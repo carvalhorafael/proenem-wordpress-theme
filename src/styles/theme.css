@@ -1,12 +1,14 @@
 :root {
-  --proenem-color-text: #111827;
-  --proenem-color-muted: #4b5563;
-  --proenem-color-border: #d1d5db;
-  --proenem-color-surface: #f9fafb;
-  --proenem-color-background: #ffffff;
-  --proenem-color-accent: #2563eb;
-  --proenem-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --proenem-radius: 0.5rem;
+  --proenem-color-text: var(--pen-color-foreground);
+  --proenem-color-muted: var(--pen-color-muted);
+  --proenem-color-border: var(--pen-color-border);
+  --proenem-color-surface: var(--pen-color-surface);
+  --proenem-color-background: var(--pen-color-background);
+  --proenem-color-accent: var(--pen-color-accent);
+  --proenem-color-accent-contrast: var(--pen-color-accent-contrast);
+  --proenem-font-sans: var(--pen-font-body);
+  --proenem-font-display: var(--pen-font-display);
+  --proenem-radius: var(--pen-radius-lg);
 }
 
 * {
@@ -141,7 +143,9 @@ img {
 .archive-header__title,
 .entry__title,
 .empty-state__title {
+  font-family: var(--proenem-font-display);
   font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: var(--pen-font-weight-display);
   line-height: 1.1;
   margin-block: 0 1rem;
 }
@@ -158,8 +162,9 @@ img {
 }
 
 .post-card {
-  border: 1px solid var(--proenem-color-border);
-  border-radius: var(--proenem-radius);
+  border: var(--pen-border-brand-sm);
+  border-radius: var(--pen-radius-xl);
+  box-shadow: var(--pen-shadow-hard-sm);
   display: grid;
   gap: 1rem;
   overflow: hidden;
@@ -171,7 +176,9 @@ img {
 }
 
 .post-card__title {
+  font-family: var(--proenem-font-display);
   font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: var(--pen-font-weight-heading);
   line-height: 1.2;
   margin-block: 0 0.5rem;
 }
@@ -226,9 +233,10 @@ img {
 .search-form__submit {
   align-items: center;
   background: var(--proenem-color-accent);
-  border: 1px solid var(--proenem-color-accent);
+  border: var(--pen-border-brand-sm);
   border-radius: var(--proenem-radius);
-  color: #ffffff;
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--proenem-color-accent-contrast);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -236,6 +244,7 @@ img {
   min-height: 2.75rem;
   padding: 0.65rem 1rem;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .search-form {

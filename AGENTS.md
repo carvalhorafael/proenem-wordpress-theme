@@ -12,12 +12,78 @@ O projeto `/Users/rafaelcarvalho/Development/executive-signal-wordpress-theme` p
 
 Nao invente direcao visual, tokens de marca, componentes proprietarios ou conteudo editorial definitivo antes de haver especificacao da Proenem.
 
-Enquanto nao houver pacote de design system Proenem publicado para consumo, mantenha a UI local como fundacao neutra, acessivel e facil de substituir. Quando um design system Proenem estiver disponivel:
+O tema consome os pacotes publicados do design system da Proenem:
+
+- `@carvalhorafael/proenem-tokens`
+- `@carvalhorafael/proenem-css`
+- `@carvalhorafael/proenem-web`
+
+Nao adicionar `@carvalhorafael/proenem-ui` por padrao. Esse pacote e React e so deve entrar no tema se houver decisao explicita de renderizar React no WordPress.
+
+Para rodar `npm install`, o projeto precisa conseguir ler os pacotes privados `@carvalhorafael/*` no GitHub Packages. Use `.npmrc.example` como modelo local e nunca commite `.npmrc`. Em GitHub Actions, use o secret `PROENEM_PACKAGES_TOKEN` e exponha-o como `NODE_AUTH_TOKEN` apenas no passo de instalacao.
+
+Quando implementar UI:
 
 1. verifique se tokens, CSS, componentes, patterns ou contratos existentes cobrem o caso;
 2. consuma o contrato existente sempre que possivel;
 3. registre em `docs/theme-decisions.md` qualquer adaptacao local relevante;
-4. se o gap parecer reutilizavel fora do tema, documente o workaround e abra o fluxo apropriado no repositorio do design system antes de consolidar a solucao.
+4. se o design system nao cobrir o caso e for necessario criar adaptacao local, siga a politica de gaps abaixo.
+
+## Gaps e evolucao do design system
+
+Quando uma implementacao do tema revelar que o design system da Proenem nao possui um componente, token, classe CSS, pattern, contrato `web` ou comportamento necessario, nao deixe o gap apenas em comentario local, TODO solto ou memoria de conversa.
+
+Pode criar adaptacao local no tema para nao bloquear o desenvolvimento, mas o tracking e obrigatorio.
+
+### Antes de criar UI local
+
+1. Verifique se `@carvalhorafael/proenem-tokens`, `@carvalhorafael/proenem-css` ou `@carvalhorafael/proenem-web` ja cobre o caso.
+2. Se existir contrato adequado, consuma o contrato existente.
+3. Se nao existir contrato adequado, classifique o gap e registre as issues obrigatorias antes de considerar a mudanca pronta.
+
+### Issue obrigatoria no design system
+
+Abra uma issue em:
+
+`https://github.com/carvalhorafael/proenem-design-system-brand-guide/issues`
+
+A issue deve pedir o novo componente, ajuste de componente existente, token, classe CSS, pattern ou comportamento necessario.
+
+A issue do design system deve conter:
+
+- contexto de consumo vindo do tema WordPress;
+- arquivo, template, pattern ou tela onde a necessidade apareceu;
+- por que os pacotes atuais nao cobrem o caso;
+- pacote(s) provavelmente afetado(s): `tokens`, `css`, `web`, `patterns` ou `ui`;
+- contrato esperado para o tema conseguir consumir depois;
+- criterio de aceite para remover a adaptacao local no tema.
+
+### Issue obrigatoria no tema
+
+Abra tambem uma issue neste repositorio:
+
+`https://github.com/carvalhorafael/proenem-wordpress-theme/issues`
+
+A issue do tema registra o debito tecnico local e deve conter:
+
+- arquivo, template, pattern ou tela onde a adaptacao foi criada;
+- descricao objetiva da adaptacao/workaround feito no tema;
+- por que a adaptacao ficou local temporariamente;
+- impacto e risco do workaround;
+- link para a issue do design system;
+- criterio para remover o workaround quando o design system publicar a solucao.
+
+### Links e fechamento do ciclo
+
+As duas issues devem ser linkadas em ambos os sentidos sempre que possivel.
+
+No PR ou commit do tema, referencie as duas issues quando houver adaptacao local por gap do design system.
+
+Quando a issue do design system for resolvida:
+
+1. atualize as dependencias do tema para a versao publicada do design system;
+2. remova a adaptacao local;
+3. feche a issue do tema citando o pacote e a versao que resolveram o gap.
 
 ## Ambiente local WordPress
 

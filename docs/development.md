@@ -7,7 +7,11 @@ npm install
 npm run dev
 ```
 
-O comando `npm run dev` inicia o `wp-env`, instala dependencias PHP dentro do container e sobe o Vite.
+O comando `npm run dev` inicia o `wp-env`, instala dependências PHP dentro do container e sobe o Vite.
+
+## GitHub Packages
+
+Para instalar os pacotes do design system da Proenem, copie `.npmrc.example` para `.npmrc` e configure um token GitHub com acesso a `@carvalhorafael/*`.
 
 URLs locais:
 
@@ -15,7 +19,7 @@ URLs locais:
 - Admin: http://localhost:8898/wp-admin
 - Testes: http://localhost:8899/
 
-## Validacao
+## Validação
 
 ```bash
 npm run build
@@ -26,17 +30,17 @@ npm run test:e2e
 npm run validate
 ```
 
-## Internacionalizacao
+## Internacionalização
 
 Use sempre o text domain `proenem-wordpress-theme`.
 
-Quando alterar strings traduziveis:
+Quando alterar strings traduzíveis:
 
 ```bash
 npm run i18n
 ```
 
-O idioma base inicial e `pt_BR`.
+O idioma base inicial é `pt_BR`.
 
 ## Empacotamento
 

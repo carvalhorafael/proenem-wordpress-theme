@@ -28,6 +28,11 @@
     "wp:stop": "wp-env stop",
     "wp:destroy": "wp-env destroy"
   },
+  "dependencies": {
+    "@carvalhorafael/proenem-css": "^0.1.0",
+    "@carvalhorafael/proenem-tokens": "^0.1.0",
+    "@carvalhorafael/proenem-web": "^0.1.0"
+  },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
