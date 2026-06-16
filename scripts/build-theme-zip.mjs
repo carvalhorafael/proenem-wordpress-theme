@@ -24,6 +24,7 @@ const includePaths = [
   "searchform.php",
   "single.php",
   "theme.json",
+  "page-templates",
   "README.md",
   "readme.txt",
   "LICENSE.md",
@@ -31,6 +32,7 @@ const includePaths = [
   "inc",
   "languages",
   "template-parts",
+  "assets/images",
   "assets/dist",
 ];
 

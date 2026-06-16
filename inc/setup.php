@@ -104,6 +104,21 @@ function proenem_register_widget_areas() {
 add_action( 'widgets_init', 'proenem_register_widget_areas' );
 
 /**
+ * Add template-aware body classes.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function proenem_body_classes( $classes ) {
+	if ( is_page_template( 'page-templates/home.php' ) ) {
+		$classes[] = 'proenem-home-template';
+	}
+
+	return $classes;
+}
+add_filter( 'body_class', 'proenem_body_classes' );
+
+/**
  * Get stylesheets loaded in the block editor canvas.
  *
  * @return string[]

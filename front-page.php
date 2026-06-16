@@ -5,6 +5,11 @@
  * @package Proenem
  */
 
+if ( is_page_template( 'page-templates/home.php' ) ) {
+	locate_template( 'page-templates/home.php', true, false );
+	return;
+}
+
 get_header();
 ?>
 
