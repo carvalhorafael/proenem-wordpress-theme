@@ -1,0 +1,12 @@
+@import "./main.css";
+
+.editor-styles-wrapper {
+  font-family: var(--proenem-font-sans);
+}
+
+.editor-styles-wrapper .is-root-container {
+  color: var(--proenem-color-text);
+  line-height: 1.65;
+  margin-inline: auto;
+  max-width: 760px;
+}
