@@ -1,0 +1,248 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Proenem 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Proenem\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Proenem scaffold\n"
+
+
+# Copyright (C) 2026 Rafael Carvalho
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Proenem 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Proenem\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: proenem-wordpress-theme\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "Proenem"
+msgstr "Proenem"
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://www.proenem.com.br/"
+msgstr "https://www.proenem.com.br/"
+
+#. Description of the theme
+#: style.css
+msgid "Tema WordPress do Proenem."
+msgstr "Tema WordPress do Proenem."
+
+#. Author of the theme
+#: style.css
+msgid "Rafael Carvalho"
+msgstr "Rafael Carvalho"
+
+#. Author URI of the theme
+#: style.css
+msgid "https://carvalhorafael.com/"
+msgstr "https://carvalhorafael.com/"
+
+#: 404.php:13
+msgid "Page not found"
+msgstr "Pagina nao encontrada"
+
+#: 404.php:14
+msgid "The requested page could not be found. Try searching for what you need."
+msgstr "A pagina solicitada nao foi encontrada. Tente buscar pelo que voce precisa."
+
+#: 404.php:17
+#: template-parts/content-none.php:32
+msgid "Return to homepage"
+msgstr "Voltar para a pagina inicial"
+
+#: comments.php:20
+msgid "One comment"
+msgstr "Um comentario"
+
+#. translators: %s: Number of comments.
+#: comments.php:24
+#, php-format
+msgid "%s comments"
+msgstr "%s comentarios"
+
+#: comments.php:48
+msgid "Comments are closed."
+msgstr "Os comentarios estao fechados."
+
+#. translators: %d: Footer column number.
+#: footer.php:13
+#, php-format
+msgid "Footer column %d"
+msgstr "Coluna %d do rodape"
+
+#. translators: %s: Current year.
+#: footer.php:27
+#, php-format
+msgid "Copyright %s Proenem."
+msgstr "Copyright %s Proenem."
+
+#: header.php:18
+msgid "Skip to content"
+msgstr "Pular para o conteudo"
+
+#: header.php:34
+#: inc/setup.php:45
+msgid "Primary menu"
+msgstr "Menu principal"
+
+#: inc/setup.php:46
+msgid "Footer menu"
+msgstr "Menu do rodape"
+
+#: inc/setup.php:62
+msgid "Proenem primary"
+msgstr "Proenem principal"
+
+#: inc/setup.php:70
+msgid "Proenem panel"
+msgstr "Painel Proenem"
+
+#: inc/setup.php:83
+msgid "Footer column 1"
+msgstr "Coluna 1 do rodape"
+
+#: inc/setup.php:84
+msgid "Footer column 2"
+msgstr "Coluna 2 do rodape"
+
+#: inc/setup.php:85
+msgid "Footer column 3"
+msgstr "Coluna 3 do rodape"
+
+#: inc/setup.php:86
+msgid "Footer bottom"
+msgstr "Linha final do rodape"
+
+#. translators: %s: Widget area name.
+#: inc/setup.php:95
+#, php-format
+msgid "Widgets added here appear in %s."
+msgstr "Widgets adicionados aqui aparecem em %s."
+
+#: inc/template-tags.php:25
+msgid "Post information"
+msgstr "Informacoes do post"
+
+#: inc/template-tags.php:44
+msgid "Previous"
+msgstr "Anterior"
+
+#: inc/template-tags.php:45
+msgid "Next"
+msgstr "Proxima"
+
+#: inc/template-tags.php:53
+msgid "Posts pagination"
+msgstr "Paginacao de posts"
+
+#: index.php:13
+msgid "Latest posts"
+msgstr "Posts recentes"
+
+#. translators: %s: Search query.
+#: search.php:17
+#, php-format
+msgid "Search results for: %s"
+msgstr "Resultados de busca para: %s"
+
+#: searchform.php:12
+#: searchform.php:16
+msgid "Search"
+msgstr "Busca"
+
+#: searchform.php:15
+msgid "Search..."
+msgstr "Buscar..."
+
+#: template-parts/content-none.php:13
+msgid "Nothing found"
+msgstr "Nada encontrado"
+
+#: template-parts/content-none.php:15
+msgid "No posts yet"
+msgstr "Ainda nao ha posts"
+
+#: template-parts/content-none.php:22
+msgid "Try a different search or return to the homepage."
+msgstr "Tente uma busca diferente ou volte para a pagina inicial."
+
+#: template-parts/content-none.php:24
+msgid "This archive does not have published posts yet."
+msgstr "Este arquivo ainda nao tem posts publicados."
+
+#: template-parts/content-page.php:19
+#: template-parts/content-single.php:26
+msgid "Page navigation"
+msgstr "Navegacao da pagina"
+
+#: template-parts/content-single.php:35
+msgid "Post tags"
+msgstr "Tags do post"
+
+#: template-parts/content.php:27
+msgid "Read more"
+msgstr "Ler mais"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Text"
+msgstr "Text"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Background"
+msgstr "Background"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface"
+msgstr "Surface"
+
+#: theme.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr "Accent"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "System Sans"
+msgstr "System Sans"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr "Small"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Base"
+msgstr "Base"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr "Large"
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Display"
+msgstr "Display"
+

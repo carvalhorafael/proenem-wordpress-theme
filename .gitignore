@@ -1,0 +1,15 @@
+assets/dist/
+coverage/
+dist/
+node_modules/
+vendor/
+.DS_Store
+.env
+.env.*
+.npmrc
+.phpunit.result.cache
+.vite/
+test-results/
+playwright-report/
+.wp-env.json.override
+.wp-env.override.json

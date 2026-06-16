@@ -1,0 +1,23 @@
+/*
+Theme Name: Proenem
+Theme URI: https://www.proenem.com.br/
+Author: Rafael Carvalho
+Author URI: https://carvalhorafael.com/
+Description: Tema WordPress do Proenem.
+Version: 0.1.0
+Requires at least: 6.5
+Tested up to: 6.6
+Requires PHP: 8.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: proenem-wordpress-theme
+Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
+Update URI: false
+*/
+
+/*
+Copyright 2026 Rafael Carvalho.
+Proenem WordPress Theme is distributed under the terms of the GNU GPL.
+*/
+
+/* Runtime styles are built from src/styles/main.css. */

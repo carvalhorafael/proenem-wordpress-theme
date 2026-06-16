@@ -1,0 +1,37 @@
+{
+  "name": "proenem-wordpress-theme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run wp:start && npm run composer:install && vite --host 0.0.0.0",
+    "build": "vite build",
+    "composer:install": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && composer install'",
+    "i18n:pot": "npx wp-env run cli -- wp i18n make-pot /var/www/html/wp-content/themes/proenem-wordpress-theme /var/www/html/wp-content/themes/proenem-wordpress-theme/languages/proenem-wordpress-theme.pot --domain=proenem-wordpress-theme --exclude=assets/dist,coverage,dist,docs,node_modules,scripts,tests,vendor --headers='{\"Language-Team\":\"Proenem\",\"POT-Creation-Date\":\"\"}' --skip-js",
+    "i18n:po": "node scripts/sync-pt-br-po.mjs",
+    "i18n:mo": "npx wp-env run cli -- wp i18n make-mo /var/www/html/wp-content/themes/proenem-wordpress-theme/languages",
+    "i18n": "npm run i18n:pot && npm run i18n:po && npm run i18n:mo",
+    "i18n:check": "npm run i18n && git diff --exit-code -- languages",
+    "lint:php": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpcs'",
+    "lint:php:fix": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpcbf'",
+    "lint:php:syntax": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && find . \\( -path \"./dist\" -o -path \"./vendor\" -o -path \"./node_modules\" -o -path \"./assets/dist\" \\) -prune -o -name \"*.php\" -print0 | xargs -0 -n1 php -l'",
+    "release:check-version": "node scripts/validate-release-version.mjs",
+    "test:static": "npm run build && npm run i18n:check && npm run lint:php:syntax && npm run lint:php && npm run theme:check",
+    "test:php": "npx wp-env run tests-cli bash -lc 'wp --path=/var/www/html theme activate proenem-wordpress-theme && cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpunit --configuration phpunit.xml.dist'",
+    "test:e2e": "npx wp-env run cli wp theme activate proenem-wordpress-theme && playwright test",
+    "test": "npm run test:static && npm run test:php && npm run test:e2e",
+    "theme:check": "npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/run-theme-check.php",
+    "theme:zip": "npm run build && node scripts/build-theme-zip.mjs",
+    "theme:validate-zip": "node scripts/validate-theme-zip.mjs",
+    "validate": "npm run test && npm run theme:zip && npm run theme:validate-zip",
+    "wp:start": "wp-env start",
+    "wp:stop": "wp-env stop",
+    "wp:destroy": "wp-env destroy"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@playwright/test": "^1.60.0",
+    "@wordpress/env": "^10.29.0",
+    "vite": "^7.0.0"
+  }
+}
