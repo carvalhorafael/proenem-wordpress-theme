@@ -398,6 +398,59 @@ body.proenem-home-template {
   text-align: center;
 }
 
+.pro-home .pen-hero-section__image {
+  bottom: clamp(-15rem, -12vw, -5rem);
+  height: clamp(46rem, 60vw, 72rem);
+  width: auto;
+}
+
+@media (min-width: 761px) {
+  .pro-home .pen-hero-section__stage {
+    min-height: clamp(32rem, calc(100vh - 12rem), 50rem);
+  }
+
+  .pro-home .pen-hero-section__title {
+    font-size: 75pt;
+    font-weight: 800;
+    left: 50%;
+    line-height: 0.78;
+    text-align: left;
+    top: 32%;
+    width: max-content;
+  }
+
+  .pro-home .pen-hero-section__title > span:nth-child(4) {
+    text-align: right;
+  }
+
+  .pro-home .pen-hero-section__emphasis {
+    color: var(--pen-color-ink);
+    display: inline-block;
+    filter: drop-shadow(5px 5px 0 var(--pen-color-ink));
+    font-size: inherit;
+    font-weight: 800;
+    paint-order: stroke fill;
+    text-shadow: none;
+    -webkit-text-stroke-width: 0.16em;
+  }
+
+  .pro-home .pen-hero-section__emphasis--blue {
+    -webkit-text-stroke-color: var(--pen-color-cyan);
+  }
+
+  .pro-home .pen-hero-section__emphasis--yellow {
+    -webkit-text-stroke-color: var(--pen-color-yellow-bright);
+  }
+
+  .pro-home .pen-hero-action-bar {
+    min-height: 7rem;
+  }
+
+  .pro-home .pen-hero-action-bar p {
+    font-size: 1.5vw;
+  }
+}
+
 @media (max-width: 760px) {
   .pro-home .pen-navbar {
     align-items: center;
