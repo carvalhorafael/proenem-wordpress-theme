@@ -404,6 +404,10 @@ body.proenem-home-template {
   width: auto;
 }
 
+.pro-home .pen-hero-action-bar {
+  background: #ff90e8;
+}
+
 @media (min-width: 761px) {
   .pro-home .pen-hero-section__stage {
     min-height: clamp(32rem, calc(100vh - 12rem), 50rem);
@@ -443,7 +447,15 @@ body.proenem-home-template {
   }
 
   .pro-home .pen-hero-action-bar {
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 35%);
     min-height: 7rem;
+  }
+
+  .pro-home .pen-hero-action-bar__action {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 9rem 100%;
+    margin-left: -5.5rem;
+    padding-left: clamp(6rem, 7vw, 8rem);
   }
 
   .pro-home .pen-hero-action-bar p {
