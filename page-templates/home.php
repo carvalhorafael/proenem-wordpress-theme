@@ -267,9 +267,13 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 	</aside>
 
 	<div class="pen-marquee" aria-hidden="true">
-		<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
-		<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
-		<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+		<div class="pen-marquee__track">
+			<?php for ( $marquee_iteration = 0; $marquee_iteration < 2; $marquee_iteration++ ) : ?>
+				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+			<?php endfor; ?>
+		</div>
 	</div>
 
 	<section id="metodo" class="pen-pillars-section" aria-labelledby="pro-pillars-title">

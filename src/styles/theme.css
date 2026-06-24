@@ -408,6 +408,42 @@ body.proenem-home-template {
   background: #ff90e8;
 }
 
+.pro-home .pen-marquee {
+  background: #4d17f5;
+  border-radius: 0;
+  font-size: 22px;
+  font-weight: 300;
+  min-height: 2.75rem;
+  text-transform: none;
+}
+
+.pro-home .pen-marquee__track {
+  animation: pro-home-marquee-scroll 18s linear infinite;
+  display: flex;
+  min-width: max-content;
+  width: max-content;
+}
+
+.pro-home .pen-marquee span {
+  padding: 0 var(--pen-space-4);
+}
+
+.pro-home .pen-marquee span::after {
+  color: var(--pen-color-yellow-bright);
+  content: " ⚡";
+  margin-left: var(--pen-space-4);
+}
+
+@keyframes pro-home-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 @media (min-width: 761px) {
   .pro-home .pen-hero-section__stage {
     min-height: clamp(32rem, calc(100vh - 12rem), 50rem);
