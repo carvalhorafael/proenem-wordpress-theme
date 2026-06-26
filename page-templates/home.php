@@ -391,21 +391,70 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 
 	<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
 		<p class="pen-section-pill"><?php esc_html_e( 'Você se identifica?', 'proenem-wordpress-theme' ); ?></p>
-		<h2 id="pro-pain-title"><?php esc_html_e( 'Já sentiu que estuda muito, mas a nota não sobe?', 'proenem-wordpress-theme' ); ?></h2>
+		<h2 id="pro-pain-title">
+			<?php esc_html_e( 'Já sentiu que', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( 'estuda muito,', 'proenem-wordpress-theme' ); ?></strong>
+			<br>
+			<?php esc_html_e( 'mas a nota', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( 'não sobe?', 'proenem-wordpress-theme' ); ?></strong>
+		</h2>
 		<div class="pen-feature-grid">
-			<article>
-				<h3><?php esc_html_e( 'Estuda sem direção', 'proenem-wordpress-theme' ); ?></h3>
+			<article class="pro-home-pain-card pro-home-pain-card--blue">
+				<span class="pro-home-pain-card__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" focusable="false">
+						<circle cx="12" cy="12" r="7"></circle>
+						<path d="M15.5 8.5 13.8 14l-5.3 1.5L10.2 10z"></path>
+					</svg>
+				</span>
+				<h3>
+					<span><?php esc_html_e( 'Estuda', 'proenem-wordpress-theme' ); ?></span>
+					<strong><?php esc_html_e( 'sem direção', 'proenem-wordpress-theme' ); ?></strong>
+				</h3>
 				<p><?php esc_html_e( 'Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
-			<article>
-				<h3><?php esc_html_e( 'Trava em simulados', 'proenem-wordpress-theme' ); ?></h3>
+			<article class="pro-home-pain-card pro-home-pain-card--yellow">
+				<span class="pro-home-pain-card__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" focusable="false">
+						<circle cx="12" cy="12" r="7"></circle>
+						<circle cx="12" cy="12" r="4"></circle>
+						<circle cx="12" cy="12" r="1.2"></circle>
+					</svg>
+				</span>
+				<h3>
+					<strong><?php esc_html_e( 'Trava', 'proenem-wordpress-theme' ); ?></strong>
+					<span><?php esc_html_e( 'em simulados', 'proenem-wordpress-theme' ); ?></span>
+				</h3>
 				<p><?php esc_html_e( 'A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
-			<article>
-				<h3><?php esc_html_e( 'Ansiedade e insegurança', 'proenem-wordpress-theme' ); ?></h3>
+			<article class="pro-home-pain-card pro-home-pain-card--red">
+				<span class="pro-home-pain-card__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" focusable="false">
+						<path d="M12 4.2 20 18H4z"></path>
+						<path d="M12 9v4.2"></path>
+						<path d="M12 16h.01"></path>
+					</svg>
+				</span>
+				<h3>
+					<strong><?php esc_html_e( 'Ansiedade', 'proenem-wordpress-theme' ); ?></strong>
+					<span><?php esc_html_e( '&', 'proenem-wordpress-theme' ); ?></span>
+					<strong><?php esc_html_e( 'insegurança', 'proenem-wordpress-theme' ); ?></strong>
+				</h3>
 				<p><?php esc_html_e( 'Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
 		</div>
+		<p class="pro-home-pain-section__statement">
+			<span><?php esc_html_e( 'O problema não é o esforço.', 'proenem-wordpress-theme' ); ?></span>
+			<span>
+				<?php esc_html_e( 'É estudar', 'proenem-wordpress-theme' ); ?>
+				<strong><?php esc_html_e( 'sem método.', 'proenem-wordpress-theme' ); ?></strong>
+			</span>
+		</p>
+		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="#planos">
+			<?php esc_html_e( 'Comece agora!', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( 'É gratuito', 'proenem-wordpress-theme' ); ?></span>
+		</a>
+		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span>
+		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--pink" aria-hidden="true"></span>
 	</section>
 
 	<section class="pen-platform-showcase" aria-labelledby="pro-platform-title">

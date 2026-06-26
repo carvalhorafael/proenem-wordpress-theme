@@ -328,6 +328,13 @@ body.proenem-home-template {
 }
 
 .pro-home {
+  --pro-home-red-pattern:
+    repeating-linear-gradient(
+      60deg,
+      rgb(0 0 0 / 14%) 0 1px,
+      transparent 1px 5px
+    ),
+    #e23a3a;
   max-width: none;
   overflow: hidden;
   padding: 0;
@@ -459,6 +466,225 @@ body.proenem-home-template {
   background:
     linear-gradient(135deg, rgb(0 0 0 / 10%) 25%, transparent 25%) 0 0 / 12px 12px,
     #e23a3a;
+}
+
+.pro-home .pen-feature-grid-section {
+  background: #fff0f0;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 7vw, 7rem) clamp(8rem, 12vw, 11rem);
+  position: relative;
+}
+
+.pro-home .pen-feature-grid-section::before {
+  background: var(--pro-home-red-pattern);
+  bottom: clamp(3.8rem, 6vw, 5.3rem);
+  content: "";
+  filter:
+    drop-shadow(0 -2px 0 var(--pen-color-ink))
+    drop-shadow(2px 0 0 var(--pen-color-ink))
+    drop-shadow(-2px 0 0 var(--pen-color-ink));
+  height: 1.95rem;
+  left: 0;
+  mask: radial-gradient(circle at 50% 100%, #000 0 1.72rem, transparent 1.74rem) 0 0 / 4.75rem 1.95rem repeat-x;
+  position: absolute;
+  right: 0;
+  -webkit-mask: radial-gradient(circle at 50% 100%, #000 0 1.72rem, transparent 1.74rem) 0 0 / 4.75rem 1.95rem repeat-x;
+  z-index: 1;
+}
+
+.pro-home .pen-feature-grid-section::after {
+  background: var(--pro-home-red-pattern);
+  border-top: var(--pen-border-brand);
+  bottom: 0;
+  content: "";
+  height: clamp(3.8rem, 6vw, 5.3rem);
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 0;
+}
+
+.pro-home .pen-platform-showcase {
+  background: var(--pro-home-red-pattern);
+}
+
+.pro-home .pen-feature-grid-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.pro-home .pen-feature-grid-section .pen-section-pill {
+  font-size: 0.78rem;
+  margin-inline: auto;
+  padding: 0.24rem 0.55rem;
+}
+
+.pro-home .pen-feature-grid-section h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 500;
+  line-height: 0.96;
+  margin: 1.4rem auto 0;
+  max-width: 44rem;
+}
+
+.pro-home .pen-feature-grid-section h2 strong {
+  font-weight: 900;
+}
+
+.pro-home .pen-feature-grid {
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-top: clamp(3.3rem, 5vw, 4.5rem);
+  max-width: 72rem;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card {
+  border-radius: 1.1rem;
+  min-height: 12rem;
+  padding: clamp(4.15rem, 5vw, 4.8rem) clamp(1.65rem, 2.5vw, 2.05rem) clamp(1.55rem, 2.5vw, 1.9rem);
+  position: relative;
+}
+
+.pro-home .pro-home-pain-card__icon {
+  align-items: center;
+  background: var(--pro-home-pain-icon-background);
+  border: var(--pen-border-brand-sm);
+  border-radius: 1.05rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pro-home-pain-icon-color);
+  display: inline-flex;
+  font-weight: 900;
+  height: 4rem;
+  justify-content: center;
+  left: 2.1rem;
+  line-height: 1;
+  position: absolute;
+  top: -2rem;
+  width: 4rem;
+}
+
+.pro-home .pro-home-pain-card__icon svg {
+  display: block;
+  fill: none;
+  height: 1.55rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.1;
+  width: 1.55rem;
+}
+
+.pro-home .pro-home-pain-card--blue {
+  --pro-home-pain-icon-background: #eaf2ff;
+  --pro-home-pain-icon-color: #1c71ff;
+}
+
+.pro-home .pro-home-pain-card--yellow {
+  --pro-home-pain-icon-background: #fff1b8;
+  --pro-home-pain-icon-color: #ff9d00;
+}
+
+.pro-home .pro-home-pain-card--red {
+  --pro-home-pain-icon-background: #ffe9e9;
+  --pro-home-pain-icon-color: #ff4f45;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card h3 {
+  display: block;
+  font-size: clamp(1.28rem, 1.7vw, 1.55rem);
+  font-weight: 500;
+  line-height: 0.98;
+  margin-bottom: 1.45rem;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card h3 span,
+.pro-home .pen-feature-grid .pro-home-pain-card h3 strong {
+  display: block;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card h3 strong {
+  font-weight: 900;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card--red h3 span {
+  display: inline;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card--red h3 strong:first-child {
+  display: inline;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card--red h3 strong:last-child {
+  display: block;
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card p {
+  font-size: clamp(0.78rem, 1vw, 0.9rem);
+  line-height: 1.45;
+}
+
+.pro-home .pro-home-pain-section__statement {
+  display: grid;
+  font-size: clamp(2.25rem, 3.4vw, 3.2rem);
+  line-height: 1.04;
+  margin: clamp(3.2rem, 5vw, 4.5rem) auto 0;
+  max-width: 48rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pro-home .pro-home-pain-section__statement strong {
+  display: inline-block;
+  font-weight: 900;
+  padding-bottom: 0.08em;
+  position: relative;
+}
+
+.pro-home .pro-home-pain-section__statement strong::after {
+  border-bottom: 0.13em solid #e23a3a;
+  border-radius: 0 0 55% 50%;
+  bottom: -0.04em;
+  content: "";
+  height: 0.2em;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  transform: rotate(1deg);
+  transform-origin: center;
+}
+
+.pro-home .pro-home-pain-section__cta {
+  background: var(--pen-color-surface);
+  color: var(--pen-color-ink);
+  margin-top: 1.65rem;
+}
+
+.pro-home .pro-home-pain-section__shape {
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.75rem;
+  bottom: clamp(4.1rem, 6vw, 5.4rem);
+  display: block;
+  position: absolute;
+  z-index: 1;
+}
+
+.pro-home .pro-home-pain-section__shape--blue {
+  background: var(--pen-color-cyan);
+  bottom: clamp(7rem, 10vw, 9.6rem);
+  height: clamp(5.3rem, 7vw, 6.8rem);
+  left: clamp(2.6rem, 6.2vw, 4.9rem);
+  transform: rotate(5deg);
+  width: clamp(5.3rem, 7vw, 6.8rem);
+}
+
+.pro-home .pro-home-pain-section__shape--pink {
+  background: #f178df;
+  bottom: clamp(3.35rem, 5.1vw, 4.45rem);
+  height: clamp(4.1rem, 5.4vw, 5rem);
+  left: clamp(7.5rem, 12.2vw, 10.8rem);
+  transform: rotate(-16deg);
+  width: clamp(4.1rem, 5.4vw, 5rem);
 }
 
 .pro-home .pen-pillars-section__cards {
