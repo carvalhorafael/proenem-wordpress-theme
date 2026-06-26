@@ -434,6 +434,199 @@ body.proenem-home-template {
   margin-left: var(--pen-space-4);
 }
 
+.pro-home .pen-pillars-section__cards {
+  background: transparent;
+  border: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  isolation: isolate;
+  margin-block: 0;
+  min-height: 28rem;
+  overflow: visible;
+  padding-block: 3rem;
+  place-items: center;
+  position: relative;
+}
+
+.pro-home .pen-pillars-section__cards::before {
+  background: var(--pen-color-teal);
+  border: var(--pen-border-brand);
+  border-radius: 1.75rem;
+  content: "";
+  inset: 0 12%;
+  position: absolute;
+  z-index: 0;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card {
+  grid-area: 1 / 1;
+  opacity: 1;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    width 180ms ease;
+  width: min(13rem, 24vw);
+  z-index: 1;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-prev {
+  transform: translateX(clamp(-19rem, -24vw, -14rem));
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active {
+  transform: translateX(0);
+  width: min(19.5rem, 32vw);
+  z-index: 3;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-next {
+  transform: translateX(clamp(14rem, 24vw, 19rem));
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0) scale(0.92);
+  z-index: 0;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card:not(.is-active) p {
+  display: none;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card:not(.is-active) .pen-step-card__image {
+  aspect-ratio: 1 / 1.22;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active .pen-step-card__image {
+  aspect-ratio: 1 / 0.72;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card > div {
+  min-height: 5.25rem;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active > div {
+  min-height: 8.5rem;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active p {
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  line-height: 1.45;
+  margin-top: 0.45rem;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card:not(.is-active) h3 {
+  color: inherit;
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card--featured.is-active,
+.pro-home .pen-pillars-section__cards .pen-step-card--pink.is-active {
+  background: var(--pen-color-pink-mid);
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card--blue.is-active {
+  background: var(--pen-color-cyan);
+}
+
+.pro-home .pen-pillars-section__cards .pen-step-card--red.is-active {
+  background: var(--pen-color-primary);
+  color: var(--pen-color-on-red);
+}
+
+.pro-home .pro-home-pillars-badge {
+  aspect-ratio: 1;
+  background: var(--pen-color-ink);
+  clip-path: polygon(
+    50% 0%,
+    58% 7%,
+    68% 4%,
+    73% 14%,
+    84% 16%,
+    86% 27%,
+    96% 32%,
+    93% 42%,
+    100% 50%,
+    93% 58%,
+    96% 68%,
+    86% 73%,
+    84% 84%,
+    73% 86%,
+    68% 96%,
+    58% 93%,
+    50% 100%,
+    42% 93%,
+    32% 96%,
+    27% 86%,
+    16% 84%,
+    14% 73%,
+    4% 68%,
+    7% 58%,
+    0% 50%,
+    7% 42%,
+    4% 32%,
+    14% 27%,
+    16% 16%,
+    27% 14%,
+    32% 4%,
+    42% 7%
+  );
+  padding: 0.18rem;
+  position: absolute;
+  right: 9%;
+  top: -1.6rem;
+  width: clamp(3.8rem, 6vw, 5rem);
+  z-index: 2;
+}
+
+.pro-home .pro-home-pillars-control {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  display: flex;
+  gap: 0.8rem;
+  height: 1.5rem;
+  justify-content: center;
+  left: 8%;
+  padding-inline: 0.5rem;
+  position: absolute;
+  top: 1.8rem;
+  z-index: 4;
+}
+
+.pro-home .pro-home-pillars-control button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--pen-color-ink);
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  padding: 0;
+}
+
+.pro-home .pro-home-pillars-control span {
+  background: var(--pen-color-ink);
+  border-radius: 50%;
+  height: 0.2rem;
+  opacity: 0.35;
+  width: 0.2rem;
+}
+
+.pro-home .pro-home-pillars-badge::before {
+  background: var(--pen-color-cyan);
+  clip-path: inherit;
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.pro-home .pen-pillars-section a.pen-button--primary {
+  color: var(--pen-color-on-red);
+}
+
 @keyframes pro-home-marquee-scroll {
   from {
     transform: translateX(0);
@@ -500,6 +693,30 @@ body.proenem-home-template {
 }
 
 @media (max-width: 760px) {
+  .pro-home .pen-pillars-section__cards {
+    min-height: 30rem;
+    overflow: hidden;
+  }
+
+  .pro-home .pen-pillars-section__cards::before {
+    inset: 0 8%;
+  }
+
+  .pro-home .pen-pillars-section__cards .pen-step-card {
+    width: min(15rem, 70vw);
+  }
+
+  .pro-home .pen-pillars-section__cards .pen-step-card.is-prev,
+  .pro-home .pen-pillars-section__cards .pen-step-card.is-next {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(0) scale(0.92);
+  }
+
+  .pro-home .pen-pillars-section__cards .pen-step-card.is-active {
+    width: min(16rem, 76vw);
+  }
+
   .pro-home .pen-navbar {
     align-items: center;
     flex-direction: row;

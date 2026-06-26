@@ -282,15 +282,26 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
 			<p><?php esc_html_e( 'O Método PRO não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-			<a class="pen-action-link pen-action-link--primary" href="#planos"><?php esc_html_e( 'Começar gratuitamente', 'proenem-wordpress-theme' ); ?> <span aria-hidden="true">-></span></a>
+			<a class="pen-button pen-button--primary pen-button--md" href="#planos"><?php esc_html_e( 'Começar gratuitamente', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
-		<div class="pen-pillars-section__cards">
-			<article class="pen-step-card pen-step-card--blue">
+		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
+			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
+			<div class="pro-home-pillars-control" aria-label="<?php esc_attr_e( 'Navegação dos pilares', 'proenem-wordpress-theme' ); ?>">
+				<button type="button" data-pro-home-pillars-prev aria-label="<?php esc_attr_e( 'Pilar anterior', 'proenem-wordpress-theme' ); ?>">‹</button>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+				<button type="button" data-pro-home-pillars-next aria-label="<?php esc_attr_e( 'Próximo pilar', 'proenem-wordpress-theme' ); ?>">›</button>
+			</div>
+			<article class="pen-step-card pen-step-card--blue" data-pro-home-pillar-card>
 				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt="">
 				<span>01</span>
-				<h3><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></h3>
+				<div>
+					<h3><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais.', 'proenem-wordpress-theme' ); ?></p>
+				</div>
 			</article>
-			<article class="pen-step-card pen-step-card--featured">
+			<article class="pen-step-card pen-step-card--featured is-active" data-pro-home-pillar-card>
 				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-diagnostico.webp' ) ); ?>" alt="">
 				<span>02</span>
 				<div>
@@ -298,10 +309,21 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 					<p><?php esc_html_e( 'Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
-			<article class="pen-step-card pen-step-card--red">
+			<article class="pen-step-card pen-step-card--red" data-pro-home-pillar-card>
 				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-execucao.webp' ) ); ?>" alt="">
 				<span>03</span>
-				<h3><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></h3>
+				<div>
+					<h3><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo.', 'proenem-wordpress-theme' ); ?></p>
+				</div>
+			</article>
+			<article class="pen-step-card pen-step-card--pink" data-pro-home-pillar-card>
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt="">
+				<span>04</span>
+				<div>
+					<h3><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></h3>
+					<p><?php esc_html_e( 'Acompanhamos sua evolução para trocar esforço solto por resultado mensurável.', 'proenem-wordpress-theme' ); ?></p>
+				</div>
 			</article>
 		</div>
 	</section>
