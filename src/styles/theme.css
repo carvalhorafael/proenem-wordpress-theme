@@ -434,6 +434,33 @@ body.proenem-home-template {
   margin-left: var(--pen-space-4);
 }
 
+.pro-home .pen-proof-section__badge {
+  align-items: center;
+  background: #fa9dcd;
+  color: var(--pen-color-on-red);
+  display: flex;
+  flex-direction: column;
+  font-size: 1.8rem;
+  height: 100px;
+  justify-content: center;
+  line-height: 0.88;
+  padding: 0.5rem 0.95rem;
+  text-shadow:
+    1px 0 var(--pen-color-ink),
+    -1px 0 var(--pen-color-ink),
+    0 1px var(--pen-color-ink),
+    0 -1px var(--pen-color-ink),
+    2px 2px 0 var(--pen-color-ink);
+  transform: translate(-50%, -47%) rotate(-4deg);
+  width: 190px;
+}
+
+.pro-home .pen-proof-section__strip {
+  background:
+    linear-gradient(135deg, rgb(0 0 0 / 10%) 25%, transparent 25%) 0 0 / 12px 12px,
+    #e23a3a;
+}
+
 .pro-home .pen-pillars-section__cards {
   background: transparent;
   border: 0;

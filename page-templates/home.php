@@ -328,15 +328,64 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 		</div>
 	</section>
 
+	<?php
+	$proof_student_images = array(
+		'proof-students-1.webp',
+		'proof-students-2.png',
+		'proof-students-3.png',
+		'proof-students-4.png',
+		'proof-students-5.png',
+		'proof-students-6.png',
+	);
+
+	$proof_university_logos = array(
+		array(
+			'file' => 'proof-logo-ufrj.png',
+			'name' => __( 'UFRJ', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'file' => 'proof-logo-ufrgs.png',
+			'name' => __( 'UFRGS', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'file' => 'proof-logo-unicamp.png',
+			'name' => __( 'Unicamp', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'file' => 'proof-logo-uerj.png',
+			'name' => __( 'UERJ', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'file' => 'proof-logo-usp.png',
+			'name' => __( 'USP', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'file' => 'proof-logo-unifesp.png',
+			'name' => __( 'Unifesp', 'proenem-wordpress-theme' ),
+		),
+	);
+	?>
 	<section id="aprovados" class="pen-proof-section" aria-labelledby="pro-proof-title">
 		<div class="pen-proof-section__students">
-			<?php for ( $index = 0; $index < 6; $index++ ) : ?>
-				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( 'proof-students-1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>">
-			<?php endfor; ?>
+			<p class="pen-proof-section__badge">
+				<span><?php esc_html_e( 'Nossos', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Alunos!', 'proenem-wordpress-theme' ); ?></span>
+			</p>
+			<?php foreach ( $proof_student_images as $proof_student_image ) : ?>
+				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>">
+			<?php endforeach; ?>
 		</div>
 		<div class="pen-proof-section__strip">
 			<h2 id="pro-proof-title"><?php esc_html_e( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ); ?></h2>
-			<p><?php esc_html_e( 'UFRJ · UFRGS · Unicamp · UERJ · USP · Unifesp', 'proenem-wordpress-theme' ); ?></p>
+			<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
+				<?php foreach ( $proof_university_logos as $proof_university_logo ) : ?>
+					<img
+						class="pen-proof-section__logo"
+						src="<?php echo esc_url( $home_asset_uri( $proof_university_logo['file'] ) ); ?>"
+						alt="<?php echo esc_attr( $proof_university_logo['name'] ); ?>"
+					>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	</section>
 

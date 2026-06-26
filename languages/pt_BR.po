@@ -191,8 +191,8 @@ msgstr "Comunidade de alunos"
 
 #: page-templates/home.php:32
 #: page-templates/home.php:88
-#: page-templates/home.php:466
-#: page-templates/home.php:474
+#: page-templates/home.php:515
+#: page-templates/home.php:523
 msgid "Método PRO"
 msgstr "Método PRO"
 
@@ -221,7 +221,7 @@ msgid "Simulados TRI semanais"
 msgstr "Simulados TRI semanais"
 
 #: page-templates/home.php:41
-#: page-templates/home.php:366
+#: page-templates/home.php:415
 msgid "Aulas ao vivo todos os dias"
 msgstr "Aulas ao vivo todos os dias"
 
@@ -314,7 +314,7 @@ msgid "Português"
 msgstr "Português"
 
 #: page-templates/home.php:93
-#: page-templates/home.php:467
+#: page-templates/home.php:516
 msgid "Planos"
 msgstr "Planos"
 
@@ -327,7 +327,7 @@ msgid "Aprovados"
 msgstr "Aprovados"
 
 #: page-templates/home.php:105
-#: page-templates/home.php:469
+#: page-templates/home.php:518
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -340,7 +340,7 @@ msgid "Navegação da home"
 msgstr "Navegação da home"
 
 #: page-templates/home.php:174
-#: page-templates/home.php:473
+#: page-templates/home.php:522
 msgid "ProEnem"
 msgstr "ProEnem"
 
@@ -434,7 +434,7 @@ msgid "O ENEM não é prova de quem estuda mais. É de quem estuda com estratég
 msgstr "O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia."
 
 #: page-templates/home.php:285
-#: page-templates/home.php:438
+#: page-templates/home.php:487
 msgid "Começar gratuitamente"
 msgstr "Começar gratuitamente"
 
@@ -466,192 +466,224 @@ msgstr "Você sabe o que estudar, quando revisar e como corrigir rota sem perder
 msgid "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável."
 msgstr "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável."
 
-#: page-templates/home.php:334
+#: page-templates/home.php:344
+msgid "UFRJ"
+msgstr "UFRJ"
+
+#: page-templates/home.php:348
+msgid "UFRGS"
+msgstr "UFRGS"
+
+#: page-templates/home.php:352
+msgid "Unicamp"
+msgstr "Unicamp"
+
+#: page-templates/home.php:356
+msgid "UERJ"
+msgstr "UERJ"
+
+#: page-templates/home.php:360
+msgid "USP"
+msgstr "USP"
+
+#: page-templates/home.php:364
+msgid "Unifesp"
+msgstr "Unifesp"
+
+#: page-templates/home.php:371
+msgid "Nossos"
+msgstr "Nossos"
+
+#: page-templates/home.php:372
+msgid "Alunos!"
+msgstr "Alunos!"
+
+#: page-templates/home.php:375
 msgid "Aluno aprovado exibindo aprovação."
 msgstr "Aluno aprovado exibindo aprovação."
 
-#: page-templates/home.php:338
+#: page-templates/home.php:379
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr "+ de 40.000 aprovados em universidades públicas"
 
-#: page-templates/home.php:339
-msgid "UFRJ · UFRGS · Unicamp · UERJ · USP · Unifesp"
-msgstr "UFRJ · UFRGS · Unicamp · UERJ · USP · Unifesp"
+#: page-templates/home.php:380
+msgid "Universidades públicas com alunos aprovados pela Proenem"
+msgstr "Universidades públicas com alunos aprovados pela Proenem"
 
-#: page-templates/home.php:344
+#: page-templates/home.php:393
 msgid "Você se identifica?"
 msgstr "Você se identifica?"
 
-#: page-templates/home.php:345
-#: page-templates/home.php:445
+#: page-templates/home.php:394
+#: page-templates/home.php:494
 msgid "Já sentiu que estuda muito, mas a nota não sobe?"
 msgstr "Já sentiu que estuda muito, mas a nota não sobe?"
 
-#: page-templates/home.php:348
+#: page-templates/home.php:397
 msgid "Estuda sem direção"
 msgstr "Estuda sem direção"
 
-#: page-templates/home.php:349
+#: page-templates/home.php:398
 msgid "Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece."
 msgstr "Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece."
 
-#: page-templates/home.php:352
+#: page-templates/home.php:401
 msgid "Trava em simulados"
 msgstr "Trava em simulados"
 
-#: page-templates/home.php:353
+#: page-templates/home.php:402
 msgid "A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos."
 msgstr "A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos."
 
-#: page-templates/home.php:356
+#: page-templates/home.php:405
 msgid "Ansiedade e insegurança"
 msgstr "Ansiedade e insegurança"
 
-#: page-templates/home.php:357
+#: page-templates/home.php:406
 msgid "Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros."
 msgstr "Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros."
 
-#: page-templates/home.php:363
+#: page-templates/home.php:412
 msgid "Explore por dentro cada detalhe"
 msgstr "Explore por dentro cada detalhe"
 
-#: page-templates/home.php:367
+#: page-templates/home.php:416
 msgid "+50 mil questões"
 msgstr "+50 mil questões"
 
-#: page-templates/home.php:368
+#: page-templates/home.php:417
 msgid "Plano personalizado"
 msgstr "Plano personalizado"
 
-#: page-templates/home.php:369
+#: page-templates/home.php:418
 msgid "Tutor com IA"
 msgstr "Tutor com IA"
 
-#: page-templates/home.php:370
+#: page-templates/home.php:419
 msgid "Correção de redação"
 msgstr "Correção de redação"
 
-#: page-templates/home.php:371
+#: page-templates/home.php:420
 msgid "Simulados com TRI"
 msgstr "Simulados com TRI"
 
-#: page-templates/home.php:375
+#: page-templates/home.php:424
 msgid "Simulados com a mesma lógica de correção do ENEM."
 msgstr "Simulados com a mesma lógica de correção do ENEM."
 
-#: page-templates/home.php:376
+#: page-templates/home.php:425
 msgid "Veja sua nota real, evolução por área e onde focar agora."
 msgstr "Veja sua nota real, evolução por área e onde focar agora."
 
-#: page-templates/home.php:384
+#: page-templates/home.php:433
 msgid "Explore +50 mil questões sem precisar criar conta."
 msgstr "Explore +50 mil questões sem precisar criar conta."
 
-#: page-templates/home.php:385
+#: page-templates/home.php:434
 msgid "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
 msgstr "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
 
-#: page-templates/home.php:390
+#: page-templates/home.php:439
 msgid "512 questões · 40 aulas"
 msgstr "512 questões · 40 aulas"
 
-#: page-templates/home.php:394
+#: page-templates/home.php:443
 msgid "Comece agora! É gratuito"
 msgstr "Comece agora! É gratuito"
 
-#: page-templates/home.php:398
+#: page-templates/home.php:447
 msgid "Investimento que se paga em uma vaga."
 msgstr "Investimento que se paga em uma vaga."
 
-#: page-templates/home.php:399
+#: page-templates/home.php:448
 msgid "Comece grátis. Cancele com 1 clique. 7 dias de garantia em todos os planos."
 msgstr "Comece grátis. Cancele com 1 clique. 7 dias de garantia em todos os planos."
 
-#: page-templates/home.php:406
+#: page-templates/home.php:455
 msgid "R$"
 msgstr "R$"
 
-#: page-templates/home.php:406
+#: page-templates/home.php:455
 msgid "ao mês"
 msgstr "ao mês"
 
-#: page-templates/home.php:413
+#: page-templates/home.php:462
 msgid "Quero o Método PRO"
 msgstr "Quero o Método PRO"
 
-#: page-templates/home.php:421
+#: page-templates/home.php:470
 msgid "Leve o Método PRO para a sua escola."
 msgstr "Leve o Método PRO para a sua escola."
 
-#: page-templates/home.php:422
+#: page-templates/home.php:471
 msgid "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM em um único pacote."
 msgstr "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM em um único pacote."
 
-#: page-templates/home.php:425
+#: page-templates/home.php:474
 msgid "Combo plataforma + apostilas"
 msgstr "Combo plataforma + apostilas"
 
-#: page-templates/home.php:425
+#: page-templates/home.php:474
 msgid "Acesso completo à plataforma e kit de apostilas exclusivas."
 msgstr "Acesso completo à plataforma e kit de apostilas exclusivas."
 
-#: page-templates/home.php:426
+#: page-templates/home.php:475
 msgid "Acompanhe cada aluno"
 msgstr "Acompanhe cada aluno"
 
-#: page-templates/home.php:426
+#: page-templates/home.php:475
 msgid "Painel exclusivo para desempenho, simulados e frequência."
 msgstr "Painel exclusivo para desempenho, simulados e frequência."
 
-#: page-templates/home.php:427
+#: page-templates/home.php:476
 msgid "Acesso para todos os alunos"
 msgstr "Acesso para todos os alunos"
 
-#: page-templates/home.php:427
+#: page-templates/home.php:476
 msgid "Licenças geradas para todas as turmas."
 msgstr "Licenças geradas para todas as turmas."
 
-#: page-templates/home.php:428
+#: page-templates/home.php:477
 msgid "Onboarding dedicado"
 msgstr "Onboarding dedicado"
 
-#: page-templates/home.php:428
+#: page-templates/home.php:477
 msgid "Um especialista acompanha os primeiros ciclos."
 msgstr "Um especialista acompanha os primeiros ciclos."
 
-#: page-templates/home.php:434
+#: page-templates/home.php:483
 msgid "Pronto para transformar a preparação ENEM na sua escola?"
 msgstr "Pronto para transformar a preparação ENEM na sua escola?"
 
-#: page-templates/home.php:435
+#: page-templates/home.php:484
 msgid "Converse com nossa equipe e receba uma proposta personalizada."
 msgstr "Converse com nossa equipe e receba uma proposta personalizada."
 
-#: page-templates/home.php:444
+#: page-templates/home.php:493
 msgid "Perguntas frequentes"
 msgstr "Perguntas frequentes"
 
-#: page-templates/home.php:459
+#: page-templates/home.php:508
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: page-templates/home.php:460
+#: page-templates/home.php:509
 msgid "Sua Aprovação não é sorte. É método."
 msgstr "Sua Aprovação não é sorte. É método."
 
-#: page-templates/home.php:461
+#: page-templates/home.php:510
 msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 
-#: page-templates/home.php:464
+#: page-templates/home.php:513
 msgid "Links do rodapé da home"
 msgstr "Links do rodapé da home"
 
-#: page-templates/home.php:465
+#: page-templates/home.php:514
 msgid "Navegação"
 msgstr "Navegação"
 
-#: page-templates/home.php:468
+#: page-templates/home.php:517
 msgid "Banco de questões"
 msgstr "Banco de questões"
 
