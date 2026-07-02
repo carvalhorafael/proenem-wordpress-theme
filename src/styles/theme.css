@@ -1082,6 +1082,328 @@ body.proenem-home-template {
   width: 7.2rem;
 }
 
+.pro-home .pen-pricing-section {
+  background: var(--pro-home-soft-pink);
+  border-radius: 0;
+  margin: 0;
+  overflow: hidden;
+  padding: clamp(3.2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 8vw, 7rem);
+  position: relative;
+  text-align: center;
+}
+
+.pro-home .pen-pricing-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pro-home .pro-home-pricing__strokes {
+  bottom: -10rem;
+  display: block;
+  height: auto;
+  left: 50%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center top;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 0;
+}
+
+.pro-home .pro-home-pricing__header {
+  margin-inline: auto;
+  max-width: 74rem;
+  position: relative;
+}
+
+.pro-home .pro-home-pricing__intro {
+  margin-inline: auto;
+  max-width: 35rem;
+  text-align: center;
+}
+
+.pro-home .pen-pricing-section h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.8rem, 4vw, 4.35rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.96;
+  margin: 0;
+}
+
+.pro-home .pen-pricing-section h2 strong {
+  font-weight: 900;
+}
+
+.pro-home .pen-pricing-section > p,
+.pro-home .pro-home-pricing__intro p {
+  color: var(--pen-color-ink-muted);
+  font-size: clamp(1rem, 1.25vw, 1.25rem);
+  line-height: 1.45;
+  margin: 1.55rem 0 0;
+}
+
+.pro-home .pro-home-pricing__seal {
+  display: block;
+  height: 11.6rem;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-0.8rem, -50%);
+  width: 11.6rem;
+}
+
+.pro-home .pro-home-pricing__seal img {
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  position: absolute;
+}
+
+.pro-home .pro-home-pricing__seal-bg {
+  height: 7.35rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 7.35rem;
+}
+
+.pro-home .pro-home-pricing__seal-text {
+  height: 100%;
+  inset: 0;
+  width: 100%;
+}
+
+.pro-home .pro-home-pricing__seal-check {
+  height: 4.55rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.55rem;
+}
+
+.pro-home .pen-plan-grid {
+  align-items: end;
+  display: grid;
+  gap: clamp(1.7rem, 2.5vw, 2.2rem);
+  grid-template-columns: repeat(3, minmax(0, 22.7rem));
+  justify-content: center;
+  margin: clamp(4.2rem, 6vw, 5.8rem) auto 0;
+  max-width: 76rem;
+}
+
+.pro-home .pen-plan-card {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 1.2rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-ink);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 27.75rem;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  text-align: left;
+}
+
+.pro-home .pen-plan-card.is-featured {
+  background: #e23a3a;
+  color: var(--pen-color-surface);
+  height: 34.375rem;
+}
+
+.pro-home .pen-plan-card header {
+  min-height: 9.35rem;
+  padding: 2rem 1.55rem 1.45rem;
+  position: relative;
+}
+
+.pro-home .pen-plan-card.is-featured header {
+  background:
+    linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+  background-size: 1.55rem 1.55rem;
+  min-height: 11.6rem;
+}
+
+.pro-home .pen-plan-card h3 {
+  font-size: clamp(1.45rem, 1.8vw, 1.8rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+  max-width: 11.5rem;
+}
+
+.pro-home .pen-plan-card header p {
+  font-size: 1rem;
+  line-height: 1.35;
+  margin: 0.9rem 0 0;
+  max-width: 12.5rem;
+}
+
+.pro-home .pen-plan-card header strong {
+  align-items: flex-end;
+  color: var(--pen-color-surface);
+  display: flex;
+  font-size: clamp(4.2rem, 5vw, 5rem);
+  font-weight: 900;
+  gap: 0.25rem;
+  letter-spacing: -0.03em;
+  line-height: 0.78;
+  position: absolute;
+  right: 1.45rem;
+  text-shadow: 4px 4px 0 var(--pen-color-ink);
+  top: 1.5rem;
+  -webkit-text-fill-color: var(--pen-color-surface);
+  -webkit-text-stroke: 2px var(--pen-color-ink);
+}
+
+.pro-home .pen-plan-card.is-featured header strong {
+  align-items: center;
+  background: var(--pro-home-pricing-star) center / contain no-repeat;
+  border: 0;
+  box-shadow: none;
+  color: var(--pen-color-surface);
+  flex-wrap: wrap;
+  font-size: 4.7rem;
+  height: 8rem;
+  justify-content: center;
+  line-height: 0.72;
+  padding: 1.05rem 1rem;
+  right: 1rem;
+  text-align: center;
+  text-shadow: 4px 4px 0 var(--pen-color-ink);
+  top: -2rem;
+  width: 8rem;
+  -webkit-text-fill-color: var(--pen-color-surface);
+  -webkit-text-stroke: 2px var(--pen-color-ink);
+}
+
+.pro-home .pen-plan-card header strong span {
+  font-size: 1rem;
+  letter-spacing: 0;
+  line-height: 1;
+  text-shadow: 2px 2px 0 var(--pen-color-ink);
+  -webkit-text-fill-color: var(--pen-color-surface);
+  -webkit-text-stroke: 1px var(--pen-color-ink);
+}
+
+.pro-home .pen-plan-card header strong small {
+  display: block;
+  flex-basis: 100%;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: right;
+  text-shadow: 2px 2px 0 var(--pen-color-ink);
+  text-transform: uppercase;
+  -webkit-text-fill-color: var(--pen-color-surface);
+  -webkit-text-stroke: 1px var(--pen-color-ink);
+}
+
+.pro-home .pen-plan-card.is-featured header strong small {
+  text-align: center;
+}
+
+.pro-home .pen-plan-card ul {
+  border-block: var(--pen-border-brand-xs);
+  list-style: none;
+  margin: 0;
+  padding: 1.45rem 1.55rem;
+}
+
+.pro-home .pen-plan-card li {
+  align-items: flex-start;
+  display: flex;
+  font-size: 0.96rem;
+  gap: 0.75rem;
+  line-height: 1.35;
+}
+
+.pro-home .pen-plan-card li + li {
+  margin-top: 0.82rem;
+}
+
+.pro-home .pen-plan-card li::before {
+  align-items: center;
+  background: #ffc900;
+  border: var(--pen-border-brand-xs);
+  border-radius: 0.16rem;
+  color: var(--pen-color-ink);
+  content: "✓";
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.62rem;
+  font-weight: 900;
+  height: 0.95rem;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 0.15rem;
+  width: 0.95rem;
+}
+
+.pro-home .pen-plan-card .pen-action-link {
+  align-items: center;
+  align-self: end;
+  background: #e23a3a;
+  border: var(--pen-border-brand-sm);
+  border-radius: 999px;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-surface);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1.15rem auto 1.25rem;
+  min-height: 3.1rem;
+  padding: 0.75rem 1.6rem;
+  text-decoration: none;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  width: calc(100% - 4.6rem);
+}
+
+.pro-home .pen-plan-card.is-featured .pen-action-link {
+  background: #ff90e8;
+}
+
+.pro-home .pen-plan-card .pen-action-link:hover,
+.pro-home .pen-plan-card .pen-action-link:focus-visible {
+  box-shadow: 1px 1px 0 var(--pen-color-ink);
+  transform: translate(2px, 2px);
+}
+
+.pro-home .pro-home-plan-card__label {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 999px;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 800;
+  gap: 0.35rem;
+  left: 1.55rem;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: -1.05rem;
+  z-index: 2;
+}
+
+.pro-home .pro-home-plan-card__label::before {
+  content: "✣";
+  font-size: 0.85rem;
+  letter-spacing: 0;
+}
+
 .pro-home .pen-feature-grid-section > * {
   position: relative;
   z-index: 2;
@@ -1646,6 +1968,66 @@ body.proenem-home-template {
     height: 2.9rem;
     right: 1.1rem;
     width: 4.4rem;
+  }
+
+  .pro-home .pen-pricing-section {
+    padding: 2.8rem 1rem 4.2rem;
+  }
+
+  .pro-home .pro-home-pricing__strokes {
+    bottom: -7rem;
+    height: 24rem;
+  }
+
+  .pro-home .pro-home-pricing__header {
+    display: block;
+  }
+
+  .pro-home .pro-home-pricing__seal {
+    height: 8.1rem;
+    margin: 0 auto 1.5rem;
+    transform: none;
+    width: 8.1rem;
+  }
+
+  .pro-home .pro-home-pricing__seal-bg {
+    height: 5.1rem;
+    width: 5.1rem;
+  }
+
+  .pro-home .pro-home-pricing__seal-check {
+    height: 3.2rem;
+    width: 3.2rem;
+  }
+
+  .pro-home .pen-pricing-section h2 {
+    font-size: clamp(2.15rem, 10vw, 3.1rem);
+  }
+
+  .pro-home .pen-plan-grid {
+    align-items: stretch;
+    grid-template-columns: minmax(0, min(100%, 22.7rem));
+    margin-top: 3.2rem;
+  }
+
+  .pro-home .pen-plan-card,
+  .pro-home .pen-plan-card.is-featured {
+    height: auto;
+    min-height: 0;
+  }
+
+  .pro-home .pen-plan-card.is-featured {
+    order: -1;
+  }
+
+  .pro-home .pen-plan-card header strong {
+    font-size: 4rem;
+  }
+
+  .pro-home .pen-plan-card.is-featured header strong {
+    font-size: 3.8rem;
+    height: 6.8rem;
+    width: 6.8rem;
   }
 
   .pro-home .pen-navbar {

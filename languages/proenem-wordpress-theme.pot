@@ -175,8 +175,8 @@ msgstr ""
 
 #: page-templates/home.php:58
 #: page-templates/home.php:144
-#: page-templates/home.php:768
-#: page-templates/home.php:776
+#: page-templates/home.php:788
+#: page-templates/home.php:796
 msgid "Método PRO"
 msgstr ""
 
@@ -313,7 +313,7 @@ msgid "Português"
 msgstr ""
 
 #: page-templates/home.php:149
-#: page-templates/home.php:769
+#: page-templates/home.php:789
 msgid "Planos"
 msgstr ""
 
@@ -326,7 +326,7 @@ msgid "Aprovados"
 msgstr ""
 
 #: page-templates/home.php:161
-#: page-templates/home.php:771
+#: page-templates/home.php:791
 msgid "FAQ"
 msgstr ""
 
@@ -339,7 +339,7 @@ msgid "Navegação da home"
 msgstr ""
 
 #: page-templates/home.php:230
-#: page-templates/home.php:775
+#: page-templates/home.php:795
 msgid "ProEnem"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgid "O ENEM não é prova de quem estuda mais. É de quem estuda com estratég
 msgstr ""
 
 #: page-templates/home.php:341
-#: page-templates/home.php:740
+#: page-templates/home.php:760
 msgid "Começar gratuitamente"
 msgstr ""
 
@@ -582,12 +582,12 @@ msgid "sem método."
 msgstr ""
 
 #: page-templates/home.php:509
-#: page-templates/home.php:693
+#: page-templates/home.php:697
 msgid "Comece agora!"
 msgstr ""
 
 #: page-templates/home.php:510
-#: page-templates/home.php:694
+#: page-templates/home.php:698
 msgid "É gratuito"
 msgstr ""
 
@@ -616,7 +616,7 @@ msgid "Registro do que você já assistiu"
 msgstr ""
 
 #: page-templates/home.php:532
-#: page-templates/home.php:669
+#: page-templates/home.php:673
 msgid "+50 mil questões"
 msgstr ""
 
@@ -757,7 +757,7 @@ msgid "Diagnóstico por área e tópico"
 msgstr ""
 
 #: page-templates/home.php:604
-#: page-templates/home.php:668
+#: page-templates/home.php:672
 msgid "Explore"
 msgstr ""
 
@@ -769,127 +769,143 @@ msgstr ""
 msgid "cada detalhe"
 msgstr ""
 
-#: page-templates/home.php:608
+#: page-templates/home.php:610
 msgid "Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma."
 msgstr ""
 
-#: page-templates/home.php:611
+#: page-templates/home.php:614
 msgid "Recursos da plataforma"
 msgstr ""
 
-#: page-templates/home.php:670
+#: page-templates/home.php:674
 msgid "sem precisar criar conta."
 msgstr ""
 
-#: page-templates/home.php:672
+#: page-templates/home.php:676
 msgid "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
 msgstr ""
 
-#: page-templates/home.php:685
+#: page-templates/home.php:689
 msgid "512 questões"
 msgstr ""
 
-#: page-templates/home.php:686
+#: page-templates/home.php:690
 msgid "40 aulas"
 msgstr ""
 
-#: page-templates/home.php:700
-msgid "Investimento que se paga em uma vaga."
+#: page-templates/home.php:713
+msgid "Investimento que se"
 msgstr ""
 
-#: page-templates/home.php:701
-msgid "Comece grátis. Cancele com 1 clique. 7 dias de garantia em todos os planos."
+#: page-templates/home.php:714
+msgid "paga em"
 msgstr ""
 
-#: page-templates/home.php:708
-msgid "R$"
+#: page-templates/home.php:714
+msgid "uma vaga."
 msgstr ""
 
-#: page-templates/home.php:708
-msgid "ao mês"
+#: page-templates/home.php:716
+msgid "Comece grátis. Cancele com 1 clique."
 msgstr ""
 
-#: page-templates/home.php:715
-msgid "Quero o Método PRO"
+#: page-templates/home.php:716
+msgid "7 dias de garantia em todos os planos."
 msgstr ""
 
 #: page-templates/home.php:723
+msgid "Mais escolhido"
+msgstr ""
+
+#: page-templates/home.php:728
+msgid "R$"
+msgstr ""
+
+#: page-templates/home.php:728
+msgid "ao mês"
+msgstr ""
+
+#: page-templates/home.php:735
+msgid "Quero o Método PRO"
+msgstr ""
+
+#: page-templates/home.php:743
 msgid "Leve o Método PRO para a sua escola."
 msgstr ""
 
-#: page-templates/home.php:724
+#: page-templates/home.php:744
 msgid "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM em um único pacote."
 msgstr ""
 
-#: page-templates/home.php:727
+#: page-templates/home.php:747
 msgid "Combo plataforma + apostilas"
 msgstr ""
 
-#: page-templates/home.php:727
+#: page-templates/home.php:747
 msgid "Acesso completo à plataforma e kit de apostilas exclusivas."
 msgstr ""
 
-#: page-templates/home.php:728
+#: page-templates/home.php:748
 msgid "Acompanhe cada aluno"
 msgstr ""
 
-#: page-templates/home.php:728
+#: page-templates/home.php:748
 msgid "Painel exclusivo para desempenho, simulados e frequência."
 msgstr ""
 
-#: page-templates/home.php:729
+#: page-templates/home.php:749
 msgid "Acesso para todos os alunos"
 msgstr ""
 
-#: page-templates/home.php:729
+#: page-templates/home.php:749
 msgid "Licenças geradas para todas as turmas."
 msgstr ""
 
-#: page-templates/home.php:730
+#: page-templates/home.php:750
 msgid "Onboarding dedicado"
 msgstr ""
 
-#: page-templates/home.php:730
+#: page-templates/home.php:750
 msgid "Um especialista acompanha os primeiros ciclos."
 msgstr ""
 
-#: page-templates/home.php:736
+#: page-templates/home.php:756
 msgid "Pronto para transformar a preparação ENEM na sua escola?"
 msgstr ""
 
-#: page-templates/home.php:737
+#: page-templates/home.php:757
 msgid "Converse com nossa equipe e receba uma proposta personalizada."
 msgstr ""
 
-#: page-templates/home.php:746
+#: page-templates/home.php:766
 msgid "Perguntas frequentes"
 msgstr ""
 
-#: page-templates/home.php:747
+#: page-templates/home.php:767
 msgid "Já sentiu que estuda muito, mas a nota não sobe?"
 msgstr ""
 
-#: page-templates/home.php:761
+#: page-templates/home.php:781
 msgid "Manifesto Proenem"
 msgstr ""
 
-#: page-templates/home.php:762
+#: page-templates/home.php:782
 msgid "Sua Aprovação não é sorte. É método."
 msgstr ""
 
-#: page-templates/home.php:763
+#: page-templates/home.php:783
 msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 msgstr ""
 
-#: page-templates/home.php:766
+#: page-templates/home.php:786
 msgid "Links do rodapé da home"
 msgstr ""
 
-#: page-templates/home.php:767
+#: page-templates/home.php:787
 msgid "Navegação"
 msgstr ""
 
-#: page-templates/home.php:770
+#: page-templates/home.php:790
 msgid "Banco de questões"
 msgstr ""
 

@@ -701,15 +701,31 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 	</section>
 
 	<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
-		<h2 id="pro-pricing-title"><?php esc_html_e( 'Investimento que se paga em uma vaga.', 'proenem-wordpress-theme' ); ?></h2>
-		<p><?php esc_html_e( 'Comece grátis. Cancele com 1 clique. 7 dias de garantia em todos os planos.', 'proenem-wordpress-theme' ); ?></p>
+		<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true">
+		<div class="pro-home-pricing__header">
+			<div class="pro-home-pricing__seal" aria-hidden="true">
+				<img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true">
+				<img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true">
+				<img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true">
+			</div>
+			<div class="pro-home-pricing__intro">
+				<h2 id="pro-pricing-title">
+					<?php esc_html_e( 'Investimento que se', 'proenem-wordpress-theme' ); ?><br>
+					<?php esc_html_e( 'paga em', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'uma vaga.', 'proenem-wordpress-theme' ); ?></strong>
+				</h2>
+				<p><?php esc_html_e( 'Comece grátis. Cancele com 1 clique.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( '7 dias de garantia em todos os planos.', 'proenem-wordpress-theme' ); ?></p>
+			</div>
+		</div>
 		<div class="pen-plan-grid">
 			<?php foreach ( $plans as $plan ) : ?>
 				<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?>">
+					<?php if ( ! empty( $plan['featured'] ) ) : ?>
+						<span class="pro-home-plan-card__label"><?php esc_html_e( 'Mais escolhido', 'proenem-wordpress-theme' ); ?></span>
+					<?php endif; ?>
 					<header>
 						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
 						<p><?php echo esc_html( $plan['summary'] ); ?></p>
-						<strong><span><?php esc_html_e( 'R$', 'proenem-wordpress-theme' ); ?></span><?php echo esc_html( $plan['price'] ); ?><small><?php esc_html_e( 'ao mês', 'proenem-wordpress-theme' ); ?></small></strong>
+						<strong <?php echo ! empty( $plan['featured'] ) ? 'style="' . esc_attr( '--pro-home-pricing-star: url(' . esc_url( $home_asset_uri( 'pricing_star.svg' ) ) . ');' ) . '"' : ''; ?>><span><?php esc_html_e( 'R$', 'proenem-wordpress-theme' ); ?></span><?php echo esc_html( $plan['price'] ); ?><small><?php esc_html_e( 'ao mês', 'proenem-wordpress-theme' ); ?></small></strong>
 					</header>
 					<ul>
 						<?php foreach ( $plan['features'] as $feature ) : ?>
