@@ -105,3 +105,126 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
     });
   });
 });
+
+document.querySelectorAll("[data-pro-home-testimonials-slider]").forEach((slider) => {
+  const track = slider.querySelector("[data-pro-home-testimonials-track]");
+  const cards = Array.from(track?.querySelectorAll("[data-pro-home-testimonial-card]") || []);
+  const previousButton = slider.querySelector("[data-pro-home-testimonials-prev]");
+  const nextButton = slider.querySelector("[data-pro-home-testimonials-next]");
+  const intervalMs = 3800;
+
+  if (!track || cards.length < 2) {
+    return;
+  }
+
+  const cloneCard = (card) => {
+    const clone = card.cloneNode(true);
+
+    clone.classList.remove("is-active");
+    clone.classList.add("is-clone");
+    clone.setAttribute("aria-hidden", "true");
+
+    return clone;
+  };
+
+  const beforeClones = document.createDocumentFragment();
+  const afterClones = document.createDocumentFragment();
+
+  cards.forEach((card) => {
+    beforeClones.append(cloneCard(card));
+    afterClones.append(cloneCard(card));
+  });
+
+  track.prepend(beforeClones);
+  track.append(afterClones);
+
+  const allCards = Array.from(track.querySelectorAll("[data-pro-home-testimonial-card]"));
+  const originalOffset = cards.length;
+  const resetDelayMs = 650;
+  let activeIndex = Math.max(
+    0,
+    cards.findIndex((card) => card.classList.contains("is-active")),
+  );
+  let visualIndex = originalOffset + activeIndex;
+  let intervalId = null;
+  let resetTimeoutId = null;
+
+  const centerCard = (card, behavior) => {
+    track.scrollTo({
+      behavior,
+      left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2,
+    });
+  };
+
+  const setActiveCard = () => {
+    allCards.forEach((card, index) => {
+      card.classList.toggle("is-active", index === visualIndex);
+    });
+  };
+
+  const resetIfNeeded = () => {
+    if (visualIndex >= originalOffset + cards.length) {
+      visualIndex = originalOffset;
+    } else if (visualIndex < originalOffset) {
+      visualIndex = originalOffset + cards.length - 1;
+    } else {
+      return;
+    }
+
+    activeIndex = (visualIndex - originalOffset + cards.length) % cards.length;
+    setActiveCard();
+    centerCard(allCards[visualIndex], "auto");
+  };
+
+  const render = (behavior = "smooth") => {
+    window.clearTimeout(resetTimeoutId);
+    activeIndex = (visualIndex - originalOffset + cards.length) % cards.length;
+    setActiveCard();
+    centerCard(allCards[visualIndex], behavior);
+
+    if (behavior === "auto") {
+      resetIfNeeded();
+      return;
+    }
+
+    resetTimeoutId = window.setTimeout(resetIfNeeded, resetDelayMs);
+  };
+
+  const stopAutoplay = () => {
+    if (!intervalId) {
+      return;
+    }
+
+    window.clearInterval(intervalId);
+    intervalId = null;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    intervalId = window.setInterval(() => {
+      visualIndex += 1;
+      render();
+    }, intervalMs);
+  };
+
+  previousButton?.addEventListener("click", () => {
+    visualIndex -= 1;
+    render();
+    startAutoplay();
+  });
+
+  nextButton?.addEventListener("click", () => {
+    visualIndex += 1;
+    render();
+    startAutoplay();
+  });
+
+  slider.addEventListener("mouseenter", stopAutoplay);
+  slider.addEventListener("mouseleave", startAutoplay);
+  slider.addEventListener("focusin", stopAutoplay);
+  slider.addEventListener("focusout", startAutoplay);
+
+  window.requestAnimationFrame(() => render("auto"));
+  startAutoplay();
+});

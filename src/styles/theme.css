@@ -1098,7 +1098,7 @@ body.proenem-home-template {
 }
 
 .pro-home .pro-home-pricing__strokes {
-  bottom: -10rem;
+  bottom: -20rem;
   display: block;
   height: auto;
   left: 50%;
@@ -1402,6 +1402,208 @@ body.proenem-home-template {
   content: "✣";
   font-size: 0.85rem;
   letter-spacing: 0;
+}
+
+.pro-home .pro-home-testimonials {
+  background: var(--pro-home-soft-pink);
+  overflow: hidden;
+  padding: 0 0 clamp(3.8rem, 6vw, 5rem);
+  position: relative;
+  text-align: center;
+}
+
+.pro-home .pro-home-testimonials__header {
+  margin-inline: auto;
+  max-width: 34rem;
+  padding-inline: 1rem;
+}
+
+.pro-home .pro-home-testimonials .pen-section-pill {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 999px;
+  box-shadow: var(--pen-shadow-hard-sm);
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 500;
+  margin: 0;
+  padding: 0.22rem 0.7rem;
+}
+
+.pro-home .pro-home-testimonials h2 {
+  align-items: center;
+  display: grid;
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.25rem, 3.55vw, 3.45rem);
+  font-weight: 400;
+  justify-items: center;
+  letter-spacing: 0;
+  line-height: 0.94;
+  margin: 1.35rem 0 0;
+}
+
+.pro-home .pro-home-testimonials h2 > span {
+  display: block;
+  white-space: nowrap;
+}
+
+.pro-home .pro-home-testimonials h2 strong {
+  display: inline-block;
+  font-weight: 900;
+  padding-bottom: 0.1em;
+  position: relative;
+}
+
+.pro-home .pro-home-testimonials h2 strong::after {
+  border-bottom: 0.12em solid #e23a3a;
+  border-radius: 0 0 55% 50%;
+  bottom: -0.02em;
+  content: "";
+  height: 0.18em;
+  left: -0.04em;
+  pointer-events: none;
+  position: absolute;
+  right: -0.04em;
+  transform: rotate(1deg);
+  transform-origin: center;
+}
+
+.pro-home .pro-home-testimonials__header p {
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+  line-height: 1.45;
+  margin: 1.1rem auto 0;
+  max-width: 25rem;
+}
+
+.pro-home .pro-home-testimonials__viewport {
+  margin-top: clamp(3.8rem, 6vw, 5rem);
+  overflow: hidden;
+  width: 100%;
+}
+
+.pro-home .pro-home-testimonials__track {
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  padding: 0.15rem max(1rem, calc((100vw - 31rem) / 2)) 0.55rem;
+  scroll-padding-inline: max(1rem, calc((100vw - 31rem) / 2));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.pro-home .pro-home-testimonials__track::-webkit-scrollbar {
+  display: none;
+}
+
+.pro-home .pro-home-testimonial-card {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.45rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  flex: 0 0 min(31rem, calc(100vw - 3rem));
+  min-height: 13.1rem;
+  overflow: hidden;
+  scroll-snap-align: center;
+  text-align: left;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.pro-home .pro-home-testimonial-card:hover,
+.pro-home .pro-home-testimonial-card:focus-within {
+  box-shadow: 1px 1px 0 var(--pen-color-ink);
+  transform: translate(2px, 2px);
+}
+
+.pro-home .pro-home-testimonial-card__quote {
+  align-items: flex-start;
+  display: grid;
+  gap: 1.55rem;
+  grid-template-columns: auto 1fr;
+  min-height: 7.9rem;
+  padding: 1.55rem 1.7rem 1.35rem;
+}
+
+.pro-home .pro-home-testimonial-card__quote > span {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 0.8;
+  margin-top: 0.15rem;
+}
+
+.pro-home .pro-home-testimonial-card__quote p {
+  font-size: clamp(0.96rem, 1.12vw, 1.08rem);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.pro-home .pro-home-testimonial-card footer {
+  align-items: center;
+  border-top: var(--pen-border-brand-xs);
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 4.1rem 1fr;
+  min-height: 4.35rem;
+}
+
+.pro-home .pro-home-testimonial-card footer img {
+  aspect-ratio: 1;
+  border-right: var(--pen-border-brand-xs);
+  display: block;
+  height: 4.35rem;
+  object-fit: cover;
+  width: 4.35rem;
+}
+
+.pro-home .pro-home-testimonial-card footer span {
+  display: grid;
+  gap: 0.1rem;
+  padding-right: 1rem;
+}
+
+.pro-home .pro-home-testimonial-card footer strong {
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.pro-home .pro-home-testimonial-card footer small {
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.pro-home .pro-home-testimonials__controls {
+  display: flex;
+  gap: 1.35rem;
+  justify-content: center;
+  margin-top: clamp(2rem, 3.5vw, 2.7rem);
+}
+
+.pro-home .pro-home-testimonials__controls button {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-md);
+  border-radius: 0.55rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-ink);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 1.45rem;
+  font-weight: 500;
+  height: 3rem;
+  justify-content: center;
+  line-height: 1;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  width: 6.2rem;
+}
+
+.pro-home .pro-home-testimonials__controls button:hover,
+.pro-home .pro-home-testimonials__controls button:focus-visible {
+  box-shadow: 1px 1px 0 var(--pen-color-ink);
+  transform: translate(2px, 2px);
 }
 
 .pro-home .pen-feature-grid-section > * {
@@ -2028,6 +2230,51 @@ body.proenem-home-template {
     font-size: 3.8rem;
     height: 6.8rem;
     width: 6.8rem;
+  }
+
+  .pro-home .pro-home-testimonials {
+    padding: 2.4rem 0 3.6rem;
+  }
+
+  .pro-home .pro-home-testimonials h2 {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .pro-home .pro-home-testimonials__viewport {
+    margin-top: 3rem;
+  }
+
+  .pro-home .pro-home-testimonials__track {
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+  }
+
+  .pro-home .pro-home-testimonial-card {
+    flex-basis: min(28rem, calc(100vw - 2rem));
+  }
+
+  .pro-home .pro-home-testimonial-card__quote {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 1.25rem;
+  }
+
+  .pro-home .pro-home-testimonial-card__quote > span {
+    font-size: 3.2rem;
+  }
+
+  .pro-home .pro-home-testimonial-card footer {
+    grid-template-columns: 3.7rem 1fr;
+  }
+
+  .pro-home .pro-home-testimonial-card footer img {
+    height: 3.85rem;
+    width: 3.85rem;
+  }
+
+  .pro-home .pro-home-testimonials__controls button {
+    width: 5.2rem;
   }
 
   .pro-home .pen-navbar {
