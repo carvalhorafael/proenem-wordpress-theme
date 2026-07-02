@@ -581,17 +581,12 @@ body.proenem-home-template {
   border: 0;
   box-shadow: none;
   color: var(--pen-color-ink);
-  font-size: clamp(0.95rem, 1.35vw, 1.12rem);
-  font-weight: 500;
   grid-column: 1 / 3;
   grid-row: 1;
   justify-self: end;
-  isolation: isolate;
-  line-height: 1.35;
   margin: 0;
   max-width: 29rem;
-  min-height: 8.4rem;
-  padding: 3rem 2.5rem 2.45rem;
+  padding: 0;
   position: relative;
   text-align: center;
   transform: translateX(-28%);
@@ -599,27 +594,28 @@ body.proenem-home-template {
   z-index: 1;
 }
 
-.pro-home .pro-home-platform-note::before,
-.pro-home .pro-home-platform-note::after {
-  content: "";
-  pointer-events: none;
+.pro-home .pro-home-platform-note img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.pro-home .pro-home-platform-note__text {
+  color: var(--pen-color-ink);
+  font-size: clamp(0.88rem, 1.2vw, 1.08rem);
+  font-weight: 500;
+  left: 50%;
+  line-height: 1.28;
+  max-width: 22rem;
   position: absolute;
-  z-index: -1;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 72%;
 }
 
 .pro-home .pro-home-platform-body {
   display: grid;
   grid-template-columns: minmax(21rem, 0.46fr) minmax(0, 1fr);
-}
-
-.pro-home .pro-home-platform-note::before {
-  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%201000%20300%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cmask%20id%3D%22o%22%3E%3Crect%20x%3D%2220%22%20y%3D%2220%22%20width%3D%22960%22%20height%3D%22260%22%20fill%3D%22white%22%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22295%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22390%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22485%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22580%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22675%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22770%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22865%22%20cy%3D%2220%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22295%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22390%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22485%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22580%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22675%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22770%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22865%22%20cy%3D%22280%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2295%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%22150%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%22205%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22980%22%20cy%3D%2295%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22980%22%20cy%3D%22150%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22980%22%20cy%3D%22205%22%20r%3D%2228%22%20fill%3D%22black%22%2F%3E%3C%2Fmask%3E%3Cmask%20id%3D%22i%22%3E%3Crect%20x%3D%2238%22%20y%3D%2238%22%20width%3D%22924%22%20height%3D%22224%22%20fill%3D%22white%22%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22295%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22390%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22485%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22580%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22675%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22770%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22865%22%20cy%3D%2238%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22105%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22295%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22390%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22485%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22580%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22675%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22770%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22865%22%20cy%3D%22262%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2295%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%22150%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%22205%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22962%22%20cy%3D%2295%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22962%22%20cy%3D%22150%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%22962%22%20cy%3D%22205%22%20r%3D%2223%22%20fill%3D%22black%22%2F%3E%3C%2Fmask%3E%3C%2Fdefs%3E%3Crect%20width%3D%221000%22%20height%3D%22300%22%20fill%3D%22black%22%20mask%3D%22url(%23o)%22%2F%3E%3Crect%20width%3D%221000%22%20height%3D%22300%22%20fill%3D%22%23FFC900%22%20mask%3D%22url(%23i)%22%2F%3E%3C%2Fsvg%3E") center / 100% 100% no-repeat;
-  clip-path: none;
-  inset: -0.35rem;
-}
-
-.pro-home .pro-home-platform-note::after {
-  display: none;
 }
 
 .pro-home .pro-home-platform-tabs {
@@ -886,6 +882,204 @@ body.proenem-home-template {
   transform: rotate(-18deg);
   width: clamp(8.4rem, 13vw, 11.2rem);
   z-index: 5;
+}
+
+.pro-home .pen-question-bank-section {
+  --pro-home-question-bank-red-band-height: clamp(4.5rem, 7vw, 6rem);
+  background: transparent;
+  border: 0;
+  border-radius: 0.35rem;
+  box-shadow: none;
+  isolation: isolate;
+  margin: 0 auto 3.4rem;
+  max-width: min(80rem, calc(100% - 1.5rem));
+  overflow: visible;
+  padding: clamp(4.2rem, 6.2vw, 6rem) 0 clamp(3.2rem, 5vw, 4.6rem);
+  position: relative;
+  text-align: center;
+}
+
+.pro-home .pen-question-bank-section::before {
+  background: var(--pro-home-red-pattern);
+  content: "";
+  height: var(--pro-home-question-bank-red-band-height);
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 0;
+}
+
+.pro-home .pen-question-bank-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.pro-home .pro-home-question-bank__background {
+  display: block;
+  height: 100%;
+  inset: 0;
+  object-fit: fill;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.pro-home .pen-question-bank-section h2 {
+  background: transparent;
+  border: 0;
+  font-size: clamp(2.35rem, 4.1vw, 4.05rem);
+  font-weight: 500;
+  line-height: 0.94;
+  margin: 0 auto;
+  max-width: 70rem;
+  padding: 0;
+}
+
+.pro-home .pen-question-bank-section h2 strong {
+  font-weight: 900;
+}
+
+.pro-home .pen-question-bank-section p {
+  font-size: clamp(0.92rem, 1vw, 1.05rem);
+  line-height: 1.35;
+  margin: 1rem auto 0;
+  max-width: 52rem;
+}
+
+.pro-home .pen-subject-grid {
+  display: grid;
+  gap: 1.15rem;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  margin: clamp(2.35rem, 3.5vw, 3rem) auto 0;
+  max-width: 76rem;
+  overflow: hidden;
+  padding: 0 1.4rem 0.2rem;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  border-radius: 0.55rem;
+  box-shadow: 3px 3px 0 var(--pen-color-ink);
+  color: var(--pen-color-ink);
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 3.3rem minmax(10.5rem, 1fr) 1.35rem;
+  min-height: 6.1rem;
+  padding: 0.95rem 1rem;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  width: clamp(18.5rem, 26vw, 22.6rem);
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card:hover,
+.pro-home .pen-subject-grid .pro-home-subject-card:focus-visible {
+  box-shadow: 1px 1px 0 var(--pen-color-ink);
+  transform: translate(2px, 2px);
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card:focus-visible {
+  outline: 0.18rem solid var(--pen-color-blue);
+  outline-offset: 0.18rem;
+}
+
+.pro-home .pro-home-subject-card__icon {
+  align-items: center;
+  background: #fa9dcd;
+  border: var(--pen-border-brand-xs);
+  border-radius: 0.45rem;
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  height: 3rem;
+  justify-content: center;
+  width: 3rem;
+}
+
+.pro-home .pro-home-subject-card--yellow .pro-home-subject-card__icon {
+  background: #ffe680;
+}
+
+.pro-home .pro-home-subject-card__icon svg {
+  display: block;
+  fill: none;
+  height: 1.35rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 1.35rem;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card__body,
+.pro-home .pen-subject-grid .pro-home-subject-card strong,
+.pro-home .pen-subject-grid .pro-home-subject-card small {
+  display: block;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card strong {
+  font-size: 1.18rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card small {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-top: 0.15rem;
+  text-transform: uppercase;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card__meta {
+  color: var(--pen-color-ink);
+  display: block;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  margin-top: 0.42rem;
+}
+
+.pro-home .pen-subject-grid .pro-home-subject-card__meta + .pro-home-subject-card__meta {
+  margin-top: 0.12rem;
+}
+
+.pro-home .pro-home-subject-card__arrow {
+  align-items: center;
+  background: var(--pen-color-ink);
+  border-radius: 50%;
+  color: var(--pen-color-surface);
+  display: inline-flex;
+  font-size: 0.95rem;
+  height: 1.32rem;
+  justify-content: center;
+  line-height: 1;
+  width: 1.32rem;
+}
+
+.pro-home .pro-home-question-bank__cta {
+  color: var(--pen-color-ink);
+  margin-top: clamp(1.45rem, 2.6vw, 2rem);
+}
+
+.pro-home .pro-home-question-bank__shape {
+  bottom: -2rem;
+  display: block;
+  height: 5rem;
+  max-width: none;
+  object-fit: contain;
+  position: absolute;
+  right: 4.8rem;
+  width: 7.2rem;
 }
 
 .pro-home .pen-feature-grid-section > * {
@@ -1413,6 +1607,45 @@ body.proenem-home-template {
 
   .pro-home .pen-pillars-section__cards .pen-step-card.is-active {
     width: min(16rem, 76vw);
+  }
+
+  .pro-home .pen-question-bank-section {
+    margin-inline: 0.85rem;
+    max-width: none;
+    padding: 2.6rem 0 2.4rem;
+  }
+
+  .pro-home .pen-question-bank-section h2 {
+    font-size: clamp(1.35rem, 7vw, 1.75rem);
+    line-height: 0.98;
+    max-width: 17rem;
+  }
+
+  .pro-home .pen-question-bank-section p {
+    max-width: 18.5rem;
+    padding-inline: 1rem;
+  }
+
+  .pro-home .pen-subject-grid {
+    display: flex;
+    justify-content: flex-start;
+    max-width: none;
+    overflow-x: auto;
+    padding: 0.2rem 1rem 0.45rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .pro-home .pen-subject-grid .pro-home-subject-card {
+    flex: 0 0 15rem;
+    scroll-snap-align: center;
+    width: 15rem;
+  }
+
+  .pro-home .pro-home-question-bank__shape {
+    bottom: -1.1rem;
+    height: 2.9rem;
+    right: 1.1rem;
+    width: 4.4rem;
   }
 
   .pro-home .pen-navbar {

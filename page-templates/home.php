@@ -29,6 +29,19 @@ $platform_icon_svg = static function ( $icon ) {
 	return $icons[ $icon ] ?? $icons['clock'];
 };
 
+$subject_icon_svg = static function ( $icon ) {
+	$icons = array(
+		'chemistry'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M9 3h6"></path><path d="M10 3v5l-5.2 9.2A2.6 2.6 0 0 0 7 21h10a2.6 2.6 0 0 0 2.2-3.8L14 8V3"></path><path d="M7.5 16h9"></path></svg>',
+		'biology'    => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19c9.5 0 14-4.5 14-14C9.5 5 5 9.5 5 19z"></path><path d="M5 19 15 9"></path></svg>',
+		'math'       => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8"></path><path d="M8 11h2"></path><path d="M14 11h2"></path><path d="M8 15h2"></path><path d="M14 15h2"></path></svg>',
+		'history'    => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M4 9h16"></path><path d="m5 9 7-5 7 5"></path><path d="M6 9v9"></path><path d="M10 9v9"></path><path d="M14 9v9"></path><path d="M18 9v9"></path><path d="M4 18h16"></path></svg>',
+		'english'    => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 5h14v10H8l-3 3z"></path><path d="M8 9h8"></path><path d="M8 12h5"></path></svg>',
+		'portuguese' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19h14"></path><path d="m7 16 1-4 7.5-7.5a2.1 2.1 0 0 1 3 3L11 15z"></path></svg>',
+	);
+
+	return $icons[ $icon ] ?? $icons['portuguese'];
+};
+
 $plans = array(
 	array(
 		'name'     => __( 'Essencial', 'proenem-wordpress-theme' ),
@@ -88,12 +101,42 @@ $faq_items = array(
 );
 
 $subjects = array(
-	__( 'Química', 'proenem-wordpress-theme' ),
-	__( 'Biologia', 'proenem-wordpress-theme' ),
-	__( 'Matemática', 'proenem-wordpress-theme' ),
-	__( 'História', 'proenem-wordpress-theme' ),
-	__( 'Inglês', 'proenem-wordpress-theme' ),
-	__( 'Português', 'proenem-wordpress-theme' ),
+	array(
+		'name'     => __( 'Química', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'chemistry',
+		'tone'     => 'yellow',
+	),
+	array(
+		'name'     => __( 'Biologia', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'biology',
+		'tone'     => 'pink',
+	),
+	array(
+		'name'     => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'category' => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'icon'     => 'math',
+		'tone'     => 'pink',
+	),
+	array(
+		'name'     => __( 'História', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+		'icon'     => 'history',
+		'tone'     => 'pink',
+	),
+	array(
+		'name'     => __( 'Inglês', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'english',
+		'tone'     => 'pink',
+	),
+	array(
+		'name'     => __( 'Português', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'portuguese',
+		'tone'     => 'pink',
+	),
 );
 
 $home_nav_links   = array(
@@ -562,7 +605,10 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 					<span><?php esc_html_e( 'por dentro', 'proenem-wordpress-theme' ); ?></span><br>
 					<?php esc_html_e( 'cada detalhe', 'proenem-wordpress-theme' ); ?>
 				</h2>
-				<p class="pro-home-platform-note"><?php esc_html_e( 'Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></p>
+				<p class="pro-home-platform-note">
+					<img src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true">
+					<span class="pro-home-platform-note__text"><?php esc_html_e( 'Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></span>
+				</p>
 			</header>
 			<div class="pro-home-platform-body">
 				<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
@@ -621,17 +667,37 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 	</section>
 
 	<section id="questoes" class="pen-question-bank-section" aria-labelledby="pro-questions-title">
-		<h2 id="pro-questions-title"><?php esc_html_e( 'Explore +50 mil questões sem precisar criar conta.', 'proenem-wordpress-theme' ); ?></h2>
+		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true">
+		<h2 id="pro-questions-title">
+			<?php esc_html_e( 'Explore', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( '+50 mil questões', 'proenem-wordpress-theme' ); ?></strong><br>
+			<?php esc_html_e( 'sem precisar criar conta.', 'proenem-wordpress-theme' ); ?>
+		</h2>
 		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora.', 'proenem-wordpress-theme' ); ?></p>
 		<div class="pen-subject-grid">
 			<?php foreach ( $subjects as $subject ) : ?>
-				<a href="#planos">
-					<strong><?php echo esc_html( $subject ); ?></strong>
-					<span><?php esc_html_e( '512 questões · 40 aulas', 'proenem-wordpress-theme' ); ?></span>
+				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="#planos">
+					<span class="pro-home-subject-card__icon" aria-hidden="true">
+						<?php
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is hardcoded in this template.
+						echo $subject_icon_svg( $subject['icon'] );
+						?>
+					</span>
+					<span class="pro-home-subject-card__body">
+						<strong><?php echo esc_html( $subject['name'] ); ?></strong>
+						<small><?php echo esc_html( $subject['category'] ); ?></small>
+						<span class="pro-home-subject-card__meta"><?php esc_html_e( '512 questões', 'proenem-wordpress-theme' ); ?></span>
+						<span class="pro-home-subject-card__meta"><?php esc_html_e( '40 aulas', 'proenem-wordpress-theme' ); ?></span>
+					</span>
+					<span class="pro-home-subject-card__arrow" aria-hidden="true">→</span>
 				</a>
 			<?php endforeach; ?>
 		</div>
-		<a class="pen-action-link" href="#planos"><?php esc_html_e( 'Comece agora! É gratuito', 'proenem-wordpress-theme' ); ?></a>
+		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="#planos">
+			<?php esc_html_e( 'Comece agora!', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( 'É gratuito', 'proenem-wordpress-theme' ); ?></span>
+		</a>
+		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true">
 	</section>
 
 	<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
