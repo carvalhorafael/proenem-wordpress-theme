@@ -60,3 +60,48 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
 
   render();
 });
+
+document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => {
+  const tabs = Array.from(section.querySelectorAll("[data-pro-home-platform-tab]"));
+  const screen = section.querySelector("[data-pro-home-platform-screen]");
+  const title = screen?.querySelector("[data-pro-home-platform-title]");
+  const body = screen?.querySelector("[data-pro-home-platform-body]");
+  const url = screen?.querySelector("[data-pro-home-platform-url]");
+  const bulletList = screen?.querySelector("[data-pro-home-platform-bullets]");
+
+  if (!tabs.length || !screen || !title || !body || !url || !bulletList) {
+    return;
+  }
+
+  const renderBullets = (items) => {
+    bulletList.replaceChildren(
+      ...items.map((item) => {
+        const bullet = document.createElement("li");
+        bullet.textContent = item;
+
+        return bullet;
+      }),
+    );
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((currentTab) => {
+        const isActive = currentTab === tab;
+
+        currentTab.classList.toggle("is-active", isActive);
+        currentTab.setAttribute("aria-selected", String(isActive));
+      });
+
+      title.textContent = tab.dataset.title || "";
+      body.textContent = tab.dataset.body || "";
+      url.textContent = tab.dataset.url || "";
+
+      try {
+        renderBullets(JSON.parse(tab.dataset.bullets || "[]"));
+      } catch {
+        renderBullets([]);
+      }
+    });
+  });
+});
