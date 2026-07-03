@@ -1075,16 +1075,15 @@ body.proenem-home-template {
   border-bottom-left-radius: clamp(1.1rem, 2vw, 1.8rem);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   list-style: none;
   margin: 0;
   overflow: hidden;
-  padding: 0 0 0.5rem;
+  padding: 0;
 }
 
 .pro-home .pro-home-platform-tabs li {
   background: transparent;
-  border-bottom: 0;
+  border-bottom: var(--pen-border-brand-xs);
   border-left: 0;
   border-radius: 0;
   border-right: 0;
