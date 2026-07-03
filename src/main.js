@@ -228,3 +228,97 @@ document.querySelectorAll("[data-pro-home-testimonials-slider]").forEach((slider
   window.requestAnimationFrame(() => render("auto"));
   startAutoplay();
 });
+
+document.querySelectorAll("[data-pro-materials-filter]").forEach((form) => {
+  const grid = document.querySelector("[data-pro-materials-grid]");
+  const count = document.querySelector("[data-pro-materials-count]");
+  const emptyState = document.querySelector("[data-pro-materials-empty]");
+  const clearLink = form.querySelector("[data-pro-materials-clear]");
+  const cards = Array.from(document.querySelectorAll("[data-pro-material-card]"));
+  const checkboxes = Array.from(form.querySelectorAll('input[name="material_categoria[]"]'));
+
+  if (!grid || !cards.length || !checkboxes.length) {
+    return;
+  }
+
+  const getCardCategories = (card) => {
+    try {
+      return JSON.parse(card.dataset.materialCategories || "[]");
+    } catch {
+      return [];
+    }
+  };
+
+  const updateUrl = (selectedCategories) => {
+    const url = new URL(window.location.href);
+
+    url.searchParams.delete("material_categoria[]");
+    url.searchParams.delete("material_categoria");
+
+    selectedCategories.forEach((category) => {
+      url.searchParams.append("material_categoria[]", category);
+    });
+
+    window.history.replaceState({}, "", url);
+  };
+
+  const render = () => {
+    const selectedCategories = checkboxes
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const cardCategories = getCardCategories(card);
+      const isVisible =
+        selectedCategories.length === 0 ||
+        selectedCategories.some((category) => cardCategories.includes(category));
+
+      card.hidden = !isVisible;
+
+      if (isVisible) {
+        visibleCount += 1;
+      }
+    });
+
+    if (count) {
+      const countTemplate =
+        visibleCount === 1
+          ? count.dataset.countTemplateSingular || "%s"
+          : count.dataset.countTemplatePlural || "%s";
+
+      count.textContent = countTemplate.replace("%s", visibleCount.toLocaleString("pt-BR"));
+    }
+
+    if (emptyState) {
+      emptyState.hidden = visibleCount !== 0;
+    }
+
+    if (clearLink) {
+      clearLink.hidden = selectedCategories.length === 0;
+    }
+
+    updateUrl(selectedCategories);
+  };
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    render();
+  });
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", render);
+  });
+
+  clearLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+
+    render();
+  });
+
+  render();
+});

@@ -116,6 +116,10 @@ function proenem_body_classes( $classes ) {
 		$classes[] = 'proenem-home-template';
 	}
 
+	if ( function_exists( 'proenem_is_free_materials_surface' ) && proenem_is_free_materials_surface() ) {
+		$classes[] = 'proenem-free-materials-template';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'proenem_body_classes' );

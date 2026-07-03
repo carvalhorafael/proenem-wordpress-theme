@@ -96,7 +96,7 @@ msgid "Plataforma"
 msgstr ""
 
 #: footer.php:24
-#: inc/template-tags.php:430
+#: inc/template-tags.php:668
 #: page-templates/home.php:54
 #: page-templates/home.php:677
 #: page-templates/home.php:757
@@ -104,7 +104,7 @@ msgid "Método PRO"
 msgstr ""
 
 #: footer.php:25
-#: inc/template-tags.php:435
+#: inc/template-tags.php:673
 #: page-templates/home.php:758
 msgid "Planos"
 msgstr ""
@@ -116,7 +116,7 @@ msgstr ""
 
 #: footer.php:27
 #: inc/template-tags.php:102
-#: inc/template-tags.php:440
+#: inc/template-tags.php:678
 msgid "Blog"
 msgstr ""
 
@@ -348,23 +348,55 @@ msgstr ""
 msgid "Todas as postagens"
 msgstr ""
 
-#: inc/template-tags.php:447
+#: inc/template-tags.php:512
+#: single-material_gratuito.php:70
+#: single-material_gratuito.php:86
+msgid "Material gratuito"
+msgstr ""
+
+#: inc/template-tags.php:559
+msgid "Acessar material"
+msgstr ""
+
+#: inc/template-tags.php:617
+msgid "Categorias"
+msgstr ""
+
+#: inc/template-tags.php:618
+msgid "Limpar filtros"
+msgstr ""
+
+#: inc/template-tags.php:622
+msgid "Nenhuma categoria cadastrada ainda."
+msgstr ""
+
+#: inc/template-tags.php:634
+msgid "Filtrar materiais"
+msgstr ""
+
+#. Template Name of the theme
+#: inc/template-tags.php:683
+#: page-templates/free-materials.php:43
+msgid "Materiais gratuitos"
+msgstr ""
+
+#: inc/template-tags.php:690
 msgid "Login"
 msgstr ""
 
-#: inc/template-tags.php:452
+#: inc/template-tags.php:695
 msgid "Comece grátis"
 msgstr ""
 
-#: inc/template-tags.php:518
+#: inc/template-tags.php:761
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:527
+#: inc/template-tags.php:770
 msgid "ProEnem"
 msgstr ""
 
-#: inc/template-tags.php:530
+#: inc/template-tags.php:773
 msgid "Abrir menu"
 msgstr ""
 
@@ -374,6 +406,56 @@ msgstr ""
 
 #: index.php:15
 msgid "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
+msgstr ""
+
+#: page-templates/free-materials.php:44
+msgid "Guias para estudar com método antes da próxima prova"
+msgstr ""
+
+#: page-templates/free-materials.php:45
+msgid "Escolha uma categoria e encontre materiais prontos para organizar revisão, prática e estratégia de estudo."
+msgstr ""
+
+#: page-templates/free-materials.php:50
+msgid "Filtros de materiais gratuitos"
+msgstr ""
+
+#: page-templates/free-materials.php:56
+msgid "Todos os materiais"
+msgstr ""
+
+#. translators: %s: Number of materials found.
+#: page-templates/free-materials.php:60
+#, php-format
+msgid "%s material disponível"
+msgstr ""
+
+#. translators: %s: Number of materials found.
+#: page-templates/free-materials.php:62
+#: page-templates/free-materials.php:67
+#, php-format
+msgid "%s materiais disponíveis"
+msgstr ""
+
+#: page-templates/free-materials.php:77
+msgid "Plugin Free Materials não está ativo."
+msgstr ""
+
+#: page-templates/free-materials.php:78
+msgid "Ative o plugin para publicar e listar materiais gratuitos nesta página."
+msgstr ""
+
+#: page-templates/free-materials.php:94
+#: page-templates/free-materials.php:100
+msgid "Nenhum material encontrado."
+msgstr ""
+
+#: page-templates/free-materials.php:95
+msgid "Tente selecionar outra categoria ou limpar os filtros."
+msgstr ""
+
+#: page-templates/free-materials.php:101
+msgid "Tente limpar os filtros ou cadastre novos materiais gratuitos no WordPress."
 msgstr ""
 
 #. Template Name of the theme
@@ -1204,6 +1286,81 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
+#: single-material_gratuito.php:23
+msgid "← Materiais gratuitos"
+msgstr ""
+
+#: single-material_gratuito.php:32
+msgid "Acesso imediato"
+msgstr ""
+
+#: single-material_gratuito.php:33
+msgid "Complete o formulário"
+msgstr ""
+
+#: single-material_gratuito.php:34
+msgid "para receber o material."
+msgstr ""
+
+#: single-material_gratuito.php:37
+msgid "Nome"
+msgstr ""
+
+#: single-material_gratuito.php:38
+msgid "Seu nome completo"
+msgstr ""
+
+#: single-material_gratuito.php:41
+msgid "Email"
+msgstr ""
+
+#: single-material_gratuito.php:42
+msgid "voce@exemplo.com"
+msgstr ""
+
+#: single-material_gratuito.php:45
+msgid "WhatsApp"
+msgstr ""
+
+#: single-material_gratuito.php:46
+msgid "(00) 00000-0000"
+msgstr ""
+
+#: single-material_gratuito.php:49
+msgid "Baixar material gratuito"
+msgstr ""
+
+#: single-material_gratuito.php:52
+msgid "Sem pagamento. Enviaremos o material para o contato informado."
+msgstr ""
+
+#: single-material_gratuito.php:62
+#: template-parts/content-page.php:19
+#: template-parts/content-single.php:26
+msgid "Page navigation"
+msgstr ""
+
+#: single-material_gratuito.php:71
+msgid "Pronto para usar nos estudos"
+msgstr ""
+
+#: single-material_gratuito.php:72
+msgid "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
+msgstr ""
+
+#: single-material_gratuito.php:74
+#: single-material_gratuito.php:91
+msgid "Baixar material"
+msgstr ""
+
+#: single-material_gratuito.php:87
+msgid "Leve este material para sua rotina de estudos"
+msgstr ""
+
+#: single-material_gratuito.php:88
+msgid "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
+msgstr ""
+
 #: template-parts/content-none.php:13
 msgid "Nothing found"
 msgstr ""
@@ -1218,11 +1375,6 @@ msgstr ""
 
 #: template-parts/content-none.php:24
 msgid "This archive does not have published posts yet."
-msgstr ""
-
-#: template-parts/content-page.php:19
-#: template-parts/content-single.php:26
-msgid "Page navigation"
 msgstr ""
 
 #: template-parts/content-single.php:36
