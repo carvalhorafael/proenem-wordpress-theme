@@ -50,3 +50,16 @@ npm run theme:validate-zip
 ```
 
 O ZIP final fica em `dist/proenem-wordpress-theme.zip`.
+
+## Releases e atualizacoes do tema
+
+Releases sao publicadas a partir de tags versionadas:
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
+```
+
+O workflow de release valida se a tag bate com `package.json`, `style.css` e `readme.txt`, roda `npm run validate` e publica o ZIP `dist/proenem-wordpress-theme.zip` na GitHub Release.
+
+O tema usa GitHub Releases para informar atualizacoes ao admin do WordPress. Essa rotina assume que o repositorio e suas releases estao publicamente acessiveis.
