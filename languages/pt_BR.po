@@ -15,10 +15,10 @@ msgstr ""
 
 
 # Copyright (C) 2026 Rafael Carvalho
-# This file is distributed under the GNU General Public License v2 or later.
+# This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.1.0\n"
+"Project-Id-Version: Proenem 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -1135,49 +1135,4 @@ msgstr "Tags do post"
 #: template-parts/content.php:27
 msgid "Read more"
 msgstr "Ler mais"
-
-#: theme.json
-msgctxt "Color name"
-msgid "Text"
-msgstr "Text"
-
-#: theme.json
-msgctxt "Color name"
-msgid "Background"
-msgstr "Background"
-
-#: theme.json
-msgctxt "Color name"
-msgid "Surface"
-msgstr "Surface"
-
-#: theme.json
-msgctxt "Color name"
-msgid "Accent"
-msgstr "Accent"
-
-#: theme.json
-msgctxt "Font family name"
-msgid "System Sans"
-msgstr "System Sans"
-
-#: theme.json
-msgctxt "Font size name"
-msgid "Small"
-msgstr "Small"
-
-#: theme.json
-msgctxt "Font size name"
-msgid "Base"
-msgstr "Base"
-
-#: theme.json
-msgctxt "Font size name"
-msgid "Large"
-msgstr "Large"
-
-#: theme.json
-msgctxt "Font size name"
-msgid "Display"
-msgstr "Display"
 
