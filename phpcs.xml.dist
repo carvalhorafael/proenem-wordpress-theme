@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ruleset name="Proenem WordPress Theme">
+	<description>WordPress Coding Standards for the Proenem theme.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>*/assets/dist/*</exclude-pattern>
+	<exclude-pattern>*/coverage/*</exclude-pattern>
+	<exclude-pattern>*/dist/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/scripts/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="parallel" value="4"/>
+
+	<config name="testVersion" value="8.2-"/>
+	<config name="minimum_supported_wp_version" value="6.5"/>
+
+	<rule ref="WordPress"/>
+	<rule ref="WordPress-Extra"/>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>*/404.php</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="proenem-wordpress-theme"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

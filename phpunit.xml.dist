@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="tests/php/bootstrap.php"
+	colors="true"
+	verbose="true"
+>
+	<testsuites>
+		<testsuite name="Proenem Theme">
+			<directory>tests/php</directory>
+		</testsuite>
+	</testsuites>
+	<coverage>
+		<include>
+			<directory suffix=".php">inc</directory>
+			<file>functions.php</file>
+		</include>
+	</coverage>
+</phpunit>
