@@ -84,6 +84,8 @@ function proenem_register_widget_areas() {
 		'footer-2'      => __( 'Footer column 2', 'proenem-wordpress-theme' ),
 		'footer-3'      => __( 'Footer column 3', 'proenem-wordpress-theme' ),
 		'footer-bottom' => __( 'Footer bottom', 'proenem-wordpress-theme' ),
+		'home-footer-platform' => __( 'Home footer - Plataforma', 'proenem-wordpress-theme' ),
+		'home-footer-support'  => __( 'Home footer - Suporte', 'proenem-wordpress-theme' ),
 	);
 
 	foreach ( $widget_areas as $id => $name ) {

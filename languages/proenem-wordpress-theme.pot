@@ -115,8 +115,16 @@ msgstr ""
 msgid "Footer bottom"
 msgstr ""
 
+#: inc/setup.php:87
+msgid "Home footer - Plataforma"
+msgstr ""
+
+#: inc/setup.php:88
+msgid "Home footer - Suporte"
+msgstr ""
+
 #. translators: %s: Widget area name.
-#: inc/setup.php:95
+#: inc/setup.php:97
 #, php-format
 msgid "Widgets added here appear in %s."
 msgstr ""
@@ -176,7 +184,6 @@ msgstr ""
 #: page-templates/home.php:58
 #: page-templates/home.php:175
 #: page-templates/home.php:823
-#: page-templates/home.php:895
 #: page-templates/home.php:903
 msgid "Método PRO"
 msgstr ""
@@ -370,7 +377,7 @@ msgid "Português"
 msgstr ""
 
 #: page-templates/home.php:180
-#: page-templates/home.php:896
+#: page-templates/home.php:904
 msgid "Planos"
 msgstr ""
 
@@ -380,11 +387,12 @@ msgstr ""
 
 #: page-templates/home.php:188
 #: page-templates/home.php:774
+#: page-templates/home.php:907
 msgid "Aprovados"
 msgstr ""
 
 #: page-templates/home.php:192
-#: page-templates/home.php:898
+#: page-templates/home.php:919
 msgid "FAQ"
 msgstr ""
 
@@ -397,7 +405,6 @@ msgid "Navegação da home"
 msgstr ""
 
 #: page-templates/home.php:261
-#: page-templates/home.php:902
 msgid "ProEnem"
 msgstr ""
 
@@ -1013,24 +1020,60 @@ msgstr ""
 msgid "Manifesto Proenem"
 msgstr ""
 
-#: page-templates/home.php:889
-msgid "Sua Aprovação não é sorte. É método."
-msgstr ""
-
 #: page-templates/home.php:890
-msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
+msgid "Sua Aprovação"
 msgstr ""
 
-#: page-templates/home.php:893
-msgid "Links do rodapé da home"
+#: page-templates/home.php:891
+msgid "não é sorte."
+msgstr ""
+
+#: page-templates/home.php:892
+msgid "É método."
 msgstr ""
 
 #: page-templates/home.php:894
-msgid "Navegação"
+msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 msgstr ""
 
-#: page-templates/home.php:897
+#: page-templates/home.php:901
+msgid "Plataforma"
+msgstr ""
+
+#: page-templates/home.php:905
 msgid "Banco de questões"
+msgstr ""
+
+#: page-templates/home.php:906
+msgid "Redação"
+msgstr ""
+
+#: page-templates/home.php:915
+msgid "Suporte"
+msgstr ""
+
+#: page-templates/home.php:917
+msgid "Central de ajuda"
+msgstr ""
+
+#: page-templates/home.php:918
+msgid "Fale com a gente"
+msgstr ""
+
+#: page-templates/home.php:920
+msgid "Status"
+msgstr ""
+
+#: page-templates/home.php:921
+msgid "Carreiras"
+msgstr ""
+
+#: page-templates/home.php:927
+msgid "@2026 ProEnem - Grupo Q Educação"
+msgstr ""
+
+#: page-templates/home.php:928
+msgid "Feito com ♥ para você"
 msgstr ""
 
 #. translators: %s: Search query.

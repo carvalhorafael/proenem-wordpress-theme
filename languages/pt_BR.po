@@ -131,8 +131,16 @@ msgstr "Coluna 3 do rodape"
 msgid "Footer bottom"
 msgstr "Linha final do rodape"
 
+#: inc/setup.php:87
+msgid "Home footer - Plataforma"
+msgstr "Home footer - Plataforma"
+
+#: inc/setup.php:88
+msgid "Home footer - Suporte"
+msgstr "Home footer - Suporte"
+
 #. translators: %s: Widget area name.
-#: inc/setup.php:95
+#: inc/setup.php:97
 #, php-format
 msgid "Widgets added here appear in %s."
 msgstr "Widgets adicionados aqui aparecem em %s."
@@ -192,7 +200,6 @@ msgstr "Comunidade de alunos"
 #: page-templates/home.php:58
 #: page-templates/home.php:175
 #: page-templates/home.php:823
-#: page-templates/home.php:895
 #: page-templates/home.php:903
 msgid "Método PRO"
 msgstr "Método PRO"
@@ -386,7 +393,7 @@ msgid "Português"
 msgstr "Português"
 
 #: page-templates/home.php:180
-#: page-templates/home.php:896
+#: page-templates/home.php:904
 msgid "Planos"
 msgstr "Planos"
 
@@ -396,11 +403,12 @@ msgstr "Questões"
 
 #: page-templates/home.php:188
 #: page-templates/home.php:774
+#: page-templates/home.php:907
 msgid "Aprovados"
 msgstr "Aprovados"
 
 #: page-templates/home.php:192
-#: page-templates/home.php:898
+#: page-templates/home.php:919
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -413,7 +421,6 @@ msgid "Navegação da home"
 msgstr "Navegação da home"
 
 #: page-templates/home.php:261
-#: page-templates/home.php:902
 msgid "ProEnem"
 msgstr "ProEnem"
 
@@ -1029,25 +1036,61 @@ msgstr "Perguntas frequentes"
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: page-templates/home.php:889
-msgid "Sua Aprovação não é sorte. É método."
-msgstr "Sua Aprovação não é sorte. É método."
-
 #: page-templates/home.php:890
+msgid "Sua Aprovação"
+msgstr "Sua Aprovação"
+
+#: page-templates/home.php:891
+msgid "não é sorte."
+msgstr "não é sorte."
+
+#: page-templates/home.php:892
+msgid "É método."
+msgstr "É método."
+
+#: page-templates/home.php:894
 msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 
-#: page-templates/home.php:893
-msgid "Links do rodapé da home"
-msgstr "Links do rodapé da home"
+#: page-templates/home.php:901
+msgid "Plataforma"
+msgstr "Plataforma"
 
-#: page-templates/home.php:894
-msgid "Navegação"
-msgstr "Navegação"
-
-#: page-templates/home.php:897
+#: page-templates/home.php:905
 msgid "Banco de questões"
 msgstr "Banco de questões"
+
+#: page-templates/home.php:906
+msgid "Redação"
+msgstr "Redação"
+
+#: page-templates/home.php:915
+msgid "Suporte"
+msgstr "Suporte"
+
+#: page-templates/home.php:917
+msgid "Central de ajuda"
+msgstr "Central de ajuda"
+
+#: page-templates/home.php:918
+msgid "Fale com a gente"
+msgstr "Fale com a gente"
+
+#: page-templates/home.php:920
+msgid "Status"
+msgstr "Status"
+
+#: page-templates/home.php:921
+msgid "Carreiras"
+msgstr "Carreiras"
+
+#: page-templates/home.php:927
+msgid "@2026 ProEnem - Grupo Q Educação"
+msgstr "@2026 ProEnem - Grupo Q Educação"
+
+#: page-templates/home.php:928
+msgid "Feito com ♥ para você"
+msgstr "Feito com ♥ para você"
 
 #. translators: %s: Search query.
 #: search.php:17
