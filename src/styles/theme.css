@@ -1082,18 +1082,21 @@ body.proenem-home-template {
 }
 
 .pro-home .pro-home-platform-tabs li {
+  background: transparent;
   border-bottom: var(--pen-border-brand-xs);
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  border-top: 0;
+  box-shadow: none;
+  display: block;
   margin: 0;
+  min-height: 0;
   padding: 0;
 }
 
 .pro-home .pro-home-platform-tabs li:last-child {
   border-bottom: 0;
-  flex: 1 1 auto;
-}
-
-.pro-home .pro-home-platform-tabs li:last-child .pro-home-platform-tab {
-  height: 100%;
 }
 
 .pro-home .pro-home-platform-tab {
@@ -1106,12 +1109,12 @@ body.proenem-home-template {
   cursor: pointer;
   display: grid;
   font: inherit;
-  font-size: clamp(1.12rem, 1.75vw, 1.42rem);
-  gap: clamp(0.9rem, 1.6vw, 1.25rem);
-  grid-template-columns: 3.3rem minmax(0, 1fr) 2.15rem;
+  font-size: clamp(0.95rem, 1.12vw, 1.08rem);
+  gap: clamp(0.65rem, 1.2vw, 0.95rem);
+  grid-template-columns: 2.35rem minmax(0, 1fr) 1.7rem;
   line-height: 1.1;
-  min-height: clamp(5.9rem, 8.2vw, 7rem);
-  padding: 1.25rem clamp(1.5rem, 2.6vw, 2rem);
+  min-height: clamp(3.9rem, 5vw, 4.65rem);
+  padding: 0.85rem clamp(0.95rem, 1.8vw, 1.25rem);
   text-align: left;
   transition:
     background-color 160ms ease,
@@ -1136,22 +1139,22 @@ body.proenem-home-template {
   border-radius: 0.9rem;
   color: var(--pro-home-platform-icon-color, #1c71ff);
   display: inline-flex;
-  height: 3.3rem;
+  height: 2.35rem;
   justify-content: center;
-  width: 3.3rem;
+  width: 2.35rem;
 }
 
 .pro-home .pro-home-platform-tab__arrow {
   background: transparent;
   border-radius: 0.7rem;
   color: var(--pen-color-ink);
-  font-size: 1.7rem;
+  font-size: 1rem;
   font-weight: 300;
-  height: 2.7rem;
+  height: 1.7rem;
   justify-self: end;
   line-height: 1;
-  padding-bottom: 6px;
-  width: 2.7rem;
+  padding-bottom: 0;
+  width: 1.7rem;
 }
 
 .pro-home .pro-home-platform-tab.is-active .pro-home-platform-tab__icon,
@@ -1164,12 +1167,12 @@ body.proenem-home-template {
 .pro-home .pro-home-platform-tab__icon svg {
   display: block;
   fill: none;
-  height: 1.55rem;
+  height: 1rem;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2.1;
-  width: 1.55rem;
+  width: 1rem;
 }
 
 .pro-home .pro-home-platform-tab--yellow {
@@ -2797,15 +2800,15 @@ body.proenem-home-template {
   }
 
   .pro-home .pro-home-platform-tab {
-    grid-template-columns: 2.8rem minmax(0, 1fr) 2rem;
-    min-height: 5rem;
-    padding: 1rem 1.2rem;
+    grid-template-columns: 2.35rem minmax(0, 1fr) 1.7rem;
+    min-height: 4rem;
+    padding: 0.75rem 0.9rem;
   }
 
   .pro-home .pro-home-platform-tab__icon,
   .pro-home .pro-home-platform-tab__arrow {
-    height: 2.8rem;
-    width: 2.8rem;
+    height: 2.35rem;
+    width: 2.35rem;
   }
 
   .pro-home .pen-platform-showcase__screen {
