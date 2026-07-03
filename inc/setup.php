@@ -112,7 +112,7 @@ add_action( 'widgets_init', 'proenem_register_widget_areas' );
  * @return string[]
  */
 function proenem_body_classes( $classes ) {
-	if ( is_page_template( 'page-templates/home.php' ) ) {
+	if ( is_front_page() || is_page_template( 'page-templates/home.php' ) ) {
 		$classes[] = 'proenem-home-template';
 	}
 

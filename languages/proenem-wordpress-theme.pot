@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.2.0\n"
+"Project-Id-Version: Proenem 0.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -66,23 +66,100 @@ msgstr ""
 msgid "Comments are closed."
 msgstr ""
 
-#. translators: %d: Footer column number.
-#: footer.php:13
-#, php-format
-msgid "Footer column %d"
+#: footer.php:12
+#: page-templates/home.php:742
+msgid "Manifesto Proenem"
+msgstr ""
+
+#: footer.php:14
+msgid "Sua aprovação"
+msgstr ""
+
+#: footer.php:15
+#: page-templates/home.php:745
+msgid "não é sorte."
+msgstr ""
+
+#: footer.php:16
+#: page-templates/home.php:746
+msgid "É método."
+msgstr ""
+
+#: footer.php:18
+#: page-templates/home.php:748
+msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
+msgstr ""
+
+#: footer.php:23
+#: page-templates/home.php:755
+msgid "Plataforma"
+msgstr ""
+
+#: footer.php:24
+#: inc/template-tags.php:430
+#: page-templates/home.php:54
+#: page-templates/home.php:677
+#: page-templates/home.php:757
+msgid "Método PRO"
+msgstr ""
+
+#: footer.php:25
+#: inc/template-tags.php:435
+#: page-templates/home.php:758
+msgid "Planos"
+msgstr ""
+
+#: footer.php:26
+#: page-templates/home.php:759
+msgid "Banco de questões"
+msgstr ""
+
+#: footer.php:27
+#: inc/template-tags.php:102
+#: inc/template-tags.php:440
+msgid "Blog"
+msgstr ""
+
+#: footer.php:30
+#: page-templates/home.php:769
+msgid "Suporte"
+msgstr ""
+
+#: footer.php:31
+#: page-templates/home.php:771
+msgid "Central de ajuda"
+msgstr ""
+
+#: footer.php:32
+#: page-templates/home.php:773
+msgid "FAQ"
+msgstr ""
+
+#: footer.php:33
+#: page-templates/home.php:774
+msgid "Status"
+msgstr ""
+
+#: footer.php:34
+#: page-templates/home.php:775
+msgid "Carreiras"
 msgstr ""
 
 #. translators: %s: Current year.
-#: footer.php:27
+#: footer.php:43
 #, php-format
-msgid "Copyright %s Proenem."
+msgid "@%s ProEnem - Grupo Q Educação"
+msgstr ""
+
+#: footer.php:48
+#: page-templates/home.php:782
+msgid "Feito com ♥ para você"
 msgstr ""
 
 #: header.php:18
 msgid "Skip to content"
 msgstr ""
 
-#: header.php:34
 #: inc/setup.php:45
 msgid "Primary menu"
 msgstr ""
@@ -145,935 +222,971 @@ msgstr ""
 msgid "Posts pagination"
 msgstr ""
 
-#: index.php:13
-msgid "Latest posts"
+#. translators: %d: Estimated reading time in minutes.
+#: inc/template-tags.php:159
+#, php-format
+msgid "%d min de leitura"
+msgid_plural "%d min de leitura"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/template-tags.php:248
+msgid "Categorias do blog"
+msgstr ""
+
+#: inc/template-tags.php:250
+msgid "Ver tudo"
+msgstr ""
+
+#: inc/template-tags.php:272
+#: inc/template-tags.php:273
+msgid "Ordenar posts"
+msgstr ""
+
+#: inc/template-tags.php:274
+msgid "Mais recente"
+msgstr ""
+
+#: inc/template-tags.php:299
+msgid "Paginação"
+msgstr ""
+
+#: inc/template-tags.php:301
+#: inc/template-tags.php:303
+msgid "← Anterior"
+msgstr ""
+
+#: inc/template-tags.php:315
+#: inc/template-tags.php:317
+msgid "Próxima →"
+msgstr ""
+
+#: inc/template-tags.php:330
+msgid "Destaques Proenem"
+msgstr ""
+
+#: inc/template-tags.php:333
+#: page-templates/home.php:214
+#: page-templates/home.php:664
+#: page-templates/home.php:667
+msgid "Troque a sorte pela estratégia"
+msgstr ""
+
+#: inc/template-tags.php:335
+#: page-templates/home.php:204
+#: page-templates/home.php:215
+#: page-templates/home.php:665
+#: page-templates/home.php:668
+msgid "Conheça o Método PRO"
+msgstr ""
+
+#: inc/template-tags.php:337
+#: page-templates/home.php:213
+#: page-templates/home.php:663
+#: page-templates/home.php:666
+msgid "A engenharia da sua aprovação"
+msgstr ""
+
+#: inc/template-tags.php:345
+msgid "Pronto para transformar a preparação ENEM na sua escola?"
+msgstr ""
+
+#: inc/template-tags.php:346
+msgid "Converse conosco e equipe sua instituição com uma proposta personalizada de acordo com o tamanho e perfil da sua operação."
+msgstr ""
+
+#: inc/template-tags.php:350
+#: page-templates/home.php:226
+#: page-templates/home.php:718
+msgid "Começar gratuitamente"
+msgstr ""
+
+#: inc/template-tags.php:358
+#: page-templates/home.php:724
+msgid "Perguntas frequentes"
+msgstr ""
+
+#: inc/template-tags.php:359
+msgid "Já sentiu que estuda muito, mas a nota não sobe?"
+msgstr ""
+
+#: inc/template-tags.php:363
+msgid "O que é o Método PRO?"
+msgstr ""
+
+#: inc/template-tags.php:364
+msgid "É a metodologia da Proenem para organizar estudo, diagnóstico, prática e revisão em uma rotina clara."
+msgstr ""
+
+#: inc/template-tags.php:367
+#: page-templates/home.php:113
+msgid "Posso começar a estudar de graça?"
+msgstr ""
+
+#: inc/template-tags.php:368
+msgid "Sim. Você pode criar uma conta gratuita e acessar conteúdos iniciais antes de escolher o plano ideal."
+msgstr ""
+
+#: inc/template-tags.php:371
+#: page-templates/home.php:117
+msgid "O que é a Aceleração PRO?"
+msgstr ""
+
+#: inc/template-tags.php:372
+msgid "É uma jornada intensiva para estudantes que precisam acelerar preparação com acompanhamento e foco."
+msgstr ""
+
+#: inc/template-tags.php:400
+msgid "Últimas postagens"
+msgstr ""
+
+#: inc/template-tags.php:401
+msgid "Entrevistas, dicas, guias, práticas recomendadas do setor e notícias."
+msgstr ""
+
+#: inc/template-tags.php:413
+msgid "Todas as postagens"
+msgstr ""
+
+#: inc/template-tags.php:447
+msgid "Login"
+msgstr ""
+
+#: inc/template-tags.php:452
+msgid "Comece grátis"
+msgstr ""
+
+#: inc/template-tags.php:518
+msgid "Navegação principal"
+msgstr ""
+
+#: inc/template-tags.php:527
+msgid "ProEnem"
+msgstr ""
+
+#: inc/template-tags.php:530
+msgid "Abrir menu"
+msgstr ""
+
+#: index.php:14
+msgid "Blog Proenem"
+msgstr ""
+
+#: index.php:15
+msgid "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
 msgstr ""
 
 #. Template Name of the theme
 msgid "ProEnem Home"
 msgstr ""
 
-#: page-templates/home.php:47
+#: page-templates/home.php:43
 msgid "Essencial"
 msgstr ""
 
-#: page-templates/home.php:48
+#: page-templates/home.php:44
 msgid "39"
 msgstr ""
 
-#: page-templates/home.php:49
+#: page-templates/home.php:45
 msgid "Para começar a estudar com método."
 msgstr ""
 
-#: page-templates/home.php:51
+#: page-templates/home.php:47
 msgid "Banco com +50k questões"
 msgstr ""
 
-#: page-templates/home.php:52
+#: page-templates/home.php:48
 msgid "Aulas gravadas completas"
 msgstr ""
 
-#: page-templates/home.php:53
+#: page-templates/home.php:49
 msgid "Cronograma básico"
 msgstr ""
 
-#: page-templates/home.php:54
+#: page-templates/home.php:50
 msgid "Comunidade de alunos"
 msgstr ""
 
-#: page-templates/home.php:58
-#: page-templates/home.php:175
-#: page-templates/home.php:823
-#: page-templates/home.php:903
-msgid "Método PRO"
-msgstr ""
-
-#: page-templates/home.php:59
+#: page-templates/home.php:55
 msgid "99"
 msgstr ""
 
-#: page-templates/home.php:60
+#: page-templates/home.php:56
 msgid "O método completo, com IA e mentoria."
 msgstr ""
 
-#: page-templates/home.php:63
+#: page-templates/home.php:59
 msgid "Tudo do Essencial"
 msgstr ""
 
-#: page-templates/home.php:64
+#: page-templates/home.php:60
 msgid "Tutor IA ilimitado 24/7"
 msgstr ""
 
-#: page-templates/home.php:65
+#: page-templates/home.php:61
 msgid "Redação corrigida em 48h"
 msgstr ""
 
-#: page-templates/home.php:66
+#: page-templates/home.php:62
 msgid "Simulados TRI semanais"
 msgstr ""
 
-#: page-templates/home.php:67
-#: page-templates/home.php:550
+#: page-templates/home.php:63
+#: page-templates/home.php:404
 msgid "Aulas ao vivo todos os dias"
 msgstr ""
 
-#: page-templates/home.php:68
+#: page-templates/home.php:64
 msgid "Plano adaptativo por IA"
 msgstr ""
 
-#: page-templates/home.php:72
+#: page-templates/home.php:68
 msgid "Elite"
 msgstr ""
 
-#: page-templates/home.php:73
+#: page-templates/home.php:69
 msgid "199"
 msgstr ""
 
-#: page-templates/home.php:74
+#: page-templates/home.php:70
 msgid "Mentoria 1:1 com aprovados."
 msgstr ""
 
-#: page-templates/home.php:76
+#: page-templates/home.php:72
 msgid "Tudo do Método PRO"
 msgstr ""
 
-#: page-templates/home.php:77
+#: page-templates/home.php:73
 msgid "Mentor pessoal aprovado em Medicina"
 msgstr ""
 
-#: page-templates/home.php:78
+#: page-templates/home.php:74
 msgid "2 sessões 1:1 por semana"
 msgstr ""
 
-#: page-templates/home.php:79
+#: page-templates/home.php:75
 msgid "Revisão de redação prioritária"
 msgstr ""
 
-#: page-templates/home.php:86
+#: page-templates/home.php:82
 msgid "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana."
 msgstr ""
 
-#: page-templates/home.php:87
+#: page-templates/home.php:83
 msgid "Mariana Costa"
 msgstr ""
 
-#: page-templates/home.php:88
+#: page-templates/home.php:84
 msgid "Aprovada em Medicina"
 msgstr ""
 
-#: page-templates/home.php:92
+#: page-templates/home.php:88
 msgid "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir."
 msgstr ""
 
-#: page-templates/home.php:93
+#: page-templates/home.php:89
 msgid "Lucas Almeida"
 msgstr ""
 
-#: page-templates/home.php:94
+#: page-templates/home.php:90
 msgid "Aprovado em Engenharia"
 msgstr ""
 
-#: page-templates/home.php:98
+#: page-templates/home.php:94
 msgid "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante."
 msgstr ""
 
-#: page-templates/home.php:99
+#: page-templates/home.php:95
 msgid "Beatriz Rocha"
 msgstr ""
 
-#: page-templates/home.php:100
+#: page-templates/home.php:96
 msgid "Aprovada em Direito"
 msgstr ""
 
-#: page-templates/home.php:104
+#: page-templates/home.php:100
 msgid "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade."
 msgstr ""
 
-#: page-templates/home.php:105
+#: page-templates/home.php:101
 msgid "Pedro Martins"
 msgstr ""
 
-#: page-templates/home.php:106
+#: page-templates/home.php:102
 msgid "Aprovado em Psicologia"
 msgstr ""
 
-#: page-templates/home.php:113
+#: page-templates/home.php:109
 msgid "O que é o MÉTODO PRO?"
 msgstr ""
 
-#: page-templates/home.php:114
+#: page-templates/home.php:110
 msgid "É uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos até a aprovação."
 msgstr ""
 
-#: page-templates/home.php:117
-msgid "Posso começar a estudar de graça?"
-msgstr ""
-
-#: page-templates/home.php:118
+#: page-templates/home.php:114
 msgid "Sim. Você pode criar uma conta gratuita e acessar o banco de questões, listas e um diagnóstico simplificado."
 msgstr ""
 
-#: page-templates/home.php:121
-msgid "O que é a Aceleração PRO?"
-msgstr ""
-
-#: page-templates/home.php:122
+#: page-templates/home.php:118
 msgid "É o plano para quem quer acompanhamento mais próximo, simulados com TRI, redação corrigida e rotina adaptada por IA."
 msgstr ""
 
-#: page-templates/home.php:125
+#: page-templates/home.php:121
 msgid "Posso entrar em qualquer época do ano?"
 msgstr ""
 
-#: page-templates/home.php:126
+#: page-templates/home.php:122
 msgid "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo disponível até a prova."
 msgstr ""
 
-#: page-templates/home.php:129
+#: page-templates/home.php:125
 msgid "E se eu não gostar?"
 msgstr ""
 
-#: page-templates/home.php:130
+#: page-templates/home.php:126
 msgid "Você pode cancelar quando quiser. A ideia é experimentar o método sem burocracia e seguir apenas se fizer sentido para sua rotina."
 msgstr ""
 
-#: page-templates/home.php:136
+#: page-templates/home.php:132
 msgid "Química"
 msgstr ""
 
-#: page-templates/home.php:137
-#: page-templates/home.php:143
+#: page-templates/home.php:133
+#: page-templates/home.php:139
 msgid "Ciências da Natureza"
 msgstr ""
 
-#: page-templates/home.php:142
+#: page-templates/home.php:138
 msgid "Biologia"
 msgstr ""
 
-#: page-templates/home.php:148
-#: page-templates/home.php:149
+#: page-templates/home.php:144
+#: page-templates/home.php:145
 msgid "Matemática"
 msgstr ""
 
-#: page-templates/home.php:154
+#: page-templates/home.php:150
 msgid "História"
 msgstr ""
 
-#: page-templates/home.php:155
+#: page-templates/home.php:151
 msgid "Ciências Humanas"
 msgstr ""
 
-#: page-templates/home.php:160
+#: page-templates/home.php:156
 msgid "Inglês"
 msgstr ""
 
-#: page-templates/home.php:161
-#: page-templates/home.php:167
+#: page-templates/home.php:157
+#: page-templates/home.php:163
 msgid "Linguagens"
 msgstr ""
 
-#: page-templates/home.php:166
+#: page-templates/home.php:162
 msgid "Português"
 msgstr ""
 
-#: page-templates/home.php:180
-#: page-templates/home.php:904
-msgid "Planos"
-msgstr ""
-
-#: page-templates/home.php:184
-msgid "Questões"
-msgstr ""
-
-#: page-templates/home.php:188
-#: page-templates/home.php:774
-#: page-templates/home.php:907
-msgid "Aprovados"
-msgstr ""
-
-#: page-templates/home.php:192
-#: page-templates/home.php:919
-msgid "FAQ"
-msgstr ""
-
-#: page-templates/home.php:198
-msgid "Comece grátis"
-msgstr ""
-
-#: page-templates/home.php:259
+#: page-templates/home.php:175
 msgid "Navegação da home"
 msgstr ""
 
-#: page-templates/home.php:261
-msgid "ProEnem"
-msgstr ""
-
-#: page-templates/home.php:264
-msgid "Abrir menu"
-msgstr ""
-
-#: page-templates/home.php:329
+#: page-templates/home.php:183
 msgid "Estudante sorrindo com cadernos nas mãos."
 msgstr ""
 
-#: page-templates/home.php:330
-#: page-templates/home.php:395
+#: page-templates/home.php:184
+#: page-templates/home.php:249
 msgid "Diagnóstico"
 msgstr ""
 
-#: page-templates/home.php:331
-#: page-templates/home.php:411
+#: page-templates/home.php:185
+#: page-templates/home.php:265
 msgid "Performance"
 msgstr ""
 
-#: page-templates/home.php:332
-#: page-templates/home.php:387
+#: page-templates/home.php:186
+#: page-templates/home.php:241
 msgid "Meta"
 msgstr ""
 
-#: page-templates/home.php:333
-#: page-templates/home.php:403
+#: page-templates/home.php:187
+#: page-templates/home.php:257
 msgid "Execução"
 msgstr ""
 
-#: page-templates/home.php:335
+#: page-templates/home.php:189
 msgid "Sua"
 msgstr ""
 
-#: page-templates/home.php:336
+#: page-templates/home.php:190
 msgid "aprovação"
 msgstr ""
 
-#: page-templates/home.php:337
+#: page-templates/home.php:191
 msgid "não é"
 msgstr ""
 
-#: page-templates/home.php:337
+#: page-templates/home.php:191
 msgid "sorte"
 msgstr ""
 
-#: page-templates/home.php:338
+#: page-templates/home.php:192
 msgid "é"
 msgstr ""
 
-#: page-templates/home.php:338
+#: page-templates/home.php:192
 msgid "método"
 msgstr ""
 
-#: page-templates/home.php:345
+#: page-templates/home.php:199
 msgid "O Método PRO"
 msgstr ""
 
-#: page-templates/home.php:346
+#: page-templates/home.php:200
 msgid "não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
 msgstr ""
 
-#: page-templates/home.php:350
-#: page-templates/home.php:361
-#: page-templates/home.php:811
-#: page-templates/home.php:814
-msgid "Conheça o Método PRO"
-msgstr ""
-
-#: page-templates/home.php:359
-#: page-templates/home.php:809
-#: page-templates/home.php:812
-msgid "A engenharia da sua aprovação"
-msgstr ""
-
-#: page-templates/home.php:360
-#: page-templates/home.php:810
-#: page-templates/home.php:813
-msgid "Troque a sorte pela estratégia"
-msgstr ""
-
-#: page-templates/home.php:368
+#: page-templates/home.php:222
 msgid "Método Pro"
 msgstr ""
 
-#: page-templates/home.php:369
+#: page-templates/home.php:223
 msgid "Os 4 pilares que organizam a sua aprovação"
 msgstr ""
 
-#: page-templates/home.php:370
+#: page-templates/home.php:224
 msgid "O Método PRO não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
 msgstr ""
 
-#: page-templates/home.php:371
+#: page-templates/home.php:225
 msgid "O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia."
 msgstr ""
 
-#: page-templates/home.php:372
-#: page-templates/home.php:864
-msgid "Começar gratuitamente"
-msgstr ""
-
-#: page-templates/home.php:376
+#: page-templates/home.php:230
 msgid "Navegação dos pilares"
 msgstr ""
 
-#: page-templates/home.php:377
+#: page-templates/home.php:231
 msgid "Pilar anterior"
 msgstr ""
 
-#: page-templates/home.php:381
+#: page-templates/home.php:235
 msgid "Próximo pilar"
 msgstr ""
 
-#: page-templates/home.php:388
+#: page-templates/home.php:242
 msgid "Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais."
 msgstr ""
 
-#: page-templates/home.php:396
+#: page-templates/home.php:250
 msgid "Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está."
 msgstr ""
 
-#: page-templates/home.php:404
+#: page-templates/home.php:258
 msgid "Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo."
 msgstr ""
 
-#: page-templates/home.php:412
+#: page-templates/home.php:266
 msgid "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável."
 msgstr ""
 
-#: page-templates/home.php:431
+#: page-templates/home.php:285
 msgid "UFRJ"
 msgstr ""
 
-#: page-templates/home.php:435
+#: page-templates/home.php:289
 msgid "UFRGS"
 msgstr ""
 
-#: page-templates/home.php:439
+#: page-templates/home.php:293
 msgid "Unicamp"
 msgstr ""
 
-#: page-templates/home.php:443
+#: page-templates/home.php:297
 msgid "UERJ"
 msgstr ""
 
-#: page-templates/home.php:447
+#: page-templates/home.php:301
 msgid "USP"
 msgstr ""
 
-#: page-templates/home.php:451
+#: page-templates/home.php:305
 msgid "Unifesp"
 msgstr ""
 
-#: page-templates/home.php:458
+#: page-templates/home.php:312
 msgid "Nossos"
 msgstr ""
 
-#: page-templates/home.php:459
+#: page-templates/home.php:313
 msgid "Alunos!"
 msgstr ""
 
-#: page-templates/home.php:462
+#: page-templates/home.php:316
 msgid "Aluno aprovado exibindo aprovação."
 msgstr ""
 
-#: page-templates/home.php:466
+#: page-templates/home.php:320
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr ""
 
-#: page-templates/home.php:467
+#: page-templates/home.php:321
 msgid "Universidades públicas com alunos aprovados pela Proenem"
 msgstr ""
 
-#: page-templates/home.php:480
+#: page-templates/home.php:334
 msgid "Você se identifica?"
 msgstr ""
 
-#: page-templates/home.php:482
-#: page-templates/home.php:872
+#: page-templates/home.php:336
+#: page-templates/home.php:726
 msgid "Já sentiu que"
 msgstr ""
 
-#: page-templates/home.php:483
-#: page-templates/home.php:872
+#: page-templates/home.php:337
+#: page-templates/home.php:726
 msgid "estuda muito,"
 msgstr ""
 
-#: page-templates/home.php:485
-#: page-templates/home.php:873
+#: page-templates/home.php:339
+#: page-templates/home.php:727
 msgid "mas a nota"
 msgstr ""
 
-#: page-templates/home.php:486
-#: page-templates/home.php:873
+#: page-templates/home.php:340
+#: page-templates/home.php:727
 msgid "não sobe?"
 msgstr ""
 
-#: page-templates/home.php:497
+#: page-templates/home.php:351
 msgid "Estuda"
 msgstr ""
 
-#: page-templates/home.php:498
+#: page-templates/home.php:352
 msgid "sem direção"
 msgstr ""
 
-#: page-templates/home.php:500
+#: page-templates/home.php:354
 msgid "Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece."
 msgstr ""
 
-#: page-templates/home.php:511
+#: page-templates/home.php:365
 msgid "Trava"
 msgstr ""
 
-#: page-templates/home.php:512
+#: page-templates/home.php:366
 msgid "em simulados"
 msgstr ""
 
-#: page-templates/home.php:514
+#: page-templates/home.php:368
 msgid "A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos."
 msgstr ""
 
-#: page-templates/home.php:525
+#: page-templates/home.php:379
 msgid "Ansiedade"
 msgstr ""
 
-#: page-templates/home.php:526
+#: page-templates/home.php:380
 msgid "&"
 msgstr ""
 
-#: page-templates/home.php:527
+#: page-templates/home.php:381
 msgid "insegurança"
 msgstr ""
 
-#: page-templates/home.php:529
+#: page-templates/home.php:383
 msgid "Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros."
 msgstr ""
 
-#: page-templates/home.php:533
+#: page-templates/home.php:387
 msgid "O problema não é o esforço."
 msgstr ""
 
-#: page-templates/home.php:535
+#: page-templates/home.php:389
 msgid "É estudar"
 msgstr ""
 
-#: page-templates/home.php:536
+#: page-templates/home.php:390
 msgid "sem método."
 msgstr ""
 
-#: page-templates/home.php:540
-#: page-templates/home.php:728
+#: page-templates/home.php:394
+#: page-templates/home.php:582
 msgid "Comece agora!"
 msgstr ""
 
-#: page-templates/home.php:541
-#: page-templates/home.php:729
+#: page-templates/home.php:395
+#: page-templates/home.php:583
 msgid "É gratuito"
 msgstr ""
 
-#: page-templates/home.php:553
+#: page-templates/home.php:407
 msgid "Aulas ao vivo para manter sua rotina em movimento."
 msgstr ""
 
-#: page-templates/home.php:554
+#: page-templates/home.php:408
 msgid "Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana."
 msgstr ""
 
-#: page-templates/home.php:555
+#: page-templates/home.php:409
 msgid "proenem.com.br/app/aulas-ao-vivo"
 msgstr ""
 
-#: page-templates/home.php:557
+#: page-templates/home.php:411
 msgid "Agenda diária de aulas"
 msgstr ""
 
-#: page-templates/home.php:558
+#: page-templates/home.php:412
 msgid "Revisões próximas das provas"
 msgstr ""
 
-#: page-templates/home.php:559
+#: page-templates/home.php:413
 msgid "Registro do que você já assistiu"
 msgstr ""
 
-#: page-templates/home.php:563
-#: page-templates/home.php:704
+#: page-templates/home.php:417
+#: page-templates/home.php:558
 msgid "+50 mil questões"
 msgstr ""
 
-#: page-templates/home.php:566
+#: page-templates/home.php:420
 msgid "Mais de 50 mil questões para treinar com intenção."
 msgstr ""
 
-#: page-templates/home.php:567
+#: page-templates/home.php:421
 msgid "Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico."
 msgstr ""
 
-#: page-templates/home.php:568
+#: page-templates/home.php:422
 msgid "proenem.com.br/app/questoes"
 msgstr ""
 
-#: page-templates/home.php:570
+#: page-templates/home.php:424
 msgid "Questões por área do conhecimento"
 msgstr ""
 
-#: page-templates/home.php:571
+#: page-templates/home.php:425
 msgid "Resoluções comentadas"
 msgstr ""
 
-#: page-templates/home.php:572
+#: page-templates/home.php:426
 msgid "Histórico de acertos e erros"
 msgstr ""
 
-#: page-templates/home.php:576
+#: page-templates/home.php:430
 msgid "Plano personalizado"
 msgstr ""
 
-#: page-templates/home.php:579
+#: page-templates/home.php:433
 msgid "Plano personalizado para estudar o que mais importa agora."
 msgstr ""
 
-#: page-templates/home.php:580
+#: page-templates/home.php:434
 msgid "A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução."
 msgstr ""
 
-#: page-templates/home.php:581
+#: page-templates/home.php:435
 msgid "proenem.com.br/app/plano"
 msgstr ""
 
-#: page-templates/home.php:583
+#: page-templates/home.php:437
 msgid "Rotina ajustada por meta"
 msgstr ""
 
-#: page-templates/home.php:584
+#: page-templates/home.php:438
 msgid "Prioridade por lacuna"
 msgstr ""
 
-#: page-templates/home.php:585
+#: page-templates/home.php:439
 msgid "Próximas ações sempre visíveis"
 msgstr ""
 
-#: page-templates/home.php:589
+#: page-templates/home.php:443
 msgid "Tutor com IA"
 msgstr ""
 
-#: page-templates/home.php:592
+#: page-templates/home.php:446
 msgid "Tutor com IA para tirar dúvidas no seu ritmo."
 msgstr ""
 
-#: page-templates/home.php:593
+#: page-templates/home.php:447
 msgid "Receba explicações guiadas e volte para o estudo sem perder o contexto da tarefa."
 msgstr ""
 
-#: page-templates/home.php:594
+#: page-templates/home.php:448
 msgid "proenem.com.br/app/tutor-ia"
 msgstr ""
 
-#: page-templates/home.php:596
+#: page-templates/home.php:450
 msgid "Explicação passo a passo"
 msgstr ""
 
-#: page-templates/home.php:597
+#: page-templates/home.php:451
 msgid "Apoio em questões difíceis"
 msgstr ""
 
-#: page-templates/home.php:598
+#: page-templates/home.php:452
 msgid "Disponível durante a rotina"
 msgstr ""
 
-#: page-templates/home.php:602
+#: page-templates/home.php:456
 msgid "Correção de redação"
 msgstr ""
 
-#: page-templates/home.php:605
+#: page-templates/home.php:459
 msgid "Correção de redação com devolutiva objetiva."
 msgstr ""
 
-#: page-templates/home.php:606
+#: page-templates/home.php:460
 msgid "Entenda competência por competência onde melhorar para escrever com mais segurança."
 msgstr ""
 
-#: page-templates/home.php:607
+#: page-templates/home.php:461
 msgid "proenem.com.br/app/redacao"
 msgstr ""
 
-#: page-templates/home.php:609
+#: page-templates/home.php:463
 msgid "Comentários por competência"
 msgstr ""
 
-#: page-templates/home.php:610
+#: page-templates/home.php:464
 msgid "Plano de reescrita"
 msgstr ""
 
-#: page-templates/home.php:611
+#: page-templates/home.php:465
 msgid "Evolução por envio"
 msgstr ""
 
-#: page-templates/home.php:615
+#: page-templates/home.php:469
 msgid "Simulados com TRI"
 msgstr ""
 
-#: page-templates/home.php:619
+#: page-templates/home.php:473
 msgid "Simulados com a mesma lógica de correção do ENEM."
 msgstr ""
 
-#: page-templates/home.php:620
+#: page-templates/home.php:474
 msgid "Veja sua nota real, evolução por área e onde focar agora."
 msgstr ""
 
-#: page-templates/home.php:621
+#: page-templates/home.php:475
 msgid "proenem.com.br/app/simulados-com-tri"
 msgstr ""
 
-#: page-templates/home.php:623
+#: page-templates/home.php:477
 msgid "Nota real estimada pelo TRI"
 msgstr ""
 
-#: page-templates/home.php:624
+#: page-templates/home.php:478
 msgid "Comparativo com aprovados"
 msgstr ""
 
-#: page-templates/home.php:625
+#: page-templates/home.php:479
 msgid "Diagnóstico por área e tópico"
 msgstr ""
 
-#: page-templates/home.php:635
-#: page-templates/home.php:703
+#: page-templates/home.php:489
+#: page-templates/home.php:557
 msgid "Explore"
 msgstr ""
 
-#: page-templates/home.php:636
+#: page-templates/home.php:490
 msgid "por dentro"
 msgstr ""
 
-#: page-templates/home.php:637
+#: page-templates/home.php:491
 msgid "cada detalhe"
 msgstr ""
 
-#: page-templates/home.php:641
+#: page-templates/home.php:495
 msgid "Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma."
 msgstr ""
 
-#: page-templates/home.php:645
+#: page-templates/home.php:499
 msgid "Recursos da plataforma"
 msgstr ""
 
-#: page-templates/home.php:705
+#: page-templates/home.php:559
 msgid "sem precisar criar conta."
 msgstr ""
 
-#: page-templates/home.php:707
+#: page-templates/home.php:561
 msgid "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
 msgstr ""
 
-#: page-templates/home.php:720
+#: page-templates/home.php:574
 msgid "512 questões"
 msgstr ""
 
-#: page-templates/home.php:721
+#: page-templates/home.php:575
 msgid "40 aulas"
 msgstr ""
 
-#: page-templates/home.php:744
+#: page-templates/home.php:598
 msgid "Investimento que se"
 msgstr ""
 
-#: page-templates/home.php:745
+#: page-templates/home.php:599
 msgid "paga em"
 msgstr ""
 
-#: page-templates/home.php:745
+#: page-templates/home.php:599
 msgid "uma vaga."
 msgstr ""
 
-#: page-templates/home.php:747
+#: page-templates/home.php:601
 msgid "Comece grátis. Cancele com 1 clique."
 msgstr ""
 
-#: page-templates/home.php:747
+#: page-templates/home.php:601
 msgid "7 dias de garantia em todos os planos."
 msgstr ""
 
-#: page-templates/home.php:754
+#: page-templates/home.php:608
 msgid "Mais escolhido"
 msgstr ""
 
-#: page-templates/home.php:759
+#: page-templates/home.php:613
 msgid "R$"
 msgstr ""
 
-#: page-templates/home.php:759
+#: page-templates/home.php:613
 msgid "ao mês"
 msgstr ""
 
-#: page-templates/home.php:766
+#: page-templates/home.php:620
 msgid "Quero o Método PRO"
 msgstr ""
 
-#: page-templates/home.php:776
+#: page-templates/home.php:628
+#: page-templates/home.php:761
+msgid "Aprovados"
+msgstr ""
+
+#: page-templates/home.php:630
 msgid "Quem seguiu o método,"
 msgstr ""
 
-#: page-templates/home.php:777
+#: page-templates/home.php:631
 msgid "conquistou a vaga."
 msgstr ""
 
-#: page-templates/home.php:779
+#: page-templates/home.php:633
 msgid "Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias."
 msgstr ""
 
-#: page-templates/home.php:800
+#: page-templates/home.php:654
 msgid "Controles dos depoimentos"
 msgstr ""
 
-#: page-templates/home.php:801
+#: page-templates/home.php:655
 msgid "Depoimento anterior"
 msgstr ""
 
-#: page-templates/home.php:802
+#: page-templates/home.php:656
 msgid "Próximo depoimento"
 msgstr ""
 
-#: page-templates/home.php:818
+#: page-templates/home.php:672
 msgid "Estudante sorrindo em ambiente escolar."
 msgstr ""
 
-#: page-templates/home.php:823
+#: page-templates/home.php:677
 msgid "Leve o"
 msgstr ""
 
-#: page-templates/home.php:824
+#: page-templates/home.php:678
 msgid "para a"
 msgstr ""
 
-#: page-templates/home.php:824
+#: page-templates/home.php:678
 msgid "sua escola."
 msgstr ""
 
-#: page-templates/home.php:826
+#: page-templates/home.php:680
 msgid "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote."
 msgstr ""
 
-#: page-templates/home.php:828
+#: page-templates/home.php:682
 msgid "Estudante sorrindo com livros ao fundo."
 msgstr ""
 
-#: page-templates/home.php:834
+#: page-templates/home.php:688
 msgid "Combo plataforma + apostilas"
 msgstr ""
 
-#: page-templates/home.php:835
+#: page-templates/home.php:689
 msgid "Acesso completo à plataforma, mais o kit de apostilas exclusivas entregue na escola."
 msgstr ""
 
-#: page-templates/home.php:839
+#: page-templates/home.php:693
 msgid "Acompanhe cada aluno"
 msgstr ""
 
-#: page-templates/home.php:840
+#: page-templates/home.php:694
 msgid "Painel exclusivo para coordenadores e professores com desempenho, simulados e frequência em tempo real."
 msgstr ""
 
-#: page-templates/home.php:844
+#: page-templates/home.php:698
 msgid "Acesso para todos os alunos"
 msgstr ""
 
-#: page-templates/home.php:845
+#: page-templates/home.php:699
 msgid "Licenças geradas para todas as turmas. Cada aluno tem seu perfil individual e plano personalizado."
 msgstr ""
 
-#: page-templates/home.php:849
+#: page-templates/home.php:703
 msgid "Onboarding dedicado"
 msgstr ""
 
-#: page-templates/home.php:850
+#: page-templates/home.php:704
 msgid "Um especialista cuida da implantação, treina os professores e acompanha os primeiros ciclos."
 msgstr ""
 
-#: page-templates/home.php:858
+#: page-templates/home.php:712
 msgid "Pronto para"
 msgstr ""
 
-#: page-templates/home.php:858
+#: page-templates/home.php:712
 msgid "transformar"
 msgstr ""
 
-#: page-templates/home.php:858
+#: page-templates/home.php:712
 msgid "a"
 msgstr ""
 
-#: page-templates/home.php:859
+#: page-templates/home.php:713
 msgid "preparação"
 msgstr ""
 
-#: page-templates/home.php:859
+#: page-templates/home.php:713
 msgid "ENEM"
 msgstr ""
 
-#: page-templates/home.php:859
+#: page-templates/home.php:713
 msgid "na sua escola?"
 msgstr ""
 
-#: page-templates/home.php:861
+#: page-templates/home.php:715
 msgid "Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição."
 msgstr ""
 
-#: page-templates/home.php:870
-msgid "Perguntas frequentes"
-msgstr ""
-
-#: page-templates/home.php:888
-msgid "Manifesto Proenem"
-msgstr ""
-
-#: page-templates/home.php:890
+#: page-templates/home.php:744
 msgid "Sua Aprovação"
 msgstr ""
 
-#: page-templates/home.php:891
-msgid "não é sorte."
-msgstr ""
-
-#: page-templates/home.php:892
-msgid "É método."
-msgstr ""
-
-#: page-templates/home.php:894
-msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
-msgstr ""
-
-#: page-templates/home.php:901
-msgid "Plataforma"
-msgstr ""
-
-#: page-templates/home.php:905
-msgid "Banco de questões"
-msgstr ""
-
-#: page-templates/home.php:906
+#: page-templates/home.php:760
 msgid "Redação"
 msgstr ""
 
-#: page-templates/home.php:915
-msgid "Suporte"
-msgstr ""
-
-#: page-templates/home.php:917
-msgid "Central de ajuda"
-msgstr ""
-
-#: page-templates/home.php:918
+#: page-templates/home.php:772
 msgid "Fale com a gente"
 msgstr ""
 
-#: page-templates/home.php:920
-msgid "Status"
-msgstr ""
-
-#: page-templates/home.php:921
-msgid "Carreiras"
-msgstr ""
-
-#: page-templates/home.php:927
+#: page-templates/home.php:781
 msgid "@2026 ProEnem - Grupo Q Educação"
-msgstr ""
-
-#: page-templates/home.php:928
-msgid "Feito com ♥ para você"
 msgstr ""
 
 #. translators: %s: Search query.
@@ -1112,10 +1225,14 @@ msgstr ""
 msgid "Page navigation"
 msgstr ""
 
-#: template-parts/content-single.php:35
-msgid "Post tags"
+#: template-parts/content-single.php:36
+msgid "Compartilhar no X"
 msgstr ""
 
-#: template-parts/content.php:27
-msgid "Read more"
+#: template-parts/content-single.php:37
+msgid "Compartilhar no Facebook"
+msgstr ""
+
+#: template-parts/content-single.php:38
+msgid "Compartilhar no LinkedIn"
 msgstr ""
