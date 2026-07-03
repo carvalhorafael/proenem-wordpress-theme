@@ -2714,7 +2714,7 @@ body.proenem-home-template {
     width: max-content;
   }
 
-  .pro-home .pen-hero-section__title > span:nth-child(4) {
+  .pro-home .pen-hero-section__title-line--right {
     text-align: right;
   }
 

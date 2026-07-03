@@ -186,10 +186,10 @@ $subjects = array(
 			<span class="pen-hero-sticker pen-hero-sticker--green"><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></span>
 			<span class="pen-hero-sticker pen-hero-sticker--orange"><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></span>
 			<h1 id="pro-home-title" class="pen-hero-section__title">
-				<span><?php esc_html_e( 'Sua', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'aprovação', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'não é', 'proenem-wordpress-theme' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--blue"><?php esc_html_e( 'sorte', 'proenem-wordpress-theme' ); ?></strong></span>
-				<span><?php esc_html_e( 'é', 'proenem-wordpress-theme' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--yellow"><?php esc_html_e( 'método', 'proenem-wordpress-theme' ); ?></strong></span>
+				<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php esc_html_e( 'Sua', 'proenem-wordpress-theme' ); ?></span>
+				<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php esc_html_e( 'aprovação', 'proenem-wordpress-theme' ); ?></span>
+				<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php esc_html_e( 'não é', 'proenem-wordpress-theme' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--blue"><?php esc_html_e( 'sorte', 'proenem-wordpress-theme' ); ?></strong></span>
+				<span class="pen-hero-section__title-line pen-hero-section__title-line--right"><?php esc_html_e( 'é', 'proenem-wordpress-theme' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--yellow"><?php esc_html_e( 'método', 'proenem-wordpress-theme' ); ?></strong></span>
 			</h1>
 		</div>
 	</section>
