@@ -417,6 +417,244 @@ function proenem_render_latest_posts_section( $current_post_id ) {
 }
 
 /**
+ * Get the Free Materials post type contract.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_post_type() {
+	return function_exists( 'free_materials_post_type' ) ? free_materials_post_type() : 'material_gratuito';
+}
+
+/**
+ * Get the Free Materials taxonomy contract.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_taxonomy() {
+	return function_exists( 'free_materials_taxonomy' ) ? free_materials_taxonomy() : 'material_categoria';
+}
+
+/**
+ * Get the Free Materials CTA label meta key.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_cta_label_meta_key() {
+	return function_exists( 'free_materials_cta_label_meta_key' ) ? free_materials_cta_label_meta_key() : '_executive_signal_material_capture_label';
+}
+
+/**
+ * Get the Free Materials delivery URL meta key.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_delivery_url_meta_key() {
+	return function_exists( 'free_materials_brevo_delivery_url_meta_key' ) ? free_materials_brevo_delivery_url_meta_key() : '_brevo_leads_capture_delivery_url';
+}
+
+/**
+ * Check whether the Free Materials plugin contract is available.
+ *
+ * @return bool
+ */
+function proenem_free_materials_is_available() {
+	return post_type_exists( proenem_get_free_materials_post_type() ) && taxonomy_exists( proenem_get_free_materials_taxonomy() );
+}
+
+/**
+ * Check whether the current request belongs to the Free Materials surface.
+ *
+ * @return bool
+ */
+function proenem_is_free_materials_surface() {
+	return is_page_template( 'page-templates/free-materials.php' )
+		|| is_singular( proenem_get_free_materials_post_type() )
+		|| is_tax( proenem_get_free_materials_taxonomy() );
+}
+
+/**
+ * Get selected material category slugs from the request.
+ *
+ * @return string[]
+ */
+function proenem_get_selected_material_category_slugs() {
+	$raw_categories = filter_input( INPUT_GET, 'material_categoria', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+	if ( ! is_array( $raw_categories ) ) {
+		$raw_category = filter_input( INPUT_GET, 'material_categoria', FILTER_DEFAULT );
+
+		$raw_categories = null === $raw_category ? array() : array( $raw_category );
+	}
+
+	$slugs = array();
+
+	foreach ( $raw_categories as $raw_category ) {
+		$slug = sanitize_title( $raw_category );
+
+		if ( $slug ) {
+			$slugs[] = $slug;
+		}
+	}
+
+	return array_values( array_unique( $slugs ) );
+}
+
+/**
+ * Get the material category label for cards and single pages.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_category_label( $post_id ) {
+	$terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return __( 'Material gratuito', 'proenem-wordpress-theme' );
+	}
+
+	return $terms[0]->name;
+}
+
+/**
+ * Get the material excerpt.
+ *
+ * @param int $post_id Post ID.
+ * @param int $word_count Word count.
+ * @return string
+ */
+function proenem_get_material_excerpt( $post_id, $word_count = 20 ) {
+	$excerpt = get_the_excerpt( $post_id );
+
+	if ( $excerpt ) {
+		return wp_trim_words( $excerpt, $word_count );
+	}
+
+	return wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), $word_count );
+}
+
+/**
+ * Get the image slot expected by Proenem material cards.
+ *
+ * @param int    $post_id Post ID.
+ * @param string $size    Image size.
+ * @return array{src:string,alt:string}
+ */
+function proenem_get_material_image_slot( $post_id, $size = 'large' ) {
+	return proenem_get_post_image_slot( $post_id, $size );
+}
+
+/**
+ * Get the material CTA label.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_cta_label( $post_id ) {
+	$label = get_post_meta( $post_id, proenem_get_free_materials_cta_label_meta_key(), true );
+
+	if ( is_string( $label ) && '' !== trim( $label ) ) {
+		return $label;
+	}
+
+	return __( 'Acessar material', 'proenem-wordpress-theme' );
+}
+
+/**
+ * Get the material delivery URL.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_delivery_url( $post_id ) {
+	$url = get_post_meta( $post_id, proenem_get_free_materials_delivery_url_meta_key(), true );
+
+	return is_string( $url ) ? $url : '';
+}
+
+/**
+ * Render a Free Materials card.
+ *
+ * @param int $post_id Post ID.
+ * @return void
+ */
+function proenem_render_material_card( $post_id ) {
+	$image          = proenem_get_material_image_slot( $post_id, 'large' );
+	$category_terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+	$category_slugs = array();
+
+	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
+		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
+	}
+	?>
+	<article class="pro-material-card" data-pro-material-card data-material-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
+			<img src="<?php echo esc_url( $image['src'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
+			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
+		</a>
+		<div class="pro-material-card__body">
+			<h2><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h2>
+			<p><?php echo esc_html( proenem_get_material_excerpt( $post_id ) ); ?></p>
+			<a class="pro-material-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
+				<?php echo esc_html( proenem_get_material_cta_label( $post_id ) ); ?>
+				<span aria-hidden="true">→</span>
+			</a>
+		</div>
+	</article>
+	<?php
+}
+
+/**
+ * Render material category filters.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return void
+ */
+function proenem_render_material_category_filters( $terms, $selected_slugs ) {
+	?>
+		<form class="pro-materials-filter" method="get" action="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-filter>
+			<div class="pro-materials-filter__header">
+				<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
+				<a href="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-clear<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+			</div>
+		<div class="pro-materials-filter__options">
+			<?php if ( empty( $terms ) ) : ?>
+				<p><?php esc_html_e( 'Nenhuma categoria cadastrada ainda.', 'proenem-wordpress-theme' ); ?></p>
+			<?php else : ?>
+				<?php foreach ( $terms as $term ) : ?>
+					<label class="pro-materials-filter__option">
+						<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
+						<span><?php echo esc_html( $term->name ); ?></span>
+						<small><?php echo esc_html( (string) $term->count ); ?></small>
+					</label>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
+			<?php esc_html_e( 'Filtrar materiais', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
+	<?php
+}
+
+/**
+ * Render a local empty state for the materials surface.
+ *
+ * @param string $title Empty title.
+ * @param string $body  Empty body.
+ * @return void
+ */
+function proenem_render_materials_empty_state( $title, $body ) {
+	?>
+	<section class="pro-materials-empty">
+		<span aria-hidden="true">✦</span>
+		<h2><?php echo esc_html( $title ); ?></h2>
+		<p><?php echo esc_html( $body ); ?></p>
+	</section>
+	<?php
+}
+
+/**
  * Get primary navigation data for the design-system navbar.
  *
  * @param string $context Navigation context.
@@ -438,7 +676,12 @@ function proenem_get_primary_navigation_items( $context = 'site' ) {
 			array(
 				'url'    => home_url( '/blog/' ),
 				'label'  => __( 'Blog', 'proenem-wordpress-theme' ),
-				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || is_archive() ),
+				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || ( is_archive() && ! proenem_is_free_materials_surface() ) ),
+			),
+			array(
+				'url'    => home_url( '/materiais-gratuitos/' ),
+				'label'  => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
+				'active' => 'home' !== $context && proenem_is_free_materials_surface(),
 			),
 		),
 		'actions' => array(
