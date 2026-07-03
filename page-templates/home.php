@@ -125,6 +125,10 @@ $faq_items = array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
 		'answer'   => __( 'Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo disponível até a prova.', 'proenem-wordpress-theme' ),
 	),
+	array(
+		'question' => __( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Você pode cancelar quando quiser. A ideia é experimentar o método sem burocracia e seguir apenas se fizer sentido para sua rotina.', 'proenem-wordpress-theme' ),
+	),
 );
 
 $subjects = array(
@@ -864,7 +868,10 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 	<section id="faq" class="pen-faq-section" aria-labelledby="pro-faq-title">
 		<div class="pen-faq-section__header">
 			<span class="pen-pill-eyebrow"><?php esc_html_e( 'Perguntas frequentes', 'proenem-wordpress-theme' ); ?></span>
-			<h2 id="pro-faq-title"><?php esc_html_e( 'Já sentiu que estuda muito, mas a nota não sobe?', 'proenem-wordpress-theme' ); ?></h2>
+			<h2 id="pro-faq-title">
+				<?php esc_html_e( 'Já sentiu que', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'estuda muito,', 'proenem-wordpress-theme' ); ?></strong><br>
+				<?php esc_html_e( 'mas a nota', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'não sobe?', 'proenem-wordpress-theme' ); ?></strong>
+			</h2>
 		</div>
 		<div class="pen-faq-section__items">
 			<?php foreach ( $faq_items as $index => $item ) : ?>
