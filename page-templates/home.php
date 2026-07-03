@@ -12,10 +12,6 @@ $home_asset_uri = static function ( $filename ) {
 	return PROENEM_THEME_URI . '/assets/images/home/' . $filename;
 };
 
-$brand_asset_uri = static function ( $filename ) {
-	return PROENEM_THEME_URI . '/assets/images/brand/' . $filename;
-};
-
 $platform_icon_svg = static function ( $icon ) {
 	$icons = array(
 		'clock' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>',
@@ -170,159 +166,17 @@ $subjects = array(
 	),
 );
 
-$home_nav_links   = array(
-	array(
-		'label'  => __( 'Método PRO', 'proenem-wordpress-theme' ),
-		'url'    => '#metodo',
-		'active' => true,
-	),
-	array(
-		'label' => __( 'Planos', 'proenem-wordpress-theme' ),
-		'url'   => '#planos',
-	),
-	array(
-		'label' => __( 'Questões', 'proenem-wordpress-theme' ),
-		'url'   => '#questoes',
-	),
-	array(
-		'label' => __( 'Aprovados', 'proenem-wordpress-theme' ),
-		'url'   => '#aprovados',
-	),
-	array(
-		'label' => __( 'FAQ', 'proenem-wordpress-theme' ),
-		'url'   => '#faq',
-	),
-);
-$home_nav_actions = array(
-	array(
-		'label'   => __( 'Comece grátis', 'proenem-wordpress-theme' ),
-		'url'     => '#planos',
-		'variant' => 'primary',
-	),
-);
-
-$nav_menu_locations = get_nav_menu_locations();
-
-if ( ! empty( $nav_menu_locations['primary'] ) ) {
-	$primary_menu_items = wp_get_nav_menu_items( $nav_menu_locations['primary'] );
-
-	if ( ! empty( $primary_menu_items ) && ! is_wp_error( $primary_menu_items ) ) {
-		$home_nav_links   = array();
-		$home_nav_actions = array();
-
-		foreach ( $primary_menu_items as $primary_menu_item ) {
-			if ( '0' !== (string) $primary_menu_item->menu_item_parent ) {
-				continue;
-			}
-
-			$primary_menu_item_classes = is_array( $primary_menu_item->classes )
-				? $primary_menu_item->classes
-				: array();
-			$primary_menu_item_classes = array_filter(
-				array_map( 'sanitize_html_class', $primary_menu_item_classes )
-			);
-
-			$home_nav_item = array(
-				'label'   => $primary_menu_item->title,
-				'url'     => $primary_menu_item->url,
-				'target'  => $primary_menu_item->target,
-				'rel'     => $primary_menu_item->xfn,
-				'classes' => $primary_menu_item_classes,
-				'active'  => ! empty(
-					array_intersect(
-						array(
-							'current-menu-item',
-							'current-menu-ancestor',
-							'current_page_item',
-						),
-						$primary_menu_item_classes
-					)
-				),
-			);
-
-			if ( in_array( 'pen-navbar-action', $primary_menu_item_classes, true ) ) {
-				$home_nav_item['variant'] = in_array( 'pen-navbar-action-secondary', $primary_menu_item_classes, true )
-					? 'secondary'
-					: 'primary';
-
-				$home_nav_actions[] = $home_nav_item;
-				continue;
-			}
-
-			$home_nav_links[] = $home_nav_item;
-		}
-	}
-}
 ?>
 
 <main id="primary" class="site-main pro-home">
-	<nav class="pen-navbar" aria-label="<?php esc_attr_e( 'Navegação da home', 'proenem-wordpress-theme' ); ?>" data-pro-home-navbar>
-		<a class="pen-brand-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-			<img src="<?php echo esc_url( $brand_asset_uri( 'logo_proenem.svg' ) ); ?>" alt="<?php esc_attr_e( 'ProEnem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
-		</a>
-		<button class="pro-home-navbar-toggle" type="button" aria-controls="pro-home-navbar-menu" aria-expanded="false">
-			<span class="screen-reader-text"><?php esc_html_e( 'Abrir menu', 'proenem-wordpress-theme' ); ?></span>
-			<span aria-hidden="true"></span>
-			<span aria-hidden="true"></span>
-			<span aria-hidden="true"></span>
-		</button>
-		<div id="pro-home-navbar-menu" class="pro-home-navbar-menu">
-			<div class="pen-navbar__links">
-			<?php foreach ( $home_nav_links as $home_nav_link ) : ?>
-				<?php
-				$home_nav_link_class = 'pen-navbar__link';
-
-				if ( ! empty( $home_nav_link['active'] ) ) {
-					$home_nav_link_class .= ' pen-navbar__link--active';
-				}
-
-				$home_nav_link_rel = $home_nav_link['rel'] ?? '';
-
-				if ( '_blank' === ( $home_nav_link['target'] ?? '' ) && empty( $home_nav_link_rel ) ) {
-					$home_nav_link_rel = 'noopener';
-				}
-				?>
-				<a
-					class="<?php echo esc_attr( $home_nav_link_class ); ?>"
-					href="<?php echo esc_url( $home_nav_link['url'] ); ?>"
-					<?php echo ! empty( $home_nav_link['target'] ) ? 'target="' . esc_attr( $home_nav_link['target'] ) . '"' : ''; ?>
-					<?php echo ! empty( $home_nav_link_rel ) ? 'rel="' . esc_attr( $home_nav_link_rel ) . '"' : ''; ?>
-					<?php echo ! empty( $home_nav_link['active'] ) ? 'aria-current="page"' : ''; ?>
-				>
-					<?php echo esc_html( $home_nav_link['label'] ); ?>
-				</a>
-			<?php endforeach; ?>
-			</div>
-			<?php if ( ! empty( $home_nav_actions ) ) : ?>
-				<div class="pen-navbar__actions">
-					<?php foreach ( $home_nav_actions as $home_nav_action ) : ?>
-						<?php
-						$home_nav_action_variant = in_array( $home_nav_action['variant'] ?? '', array( 'primary', 'secondary' ), true )
-							? $home_nav_action['variant']
-							: 'primary';
-						$home_nav_action_class   = 'pen-navbar__action pen-navbar__action--' . $home_nav_action_variant;
-						$home_nav_action_class  .= ! empty( $home_nav_action['classes'] )
-							? ' ' . implode( ' ', $home_nav_action['classes'] )
-							: '';
-						$home_nav_action_rel     = $home_nav_action['rel'] ?? '';
-
-						if ( '_blank' === ( $home_nav_action['target'] ?? '' ) && empty( $home_nav_action_rel ) ) {
-							$home_nav_action_rel = 'noopener';
-						}
-						?>
-						<a
-							class="<?php echo esc_attr( $home_nav_action_class ); ?>"
-							href="<?php echo esc_url( $home_nav_action['url'] ); ?>"
-							<?php echo ! empty( $home_nav_action['target'] ) ? 'target="' . esc_attr( $home_nav_action['target'] ) . '"' : ''; ?>
-							<?php echo ! empty( $home_nav_action_rel ) ? 'rel="' . esc_attr( $home_nav_action_rel ) . '"' : ''; ?>
-						>
-							<?php echo esc_html( $home_nav_action['label'] ); ?>
-						</a>
-					<?php endforeach; ?>
-				</div>
-			<?php endif; ?>
-		</div>
-	</nav>
+	<?php
+	proenem_render_site_navbar(
+		array(
+			'aria_label' => __( 'Navegação da home', 'proenem-wordpress-theme' ),
+			'context'    => 'home',
+		)
+	);
+	?>
 
 	<section class="pen-hero-section" aria-labelledby="pro-home-title">
 		<div class="pen-hero-section__stage">

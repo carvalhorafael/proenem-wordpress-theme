@@ -419,15 +419,16 @@ function proenem_render_latest_posts_section( $current_post_id ) {
 /**
  * Get primary navigation data for the design-system navbar.
  *
+ * @param string $context Navigation context.
  * @return array{links:array<int,array<string,mixed>>,actions:array<int,array<string,mixed>>}
  */
-function proenem_get_primary_navigation_items() {
+function proenem_get_primary_navigation_items( $context = 'site' ) {
 	$fallback = array(
 		'links'   => array(
 			array(
 				'url'    => home_url( '/#metodo' ),
 				'label'  => __( 'Método PRO', 'proenem-wordpress-theme' ),
-				'active' => false,
+				'active' => 'home' === $context,
 			),
 			array(
 				'url'    => home_url( '/#planos' ),
@@ -437,7 +438,7 @@ function proenem_get_primary_navigation_items() {
 			array(
 				'url'    => home_url( '/blog/' ),
 				'label'  => __( 'Blog', 'proenem-wordpress-theme' ),
-				'active' => is_home() || is_singular( 'post' ) || is_archive(),
+				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || is_archive() ),
 			),
 		),
 		'actions' => array(
@@ -472,6 +473,10 @@ function proenem_get_primary_navigation_items() {
 	);
 
 	foreach ( $menu_items as $menu_item ) {
+		if ( '0' !== (string) $menu_item->menu_item_parent ) {
+			continue;
+		}
+
 		$classes = array_filter( (array) $menu_item->classes );
 		$item    = array(
 			'url'     => $menu_item->url,
@@ -500,4 +505,89 @@ function proenem_get_primary_navigation_items() {
 	}
 
 	return $navigation;
+}
+
+/**
+ * Render the shared Proenem navbar markup.
+ *
+ * @param array{aria_label?:string,context?:string} $args Navbar args.
+ * @return void
+ */
+function proenem_render_site_navbar( $args = array() ) {
+	$defaults   = array(
+		'aria_label' => __( 'Navegação principal', 'proenem-wordpress-theme' ),
+		'context'    => 'site',
+	);
+	$args       = wp_parse_args( $args, $defaults );
+	$navigation = proenem_get_primary_navigation_items( $args['context'] );
+	$menu_id    = 'proenem-navbar-menu-' . sanitize_html_class( $args['context'] );
+	?>
+	<nav class="pen-navbar pro-site-navbar" aria-label="<?php echo esc_attr( $args['aria_label'] ); ?>" data-pro-home-navbar>
+		<a class="pen-brand-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+			<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'ProEnem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
+		</a>
+		<button class="pro-home-navbar-toggle" type="button" aria-controls="<?php echo esc_attr( $menu_id ); ?>" aria-expanded="false">
+			<span class="screen-reader-text"><?php esc_html_e( 'Abrir menu', 'proenem-wordpress-theme' ); ?></span>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+			<span aria-hidden="true"></span>
+		</button>
+		<div id="<?php echo esc_attr( $menu_id ); ?>" class="pro-home-navbar-menu">
+			<div class="pen-navbar__links">
+				<?php foreach ( $navigation['links'] as $navigation_link ) : ?>
+					<?php
+					$navigation_link_class = 'pen-navbar__link';
+
+					if ( ! empty( $navigation_link['active'] ) ) {
+						$navigation_link_class .= ' pen-navbar__link--active';
+					}
+
+					$navigation_link_rel = $navigation_link['rel'] ?? '';
+
+					if ( '_blank' === ( $navigation_link['target'] ?? '' ) && empty( $navigation_link_rel ) ) {
+						$navigation_link_rel = 'noopener';
+					}
+					?>
+					<a
+						class="<?php echo esc_attr( $navigation_link_class ); ?>"
+						href="<?php echo esc_url( $navigation_link['url'] ); ?>"
+						<?php echo ! empty( $navigation_link['target'] ) ? 'target="' . esc_attr( $navigation_link['target'] ) . '"' : ''; ?>
+						<?php echo ! empty( $navigation_link_rel ) ? 'rel="' . esc_attr( $navigation_link_rel ) . '"' : ''; ?>
+						<?php echo ! empty( $navigation_link['active'] ) ? 'aria-current="page"' : ''; ?>
+					>
+						<?php echo esc_html( $navigation_link['label'] ); ?>
+					</a>
+				<?php endforeach; ?>
+			</div>
+			<?php if ( ! empty( $navigation['actions'] ) ) : ?>
+				<div class="pen-navbar__actions">
+					<?php foreach ( $navigation['actions'] as $navigation_action ) : ?>
+						<?php
+						$navigation_action_variant = in_array( $navigation_action['variant'] ?? '', array( 'primary', 'secondary' ), true )
+							? $navigation_action['variant']
+							: 'primary';
+						$navigation_action_class   = 'pen-navbar__action pen-navbar__action--' . $navigation_action_variant;
+						$navigation_action_class  .= ! empty( $navigation_action['classes'] )
+							? ' ' . implode( ' ', $navigation_action['classes'] )
+							: '';
+						$navigation_action_rel     = $navigation_action['rel'] ?? '';
+
+						if ( '_blank' === ( $navigation_action['target'] ?? '' ) && empty( $navigation_action_rel ) ) {
+							$navigation_action_rel = 'noopener';
+						}
+						?>
+						<a
+							class="<?php echo esc_attr( $navigation_action_class ); ?>"
+							href="<?php echo esc_url( $navigation_action['url'] ); ?>"
+							<?php echo ! empty( $navigation_action['target'] ) ? 'target="' . esc_attr( $navigation_action['target'] ) . '"' : ''; ?>
+							<?php echo ! empty( $navigation_action_rel ) ? 'rel="' . esc_attr( $navigation_action_rel ) . '"' : ''; ?>
+						>
+							<?php echo esc_html( $navigation_action['label'] ); ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+		</div>
+	</nav>
+	<?php
 }
