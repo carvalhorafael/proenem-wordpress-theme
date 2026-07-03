@@ -80,10 +80,10 @@ add_action( 'init', 'proenem_register_block_styles' );
  */
 function proenem_register_widget_areas() {
 	$widget_areas = array(
-		'footer-1'      => __( 'Footer column 1', 'proenem-wordpress-theme' ),
-		'footer-2'      => __( 'Footer column 2', 'proenem-wordpress-theme' ),
-		'footer-3'      => __( 'Footer column 3', 'proenem-wordpress-theme' ),
-		'footer-bottom' => __( 'Footer bottom', 'proenem-wordpress-theme' ),
+		'footer-1'             => __( 'Footer column 1', 'proenem-wordpress-theme' ),
+		'footer-2'             => __( 'Footer column 2', 'proenem-wordpress-theme' ),
+		'footer-3'             => __( 'Footer column 3', 'proenem-wordpress-theme' ),
+		'footer-bottom'        => __( 'Footer bottom', 'proenem-wordpress-theme' ),
 		'home-footer-platform' => __( 'Home footer - Plataforma', 'proenem-wordpress-theme' ),
 		'home-footer-support'  => __( 'Home footer - Suporte', 'proenem-wordpress-theme' ),
 	);

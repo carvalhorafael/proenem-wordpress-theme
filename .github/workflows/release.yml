@@ -1,16 +1,16 @@
-name: CI
+name: Release
 
 on:
-  pull_request:
   push:
-    branches:
-      - main
+    tags:
+      - "v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  validate:
+  release:
+    name: Publish tagged release
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -25,13 +25,13 @@ jobs:
           cache: npm
 
       - name: Configure GitHub Packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.PROENEM_PACKAGES_TOKEN }}
         run: |
           {
             echo "@carvalhorafael:registry=https://npm.pkg.github.com"
             echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}"
           } > .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PROENEM_PACKAGES_TOKEN }}
 
       - name: Install dependencies
         run: npm ci
@@ -39,26 +39,29 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Check release version
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: npm run release:check-version -- "${TAG_NAME}"
+
       - name: Start WordPress
         run: npm run wp:start
 
       - name: Install PHP dependencies
         run: npm run composer:install
 
-      - name: Run automated tests
-        run: npm test
-
       - name: Validate release package
-        if: github.event_name == 'push' && github.ref_name == 'main'
-        run: npm run theme:zip && npm run theme:validate-zip
+        run: npm run validate
 
-      - name: Upload theme ZIP
-        if: github.event_name == 'push' && github.ref_name == 'main'
-        uses: actions/upload-artifact@v4
-        with:
-          name: proenem-wordpress-theme
-          path: dist/proenem-wordpress-theme.zip
-          if-no-files-found: error
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          gh release create "${TAG_NAME}" \
+            dist/proenem-wordpress-theme.zip \
+            --title "Proenem WordPress Theme ${TAG_NAME}" \
+            --generate-notes
 
       - name: Stop WordPress
         if: always()

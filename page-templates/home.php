@@ -18,12 +18,12 @@ $brand_asset_uri = static function ( $filename ) {
 
 $platform_icon_svg = static function ( $icon ) {
 	$icons = array(
-		'clock'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>',
-		'book'   => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 5.5h7a4 4 0 0 1 4 4v9a4 4 0 0 0-4-4H5z"></path><path d="M19 5.5h-3a4 4 0 0 0-4 4"></path><path d="M19 5.5v11.7"></path><path d="m16 15 1.5-1.5L19 15"></path></svg>',
-		'brain'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M9 5.3a3.2 3.2 0 0 0-4 3.1 3 3 0 0 0 .8 5.8 3 3 0 0 0 3.8 4.3"></path><path d="M15 5.3a3.2 3.2 0 0 1 4 3.1 3 3 0 0 1-.8 5.8 3 3 0 0 1-3.8 4.3"></path><path d="M9 5.3v13.2"></path><path d="M15 5.3v13.2"></path><path d="M9 9.2H7.2"></path><path d="M15 9.2h1.8"></path><path d="M9 14.2H7.2"></path><path d="M15 14.2h1.8"></path></svg>',
-		'robot'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><rect x="6" y="8" width="12" height="10" rx="2"></rect><path d="M12 5v3"></path><path d="M9 12h.01"></path><path d="M15 12h.01"></path><path d="M9 16h6"></path><path d="M4 12h2"></path><path d="M18 12h2"></path></svg>',
-		'edit'   => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19h14"></path><path d="m7 16 1-4 7.5-7.5a2.1 2.1 0 0 1 3 3L11 15z"></path></svg>',
-		'chart'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19V5"></path><path d="M5 19h14"></path><path d="m8 15 3-3 2 2 4-6"></path></svg>',
+		'clock' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>',
+		'book'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 5.5h7a4 4 0 0 1 4 4v9a4 4 0 0 0-4-4H5z"></path><path d="M19 5.5h-3a4 4 0 0 0-4 4"></path><path d="M19 5.5v11.7"></path><path d="m16 15 1.5-1.5L19 15"></path></svg>',
+		'brain' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M9 5.3a3.2 3.2 0 0 0-4 3.1 3 3 0 0 0 .8 5.8 3 3 0 0 0 3.8 4.3"></path><path d="M15 5.3a3.2 3.2 0 0 1 4 3.1 3 3 0 0 1-.8 5.8 3 3 0 0 1-3.8 4.3"></path><path d="M9 5.3v13.2"></path><path d="M15 5.3v13.2"></path><path d="M9 9.2H7.2"></path><path d="M15 9.2h1.8"></path><path d="M9 14.2H7.2"></path><path d="M15 14.2h1.8"></path></svg>',
+		'robot' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><rect x="6" y="8" width="12" height="10" rx="2"></rect><path d="M12 5v3"></path><path d="M9 12h.01"></path><path d="M15 12h.01"></path><path d="M9 16h6"></path><path d="M4 12h2"></path><path d="M18 12h2"></path></svg>',
+		'edit'  => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19h14"></path><path d="m7 16 1-4 7.5-7.5a2.1 2.1 0 0 1 3 3L11 15z"></path></svg>',
+		'chart' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5 19V5"></path><path d="M5 19h14"></path><path d="m8 15 3-3 2 2 4-6"></path></svg>',
 	);
 
 	return $icons[ $icon ] ?? $icons['clock'];
@@ -545,7 +545,7 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 	</section>
 
 	<?php
-	$platform_items = array(
+	$platform_items       = array(
 		array(
 			'label'   => __( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
 			'icon'    => 'clock',

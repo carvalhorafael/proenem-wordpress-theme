@@ -1,13 +1,13 @@
 {
   "name": "proenem-wordpress-theme",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "npm run wp:start && npm run composer:install && vite --host 0.0.0.0",
     "build": "vite build",
     "composer:install": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && composer install'",
-    "i18n:pot": "npx wp-env run cli -- wp i18n make-pot /var/www/html/wp-content/themes/proenem-wordpress-theme /var/www/html/wp-content/themes/proenem-wordpress-theme/languages/proenem-wordpress-theme.pot --domain=proenem-wordpress-theme --exclude=assets/dist,coverage,dist,docs,node_modules,scripts,tests,vendor --headers='{\"Language-Team\":\"Proenem\",\"POT-Creation-Date\":\"\"}' --skip-js",
+    "i18n:pot": "npx wp-env run cli -- wp i18n make-pot /var/www/html/wp-content/themes/proenem-wordpress-theme /var/www/html/wp-content/themes/proenem-wordpress-theme/languages/proenem-wordpress-theme.pot --domain=proenem-wordpress-theme --exclude=assets/dist,coverage,dist,docs,node_modules,scripts,tests,vendor --headers='{\"Language-Team\":\"Proenem\",\"POT-Creation-Date\":\"\"}' --skip-js --skip-theme-json",
     "i18n:po": "node scripts/sync-pt-br-po.mjs",
     "i18n:mo": "npx wp-env run cli -- wp i18n make-mo /var/www/html/wp-content/themes/proenem-wordpress-theme/languages",
     "i18n": "npm run i18n:pot && npm run i18n:po && npm run i18n:mo",
