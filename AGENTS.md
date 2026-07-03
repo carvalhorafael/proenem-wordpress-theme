@@ -29,6 +29,16 @@ Quando implementar UI:
 3. registre em `docs/theme-decisions.md` qualquer adaptacao local relevante;
 4. se o design system nao cobrir o caso e for necessario criar adaptacao local, siga a politica de gaps abaixo.
 
+### Referencia Figma da home
+
+Para ajustes visuais da home, use como referencia principal o arquivo Figma:
+
+`https://www.figma.com/design/hjWMV10KDc07g182tYo6jF/LP---ProEnem?node-id=360-8816&t=MtOygTtDGtUdi4bu-0`
+
+Node de referencia atual: `360:8816` (`Rectangle 5457`), tamanho `1440 x 1345`.
+
+Antes de novos ajustes finos nessa area, quando as ferramentas Figma estiverem disponiveis, consulte o node via MCP (`get_metadata` e/ou `get_screenshot`) para comparar contra a implementacao local em vez de depender apenas de prints enviados na conversa.
+
 ## Gaps e evolucao do design system
 
 Quando uma implementacao do tema revelar que o design system da Proenem nao possui um componente, token, classe CSS, pattern, contrato `web` ou comportamento necessario, nao deixe o gap apenas em comentario local, TODO solto ou memoria de conversa.
