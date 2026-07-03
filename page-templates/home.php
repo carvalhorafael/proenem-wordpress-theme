@@ -799,23 +799,62 @@ if ( ! empty( $nav_menu_locations['primary'] ) ) {
 		</div>
 	</section>
 
-	<section class="pen-audience-section" aria-labelledby="pro-school-title">
-		<div class="pen-audience-section__intro">
-			<h2 id="pro-school-title"><?php esc_html_e( 'Leve o Método PRO para a sua escola.', 'proenem-wordpress-theme' ); ?></h2>
-			<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM em um único pacote.', 'proenem-wordpress-theme' ); ?></p>
+	<section class="pen-audience-section pro-home-school-section" aria-labelledby="pro-school-title">
+		<div class="pro-home-school-section__marquee" aria-hidden="true">
+			<div class="pro-home-school-section__marquee-track">
+				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+			</div>
+		</div>
+		<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary">
+			<img src="<?php echo esc_url( $home_asset_uri( 'student_school_1.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>">
+		</figure>
+		<div class="pen-audience-section__intro pro-home-school-section__intro">
+			<div>
+				<h2 id="pro-school-title">
+					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></strong><br>
+					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
+				</h2>
+				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote.', 'proenem-wordpress-theme' ); ?></p>
+			</div>
+			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>">
+			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
 		</div>
 		<div class="pen-feature-grid pen-feature-grid--school">
-			<article><h3><?php esc_html_e( 'Combo plataforma + apostilas', 'proenem-wordpress-theme' ); ?></h3><p><?php esc_html_e( 'Acesso completo à plataforma e kit de apostilas exclusivas.', 'proenem-wordpress-theme' ); ?></p></article>
-			<article><h3><?php esc_html_e( 'Acompanhe cada aluno', 'proenem-wordpress-theme' ); ?></h3><p><?php esc_html_e( 'Painel exclusivo para desempenho, simulados e frequência.', 'proenem-wordpress-theme' ); ?></p></article>
-			<article><h3><?php esc_html_e( 'Acesso para todos os alunos', 'proenem-wordpress-theme' ); ?></h3><p><?php esc_html_e( 'Licenças geradas para todas as turmas.', 'proenem-wordpress-theme' ); ?></p></article>
-			<article><h3><?php esc_html_e( 'Onboarding dedicado', 'proenem-wordpress-theme' ); ?></h3><p><?php esc_html_e( 'Um especialista acompanha os primeiros ciclos.', 'proenem-wordpress-theme' ); ?></p></article>
+			<article>
+				<span class="pro-home-school-section__card-icon" aria-hidden="true"><?php echo $platform_icon_svg( 'book' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<h3><?php esc_html_e( 'Combo plataforma + apostilas', 'proenem-wordpress-theme' ); ?></h3>
+				<p><?php esc_html_e( 'Acesso completo à plataforma, mais o kit de apostilas exclusivas entregue na escola.', 'proenem-wordpress-theme' ); ?></p>
+			</article>
+			<article>
+				<span class="pro-home-school-section__card-icon" aria-hidden="true"><?php echo $platform_icon_svg( 'chart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<h3><?php esc_html_e( 'Acompanhe cada aluno', 'proenem-wordpress-theme' ); ?></h3>
+				<p><?php esc_html_e( 'Painel exclusivo para coordenadores e professores com desempenho, simulados e frequência em tempo real.', 'proenem-wordpress-theme' ); ?></p>
+			</article>
+			<article>
+				<span class="pro-home-school-section__card-icon" aria-hidden="true"><?php echo $platform_icon_svg( 'brain' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<h3><?php esc_html_e( 'Acesso para todos os alunos', 'proenem-wordpress-theme' ); ?></h3>
+				<p><?php esc_html_e( 'Licenças geradas para todas as turmas. Cada aluno tem seu perfil individual e plano personalizado.', 'proenem-wordpress-theme' ); ?></p>
+			</article>
+			<article>
+				<span class="pro-home-school-section__card-icon" aria-hidden="true"><?php echo $platform_icon_svg( 'robot' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<h3><?php esc_html_e( 'Onboarding dedicado', 'proenem-wordpress-theme' ); ?></h3>
+				<p><?php esc_html_e( 'Um especialista cuida da implantação, treina os professores e acompanha os primeiros ciclos.', 'proenem-wordpress-theme' ); ?></p>
+			</article>
 		</div>
 	</section>
 
 	<section class="pen-marketing-cta pro-home__final-cta" aria-labelledby="pro-final-title">
 		<div class="pen-marketing-cta__content">
-			<h2 id="pro-final-title"><?php esc_html_e( 'Pronto para transformar a preparação ENEM na sua escola?', 'proenem-wordpress-theme' ); ?></h2>
-			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta personalizada.', 'proenem-wordpress-theme' ); ?></p>
+			<h2 id="pro-final-title">
+				<?php esc_html_e( 'Pronto para', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'transformar', 'proenem-wordpress-theme' ); ?></strong> <?php esc_html_e( 'a', 'proenem-wordpress-theme' ); ?><br>
+				<?php esc_html_e( 'preparação', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'ENEM', 'proenem-wordpress-theme' ); ?></strong> <?php esc_html_e( 'na sua escola?', 'proenem-wordpress-theme' ); ?>
+			</h2>
+			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 		<div class="pen-marketing-cta__actions">
 			<a class="pen-button pen-button--primary pen-button--lg" href="#faq"><?php esc_html_e( 'Começar gratuitamente', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
