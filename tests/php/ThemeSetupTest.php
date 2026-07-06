@@ -73,4 +73,37 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/testimonials.php' );
 		$this->assertFileExists( PROENEM_THEME_DIR . '/single-depoimento.php' );
 	}
+
+	/**
+	 * Required plugin dependency contracts should be declared by plugin file.
+	 *
+	 * @return void
+	 */
+	public function test_required_plugin_dependencies_are_declared() {
+		$required_plugins = proenem_get_required_plugins();
+
+		$this->assertSame( 'free-materials/free-materials.php', $required_plugins['free-materials']['file'] );
+		$this->assertSame( 'testimonials/testimonials.php', $required_plugins['testimonials']['file'] );
+	}
+
+	/**
+	 * Active required plugins should not be reported as unmet.
+	 *
+	 * @return void
+	 */
+	public function test_active_required_plugins_are_not_reported_as_unmet() {
+		$previous_active_plugins = get_option( 'active_plugins', array() );
+
+		update_option(
+			'active_plugins',
+			array(
+				'free-materials/free-materials.php',
+				'testimonials/testimonials.php',
+			)
+		);
+
+		$this->assertSame( array(), proenem_get_unmet_required_plugins() );
+
+		update_option( 'active_plugins', $previous_active_plugins );
+	}
 }
