@@ -96,7 +96,7 @@ msgid "Plataforma"
 msgstr ""
 
 #: footer.php:24
-#: inc/template-tags.php:668
+#: inc/template-tags.php:1105
 #: page-templates/home.php:54
 #: page-templates/home.php:677
 #: page-templates/home.php:757
@@ -104,7 +104,7 @@ msgid "Método PRO"
 msgstr ""
 
 #: footer.php:25
-#: inc/template-tags.php:673
+#: inc/template-tags.php:1110
 #: page-templates/home.php:758
 msgid "Planos"
 msgstr ""
@@ -116,7 +116,7 @@ msgstr ""
 
 #: footer.php:27
 #: inc/template-tags.php:102
-#: inc/template-tags.php:678
+#: inc/template-tags.php:1115
 msgid "Blog"
 msgstr ""
 
@@ -359,14 +359,17 @@ msgid "Acessar material"
 msgstr ""
 
 #: inc/template-tags.php:617
+#: inc/template-tags.php:1054
 msgid "Categorias"
 msgstr ""
 
 #: inc/template-tags.php:618
+#: inc/template-tags.php:1055
 msgid "Limpar filtros"
 msgstr ""
 
 #: inc/template-tags.php:622
+#: inc/template-tags.php:1059
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr ""
 
@@ -374,29 +377,59 @@ msgstr ""
 msgid "Filtrar materiais"
 msgstr ""
 
+#: inc/template-tags.php:777
+msgid "Depoimento"
+msgstr ""
+
+#. translators: 1: Student placement. 2: Where the student was approved.
+#: inc/template-tags.php:858
+#, php-format
+msgid "%1$s · %2$s"
+msgstr ""
+
+#. translators: %s: Student name.
+#: inc/template-tags.php:1016
+#, php-format
+msgid "Reproduzir vídeo de %s"
+msgstr ""
+
+#: inc/template-tags.php:1034
+msgid "Ver história completa"
+msgstr ""
+
+#: inc/template-tags.php:1071
+msgid "Filtrar depoimentos"
+msgstr ""
+
 #. Template Name of the theme
-#: inc/template-tags.php:683
+#: inc/template-tags.php:1120
 #: page-templates/free-materials.php:43
 msgid "Materiais gratuitos"
 msgstr ""
 
-#: inc/template-tags.php:690
+#. Template Name of the theme
+#: inc/template-tags.php:1125
+#: page-templates/testimonials.php:54
+msgid "Depoimentos"
+msgstr ""
+
+#: inc/template-tags.php:1132
 msgid "Login"
 msgstr ""
 
-#: inc/template-tags.php:695
+#: inc/template-tags.php:1137
 msgid "Comece grátis"
 msgstr ""
 
-#: inc/template-tags.php:761
+#: inc/template-tags.php:1203
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:770
+#: inc/template-tags.php:1212
 msgid "ProEnem"
 msgstr ""
 
-#: inc/template-tags.php:773
+#: inc/template-tags.php:1215
 msgid "Abrir menu"
 msgstr ""
 
@@ -1271,6 +1304,46 @@ msgstr ""
 msgid "@2026 ProEnem - Grupo Q Educação"
 msgstr ""
 
+#: page-templates/testimonials.php:55
+msgid "Histórias reais de quem estudou com a Proenem"
+msgstr ""
+
+#: page-templates/testimonials.php:56
+msgid "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+msgstr ""
+
+#: page-templates/testimonials.php:61
+msgid "Filtros de depoimentos"
+msgstr ""
+
+#: page-templates/testimonials.php:67
+msgid "Todos os depoimentos"
+msgstr ""
+
+#. translators: %s: Number of testimonials found.
+#: page-templates/testimonials.php:72
+#, php-format
+msgid "%s depoimento publicado"
+msgid_plural "%s depoimentos publicados"
+msgstr[0] ""
+msgstr[1] ""
+
+#: page-templates/testimonials.php:82
+msgid "Plugin Testimonials não está ativo."
+msgstr ""
+
+#: page-templates/testimonials.php:83
+msgid "Ative o plugin para publicar e listar depoimentos nesta página."
+msgstr ""
+
+#: page-templates/testimonials.php:99
+msgid "Nenhum depoimento encontrado."
+msgstr ""
+
+#: page-templates/testimonials.php:100
+msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+msgstr ""
+
 #. translators: %s: Search query.
 #: search.php:17
 #, php-format
@@ -1284,6 +1357,25 @@ msgstr ""
 
 #: searchform.php:15
 msgid "Search..."
+msgstr ""
+
+#: single-depoimento.php:30
+msgid "← Depoimentos"
+msgstr ""
+
+#: single-depoimento.php:51
+#: single-material_gratuito.php:62
+#: template-parts/content-page.php:19
+#: template-parts/content-single.php:26
+msgid "Page navigation"
+msgstr ""
+
+#: single-depoimento.php:63
+msgid "Onde passou"
+msgstr ""
+
+#: single-depoimento.php:70
+msgid "Ver depoimentos"
 msgstr ""
 
 #: single-material_gratuito.php:23
@@ -1332,12 +1424,6 @@ msgstr ""
 
 #: single-material_gratuito.php:52
 msgid "Sem pagamento. Enviaremos o material para o contato informado."
-msgstr ""
-
-#: single-material_gratuito.php:62
-#: template-parts/content-page.php:19
-#: template-parts/content-single.php:26
-msgid "Page navigation"
 msgstr ""
 
 #: single-material_gratuito.php:71
