@@ -3,7 +3,7 @@
   "port": 8898,
   "testsPort": 8899,
   "plugins": [
-    "../../plugins-wordpress/testimonials",
+    "https://github.com/carvalhorafael/testimonials/releases/download/v0.4.0/testimonials-0.4.0.zip",
     "https://downloads.wordpress.org/plugin/theme-check.latest-stable.zip"
   ],
   "themes": [
