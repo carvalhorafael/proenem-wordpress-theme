@@ -13,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Proenem scaffold\n"
 
-
 # Copyright (C) 2026 Rafael Carvalho
 # This file is distributed under the Proprietary.
 msgid ""
@@ -243,8 +242,8 @@ msgstr "Paginacao de posts"
 #, php-format
 msgid "%d min de leitura"
 msgid_plural "%d min de leitura"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d min de leitura"
+msgstr[1] "%d min de leitura"
 
 #: inc/template-tags.php:248
 msgid "Categorias do blog"
