@@ -655,6 +655,443 @@ function proenem_render_materials_empty_state( $title, $body ) {
 }
 
 /**
+ * Get the Testimonials post type contract.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_post_type() {
+	return function_exists( 'testimonials_post_type' ) ? testimonials_post_type() : 'depoimento';
+}
+
+/**
+ * Get the Testimonials taxonomy contract.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_taxonomy() {
+	return function_exists( 'testimonials_taxonomy' ) ? testimonials_taxonomy() : 'depoimento_categoria';
+}
+
+/**
+ * Get the Testimonials video URL meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_video_url_meta_key() {
+	return function_exists( 'testimonials_video_url_meta_key' ) ? testimonials_video_url_meta_key() : '_testimonials_video_url';
+}
+
+/**
+ * Get the Testimonials student name meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_student_name_meta_key() {
+	return function_exists( 'testimonials_student_name_meta_key' ) ? testimonials_student_name_meta_key() : '_testimonials_student_name';
+}
+
+/**
+ * Get the Testimonials approved at meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_approved_at_meta_key() {
+	return function_exists( 'testimonials_approved_at_meta_key' ) ? testimonials_approved_at_meta_key() : '_testimonials_approved_at';
+}
+
+/**
+ * Get the Testimonials placement meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_placement_meta_key() {
+	return function_exists( 'testimonials_placement_meta_key' ) ? testimonials_placement_meta_key() : '_testimonials_placement';
+}
+
+/**
+ * Check whether the Testimonials plugin contract is available.
+ *
+ * @return bool
+ */
+function proenem_testimonials_is_available() {
+	return post_type_exists( proenem_get_testimonials_post_type() ) && taxonomy_exists( proenem_get_testimonials_taxonomy() );
+}
+
+/**
+ * Check whether the current request belongs to the Testimonials surface.
+ *
+ * @return bool
+ */
+function proenem_is_testimonials_surface() {
+	return is_page_template( 'page-templates/testimonials.php' )
+		|| is_singular( proenem_get_testimonials_post_type() )
+		|| is_tax( proenem_get_testimonials_taxonomy() );
+}
+
+/**
+ * Get the Testimonials listing page URL.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_url() {
+	return home_url( '/depoimentos/' );
+}
+
+/**
+ * Get selected testimonial category slugs from the request.
+ *
+ * @return string[]
+ */
+function proenem_get_selected_testimonial_category_slugs() {
+	$raw_categories = filter_input( INPUT_GET, 'depoimento_categoria', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
+	if ( ! is_array( $raw_categories ) ) {
+		$raw_category = filter_input( INPUT_GET, 'depoimento_categoria', FILTER_DEFAULT );
+
+		$raw_categories = null === $raw_category ? array() : array( $raw_category );
+	}
+
+	$slugs = array();
+
+	foreach ( $raw_categories as $raw_category ) {
+		$slug = sanitize_title( $raw_category );
+
+		if ( $slug ) {
+			$slugs[] = $slug;
+		}
+	}
+
+	return array_values( array_unique( $slugs ) );
+}
+
+/**
+ * Get the testimonial category label for cards and single pages.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_category_label( $post_id ) {
+	$terms = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
+
+	if ( empty( $terms ) || is_wp_error( $terms ) ) {
+		return __( 'Depoimento', 'proenem-wordpress-theme' );
+	}
+
+	return $terms[0]->name;
+}
+
+/**
+ * Get a trimmed testimonial quote.
+ *
+ * @param int $post_id Post ID.
+ * @param int $word_count Word count.
+ * @return string
+ */
+function proenem_get_testimonial_quote( $post_id, $word_count = 30 ) {
+	$excerpt = get_the_excerpt( $post_id );
+
+	if ( $excerpt ) {
+		return wp_trim_words( $excerpt, $word_count );
+	}
+
+	return wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), $word_count );
+}
+
+/**
+ * Get a string testimonial meta value.
+ *
+ * @param int    $post_id  Post ID.
+ * @param string $meta_key Meta key.
+ * @return string
+ */
+function proenem_get_testimonial_string_meta( $post_id, $meta_key ) {
+	$value = get_post_meta( $post_id, $meta_key, true );
+
+	return is_string( $value ) ? trim( $value ) : '';
+}
+
+/**
+ * Get the testimonial student name.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_student_name( $post_id ) {
+	$student_name = proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_student_name_meta_key() );
+
+	return $student_name ? $student_name : get_the_title( $post_id );
+}
+
+/**
+ * Get the testimonial approved at value.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_approved_at( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_approved_at_meta_key() );
+}
+
+/**
+ * Get the testimonial placement value.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_placement( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_placement_meta_key() );
+}
+
+/**
+ * Get the testimonial approval summary.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_approval_summary( $post_id ) {
+	$placement   = proenem_get_testimonial_placement( $post_id );
+	$approved_at = proenem_get_testimonial_approved_at( $post_id );
+
+	if ( $placement && $approved_at ) {
+		return sprintf(
+			/* translators: 1: Student placement. 2: Where the student was approved. */
+			__( '%1$s · %2$s', 'proenem-wordpress-theme' ),
+			$placement,
+			$approved_at
+		);
+	}
+
+	if ( $approved_at ) {
+		return $approved_at;
+	}
+
+	if ( $placement ) {
+		return $placement;
+	}
+
+	return proenem_get_testimonial_category_label( $post_id );
+}
+
+/**
+ * Get the testimonial video URL.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_video_url( $post_id ) {
+	$url = get_post_meta( $post_id, proenem_get_testimonials_video_url_meta_key(), true );
+
+	return is_string( $url ) ? $url : '';
+}
+
+/**
+ * Get a YouTube video ID from common YouTube URL formats.
+ *
+ * @param string $url Video URL.
+ * @return string
+ */
+function proenem_get_youtube_video_id( $url ) {
+	$parts = wp_parse_url( $url );
+
+	if ( empty( $parts['host'] ) ) {
+		return '';
+	}
+
+	$host = strtolower( $parts['host'] );
+	$path = isset( $parts['path'] ) ? trim( $parts['path'], '/' ) : '';
+
+	if ( false !== strpos( $host, 'youtu.be' ) ) {
+		return sanitize_text_field( strtok( $path, '/' ) );
+	}
+
+	if ( false !== strpos( $host, 'youtube.com' ) ) {
+		if ( ! empty( $parts['query'] ) ) {
+			parse_str( $parts['query'], $query );
+
+			if ( ! empty( $query['v'] ) && is_string( $query['v'] ) ) {
+				return sanitize_text_field( $query['v'] );
+			}
+		}
+
+		if ( preg_match( '#(?:embed|shorts)/([^/?]+)#', $path, $matches ) ) {
+			return sanitize_text_field( $matches[1] );
+		}
+	}
+
+	return '';
+}
+
+/**
+ * Get the testimonial video thumbnail URL.
+ *
+ * @param int    $post_id   Post ID.
+ * @param string $video_url Video URL.
+ * @return string
+ */
+function proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) {
+	$youtube_id = proenem_get_youtube_video_id( $video_url );
+
+	if ( $youtube_id ) {
+		return 'https://img.youtube.com/vi/' . rawurlencode( $youtube_id ) . '/hqdefault.jpg';
+	}
+
+	$image = proenem_get_post_image_slot( $post_id, 'large' );
+
+	return $image['src'];
+}
+
+/**
+ * Get an embeddable video URL with autoplay for inline testimonial playback.
+ *
+ * @param string $video_url Video URL.
+ * @return string
+ */
+function proenem_get_testimonial_video_embed_url( $video_url ) {
+	$youtube_id = proenem_get_youtube_video_id( $video_url );
+
+	if ( $youtube_id ) {
+		return add_query_arg(
+			array(
+				'autoplay' => '1',
+				'rel'      => '0',
+			),
+			'https://www.youtube.com/embed/' . rawurlencode( $youtube_id )
+		);
+	}
+
+	return esc_url_raw( $video_url );
+}
+
+/**
+ * Get allowed HTML for WordPress oEmbed output.
+ *
+ * @return array<string,array<string,bool>>
+ */
+function proenem_get_oembed_allowed_html() {
+	return array(
+		'iframe' => array(
+			'allow'           => true,
+			'allowfullscreen' => true,
+			'class'           => true,
+			'frameborder'     => true,
+			'height'          => true,
+			'loading'         => true,
+			'referrerpolicy'  => true,
+			'src'             => true,
+			'style'           => true,
+			'title'           => true,
+			'width'           => true,
+		),
+	);
+}
+
+/**
+ * Render a testimonial card for theme-owned testimonial archives.
+ *
+ * @param int $post_id Post ID.
+ * @return void
+ */
+function proenem_render_testimonial_card( $post_id ) {
+	$category_terms = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
+	$category_slugs = array();
+	$video_url      = proenem_get_testimonial_video_url( $post_id );
+	$embed_url      = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
+	$thumbnail_url  = $video_url ? proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) : proenem_get_post_image_slot( $post_id, 'large' )['src'];
+	$student_name   = proenem_get_testimonial_student_name( $post_id );
+	$approval_label = proenem_get_testimonial_approval_summary( $post_id );
+
+	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
+		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
+	}
+	?>
+	<article class="pro-testimonial-card-wrap" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+		<div class="testimonials-card pro-testimonial-card">
+			<div class="pro-testimonial-card__video" data-pro-testimonial-video>
+				<?php if ( $embed_url ) : ?>
+					<button
+						class="pro-testimonial-card__play"
+						type="button"
+						data-pro-testimonial-play
+						data-embed-url="<?php echo esc_url( $embed_url ); ?>"
+						aria-label="<?php echo esc_attr( sprintf( /* translators: %s: Student name. */ __( 'Reproduzir vídeo de %s', 'proenem-wordpress-theme' ), $student_name ) ); ?>"
+					>
+						<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+						<span aria-hidden="true"></span>
+					</button>
+				<?php else : ?>
+					<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+				<?php endif; ?>
+			</div>
+			<div class="pro-testimonial-card__body">
+				<blockquote class="testimonials-card__quote">
+					<p><?php echo esc_html( proenem_get_testimonial_quote( $post_id, 40 ) ); ?></p>
+				</blockquote>
+				<footer class="pro-testimonial-card__footer">
+					<strong><?php echo esc_html( $student_name ); ?></strong>
+					<p><?php echo esc_html( $approval_label ); ?></p>
+				</footer>
+				<a class="testimonials-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
+					<?php esc_html_e( 'Ver história completa', 'proenem-wordpress-theme' ); ?>
+					<span aria-hidden="true">→</span>
+				</a>
+			</div>
+		</div>
+	</article>
+	<?php
+}
+
+/**
+ * Render testimonial category filters.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return void
+ */
+function proenem_render_testimonial_category_filters( $terms, $selected_slugs ) {
+	?>
+	<form class="pro-materials-filter pro-testimonials-filter" method="get" action="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
+		<div class="pro-materials-filter__header">
+			<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
+			<a href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>"<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+		</div>
+		<div class="pro-materials-filter__options">
+			<?php if ( empty( $terms ) ) : ?>
+				<p><?php esc_html_e( 'Nenhuma categoria cadastrada ainda.', 'proenem-wordpress-theme' ); ?></p>
+			<?php else : ?>
+				<?php foreach ( $terms as $term ) : ?>
+					<label class="pro-materials-filter__option">
+						<input type="checkbox" name="depoimento_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
+						<span><?php echo esc_html( $term->name ); ?></span>
+						<small><?php echo esc_html( (string) $term->count ); ?></small>
+					</label>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</div>
+		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
+			<?php esc_html_e( 'Filtrar depoimentos', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
+	<?php
+}
+
+/**
+ * Render a local empty state for the testimonials surface.
+ *
+ * @param string $title Empty title.
+ * @param string $body  Empty body.
+ * @return void
+ */
+function proenem_render_testimonials_empty_state( $title, $body ) {
+	?>
+	<section class="pro-materials-empty pro-testimonials-empty">
+		<span aria-hidden="true">✦</span>
+		<h2><?php echo esc_html( $title ); ?></h2>
+		<p><?php echo esc_html( $body ); ?></p>
+	</section>
+	<?php
+}
+
+/**
  * Get primary navigation data for the design-system navbar.
  *
  * @param string $context Navigation context.
@@ -676,12 +1113,17 @@ function proenem_get_primary_navigation_items( $context = 'site' ) {
 			array(
 				'url'    => home_url( '/blog/' ),
 				'label'  => __( 'Blog', 'proenem-wordpress-theme' ),
-				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || ( is_archive() && ! proenem_is_free_materials_surface() ) ),
+				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || ( is_archive() && ! proenem_is_free_materials_surface() && ! proenem_is_testimonials_surface() ) ),
 			),
 			array(
 				'url'    => home_url( '/materiais-gratuitos/' ),
 				'label'  => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
 				'active' => 'home' !== $context && proenem_is_free_materials_surface(),
+			),
+			array(
+				'url'    => proenem_get_testimonials_url(),
+				'label'  => __( 'Depoimentos', 'proenem-wordpress-theme' ),
+				'active' => 'home' !== $context && proenem_is_testimonials_surface(),
 			),
 		),
 		'actions' => array(

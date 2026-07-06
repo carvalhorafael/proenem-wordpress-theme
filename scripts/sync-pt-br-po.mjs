@@ -77,12 +77,26 @@ for (const block of blocks) {
     continue;
   }
 
+  const msgidPlural = block.match(/^msgid_plural "((?:[^"\\]|\\.)*)"$/m)?.[1];
+
+  if (msgidPlural) {
+    const singular = translations.get(unescapePo(msgid)) ?? unescapePo(msgid);
+    const plural = translations.get(unescapePo(msgidPlural)) ?? unescapePo(msgidPlural);
+
+    rendered.push(
+      block
+        .replace(/msgstr\[0\] "((?:[^"\\]|\\.)*)"$/m, `msgstr[0] "${escapePo(singular)}"`)
+        .replace(/msgstr\[1\] "((?:[^"\\]|\\.)*)"$/m, `msgstr[1] "${escapePo(plural)}"`),
+    );
+    continue;
+  }
+
   const translation = translations.get(unescapePo(msgid)) ?? unescapePo(msgid);
   rendered.push(block.replace(/msgstr "((?:[^"\\]|\\.)*)"$/m, `msgstr "${escapePo(translation)}"`));
 }
 
 await mkdir(dirname(poPath), { recursive: true });
-await writeFile(poPath, `${rendered.join("\n\n")}\n`);
+await writeFile(poPath, `${rendered.map((block) => block.trimEnd()).join("\n\n")}\n`);
 
 function escapePo(value) {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');

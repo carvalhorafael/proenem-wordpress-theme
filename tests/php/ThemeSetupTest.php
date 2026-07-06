@@ -45,11 +45,32 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonials fallbacks should expose the expected portable identifiers.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_contract_fallbacks_are_available() {
+		$this->assertSame( 'depoimento', proenem_get_testimonials_post_type() );
+		$this->assertSame( 'depoimento_categoria', proenem_get_testimonials_taxonomy() );
+		$this->assertSame( '_testimonials_video_url', proenem_get_testimonials_video_url_meta_key() );
+	}
+
+	/**
 	 * The free materials listing should be exposed as an explicit page template.
 	 *
 	 * @return void
 	 */
 	public function test_free_materials_page_template_exists() {
 		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/free-materials.php' );
+	}
+
+	/**
+	 * The testimonials listing should be exposed as an explicit page template.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_page_template_exists() {
+		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/testimonials.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/single-depoimento.php' );
 	}
 }

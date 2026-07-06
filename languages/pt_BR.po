@@ -13,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Proenem scaffold\n"
 
-
 # Copyright (C) 2026 Rafael Carvalho
 # This file is distributed under the Proprietary.
 msgid ""
@@ -112,7 +111,7 @@ msgid "Plataforma"
 msgstr "Plataforma"
 
 #: footer.php:24
-#: inc/template-tags.php:668
+#: inc/template-tags.php:1105
 #: page-templates/home.php:54
 #: page-templates/home.php:677
 #: page-templates/home.php:757
@@ -120,7 +119,7 @@ msgid "Método PRO"
 msgstr "Método PRO"
 
 #: footer.php:25
-#: inc/template-tags.php:673
+#: inc/template-tags.php:1110
 #: page-templates/home.php:758
 msgid "Planos"
 msgstr "Planos"
@@ -132,7 +131,7 @@ msgstr "Banco de questões"
 
 #: footer.php:27
 #: inc/template-tags.php:102
-#: inc/template-tags.php:678
+#: inc/template-tags.php:1115
 msgid "Blog"
 msgstr "Blog"
 
@@ -243,8 +242,8 @@ msgstr "Paginacao de posts"
 #, php-format
 msgid "%d min de leitura"
 msgid_plural "%d min de leitura"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d min de leitura"
+msgstr[1] "%d min de leitura"
 
 #: inc/template-tags.php:248
 msgid "Categorias do blog"
@@ -375,14 +374,17 @@ msgid "Acessar material"
 msgstr "Acessar material"
 
 #: inc/template-tags.php:617
+#: inc/template-tags.php:1054
 msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
+#: inc/template-tags.php:1055
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
+#: inc/template-tags.php:1059
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -390,29 +392,59 @@ msgstr "Nenhuma categoria cadastrada ainda."
 msgid "Filtrar materiais"
 msgstr "Filtrar materiais"
 
+#: inc/template-tags.php:777
+msgid "Depoimento"
+msgstr "Depoimento"
+
+#. translators: 1: Student placement. 2: Where the student was approved.
+#: inc/template-tags.php:858
+#, php-format
+msgid "%1$s · %2$s"
+msgstr "%1$s · %2$s"
+
+#. translators: %s: Student name.
+#: inc/template-tags.php:1016
+#, php-format
+msgid "Reproduzir vídeo de %s"
+msgstr "Reproduzir vídeo de %s"
+
+#: inc/template-tags.php:1034
+msgid "Ver história completa"
+msgstr "Ver história completa"
+
+#: inc/template-tags.php:1071
+msgid "Filtrar depoimentos"
+msgstr "Filtrar depoimentos"
+
 #. Template Name of the theme
-#: inc/template-tags.php:683
+#: inc/template-tags.php:1120
 #: page-templates/free-materials.php:43
 msgid "Materiais gratuitos"
 msgstr "Materiais gratuitos"
 
-#: inc/template-tags.php:690
+#. Template Name of the theme
+#: inc/template-tags.php:1125
+#: page-templates/testimonials.php:54
+msgid "Depoimentos"
+msgstr "Depoimentos"
+
+#: inc/template-tags.php:1132
 msgid "Login"
 msgstr "Login"
 
-#: inc/template-tags.php:695
+#: inc/template-tags.php:1137
 msgid "Comece grátis"
 msgstr "Comece grátis"
 
-#: inc/template-tags.php:761
+#: inc/template-tags.php:1203
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:770
+#: inc/template-tags.php:1212
 msgid "ProEnem"
 msgstr "ProEnem"
 
-#: inc/template-tags.php:773
+#: inc/template-tags.php:1215
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
@@ -1287,6 +1319,46 @@ msgstr "Fale com a gente"
 msgid "@2026 ProEnem - Grupo Q Educação"
 msgstr "@2026 ProEnem - Grupo Q Educação"
 
+#: page-templates/testimonials.php:55
+msgid "Histórias reais de quem estudou com a Proenem"
+msgstr "Histórias reais de quem estudou com a Proenem"
+
+#: page-templates/testimonials.php:56
+msgid "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+msgstr "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+
+#: page-templates/testimonials.php:61
+msgid "Filtros de depoimentos"
+msgstr "Filtros de depoimentos"
+
+#: page-templates/testimonials.php:67
+msgid "Todos os depoimentos"
+msgstr "Todos os depoimentos"
+
+#. translators: %s: Number of testimonials found.
+#: page-templates/testimonials.php:72
+#, php-format
+msgid "%s depoimento publicado"
+msgid_plural "%s depoimentos publicados"
+msgstr[0] "%s depoimento publicado"
+msgstr[1] "%s depoimentos publicados"
+
+#: page-templates/testimonials.php:82
+msgid "Plugin Testimonials não está ativo."
+msgstr "Plugin Testimonials não está ativo."
+
+#: page-templates/testimonials.php:83
+msgid "Ative o plugin para publicar e listar depoimentos nesta página."
+msgstr "Ative o plugin para publicar e listar depoimentos nesta página."
+
+#: page-templates/testimonials.php:99
+msgid "Nenhum depoimento encontrado."
+msgstr "Nenhum depoimento encontrado."
+
+#: page-templates/testimonials.php:100
+msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+msgstr "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+
 #. translators: %s: Search query.
 #: search.php:17
 #, php-format
@@ -1301,6 +1373,25 @@ msgstr "Busca"
 #: searchform.php:15
 msgid "Search..."
 msgstr "Buscar..."
+
+#: single-depoimento.php:30
+msgid "← Depoimentos"
+msgstr "← Depoimentos"
+
+#: single-depoimento.php:51
+#: single-material_gratuito.php:62
+#: template-parts/content-page.php:19
+#: template-parts/content-single.php:26
+msgid "Page navigation"
+msgstr "Navegacao da pagina"
+
+#: single-depoimento.php:63
+msgid "Onde passou"
+msgstr "Onde passou"
+
+#: single-depoimento.php:70
+msgid "Ver depoimentos"
+msgstr "Ver depoimentos"
 
 #: single-material_gratuito.php:23
 msgid "← Materiais gratuitos"
@@ -1350,12 +1441,6 @@ msgstr "Baixar material gratuito"
 msgid "Sem pagamento. Enviaremos o material para o contato informado."
 msgstr "Sem pagamento. Enviaremos o material para o contato informado."
 
-#: single-material_gratuito.php:62
-#: template-parts/content-page.php:19
-#: template-parts/content-single.php:26
-msgid "Page navigation"
-msgstr "Navegacao da pagina"
-
 #: single-material_gratuito.php:71
 msgid "Pronto para usar nos estudos"
 msgstr "Pronto para usar nos estudos"
@@ -1404,4 +1489,3 @@ msgstr "Compartilhar no Facebook"
 #: template-parts/content-single.php:38
 msgid "Compartilhar no LinkedIn"
 msgstr "Compartilhar no LinkedIn"
-
