@@ -1028,6 +1028,18 @@ img {
   width: 100%;
 }
 
+.pro-material-capture__form .pro-material-capture__honeypot {
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  min-height: 0;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+}
+
 .pro-material-capture__form input::placeholder {
   color: rgb(27 29 35 / 0.55);
 }
