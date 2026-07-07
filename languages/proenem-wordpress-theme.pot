@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.3.0\n"
+"Project-Id-Version: Proenem 0.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -294,7 +294,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:519
 #: inc/class-proenem-elementor-sales-widget-base.php:687
-#: single-material_gratuito.php:37
+#: single-material_gratuito.php:46
 msgid "Nome"
 msgstr ""
 
@@ -674,8 +674,8 @@ msgid "Todas as postagens"
 msgstr ""
 
 #: inc/template-tags.php:512
-#: single-material_gratuito.php:70
-#: single-material_gratuito.php:86
+#: single-material_gratuito.php:79
+#: single-material_gratuito.php:95
 msgid "Material gratuito"
 msgstr ""
 
@@ -1689,7 +1689,7 @@ msgid "← Depoimentos"
 msgstr ""
 
 #: single-depoimento.php:51
-#: single-material_gratuito.php:62
+#: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
@@ -1719,52 +1719,52 @@ msgstr ""
 msgid "para receber o material."
 msgstr ""
 
-#: single-material_gratuito.php:38
+#: single-material_gratuito.php:47
 msgid "Seu nome completo"
 msgstr ""
 
-#: single-material_gratuito.php:41
+#: single-material_gratuito.php:50
 msgid "Email"
 msgstr ""
 
-#: single-material_gratuito.php:42
+#: single-material_gratuito.php:51
 msgid "voce@exemplo.com"
 msgstr ""
 
-#: single-material_gratuito.php:45
+#: single-material_gratuito.php:54
 msgid "WhatsApp"
 msgstr ""
 
-#: single-material_gratuito.php:46
+#: single-material_gratuito.php:55
 msgid "(00) 00000-0000"
 msgstr ""
 
-#: single-material_gratuito.php:49
+#: single-material_gratuito.php:58
 msgid "Baixar material gratuito"
 msgstr ""
 
-#: single-material_gratuito.php:52
+#: single-material_gratuito.php:61
 msgid "Sem pagamento. Enviaremos o material para o contato informado."
 msgstr ""
 
-#: single-material_gratuito.php:71
+#: single-material_gratuito.php:80
 msgid "Pronto para usar nos estudos"
 msgstr ""
 
-#: single-material_gratuito.php:72
+#: single-material_gratuito.php:81
 msgid "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
 msgstr ""
 
-#: single-material_gratuito.php:74
-#: single-material_gratuito.php:91
+#: single-material_gratuito.php:83
+#: single-material_gratuito.php:100
 msgid "Baixar material"
 msgstr ""
 
-#: single-material_gratuito.php:87
+#: single-material_gratuito.php:96
 msgid "Leve este material para sua rotina de estudos"
 msgstr ""
 
-#: single-material_gratuito.php:88
+#: single-material_gratuito.php:97
 msgid "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
 msgstr ""
 
