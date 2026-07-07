@@ -84,6 +84,29 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertSame( 'free-materials/free-materials.php', $required_plugins['free-materials']['file'] );
 		$this->assertSame( 'testimonials/testimonials.php', $required_plugins['testimonials']['file'] );
+		$this->assertSame( 'crm-leads-capture/crm-leads-capture.php', $required_plugins['crm-leads-capture']['file'] );
+	}
+
+	/**
+	 * Sales page Elementor widgets should expose stable technical names.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_sales_widget_contracts_are_declared() {
+		$this->assertSame(
+			array(
+				'Proenem_Elementor_Navbar_Widget',
+				'Proenem_Elementor_Offer_Hero_Widget',
+				'Proenem_Elementor_Offer_Countdown_Widget',
+				'Proenem_Elementor_Pricing_Grid_Widget',
+				'Proenem_Elementor_Pricing_Card_Widget',
+				'Proenem_Elementor_Benefits_List_Widget',
+				'Proenem_Elementor_Plans_Comparison_Widget',
+				'Proenem_Elementor_Cta_Widget',
+				'Proenem_Elementor_Faq_Widget',
+			),
+			proenem_get_elementor_sales_widget_classes()
+		);
 	}
 
 	/**
@@ -99,6 +122,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 			array(
 				'free-materials/free-materials.php',
 				'testimonials/testimonials.php',
+				'crm-leads-capture/crm-leads-capture.php',
 			)
 		);
 

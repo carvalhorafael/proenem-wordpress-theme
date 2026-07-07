@@ -9,12 +9,23 @@ npm run dev
 
 O comando `npm run dev` inicia o `wp-env`, instala dependências PHP dentro do container e sobe o Vite.
 
-O ambiente local monta os plugins de conteúdo usados pelo tema a partir de checkouts locais:
+O `wp-env` base usado pelo CI não monta os plugins de conteúdo, porque eles são dependências funcionais opcionais do tema e devem aparecer como aviso no admin quando ausentes.
+
+Para desenvolvimento local com os plugins de conteúdo ativos, copie o exemplo de override:
+
+```bash
+cp .wp-env.override.example.json .wp-env.override.json
+```
+
+O override monta os plugins de conteúdo usados pelo tema a partir de checkouts locais:
 
 - `../../plugins-wordpress/free-materials`
 - `../../plugins-wordpress/testimonials`
+- `../../plugins-wordpress/crm-leads-capture`
 
-Esses caminhos são relativos a este repositório. Eles mantêm os slugs canônicos `free-materials` e `testimonials` dentro do WordPress local.
+Esses caminhos são relativos a este repositório. Eles mantêm os slugs canônicos `free-materials`, `testimonials` e `crm-leads-capture` dentro do WordPress local.
+
+O `@wordpress/env` substitui a lista `plugins` quando `.wp-env.override.json` define esse campo. Por isso, o override também inclui o Theme Check.
 
 ## GitHub Packages
 

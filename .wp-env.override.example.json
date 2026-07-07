@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "../../plugins-wordpress/free-materials",
+    "../../plugins-wordpress/testimonials",
+    "../../plugins-wordpress/crm-leads-capture",
+    "https://downloads.wordpress.org/plugin/theme-check.latest-stable.zip"
+  ]
+}

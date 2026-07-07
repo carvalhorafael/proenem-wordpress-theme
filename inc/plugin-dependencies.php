@@ -16,13 +16,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function proenem_get_required_plugins() {
 	return array(
-		'free-materials' => array(
+		'free-materials'    => array(
 			'name' => __( 'Free Materials', 'proenem-wordpress-theme' ),
 			'file' => 'free-materials/free-materials.php',
 		),
-		'testimonials'   => array(
+		'testimonials'      => array(
 			'name' => __( 'Testimonials', 'proenem-wordpress-theme' ),
 			'file' => 'testimonials/testimonials.php',
+		),
+		'crm-leads-capture' => array(
+			'name' => __( 'CRM Leads Capture', 'proenem-wordpress-theme' ),
+			'file' => 'crm-leads-capture/crm-leads-capture.php',
 		),
 	);
 }
