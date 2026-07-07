@@ -1095,9 +1095,10 @@ function proenem_render_testimonials_empty_state( $title, $body ) {
  * Get primary navigation data for the design-system navbar.
  *
  * @param string $context Navigation context.
+ * @param int    $menu_id Optional menu term ID.
  * @return array{links:array<int,array<string,mixed>>,actions:array<int,array<string,mixed>>}
  */
-function proenem_get_primary_navigation_items( $context = 'site' ) {
+function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 ) {
 	$fallback = array(
 		'links'   => array(
 			array(
@@ -1140,13 +1141,19 @@ function proenem_get_primary_navigation_items( $context = 'site' ) {
 		),
 	);
 
-	$locations = get_nav_menu_locations();
+	$menu_id = absint( $menu_id );
 
-	if ( empty( $locations['primary'] ) ) {
-		return $fallback;
+	if ( ! $menu_id ) {
+		$locations = get_nav_menu_locations();
+
+		if ( empty( $locations['primary'] ) ) {
+			return $fallback;
+		}
+
+		$menu_id = absint( $locations['primary'] );
 	}
 
-	$menu_items = wp_get_nav_menu_items( $locations['primary'] );
+	$menu_items = wp_get_nav_menu_items( $menu_id );
 
 	if ( empty( $menu_items ) || is_wp_error( $menu_items ) ) {
 		return $fallback;
@@ -1195,22 +1202,35 @@ function proenem_get_primary_navigation_items( $context = 'site' ) {
 /**
  * Render the shared Proenem navbar markup.
  *
- * @param array{aria_label?:string,context?:string} $args Navbar args.
+ * @param array{aria_label?:string,context?:string,logo_only?:bool,menu_id?:int} $args Navbar args.
  * @return void
  */
 function proenem_render_site_navbar( $args = array() ) {
 	$defaults   = array(
 		'aria_label' => __( 'Navegação principal', 'proenem-wordpress-theme' ),
 		'context'    => 'site',
+		'logo_only'  => false,
+		'menu_id'    => 0,
 	);
 	$args       = wp_parse_args( $args, $defaults );
-	$navigation = proenem_get_primary_navigation_items( $args['context'] );
-	$menu_id    = 'proenem-navbar-menu-' . sanitize_html_class( $args['context'] );
+	$navigation = proenem_get_primary_navigation_items( $args['context'], absint( $args['menu_id'] ) );
+	$menu_id    = wp_unique_id( 'proenem-navbar-menu-' . sanitize_html_class( $args['context'] ) . '-' );
+	$classes    = 'pen-navbar pro-site-navbar';
+
+	if ( $args['logo_only'] ) {
+		$classes .= ' pro-site-navbar--logo-only';
+	}
 	?>
-	<nav class="pen-navbar pro-site-navbar" aria-label="<?php echo esc_attr( $args['aria_label'] ); ?>" data-pro-home-navbar>
+	<nav class="<?php echo esc_attr( $classes ); ?>" aria-label="<?php echo esc_attr( $args['aria_label'] ); ?>" data-pro-home-navbar>
 		<a class="pen-brand-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'ProEnem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
 		</a>
+		<?php if ( $args['logo_only'] ) : ?>
+			</nav>
+			<?php
+			return;
+		endif;
+		?>
 		<button class="pro-home-navbar-toggle" type="button" aria-controls="<?php echo esc_attr( $menu_id ); ?>" aria-expanded="false">
 			<span class="screen-reader-text"><?php esc_html_e( 'Abrir menu', 'proenem-wordpress-theme' ); ?></span>
 			<span aria-hidden="true"></span>

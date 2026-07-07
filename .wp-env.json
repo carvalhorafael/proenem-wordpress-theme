@@ -3,8 +3,6 @@
   "port": 8898,
   "testsPort": 8899,
   "plugins": [
-    "../../plugins-wordpress/free-materials",
-    "../../plugins-wordpress/testimonials",
     "https://downloads.wordpress.org/plugin/theme-check.latest-stable.zip"
   ],
   "themes": [
