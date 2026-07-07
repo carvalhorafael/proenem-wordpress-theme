@@ -13,7 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Proenem scaffold\n"
 
-
 # Copyright (C) 2026 Rafael Carvalho
 # This file is distributed under the Proprietary.
 msgid ""
@@ -32,6 +31,7 @@ msgstr ""
 
 #. Theme Name of the theme
 #: style.css
+#: inc/elementor-sales-widgets.php:41
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -112,7 +112,7 @@ msgid "Plataforma"
 msgstr "Plataforma"
 
 #: footer.php:24
-#: inc/template-tags.php:430
+#: inc/template-tags.php:1106
 #: page-templates/home.php:54
 #: page-templates/home.php:677
 #: page-templates/home.php:757
@@ -120,7 +120,9 @@ msgid "Método PRO"
 msgstr "Método PRO"
 
 #: footer.php:25
-#: inc/template-tags.php:435
+#: inc/class-proenem-elementor-sales-widget-base.php:501
+#: inc/class-proenem-elementor-sales-widget-base.php:574
+#: inc/template-tags.php:1111
 #: page-templates/home.php:758
 msgid "Planos"
 msgstr "Planos"
@@ -132,7 +134,7 @@ msgstr "Banco de questões"
 
 #: footer.php:27
 #: inc/template-tags.php:102
-#: inc/template-tags.php:440
+#: inc/template-tags.php:1116
 msgid "Blog"
 msgstr "Blog"
 
@@ -175,6 +177,333 @@ msgstr "Feito com ♥ para você"
 #: header.php:18
 msgid "Skip to content"
 msgstr "Pular para o conteudo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:105
+msgid "Pro Navbar"
+msgstr "Pro Navbar"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:133
+msgid "Menu principal do tema"
+msgstr "Menu principal do tema"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:153
+msgid "Menu"
+msgstr "Menu"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:161
+msgid "Modo"
+msgstr "Modo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:165
+msgid "Somente logo"
+msgstr "Somente logo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:166
+#: inc/class-proenem-elementor-sales-widget-base.php:174
+msgid "Menu WordPress"
+msgstr "Menu WordPress"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:187
+msgid "Rótulo de acessibilidade"
+msgstr "Rótulo de acessibilidade"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:189
+#: inc/class-proenem-elementor-sales-widget-base.php:207
+msgid "Navegação da página de vendas"
+msgstr "Navegação da página de vendas"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:235
+msgid "Pro Hero de Oferta"
+msgstr "Pro Hero de Oferta"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:256
+#: inc/class-proenem-elementor-sales-widget-base.php:403
+msgid "Conteúdo"
+msgstr "Conteúdo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:264
+#: inc/class-proenem-elementor-sales-widget-base.php:527
+#: inc/class-proenem-elementor-sales-widget-base.php:680
+msgid "Selo"
+msgstr "Selo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:266
+msgid "Oferta especial"
+msgstr "Oferta especial"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:272
+#: inc/class-proenem-elementor-sales-widget-base.php:410
+#: inc/class-proenem-elementor-sales-widget-base.php:509
+#: inc/class-proenem-elementor-sales-widget-base.php:824
+#: inc/class-proenem-elementor-sales-widget-base.php:933
+#: inc/class-proenem-elementor-sales-widget-base.php:1063
+#: inc/class-proenem-elementor-sales-widget-base.php:1163
+msgid "Título"
+msgstr "Título"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:274
+msgid "Estude para o Enem com uma rotina completa"
+msgstr "Estude para o Enem com uma rotina completa"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:281
+#: inc/class-proenem-elementor-sales-widget-base.php:418
+#: inc/class-proenem-elementor-sales-widget-base.php:1071
+msgid "Texto"
+msgstr "Texto"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:283
+msgid "Cursos, questões, simulados e acompanhamento para acelerar sua preparação."
+msgstr "Cursos, questões, simulados e acompanhamento para acelerar sua preparação."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:289
+msgid "Botão principal"
+msgstr "Botão principal"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:291
+msgid "Ver planos"
+msgstr "Ver planos"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:297
+msgid "Link principal"
+msgstr "Link principal"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:304
+msgid "Botão secundário"
+msgstr "Botão secundário"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:311
+msgid "Link secundário"
+msgstr "Link secundário"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:318
+msgid "Imagem"
+msgstr "Imagem"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:382
+msgid "Pro Contador de Oferta"
+msgstr "Pro Contador de Oferta"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:412
+msgid "Oferta por tempo limitado"
+msgstr "Oferta por tempo limitado"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:420
+msgid "Garanta as condições especiais antes do encerramento da campanha."
+msgstr "Garanta as condições especiais antes do encerramento da campanha."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:426
+msgid "Data final"
+msgstr "Data final"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:428
+msgid "Usada como informação exibida. A contagem dinâmica pode ser adicionada em uma próxima etapa."
+msgstr "Usada como informação exibida. A contagem dinâmica pode ser adicionada em uma próxima etapa."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:480
+msgid "Pro Grade de Planos"
+msgstr "Pro Grade de Planos"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:511
+msgid "Escolha seu plano"
+msgstr "Escolha seu plano"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:519
+#: inc/class-proenem-elementor-sales-widget-base.php:687
+#: single-material_gratuito.php:37
+msgid "Nome"
+msgstr "Nome"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:521
+#: inc/class-proenem-elementor-sales-widget-base.php:689
+msgid "Plano Pro"
+msgstr "Plano Pro"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:534
+#: inc/class-proenem-elementor-sales-widget-base.php:702
+msgid "Preço"
+msgstr "Preço"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:536
+#: inc/class-proenem-elementor-sales-widget-base.php:704
+msgid "R$ 99"
+msgstr "R$ 99"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:542
+#: inc/class-proenem-elementor-sales-widget-base.php:710
+msgid "Recorrência"
+msgstr "Recorrência"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:544
+#: inc/class-proenem-elementor-sales-widget-base.php:712
+msgid "/mês"
+msgstr "/mês"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:550
+#: inc/class-proenem-elementor-sales-widget-base.php:718
+#: inc/class-proenem-elementor-sales-widget-base.php:817
+msgid "Benefícios"
+msgstr "Benefícios"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:552
+#: inc/class-proenem-elementor-sales-widget-base.php:720
+msgid "Um benefício por linha."
+msgstr "Um benefício por linha."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:558
+#: inc/class-proenem-elementor-sales-widget-base.php:726
+#: inc/class-proenem-elementor-sales-widget-base.php:1078
+msgid "Botão"
+msgstr "Botão"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:560
+#: inc/class-proenem-elementor-sales-widget-base.php:728
+msgid "Assinar agora"
+msgstr "Assinar agora"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:566
+#: inc/class-proenem-elementor-sales-widget-base.php:734
+#: inc/class-proenem-elementor-sales-widget-base.php:1086
+msgid "Link"
+msgstr "Link"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:652
+msgid "Pro Card de Plano"
+msgstr "Pro Card de Plano"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:673
+msgid "Plano"
+msgstr "Plano"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:695
+#: inc/class-proenem-elementor-sales-widget-base.php:841
+msgid "Descrição"
+msgstr "Descrição"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:796
+msgid "Pro Lista de Benefícios"
+msgstr "Pro Lista de Benefícios"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:826
+msgid "O que está incluído"
+msgstr "O que está incluído"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:833
+msgid "Benefício"
+msgstr "Benefício"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:835
+msgid "Benefício da oferta"
+msgstr "Benefício da oferta"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:848
+#: inc/class-proenem-elementor-sales-widget-base.php:1186
+msgid "Itens"
+msgstr "Itens"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:905
+msgid "Pro Comparativo de Planos"
+msgstr "Pro Comparativo de Planos"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:926
+msgid "Comparativo"
+msgstr "Comparativo"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:935
+msgid "Compare os planos"
+msgstr "Compare os planos"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:941
+msgid "Colunas de planos"
+msgstr "Colunas de planos"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:943
+msgid "Um nome de plano por linha."
+msgstr "Um nome de plano por linha."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:950
+#: inc/class-proenem-elementor-sales-widget-base.php:992
+msgid "Recurso"
+msgstr "Recurso"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:957
+msgid "Valores"
+msgstr "Valores"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:959
+msgid "Um valor por linha, na mesma ordem das colunas."
+msgstr "Um valor por linha, na mesma ordem das colunas."
+
+#: inc/class-proenem-elementor-sales-widget-base.php:965
+msgid "Linhas"
+msgstr "Linhas"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1035
+msgid "Pro CTA"
+msgstr "Pro CTA"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1056
+msgid "Chamada"
+msgstr "Chamada"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1065
+msgid "Comece sua preparação hoje"
+msgstr "Comece sua preparação hoje"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1080
+msgid "Escolher plano"
+msgstr "Escolher plano"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1135
+msgid "Pro FAQ"
+msgstr "Pro FAQ"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1156
+msgid "Perguntas"
+msgstr "Perguntas"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1165
+#: inc/template-tags.php:358
+#: page-templates/home.php:724
+msgid "Perguntas frequentes"
+msgstr "Perguntas frequentes"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1172
+msgid "Pergunta"
+msgstr "Pergunta"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1179
+msgid "Resposta"
+msgstr "Resposta"
+
+#: inc/plugin-dependencies.php:20
+msgid "Free Materials"
+msgstr "Free Materials"
+
+#: inc/plugin-dependencies.php:24
+msgid "Testimonials"
+msgstr "Testimonials"
+
+#: inc/plugin-dependencies.php:28
+msgid "CRM Leads Capture"
+msgstr "CRM Leads Capture"
+
+#: inc/plugin-dependencies.php:102
+msgid "Tema Proenem: plugins obrigatórios ausentes ou inativos."
+msgstr "Tema Proenem: plugins obrigatórios ausentes ou inativos."
+
+#. translators: %s: Required plugin names.
+#: inc/plugin-dependencies.php:108
+#, php-format
+msgid "Para funcionar corretamente, este tema precisa que os seguintes plugins estejam instalados e ativos: %s."
+msgstr "Para funcionar corretamente, este tema precisa que os seguintes plugins estejam instalados e ativos: %s."
+
+#: inc/plugin-dependencies.php:114
+msgid "Instale ou ative os plugins necessários para remover este aviso."
+msgstr "Instale ou ative os plugins necessários para remover este aviso."
+
+#: inc/plugin-dependencies.php:115
+msgid "Ir para Plugins"
+msgstr "Ir para Plugins"
 
 #: inc/setup.php:45
 msgid "Primary menu"
@@ -243,8 +572,8 @@ msgstr "Paginacao de posts"
 #, php-format
 msgid "%d min de leitura"
 msgid_plural "%d min de leitura"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d min de leitura"
+msgstr[1] "%d min de leitura"
 
 #: inc/template-tags.php:248
 msgid "Categorias do blog"
@@ -317,11 +646,6 @@ msgstr "Converse conosco e equipe sua instituição com uma proposta personaliza
 msgid "Começar gratuitamente"
 msgstr "Começar gratuitamente"
 
-#: inc/template-tags.php:358
-#: page-templates/home.php:724
-msgid "Perguntas frequentes"
-msgstr "Perguntas frequentes"
-
 #: inc/template-tags.php:359
 msgid "Já sentiu que estuda muito, mas a nota não sobe?"
 msgstr "Já sentiu que estuda muito, mas a nota não sobe?"
@@ -364,23 +688,88 @@ msgstr "Entrevistas, dicas, guias, práticas recomendadas do setor e notícias."
 msgid "Todas as postagens"
 msgstr "Todas as postagens"
 
-#: inc/template-tags.php:447
+#: inc/template-tags.php:512
+#: single-material_gratuito.php:70
+#: single-material_gratuito.php:86
+msgid "Material gratuito"
+msgstr "Material gratuito"
+
+#: inc/template-tags.php:559
+msgid "Acessar material"
+msgstr "Acessar material"
+
+#: inc/template-tags.php:617
+#: inc/template-tags.php:1054
+msgid "Categorias"
+msgstr "Categorias"
+
+#: inc/template-tags.php:618
+#: inc/template-tags.php:1055
+msgid "Limpar filtros"
+msgstr "Limpar filtros"
+
+#: inc/template-tags.php:622
+#: inc/template-tags.php:1059
+msgid "Nenhuma categoria cadastrada ainda."
+msgstr "Nenhuma categoria cadastrada ainda."
+
+#: inc/template-tags.php:634
+msgid "Filtrar materiais"
+msgstr "Filtrar materiais"
+
+#: inc/template-tags.php:777
+msgid "Depoimento"
+msgstr "Depoimento"
+
+#. translators: 1: Student placement. 2: Where the student was approved.
+#: inc/template-tags.php:858
+#, php-format
+msgid "%1$s · %2$s"
+msgstr "%1$s · %2$s"
+
+#. translators: %s: Student name.
+#: inc/template-tags.php:1016
+#, php-format
+msgid "Reproduzir vídeo de %s"
+msgstr "Reproduzir vídeo de %s"
+
+#: inc/template-tags.php:1034
+msgid "Ver história completa"
+msgstr "Ver história completa"
+
+#: inc/template-tags.php:1071
+msgid "Filtrar depoimentos"
+msgstr "Filtrar depoimentos"
+
+#. Template Name of the theme
+#: inc/template-tags.php:1121
+#: page-templates/free-materials.php:43
+msgid "Materiais gratuitos"
+msgstr "Materiais gratuitos"
+
+#. Template Name of the theme
+#: inc/template-tags.php:1126
+#: page-templates/testimonials.php:54
+msgid "Depoimentos"
+msgstr "Depoimentos"
+
+#: inc/template-tags.php:1133
 msgid "Login"
 msgstr "Login"
 
-#: inc/template-tags.php:452
+#: inc/template-tags.php:1138
 msgid "Comece grátis"
 msgstr "Comece grátis"
 
-#: inc/template-tags.php:518
+#: inc/template-tags.php:1210
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:527
+#: inc/template-tags.php:1226
 msgid "ProEnem"
 msgstr "ProEnem"
 
-#: inc/template-tags.php:530
+#: inc/template-tags.php:1235
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
@@ -391,6 +780,56 @@ msgstr "Blog Proenem"
 #: index.php:15
 msgid "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
 msgstr "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
+
+#: page-templates/free-materials.php:44
+msgid "Guias para estudar com método antes da próxima prova"
+msgstr "Guias para estudar com método antes da próxima prova"
+
+#: page-templates/free-materials.php:45
+msgid "Escolha uma categoria e encontre materiais prontos para organizar revisão, prática e estratégia de estudo."
+msgstr "Escolha uma categoria e encontre materiais prontos para organizar revisão, prática e estratégia de estudo."
+
+#: page-templates/free-materials.php:50
+msgid "Filtros de materiais gratuitos"
+msgstr "Filtros de materiais gratuitos"
+
+#: page-templates/free-materials.php:56
+msgid "Todos os materiais"
+msgstr "Todos os materiais"
+
+#. translators: %s: Number of materials found.
+#: page-templates/free-materials.php:60
+#, php-format
+msgid "%s material disponível"
+msgstr "%s material disponível"
+
+#. translators: %s: Number of materials found.
+#: page-templates/free-materials.php:62
+#: page-templates/free-materials.php:67
+#, php-format
+msgid "%s materiais disponíveis"
+msgstr "%s materiais disponíveis"
+
+#: page-templates/free-materials.php:77
+msgid "Plugin Free Materials não está ativo."
+msgstr "Plugin Free Materials não está ativo."
+
+#: page-templates/free-materials.php:78
+msgid "Ative o plugin para publicar e listar materiais gratuitos nesta página."
+msgstr "Ative o plugin para publicar e listar materiais gratuitos nesta página."
+
+#: page-templates/free-materials.php:94
+#: page-templates/free-materials.php:100
+msgid "Nenhum material encontrado."
+msgstr "Nenhum material encontrado."
+
+#: page-templates/free-materials.php:95
+msgid "Tente selecionar outra categoria ou limpar os filtros."
+msgstr "Tente selecionar outra categoria ou limpar os filtros."
+
+#: page-templates/free-materials.php:101
+msgid "Tente limpar os filtros ou cadastre novos materiais gratuitos no WordPress."
+msgstr "Tente limpar os filtros ou cadastre novos materiais gratuitos no WordPress."
 
 #. Template Name of the theme
 msgid "ProEnem Home"
@@ -1205,6 +1644,46 @@ msgstr "Fale com a gente"
 msgid "@2026 ProEnem - Grupo Q Educação"
 msgstr "@2026 ProEnem - Grupo Q Educação"
 
+#: page-templates/testimonials.php:55
+msgid "Histórias reais de quem estudou com a Proenem"
+msgstr "Histórias reais de quem estudou com a Proenem"
+
+#: page-templates/testimonials.php:56
+msgid "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+msgstr "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+
+#: page-templates/testimonials.php:61
+msgid "Filtros de depoimentos"
+msgstr "Filtros de depoimentos"
+
+#: page-templates/testimonials.php:67
+msgid "Todos os depoimentos"
+msgstr "Todos os depoimentos"
+
+#. translators: %s: Number of testimonials found.
+#: page-templates/testimonials.php:72
+#, php-format
+msgid "%s depoimento publicado"
+msgid_plural "%s depoimentos publicados"
+msgstr[0] "%s depoimento publicado"
+msgstr[1] "%s depoimentos publicados"
+
+#: page-templates/testimonials.php:82
+msgid "Plugin Testimonials não está ativo."
+msgstr "Plugin Testimonials não está ativo."
+
+#: page-templates/testimonials.php:83
+msgid "Ative o plugin para publicar e listar depoimentos nesta página."
+msgstr "Ative o plugin para publicar e listar depoimentos nesta página."
+
+#: page-templates/testimonials.php:99
+msgid "Nenhum depoimento encontrado."
+msgstr "Nenhum depoimento encontrado."
+
+#: page-templates/testimonials.php:100
+msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+msgstr "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+
 #. translators: %s: Search query.
 #: search.php:17
 #, php-format
@@ -1219,6 +1698,90 @@ msgstr "Busca"
 #: searchform.php:15
 msgid "Search..."
 msgstr "Buscar..."
+
+#: single-depoimento.php:30
+msgid "← Depoimentos"
+msgstr "← Depoimentos"
+
+#: single-depoimento.php:51
+#: single-material_gratuito.php:62
+#: template-parts/content-page.php:19
+#: template-parts/content-single.php:26
+msgid "Page navigation"
+msgstr "Navegacao da pagina"
+
+#: single-depoimento.php:63
+msgid "Onde passou"
+msgstr "Onde passou"
+
+#: single-depoimento.php:70
+msgid "Ver depoimentos"
+msgstr "Ver depoimentos"
+
+#: single-material_gratuito.php:23
+msgid "← Materiais gratuitos"
+msgstr "← Materiais gratuitos"
+
+#: single-material_gratuito.php:32
+msgid "Acesso imediato"
+msgstr "Acesso imediato"
+
+#: single-material_gratuito.php:33
+msgid "Complete o formulário"
+msgstr "Complete o formulário"
+
+#: single-material_gratuito.php:34
+msgid "para receber o material."
+msgstr "para receber o material."
+
+#: single-material_gratuito.php:38
+msgid "Seu nome completo"
+msgstr "Seu nome completo"
+
+#: single-material_gratuito.php:41
+msgid "Email"
+msgstr "Email"
+
+#: single-material_gratuito.php:42
+msgid "voce@exemplo.com"
+msgstr "voce@exemplo.com"
+
+#: single-material_gratuito.php:45
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: single-material_gratuito.php:46
+msgid "(00) 00000-0000"
+msgstr "(00) 00000-0000"
+
+#: single-material_gratuito.php:49
+msgid "Baixar material gratuito"
+msgstr "Baixar material gratuito"
+
+#: single-material_gratuito.php:52
+msgid "Sem pagamento. Enviaremos o material para o contato informado."
+msgstr "Sem pagamento. Enviaremos o material para o contato informado."
+
+#: single-material_gratuito.php:71
+msgid "Pronto para usar nos estudos"
+msgstr "Pronto para usar nos estudos"
+
+#: single-material_gratuito.php:72
+msgid "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
+msgstr "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
+
+#: single-material_gratuito.php:74
+#: single-material_gratuito.php:91
+msgid "Baixar material"
+msgstr "Baixar material"
+
+#: single-material_gratuito.php:87
+msgid "Leve este material para sua rotina de estudos"
+msgstr "Leve este material para sua rotina de estudos"
+
+#: single-material_gratuito.php:88
+msgid "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
+msgstr "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
 
 #: template-parts/content-none.php:13
 msgid "Nothing found"
@@ -1236,11 +1799,6 @@ msgstr "Tente uma busca diferente ou volte para a pagina inicial."
 msgid "This archive does not have published posts yet."
 msgstr "Este arquivo ainda nao tem posts publicados."
 
-#: template-parts/content-page.php:19
-#: template-parts/content-single.php:26
-msgid "Page navigation"
-msgstr "Navegacao da pagina"
-
 #: template-parts/content-single.php:36
 msgid "Compartilhar no X"
 msgstr "Compartilhar no X"
@@ -1252,4 +1810,3 @@ msgstr "Compartilhar no Facebook"
 #: template-parts/content-single.php:38
 msgid "Compartilhar no LinkedIn"
 msgstr "Compartilhar no LinkedIn"
-
