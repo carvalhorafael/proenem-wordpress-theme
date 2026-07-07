@@ -9,6 +9,13 @@ npm run dev
 
 O comando `npm run dev` inicia o `wp-env`, instala dependências PHP dentro do container e sobe o Vite.
 
+O ambiente local monta os plugins de conteúdo usados pelo tema a partir de checkouts locais:
+
+- `../../plugins-wordpress/free-materials`
+- `../../plugins-wordpress/testimonials`
+
+Esses caminhos são relativos a este repositório. Eles mantêm os slugs canônicos `free-materials` e `testimonials` dentro do WordPress local.
+
 ## GitHub Packages
 
 Para instalar os pacotes do design system da Proenem, copie `.npmrc.example` para `.npmrc` e configure um token GitHub com acesso a `@carvalhorafael/*`.
