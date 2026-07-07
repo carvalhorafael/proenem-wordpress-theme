@@ -32,20 +32,29 @@ get_header();
 					<span class="pro-material-capture__eyebrow"><?php esc_html_e( 'Acesso imediato', 'proenem-wordpress-theme' ); ?></span>
 					<h2 id="pro-material-capture-title"><?php esc_html_e( 'Complete o formulário', 'proenem-wordpress-theme' ); ?></h2>
 					<p><?php esc_html_e( 'para receber o material.', 'proenem-wordpress-theme' ); ?></p>
-					<form class="pro-material-capture__form" method="post" action="" data-pro-material-capture-placeholder>
+					<form class="pro-material-capture__form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+						<input type="hidden" name="action" value="crm_leads_capture_free_material">
+						<?php wp_nonce_field( 'crm_leads_capture_free_material' ); ?>
+						<input type="hidden" name="material_id" value="<?php echo esc_attr( (string) $material_id ); ?>">
+						<input class="pro-material-capture__honeypot" type="text" name="crm_leads_capture_website" value="" autocomplete="off" tabindex="-1" aria-hidden="true">
+						<?php
+						if ( function_exists( 'crm_leads_capture_render_free_material_error_message' ) ) {
+							crm_leads_capture_render_free_material_error_message();
+						}
+						?>
 						<label>
 							<span><?php esc_html_e( 'Nome', 'proenem-wordpress-theme' ); ?></span>
-							<input type="text" name="material_name" autocomplete="name" placeholder="<?php esc_attr_e( 'Seu nome completo', 'proenem-wordpress-theme' ); ?>">
+							<input type="text" name="name" autocomplete="name" placeholder="<?php esc_attr_e( 'Seu nome completo', 'proenem-wordpress-theme' ); ?>">
 						</label>
 						<label>
 							<span><?php esc_html_e( 'Email', 'proenem-wordpress-theme' ); ?></span>
-							<input type="email" name="material_email" autocomplete="email" placeholder="<?php esc_attr_e( 'voce@exemplo.com', 'proenem-wordpress-theme' ); ?>">
+							<input type="email" name="email" autocomplete="email" placeholder="<?php esc_attr_e( 'voce@exemplo.com', 'proenem-wordpress-theme' ); ?>">
 						</label>
 						<label>
 							<span><?php esc_html_e( 'WhatsApp', 'proenem-wordpress-theme' ); ?></span>
-							<input type="tel" name="material_whatsapp" autocomplete="tel" placeholder="<?php esc_attr_e( '(00) 00000-0000', 'proenem-wordpress-theme' ); ?>">
+							<input type="tel" name="whatsapp" autocomplete="tel" placeholder="<?php esc_attr_e( '(00) 00000-0000', 'proenem-wordpress-theme' ); ?>">
 						</label>
-						<button class="pen-button pen-button--primary pen-button--md pro-material-capture__button" type="button">
+						<button class="pen-button pen-button--primary pen-button--md pro-material-capture__button" type="submit">
 							<?php esc_html_e( 'Baixar material gratuito', 'proenem-wordpress-theme' ); ?>
 						</button>
 					</form>
