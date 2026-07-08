@@ -9,13 +9,8 @@ const pot = await readFile(potPath, "utf8");
 
 const translations = new Map([
   ["Primary menu", "Menu principal"],
-  ["Footer menu", "Menu do rodape"],
   ["Proenem primary", "Proenem principal"],
   ["Proenem panel", "Painel Proenem"],
-  ["Footer column 1", "Coluna 1 do rodape"],
-  ["Footer column 2", "Coluna 2 do rodape"],
-  ["Footer column 3", "Coluna 3 do rodape"],
-  ["Footer bottom", "Linha final do rodape"],
   ["Widgets added here appear in %s.", "Widgets adicionados aqui aparecem em %s."],
   ["Post information", "Informacoes do post"],
   ["Previous", "Anterior"],

@@ -42,8 +42,12 @@ function proenem_theme_setup() {
 
 	register_nav_menus(
 		array(
-			'primary' => esc_html__( 'Primary menu', 'proenem-wordpress-theme' ),
-			'footer'  => esc_html__( 'Footer menu', 'proenem-wordpress-theme' ),
+			'primary'            => esc_html__( 'Primary menu', 'proenem-wordpress-theme' ),
+			'footer-subjects'    => esc_html__( 'Rodapé - Matérias lecionadas', 'proenem-wordpress-theme' ),
+			'footer-answer-keys' => esc_html__( 'Rodapé - Gabaritos', 'proenem-wordpress-theme' ),
+			'footer-tools'       => esc_html__( 'Rodapé - Ferramentas e simulados', 'proenem-wordpress-theme' ),
+			'footer-classes'     => esc_html__( 'Rodapé - Turmas', 'proenem-wordpress-theme' ),
+			'footer-legal'       => esc_html__( 'Rodapé - Links legais', 'proenem-wordpress-theme' ),
 		)
 	);
 }
@@ -80,12 +84,10 @@ add_action( 'init', 'proenem_register_block_styles' );
  */
 function proenem_register_widget_areas() {
 	$widget_areas = array(
-		'footer-1'             => __( 'Footer column 1', 'proenem-wordpress-theme' ),
-		'footer-2'             => __( 'Footer column 2', 'proenem-wordpress-theme' ),
-		'footer-3'             => __( 'Footer column 3', 'proenem-wordpress-theme' ),
-		'footer-bottom'        => __( 'Footer bottom', 'proenem-wordpress-theme' ),
-		'home-footer-platform' => __( 'Home footer - Plataforma', 'proenem-wordpress-theme' ),
-		'home-footer-support'  => __( 'Home footer - Suporte', 'proenem-wordpress-theme' ),
+		'footer-social'       => __( 'Rodapé - Redes sociais', 'proenem-wordpress-theme' ),
+		'footer-trust'        => __( 'Rodapé - Selos de confiança', 'proenem-wordpress-theme' ),
+		'footer-payment'      => __( 'Rodapé - Formas de pagamento', 'proenem-wordpress-theme' ),
+		'footer-company-info' => __( 'Rodapé - Dados da empresa', 'proenem-wordpress-theme' ),
 	);
 
 	foreach ( $widget_areas as $id => $name ) {

@@ -623,7 +623,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<section class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
+	<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
 		<div class="pro-home-testimonials__header">
 			<span class="pen-section-pill"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></span>
 			<h2 id="pro-testimonials-title">
@@ -737,51 +737,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<footer class="pen-site-footer">
-		<div class="pen-site-footer__content">
-			<p class="pen-section-pill"><?php esc_html_e( 'Manifesto Proenem', 'proenem-wordpress-theme' ); ?></p>
-			<h2 class="pen-site-footer__title">
-				<?php esc_html_e( 'Sua Aprovação', 'proenem-wordpress-theme' ); ?><br>
-				<span><?php esc_html_e( 'não é sorte.', 'proenem-wordpress-theme' ); ?></span><br>
-				<strong><?php esc_html_e( 'É método.', 'proenem-wordpress-theme' ); ?></strong>
-			</h2>
-			<p class="pen-site-footer__body"><?php esc_html_e( 'Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto.', 'proenem-wordpress-theme' ); ?></p>
-		</div>
-		<div class="pen-site-footer__links">
-			<div class="pen-site-footer__column pen-site-footer__widget-area">
-				<?php if ( is_active_sidebar( 'home-footer-platform' ) ) : ?>
-					<?php dynamic_sidebar( 'home-footer-platform' ); ?>
-				<?php else : ?>
-					<h3 class="pen-site-footer__column-title"><?php esc_html_e( 'Plataforma', 'proenem-wordpress-theme' ); ?></h3>
-					<ul>
-						<li><a href="#metodo"><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#planos"><?php esc_html_e( 'Planos', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#questoes"><?php esc_html_e( 'Banco de questões', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#redacao"><?php esc_html_e( 'Redação', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#aprovados"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></a></li>
-					</ul>
-				<?php endif; ?>
-			</div>
-			<div class="pen-site-footer__column pen-site-footer__widget-area">
-				<?php if ( is_active_sidebar( 'home-footer-support' ) ) : ?>
-					<?php dynamic_sidebar( 'home-footer-support' ); ?>
-				<?php else : ?>
-					<h3 class="pen-site-footer__column-title"><?php esc_html_e( 'Suporte', 'proenem-wordpress-theme' ); ?></h3>
-					<ul>
-						<li><a href="#ajuda"><?php esc_html_e( 'Central de ajuda', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#contato"><?php esc_html_e( 'Fale com a gente', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#faq"><?php esc_html_e( 'FAQ', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#status"><?php esc_html_e( 'Status', 'proenem-wordpress-theme' ); ?></a></li>
-						<li><a href="#carreiras"><?php esc_html_e( 'Carreiras', 'proenem-wordpress-theme' ); ?></a></li>
-					</ul>
-				<?php endif; ?>
-			</div>
-		</div>
-		<div class="pen-site-footer__bottom">
-			<a class="pen-site-footer__copyright" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( '@2026 ProEnem - Grupo Q Educação', 'proenem-wordpress-theme' ); ?></a>
-			<span class="pen-site-footer__signature"><?php esc_html_e( 'Feito com ♥ para você', 'proenem-wordpress-theme' ); ?></span>
-		</div>
-	</footer>
+	<?php proenem_render_site_footer(); ?>
 </main>
 
 <?php
