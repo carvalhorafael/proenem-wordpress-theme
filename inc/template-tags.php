@@ -1092,6 +1092,140 @@ function proenem_render_testimonials_empty_state( $title, $body ) {
 }
 
 /**
+ * Get configurable footer menu columns.
+ *
+ * @return array<string,string>
+ */
+function proenem_get_footer_menu_columns() {
+	return array(
+		'footer-subjects'    => __( 'Matérias lecionadas', 'proenem-wordpress-theme' ),
+		'footer-answer-keys' => __( 'Gabaritos', 'proenem-wordpress-theme' ),
+		'footer-tools'       => __( 'Ferramentas', 'proenem-wordpress-theme' ),
+	);
+}
+
+/**
+ * Render one configurable footer menu column.
+ *
+ * @param string $location Menu location.
+ * @param string $title    Column title.
+ * @return void
+ */
+function proenem_render_footer_menu_column( $location, $title ) {
+	if ( ! has_nav_menu( $location ) ) {
+		return;
+	}
+	?>
+	<section class="pen-site-footer__column pen-site-footer__column--<?php echo esc_attr( sanitize_html_class( $location ) ); ?>" aria-labelledby="<?php echo esc_attr( 'proenem-' . $location . '-title' ); ?>">
+		<h3 id="<?php echo esc_attr( 'proenem-' . $location . '-title' ); ?>" class="pen-site-footer__column-title"><?php echo esc_html( $title ); ?></h3>
+		<?php
+		wp_nav_menu(
+			array(
+				'theme_location' => $location,
+				'container'      => false,
+				'menu_class'     => 'pen-site-footer__menu',
+				'depth'          => 1,
+				'fallback_cb'    => false,
+			)
+		);
+		?>
+	</section>
+	<?php
+}
+
+/**
+ * Render a configurable footer widget area.
+ *
+ * @param string $sidebar_id Sidebar ID.
+ * @param string $class_name Extra class name.
+ * @return void
+ */
+function proenem_render_footer_widget_area( $sidebar_id, $class_name = '' ) {
+	if ( ! is_active_sidebar( $sidebar_id ) ) {
+		return;
+	}
+	?>
+	<div class="pen-site-footer__widget-area <?php echo esc_attr( $class_name ); ?>">
+		<?php dynamic_sidebar( $sidebar_id ); ?>
+	</div>
+	<?php
+}
+
+/**
+ * Render the shared Proenem footer.
+ *
+ * @return void
+ */
+function proenem_render_site_footer() {
+	$footer_columns = proenem_get_footer_menu_columns();
+	?>
+	<footer class="pen-site-footer">
+		<div class="pen-site-footer__content">
+			<p class="pen-section-pill"><?php esc_html_e( 'Manifesto Proenem', 'proenem-wordpress-theme' ); ?></p>
+			<h2 class="pen-site-footer__title">
+				<?php esc_html_e( 'Sua aprovação', 'proenem-wordpress-theme' ); ?><br>
+				<span><?php esc_html_e( 'não é sorte.', 'proenem-wordpress-theme' ); ?></span><br>
+				<strong><?php esc_html_e( 'É método.', 'proenem-wordpress-theme' ); ?></strong>
+			</h2>
+			<p class="pen-site-footer__body"><?php esc_html_e( 'Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto.', 'proenem-wordpress-theme' ); ?></p>
+			<div class="pen-site-footer__manifest-links">
+				<?php proenem_render_footer_menu_column( 'footer-classes', __( 'Nossas turmas', 'proenem-wordpress-theme' ) ); ?>
+			</div>
+		</div>
+
+		<div class="pen-site-footer__top-widgets">
+			<?php proenem_render_footer_widget_area( 'footer-social', 'pen-site-footer__social' ); ?>
+		</div>
+
+		<div class="pen-site-footer__links" aria-label="<?php esc_attr_e( 'Links do rodapé', 'proenem-wordpress-theme' ); ?>">
+			<?php
+			foreach ( $footer_columns as $location => $title ) {
+				proenem_render_footer_menu_column( $location, $title );
+			}
+			?>
+		</div>
+
+		<?php if ( has_nav_menu( 'footer-legal' ) ) : ?>
+			<nav class="pen-site-footer__legal" aria-label="<?php esc_attr_e( 'Links legais', 'proenem-wordpress-theme' ); ?>">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'footer-legal',
+						'container'      => false,
+						'menu_class'     => 'pen-site-footer__legal-menu',
+						'depth'          => 1,
+						'fallback_cb'    => false,
+					)
+				);
+				?>
+			</nav>
+		<?php endif; ?>
+
+		<div class="pen-site-footer__meta">
+			<?php proenem_render_footer_widget_area( 'footer-trust', 'pen-site-footer__trust' ); ?>
+			<?php proenem_render_footer_widget_area( 'footer-payment', 'pen-site-footer__payment' ); ?>
+		</div>
+
+		<div class="pen-site-footer__bottom">
+			<div class="pen-site-footer__company">
+				<a class="pen-site-footer__copyright" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+					<?php
+					printf(
+						/* translators: %s: Current year. */
+						esc_html__( '@%s ProEnem - Grupo Q Educação', 'proenem-wordpress-theme' ),
+						esc_html( gmdate( 'Y' ) )
+					);
+					?>
+				</a>
+				<?php proenem_render_footer_widget_area( 'footer-company-info', 'pen-site-footer__company-info' ); ?>
+			</div>
+			<span class="pen-site-footer__signature"><?php esc_html_e( 'Feito com ♥ para você', 'proenem-wordpress-theme' ); ?></span>
+		</div>
+	</footer>
+	<?php
+}
+
+/**
  * Get primary navigation data for the design-system navbar.
  *
  * @param string $context Navigation context.

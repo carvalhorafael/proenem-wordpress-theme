@@ -30,6 +30,41 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertArrayHasKey( 'primary', $locations );
 		$this->assertArrayHasKey( 'footer', $locations );
+		$this->assertArrayHasKey( 'footer-subjects', $locations );
+		$this->assertArrayHasKey( 'footer-answer-keys', $locations );
+		$this->assertArrayHasKey( 'footer-tools', $locations );
+		$this->assertArrayHasKey( 'footer-classes', $locations );
+		$this->assertArrayHasKey( 'footer-legal', $locations );
+	}
+
+	/**
+	 * Footer widget areas should be registered for configurable mixed content.
+	 *
+	 * @return void
+	 */
+	public function test_footer_widget_areas_are_registered() {
+		global $wp_registered_sidebars;
+
+		$this->assertArrayHasKey( 'footer-social', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-trust', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-payment', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-company-info', $wp_registered_sidebars );
+	}
+
+	/**
+	 * Footer columns should expose the expected configurable menu locations.
+	 *
+	 * @return void
+	 */
+	public function test_footer_menu_columns_are_declared() {
+		$this->assertSame(
+			array(
+				'footer-subjects'    => 'Matérias lecionadas',
+				'footer-answer-keys' => 'Gabaritos',
+				'footer-tools'       => 'Ferramentas',
+			),
+			proenem_get_footer_menu_columns()
+		);
 	}
 
 	/**
