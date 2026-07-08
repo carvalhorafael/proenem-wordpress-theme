@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.4.1\n"
+"Project-Id-Version: Proenem 0.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -65,98 +65,6 @@ msgstr ""
 
 #: comments.php:48
 msgid "Comments are closed."
-msgstr ""
-
-#: footer.php:12
-#: page-templates/home.php:742
-msgid "Manifesto Proenem"
-msgstr ""
-
-#: footer.php:14
-msgid "Sua aprovação"
-msgstr ""
-
-#: footer.php:15
-#: page-templates/home.php:745
-msgid "não é sorte."
-msgstr ""
-
-#: footer.php:16
-#: page-templates/home.php:746
-msgid "É método."
-msgstr ""
-
-#: footer.php:18
-#: page-templates/home.php:748
-msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
-msgstr ""
-
-#: footer.php:23
-#: page-templates/home.php:755
-msgid "Plataforma"
-msgstr ""
-
-#: footer.php:24
-#: inc/template-tags.php:1106
-#: page-templates/home.php:54
-#: page-templates/home.php:677
-#: page-templates/home.php:757
-msgid "Método PRO"
-msgstr ""
-
-#: footer.php:25
-#: inc/class-proenem-elementor-sales-widget-base.php:501
-#: inc/class-proenem-elementor-sales-widget-base.php:574
-#: inc/template-tags.php:1111
-#: page-templates/home.php:758
-msgid "Planos"
-msgstr ""
-
-#: footer.php:26
-#: page-templates/home.php:759
-msgid "Banco de questões"
-msgstr ""
-
-#: footer.php:27
-#: inc/template-tags.php:102
-#: inc/template-tags.php:1116
-msgid "Blog"
-msgstr ""
-
-#: footer.php:30
-#: page-templates/home.php:769
-msgid "Suporte"
-msgstr ""
-
-#: footer.php:31
-#: page-templates/home.php:771
-msgid "Central de ajuda"
-msgstr ""
-
-#: footer.php:32
-#: page-templates/home.php:773
-msgid "FAQ"
-msgstr ""
-
-#: footer.php:33
-#: page-templates/home.php:774
-msgid "Status"
-msgstr ""
-
-#: footer.php:34
-#: page-templates/home.php:775
-msgid "Carreiras"
-msgstr ""
-
-#. translators: %s: Current year.
-#: footer.php:43
-#, php-format
-msgid "@%s ProEnem - Grupo Q Educação"
-msgstr ""
-
-#: footer.php:48
-#: page-templates/home.php:782
-msgid "Feito com ♥ para você"
 msgstr ""
 
 #: header.php:18
@@ -286,6 +194,11 @@ msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:480
 msgid "Pro Grade de Planos"
+msgstr ""
+
+#: inc/class-proenem-elementor-sales-widget-base.php:501
+#: inc/class-proenem-elementor-sales-widget-base.php:574
+msgid "Planos"
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:511
@@ -495,43 +408,51 @@ msgid "Primary menu"
 msgstr ""
 
 #: inc/setup.php:46
-msgid "Footer menu"
+msgid "Rodapé - Matérias lecionadas"
 msgstr ""
 
-#: inc/setup.php:62
+#: inc/setup.php:47
+msgid "Rodapé - Gabaritos"
+msgstr ""
+
+#: inc/setup.php:48
+msgid "Rodapé - Ferramentas e simulados"
+msgstr ""
+
+#: inc/setup.php:49
+msgid "Rodapé - Turmas"
+msgstr ""
+
+#: inc/setup.php:50
+msgid "Rodapé - Links legais"
+msgstr ""
+
+#: inc/setup.php:66
 msgid "Proenem primary"
 msgstr ""
 
-#: inc/setup.php:70
+#: inc/setup.php:74
 msgid "Proenem panel"
 msgstr ""
 
-#: inc/setup.php:83
-msgid "Footer column 1"
-msgstr ""
-
-#: inc/setup.php:84
-msgid "Footer column 2"
-msgstr ""
-
-#: inc/setup.php:85
-msgid "Footer column 3"
-msgstr ""
-
-#: inc/setup.php:86
-msgid "Footer bottom"
-msgstr ""
-
 #: inc/setup.php:87
-msgid "Home footer - Plataforma"
+msgid "Rodapé - Redes sociais"
 msgstr ""
 
 #: inc/setup.php:88
-msgid "Home footer - Suporte"
+msgid "Rodapé - Selos de confiança"
+msgstr ""
+
+#: inc/setup.php:89
+msgid "Rodapé - Formas de pagamento"
+msgstr ""
+
+#: inc/setup.php:90
+msgid "Rodapé - Dados da empresa"
 msgstr ""
 
 #. translators: %s: Widget area name.
-#: inc/setup.php:97
+#: inc/setup.php:99
 #, php-format
 msgid "Widgets added here appear in %s."
 msgstr ""
@@ -550,6 +471,10 @@ msgstr ""
 
 #: inc/template-tags.php:53
 msgid "Posts pagination"
+msgstr ""
+
+#: inc/template-tags.php:102
+msgid "Blog"
 msgstr ""
 
 #. translators: %d: Estimated reading time in minutes.
@@ -726,35 +651,69 @@ msgstr ""
 msgid "Filtrar depoimentos"
 msgstr ""
 
-#. Template Name of the theme
-#: inc/template-tags.php:1121
-#: page-templates/free-materials.php:43
-msgid "Materiais gratuitos"
+#: inc/template-tags.php:1101
+msgid "Matérias lecionadas"
 msgstr ""
 
-#. Template Name of the theme
-#: inc/template-tags.php:1126
-#: page-templates/testimonials.php:54
-msgid "Depoimentos"
+#: inc/template-tags.php:1102
+msgid "Gabaritos"
 msgstr ""
 
-#: inc/template-tags.php:1133
-msgid "Login"
+#: inc/template-tags.php:1103
+msgid "Ferramentas"
 msgstr ""
 
-#: inc/template-tags.php:1138
-msgid "Comece grátis"
+#: inc/template-tags.php:1164
+msgid "Manifesto Proenem"
 msgstr ""
 
-#: inc/template-tags.php:1210
+#: inc/template-tags.php:1166
+msgid "Sua aprovação"
+msgstr ""
+
+#: inc/template-tags.php:1167
+msgid "não é sorte."
+msgstr ""
+
+#: inc/template-tags.php:1168
+msgid "É método."
+msgstr ""
+
+#: inc/template-tags.php:1170
+msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
+msgstr ""
+
+#: inc/template-tags.php:1172
+msgid "Nossas turmas"
+msgstr ""
+
+#: inc/template-tags.php:1180
+msgid "Links do rodapé"
+msgstr ""
+
+#: inc/template-tags.php:1189
+msgid "Links legais"
+msgstr ""
+
+#. translators: %s: Current year.
+#: inc/template-tags.php:1215
+#, php-format
+msgid "@%s ProEnem - Grupo Q Educação"
+msgstr ""
+
+#: inc/template-tags.php:1222
+msgid "Feito com ♥ para você"
+msgstr ""
+
+#: inc/template-tags.php:1355
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:1226
+#: inc/template-tags.php:1371
 msgid "ProEnem"
 msgstr ""
 
-#: inc/template-tags.php:1235
+#: inc/template-tags.php:1380
 msgid "Abrir menu"
 msgstr ""
 
@@ -764,6 +723,11 @@ msgstr ""
 
 #: index.php:15
 msgid "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
+msgstr ""
+
+#. Template Name of the theme
+#: page-templates/free-materials.php:43
+msgid "Materiais gratuitos"
 msgstr ""
 
 #: page-templates/free-materials.php:44
@@ -846,6 +810,11 @@ msgstr ""
 
 #: page-templates/home.php:50
 msgid "Comunidade de alunos"
+msgstr ""
+
+#: page-templates/home.php:54
+#: page-templates/home.php:677
+msgid "Método PRO"
 msgstr ""
 
 #: page-templates/home.php:55
@@ -1501,7 +1470,6 @@ msgid "Quero o Método PRO"
 msgstr ""
 
 #: page-templates/home.php:628
-#: page-templates/home.php:761
 msgid "Aprovados"
 msgstr ""
 
@@ -1613,20 +1581,9 @@ msgstr ""
 msgid "Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição."
 msgstr ""
 
-#: page-templates/home.php:744
-msgid "Sua Aprovação"
-msgstr ""
-
-#: page-templates/home.php:760
-msgid "Redação"
-msgstr ""
-
-#: page-templates/home.php:772
-msgid "Fale com a gente"
-msgstr ""
-
-#: page-templates/home.php:781
-msgid "@2026 ProEnem - Grupo Q Educação"
+#. Template Name of the theme
+#: page-templates/testimonials.php:54
+msgid "Depoimentos"
 msgstr ""
 
 #: page-templates/testimonials.php:55

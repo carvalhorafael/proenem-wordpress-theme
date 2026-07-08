@@ -29,7 +29,48 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$locations = get_registered_nav_menus();
 
 		$this->assertArrayHasKey( 'primary', $locations );
-		$this->assertArrayHasKey( 'footer', $locations );
+		$this->assertArrayHasKey( 'footer-subjects', $locations );
+		$this->assertArrayHasKey( 'footer-answer-keys', $locations );
+		$this->assertArrayHasKey( 'footer-tools', $locations );
+		$this->assertArrayHasKey( 'footer-classes', $locations );
+		$this->assertArrayHasKey( 'footer-legal', $locations );
+		$this->assertArrayNotHasKey( 'footer', $locations );
+	}
+
+	/**
+	 * Footer widget areas should be registered for configurable mixed content.
+	 *
+	 * @return void
+	 */
+	public function test_footer_widget_areas_are_registered() {
+		global $wp_registered_sidebars;
+
+		$this->assertArrayHasKey( 'footer-social', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-trust', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-payment', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'footer-company-info', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-1', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-2', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-3', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-bottom', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'home-footer-platform', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'home-footer-support', $wp_registered_sidebars );
+	}
+
+	/**
+	 * Footer columns should expose the expected configurable menu locations.
+	 *
+	 * @return void
+	 */
+	public function test_footer_menu_columns_are_declared() {
+		$this->assertSame(
+			array(
+				'footer-subjects'    => 'Matérias lecionadas',
+				'footer-answer-keys' => 'Gabaritos',
+				'footer-tools'       => 'Ferramentas',
+			),
+			proenem_get_footer_menu_columns()
+		);
 	}
 
 	/**
@@ -63,6 +104,102 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	public function test_free_materials_page_template_exists() {
 		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/free-materials.php' );
 		$this->assertFileExists( PROENEM_THEME_DIR . '/single-material_gratuito.php' );
+	}
+
+	/**
+	 * Navbar actions should preserve direct submenu items from WordPress menus.
+	 *
+	 * @return void
+	 */
+	public function test_navbar_actions_include_submenu_items() {
+		$menu_id = wp_create_nav_menu( 'Proenem test menu' );
+		$parent  = wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'   => 'Entrar',
+				'menu-item-url'     => '#entrar',
+				'menu-item-status'  => 'publish',
+				'menu-item-classes' => 'pen-navbar-action pen-navbar-action-secondary',
+			)
+		);
+
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'     => 'Acessar Proenem',
+				'menu-item-url'       => 'https://app.proenem.com.br/',
+				'menu-item-status'    => 'publish',
+				'menu-item-parent-id' => $parent,
+			)
+		);
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'     => 'Acessar Promedicina',
+				'menu-item-url'       => 'https://app.promedicina.com.br/',
+				'menu-item-status'    => 'publish',
+				'menu-item-parent-id' => $parent,
+			)
+		);
+
+		$navigation = proenem_get_primary_navigation_items( 'site', $menu_id );
+
+		$this->assertCount( 1, $navigation['actions'] );
+		$this->assertSame( 'Entrar', $navigation['actions'][0]['label'] );
+		$this->assertCount( 2, $navigation['actions'][0]['children'] );
+		$this->assertSame( 'Acessar Proenem', $navigation['actions'][0]['children'][0]['label'] );
+		$this->assertSame( 'Acessar Promedicina', $navigation['actions'][0]['children'][1]['label'] );
+	}
+
+	/**
+	 * Navbar should not invent items when the primary menu location is empty.
+	 *
+	 * @return void
+	 */
+	public function test_navbar_does_not_fallback_when_location_is_empty() {
+		set_theme_mod( 'nav_menu_locations', array() );
+
+		$navigation = proenem_get_primary_navigation_items( 'site' );
+
+		$this->assertSame( array(), $navigation['links'] );
+		$this->assertSame( array(), $navigation['actions'] );
+	}
+
+	/**
+	 * Navbar actions should only come from menu items with action classes.
+	 *
+	 * @return void
+	 */
+	public function test_navbar_does_not_fallback_when_action_classes_are_missing() {
+		$menu_id = wp_create_nav_menu( 'Proenem menu without actions' );
+
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'  => 'Planos',
+				'menu-item-url'    => '#planos',
+				'menu-item-status' => 'publish',
+			)
+		);
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'  => 'Entrar',
+				'menu-item-url'    => '#entrar',
+				'menu-item-status' => 'publish',
+			)
+		);
+
+		$navigation = proenem_get_primary_navigation_items( 'site', $menu_id );
+
+		$this->assertSame( array(), $navigation['actions'] );
+		$this->assertSame( 'Planos', $navigation['links'][0]['label'] );
+		$this->assertSame( 'Entrar', $navigation['links'][1]['label'] );
 	}
 
 	/**
