@@ -746,15 +746,15 @@ msgstr ""
 msgid "Comece grátis"
 msgstr ""
 
-#: inc/template-tags.php:1210
+#: inc/template-tags.php:1270
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:1226
+#: inc/template-tags.php:1286
 msgid "ProEnem"
 msgstr ""
 
-#: inc/template-tags.php:1235
+#: inc/template-tags.php:1295
 msgid "Abrir menu"
 msgstr ""
 

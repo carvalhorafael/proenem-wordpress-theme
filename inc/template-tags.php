@@ -1099,46 +1099,9 @@ function proenem_render_testimonials_empty_state( $title, $body ) {
  * @return array{links:array<int,array<string,mixed>>,actions:array<int,array<string,mixed>>}
  */
 function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 ) {
-	$fallback = array(
-		'links'   => array(
-			array(
-				'url'    => home_url( '/#metodo' ),
-				'label'  => __( 'Método PRO', 'proenem-wordpress-theme' ),
-				'active' => 'home' === $context,
-			),
-			array(
-				'url'    => home_url( '/#planos' ),
-				'label'  => __( 'Planos', 'proenem-wordpress-theme' ),
-				'active' => false,
-			),
-			array(
-				'url'    => home_url( '/blog/' ),
-				'label'  => __( 'Blog', 'proenem-wordpress-theme' ),
-				'active' => 'home' !== $context && ( is_home() || is_singular( 'post' ) || ( is_archive() && ! proenem_is_free_materials_surface() && ! proenem_is_testimonials_surface() ) ),
-			),
-			array(
-				'url'    => home_url( '/materiais-gratuitos/' ),
-				'label'  => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
-				'active' => 'home' !== $context && proenem_is_free_materials_surface(),
-			),
-			array(
-				'url'    => proenem_get_testimonials_url(),
-				'label'  => __( 'Depoimentos', 'proenem-wordpress-theme' ),
-				'active' => 'home' !== $context && proenem_is_testimonials_surface(),
-			),
-		),
-		'actions' => array(
-			array(
-				'url'     => home_url( '/login/' ),
-				'label'   => __( 'Login', 'proenem-wordpress-theme' ),
-				'variant' => 'secondary',
-			),
-			array(
-				'url'     => home_url( '/#planos' ),
-				'label'   => __( 'Comece grátis', 'proenem-wordpress-theme' ),
-				'variant' => 'primary',
-			),
-		),
+	$navigation = array(
+		'links'   => array(),
+		'actions' => array(),
 	);
 
 	$menu_id = absint( $menu_id );
@@ -1147,7 +1110,7 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 		$locations = get_nav_menu_locations();
 
 		if ( empty( $locations['primary'] ) ) {
-			return $fallback;
+			return $navigation;
 		}
 
 		$menu_id = absint( $locations['primary'] );
@@ -1156,13 +1119,18 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 	$menu_items = wp_get_nav_menu_items( $menu_id );
 
 	if ( empty( $menu_items ) || is_wp_error( $menu_items ) ) {
-		return $fallback;
+		return $navigation;
 	}
 
-	$navigation = array(
-		'links'   => array(),
-		'actions' => array(),
-	);
+	$children = array();
+
+	foreach ( $menu_items as $menu_item ) {
+		if ( '0' === (string) $menu_item->menu_item_parent ) {
+			continue;
+		}
+
+		$children[ (int) $menu_item->menu_item_parent ][] = $menu_item;
+	}
 
 	foreach ( $menu_items as $menu_item ) {
 		if ( '0' !== (string) $menu_item->menu_item_parent ) {
@@ -1171,13 +1139,26 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 
 		$classes = array_filter( (array) $menu_item->classes );
 		$item    = array(
-			'url'     => $menu_item->url,
-			'label'   => $menu_item->title,
-			'target'  => $menu_item->target,
-			'rel'     => $menu_item->xfn,
-			'classes' => array_map( 'sanitize_html_class', $classes ),
-			'active'  => in_array( 'current-menu-item', $classes, true ) || in_array( 'current-menu-ancestor', $classes, true ),
+			'url'      => $menu_item->url,
+			'label'    => $menu_item->title,
+			'target'   => $menu_item->target,
+			'rel'      => $menu_item->xfn,
+			'classes'  => array_map( 'sanitize_html_class', $classes ),
+			'active'   => in_array( 'current-menu-item', $classes, true ) || in_array( 'current-menu-ancestor', $classes, true ),
+			'children' => array(),
 		);
+
+		foreach ( $children[ (int) $menu_item->ID ] ?? array() as $child_menu_item ) {
+			$child_classes      = array_filter( (array) $child_menu_item->classes );
+			$item['children'][] = array(
+				'url'     => $child_menu_item->url,
+				'label'   => $child_menu_item->title,
+				'target'  => $child_menu_item->target,
+				'rel'     => $child_menu_item->xfn,
+				'classes' => array_map( 'sanitize_html_class', $child_classes ),
+				'active'  => in_array( 'current-menu-item', $child_classes, true ),
+			);
+		}
 
 		if ( in_array( 'pen-navbar-action', $classes, true ) ) {
 			$item['variant']         = in_array( 'pen-navbar-action-secondary', $classes, true ) ? 'secondary' : 'primary';
@@ -1188,15 +1169,45 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 		$navigation['links'][] = $item;
 	}
 
-	if ( empty( $navigation['links'] ) ) {
-		$navigation['links'] = $fallback['links'];
-	}
-
-	if ( empty( $navigation['actions'] ) ) {
-		$navigation['actions'] = $fallback['actions'];
-	}
-
 	return $navigation;
+}
+
+/**
+ * Render a navbar item submenu.
+ *
+ * @param array<string,mixed> $navigation_item Navigation item data.
+ * @return void
+ */
+function proenem_render_site_navbar_submenu( $navigation_item ) {
+	$children = $navigation_item['children'] ?? array();
+
+	if ( empty( $children ) || ! is_array( $children ) ) {
+		return;
+	}
+	?>
+	<ul class="pen-navbar__submenu">
+		<?php foreach ( $children as $child_item ) : ?>
+			<?php
+			$child_item_rel = $child_item['rel'] ?? '';
+
+			if ( '_blank' === ( $child_item['target'] ?? '' ) && empty( $child_item_rel ) ) {
+				$child_item_rel = 'noopener';
+			}
+			?>
+			<li class="pen-navbar__submenu-item">
+				<a
+					class="pen-navbar__submenu-link<?php echo ! empty( $child_item['active'] ) ? ' pen-navbar__submenu-link--active' : ''; ?>"
+					href="<?php echo esc_url( $child_item['url'] ); ?>"
+					<?php echo ! empty( $child_item['target'] ) ? 'target="' . esc_attr( $child_item['target'] ) . '"' : ''; ?>
+					<?php echo ! empty( $child_item_rel ) ? 'rel="' . esc_attr( $child_item_rel ) . '"' : ''; ?>
+					<?php echo ! empty( $child_item['active'] ) ? 'aria-current="page"' : ''; ?>
+				>
+					<?php echo esc_html( $child_item['label'] ); ?>
+				</a>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php
 }
 
 /**
@@ -1248,20 +1259,25 @@ function proenem_render_site_navbar( $args = array() ) {
 					}
 
 					$navigation_link_rel = $navigation_link['rel'] ?? '';
+					$has_submenu         = ! empty( $navigation_link['children'] );
 
 					if ( '_blank' === ( $navigation_link['target'] ?? '' ) && empty( $navigation_link_rel ) ) {
 						$navigation_link_rel = 'noopener';
 					}
 					?>
-					<a
-						class="<?php echo esc_attr( $navigation_link_class ); ?>"
-						href="<?php echo esc_url( $navigation_link['url'] ); ?>"
-						<?php echo ! empty( $navigation_link['target'] ) ? 'target="' . esc_attr( $navigation_link['target'] ) . '"' : ''; ?>
-						<?php echo ! empty( $navigation_link_rel ) ? 'rel="' . esc_attr( $navigation_link_rel ) . '"' : ''; ?>
-						<?php echo ! empty( $navigation_link['active'] ) ? 'aria-current="page"' : ''; ?>
-					>
-						<?php echo esc_html( $navigation_link['label'] ); ?>
-					</a>
+					<div class="pen-navbar__item<?php echo $has_submenu ? ' pen-navbar__item--has-submenu' : ''; ?>">
+						<a
+							class="<?php echo esc_attr( $navigation_link_class ); ?>"
+							href="<?php echo esc_url( $navigation_link['url'] ); ?>"
+							<?php echo ! empty( $navigation_link['target'] ) ? 'target="' . esc_attr( $navigation_link['target'] ) . '"' : ''; ?>
+							<?php echo ! empty( $navigation_link_rel ) ? 'rel="' . esc_attr( $navigation_link_rel ) . '"' : ''; ?>
+							<?php echo ! empty( $navigation_link['active'] ) ? 'aria-current="page"' : ''; ?>
+							<?php echo $has_submenu ? 'aria-haspopup="true"' : ''; ?>
+						>
+							<?php echo esc_html( $navigation_link['label'] ); ?>
+						</a>
+						<?php proenem_render_site_navbar_submenu( $navigation_link ); ?>
+					</div>
 				<?php endforeach; ?>
 			</div>
 			<?php if ( ! empty( $navigation['actions'] ) ) : ?>
@@ -1276,19 +1292,24 @@ function proenem_render_site_navbar( $args = array() ) {
 							? ' ' . implode( ' ', $navigation_action['classes'] )
 							: '';
 						$navigation_action_rel     = $navigation_action['rel'] ?? '';
+						$has_submenu               = ! empty( $navigation_action['children'] );
 
 						if ( '_blank' === ( $navigation_action['target'] ?? '' ) && empty( $navigation_action_rel ) ) {
 							$navigation_action_rel = 'noopener';
 						}
 						?>
-						<a
-							class="<?php echo esc_attr( $navigation_action_class ); ?>"
-							href="<?php echo esc_url( $navigation_action['url'] ); ?>"
-							<?php echo ! empty( $navigation_action['target'] ) ? 'target="' . esc_attr( $navigation_action['target'] ) . '"' : ''; ?>
-							<?php echo ! empty( $navigation_action_rel ) ? 'rel="' . esc_attr( $navigation_action_rel ) . '"' : ''; ?>
-						>
-							<?php echo esc_html( $navigation_action['label'] ); ?>
-						</a>
+						<div class="pen-navbar__item<?php echo $has_submenu ? ' pen-navbar__item--has-submenu' : ''; ?>">
+							<a
+								class="<?php echo esc_attr( $navigation_action_class ); ?>"
+								href="<?php echo esc_url( $navigation_action['url'] ); ?>"
+								<?php echo ! empty( $navigation_action['target'] ) ? 'target="' . esc_attr( $navigation_action['target'] ) . '"' : ''; ?>
+								<?php echo ! empty( $navigation_action_rel ) ? 'rel="' . esc_attr( $navigation_action_rel ) . '"' : ''; ?>
+								<?php echo $has_submenu ? 'aria-haspopup="true"' : ''; ?>
+							>
+								<?php echo esc_html( $navigation_action['label'] ); ?>
+							</a>
+							<?php proenem_render_site_navbar_submenu( $navigation_action ); ?>
+						</div>
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
