@@ -29,12 +29,12 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$locations = get_registered_nav_menus();
 
 		$this->assertArrayHasKey( 'primary', $locations );
-		$this->assertArrayHasKey( 'footer', $locations );
 		$this->assertArrayHasKey( 'footer-subjects', $locations );
 		$this->assertArrayHasKey( 'footer-answer-keys', $locations );
 		$this->assertArrayHasKey( 'footer-tools', $locations );
 		$this->assertArrayHasKey( 'footer-classes', $locations );
 		$this->assertArrayHasKey( 'footer-legal', $locations );
+		$this->assertArrayNotHasKey( 'footer', $locations );
 	}
 
 	/**
@@ -49,6 +49,12 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'footer-trust', $wp_registered_sidebars );
 		$this->assertArrayHasKey( 'footer-payment', $wp_registered_sidebars );
 		$this->assertArrayHasKey( 'footer-company-info', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-1', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-2', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-3', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'footer-bottom', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'home-footer-platform', $wp_registered_sidebars );
+		$this->assertArrayNotHasKey( 'home-footer-support', $wp_registered_sidebars );
 	}
 
 	/**

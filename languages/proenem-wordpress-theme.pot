@@ -408,79 +408,51 @@ msgid "Primary menu"
 msgstr ""
 
 #: inc/setup.php:46
-msgid "Footer menu"
-msgstr ""
-
-#: inc/setup.php:47
 msgid "Rodapé - Matérias lecionadas"
 msgstr ""
 
-#: inc/setup.php:48
+#: inc/setup.php:47
 msgid "Rodapé - Gabaritos"
 msgstr ""
 
-#: inc/setup.php:49
+#: inc/setup.php:48
 msgid "Rodapé - Ferramentas e simulados"
 msgstr ""
 
-#: inc/setup.php:50
+#: inc/setup.php:49
 msgid "Rodapé - Turmas"
 msgstr ""
 
-#: inc/setup.php:51
+#: inc/setup.php:50
 msgid "Rodapé - Links legais"
 msgstr ""
 
-#: inc/setup.php:67
+#: inc/setup.php:66
 msgid "Proenem primary"
 msgstr ""
 
-#: inc/setup.php:75
+#: inc/setup.php:74
 msgid "Proenem panel"
 msgstr ""
 
-#: inc/setup.php:88
-msgid "Footer column 1"
-msgstr ""
-
-#: inc/setup.php:89
-msgid "Footer column 2"
-msgstr ""
-
-#: inc/setup.php:90
-msgid "Footer column 3"
-msgstr ""
-
-#: inc/setup.php:91
-msgid "Footer bottom"
-msgstr ""
-
-#: inc/setup.php:92
+#: inc/setup.php:87
 msgid "Rodapé - Redes sociais"
 msgstr ""
 
-#: inc/setup.php:93
+#: inc/setup.php:88
 msgid "Rodapé - Selos de confiança"
 msgstr ""
 
-#: inc/setup.php:94
+#: inc/setup.php:89
 msgid "Rodapé - Formas de pagamento"
 msgstr ""
 
-#: inc/setup.php:95
+#: inc/setup.php:90
 msgid "Rodapé - Dados da empresa"
 msgstr ""
 
-#: inc/setup.php:96
-msgid "Home footer - Plataforma"
-msgstr ""
-
-#: inc/setup.php:97
-msgid "Home footer - Suporte"
-msgstr ""
-
 #. translators: %s: Widget area name.
-#: inc/setup.php:106
+#: inc/setup.php:99
 #, php-format
 msgid "Widgets added here appear in %s."
 msgstr ""
@@ -691,57 +663,57 @@ msgstr ""
 msgid "Ferramentas"
 msgstr ""
 
-#: inc/template-tags.php:1104
-msgid "Nossas turmas"
-msgstr ""
-
-#: inc/template-tags.php:1165
+#: inc/template-tags.php:1164
 msgid "Manifesto Proenem"
 msgstr ""
 
-#: inc/template-tags.php:1167
+#: inc/template-tags.php:1166
 msgid "Sua aprovação"
 msgstr ""
 
-#: inc/template-tags.php:1168
+#: inc/template-tags.php:1167
 msgid "não é sorte."
 msgstr ""
 
-#: inc/template-tags.php:1169
+#: inc/template-tags.php:1168
 msgid "É método."
 msgstr ""
 
-#: inc/template-tags.php:1171
+#: inc/template-tags.php:1170
 msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
 msgstr ""
 
-#: inc/template-tags.php:1178
+#: inc/template-tags.php:1172
+msgid "Nossas turmas"
+msgstr ""
+
+#: inc/template-tags.php:1180
 msgid "Links do rodapé"
 msgstr ""
 
-#: inc/template-tags.php:1187
+#: inc/template-tags.php:1189
 msgid "Links legais"
 msgstr ""
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1213
+#: inc/template-tags.php:1215
 #, php-format
 msgid "@%s ProEnem - Grupo Q Educação"
 msgstr ""
 
-#: inc/template-tags.php:1220
+#: inc/template-tags.php:1222
 msgid "Feito com ♥ para você"
 msgstr ""
 
-#: inc/template-tags.php:1353
+#: inc/template-tags.php:1355
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:1369
+#: inc/template-tags.php:1371
 msgid "ProEnem"
 msgstr ""
 
-#: inc/template-tags.php:1378
+#: inc/template-tags.php:1380
 msgid "Abrir menu"
 msgstr ""
 
