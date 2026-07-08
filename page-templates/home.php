@@ -623,7 +623,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<section class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
+	<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
 		<div class="pro-home-testimonials__header">
 			<span class="pen-section-pill"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></span>
 			<h2 id="pro-testimonials-title">
