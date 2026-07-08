@@ -34,6 +34,8 @@ const required = [
   `${themeName}/search.php`,
   `${themeName}/searchform.php`,
   `${themeName}/single.php`,
+  `${themeName}/single-depoimento.php`,
+  `${themeName}/single-material_gratuito.php`,
   `${themeName}/theme.json`,
   `${themeName}/LICENSE.md`,
   `${themeName}/readme.txt`,
