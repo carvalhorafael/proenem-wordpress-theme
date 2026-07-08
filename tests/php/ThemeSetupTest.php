@@ -62,6 +62,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 */
 	public function test_free_materials_page_template_exists() {
 		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/free-materials.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/single-material_gratuito.php' );
 	}
 
 	/**

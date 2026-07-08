@@ -23,6 +23,8 @@ const includePaths = [
   "search.php",
   "searchform.php",
   "single.php",
+  "single-depoimento.php",
+  "single-material_gratuito.php",
   "theme.json",
   "page-templates",
   "README.md",
