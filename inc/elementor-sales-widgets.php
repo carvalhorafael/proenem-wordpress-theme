@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function proenem_get_elementor_sales_widget_classes() {
 	return array(
 		'Proenem_Elementor_Navbar_Widget',
+		'Proenem_Elementor_Footer_Widget',
 		'Proenem_Elementor_Offer_Hero_Widget',
 		'Proenem_Elementor_Offer_Countdown_Widget',
 		'Proenem_Elementor_Pricing_Grid_Widget',
@@ -25,6 +26,19 @@ function proenem_get_elementor_sales_widget_classes() {
 		'Proenem_Elementor_Plans_Comparison_Widget',
 		'Proenem_Elementor_Cta_Widget',
 		'Proenem_Elementor_Faq_Widget',
+		'Proenem_Elementor_Home_Hero_Widget',
+		'Proenem_Elementor_Home_Action_Bar_Widget',
+		'Proenem_Elementor_Home_Marquee_Widget',
+		'Proenem_Elementor_Home_Pillars_Widget',
+		'Proenem_Elementor_Home_Proof_Widget',
+		'Proenem_Elementor_Home_Pain_Widget',
+		'Proenem_Elementor_Home_Platform_Widget',
+		'Proenem_Elementor_Home_Questions_Widget',
+		'Proenem_Elementor_Home_Pricing_Widget',
+		'Proenem_Elementor_Home_Testimonials_Widget',
+		'Proenem_Elementor_Home_Schools_Widget',
+		'Proenem_Elementor_Home_Final_Cta_Widget',
+		'Proenem_Elementor_Home_Faq_Widget',
 	);
 }
 
@@ -57,6 +71,7 @@ function proenem_register_elementor_sales_widgets( $widgets_manager ) {
 	}
 
 	require_once PROENEM_THEME_DIR . '/inc/class-proenem-elementor-sales-widget-base.php';
+	require_once PROENEM_THEME_DIR . '/inc/class-proenem-elementor-home-widget-base.php';
 
 	foreach ( proenem_get_elementor_sales_widget_classes() as $class_name ) {
 		if ( class_exists( $class_name ) ) {

@@ -226,7 +226,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Sales page Elementor widgets should expose stable technical names.
+	 * Elementor widgets should expose stable technical names.
 	 *
 	 * @return void
 	 */
@@ -234,6 +234,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame(
 			array(
 				'Proenem_Elementor_Navbar_Widget',
+				'Proenem_Elementor_Footer_Widget',
 				'Proenem_Elementor_Offer_Hero_Widget',
 				'Proenem_Elementor_Offer_Countdown_Widget',
 				'Proenem_Elementor_Pricing_Grid_Widget',
@@ -242,6 +243,19 @@ class ThemeSetupTest extends WP_UnitTestCase {
 				'Proenem_Elementor_Plans_Comparison_Widget',
 				'Proenem_Elementor_Cta_Widget',
 				'Proenem_Elementor_Faq_Widget',
+				'Proenem_Elementor_Home_Hero_Widget',
+				'Proenem_Elementor_Home_Action_Bar_Widget',
+				'Proenem_Elementor_Home_Marquee_Widget',
+				'Proenem_Elementor_Home_Pillars_Widget',
+				'Proenem_Elementor_Home_Proof_Widget',
+				'Proenem_Elementor_Home_Pain_Widget',
+				'Proenem_Elementor_Home_Platform_Widget',
+				'Proenem_Elementor_Home_Questions_Widget',
+				'Proenem_Elementor_Home_Pricing_Widget',
+				'Proenem_Elementor_Home_Testimonials_Widget',
+				'Proenem_Elementor_Home_Schools_Widget',
+				'Proenem_Elementor_Home_Final_Cta_Widget',
+				'Proenem_Elementor_Home_Faq_Widget',
 			),
 			proenem_get_elementor_sales_widget_classes()
 		);

@@ -1,0 +1,358 @@
+{
+  "title": "Proenem Home Elementor",
+  "type": "page",
+  "version": "0.4",
+  "page_settings": {
+    "template": "elementor_canvas"
+  },
+  "content": [
+    {
+      "id": "a1000001",
+      "elType": "container",
+      "isInner": false,
+      "settings": {
+        "html_tag": "main",
+        "content_width": "full",
+        "flex_gap": {
+          "unit": "px",
+          "size": 0,
+          "sizes": []
+        },
+        "gap": "no",
+        "padding": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        },
+        "margin": {
+          "unit": "px",
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "isLinked": true
+        }
+      },
+      "elements": [
+        {
+          "id": "a1000002",
+          "elType": "widget",
+          "widgetType": "pro_home_hero",
+          "isInner": false,
+          "settings": {
+            "image": {
+              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/hero-student.webp"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000003",
+          "elType": "widget",
+          "widgetType": "pro_home_action_bar",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#metodo",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000004",
+          "elType": "widget",
+          "widgetType": "pro_home_marquee",
+          "isInner": false,
+          "settings": {},
+          "elements": []
+        },
+        {
+          "id": "a1000005",
+          "elType": "widget",
+          "widgetType": "pro_home_pillars",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#planos",
+              "is_external": "",
+              "nofollow": ""
+            },
+            "cards": [
+              {
+                "_id": "pillar01",
+                "number": "01",
+                "title": "Meta",
+                "body": "Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais.",
+                "tone": "blue",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-meta.webp"
+                }
+              },
+              {
+                "_id": "pillar02",
+                "number": "02",
+                "title": "Diagnóstico",
+                "body": "Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está.",
+                "tone": "featured",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-diagnostico.webp"
+                }
+              },
+              {
+                "_id": "pillar03",
+                "number": "03",
+                "title": "Execução",
+                "body": "Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo.",
+                "tone": "red",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-execucao.webp"
+                }
+              },
+              {
+                "_id": "pillar04",
+                "number": "04",
+                "title": "Performance",
+                "body": "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável.",
+                "tone": "pink",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-meta.webp"
+                }
+              }
+            ]
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000006",
+          "elType": "widget",
+          "widgetType": "pro_home_proof",
+          "isInner": false,
+          "settings": {
+            "student_images": [
+              {
+                "_id": "student01",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
+                }
+              },
+              {
+                "_id": "student02",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-2.png"
+                }
+              },
+              {
+                "_id": "student03",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.png"
+                }
+              },
+              {
+                "_id": "student04",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.png"
+                }
+              },
+              {
+                "_id": "student05",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.png"
+                }
+              },
+              {
+                "_id": "student06",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-6.png"
+                }
+              }
+            ],
+            "logos": [
+              {
+                "_id": "logo01",
+                "name": "UFRJ",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrj.png"
+                }
+              },
+              {
+                "_id": "logo02",
+                "name": "UFRGS",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrgs.png"
+                }
+              },
+              {
+                "_id": "logo03",
+                "name": "Unicamp",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unicamp.png"
+                }
+              },
+              {
+                "_id": "logo04",
+                "name": "UERJ",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-uerj.png"
+                }
+              },
+              {
+                "_id": "logo05",
+                "name": "USP",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-usp.png"
+                }
+              },
+              {
+                "_id": "logo06",
+                "name": "Unifesp",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unifesp.png"
+                }
+              }
+            ]
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000007",
+          "elType": "widget",
+          "widgetType": "pro_home_pain",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#planos",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000008",
+          "elType": "widget",
+          "widgetType": "pro_home_platform",
+          "isInner": false,
+          "settings": {},
+          "elements": []
+        },
+        {
+          "id": "a1000009",
+          "elType": "widget",
+          "widgetType": "pro_home_questions",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#planos",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000010",
+          "elType": "widget",
+          "widgetType": "pro_home_pricing",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#faq",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000011",
+          "elType": "widget",
+          "widgetType": "pro_home_testimonials",
+          "isInner": false,
+          "settings": {
+            "testimonials": [
+              {
+                "_id": "testim01",
+                "quote": "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.",
+                "name": "Mariana Costa",
+                "role": "Aprovada em Medicina",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
+                }
+              },
+              {
+                "_id": "testim02",
+                "quote": "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.",
+                "name": "Lucas Almeida",
+                "role": "Aprovado em Engenharia",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.png"
+                }
+              },
+              {
+                "_id": "testim03",
+                "quote": "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.",
+                "name": "Beatriz Rocha",
+                "role": "Aprovada em Direito",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.png"
+                }
+              },
+              {
+                "_id": "testim04",
+                "quote": "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.",
+                "name": "Pedro Martins",
+                "role": "Aprovado em Psicologia",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.png"
+                }
+              }
+            ]
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000012",
+          "elType": "widget",
+          "widgetType": "pro_home_schools",
+          "isInner": false,
+          "settings": {
+            "primary_image": {
+              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_1.png"
+            },
+            "secondary_image": {
+              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_2.png"
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000013",
+          "elType": "widget",
+          "widgetType": "pro_home_final_cta",
+          "isInner": false,
+          "settings": {
+            "button_url": {
+              "url": "#faq",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000014",
+          "elType": "widget",
+          "widgetType": "pro_home_faq",
+          "isInner": false,
+          "settings": {},
+          "elements": []
+        }
+      ]
+    }
+  ]
+}

@@ -214,6 +214,56 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 }
 
 /**
+ * Pro footer widget.
+ */
+class Proenem_Elementor_Footer_Widget extends Proenem_Elementor_Sales_Widget_Base {
+	/**
+	 * Get widget name.
+	 *
+	 * @return string
+	 */
+	public function get_name(): string {
+		return 'pro_footer';
+	}
+
+	/**
+	 * Get widget title.
+	 *
+	 * @return string
+	 */
+	public function get_title(): string {
+		return esc_html__( 'Pro Footer', 'proenem-wordpress-theme' );
+	}
+
+	/**
+	 * Get widget icon.
+	 *
+	 * @return string
+	 */
+	public function get_icon(): string {
+		return 'eicon-footer';
+	}
+
+	/**
+	 * Get widget keywords.
+	 *
+	 * @return string[]
+	 */
+	public function get_keywords(): array {
+		return array( 'proenem', 'pro', 'footer', 'rodape', 'rodapé' );
+	}
+
+	/**
+	 * Render widget output.
+	 *
+	 * @return void
+	 */
+	protected function render(): void {
+		proenem_render_site_footer();
+	}
+}
+
+/**
  * Pro offer hero widget.
  */
 class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget_Base {
