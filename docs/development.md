@@ -22,8 +22,9 @@ O override monta os plugins de conteúdo usados pelo tema a partir de checkouts 
 - `../../plugins-wordpress/free-materials`
 - `../../plugins-wordpress/testimonials`
 - `../../plugins-wordpress/crm-leads-capture`
+- `../../plugins-wordpress/sales-pages`
 
-Esses caminhos são relativos a este repositório. Eles mantêm os slugs canônicos `free-materials`, `testimonials` e `crm-leads-capture` dentro do WordPress local.
+Esses caminhos são relativos a este repositório. Eles mantêm os slugs canônicos `free-materials`, `testimonials`, `crm-leads-capture` e `sales-pages` dentro do WordPress local.
 
 O `@wordpress/env` substitui a lista `plugins` quando `.wp-env.override.json` define esse campo. Por isso, o override também inclui o Theme Check.
 

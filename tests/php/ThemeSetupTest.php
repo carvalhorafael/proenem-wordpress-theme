@@ -223,6 +223,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( 'free-materials/free-materials.php', $required_plugins['free-materials']['file'] );
 		$this->assertSame( 'testimonials/testimonials.php', $required_plugins['testimonials']['file'] );
 		$this->assertSame( 'crm-leads-capture/crm-leads-capture.php', $required_plugins['crm-leads-capture']['file'] );
+		$this->assertSame( 'sales-pages/sales-page.php', $required_plugins['sales-page']['file'] );
 	}
 
 	/**
@@ -275,6 +276,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 				'free-materials/free-materials.php',
 				'testimonials/testimonials.php',
 				'crm-leads-capture/crm-leads-capture.php',
+				'sales-pages/sales-page.php',
 			)
 		);
 
