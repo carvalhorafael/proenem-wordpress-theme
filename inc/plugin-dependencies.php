@@ -28,6 +28,10 @@ function proenem_get_required_plugins() {
 			'name' => __( 'CRM Leads Capture', 'proenem-wordpress-theme' ),
 			'file' => 'crm-leads-capture/crm-leads-capture.php',
 		),
+		'sales-page'        => array(
+			'name' => __( 'Sales Page', 'proenem-wordpress-theme' ),
+			'file' => 'sales-pages/sales-page.php',
+		),
 	);
 }
 
