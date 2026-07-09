@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.6.0
+Stable tag: 0.7.0
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,9 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.7.0 =
+* Adiciona campo de scripts do rodapé no Customizer.
 
 = 0.5.0 =
 * Atualiza menus, rodapé e âncoras da home.

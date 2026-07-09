@@ -74,6 +74,35 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Footer scripts should be configurable through the Customizer.
+	 *
+	 * @return void
+	 */
+	public function test_footer_scripts_customizer_hooks_are_registered() {
+		$this->assertSame( 10, has_action( 'customize_register', 'proenem_customize_register' ) );
+		$this->assertSame( 20, has_action( 'wp_footer', 'proenem_render_footer_scripts' ) );
+	}
+
+	/**
+	 * Footer scripts should render from the saved theme mod.
+	 *
+	 * @return void
+	 */
+	public function test_footer_scripts_are_rendered_on_wp_footer() {
+		$script = '<script id="proenem-support-button">window.proenemSupport = true;</script>';
+
+		set_theme_mod( 'proenem_footer_scripts', $script );
+
+		ob_start();
+		proenem_render_footer_scripts();
+		$output = ob_get_clean();
+
+		remove_theme_mod( 'proenem_footer_scripts' );
+
+		$this->assertStringContainsString( $script, $output );
+	}
+
+	/**
 	 * Free Materials fallbacks should expose the expected portable identifiers.
 	 *
 	 * @return void

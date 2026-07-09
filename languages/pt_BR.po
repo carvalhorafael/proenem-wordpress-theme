@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.6.0\n"
+"Project-Id-Version: Proenem 0.7.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -1608,6 +1608,22 @@ msgstr "Escolher plano"
 #: inc/class-proenem-elementor-sales-widget-base.php:1185
 msgid "Pro FAQ"
 msgstr "Pro FAQ"
+
+#: inc/customizer.php:22
+msgid "Scripts do rodapé"
+msgstr "Scripts do rodapé"
+
+#: inc/customizer.php:23
+msgid "Adicione códigos confiáveis que devem ser renderizados no rodapé do site, como botões de suporte ou atendimento."
+msgstr "Adicione códigos confiáveis que devem ser renderizados no rodapé do site, como botões de suporte ou atendimento."
+
+#: inc/customizer.php:42
+msgid "Código do rodapé"
+msgstr "Código do rodapé"
+
+#: inc/customizer.php:43
+msgid "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
+msgstr "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 
 #: inc/plugin-dependencies.php:20
 msgid "Free Materials"
