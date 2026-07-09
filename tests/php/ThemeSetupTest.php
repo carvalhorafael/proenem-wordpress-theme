@@ -252,7 +252,8 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( 'free-materials/free-materials.php', $required_plugins['free-materials']['file'] );
 		$this->assertSame( 'testimonials/testimonials.php', $required_plugins['testimonials']['file'] );
 		$this->assertSame( 'crm-leads-capture/crm-leads-capture.php', $required_plugins['crm-leads-capture']['file'] );
-		$this->assertSame( 'sales-pages/sales-page.php', $required_plugins['sales-page']['file'] );
+		$this->assertSame( 'sales-page/sales-page.php', $required_plugins['sales-page']['file'] );
+		$this->assertSame( array( 'sales-pages/sales-page.php' ), $required_plugins['sales-page']['aliases'] );
 	}
 
 	/**
@@ -297,6 +298,29 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_active_required_plugins_are_not_reported_as_unmet() {
+		$previous_active_plugins = get_option( 'active_plugins', array() );
+
+		update_option(
+			'active_plugins',
+			array(
+				'free-materials/free-materials.php',
+				'testimonials/testimonials.php',
+				'crm-leads-capture/crm-leads-capture.php',
+				'sales-page/sales-page.php',
+			)
+		);
+
+		$this->assertSame( array(), proenem_get_unmet_required_plugins() );
+
+		update_option( 'active_plugins', $previous_active_plugins );
+	}
+
+	/**
+	 * Local required plugin aliases should also satisfy dependency notices.
+	 *
+	 * @return void
+	 */
+	public function test_required_plugin_aliases_are_not_reported_as_unmet() {
 		$previous_active_plugins = get_option( 'active_plugins', array() );
 
 		update_option(
