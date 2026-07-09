@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Get plugins required for full theme functionality.
  *
- * @return array<string,array{name:string,file:string}>
+ * @return array<string,array{name:string,file:string,aliases?:array<int,string>}>
  */
 function proenem_get_required_plugins() {
 	return array(
@@ -29,8 +29,11 @@ function proenem_get_required_plugins() {
 			'file' => 'crm-leads-capture/crm-leads-capture.php',
 		),
 		'sales-page'        => array(
-			'name' => __( 'Sales Page', 'proenem-wordpress-theme' ),
-			'file' => 'sales-pages/sales-page.php',
+			'name'    => __( 'Sales Page', 'proenem-wordpress-theme' ),
+			'file'    => 'sales-page/sales-page.php',
+			'aliases' => array(
+				'sales-pages/sales-page.php',
+			),
 		),
 	);
 }
@@ -61,9 +64,25 @@ function proenem_is_required_plugin_active( $plugin_file ) {
 }
 
 /**
+ * Get all accepted plugin file paths for a required plugin.
+ *
+ * @param array{name:string,file:string,aliases?:array<int,string>} $plugin Required plugin definition.
+ * @return array<int,string>
+ */
+function proenem_get_required_plugin_files( $plugin ) {
+	$plugin_files = array( $plugin['file'] );
+
+	if ( ! empty( $plugin['aliases'] ) ) {
+		$plugin_files = array_merge( $plugin_files, $plugin['aliases'] );
+	}
+
+	return array_values( array_unique( $plugin_files ) );
+}
+
+/**
  * Get required plugins that are missing or inactive.
  *
- * @return array<string,array{name:string,file:string,installed:bool}>
+ * @return array<string,array{name:string,file:string,aliases?:array<int,string>,installed:bool}>
  */
 function proenem_get_unmet_required_plugins() {
 	proenem_load_plugin_dependency_helpers();
@@ -72,11 +91,23 @@ function proenem_get_unmet_required_plugins() {
 	$unmet_plugins     = array();
 
 	foreach ( proenem_get_required_plugins() as $plugin_slug => $plugin ) {
-		if ( proenem_is_required_plugin_active( $plugin['file'] ) ) {
+		$plugin_files = proenem_get_required_plugin_files( $plugin );
+
+		foreach ( $plugin_files as $plugin_file ) {
+			if ( proenem_is_required_plugin_active( $plugin_file ) ) {
+				continue 2;
+			}
+		}
+
+		$installed_plugin_files = array_intersect( $plugin_files, array_keys( $installed_plugins ) );
+
+		if ( ! empty( $installed_plugin_files ) ) {
+			$plugin['installed']           = true;
+			$unmet_plugins[ $plugin_slug ] = $plugin;
 			continue;
 		}
 
-		$plugin['installed']           = array_key_exists( $plugin['file'], $installed_plugins );
+		$plugin['installed']           = false;
 		$unmet_plugins[ $plugin_slug ] = $plugin;
 	}
 

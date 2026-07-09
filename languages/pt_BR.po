@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.7.0\n"
+"Project-Id-Version: Proenem 0.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -1641,21 +1641,21 @@ msgstr "CRM Leads Capture"
 msgid "Sales Page"
 msgstr "Sales Page"
 
-#: inc/plugin-dependencies.php:106
+#: inc/plugin-dependencies.php:137
 msgid "Tema Proenem: plugins obrigatórios ausentes ou inativos."
 msgstr "Tema Proenem: plugins obrigatórios ausentes ou inativos."
 
 #. translators: %s: Required plugin names.
-#: inc/plugin-dependencies.php:112
+#: inc/plugin-dependencies.php:143
 #, php-format
 msgid "Para funcionar corretamente, este tema precisa que os seguintes plugins estejam instalados e ativos: %s."
 msgstr "Para funcionar corretamente, este tema precisa que os seguintes plugins estejam instalados e ativos: %s."
 
-#: inc/plugin-dependencies.php:118
+#: inc/plugin-dependencies.php:149
 msgid "Instale ou ative os plugins necessários para remover este aviso."
 msgstr "Instale ou ative os plugins necessários para remover este aviso."
 
-#: inc/plugin-dependencies.php:119
+#: inc/plugin-dependencies.php:150
 msgid "Ir para Plugins"
 msgstr "Ir para Plugins"
 
