@@ -2431,6 +2431,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   margin: 0;
 }
 
+.elementor-widget-pro_footer .pen-site-footer__title {
+  font-size: clamp(1.65rem, 2vw, 2.2rem);
+  line-height: 1;
+}
+
 .pro-home .pen-site-footer__title span,
 .pen-site-footer__title span {
   color: rgb(255 255 255 / 0.58);
