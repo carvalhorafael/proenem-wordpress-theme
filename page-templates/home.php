@@ -28,16 +28,31 @@ $home_asset_dimensions = array(
 	'proof-logo-unicamp.png'         => array( 99, 105 ),
 	'proof-logo-unifesp.png'         => array( 182, 110 ),
 	'proof-logo-usp.png'             => array( 171, 70 ),
+	'proof-students-1-360.webp'      => array( 360, 448 ),
 	'proof-students-1.webp'          => array( 470, 585 ),
+	'proof-students-2-360.webp'      => array( 360, 527 ),
 	'proof-students-2.webp'          => array( 482, 706 ),
+	'proof-students-3-360.webp'      => array( 360, 527 ),
 	'proof-students-3.webp'          => array( 482, 706 ),
+	'proof-students-4-360.webp'      => array( 360, 527 ),
 	'proof-students-4.webp'          => array( 482, 706 ),
+	'proof-students-5-360.webp'      => array( 360, 527 ),
 	'proof-students-5.webp'          => array( 482, 706 ),
+	'proof-students-6-360.webp'      => array( 360, 538 ),
 	'proof-students-6.webp'          => array( 472, 706 ),
 	'sticker_explore_por_dentro.svg' => array( 313, 119 ),
 	'sticker_explore_questions.svg'  => array( 1393, 965 ),
 	'student_school_1.webp'          => array( 1280, 1508 ),
 	'student_school_2.webp'          => array( 568, 584 ),
+);
+
+$home_responsive_images = array(
+	'proof-students-1.webp' => array( 'proof-students-1-360.webp' ),
+	'proof-students-2.webp' => array( 'proof-students-2-360.webp' ),
+	'proof-students-3.webp' => array( 'proof-students-3-360.webp' ),
+	'proof-students-4.webp' => array( 'proof-students-4-360.webp' ),
+	'proof-students-5.webp' => array( 'proof-students-5-360.webp' ),
+	'proof-students-6.webp' => array( 'proof-students-6-360.webp' ),
 );
 
 $home_image_attributes = static function ( $filename, $args = array() ) use ( $home_asset_dimensions ) {
@@ -66,6 +81,26 @@ $home_image_attributes = static function ( $filename, $args = array() ) use ( $h
 	}
 
 	return $rendered_attributes;
+};
+
+$home_image_source_set = static function ( $filename, $sizes ) use ( $home_asset_dimensions, $home_asset_uri, $home_responsive_images ) {
+	if ( ! isset( $home_asset_dimensions[ $filename ], $home_responsive_images[ $filename ] ) ) {
+		return '';
+	}
+
+	$sources = array();
+
+	foreach ( $home_responsive_images[ $filename ] as $variant ) {
+		if ( ! isset( $home_asset_dimensions[ $variant ] ) ) {
+			continue;
+		}
+
+		$sources[] = esc_url( $home_asset_uri( $variant ) ) . ' ' . absint( $home_asset_dimensions[ $variant ][0] ) . 'w';
+	}
+
+	$sources[] = esc_url( $home_asset_uri( $filename ) ) . ' ' . absint( $home_asset_dimensions[ $filename ][0] ) . 'w';
+
+	return sprintf( ' srcset="%s" sizes="%s"', esc_attr( implode( ', ', $sources ) ), esc_attr( $sizes ) );
 };
 
 $platform_icon_svg = static function ( $icon ) {
@@ -369,7 +404,7 @@ $subjects = array(
 				<span><?php esc_html_e( 'Alunos!', 'proenem-wordpress-theme' ); ?></span>
 			</p>
 			<?php foreach ( $proof_student_images as $proof_student_image ) : ?>
-				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( $proof_student_image ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( $proof_student_image ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $proof_student_image, '(max-width: 700px) 28vw, 12vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php endforeach; ?>
 		</div>
 		<div class="pen-proof-section__strip">
@@ -698,7 +733,7 @@ $subjects = array(
 							<p><?php echo esc_html( $testimonial['quote'] ); ?></p>
 						</div>
 						<footer>
-							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>"<?php echo $home_image_attributes( $testimonial['image'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>"<?php echo $home_image_attributes( $testimonial['image'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $testimonial['image'], '4.35rem' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 							<span>
 								<strong><?php echo esc_html( $testimonial['name'] ); ?></strong>
 								<small><?php echo esc_html( $testimonial['role'] ); ?></small>

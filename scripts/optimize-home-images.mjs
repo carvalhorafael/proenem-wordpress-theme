@@ -50,6 +50,15 @@ const targets = [
   },
 ];
 
+const responsiveVariants = [
+  "proof-students-1.webp",
+  "proof-students-2.webp",
+  "proof-students-3.webp",
+  "proof-students-4.webp",
+  "proof-students-5.webp",
+  "proof-students-6.webp",
+];
+
 function formatBytes(bytes) {
   if (bytes < 1024) {
     return `${bytes} B`;
@@ -100,6 +109,42 @@ async function optimizeImage(target) {
   };
 }
 
+async function createResponsiveVariant(filename) {
+  const inputPath = resolve(imageDir, filename);
+  const output = filename.replace(/\.webp$/u, "-360.webp");
+  const outputPath = resolve(imageDir, output);
+  const inputStats = await stat(inputPath);
+  const inputMetadata = await sharp(inputPath).metadata();
+
+  await sharp(inputPath)
+    .rotate()
+    .resize({
+      width: 360,
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: 82,
+      effort: 6,
+      smartSubsample: true,
+    })
+    .toFile(outputPath);
+
+  const outputStats = await stat(outputPath);
+  const outputMetadata = await sharp(outputPath).metadata();
+  const savings = 1 - outputStats.size / inputStats.size;
+
+  return {
+    input: filename,
+    output,
+    originalSize: inputStats.size,
+    optimizedSize: outputStats.size,
+    originalDimensions: `${inputMetadata.width || "?"}x${inputMetadata.height || "?"}`,
+    optimizedDimensions: `${outputMetadata.width || "?"}x${outputMetadata.height || "?"}`,
+    quality: 82,
+    savingsPercent: Number((savings * 100).toFixed(1)),
+  };
+}
+
 function markdownReport(results) {
   const lines = [
     "# Home Image Optimization",
@@ -125,6 +170,14 @@ async function main() {
   const results = [];
   for (const target of targets) {
     const result = await optimizeImage(target);
+    results.push(result);
+    console.log(
+      `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
+    );
+  }
+
+  for (const filename of responsiveVariants) {
+    const result = await createResponsiveVariant(filename);
     results.push(result);
     console.log(
       `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
