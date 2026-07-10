@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.7.1
+Stable tag: 0.8.0
 License: Proprietary
 License URI: LICENSE.md
 
@@ -16,9 +16,10 @@ Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao W
 
 == Changelog ==
 
-= 0.7.1 =
-* Adiciona campo de scripts do rodapé no Customizer.
-* Corrige a detecção do plugin Sales Page instalado pelo slug canônico.
+= 0.8.0 =
+* Adiciona rotina de auditoria de performance com Lighthouse e PageSpeed.
+* Otimiza imagens da home, dimensões, srcset e carregamento da imagem LCP.
+* Remove assets não usados da home para reduzir CSS e JavaScript bloqueantes.
 
 = 0.5.0 =
 * Atualiza menus, rodapé e âncoras da home.
