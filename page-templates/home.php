@@ -103,6 +103,14 @@ $home_image_source_set = static function ( $filename, $sizes ) use ( $home_asset
 	return sprintf( ' srcset="%s" sizes="%s"', esc_attr( implode( ', ', $sources ) ), esc_attr( $sizes ) );
 };
 
+$home_hero_image_attributes = $home_image_attributes(
+	'hero-student.webp',
+	array(
+		'fetchpriority' => 'high',
+		'loading'       => 'eager',
+	)
+);
+
 $platform_icon_svg = static function ( $icon ) {
 	$icons = array(
 		'clock' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>',
@@ -271,7 +279,7 @@ $subjects = array(
 
 	<section class="pen-hero-section" aria-labelledby="pro-home-title">
 		<div class="pen-hero-section__stage">
-			<img class="pen-hero-section__image" src="<?php echo esc_url( $home_asset_uri( 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( 'hero-student.webp', array( 'fetchpriority' => 'high', 'loading' => 'eager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<img class="pen-hero-section__image" src="<?php echo esc_url( $home_asset_uri( 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_hero_image_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="pen-hero-sticker pen-hero-sticker--pink"><?php esc_html_e( 'Diagnóstico', 'proenem-wordpress-theme' ); ?></span>
 			<span class="pen-hero-sticker pen-hero-sticker--yellow"><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></span>
 			<span class="pen-hero-sticker pen-hero-sticker--green"><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></span>
