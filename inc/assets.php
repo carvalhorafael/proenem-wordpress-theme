@@ -63,6 +63,23 @@ function proenem_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'proenem_enqueue_assets' );
 
 /**
+ * Remove block-library CSS from the custom home template.
+ *
+ * The home is rendered by PHP template markup instead of post block content, so
+ * the default frontend block stylesheet only adds render-blocking bytes there.
+ *
+ * @return void
+ */
+function proenem_dequeue_home_block_assets() {
+	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) ) {
+		return;
+	}
+
+	wp_dequeue_style( 'wp-block-library' );
+}
+add_action( 'wp_enqueue_scripts', 'proenem_dequeue_home_block_assets', 100 );
+
+/**
  * Enqueue block editor assets.
  *
  * @return void
