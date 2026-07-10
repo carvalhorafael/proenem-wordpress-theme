@@ -1177,13 +1177,13 @@ function proenem_render_site_footer() {
 			<?php proenem_render_footer_widget_area( 'footer-social', 'pen-site-footer__social' ); ?>
 		</div>
 
-		<div class="pen-site-footer__links" aria-label="<?php esc_attr_e( 'Links do rodapé', 'proenem-wordpress-theme' ); ?>">
+		<nav class="pen-site-footer__links" aria-label="<?php esc_attr_e( 'Links do rodapé', 'proenem-wordpress-theme' ); ?>">
 			<?php
 			foreach ( $footer_columns as $location => $title ) {
 				proenem_render_footer_menu_column( $location, $title );
 			}
 			?>
-		</div>
+		</nav>
 
 		<?php if ( has_nav_menu( 'footer-legal' ) ) : ?>
 			<nav class="pen-site-footer__legal" aria-label="<?php esc_attr_e( 'Links legais', 'proenem-wordpress-theme' ); ?>">
