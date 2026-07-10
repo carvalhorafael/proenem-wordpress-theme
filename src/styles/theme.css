@@ -2604,9 +2604,9 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   margin: 0;
 }
 
-.pen-site-footer__widget-area img {
+.pen-site-footer__social img {
   height: auto;
-  max-width: min(100%, 12rem);
+  max-width: 30px;
 }
 
 .pen-site-footer__payment {
