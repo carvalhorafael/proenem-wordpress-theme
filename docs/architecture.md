@@ -30,6 +30,18 @@ Não use `@carvalhorafael/proenem-ui` enquanto o tema não renderizar React. Com
 - `src/`: CSS e JavaScript fonte.
 - `languages/`: POT/PO/MO.
 - `scripts/`: automações de pacote, release e i18n.
+- `docs/performance.md`: arquitetura de auditoria PageSpeed/Lighthouse e rotina de otimizacao.
+- `lhci.config.cjs`: configuracao advisory para Lighthouse CI local.
+
+## Performance
+
+A performance e tratada em camadas:
+
+- PageSpeed Insights para URLs publicas e baselines de sprint.
+- Lighthouse CI local em modo advisory para medir tendencia durante desenvolvimento.
+- Playwright e axe para regressao funcional e acessibilidade automatizada.
+
+O fluxo completo esta documentado em `docs/performance.md`. Auditorias geram arquivos em `reports/`, que nao devem ser versionados.
 
 ## Referencia
 
