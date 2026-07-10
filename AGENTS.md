@@ -186,6 +186,31 @@ O que nao deve ser testado aqui:
 - snapshots visuais amplos para mudancas cosmeticas pequenas;
 - cada texto estatico, salvo quando o texto fizer parte de contrato funcional.
 
+## Performance, SEO e acessibilidade
+
+Performance deve ser tratada como rotina de diagnostico, classificacao e regressao, nao como uma unica nota isolada.
+
+Use `docs/performance.md` como fonte principal para sprints de performance. A arquitetura atual tem tres camadas:
+
+- `npm run perf:pagespeed -- <url>` para auditar URLs publicas com PageSpeed Insights e gerar baseline real em `reports/performance/`;
+- `npm run perf:lighthouse` para auditoria Lighthouse local advisory contra `http://localhost:8898/`;
+- `npm run test:e2e` com Playwright/axe para regressao funcional e acessibilidade automatizada.
+
+Ao receber uma tarefa de otimizacao:
+
+1. comece por uma URL publica real quando o objetivo for melhorar PageSpeed/Core Web Vitals percebidos por usuarios ou pelo Google;
+2. rode `npm run perf:lighthouse` em `localhost:8898` para iterar sem publicar o tema;
+3. classifique cada achado como `theme`, `content`, `plugin`, `hosting`, `third-party` ou `design-system`;
+4. corrija no tema apenas o que pertence ao tema ou a integracao WordPress;
+5. quando o problema for de conteudo, plugin, hospedagem ou terceiros, documente a recomendacao sem criar workaround indevido no tema;
+6. quando a solucao exigir gap do design system, siga a politica de issues obrigatorias do design system e do tema;
+7. confirme o impacto final com `npm run perf:pagespeed -- <url-publica>` quando houver URL publica atualizada;
+8. registre no PR ou resumo final a URL testada, data, estrategia, scores antes/depois e itens deixados fora do tema.
+
+PageSpeed publico e Lighthouse local podem divergir nos numeros absolutos. Use Lighthouse local para tendencia e regressao do tema; use PageSpeed publico para validar impacto real em staging/producao.
+
+Nao promova checks de performance para `npm test` ou `npm run validate` sem decisao explicita. Antes disso, mantenha Lighthouse como advisory, colete pelo menos tres baselines estaveis e revise `npm audit` da ferramenta usada. SEO e acessibilidade podem virar gates rigidos antes de performance; metricas afetadas por rede, cache externo ou terceiros devem continuar advisory.
+
 ## Releases e tags
 
 A decisao de criar uma nova release e humana. O usuario deve avisar explicitamente quando quiser preparar uma release, por exemplo: "preparar release 0.1.0".

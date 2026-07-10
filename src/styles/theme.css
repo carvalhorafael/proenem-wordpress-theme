@@ -3468,7 +3468,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pen-plan-card.is-featured {
-  background: #e23a3a;
+  background: #d72f2f;
   color: var(--pen-color-surface);
   height: 34.375rem;
 }
@@ -3607,7 +3607,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pen-plan-card .pen-action-link {
   align-items: center;
   align-self: end;
-  background: #e23a3a;
+  background: #d72f2f;
   border: var(--pen-border-brand-sm);
   border-radius: 999px;
   box-shadow: var(--pen-shadow-hard-sm);
@@ -3628,6 +3628,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-plan-card.is-featured .pen-action-link {
   background: #ff90e8;
+  color: var(--pen-color-ink);
 }
 
 .pro-home .pen-plan-card .pen-action-link:hover,
@@ -3875,7 +3876,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pro-home-school-section__marquee {
-  background: #e23a3a;
+  background: #d72f2f;
   border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-on-red);
   grid-column: 1 / -1;
@@ -3924,7 +3925,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pro-home-school-section__intro {
   align-items: center;
-  background: #109f73;
+  background: #087a57;
   color: var(--pen-color-on-red);
   display: block;
   margin: 0;

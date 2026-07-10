@@ -570,7 +570,7 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 				'fields'      => $students->get_controls(),
 				'default'     => array_map(
 					fn( $file ) => array( 'image' => array( 'url' => $this->home_asset_uri( $file ) ) ),
-					array( 'proof-students-1.webp', 'proof-students-2.png', 'proof-students-3.png', 'proof-students-4.png', 'proof-students-5.png', 'proof-students-6.png' )
+					array( 'proof-students-1.webp', 'proof-students-2.webp', 'proof-students-3.webp', 'proof-students-4.webp', 'proof-students-5.webp', 'proof-students-6.webp' )
 				),
 				'title_field' => esc_html__( 'Aluno', 'proenem-wordpress-theme' ),
 			)
@@ -633,11 +633,11 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 		$settings = $this->get_settings_for_display();
 		$students = array(
 			'proof-students-1.webp',
-			'proof-students-2.png',
-			'proof-students-3.png',
-			'proof-students-4.png',
-			'proof-students-5.png',
-			'proof-students-6.png',
+			'proof-students-2.webp',
+			'proof-students-3.webp',
+			'proof-students-4.webp',
+			'proof-students-5.webp',
+			'proof-students-6.webp',
 		);
 		$logos    = array(
 			'proof-logo-ufrj.png',
@@ -778,9 +778,9 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 		$settings = $this->get_settings_for_display();
 		$images   = array(
 			'proof-students-1.webp',
-			'proof-students-3.png',
-			'proof-students-4.png',
-			'proof-students-5.png',
+			'proof-students-3.webp',
+			'proof-students-4.webp',
+			'proof-students-5.webp',
 		);
 		$this->open_home_wrapper();
 		?>
@@ -1355,13 +1355,13 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 						'quote' => esc_html__( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
 						'name'  => esc_html__( 'Lucas Almeida', 'proenem-wordpress-theme' ),
 						'role'  => esc_html__( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-3.png' ) ),
+						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-3.webp' ) ),
 					),
 					array(
 						'quote' => esc_html__( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
 						'name'  => esc_html__( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
 						'role'  => esc_html__( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-4.png' ) ),
+						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-4.webp' ) ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1407,8 +1407,8 @@ class Proenem_Elementor_Home_Schools_Widget extends Proenem_Elementor_Home_Widge
 	protected function register_controls(): void {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
 		$this->add_textarea_control( 'marquee', esc_html__( 'Marquee, uma frase por linha', 'proenem-wordpress-theme' ), esc_html__( "A engenharia da sua aprovação\nTroque a sorte pela estratégia\nConheça o Método PRO", 'proenem-wordpress-theme' ) );
-		$this->add_home_media_control( 'primary_image', esc_html__( 'Imagem principal', 'proenem-wordpress-theme' ), 'student_school_1.png' );
-		$this->add_home_media_control( 'secondary_image', esc_html__( 'Imagem secundária', 'proenem-wordpress-theme' ), 'student_school_2.png' );
+		$this->add_home_media_control( 'primary_image', esc_html__( 'Imagem principal', 'proenem-wordpress-theme' ), 'student_school_1.webp' );
+		$this->add_home_media_control( 'secondary_image', esc_html__( 'Imagem secundária', 'proenem-wordpress-theme' ), 'student_school_2.webp' );
 		$this->add_text_control( 'title_prefix', esc_html__( 'Título antes', 'proenem-wordpress-theme' ), esc_html__( 'Leve o', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_emphasis_1', esc_html__( 'Destaque 1', 'proenem-wordpress-theme' ), esc_html__( 'Método PRO', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_middle', esc_html__( 'Título meio', 'proenem-wordpress-theme' ), esc_html__( 'para a', 'proenem-wordpress-theme' ) );
@@ -1493,8 +1493,8 @@ endforeach;
 endfor;
 			?>
 			</div></div>
-			<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary"><img src="<?php echo esc_url( $this->media_url( $settings['primary_image'] ?? array(), 'student_school_1.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>"></figure>
-			<div class="pen-audience-section__intro pro-home-school-section__intro"><div><h2 id="pro-school-title"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_middle'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p></div><img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $this->media_url( $settings['secondary_image'] ?? array(), 'student_school_2.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"><span class="pro-home-school-section__burst" aria-hidden="true"></span></div>
+			<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary"><img src="<?php echo esc_url( $this->media_url( $settings['primary_image'] ?? array(), 'student_school_1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>"></figure>
+			<div class="pen-audience-section__intro pro-home-school-section__intro"><div><h2 id="pro-school-title"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_middle'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p></div><img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $this->media_url( $settings['secondary_image'] ?? array(), 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"><span class="pro-home-school-section__burst" aria-hidden="true"></span></div>
 			<div class="pen-feature-grid pen-feature-grid--school">
 			<?php
 			foreach ( (array) ( $settings['cards'] ?? array() ) as $card ) :
