@@ -88,19 +88,19 @@ $testimonials = array(
 		'quote' => __( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Lucas Almeida', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-3.png',
+		'image' => 'proof-students-3.webp',
 	),
 	array(
 		'quote' => __( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-4.png',
+		'image' => 'proof-students-4.webp',
 	),
 	array(
 		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Pedro Martins', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-5.png',
+		'image' => 'proof-students-5.webp',
 	),
 );
 
@@ -272,11 +272,11 @@ $subjects = array(
 	<?php
 	$proof_student_images = array(
 		'proof-students-1.webp',
-		'proof-students-2.png',
-		'proof-students-3.png',
-		'proof-students-4.png',
-		'proof-students-5.png',
-		'proof-students-6.png',
+		'proof-students-2.webp',
+		'proof-students-3.webp',
+		'proof-students-4.webp',
+		'proof-students-5.webp',
+		'proof-students-6.webp',
 	);
 
 	$proof_university_logos = array(
@@ -669,7 +669,7 @@ $subjects = array(
 			</div>
 		</div>
 		<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary">
-			<img src="<?php echo esc_url( $home_asset_uri( 'student_school_1.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>">
+			<img src="<?php echo esc_url( $home_asset_uri( 'student_school_1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>">
 		</figure>
 		<div class="pen-audience-section__intro pro-home-school-section__intro">
 			<div>
@@ -679,7 +679,7 @@ $subjects = array(
 				</h2>
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
-			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>">
+			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>">
 			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
 		</div>
 		<div class="pen-feature-grid pen-feature-grid--school">

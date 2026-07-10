@@ -87,6 +87,24 @@ O Playwright continua sendo a camada de verificacao local para renderizacao, con
    - scores antes/depois;
    - itens que ficaram fora do tema e por que.
 
+## Otimizacao de imagens
+
+Quando o gargalo envolver imagens mantidas no tema, use o script versionado:
+
+```bash
+npm run images:optimize
+```
+
+O script usa `sharp` para gerar WebP com qualidade visual alta e redimensionamento conservador apenas para imagens explicitamente listadas em `scripts/optimize-home-images.mjs`. Ele tambem grava um relatorio temporario em `reports/images/`.
+
+Depois de gerar as imagens:
+
+1. atualize as referencias do template ou widget para usar os novos arquivos WebP;
+2. rode `npm run build`;
+3. rode `npm run perf:lighthouse`;
+4. compare LCP, peso total e score de performance antes/depois;
+5. mantenha os PNG originais enquanto ainda forem necessarios como fonte ou fallback, mas evite referencia-los em markup de front-end quando ja existir WebP otimizado.
+
 ## Como nao perder contexto
 
 Os arquivos em `reports/` nao sao versionados. Eles servem como evidencia local temporaria para analise, nao como documentacao permanente.

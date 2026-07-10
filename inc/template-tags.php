@@ -133,8 +133,8 @@ function proenem_get_post_image_slot( $post_id, $size = 'large' ) {
 		'pillar-diagnostico.webp',
 		'pillar-execucao.webp',
 		'proof-students-1.webp',
-		'student_school_1.png',
-		'student_school_2.png',
+		'student_school_1.webp',
+		'student_school_2.webp',
 	);
 	$index     = absint( $post_id ) % count( $fallbacks );
 

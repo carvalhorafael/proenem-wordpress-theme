@@ -12,6 +12,7 @@
     "i18n:mo": "npx wp-env run cli -- wp i18n make-mo /var/www/html/wp-content/themes/proenem-wordpress-theme/languages",
     "i18n": "npm run i18n:pot && npm run i18n:po && npm run i18n:mo",
     "i18n:check": "npm run i18n && git diff --exit-code -- languages",
+    "images:optimize": "node scripts/optimize-home-images.mjs",
     "lint:php": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpcs'",
     "lint:php:fix": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpcbf'",
     "lint:php:syntax": "npx wp-env run cli bash -lc 'cd /var/www/html/wp-content/themes/proenem-wordpress-theme && find . \\( -path \"./dist\" -o -path \"./vendor\" -o -path \"./node_modules\" -o -path \"./assets/dist\" \\) -prune -o -name \"*.php\" -print0 | xargs -0 -n1 php -l'",
@@ -40,6 +41,7 @@
     "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.60.0",
     "@wordpress/env": "^10.29.0",
+    "sharp": "^0.35.3",
     "vite": "^7.0.0"
   }
 }

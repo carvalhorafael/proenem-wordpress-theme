@@ -69,6 +69,12 @@ Os relatórios ficam em `reports/` e não são versionados. O fluxo completo est
 
 Use Lighthouse local para iterar antes de publicar o tema. Use PageSpeed em URL publica para confirmar o impacto real depois que a alteracao estiver em staging ou producao.
 
+Para regenerar imagens otimizadas do tema:
+
+```bash
+npm run images:optimize
+```
+
 ## Internacionalização
 
 Use sempre o text domain `proenem-wordpress-theme`.
