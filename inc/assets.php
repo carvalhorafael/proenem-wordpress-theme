@@ -73,6 +73,24 @@ function proenem_dequeue_home_block_assets() {
 add_action( 'wp_enqueue_scripts', 'proenem_dequeue_home_block_assets', 100 );
 
 /**
+ * Remove capture plugin assets from the custom home template.
+ *
+ * The free-material capture form is not rendered on the home, so these assets
+ * can stay limited to the material surfaces that actually need them.
+ *
+ * @return void
+ */
+function proenem_dequeue_home_capture_assets() {
+	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) ) {
+		return;
+	}
+
+	wp_dequeue_style( 'crm-leads-capture-free-material' );
+	wp_dequeue_script( 'crm-leads-capture-free-material' );
+}
+add_action( 'wp_enqueue_scripts', 'proenem_dequeue_home_capture_assets', 100 );
+
+/**
  * Enqueue block editor assets.
  *
  * @return void
