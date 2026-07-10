@@ -59,6 +59,114 @@ const responsiveVariants = [
   "proof-students-6.webp",
 ];
 
+const sizedVariants = [
+  {
+    input: "hero-student.webp",
+    output: "hero-student-720.webp",
+    width: 720,
+    quality: 82,
+  },
+  {
+    input: "hero-student.webp",
+    output: "hero-student-820.webp",
+    width: 820,
+    quality: 82,
+  },
+  {
+    input: "hero-student.webp",
+    output: "hero-student-780.webp",
+    width: 780,
+    quality: 82,
+  },
+  {
+    input: "pillar-meta.webp",
+    output: "pillar-meta-520.webp",
+    width: 520,
+    quality: 82,
+  },
+  {
+    input: "pillar-execucao.webp",
+    output: "pillar-execucao-280.webp",
+    width: 280,
+    quality: 82,
+  },
+  {
+    input: "pillar-execucao.webp",
+    output: "pillar-execucao-320.webp",
+    width: 320,
+    quality: 82,
+  },
+  {
+    input: "pillar-execucao.webp",
+    output: "pillar-execucao-360.webp",
+    width: 360,
+    quality: 82,
+  },
+  {
+    input: "pillar-diagnostico.webp",
+    output: "pillar-diagnostico-280.webp",
+    width: 280,
+    quality: 82,
+  },
+  {
+    input: "pillar-diagnostico.webp",
+    output: "pillar-diagnostico-320.webp",
+    width: 320,
+    quality: 82,
+  },
+  {
+    input: "pillar-diagnostico.webp",
+    output: "pillar-diagnostico-360.webp",
+    width: 360,
+    quality: 82,
+  },
+  {
+    input: "proof-students-1.webp",
+    output: "proof-students-1-240.webp",
+    width: 240,
+    quality: 80,
+  },
+  {
+    input: "proof-students-2.webp",
+    output: "proof-students-2-240.webp",
+    width: 240,
+    quality: 80,
+  },
+  {
+    input: "proof-students-3.webp",
+    output: "proof-students-3-240.webp",
+    width: 240,
+    quality: 80,
+  },
+  {
+    input: "proof-students-4.webp",
+    output: "proof-students-4-240.webp",
+    width: 240,
+    quality: 80,
+  },
+  {
+    input: "proof-students-5.webp",
+    output: "proof-students-5-240.webp",
+    width: 240,
+    quality: 80,
+  },
+  {
+    input: "proof-students-6.webp",
+    output: "proof-students-6-240.webp",
+    width: 240,
+    quality: 80,
+  },
+];
+
+const logoVariants = [
+  "proof-logo-uerj.png",
+  "proof-logo-ufrgs.png",
+  "proof-logo-ufrj.png",
+  "proof-logo-unicamp.png",
+  "proof-logo-unifesp.png",
+  "proof-logo-usp.png",
+];
+
 function formatBytes(bytes) {
   if (bytes < 1024) {
     return `${bytes} B`;
@@ -145,6 +253,73 @@ async function createResponsiveVariant(filename) {
   };
 }
 
+async function createSizedVariant(target) {
+  const inputPath = resolve(imageDir, target.input);
+  const outputPath = resolve(imageDir, target.output);
+  const inputStats = await stat(inputPath);
+  const inputMetadata = await sharp(inputPath).metadata();
+
+  await sharp(inputPath)
+    .rotate()
+    .resize({
+      width: target.width,
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: target.quality,
+      effort: 6,
+      smartSubsample: true,
+    })
+    .toFile(outputPath);
+
+  const outputStats = await stat(outputPath);
+  const outputMetadata = await sharp(outputPath).metadata();
+  const savings = 1 - outputStats.size / inputStats.size;
+
+  return {
+    input: target.input,
+    output: target.output,
+    originalSize: inputStats.size,
+    optimizedSize: outputStats.size,
+    originalDimensions: `${inputMetadata.width || "?"}x${inputMetadata.height || "?"}`,
+    optimizedDimensions: `${outputMetadata.width || "?"}x${outputMetadata.height || "?"}`,
+    quality: target.quality,
+    savingsPercent: Number((savings * 100).toFixed(1)),
+  };
+}
+
+async function createLogoVariant(filename) {
+  const inputPath = resolve(imageDir, filename);
+  const output = filename.replace(/\.png$/u, ".webp");
+  const outputPath = resolve(imageDir, output);
+  const inputStats = await stat(inputPath);
+  const inputMetadata = await sharp(inputPath).metadata();
+
+  await sharp(inputPath)
+    .rotate()
+    .webp({
+      quality: 82,
+      effort: 6,
+      smartSubsample: true,
+    })
+    .toFile(outputPath);
+
+  const outputStats = await stat(outputPath);
+  const outputMetadata = await sharp(outputPath).metadata();
+  const savings = 1 - outputStats.size / inputStats.size;
+
+  return {
+    input: filename,
+    output,
+    originalSize: inputStats.size,
+    optimizedSize: outputStats.size,
+    originalDimensions: `${inputMetadata.width || "?"}x${inputMetadata.height || "?"}`,
+    optimizedDimensions: `${outputMetadata.width || "?"}x${outputMetadata.height || "?"}`,
+    quality: 82,
+    savingsPercent: Number((savings * 100).toFixed(1)),
+  };
+}
+
 function markdownReport(results) {
   const lines = [
     "# Home Image Optimization",
@@ -178,6 +353,22 @@ async function main() {
 
   for (const filename of responsiveVariants) {
     const result = await createResponsiveVariant(filename);
+    results.push(result);
+    console.log(
+      `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
+    );
+  }
+
+  for (const target of sizedVariants) {
+    const result = await createSizedVariant(target);
+    results.push(result);
+    console.log(
+      `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
+    );
+  }
+
+  for (const filename of logoVariants) {
+    const result = await createLogoVariant(filename);
     results.push(result);
     console.log(
       `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
