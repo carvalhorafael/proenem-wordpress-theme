@@ -15,13 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function proenem_enqueue_assets() {
-	wp_enqueue_style(
-		'proenem-style',
-		get_stylesheet_uri(),
-		array(),
-		PROENEM_THEME_VERSION
-	);
-
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
