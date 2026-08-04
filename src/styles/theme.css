@@ -4219,7 +4219,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   font-weight: 500;
   line-height: 0.96;
   margin: 1.4rem auto 0;
-  max-width: 44rem;
+  max-width: 60rem;
+  white-space: nowrap;
 }
 
 .pro-home .pen-feature-grid-section h2 strong {
@@ -4230,6 +4231,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   gap: clamp(1rem, 2vw, 1.5rem);
   margin-top: clamp(3.3rem, 5vw, 4.5rem);
   max-width: 72rem;
+}
+
+.pro-home .pen-feature-grid.pro-home-pain-grid--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 86rem;
 }
 
 .pro-home .pen-feature-grid .pro-home-pain-card {
@@ -4574,6 +4580,60 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   color: var(--pen-color-on-red);
 }
 
+/* Home typography scale */
+.pro-home .pen-pillars-section h2,
+.pro-home .pen-feature-grid-section h2,
+.pro-home .pen-platform-showcase h2,
+.pro-home .pen-question-bank-section h2,
+.pro-home .pen-pricing-section h2,
+.pro-home .pro-home-testimonials h2,
+.pro-home .pro-home-school-section__intro h2,
+.pro-home .pro-home__final-cta h2,
+.pro-home .pen-faq-section h2 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+}
+
+.pro-home .pen-pillars-section__copy p:not(.pen-section-pill),
+.pro-home .pen-proof-section__strip .pro-home-proof-support,
+.pro-home .pro-home-platform-note,
+.pro-home .pro-home-platform-note__text,
+.pro-home .pro-home-platform-mock p,
+.pro-home .pen-question-bank-section > p,
+.pro-home .pro-home-pricing__intro p,
+.pro-home .pro-home-testimonials__header p,
+.pro-home .pro-home-school-section__intro p,
+.pro-home .pro-home__final-cta p,
+.pro-home .pen-faq-section .pen-faq-item summary,
+.pro-home .pro-home-hero-action-bar__support {
+  font-size: var(--pen-text-lg);
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card p,
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active p,
+.pro-home .pro-home-platform-tab,
+.pro-home .pro-home-platform-mock__bullets li,
+.pro-home .pro-home-testimonial-card__quote p,
+.pro-home .pro-home-school-section .pen-feature-grid--school p,
+.pro-home .pen-plan-card li,
+.pro-home .pen-faq-section .pen-faq-item p {
+  font-size: var(--pen-text-base);
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card h3,
+.pro-home .pen-pillars-section__cards .pen-step-card h3,
+.pro-home .pro-home-platform-mock h3,
+.pro-home .pen-plan-card h3,
+.pro-home .pro-home-school-section .pen-feature-grid--school h3 {
+  font-size: 1.5rem;
+}
+
+.pro-home .pen-pillars-section .pen-section-pill,
+.pro-home .pen-feature-grid-section .pen-section-pill,
+.pro-home .pro-home-testimonials .pen-section-pill,
+.pro-home .pen-faq-section .pen-pill-eyebrow {
+  font-size: var(--pen-text-sm);
+}
+
 @keyframes pro-home-marquee-scroll {
   from {
     transform: translateX(0);
@@ -4655,6 +4715,13 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 }
 
+@media (max-width: 1100px) {
+  .pro-home .pen-feature-grid.pro-home-pain-grid--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 50rem;
+  }
+}
+
 @media (max-width: 980px) {
   .pro-materials-hero {
     align-items: start;
@@ -4730,6 +4797,21 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .pro-home .pen-feature-grid.pro-home-pain-grid--four {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-home .pro-home-pain-section__statement {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    max-width: 100%;
+    padding-inline: var(--pen-space-4);
+    white-space: normal;
+  }
+
+  .pro-home .pen-feature-grid-section h2 {
+    white-space: normal;
+  }
+
   .pro-home .pen-hero-section__stage {
     min-height: 38rem;
   }
@@ -5110,6 +5192,18 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-school-section .pen-feature-grid--school article:last-child {
     border-bottom: 0;
+  }
+
+  .pro-home .pen-pillars-section h2,
+  .pro-home .pen-feature-grid-section h2,
+  .pro-home .pen-platform-showcase h2,
+  .pro-home .pen-question-bank-section h2,
+  .pro-home .pen-pricing-section h2,
+  .pro-home .pro-home-testimonials h2,
+  .pro-home .pro-home-school-section__intro h2,
+  .pro-home .pro-home__final-cta h2,
+  .pro-home .pen-faq-section h2 {
+    font-size: clamp(2rem, 10vw, 3rem);
   }
 
   .pro-home .pro-home__final-cta {

@@ -769,6 +769,12 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 						'body'           => esc_html__( 'Pressão da família, medo de não passar e a sensação de estar sempre atrasado.', 'proenem-wordpress-theme' ),
 						'tone'           => 'red',
 					),
+					array(
+						'title_emphasis' => esc_html__( 'Começa', 'proenem-wordpress-theme' ),
+						'title_suffix'   => esc_html__( 'e abandona', 'proenem-wordpress-theme' ),
+						'body'           => esc_html__( 'Começa animado e, em duas semanas, larga. Estudar sozinho é difícil quando ninguém te puxa de volta.', 'proenem-wordpress-theme' ),
+						'tone'           => 'blue',
+					),
 				),
 				'title_field' => '{{{ title_emphasis }}}',
 			)
@@ -788,8 +794,8 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 		?>
 		<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
 			<p class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></p>
-			<h2 id="pro-pain-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2>
-			<div class="pen-feature-grid">
+			<h2 id="pro-pain-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong> <?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2>
+			<div class="pen-feature-grid pro-home-pain-grid--four">
 				<?php foreach ( (array) ( $settings['cards'] ?? array() ) as $card ) : ?>
 					<article class="pro-home-pain-card pro-home-pain-card--<?php echo esc_attr( $card['tone'] ?? 'blue' ); ?>">
 						<h3>

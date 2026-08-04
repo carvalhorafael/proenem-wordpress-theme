@@ -72,3 +72,18 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: a classe `pro-home-proof-support` controla temporariamente tipografia, largura de leitura e espacamento porque o pattern publicado nao possui um contrato de apoio secundario.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#30`; tema `carvalhorafael/proenem-wordpress-theme#87`.
 - Criterio de remocao: atualizar o pacote `@carvalhorafael/proenem-css`, migrar para a classe compartilhada e remover o seletor local.
+
+## 2026-08-04: Grade responsiva com quatro dores na home
+
+- Contexto: a nova estrutura inclui o card `Comeca e abandona`, levando a secao de dores de tres para quatro itens.
+- Decisao: usar quatro colunas no desktop, duas em larguras intermediarias e uma no mobile, preservando os cards e tons existentes.
+- Adaptacao local: a classe `pro-home-pain-grid--four` complementa temporariamente o contrato `pen-feature-grid`; a frase final tambem recebe quebra responsiva no mobile para evitar overflow.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#31`; tema `carvalhorafael/proenem-wordpress-theme#88`.
+- Criterio de remocao: atualizar o pacote `@carvalhorafael/proenem-css`, migrar para a variacao compartilhada e remover a classe local.
+
+## 2026-08-04: Escala tipografica semantica da home
+
+- Contexto: textos com a mesma funcao editorial usavam escalas fluidas diferentes, produzindo tamanhos inconsistentes entre secoes e larguras de tela.
+- Decisao: padronizar a home por papel tipografico usando os tokens publicados: auxiliar em `--pen-text-sm`, corpo em `--pen-text-base`, apoio em `--pen-text-lg`, titulo de card em `1.5rem` e titulo de secao entre `2rem` e `3rem`.
+- Excecoes: hero, precos, selos, badges e marquees permanecem com direcao tipografica promocional propria.
+- Design system: a composicao reutiliza os tokens existentes e nao cria um novo token ou contrato local.

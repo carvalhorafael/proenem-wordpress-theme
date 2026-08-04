@@ -336,11 +336,10 @@ $subjects = array(
 		<h2 id="pro-pain-title">
 			<?php esc_html_e( 'Estuda muito', 'proenem-wordpress-theme' ); ?>
 			<strong><?php esc_html_e( 'e a nota', 'proenem-wordpress-theme' ); ?></strong>
-			<br>
 			<?php esc_html_e( 'não', 'proenem-wordpress-theme' ); ?>
 			<strong><?php esc_html_e( 'sobe?', 'proenem-wordpress-theme' ); ?></strong>
 		</h2>
-		<div class="pen-feature-grid">
+		<div class="pen-feature-grid pro-home-pain-grid--four">
 			<article class="pro-home-pain-card pro-home-pain-card--blue">
 				<span class="pro-home-pain-card__icon" aria-hidden="true">
 					<svg viewBox="0 0 24 24" focusable="false">
@@ -382,6 +381,19 @@ $subjects = array(
 					<strong><?php esc_html_e( 'insegurança', 'proenem-wordpress-theme' ); ?></strong>
 				</h3>
 				<p><?php esc_html_e( 'Pressão da família, medo de não passar e a sensação de estar sempre atrasado.', 'proenem-wordpress-theme' ); ?></p>
+			</article>
+			<article class="pro-home-pain-card pro-home-pain-card--blue">
+				<span class="pro-home-pain-card__icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" focusable="false">
+						<path d="M18.5 8.5A7 7 0 1 0 19 15"></path>
+						<path d="M18.5 4.5v4h-4"></path>
+					</svg>
+				</span>
+				<h3>
+					<strong><?php esc_html_e( 'Começa', 'proenem-wordpress-theme' ); ?></strong>
+					<span><?php esc_html_e( 'e abandona', 'proenem-wordpress-theme' ); ?></span>
+				</h3>
+				<p><?php esc_html_e( 'Começa animado e, em duas semanas, larga. Estudar sozinho é difícil quando ninguém te puxa de volta.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
 		</div>
 		<p class="pro-home-pain-section__statement">
