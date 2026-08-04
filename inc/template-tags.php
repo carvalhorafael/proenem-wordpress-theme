@@ -1167,7 +1167,7 @@ function proenem_render_site_footer() {
 				<span><?php esc_html_e( 'não é sorte.', 'proenem-wordpress-theme' ); ?></span><br>
 				<strong><?php esc_html_e( 'É método.', 'proenem-wordpress-theme' ); ?></strong>
 			</h2>
-			<p class="pen-site-footer__body"><?php esc_html_e( 'Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto.', 'proenem-wordpress-theme' ); ?></p>
+			<p class="pen-site-footer__body"><?php esc_html_e( 'Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho.', 'proenem-wordpress-theme' ); ?></p>
 			<div class="pen-site-footer__manifest-links">
 				<?php proenem_render_footer_menu_column( 'footer-classes', __( 'Nossas turmas', 'proenem-wordpress-theme' ) ); ?>
 			</div>
@@ -1212,7 +1212,7 @@ function proenem_render_site_footer() {
 					<?php
 					printf(
 						/* translators: %s: Current year. */
-						esc_html__( '@%s ProEnem - Grupo Q Educação', 'proenem-wordpress-theme' ),
+						esc_html__( '@%s Proenem - Grupo Q Educação', 'proenem-wordpress-theme' ),
 						esc_html( gmdate( 'Y' ) )
 					);
 					?>
@@ -1368,7 +1368,7 @@ function proenem_render_site_navbar( $args = array() ) {
 	?>
 	<nav class="<?php echo esc_attr( $classes ); ?>" aria-label="<?php echo esc_attr( $args['aria_label'] ); ?>" data-pro-home-navbar>
 		<a class="pen-brand-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-			<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'ProEnem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
+			<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
 		</a>
 		<?php if ( $args['logo_only'] ) : ?>
 			</nav>

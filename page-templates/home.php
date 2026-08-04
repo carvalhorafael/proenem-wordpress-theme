@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: ProEnem Home
+ * Template Name: Proenem Home
  * Template Post Type: page
  *
  * @package Proenem
@@ -106,24 +106,24 @@ $testimonials = array(
 
 $faq_items = array(
 	array(
-		'question' => __( 'O que é o MÉTODO PRO?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'É uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos até a aprovação.', 'proenem-wordpress-theme' ),
+		'question' => __( 'O que é o Método PRO?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota.', 'proenem-wordpress-theme' ),
 	),
 	array(
-		'question' => __( 'Posso começar a estudar de graça?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Sim. Você pode criar uma conta gratuita e acessar o banco de questões, listas e um diagnóstico simplificado.', 'proenem-wordpress-theme' ),
+		'question' => __( 'Posso começar de graça?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão.', 'proenem-wordpress-theme' ),
 	),
 	array(
-		'question' => __( 'O que é a Aceleração PRO?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'É o plano para quem quer acompanhamento mais próximo, simulados com TRI, redação corrigida e rotina adaptada por IA.', 'proenem-wordpress-theme' ),
+		'question' => __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Elite inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo disponível até a prova.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Você pode cancelar quando quiser. A ideia é experimentar o método sem burocracia e seguir apenas se fizer sentido para sua rotina.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você.', 'proenem-wordpress-theme' ),
 	),
 );
 
@@ -182,9 +182,9 @@ $subjects = array(
 		<div class="pen-hero-section__stage">
 			<img class="pen-hero-section__image" src="<?php echo esc_url( $home_asset_uri( 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>">
 			<span class="pen-hero-sticker pen-hero-sticker--pink"><?php esc_html_e( 'Diagnóstico', 'proenem-wordpress-theme' ); ?></span>
-			<span class="pen-hero-sticker pen-hero-sticker--yellow"><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></span>
-			<span class="pen-hero-sticker pen-hero-sticker--green"><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></span>
-			<span class="pen-hero-sticker pen-hero-sticker--orange"><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></span>
+			<span class="pen-hero-sticker pen-hero-sticker--yellow"><?php esc_html_e( 'Plano', 'proenem-wordpress-theme' ); ?></span>
+			<span class="pen-hero-sticker pen-hero-sticker--green"><?php esc_html_e( 'Prática', 'proenem-wordpress-theme' ); ?></span>
+			<span class="pen-hero-sticker pen-hero-sticker--orange"><?php esc_html_e( 'Evolução', 'proenem-wordpress-theme' ); ?></span>
 			<h1 id="pro-home-title" class="pen-hero-section__title">
 				<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php esc_html_e( 'Sua', 'proenem-wordpress-theme' ); ?></span>
 				<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php esc_html_e( 'aprovação', 'proenem-wordpress-theme' ); ?></span>
@@ -196,8 +196,8 @@ $subjects = array(
 
 	<aside class="pen-hero-action-bar">
 		<p>
-			<strong><?php esc_html_e( 'O Método PRO', 'proenem-wordpress-theme' ); ?></strong>
-			<?php esc_html_e( 'não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance.', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( 'Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar.', 'proenem-wordpress-theme' ); ?></strong>
+			<?php esc_html_e( 'Você estuda com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?>
 		</p>
 		<div class="pen-hero-action-bar__action">
 			<a class="pen-button pen-button--secondary pen-button--md" href="#metodo">
@@ -210,8 +210,8 @@ $subjects = array(
 	<div class="pen-marquee" aria-hidden="true">
 		<div class="pen-marquee__track">
 			<?php for ( $marquee_iteration = 0; $marquee_iteration < 2; $marquee_iteration++ ) : ?>
-				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
 			<?php endfor; ?>
 		</div>
@@ -219,11 +219,11 @@ $subjects = array(
 
 	<section id="metodo" class="pen-pillars-section" aria-labelledby="pro-pillars-title">
 		<div class="pen-pillars-section__copy">
-			<p class="pen-section-pill"><?php esc_html_e( 'Método Pro', 'proenem-wordpress-theme' ); ?></p>
+			<p class="pen-section-pill"><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></p>
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
-			<p><?php esc_html_e( 'O Método PRO não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-			<a class="pen-button pen-button--primary pen-button--md" href="#planos"><?php esc_html_e( 'Começar gratuitamente', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+			<a class="pen-button pen-button--primary pen-button--md" href="#planos"><?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -239,7 +239,7 @@ $subjects = array(
 				<span>01</span>
 				<div>
 					<h3><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></h3>
-					<p><?php esc_html_e( 'Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais.', 'proenem-wordpress-theme' ); ?></p>
+					<p><?php esc_html_e( 'Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--featured is-active" data-pro-home-pillar-card>
@@ -247,7 +247,7 @@ $subjects = array(
 				<span>02</span>
 				<div>
 					<h3><?php esc_html_e( 'Diagnóstico', 'proenem-wordpress-theme' ); ?></h3>
-					<p><?php esc_html_e( 'Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está.', 'proenem-wordpress-theme' ); ?></p>
+					<p><?php esc_html_e( 'Simulados adaptativos mapeiam suas forças e lacunas. Você vê, com dados, onde está e o que rende mais nota agora.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--red" data-pro-home-pillar-card>
@@ -255,7 +255,7 @@ $subjects = array(
 				<span>03</span>
 				<div>
 					<h3><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></h3>
-					<p><?php esc_html_e( 'Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo.', 'proenem-wordpress-theme' ); ?></p>
+					<p><?php esc_html_e( 'O plano diz o que estudar, quando revisar e como corrigir a rota — sem você se perder no meio do caminho.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--pink" data-pro-home-pillar-card>
@@ -263,7 +263,7 @@ $subjects = array(
 				<span>04</span>
 				<div>
 					<h3><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></h3>
-					<p><?php esc_html_e( 'Acompanhamos sua evolução para trocar esforço solto por resultado mensurável.', 'proenem-wordpress-theme' ); ?></p>
+					<p><?php esc_html_e( 'Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
 		</div>
@@ -333,11 +333,11 @@ $subjects = array(
 	<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
 		<p class="pen-section-pill"><?php esc_html_e( 'Você se identifica?', 'proenem-wordpress-theme' ); ?></p>
 		<h2 id="pro-pain-title">
-			<?php esc_html_e( 'Já sentiu que', 'proenem-wordpress-theme' ); ?>
-			<strong><?php esc_html_e( 'estuda muito,', 'proenem-wordpress-theme' ); ?></strong>
+			<?php esc_html_e( 'Estuda muito', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( 'e a nota', 'proenem-wordpress-theme' ); ?></strong>
 			<br>
-			<?php esc_html_e( 'mas a nota', 'proenem-wordpress-theme' ); ?>
-			<strong><?php esc_html_e( 'não sobe?', 'proenem-wordpress-theme' ); ?></strong>
+			<?php esc_html_e( 'não', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( 'sobe?', 'proenem-wordpress-theme' ); ?></strong>
 		</h2>
 		<div class="pen-feature-grid">
 			<article class="pro-home-pain-card pro-home-pain-card--blue">
@@ -351,7 +351,7 @@ $subjects = array(
 					<span><?php esc_html_e( 'Estuda', 'proenem-wordpress-theme' ); ?></span>
 					<strong><?php esc_html_e( 'sem direção', 'proenem-wordpress-theme' ); ?></strong>
 				</h3>
-				<p><?php esc_html_e( 'Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Cronograma bonito, mas sem prioridade. Você estuda tudo igual e o resultado não aparece.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
 			<article class="pro-home-pain-card pro-home-pain-card--yellow">
 				<span class="pro-home-pain-card__icon" aria-hidden="true">
@@ -365,7 +365,7 @@ $subjects = array(
 					<strong><?php esc_html_e( 'Trava', 'proenem-wordpress-theme' ); ?></strong>
 					<span><?php esc_html_e( 'em simulados', 'proenem-wordpress-theme' ); ?></span>
 				</h3>
-				<p><?php esc_html_e( 'A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'A nota empaca. Você faz simulado, mas não analisa o erro — e repete o mesmo tropeço.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
 			<article class="pro-home-pain-card pro-home-pain-card--red">
 				<span class="pro-home-pain-card__icon" aria-hidden="true">
@@ -380,19 +380,19 @@ $subjects = array(
 					<span><?php esc_html_e( '&', 'proenem-wordpress-theme' ); ?></span>
 					<strong><?php esc_html_e( 'insegurança', 'proenem-wordpress-theme' ); ?></strong>
 				</h3>
-				<p><?php esc_html_e( 'Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Pressão da família, medo de não passar e a sensação de estar sempre atrasado.', 'proenem-wordpress-theme' ); ?></p>
 			</article>
 		</div>
 		<p class="pro-home-pain-section__statement">
-			<span><?php esc_html_e( 'O problema não é o esforço.', 'proenem-wordpress-theme' ); ?></span>
+			<span><?php esc_html_e( 'O esforço, sozinho, não basta.', 'proenem-wordpress-theme' ); ?></span>
 			<span>
-				<?php esc_html_e( 'É estudar', 'proenem-wordpress-theme' ); ?>
-				<strong><?php esc_html_e( 'sem método.', 'proenem-wordpress-theme' ); ?></strong>
+				<?php esc_html_e( 'É preciso', 'proenem-wordpress-theme' ); ?>
+				<strong><?php esc_html_e( 'método e acompanhamento.', 'proenem-wordpress-theme' ); ?></strong>
 			</span>
 		</p>
 		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="#planos">
-			<?php esc_html_e( 'Comece agora!', 'proenem-wordpress-theme' ); ?>
-			<span class="pen-button__badge"><?php esc_html_e( 'É gratuito', 'proenem-wordpress-theme' ); ?></span>
+			<?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( 'é gratuito', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--pink" aria-hidden="true"></span>
@@ -471,7 +471,7 @@ $subjects = array(
 			'tone'    => 'active',
 			'active'  => true,
 			'title'   => __( 'Simulados com a mesma lógica de correção do ENEM.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Veja sua nota real, evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
+			'body'    => __( 'Veja sua nota real, a evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
 			'url'     => __( 'proenem.com.br/app/simulados-com-tri', 'proenem-wordpress-theme' ),
 			'bullets' => array(
 				__( 'Nota real estimada pelo TRI', 'proenem-wordpress-theme' ),
@@ -492,7 +492,7 @@ $subjects = array(
 				</h2>
 				<p class="pro-home-platform-note">
 					<img src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true">
-					<span class="pro-home-platform-note__text"><?php esc_html_e( 'Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></span>
+					<span class="pro-home-platform-note__text"><?php esc_html_e( 'Clique em qualquer recurso e veja como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></span>
 				</p>
 			</header>
 			<div class="pro-home-platform-body">
@@ -554,11 +554,11 @@ $subjects = array(
 	<section id="questoes" class="pen-question-bank-section" aria-labelledby="pro-questions-title">
 		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true">
 		<h2 id="pro-questions-title">
-			<?php esc_html_e( 'Explore', 'proenem-wordpress-theme' ); ?>
-			<strong><?php esc_html_e( '+50 mil questões', 'proenem-wordpress-theme' ); ?></strong><br>
-			<?php esc_html_e( 'sem precisar criar conta.', 'proenem-wordpress-theme' ); ?>
+			<?php esc_html_e( 'Mais de', 'proenem-wordpress-theme' ); ?>
+			<strong><?php esc_html_e( '50 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
+			<?php esc_html_e( 'e um plano que diz qual resolver agora.', 'proenem-wordpress-theme' ); ?>
 		</h2>
-		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora.', 'proenem-wordpress-theme' ); ?></p>
+		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ); ?></p>
 		<div class="pen-subject-grid">
 			<?php foreach ( $subjects as $subject ) : ?>
 				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="#planos">
@@ -579,8 +579,8 @@ $subjects = array(
 			<?php endforeach; ?>
 		</div>
 		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="#planos">
-			<?php esc_html_e( 'Comece agora!', 'proenem-wordpress-theme' ); ?>
-			<span class="pen-button__badge"><?php esc_html_e( 'É gratuito', 'proenem-wordpress-theme' ); ?></span>
+			<?php esc_html_e( 'Explorar questões grátis', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( 'Sem criar conta', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true">
 	</section>
@@ -627,10 +627,10 @@ $subjects = array(
 		<div class="pro-home-testimonials__header">
 			<span class="pen-section-pill"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></span>
 			<h2 id="pro-testimonials-title">
-				<span><?php esc_html_e( 'Quem seguiu o método,', 'proenem-wordpress-theme' ); ?></span>
-				<strong><?php esc_html_e( 'conquistou a vaga.', 'proenem-wordpress-theme' ); ?></strong>
+				<span><?php esc_html_e( 'Quem estudou com método,', 'proenem-wordpress-theme' ); ?></span>
+				<strong><?php esc_html_e( 'chegou na vaga.', 'proenem-wordpress-theme' ); ?></strong>
 			</h2>
-			<p><?php esc_html_e( 'Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php esc_html_e( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 		<div class="pro-home-testimonials__viewport">
 			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
@@ -660,11 +660,11 @@ $subjects = array(
 	<section class="pen-audience-section pro-home-school-section" aria-labelledby="pro-school-title">
 		<div class="pro-home-school-section__marquee" aria-hidden="true">
 			<div class="pro-home-school-section__marquee-track">
-				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'A engenharia da sua aprovação', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Troque a sorte pela estratégia', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
 			</div>
 		</div>
@@ -677,7 +677,7 @@ $subjects = array(
 					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></strong><br>
 					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
 				</h2>
-				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>">
 			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
@@ -710,21 +710,21 @@ $subjects = array(
 		<div class="pen-marketing-cta__content">
 			<h2 id="pro-final-title">
 				<?php esc_html_e( 'Pronto para', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'transformar', 'proenem-wordpress-theme' ); ?></strong> <?php esc_html_e( 'a', 'proenem-wordpress-theme' ); ?><br>
-				<?php esc_html_e( 'preparação', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'ENEM', 'proenem-wordpress-theme' ); ?></strong> <?php esc_html_e( 'na sua escola?', 'proenem-wordpress-theme' ); ?>
+				<?php esc_html_e( 'preparação para o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'ENEM', 'proenem-wordpress-theme' ); ?></strong> <?php esc_html_e( 'na sua escola?', 'proenem-wordpress-theme' ); ?>
 			</h2>
-			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 		<div class="pen-marketing-cta__actions">
-			<a class="pen-button pen-button--primary pen-button--lg" href="#faq"><?php esc_html_e( 'Começar gratuitamente', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+			<a class="pen-button pen-button--primary pen-button--lg" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 	</section>
 
 	<section id="faq" class="pen-faq-section" aria-labelledby="pro-faq-title">
 		<div class="pen-faq-section__header">
-			<span class="pen-pill-eyebrow"><?php esc_html_e( 'Perguntas frequentes', 'proenem-wordpress-theme' ); ?></span>
+			<span class="pen-pill-eyebrow"><?php esc_html_e( 'FAQ', 'proenem-wordpress-theme' ); ?></span>
 			<h2 id="pro-faq-title">
-				<?php esc_html_e( 'Já sentiu que', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'estuda muito,', 'proenem-wordpress-theme' ); ?></strong><br>
-				<?php esc_html_e( 'mas a nota', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'não sobe?', 'proenem-wordpress-theme' ); ?></strong>
+				<?php esc_html_e( 'Perguntas', 'proenem-wordpress-theme' ); ?><br>
+				<?php esc_html_e( 'frequentes', 'proenem-wordpress-theme' ); ?>
 			</h2>
 		</div>
 		<div class="pen-faq-section__items">
