@@ -842,6 +842,8 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 		$this->add_text_control( 'title_span', esc_html__( 'Título colorido', 'proenem-wordpress-theme' ), esc_html__( 'por dentro', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_tail', esc_html__( 'Título final', 'proenem-wordpress-theme' ), esc_html__( 'cada detalhe', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'note', esc_html__( 'Nota', 'proenem-wordpress-theme' ), esc_html__( 'Clique em qualquer recurso e veja como funciona — direto na plataforma.', 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'guard_text', esc_html__( 'Linha de posicionamento', 'proenem-wordpress-theme' ), esc_html__( 'Não é um acervo de vídeos. É um sistema que te diz', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'guard_emphasis', esc_html__( 'Destaque da linha', 'proenem-wordpress-theme' ), esc_html__( 'o próximo passo.', 'proenem-wordpress-theme' ) );
 
 		$items = new \Elementor\Repeater();
 		$items->add_control(
@@ -990,6 +992,7 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 					<h2 id="pro-platform-title"><strong><?php echo esc_html( $settings['title_strong'] ?? '' ); ?></strong> <span><?php echo esc_html( $settings['title_span'] ?? '' ); ?></span><br><?php echo esc_html( $settings['title_tail'] ?? '' ); ?></h2>
 					<p class="pro-home-platform-note"><img src="<?php echo esc_url( $this->home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true"><span class="pro-home-platform-note__text"><?php echo esc_html( $settings['note'] ?? '' ); ?></span></p>
 				</header>
+				<p class="pro-home-platform-guard"><span><?php echo esc_html( $settings['guard_text'] ?? '' ); ?></span> <strong><?php echo esc_html( $settings['guard_emphasis'] ?? '' ); ?></strong></p>
 				<div class="pro-home-platform-body">
 					<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 						<?php foreach ( $items as $index => $item ) : ?>

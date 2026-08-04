@@ -2945,6 +2945,26 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   width: 72%;
 }
 
+.pro-home .pro-home-platform-guard {
+  align-items: baseline;
+  background: var(--pen-color-ink);
+  color: var(--pen-color-surface);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--pen-text-lg);
+  gap: 0.3em;
+  justify-content: center;
+  line-height: 1.35;
+  margin: 0;
+  padding: var(--pen-space-4) clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
+  text-align: center;
+}
+
+.pro-home .pro-home-platform-guard strong {
+  color: var(--pen-color-yellow-bright);
+  font-weight: 800;
+}
+
 .pro-home .pro-home-platform-body {
   display: grid;
   grid-template-columns: minmax(21rem, 0.46fr) minmax(0, 1fr);

@@ -508,6 +508,10 @@ $subjects = array(
 					<span class="pro-home-platform-note__text"><?php esc_html_e( 'Clique em qualquer recurso e veja como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></span>
 				</p>
 			</header>
+			<p class="pro-home-platform-guard">
+				<span><?php esc_html_e( 'Não é um acervo de vídeos. É um sistema que te diz', 'proenem-wordpress-theme' ); ?></span>
+				<strong><?php esc_html_e( 'o próximo passo.', 'proenem-wordpress-theme' ); ?></strong>
+			</p>
 			<div class="pro-home-platform-body">
 				<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 					<?php foreach ( $platform_items as $index => $item ) : ?>

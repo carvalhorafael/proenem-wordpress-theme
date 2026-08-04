@@ -87,3 +87,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: padronizar a home por papel tipografico usando os tokens publicados: auxiliar em `--pen-text-sm`, corpo em `--pen-text-base`, apoio em `--pen-text-lg`, titulo de card em `1.5rem` e titulo de secao entre `2rem` e `3rem`.
 - Excecoes: hero, precos, selos, badges e marquees permanecem com direcao tipografica promocional propria.
 - Design system: a composicao reutiliza os tokens existentes e nao cria um novo token ou contrato local.
+
+## 2026-08-04: Linha de posicionamento na plataforma da home
+
+- Contexto: a nova copy precisa diferenciar a plataforma de uma biblioteca de videos antes da apresentacao dos recursos.
+- Decisao: inserir uma faixa curta entre o cabecalho e as abas, com a promessa do proximo passo em destaque e controles equivalentes no widget Elementor.
+- Adaptacao local: a classe `pro-home-platform-guard` usa apenas tokens publicados, mas sua composicao ainda nao possui um pattern compartilhado apropriado; o callout editorial existente nao corresponde ao contexto da LP.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#32`; tema `carvalhorafael/proenem-wordpress-theme#89`.
+- Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para o novo contrato e remover `pro-home-platform-guard` quando o design system cobrir a composicao.

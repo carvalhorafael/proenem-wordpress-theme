@@ -14,6 +14,8 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
   await expect(page.locator(".pro-home-pain-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
+  await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
+  await expect(page.locator(".pro-home-platform-guard strong")).toHaveText("o próximo passo.");
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
