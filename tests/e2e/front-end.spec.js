@@ -11,6 +11,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
   await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
   await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
+  await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });

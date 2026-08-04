@@ -318,6 +318,7 @@ $subjects = array(
 		</div>
 		<div class="pen-proof-section__strip">
 			<h2 id="pro-proof-title"><?php esc_html_e( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ); ?></h2>
+			<p class="pro-home-proof-support"><?php esc_html_e( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ); ?></p>
 			<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
 				<?php foreach ( $proof_university_logos as $proof_university_logo ) : ?>
 					<img

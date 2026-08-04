@@ -2788,6 +2788,18 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     #e23a3a;
 }
 
+.pro-home .pen-proof-section__strip .pro-home-proof-support {
+  font-size: clamp(0.95rem, 1.2vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: var(--pen-space-3) auto 0;
+  max-width: 65ch;
+}
+
+.pro-home .pro-home-proof-support + .pen-proof-section__logos {
+  margin-top: var(--pen-space-5);
+}
+
 .pro-home .pen-feature-grid-section {
   background: #fff0f0;
   overflow: hidden;

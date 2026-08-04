@@ -553,6 +553,7 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 		$this->add_text_control( 'badge_line_1', esc_html__( 'Badge linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Nossos', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'badge_line_2', esc_html__( 'Badge linha 2', 'proenem-wordpress-theme' ), esc_html__( 'Alunos!', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'support', esc_html__( 'Texto de apoio', 'proenem-wordpress-theme' ), esc_html__( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ) );
 
 		$students = new \Elementor\Repeater();
 		$students->add_control(
@@ -658,6 +659,7 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 			</div>
 			<div class="pen-proof-section__strip">
 				<h2 id="pro-proof-title"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2>
+				<p class="pro-home-proof-support"><?php echo esc_html( $settings['support'] ?? '' ); ?></p>
 				<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
 					<?php foreach ( (array) ( $settings['logos'] ?? array() ) as $index => $logo ) : ?>
 						<img class="pen-proof-section__logo" src="<?php echo esc_url( $this->media_url( $logo['image'] ?? array(), $logos[ $index ] ?? 'proof-logo-ufrj.png' ) ); ?>" alt="<?php echo esc_attr( $logo['name'] ?? '' ); ?>">

@@ -64,3 +64,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: as classes `pro-home-hero-action-bar__*` ficam em `src/styles/theme.css` ate existir um contrato portavel para essa composicao.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#29`; tema `carvalhorafael/proenem-wordpress-theme#86`.
 - Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para o novo contrato e remover o CSS local quando o design system cobrir a composicao.
+
+## 2026-08-04: Texto de apoio na prova social da home
+
+- Contexto: a nova copy inclui uma frase curta entre o numero de aprovados e os logos das universidades.
+- Decisao: adicionar o apoio ao template e ao widget `Pro Home Prova Social`, mantendo o titulo como prova principal e o texto novo em escala secundaria.
+- Adaptacao local: a classe `pro-home-proof-support` controla temporariamente tipografia, largura de leitura e espacamento porque o pattern publicado nao possui um contrato de apoio secundario.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#30`; tema `carvalhorafael/proenem-wordpress-theme#87`.
+- Criterio de remocao: atualizar o pacote `@carvalhorafael/proenem-css`, migrar para a classe compartilhada e remover o seletor local.
