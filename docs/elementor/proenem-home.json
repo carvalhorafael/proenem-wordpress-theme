@@ -55,8 +55,8 @@
           "widgetType": "pro_home_action_bar",
           "isInner": false,
           "settings": {
-            "button_url": {
-              "url": "#metodo",
+            "primary_button_url": {
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             }
@@ -87,7 +87,7 @@
                 "_id": "pillar01",
                 "number": "01",
                 "title": "Meta",
-        "body": "Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro.",
+                "body": "Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro.",
                 "tone": "blue",
                 "image": {
                   "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-meta.webp"
@@ -97,7 +97,7 @@
                 "_id": "pillar02",
                 "number": "02",
                 "title": "Diagnóstico",
-        "body": "Simulados adaptativos mapeiam suas forças e lacunas. Você vê, com dados, onde está e o que rende mais nota agora.",
+                "body": "Simulados adaptativos mapeiam suas forças e lacunas. Você vê, com dados, onde está e o que rende mais nota agora.",
                 "tone": "featured",
                 "image": {
                   "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-diagnostico.webp"
@@ -107,7 +107,7 @@
                 "_id": "pillar03",
                 "number": "03",
                 "title": "Execução",
-        "body": "O plano diz o que estudar, quando revisar e como corrigir a rota — sem você se perder no meio do caminho.",
+                "body": "O plano diz o que estudar, quando revisar e como corrigir a rota — sem você se perder no meio do caminho.",
                 "tone": "red",
                 "image": {
                   "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-execucao.webp"
@@ -117,7 +117,7 @@
                 "_id": "pillar04",
                 "number": "04",
                 "title": "Performance",
-        "body": "Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação.",
+                "body": "Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação.",
                 "tone": "pink",
                 "image": {
                   "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/pillar-meta.webp"

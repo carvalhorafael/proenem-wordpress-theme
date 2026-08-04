@@ -268,12 +268,12 @@ class Proenem_Elementor_Home_Hero_Widget extends Proenem_Elementor_Home_Widget_B
 		$this->add_text_control( 'sticker_2', esc_html__( 'Sticker', 'proenem-wordpress-theme' ), esc_html__( 'Plano', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'sticker_3', esc_html__( 'Sticker', 'proenem-wordpress-theme' ), esc_html__( 'Prática', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'sticker_4', esc_html__( 'Sticker', 'proenem-wordpress-theme' ), esc_html__( 'Evolução', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_1', esc_html__( 'Linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Sua', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_2', esc_html__( 'Linha 2', 'proenem-wordpress-theme' ), esc_html__( 'aprovação', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_3_prefix', esc_html__( 'Linha 3 antes do destaque', 'proenem-wordpress-theme' ), esc_html__( 'não é', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_3_emphasis', esc_html__( 'Linha 3 destaque', 'proenem-wordpress-theme' ), esc_html__( 'sorte', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_4_prefix', esc_html__( 'Linha 4 antes do destaque', 'proenem-wordpress-theme' ), esc_html__( 'é', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'line_4_emphasis', esc_html__( 'Linha 4 destaque', 'proenem-wordpress-theme' ), esc_html__( 'método', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'line_1', esc_html__( 'Linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Sua aprovação não', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'line_2', esc_html__( 'Linha 2 antes de sorte', 'proenem-wordpress-theme' ), esc_html__( 'é', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'line_3_emphasis', esc_html__( 'Destaque azul', 'proenem-wordpress-theme' ), esc_html__( 'sorte', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'line_4_prefix', esc_html__( 'Linha 2 entre os destaques', 'proenem-wordpress-theme' ), esc_html__( 'é', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'line_4_emphasis', esc_html__( 'Destaque amarelo', 'proenem-wordpress-theme' ), esc_html__( 'método', 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'subtitle', esc_html__( 'Subtítulo', 'proenem-wordpress-theme' ), esc_html__( 'A escola te ensina o conteúdo. A Proenem te faz treinar, corrigir e não parar, até a sua nota subir.', 'proenem-wordpress-theme' ) );
 		$this->end_controls_section();
 	}
 
@@ -290,10 +290,9 @@ class Proenem_Elementor_Home_Hero_Widget extends Proenem_Elementor_Home_Widget_B
 				<span class="pen-hero-sticker pen-hero-sticker--orange"><?php echo esc_html( $settings['sticker_4'] ?? '' ); ?></span>
 				<h1 id="pro-home-title" class="pen-hero-section__title">
 					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_1'] ?? '' ); ?></span>
-					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_2'] ?? '' ); ?></span>
-					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_3_prefix'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--blue"><?php echo esc_html( $settings['line_3_emphasis'] ?? '' ); ?></strong></span>
-					<span class="pen-hero-section__title-line pen-hero-section__title-line--right"><?php echo esc_html( $settings['line_4_prefix'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--yellow"><?php echo esc_html( $settings['line_4_emphasis'] ?? '' ); ?></strong></span>
+					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_2'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--blue"><?php echo esc_html( $settings['line_3_emphasis'] ?? '' ); ?></strong> <?php echo esc_html( $settings['line_4_prefix'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--yellow"><?php echo esc_html( $settings['line_4_emphasis'] ?? '' ); ?></strong></span>
 				</h1>
+				<p class="pro-home-hero-section__subtitle"><?php echo esc_html( $settings['subtitle'] ?? '' ); ?></p>
 			</div>
 		</section>
 		<?php
@@ -319,10 +318,9 @@ class Proenem_Elementor_Home_Action_Bar_Widget extends Proenem_Elementor_Home_Wi
 
 	protected function register_controls(): void {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
-		$this->add_text_control( 'strong_text', esc_html__( 'Texto em destaque', 'proenem-wordpress-theme' ), esc_html__( 'Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar.', 'proenem-wordpress-theme' ) );
-		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Você estuda com estratégia, não com mais horas.', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Conheça o Método PRO', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#metodo' );
+		$this->add_textarea_control( 'body', esc_html__( 'Texto de apoio', 'proenem-wordpress-theme' ), esc_html__( 'Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar. Você estuda com estratégia, não com mais horas.', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'primary_button_label', esc_html__( 'Botão primário', 'proenem-wordpress-theme' ), esc_html__( 'Começar grátis', 'proenem-wordpress-theme' ) );
+		$this->add_url_control( 'primary_button_url', esc_html__( 'Link do botão primário', 'proenem-wordpress-theme' ), '#planos' );
 		$this->end_controls_section();
 	}
 
@@ -330,10 +328,12 @@ class Proenem_Elementor_Home_Action_Bar_Widget extends Proenem_Elementor_Home_Wi
 		$settings = $this->get_settings_for_display();
 		$this->open_home_wrapper();
 		?>
-		<aside class="pen-hero-action-bar">
-			<p><strong><?php echo esc_html( $settings['strong_text'] ?? '' ); ?></strong> <?php echo esc_html( $settings['body'] ?? '' ); ?></p>
-			<div class="pen-hero-action-bar__action">
-				<?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--secondary pen-button--md' ); ?>
+		<aside class="pen-hero-action-bar pro-home-hero-action-bar" aria-label="<?php esc_attr_e( 'Comece a estudar com o Método PRO', 'proenem-wordpress-theme' ); ?>">
+			<div class="pro-home-hero-action-bar__copy">
+				<p class="pro-home-hero-action-bar__support"><?php echo esc_html( $settings['body'] ?? '' ); ?></p>
+			</div>
+			<div class="pen-hero-action-bar__action pro-home-hero-action-bar__actions">
+				<?php $this->render_home_button( 'primary_button_url', $settings['primary_button_url'] ?? array(), $settings['primary_button_label'] ?? '', 'pen-button pen-button--primary pen-button--md' ); ?>
 			</div>
 		</aside>
 		<?php

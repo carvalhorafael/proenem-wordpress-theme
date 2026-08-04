@@ -2665,8 +2665,74 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   width: auto;
 }
 
+.pro-home .pro-home-hero-section__subtitle {
+  color: var(--pen-color-on-red);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  font-weight: 700;
+  left: 50%;
+  line-height: 1.35;
+  margin: 0;
+  max-width: 58rem;
+  padding-inline: var(--pen-space-5);
+  position: absolute;
+  text-align: center;
+  text-shadow:
+    3px 3px 0 var(--pen-color-ink),
+    -1px -1px 0 var(--pen-color-ink),
+    1px -1px 0 var(--pen-color-ink),
+    -1px 1px 0 var(--pen-color-ink);
+  transform: translateX(-50%);
+  width: min(90vw, 58rem);
+  z-index: 4;
+}
+
 .pro-home .pen-hero-action-bar {
   background: #ff90e8;
+}
+
+.pro-home .pro-home-hero-action-bar__copy {
+  align-self: center;
+  display: grid;
+  gap: var(--pen-space-3);
+  padding: var(--pen-space-7) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  position: relative;
+  z-index: 1;
+}
+
+.pro-home .pro-home-hero-action-bar p {
+  margin: 0;
+  padding: 0;
+}
+
+.pro-home .pro-home-hero-action-bar__support {
+  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.4;
+  max-width: 72ch;
+}
+
+.pro-home .pro-home-hero-action-bar__actions {
+  align-items: center;
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button {
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-md);
+  font-size: 1rem;
+  font-weight: 700;
+  min-height: 3rem;
+  padding: 0 var(--pen-space-5);
+  width: min(100%, 20rem);
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button--primary {
+  background: var(--pen-color-primary);
+  color: var(--pen-color-on-red);
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button--primary:hover {
+  background: var(--pen-color-primary-hover);
 }
 
 .pro-home .pen-marquee {
@@ -4512,17 +4578,14 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__title {
-    font-size: 75pt;
+    font-size: clamp(4rem, 6.5vw, 6.25rem);
     font-weight: 800;
     left: 50%;
-    line-height: 0.78;
-    text-align: left;
-    top: 32%;
-    width: max-content;
-  }
-
-  .pro-home .pen-hero-section__title-line--right {
-    text-align: right;
+    letter-spacing: -0.025em;
+    line-height: 0.9;
+    text-align: center;
+    top: 45%;
+    width: min(72rem, 94vw);
   }
 
   .pro-home .pen-hero-section__emphasis {
@@ -4544,9 +4607,28 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     -webkit-text-stroke-color: var(--pen-color-yellow-bright);
   }
 
+  .pro-home .pro-home-hero-section__subtitle {
+    font-size: 2.25rem;
+    top: 74%;
+  }
+
+  .pro-home .pen-hero-sticker--pink {
+    left: 10%;
+  }
+
+  .pro-home .pen-hero-sticker--green {
+    right: 10%;
+  }
+
   .pro-home .pen-hero-action-bar {
     grid-template-columns: minmax(0, 1fr) minmax(22rem, 35%);
-    min-height: 7rem;
+    min-height: clamp(6.5rem, 7vw, 7rem);
+  }
+
+  .pro-home .pro-home-hero-action-bar__copy {
+    padding-block: var(--pen-space-3);
+    padding-left: clamp(1.5rem, 4vw, 5rem);
+    padding-right: clamp(7rem, 9vw, 10rem);
   }
 
   .pro-home .pen-hero-action-bar__action {
@@ -4556,8 +4638,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     padding-left: clamp(6rem, 7vw, 8rem);
   }
 
-  .pro-home .pen-hero-action-bar p {
-    font-size: 1.5vw;
+  .pro-home .pro-home-hero-action-bar__actions {
+    padding-block: var(--pen-space-3);
   }
 }
 
@@ -4636,6 +4718,36 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .pro-home .pen-hero-section__stage {
+    min-height: 38rem;
+  }
+
+  .pro-home .pen-hero-section__title {
+    font-size: clamp(2.15rem, 10.5vw, 3.15rem);
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    top: 45%;
+    width: min(96vw, 34rem);
+  }
+
+  .pro-home .pro-home-hero-section__subtitle {
+    font-size: 1.25rem;
+    top: 65%;
+    width: min(94vw, 34rem);
+  }
+
+  .pro-home .pro-home-hero-action-bar__copy {
+    padding: var(--pen-space-6) var(--pen-space-5);
+  }
+
+  .pro-home .pro-home-hero-action-bar__actions {
+    padding: var(--pen-space-5);
+  }
+
+  .pro-home .pro-home-hero-action-bar__actions .pen-button {
+    width: 100%;
+  }
+
   .pro-materials-hero {
     min-height: 0;
     padding: var(--pen-space-8) var(--pen-space-5);

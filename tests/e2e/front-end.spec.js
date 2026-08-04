@@ -6,6 +6,11 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator("body")).toBeVisible();
   await expect(page.locator(".pen-navbar")).toBeVisible();
   await expect(page.getByRole("heading", { level: 1, name: /sua aprovação/i })).toBeVisible();
+  await expect(page.locator(".pen-hero-section__title-line")).toHaveCount(2);
+  await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação não");
+  await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
+  await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });

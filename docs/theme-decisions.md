@@ -55,3 +55,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Escopo inicial: `Pro Home Hero`, `Pro Home Barra de Acao`, `Pro Home Marquee`, `Pro Home Pilares`, `Pro Home Prova Social`, `Pro Home Dores`, `Pro Home Plataforma`, `Pro Home Banco de Questoes`, `Pro Home Planos`, `Pro Home Depoimentos`, `Pro Home Escolas`, `Pro Home CTA Final` e `Pro Home FAQ`.
 - Fronteira: o Elementor fica responsavel pela composicao e edicao simples; o tema continua controlando markup, classes, assets, comportamento progressivo e integracao com o design system.
 - Design system: os widgets reutilizam os contratos visuais `pen-*` e a cola local ja existente para a home. A migracao para contratos compartilhados segue o tracking da LP e dos widgets Elementor.
+
+## 2026-08-04: Conteudo complementar e CTA no hero da home
+
+- Contexto: a revisao de copy da home exige subtitulo, apoio e CTA no primeiro bloco editorial.
+- Decisao: posicionar o subtitulo dentro do hero fotografico e estender localmente a barra de acao com texto de apoio no bloco rosa e um CTA no bloco amarelo.
+- Elementor: os widgets `Pro Home Hero` e `Pro Home Barra de Acao` recebem controles equivalentes aos novos campos e mantem paridade com `page-templates/home.php`.
+- Adaptacao local: as classes `pro-home-hero-action-bar__*` ficam em `src/styles/theme.css` ate existir um contrato portavel para essa composicao.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#29`; tema `carvalhorafael/proenem-wordpress-theme#86`.
+- Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para o novo contrato e remover o CSS local quando o design system cobrir a composicao.
