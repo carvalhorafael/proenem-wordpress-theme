@@ -5371,19 +5371,20 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-school-section__photo-secondary {
     bottom: auto;
-    height: 12rem;
+    height: min(15rem, 61vw);
     inset: auto;
-    margin: 1.4rem -1.4rem 0 auto;
+    margin: 0.9rem -1.4rem 0 auto;
+    object-position: center 22%;
     position: relative;
     right: auto;
     top: auto;
-    width: 11rem;
+    width: min(13.5rem, 55vw);
   }
 
   .pro-home .pro-home-school-section__burst {
-    bottom: 2.2rem;
+    bottom: 2.6rem;
     height: 5.5rem;
-    right: 7.5rem;
+    right: min(10.5rem, 42vw);
     width: 5.5rem;
   }
 

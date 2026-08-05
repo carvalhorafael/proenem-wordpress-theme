@@ -174,3 +174,19 @@ test("front page testimonial heading stays inside the mobile viewport", async ({
   expect(heading.x + heading.width).toBeLessThanOrEqual(390);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
+
+test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const intro = await page.locator(".pro-home-school-section__intro").boundingBox();
+  const photo = await page.locator(".pro-home-school-section__photo-secondary").boundingBox();
+  const cta = await page.locator(".pro-home-school-section__cta").boundingBox();
+
+  expect(intro).not.toBeNull();
+  expect(photo).not.toBeNull();
+  expect(cta).not.toBeNull();
+  expect(photo.y).toBeGreaterThanOrEqual(cta.y + cta.height);
+  expect(Math.abs(photo.x + photo.width - (intro.x + intro.width))).toBeLessThan(1);
+  expect(photo.width / intro.width).toBeGreaterThan(0.5);
+});
