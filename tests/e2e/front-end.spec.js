@@ -201,3 +201,36 @@ test("front page school photo anchors to the mobile card edge below the CTA", as
   expect(Math.abs(photo.x + photo.width - (intro.x + intro.width))).toBeLessThan(1);
   expect(photo.width / intro.width).toBeGreaterThan(0.5);
 });
+
+test("front page trust badges do not overlap in the WordPress grid", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const trustArea = page.locator(".pen-site-footer__trust");
+
+  await trustArea.evaluate((element) => {
+    element.innerHTML = `
+      <div class="wp-block-group is-layout-grid">
+        <div id="reputation-ra" style="min-height: 80px; width: 160px;"></div>
+        <script type="application/json"></script>
+        <figure class="wp-block-image size-large">
+          <svg width="209" height="50" aria-label="Site seguro"></svg>
+        </figure>
+      </div>
+    `;
+  });
+
+  const reputation = await trustArea.locator("#reputation-ra").boundingBox();
+  const secureSite = await trustArea.locator(".wp-block-image").boundingBox();
+
+  expect(reputation).not.toBeNull();
+  expect(secureSite).not.toBeNull();
+
+  const overlaps =
+    reputation.x < secureSite.x + secureSite.width &&
+    reputation.x + reputation.width > secureSite.x &&
+    reputation.y < secureSite.y + secureSite.height &&
+    reputation.y + reputation.height > secureSite.y;
+
+  expect(overlaps).toBe(false);
+});

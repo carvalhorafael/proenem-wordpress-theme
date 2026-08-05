@@ -2629,6 +2629,33 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   padding: 0.35rem 0.55rem;
 }
 
+.pen-site-footer__trust .wp-block-group.is-layout-grid {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  grid-template-columns: none;
+}
+
+.pen-site-footer__trust #reputation-ra {
+  flex: 0 0 10rem;
+  max-width: 100%;
+}
+
+.pen-site-footer__trust .wp-block-image {
+  flex: 1 1 8rem;
+  margin: 0;
+  max-width: 13.0625rem;
+  min-width: 8rem;
+}
+
+.pen-site-footer__trust .wp-block-image img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
 .pen-site-footer__bottom {
   align-items: center;
   border-top: 1px solid rgb(255 255 255 / 0.18);
