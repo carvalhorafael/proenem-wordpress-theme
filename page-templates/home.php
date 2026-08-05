@@ -365,7 +365,7 @@ $subjects = array(
 				<span aria-hidden="true"></span>
 				<button type="button" data-pro-home-pillars-next aria-label="<?php esc_attr_e( 'Próximo pilar', 'proenem-wordpress-theme' ); ?>">›</button>
 			</div>
-			<article class="pen-step-card pen-step-card--blue" data-pro-home-pillar-card>
+			<article class="pen-step-card pen-step-card--blue is-active" data-pro-home-pillar-card>
 				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-meta.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-meta.webp', '(max-width: 700px) 40vw, 24vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>01</span>
 				<div>
@@ -373,7 +373,7 @@ $subjects = array(
 					<p><?php esc_html_e( 'Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro.', 'proenem-wordpress-theme' ); ?></p>
 				</div>
 			</article>
-			<article class="pen-step-card pen-step-card--featured is-active" data-pro-home-pillar-card>
+			<article class="pen-step-card pen-step-card--featured" data-pro-home-pillar-card>
 				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-diagnostico.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-diagnostico.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-diagnostico.webp', '(max-width: 700px) 28vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>02</span>
 				<div>

@@ -22,6 +22,8 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
   const cards = Array.from(slider.querySelectorAll("[data-pro-home-pillar-card]"));
   const previousButton = slider.querySelector("[data-pro-home-pillars-prev]");
   const nextButton = slider.querySelector("[data-pro-home-pillars-next]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const intervalMs = 4800;
 
   if (cards.length < 2) {
     return;
@@ -31,6 +33,8 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
     0,
     cards.findIndex((card) => card.classList.contains("is-active")),
   );
+  let intervalId = null;
+  let pointerStartX = null;
 
   const render = () => {
     const previousIndex = (activeIndex - 1 + cards.length) % cards.length;
@@ -48,17 +52,90 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
     });
   };
 
-  previousButton?.addEventListener("click", () => {
-    activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+  const stopAutoplay = () => {
+    if (!intervalId) {
+      return;
+    }
+
+    window.clearInterval(intervalId);
+    intervalId = null;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (reducedMotion.matches || document.hidden) {
+      return;
+    }
+
+    intervalId = window.setInterval(() => {
+      activeIndex = (activeIndex + 1) % cards.length;
+      render();
+    }, intervalMs);
+  };
+
+  const move = (direction) => {
+    activeIndex = (activeIndex + direction + cards.length) % cards.length;
     render();
+    startAutoplay();
+  };
+
+  previousButton?.addEventListener("click", () => {
+    move(-1);
   });
 
   nextButton?.addEventListener("click", () => {
-    activeIndex = (activeIndex + 1) % cards.length;
-    render();
+    move(1);
+  });
+
+  slider.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary) {
+      return;
+    }
+
+    pointerStartX = event.clientX;
+    slider.setPointerCapture?.(event.pointerId);
+    stopAutoplay();
+  });
+
+  slider.addEventListener("pointerup", (event) => {
+    if (pointerStartX === null || !event.isPrimary) {
+      return;
+    }
+
+    const distance = event.clientX - pointerStartX;
+
+    pointerStartX = null;
+
+    if (Math.abs(distance) >= 42) {
+      move(distance < 0 ? 1 : -1);
+      return;
+    }
+
+    startAutoplay();
+  });
+
+  slider.addEventListener("pointercancel", () => {
+    pointerStartX = null;
+    startAutoplay();
+  });
+
+  slider.addEventListener("mouseenter", stopAutoplay);
+  slider.addEventListener("mouseleave", startAutoplay);
+  slider.addEventListener("focusin", stopAutoplay);
+  slider.addEventListener("focusout", startAutoplay);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoplay();
+      return;
+    }
+
+    startAutoplay();
   });
 
   render();
+  startAutoplay();
 });
 
 document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => {

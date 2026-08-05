@@ -67,3 +67,37 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(title.y + title.height).toBeLessThan(subtitle.y);
   expect(cta.y + cta.height).toBeLessThanOrEqual(844);
 });
+
+test("front page pillars start at the first card and accept a mobile swipe", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const slider = page.locator("[data-pro-home-pillars-slider]");
+  const cards = slider.locator("[data-pro-home-pillar-card]");
+  const cta = page.locator(".pen-pillars-section__copy > .pen-button");
+
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await expect(cards.nth(0)).toContainText("Meta");
+
+  const sliderBox = await slider.boundingBox();
+  const ctaBox = await cta.boundingBox();
+
+  expect(sliderBox).not.toBeNull();
+  expect(ctaBox).not.toBeNull();
+  expect(ctaBox.y).toBeGreaterThan(sliderBox.y + sliderBox.height);
+
+  await slider.dispatchEvent("pointerdown", {
+    clientX: 300,
+    isPrimary: true,
+    pointerId: 1,
+  });
+  await slider.dispatchEvent("pointerup", {
+    clientX: 200,
+    isPrimary: true,
+    pointerId: 1,
+  });
+
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await expect(cards.nth(1)).toContainText("Diagnóstico");
+});
