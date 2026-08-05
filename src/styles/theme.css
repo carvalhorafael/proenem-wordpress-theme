@@ -5289,6 +5289,16 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-testimonials h2 {
     font-size: clamp(2rem, 10vw, 2.8rem);
+    padding-inline: 0.75rem;
+  }
+
+  .pro-home .pro-home-testimonials h2 > span {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .pro-home .pro-home-testimonials h2 strong {
+    max-width: 100%;
   }
 
   .pro-home .pro-home-testimonials__viewport {

@@ -162,3 +162,15 @@ test("front page question cards form two mobile rows without stretching the stam
   expect(thirdCard.x).toBeGreaterThan(firstCard.x);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
+
+test("front page testimonial heading stays inside the mobile viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const heading = await page.locator("#pro-testimonials-title").boundingBox();
+
+  expect(heading).not.toBeNull();
+  expect(heading.x).toBeGreaterThanOrEqual(0);
+  expect(heading.x + heading.width).toBeLessThanOrEqual(390);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
