@@ -4855,29 +4855,35 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__stage {
-    min-height: 38rem;
+    min-height: 32.5rem;
   }
 
   .pro-home .pen-hero-section__title {
     font-size: clamp(2.15rem, 10.5vw, 3.15rem);
     letter-spacing: -0.035em;
     line-height: 0.94;
-    top: 45%;
+    top: 42%;
     width: min(96vw, 34rem);
   }
 
   .pro-home .pro-home-hero-section__subtitle {
-    font-size: 1.25rem;
-    top: 65%;
+    bottom: 1.5rem;
+    font-size: 1.05rem;
+    top: auto;
     width: min(94vw, 34rem);
   }
 
   .pro-home .pro-home-hero-action-bar__copy {
-    padding: var(--pen-space-6) var(--pen-space-5);
+    padding: var(--pen-space-5);
+  }
+
+  .pro-home .pro-home-hero-action-bar__support {
+    font-size: 1.05rem;
+    line-height: 1.35;
   }
 
   .pro-home .pro-home-hero-action-bar__actions {
-    padding: var(--pen-space-5);
+    padding: var(--pen-space-4) var(--pen-space-5) var(--pen-space-5);
   }
 
   .pro-home .pro-home-hero-action-bar__actions .pen-button {

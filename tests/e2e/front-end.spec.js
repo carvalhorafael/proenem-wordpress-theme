@@ -50,3 +50,20 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
   await expect(menu).toBeVisible();
 });
+
+test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const title = await page.locator(".pen-hero-section__title").boundingBox();
+  const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+  const cta = await page
+    .locator(".pro-home-hero-action-bar__actions .pen-button")
+    .boundingBox();
+
+  expect(title).not.toBeNull();
+  expect(subtitle).not.toBeNull();
+  expect(cta).not.toBeNull();
+  expect(title.y + title.height).toBeLessThan(subtitle.y);
+  expect(cta.y + cta.height).toBeLessThanOrEqual(844);
+});
