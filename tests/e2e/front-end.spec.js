@@ -23,9 +23,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
+  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute("href", "https://estude.proenem.com.br/");
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
+  await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 

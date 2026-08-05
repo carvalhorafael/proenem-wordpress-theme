@@ -45,6 +45,7 @@ $plans = array(
 		'summary'      => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
 		'free'         => true,
 		'button_label' => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+		'button_url'   => 'https://estude.proenem.com.br/',
 		'features'     => array(
 			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
 			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
@@ -57,6 +58,7 @@ $plans = array(
 		'summary'      => __( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
 		'featured'     => true,
 		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'button_url'   => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
 		'features'     => array(
 			__( 'Tudo do Grátis', 'proenem-wordpress-theme' ),
 			__( 'Tutor IA ilimitado 24/7', 'proenem-wordpress-theme' ),
@@ -70,7 +72,8 @@ $plans = array(
 		'name'         => __( 'Pro Medicina', 'proenem-wordpress-theme' ),
 		'price'        => __( '39', 'proenem-wordpress-theme' ),
 		'summary'      => __( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
-		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'button_label' => __( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ),
+		'button_url'   => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
 		'features'     => array(
 			__( 'Tudo do Método PRO', 'proenem-wordpress-theme' ),
 			__( 'Mentor pessoal aprovado em Medicina', 'proenem-wordpress-theme' ),
@@ -637,7 +640,7 @@ $subjects = array(
 							<li><?php echo esc_html( $feature ); ?></li>
 						<?php endforeach; ?>
 					</ul>
-					<a class="pen-action-link pen-action-link--primary" href="#faq"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
+					<a class="pen-action-link pen-action-link--primary" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
 				</article>
 			<?php endforeach; ?>
 		</div>
