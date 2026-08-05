@@ -2665,8 +2665,74 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   width: auto;
 }
 
+.pro-home .pro-home-hero-section__subtitle {
+  color: var(--pen-color-on-red);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  font-weight: 700;
+  left: 50%;
+  line-height: 1.35;
+  margin: 0;
+  max-width: 58rem;
+  padding-inline: var(--pen-space-5);
+  position: absolute;
+  text-align: center;
+  text-shadow:
+    3px 3px 0 var(--pen-color-ink),
+    -1px -1px 0 var(--pen-color-ink),
+    1px -1px 0 var(--pen-color-ink),
+    -1px 1px 0 var(--pen-color-ink);
+  transform: translateX(-50%);
+  width: min(90vw, 58rem);
+  z-index: 4;
+}
+
 .pro-home .pen-hero-action-bar {
   background: #ff90e8;
+}
+
+.pro-home .pro-home-hero-action-bar__copy {
+  align-self: center;
+  display: grid;
+  gap: var(--pen-space-3);
+  padding: var(--pen-space-7) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  position: relative;
+  z-index: 1;
+}
+
+.pro-home .pro-home-hero-action-bar p {
+  margin: 0;
+  padding: 0;
+}
+
+.pro-home .pro-home-hero-action-bar__support {
+  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.4;
+  max-width: 72ch;
+}
+
+.pro-home .pro-home-hero-action-bar__actions {
+  align-items: center;
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button {
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-md);
+  font-size: 1rem;
+  font-weight: 700;
+  min-height: 3rem;
+  padding: 0 var(--pen-space-5);
+  width: min(100%, 20rem);
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button--primary {
+  background: var(--pen-color-primary);
+  color: var(--pen-color-on-red);
+}
+
+.pro-home .pro-home-hero-action-bar__actions .pen-button--primary:hover {
+  background: var(--pen-color-primary-hover);
 }
 
 .pro-home .pen-marquee {
@@ -2720,6 +2786,18 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   background:
     linear-gradient(135deg, rgb(0 0 0 / 10%) 25%, transparent 25%) 0 0 / 12px 12px,
     #e23a3a;
+}
+
+.pro-home .pen-proof-section__strip .pro-home-proof-support {
+  font-size: clamp(0.95rem, 1.2vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: var(--pen-space-3) auto 0;
+  max-width: 65ch;
+}
+
+.pro-home .pro-home-proof-support + .pen-proof-section__logos {
+  margin-top: var(--pen-space-5);
 }
 
 .pro-home .pen-feature-grid-section {
@@ -2865,6 +2943,26 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   top: 50%;
   transform: translate(-50%, -50%);
   width: 72%;
+}
+
+.pro-home .pro-home-platform-guard {
+  align-items: baseline;
+  background: var(--pen-color-ink);
+  color: var(--pen-color-surface);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--pen-text-lg);
+  gap: 0.3em;
+  justify-content: center;
+  line-height: 1.35;
+  margin: 0;
+  padding: var(--pen-space-4) clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
+  text-align: center;
+}
+
+.pro-home .pro-home-platform-guard strong {
+  color: var(--pen-color-yellow-bright);
+  font-weight: 800;
 }
 
 .pro-home .pro-home-platform-body {
@@ -3378,7 +3476,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pro-home-pricing__intro {
   margin-inline: auto;
-  max-width: 35rem;
+  max-width: 44rem;
   text-align: center;
 }
 
@@ -3393,6 +3491,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-pricing-section h2 strong {
   font-weight: 900;
+}
+
+.pro-home .pro-home-pricing__title-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .pro-home .pen-pricing-section > p,
@@ -3471,6 +3574,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   background: #d72f2f;
   color: var(--pen-color-surface);
   height: 34.375rem;
+}
+
+.pro-home .pen-plan-card.is-free header {
+  background: var(--pen-color-yellow-bright);
+  border-radius: 1rem 1rem 0 0;
 }
 
 .pro-home .pen-plan-card header {
@@ -3618,16 +3726,21 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   justify-content: center;
   margin: 1.15rem auto 1.25rem;
   min-height: 3.1rem;
-  padding: 0.75rem 1.6rem;
+  padding: 0.75rem 1rem;
   text-decoration: none;
   transition:
     box-shadow 160ms ease,
     transform 160ms ease;
-  width: calc(100% - 4.6rem);
+  width: calc(100% - 2.5rem);
 }
 
 .pro-home .pen-plan-card.is-featured .pen-action-link {
   background: #ff90e8;
+  color: var(--pen-color-ink);
+}
+
+.pro-home .pen-plan-card.is-free .pen-action-link {
+  background: var(--pen-color-yellow-bright);
   color: var(--pen-color-ink);
 }
 
@@ -3973,6 +4086,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   max-width: 35rem;
 }
 
+.pro-home .pro-home-school-section__cta {
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 4;
+}
+
 .pro-home .pro-home-school-section__photo-secondary {
   display: block;
   bottom: 0;
@@ -4142,7 +4261,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   font-weight: 500;
   line-height: 0.96;
   margin: 1.4rem auto 0;
-  max-width: 44rem;
+  max-width: 60rem;
+  white-space: nowrap;
 }
 
 .pro-home .pen-feature-grid-section h2 strong {
@@ -4153,6 +4273,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   gap: clamp(1rem, 2vw, 1.5rem);
   margin-top: clamp(3.3rem, 5vw, 4.5rem);
   max-width: 72rem;
+}
+
+.pro-home .pen-feature-grid.pro-home-pain-grid--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 86rem;
 }
 
 .pro-home .pen-feature-grid .pro-home-pain-card {
@@ -4497,6 +4622,60 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   color: var(--pen-color-on-red);
 }
 
+/* Home typography scale */
+.pro-home .pen-pillars-section h2,
+.pro-home .pen-feature-grid-section h2,
+.pro-home .pen-platform-showcase h2,
+.pro-home .pen-question-bank-section h2,
+.pro-home .pen-pricing-section h2,
+.pro-home .pro-home-testimonials h2,
+.pro-home .pro-home-school-section__intro h2,
+.pro-home .pro-home__final-cta h2,
+.pro-home .pen-faq-section h2 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+}
+
+.pro-home .pen-pillars-section__copy p:not(.pen-section-pill),
+.pro-home .pen-proof-section__strip .pro-home-proof-support,
+.pro-home .pro-home-platform-note,
+.pro-home .pro-home-platform-note__text,
+.pro-home .pro-home-platform-mock p,
+.pro-home .pen-question-bank-section > p,
+.pro-home .pro-home-pricing__intro p,
+.pro-home .pro-home-testimonials__header p,
+.pro-home .pro-home-school-section__intro p,
+.pro-home .pro-home__final-cta p,
+.pro-home .pen-faq-section .pen-faq-item summary,
+.pro-home .pro-home-hero-action-bar__support {
+  font-size: var(--pen-text-lg);
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card p,
+.pro-home .pen-pillars-section__cards .pen-step-card.is-active p,
+.pro-home .pro-home-platform-tab,
+.pro-home .pro-home-platform-mock__bullets li,
+.pro-home .pro-home-testimonial-card__quote p,
+.pro-home .pro-home-school-section .pen-feature-grid--school p,
+.pro-home .pen-plan-card li,
+.pro-home .pen-faq-section .pen-faq-item p {
+  font-size: var(--pen-text-base);
+}
+
+.pro-home .pen-feature-grid .pro-home-pain-card h3,
+.pro-home .pen-pillars-section__cards .pen-step-card h3,
+.pro-home .pro-home-platform-mock h3,
+.pro-home .pen-plan-card h3,
+.pro-home .pro-home-school-section .pen-feature-grid--school h3 {
+  font-size: 1.5rem;
+}
+
+.pro-home .pen-pillars-section .pen-section-pill,
+.pro-home .pen-feature-grid-section .pen-section-pill,
+.pro-home .pro-home-testimonials .pen-section-pill,
+.pro-home .pen-faq-section .pen-pill-eyebrow {
+  font-size: var(--pen-text-sm);
+}
+
 @keyframes pro-home-marquee-scroll {
   from {
     transform: translateX(0);
@@ -4513,17 +4692,14 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__title {
-    font-size: 75pt;
+    font-size: clamp(4rem, 6.5vw, 6.25rem);
     font-weight: 800;
     left: 50%;
-    line-height: 0.78;
-    text-align: left;
-    top: 32%;
-    width: max-content;
-  }
-
-  .pro-home .pen-hero-section__title-line--right {
-    text-align: right;
+    letter-spacing: -0.025em;
+    line-height: 0.9;
+    text-align: center;
+    top: 45%;
+    width: min(72rem, 94vw);
   }
 
   .pro-home .pen-hero-section__emphasis {
@@ -4545,9 +4721,28 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     -webkit-text-stroke-color: var(--pen-color-yellow-bright);
   }
 
+  .pro-home .pro-home-hero-section__subtitle {
+    font-size: 2.25rem;
+    top: 74%;
+  }
+
+  .pro-home .pen-hero-sticker--pink {
+    left: 10%;
+  }
+
+  .pro-home .pen-hero-sticker--green {
+    right: 10%;
+  }
+
   .pro-home .pen-hero-action-bar {
     grid-template-columns: minmax(0, 1fr) minmax(22rem, 35%);
-    min-height: 7rem;
+    min-height: clamp(6.5rem, 7vw, 7rem);
+  }
+
+  .pro-home .pro-home-hero-action-bar__copy {
+    padding-block: var(--pen-space-3);
+    padding-left: clamp(1.5rem, 4vw, 5rem);
+    padding-right: clamp(7rem, 9vw, 10rem);
   }
 
   .pro-home .pen-hero-action-bar__action {
@@ -4557,8 +4752,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     padding-left: clamp(6rem, 7vw, 8rem);
   }
 
-  .pro-home .pen-hero-action-bar p {
-    font-size: 1.5vw;
+  .pro-home .pro-home-hero-action-bar__actions {
+    padding-block: var(--pen-space-3);
+  }
+}
+
+@media (max-width: 1100px) {
+  .pro-home .pen-feature-grid.pro-home-pain-grid--four {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 50rem;
   }
 }
 
@@ -4637,6 +4839,51 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .pro-home .pen-feature-grid.pro-home-pain-grid--four {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-home .pro-home-pain-section__statement {
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    max-width: 100%;
+    padding-inline: var(--pen-space-4);
+    white-space: normal;
+  }
+
+  .pro-home .pen-feature-grid-section h2 {
+    white-space: normal;
+  }
+
+  .pro-home .pen-hero-section__stage {
+    min-height: 38rem;
+  }
+
+  .pro-home .pen-hero-section__title {
+    font-size: clamp(2.15rem, 10.5vw, 3.15rem);
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+    top: 45%;
+    width: min(96vw, 34rem);
+  }
+
+  .pro-home .pro-home-hero-section__subtitle {
+    font-size: 1.25rem;
+    top: 65%;
+    width: min(94vw, 34rem);
+  }
+
+  .pro-home .pro-home-hero-action-bar__copy {
+    padding: var(--pen-space-6) var(--pen-space-5);
+  }
+
+  .pro-home .pro-home-hero-action-bar__actions {
+    padding: var(--pen-space-5);
+  }
+
+  .pro-home .pro-home-hero-action-bar__actions .pen-button {
+    width: 100%;
+  }
+
   .pro-materials-hero {
     min-height: 0;
     padding: var(--pen-space-8) var(--pen-space-5);
@@ -4835,7 +5082,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-pricing__seal {
     height: 8.1rem;
+    left: auto;
     margin: 0 auto 1.5rem;
+    position: relative;
+    top: auto;
     transform: none;
     width: 8.1rem;
   }
@@ -4850,10 +5100,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     width: 3.2rem;
   }
 
-  .pro-home .pen-pricing-section h2 {
-    font-size: clamp(2.15rem, 10vw, 3.1rem);
-  }
-
   .pro-home .pen-plan-grid {
     align-items: stretch;
     grid-template-columns: minmax(0, min(100%, 22.7rem));
@@ -4866,8 +5112,32 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     min-height: 0;
   }
 
-  .pro-home .pen-plan-card.is-featured {
-    order: -1;
+  .pro-home .pen-plan-card:not(.is-featured) header {
+    column-gap: var(--pen-space-3);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header h3 {
+    align-self: start;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header strong {
+    align-self: start;
+    font-size: 3.25rem;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    position: static;
   }
 
   .pro-home .pen-plan-card header strong {
@@ -4987,6 +5257,23 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-school-section .pen-feature-grid--school article:last-child {
     border-bottom: 0;
+  }
+
+  .pro-home .pen-pillars-section h2,
+  .pro-home .pen-feature-grid-section h2,
+  .pro-home .pen-platform-showcase h2,
+  .pro-home .pen-question-bank-section h2,
+  .pro-home .pen-pricing-section h2,
+  .pro-home .pro-home-testimonials h2,
+  .pro-home .pro-home-school-section__intro h2,
+  .pro-home .pro-home__final-cta h2,
+  .pro-home .pen-faq-section h2 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .pro-home .pen-pricing-section h2 {
+    font-size: 1.65rem;
+    letter-spacing: -0.035em;
   }
 
   .pro-home .pro-home__final-cta {
