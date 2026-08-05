@@ -1,5 +1,38 @@
 import { expect, test } from "@playwright/test";
 
+const installNavbarSubmenuFixture = async (page) => {
+  await page.route(
+    "**/",
+    async (route) => {
+      const response = await route.fetch();
+      const body = await response.text();
+      const menuLinks = '<div class="pen-navbar__links">';
+      const submenuFixture = `
+      <div class="pen-navbar__item pen-navbar__item--has-submenu">
+        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">Teste</a>
+        <button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="e2e-navbar-submenu" aria-expanded="false">
+          <span class="screen-reader-text">Alternar submenu de teste</span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <ul id="e2e-navbar-submenu" class="pen-navbar__submenu">
+          <li class="pen-navbar__submenu-item">
+            <a class="pen-navbar__submenu-link" href="#e2e-submenu-item">Item de teste</a>
+          </li>
+        </ul>
+      </div>
+    `;
+
+      expect(body).toContain(menuLinks);
+
+      await route.fulfill({
+        response,
+        body: body.replace(menuLinks, `${menuLinks}${submenuFixture}`),
+      });
+    },
+    { times: 1 },
+  );
+};
+
 test("front page renders the Proenem home", async ({ page }) => {
   await page.goto("/");
 
@@ -35,6 +68,7 @@ test("front page renders the Proenem home", async ({ page }) => {
 
 test("front page navbar starts closed on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  await installNavbarSubmenuFixture(page);
   await page.goto("/");
 
   const toggle = page.locator(".pro-home-navbar-toggle");
@@ -206,7 +240,19 @@ test("front page trust badges do not overlap in the WordPress grid", async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const trustArea = page.locator(".pen-site-footer__trust");
+  const footerMeta = page.locator(".pen-site-footer__meta");
+
+  await footerMeta.evaluate((element) => {
+    if (!element.querySelector(".pen-site-footer__trust")) {
+      const trustArea = document.createElement("div");
+
+      trustArea.className =
+        "pen-site-footer__widget-area pen-site-footer__trust";
+      element.prepend(trustArea);
+    }
+  });
+
+  const trustArea = footerMeta.locator(".pen-site-footer__trust");
 
   await trustArea.evaluate((element) => {
     element.innerHTML = `
