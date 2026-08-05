@@ -1187,10 +1187,10 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 
 	protected function register_controls(): void {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
-		$this->add_text_control( 'title_line_1', esc_html__( 'Título linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Investimento que se', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'title_line_2', esc_html__( 'Título linha 2', 'proenem-wordpress-theme' ), esc_html__( 'paga em', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'title_emphasis', esc_html__( 'Destaque', 'proenem-wordpress-theme' ), esc_html__( 'uma vaga.', 'proenem-wordpress-theme' ) );
-		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( "Comece grátis. Cancele com 1 clique.\n7 dias de garantia em todos os planos.", 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'title_line_1', esc_html__( 'Título linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Comece de graça.', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'title_line_2', esc_html__( 'Título linha 2', 'proenem-wordpress-theme' ), esc_html__( 'Evolua quando', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'title_emphasis', esc_html__( 'Destaque', 'proenem-wordpress-theme' ), esc_html__( 'fizer sentido.', 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( "Comece grátis, sem cartão. Cancele quando quiser.\n7 dias de garantia em todos os planos pagos.", 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão dos planos', 'proenem-wordpress-theme' ), esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ) );
 		$this->add_url_control( 'button_url', esc_html__( 'Link dos planos', 'proenem-wordpress-theme' ), '#faq' );
 
@@ -1224,6 +1224,21 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 			)
 		);
 		$plans->add_control(
+			'button_label',
+			array(
+				'label' => esc_html__( 'Texto do botão', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plans->add_control(
+			'free',
+			array(
+				'label'        => esc_html__( 'Plano gratuito', 'proenem-wordpress-theme' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+			)
+		);
+		$plans->add_control(
 			'featured',
 			array(
 				'label'        => esc_html__( 'Destacado', 'proenem-wordpress-theme' ),
@@ -1239,23 +1254,27 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 				'fields'      => $plans->get_controls(),
 				'default'     => array(
 					array(
-						'name'     => esc_html__( 'Essencial', 'proenem-wordpress-theme' ),
-						'price'    => '39',
-						'summary'  => esc_html__( 'Para começar a estudar com método.', 'proenem-wordpress-theme' ),
-						'features' => esc_html__( "Banco com +50k questões\nAulas gravadas completas\nCronograma básico\nComunidade de alunos", 'proenem-wordpress-theme' ),
+						'name'         => esc_html__( 'Grátis', 'proenem-wordpress-theme' ),
+						'price'        => '0',
+						'summary'      => esc_html__( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+						'features'     => esc_html__( "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão", 'proenem-wordpress-theme' ),
+						'button_label' => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+						'free'         => 'yes',
 					),
 					array(
-						'name'     => esc_html__( 'Método PRO', 'proenem-wordpress-theme' ),
-						'price'    => '99',
-						'summary'  => esc_html__( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
-						'features' => esc_html__( "Tudo do Essencial\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA", 'proenem-wordpress-theme' ),
-						'featured' => 'yes',
+						'name'         => esc_html__( 'Método PRO', 'proenem-wordpress-theme' ),
+						'price'        => '29',
+						'summary'      => esc_html__( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
+						'features'     => esc_html__( "Tudo do Grátis\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA", 'proenem-wordpress-theme' ),
+						'featured'     => 'yes',
+						'button_label' => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
 					),
 					array(
-						'name'     => esc_html__( 'Elite', 'proenem-wordpress-theme' ),
-						'price'    => '199',
-						'summary'  => esc_html__( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
-						'features' => esc_html__( "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária", 'proenem-wordpress-theme' ),
+						'name'         => esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ),
+						'price'        => '39',
+						'summary'      => esc_html__( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+						'features'     => esc_html__( "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária", 'proenem-wordpress-theme' ),
+						'button_label' => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1270,14 +1289,14 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 		?>
 		<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
 			<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $this->home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true">
-			<div class="pro-home-pricing__header"><div class="pro-home-pricing__seal" aria-hidden="true"><img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $this->home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $this->home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $this->home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"></div><div class="pro-home-pricing__intro"><h2 id="pro-pricing-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></h2>
+			<div class="pro-home-pricing__header"><div class="pro-home-pricing__seal" aria-hidden="true"><img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $this->home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $this->home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $this->home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"></div><div class="pro-home-pricing__intro"><h2 id="pro-pricing-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><span class="pro-home-pricing__title-line"><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></span></h2>
 			<?php
 			foreach ( $this->split_lines( $settings['body'] ?? '' ) as $line ) :
 				?>
 				<p><?php echo esc_html( $line ); ?></p><?php endforeach; ?></div></div>
 			<div class="pen-plan-grid">
 				<?php foreach ( (array) ( $settings['plans'] ?? array() ) as $index => $plan ) : ?>
-					<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?>">
+					<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
 						<?php
 						if ( ! empty( $plan['featured'] ) ) :
 							?>
@@ -1288,7 +1307,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						foreach ( $this->split_lines( $plan['features'] ?? '' ) as $feature ) :
 							?>
 							<li><?php echo esc_html( $feature ); ?></li><?php endforeach; ?></ul>
-						<?php $this->render_home_button( 'plan_button_' . $index, $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-action-link pen-action-link--primary' ); ?>
+						<?php $this->render_home_button( 'plan_button_' . $index, $settings['button_url'] ?? array(), $plan['button_label'] ?? $settings['button_label'] ?? '', 'pen-action-link pen-action-link--primary' ); ?>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -1605,7 +1624,7 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 					),
 					array(
 						'question' => esc_html__( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-						'answer'   => esc_html__( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Elite inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+						'answer'   => esc_html__( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
 					),
 					array(
 						'question' => esc_html__( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),

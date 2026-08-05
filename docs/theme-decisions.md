@@ -95,3 +95,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: a classe `pro-home-platform-guard` usa apenas tokens publicados, mas sua composicao ainda nao possui um pattern compartilhado apropriado; o callout editorial existente nao corresponde ao contexto da LP.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#32`; tema `carvalhorafael/proenem-wordpress-theme#89`.
 - Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para o novo contrato e remover `pro-home-platform-guard` quando o design system cobrir a composicao.
+
+## 2026-08-04: Plano gratuito na home
+
+- Contexto: a nova estrutura torna o freemium um degrau visivel antes dos dois planos pagos.
+- Decisao: apresentar Gratis, Metodo PRO e Pro Medicina nessa ordem; o Metodo PRO continua sendo a unica oferta visualmente dominante.
+- Adaptacao local: a classe `is-free` complementa temporariamente `pen-plan-card`, que nao possui uma variacao gratuita no contrato publicado.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#33`; tema `carvalhorafael/proenem-wordpress-theme#90`.
+- Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para a variacao compartilhada e remover `is-free` quando o design system cobrir o plano gratuito.

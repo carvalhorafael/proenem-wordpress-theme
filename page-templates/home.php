@@ -40,23 +40,25 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'     => __( 'Essencial', 'proenem-wordpress-theme' ),
-		'price'    => __( '39', 'proenem-wordpress-theme' ),
-		'summary'  => __( 'Para começar a estudar com método.', 'proenem-wordpress-theme' ),
-		'features' => array(
-			__( 'Banco com +50k questões', 'proenem-wordpress-theme' ),
-			__( 'Aulas gravadas completas', 'proenem-wordpress-theme' ),
-			__( 'Cronograma básico', 'proenem-wordpress-theme' ),
-			__( 'Comunidade de alunos', 'proenem-wordpress-theme' ),
+		'name'         => __( 'Grátis', 'proenem-wordpress-theme' ),
+		'price'        => __( '0', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+		'free'         => true,
+		'button_label' => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+		'features'     => array(
+			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
+			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Sem cartão', 'proenem-wordpress-theme' ),
 		),
 	),
 	array(
-		'name'     => __( 'Método PRO', 'proenem-wordpress-theme' ),
-		'price'    => __( '99', 'proenem-wordpress-theme' ),
-		'summary'  => __( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
-		'featured' => true,
-		'features' => array(
-			__( 'Tudo do Essencial', 'proenem-wordpress-theme' ),
+		'name'         => __( 'Método PRO', 'proenem-wordpress-theme' ),
+		'price'        => __( '29', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
+		'featured'     => true,
+		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'features'     => array(
+			__( 'Tudo do Grátis', 'proenem-wordpress-theme' ),
 			__( 'Tutor IA ilimitado 24/7', 'proenem-wordpress-theme' ),
 			__( 'Redação corrigida em 48h', 'proenem-wordpress-theme' ),
 			__( 'Simulados TRI semanais', 'proenem-wordpress-theme' ),
@@ -65,10 +67,11 @@ $plans = array(
 		),
 	),
 	array(
-		'name'     => __( 'Elite', 'proenem-wordpress-theme' ),
-		'price'    => __( '199', 'proenem-wordpress-theme' ),
-		'summary'  => __( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
-		'features' => array(
+		'name'         => __( 'Pro Medicina', 'proenem-wordpress-theme' ),
+		'price'        => __( '39', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'features'     => array(
 			__( 'Tudo do Método PRO', 'proenem-wordpress-theme' ),
 			__( 'Mentor pessoal aprovado em Medicina', 'proenem-wordpress-theme' ),
 			__( '2 sessões 1:1 por semana', 'proenem-wordpress-theme' ),
@@ -115,7 +118,7 @@ $faq_items = array(
 	),
 	array(
 		'question' => __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Elite inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
@@ -612,15 +615,15 @@ $subjects = array(
 			</div>
 			<div class="pro-home-pricing__intro">
 				<h2 id="pro-pricing-title">
-					<?php esc_html_e( 'Investimento que se', 'proenem-wordpress-theme' ); ?><br>
-					<?php esc_html_e( 'paga em', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'uma vaga.', 'proenem-wordpress-theme' ); ?></strong>
+					<?php esc_html_e( 'Comece de graça.', 'proenem-wordpress-theme' ); ?><br>
+					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Evolua quando', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'fizer sentido.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Comece grátis. Cancele com 1 clique.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( '7 dias de garantia em todos os planos.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Comece grátis, sem cartão. Cancele quando quiser.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( '7 dias de garantia em todos os planos pagos.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid">
 			<?php foreach ( $plans as $plan ) : ?>
-				<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?>">
+				<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
 					<?php if ( ! empty( $plan['featured'] ) ) : ?>
 						<span class="pro-home-plan-card__label"><?php esc_html_e( 'Mais escolhido', 'proenem-wordpress-theme' ); ?></span>
 					<?php endif; ?>
@@ -634,7 +637,7 @@ $subjects = array(
 							<li><?php echo esc_html( $feature ); ?></li>
 						<?php endforeach; ?>
 					</ul>
-					<a class="pen-action-link pen-action-link--primary" href="#faq"><?php esc_html_e( 'Quero o Método PRO', 'proenem-wordpress-theme' ); ?> <span aria-hidden="true">-></span></a>
+					<a class="pen-action-link pen-action-link--primary" href="#faq"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
 				</article>
 			<?php endforeach; ?>
 		</div>

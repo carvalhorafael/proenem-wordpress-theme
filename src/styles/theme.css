@@ -3476,7 +3476,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pro-home-pricing__intro {
   margin-inline: auto;
-  max-width: 35rem;
+  max-width: 44rem;
   text-align: center;
 }
 
@@ -3491,6 +3491,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-pricing-section h2 strong {
   font-weight: 900;
+}
+
+.pro-home .pro-home-pricing__title-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .pro-home .pen-pricing-section > p,
@@ -3569,6 +3574,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   background: #e23a3a;
   color: var(--pen-color-surface);
   height: 34.375rem;
+}
+
+.pro-home .pen-plan-card.is-free header {
+  background: var(--pen-color-yellow-bright);
+  border-radius: 1rem 1rem 0 0;
 }
 
 .pro-home .pen-plan-card header {
@@ -3716,16 +3726,21 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   justify-content: center;
   margin: 1.15rem auto 1.25rem;
   min-height: 3.1rem;
-  padding: 0.75rem 1.6rem;
+  padding: 0.75rem 1rem;
   text-decoration: none;
   transition:
     box-shadow 160ms ease,
     transform 160ms ease;
-  width: calc(100% - 4.6rem);
+  width: calc(100% - 2.5rem);
 }
 
 .pro-home .pen-plan-card.is-featured .pen-action-link {
   background: #ff90e8;
+}
+
+.pro-home .pen-plan-card.is-free .pen-action-link {
+  background: var(--pen-color-yellow-bright);
+  color: var(--pen-color-ink);
 }
 
 .pro-home .pen-plan-card .pen-action-link:hover,
@@ -5060,7 +5075,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-pricing__seal {
     height: 8.1rem;
+    left: auto;
     margin: 0 auto 1.5rem;
+    position: relative;
+    top: auto;
     transform: none;
     width: 8.1rem;
   }
@@ -5075,10 +5093,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     width: 3.2rem;
   }
 
-  .pro-home .pen-pricing-section h2 {
-    font-size: clamp(2.15rem, 10vw, 3.1rem);
-  }
-
   .pro-home .pen-plan-grid {
     align-items: stretch;
     grid-template-columns: minmax(0, min(100%, 22.7rem));
@@ -5091,8 +5105,32 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     min-height: 0;
   }
 
-  .pro-home .pen-plan-card.is-featured {
-    order: -1;
+  .pro-home .pen-plan-card:not(.is-featured) header {
+    column-gap: var(--pen-space-3);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header h3 {
+    align-self: start;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .pro-home .pen-plan-card:not(.is-featured) header strong {
+    align-self: start;
+    font-size: 3.25rem;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    position: static;
   }
 
   .pro-home .pen-plan-card header strong {
@@ -5224,6 +5262,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   .pro-home .pro-home__final-cta h2,
   .pro-home .pen-faq-section h2 {
     font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .pro-home .pen-pricing-section h2 {
+    font-size: 1.65rem;
+    letter-spacing: -0.035em;
   }
 
   .pro-home .pro-home__final-cta {

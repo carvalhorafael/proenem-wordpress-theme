@@ -17,6 +17,15 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
   await expect(page.locator(".pro-home-platform-guard strong")).toHaveText("o próximo passo.");
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
+  await expect(page.getByText(/comece grátis, sem cartão.*cancele quando quiser/i)).toBeVisible();
+  await expect(page.locator(".pen-plan-card")).toHaveCount(3);
+  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
+  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
+  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
+  await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
