@@ -1310,16 +1310,17 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
  * Render a navbar item submenu.
  *
  * @param array<string,mixed> $navigation_item Navigation item data.
+ * @param string              $submenu_id      Submenu element ID.
  * @return void
  */
-function proenem_render_site_navbar_submenu( $navigation_item ) {
+function proenem_render_site_navbar_submenu( $navigation_item, $submenu_id = '' ) {
 	$children = $navigation_item['children'] ?? array();
 
 	if ( empty( $children ) || ! is_array( $children ) ) {
 		return;
 	}
 	?>
-	<ul class="pen-navbar__submenu">
+	<ul class="pen-navbar__submenu"<?php echo $submenu_id ? ' id="' . esc_attr( $submenu_id ) . '"' : ''; ?>>
 		<?php foreach ( $children as $child_item ) : ?>
 			<?php
 			$child_item_rel = $child_item['rel'] ?? '';
@@ -1341,6 +1342,32 @@ function proenem_render_site_navbar_submenu( $navigation_item ) {
 			</li>
 		<?php endforeach; ?>
 	</ul>
+	<?php
+}
+
+/**
+ * Render a mobile disclosure button for a navbar submenu.
+ *
+ * @param array<string,mixed> $navigation_item Navigation item data.
+ * @param string              $submenu_id      Submenu element ID.
+ * @return void
+ */
+function proenem_render_site_navbar_submenu_toggle( $navigation_item, $submenu_id ) {
+	if ( empty( $navigation_item['children'] ) || ! $submenu_id ) {
+		return;
+	}
+
+	$navigation_label = (string) ( $navigation_item['label'] ?? '' );
+	$toggle_label     = sprintf(
+		/* translators: %s: Navigation item label. */
+		__( 'Alternar submenu de %s', 'proenem-wordpress-theme' ),
+		$navigation_label
+	);
+	?>
+	<button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="<?php echo esc_attr( $submenu_id ); ?>" aria-expanded="false">
+		<span class="screen-reader-text"><?php echo esc_html( $toggle_label ); ?></span>
+		<span aria-hidden="true">⌄</span>
+	</button>
 	<?php
 }
 
@@ -1394,6 +1421,7 @@ function proenem_render_site_navbar( $args = array() ) {
 
 					$navigation_link_rel = $navigation_link['rel'] ?? '';
 					$has_submenu         = ! empty( $navigation_link['children'] );
+					$submenu_id          = $has_submenu ? wp_unique_id( 'proenem-navbar-submenu-' ) : '';
 
 					if ( '_blank' === ( $navigation_link['target'] ?? '' ) && empty( $navigation_link_rel ) ) {
 						$navigation_link_rel = 'noopener';
@@ -1410,7 +1438,8 @@ function proenem_render_site_navbar( $args = array() ) {
 						>
 							<?php echo esc_html( $navigation_link['label'] ); ?>
 						</a>
-						<?php proenem_render_site_navbar_submenu( $navigation_link ); ?>
+						<?php proenem_render_site_navbar_submenu_toggle( $navigation_link, $submenu_id ); ?>
+						<?php proenem_render_site_navbar_submenu( $navigation_link, $submenu_id ); ?>
 					</div>
 				<?php endforeach; ?>
 			</div>
@@ -1427,6 +1456,7 @@ function proenem_render_site_navbar( $args = array() ) {
 							: '';
 						$navigation_action_rel     = $navigation_action['rel'] ?? '';
 						$has_submenu               = ! empty( $navigation_action['children'] );
+						$submenu_id                = $has_submenu ? wp_unique_id( 'proenem-navbar-submenu-' ) : '';
 
 						if ( '_blank' === ( $navigation_action['target'] ?? '' ) && empty( $navigation_action_rel ) ) {
 							$navigation_action_rel = 'noopener';
@@ -1442,7 +1472,8 @@ function proenem_render_site_navbar( $args = array() ) {
 							>
 								<?php echo esc_html( $navigation_action['label'] ); ?>
 							</a>
-							<?php proenem_render_site_navbar_submenu( $navigation_action ); ?>
+							<?php proenem_render_site_navbar_submenu_toggle( $navigation_action, $submenu_id ); ?>
+							<?php proenem_render_site_navbar_submenu( $navigation_action, $submenu_id ); ?>
 						</div>
 					<?php endforeach; ?>
 				</div>

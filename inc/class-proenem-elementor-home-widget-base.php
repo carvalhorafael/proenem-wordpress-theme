@@ -519,7 +519,7 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 				</div>
 				<?php foreach ( $cards as $index => $card ) : ?>
 					<?php $tone = in_array( $card['tone'] ?? '', array( 'blue', 'featured', 'red', 'pink' ), true ) ? $card['tone'] : 'blue'; ?>
-					<article class="pen-step-card pen-step-card--<?php echo esc_attr( $tone ); ?><?php echo 'featured' === $tone ? ' is-active' : ''; ?>" data-pro-home-pillar-card>
+					<article class="pen-step-card pen-step-card--<?php echo esc_attr( $tone ); ?><?php echo 0 === $index ? ' is-active' : ''; ?>" data-pro-home-pillar-card>
 						<img class="pen-step-card__image" src="<?php echo esc_url( $this->media_url( $card['image'] ?? array(), $images[ $index ] ?? 'pillar-meta.webp' ) ); ?>" alt="">
 						<span><?php echo esc_html( $card['number'] ?? str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 						<div><h3><?php echo esc_html( $card['title'] ?? '' ); ?></h3><p><?php echo esc_html( $card['body'] ?? '' ); ?></p></div>

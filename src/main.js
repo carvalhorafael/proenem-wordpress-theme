@@ -6,6 +6,9 @@ enhanceProenemWeb(document);
 
 document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
   const toggle = navbar.querySelector(".pro-home-navbar-toggle");
+  const submenuToggles = Array.from(
+    navbar.querySelectorAll(".pro-home-navbar-submenu-toggle"),
+  );
 
   if (!toggle) {
     return;
@@ -15,6 +18,33 @@ document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
     const isOpen = navbar.classList.toggle("is-open");
 
     toggle.setAttribute("aria-expanded", String(isOpen));
+
+    if (!isOpen) {
+      submenuToggles.forEach((submenuToggle) => {
+        submenuToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
+        submenuToggle.setAttribute("aria-expanded", "false");
+      });
+    }
+  });
+
+  submenuToggles.forEach((submenuToggle) => {
+    submenuToggle.addEventListener("click", () => {
+      const item = submenuToggle.closest(".pen-navbar__item");
+
+      if (!item) {
+        return;
+      }
+
+      const willOpen = !item.classList.contains("is-submenu-open");
+
+      submenuToggles.forEach((currentToggle) => {
+        currentToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
+        currentToggle.setAttribute("aria-expanded", "false");
+      });
+
+      item.classList.toggle("is-submenu-open", willOpen);
+      submenuToggle.setAttribute("aria-expanded", String(willOpen));
+    });
   });
 });
 
@@ -22,6 +52,8 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
   const cards = Array.from(slider.querySelectorAll("[data-pro-home-pillar-card]"));
   const previousButton = slider.querySelector("[data-pro-home-pillars-prev]");
   const nextButton = slider.querySelector("[data-pro-home-pillars-next]");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const intervalMs = 4800;
 
   if (cards.length < 2) {
     return;
@@ -31,6 +63,8 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
     0,
     cards.findIndex((card) => card.classList.contains("is-active")),
   );
+  let intervalId = null;
+  let pointerStartX = null;
 
   const render = () => {
     const previousIndex = (activeIndex - 1 + cards.length) % cards.length;
@@ -48,20 +82,94 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
     });
   };
 
-  previousButton?.addEventListener("click", () => {
-    activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+  const stopAutoplay = () => {
+    if (!intervalId) {
+      return;
+    }
+
+    window.clearInterval(intervalId);
+    intervalId = null;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (reducedMotion.matches || document.hidden) {
+      return;
+    }
+
+    intervalId = window.setInterval(() => {
+      activeIndex = (activeIndex + 1) % cards.length;
+      render();
+    }, intervalMs);
+  };
+
+  const move = (direction) => {
+    activeIndex = (activeIndex + direction + cards.length) % cards.length;
     render();
+    startAutoplay();
+  };
+
+  previousButton?.addEventListener("click", () => {
+    move(-1);
   });
 
   nextButton?.addEventListener("click", () => {
-    activeIndex = (activeIndex + 1) % cards.length;
-    render();
+    move(1);
+  });
+
+  slider.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary) {
+      return;
+    }
+
+    pointerStartX = event.clientX;
+    slider.setPointerCapture?.(event.pointerId);
+    stopAutoplay();
+  });
+
+  slider.addEventListener("pointerup", (event) => {
+    if (pointerStartX === null || !event.isPrimary) {
+      return;
+    }
+
+    const distance = event.clientX - pointerStartX;
+
+    pointerStartX = null;
+
+    if (Math.abs(distance) >= 42) {
+      move(distance < 0 ? 1 : -1);
+      return;
+    }
+
+    startAutoplay();
+  });
+
+  slider.addEventListener("pointercancel", () => {
+    pointerStartX = null;
+    startAutoplay();
+  });
+
+  slider.addEventListener("mouseenter", stopAutoplay);
+  slider.addEventListener("mouseleave", startAutoplay);
+  slider.addEventListener("focusin", stopAutoplay);
+  slider.addEventListener("focusout", startAutoplay);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoplay();
+      return;
+    }
+
+    startAutoplay();
   });
 
   render();
+  startAutoplay();
 });
 
 document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => {
+  const tabList = section.querySelector(".pro-home-platform-tabs");
   const tabs = Array.from(section.querySelectorAll("[data-pro-home-platform-tab]"));
   const screen = section.querySelector("[data-pro-home-platform-screen]");
   const title = screen?.querySelector("[data-pro-home-platform-title]");
@@ -69,9 +177,20 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
   const url = screen?.querySelector("[data-pro-home-platform-url]");
   const bulletList = screen?.querySelector("[data-pro-home-platform-bullets]");
 
-  if (!tabs.length || !screen || !title || !body || !url || !bulletList) {
+  if (!tabList || !tabs.length || !screen || !title || !body || !url || !bulletList) {
     return;
   }
+
+  const revealTab = (tab, behavior = "smooth") => {
+    if (tabList.scrollWidth <= tabList.clientWidth) {
+      return;
+    }
+
+    tabList.scrollTo({
+      behavior,
+      left: tab.offsetLeft - (tabList.clientWidth - tab.clientWidth) / 2,
+    });
+  };
 
   const renderBullets = (items) => {
     bulletList.replaceChildren(
@@ -102,8 +221,16 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
       } catch {
         renderBullets([]);
       }
+
+      revealTab(tab);
     });
   });
+
+  const activeTab = tabs.find((tab) => tab.classList.contains("is-active"));
+
+  if (activeTab) {
+    window.requestAnimationFrame(() => revealTab(activeTab, "auto"));
+  }
 });
 
 document.querySelectorAll("[data-pro-home-testimonials-slider]").forEach((slider) => {

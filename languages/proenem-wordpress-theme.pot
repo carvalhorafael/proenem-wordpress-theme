@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.9.0\n"
+"Project-Id-Version: Proenem 0.10.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:1371
+#: inc/template-tags.php:1398
 msgid "Proenem"
 msgstr ""
 
@@ -2000,11 +2000,17 @@ msgstr ""
 msgid "Feito com ♥ para você"
 msgstr ""
 
-#: inc/template-tags.php:1355
+#. translators: %s: Navigation item label.
+#: inc/template-tags.php:1363
+#, php-format
+msgid "Alternar submenu de %s"
+msgstr ""
+
+#: inc/template-tags.php:1382
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:1380
+#: inc/template-tags.php:1407
 msgid "Abrir menu"
 msgstr ""
 
