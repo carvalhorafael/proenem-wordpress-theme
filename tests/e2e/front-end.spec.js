@@ -49,6 +49,17 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
 
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
   await expect(menu).toBeVisible();
+
+  const submenuToggle = menu.locator(".pro-home-navbar-submenu-toggle").first();
+  const submenu = menu.locator(".pen-navbar__submenu").first();
+
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(submenu).toBeHidden();
+
+  await submenuToggle.click();
+
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(submenu).toBeVisible();
 });
 
 test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {

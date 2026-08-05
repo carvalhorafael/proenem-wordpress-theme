@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:1371
+#: inc/template-tags.php:1398
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -2015,11 +2015,17 @@ msgstr "@%s Proenem - Grupo Q Educação"
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:1355
+#. translators: %s: Navigation item label.
+#: inc/template-tags.php:1363
+#, php-format
+msgid "Alternar submenu de %s"
+msgstr "Alternar submenu de %s"
+
+#: inc/template-tags.php:1382
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:1380
+#: inc/template-tags.php:1407
 msgid "Abrir menu"
 msgstr "Abrir menu"
 

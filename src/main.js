@@ -6,6 +6,9 @@ enhanceProenemWeb(document);
 
 document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
   const toggle = navbar.querySelector(".pro-home-navbar-toggle");
+  const submenuToggles = Array.from(
+    navbar.querySelectorAll(".pro-home-navbar-submenu-toggle"),
+  );
 
   if (!toggle) {
     return;
@@ -15,6 +18,33 @@ document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
     const isOpen = navbar.classList.toggle("is-open");
 
     toggle.setAttribute("aria-expanded", String(isOpen));
+
+    if (!isOpen) {
+      submenuToggles.forEach((submenuToggle) => {
+        submenuToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
+        submenuToggle.setAttribute("aria-expanded", "false");
+      });
+    }
+  });
+
+  submenuToggles.forEach((submenuToggle) => {
+    submenuToggle.addEventListener("click", () => {
+      const item = submenuToggle.closest(".pen-navbar__item");
+
+      if (!item) {
+        return;
+      }
+
+      const willOpen = !item.classList.contains("is-submenu-open");
+
+      submenuToggles.forEach((currentToggle) => {
+        currentToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
+        currentToggle.setAttribute("aria-expanded", "false");
+      });
+
+      item.classList.toggle("is-submenu-open", willOpen);
+      submenuToggle.setAttribute("aria-expanded", String(willOpen));
+    });
   });
 });
 
