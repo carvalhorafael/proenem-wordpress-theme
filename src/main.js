@@ -139,6 +139,7 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
 });
 
 document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => {
+  const tabList = section.querySelector(".pro-home-platform-tabs");
   const tabs = Array.from(section.querySelectorAll("[data-pro-home-platform-tab]"));
   const screen = section.querySelector("[data-pro-home-platform-screen]");
   const title = screen?.querySelector("[data-pro-home-platform-title]");
@@ -146,9 +147,20 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
   const url = screen?.querySelector("[data-pro-home-platform-url]");
   const bulletList = screen?.querySelector("[data-pro-home-platform-bullets]");
 
-  if (!tabs.length || !screen || !title || !body || !url || !bulletList) {
+  if (!tabList || !tabs.length || !screen || !title || !body || !url || !bulletList) {
     return;
   }
+
+  const revealTab = (tab, behavior = "smooth") => {
+    if (tabList.scrollWidth <= tabList.clientWidth) {
+      return;
+    }
+
+    tabList.scrollTo({
+      behavior,
+      left: tab.offsetLeft - (tabList.clientWidth - tab.clientWidth) / 2,
+    });
+  };
 
   const renderBullets = (items) => {
     bulletList.replaceChildren(
@@ -179,8 +191,16 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
       } catch {
         renderBullets([]);
       }
+
+      revealTab(tab);
     });
   });
+
+  const activeTab = tabs.find((tab) => tab.classList.contains("is-active"));
+
+  if (activeTab) {
+    window.requestAnimationFrame(() => revealTab(activeTab, "auto"));
+  }
 });
 
 document.querySelectorAll("[data-pro-home-testimonials-slider]").forEach((slider) => {
