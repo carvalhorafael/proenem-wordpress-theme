@@ -4839,6 +4839,19 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .pro-home .pen-proof-section__students {
+    background: var(--pro-home-soft-pink);
+    padding-top: 5.25rem;
+  }
+
+  .pro-home .pen-proof-section__badge {
+    font-size: 1.45rem;
+    height: 4.75rem;
+    top: 2.25rem;
+    transform: translate(-50%, -50%) rotate(-4deg);
+    width: 9.5rem;
+  }
+
   .pro-home .pen-pillars-section {
     align-items: stretch;
     display: flex;

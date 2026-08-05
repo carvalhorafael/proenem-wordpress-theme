@@ -101,3 +101,15 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await expect(cards.nth(1)).toContainText("Diagnóstico");
 });
+
+test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const badge = await page.locator(".pen-proof-section__badge").boundingBox();
+  const firstPortrait = await page.locator(".pen-proof-section__image").first().boundingBox();
+
+  expect(badge).not.toBeNull();
+  expect(firstPortrait).not.toBeNull();
+  expect(badge.y + badge.height).toBeLessThanOrEqual(firstPortrait.y);
+});
