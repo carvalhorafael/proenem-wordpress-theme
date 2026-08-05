@@ -132,12 +132,30 @@ Regra padrao:
 - fazer push da branch para `origin` quando solicitado;
 - abrir PRs pequenos por padrao.
 
-Antes de comecar uma nova tarefa, sempre verificar:
+Antes de comecar uma nova tarefa, atualize as referencias remotas e verifique a base:
 
 ```bash
+git fetch --prune origin
 git status --short --branch
 git branch -vv
+git rev-list --left-right --count origin/develop...origin/main
+git diff --stat origin/develop origin/main
 ```
+
+Para novas funcionalidades, correcoes e ajustes editoriais, use `develop` como branch-base padrao. Crie a branch de trabalho a partir da referencia remota atualizada para nao depender de uma `develop` local possivelmente desatualizada:
+
+```bash
+git switch -c codex/nome-da-tarefa origin/develop
+```
+
+Se for necessario trabalhar primeiro na `develop` local, confirme que o worktree esta limpo e atualize-a somente por fast-forward:
+
+```bash
+git switch develop
+git pull --ff-only origin develop
+```
+
+Antes de criar a branch de trabalho, compare `origin/develop` e `origin/main`. Se `main` possuir mudancas de conteudo ainda ausentes em `develop`, nao inicie o trabalho sobre uma base divergente: pare, informe a diferenca e proponha sincronizar `develop` por PR ou merge aprovado. Nao faca merge ou push direto em `develop` apenas para preparar a base sem autorizacao explicita.
 
 Se o checkout estiver em `main`, crie uma branch de trabalho antes de editar arquivos, salvo quando a tarefa for explicitamente uma operacao de release ou manutencao em `main`.
 

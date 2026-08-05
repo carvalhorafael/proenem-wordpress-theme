@@ -1,5 +1,38 @@
 import { expect, test } from "@playwright/test";
 
+const installNavbarSubmenuFixture = async (page) => {
+  await page.route(
+    "**/",
+    async (route) => {
+      const response = await route.fetch();
+      const body = await response.text();
+      const menuLinks = '<div class="pen-navbar__links">';
+      const submenuFixture = `
+      <div class="pen-navbar__item pen-navbar__item--has-submenu">
+        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">Teste</a>
+        <button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="e2e-navbar-submenu" aria-expanded="false">
+          <span class="screen-reader-text">Alternar submenu de teste</span>
+          <span aria-hidden="true">⌄</span>
+        </button>
+        <ul id="e2e-navbar-submenu" class="pen-navbar__submenu">
+          <li class="pen-navbar__submenu-item">
+            <a class="pen-navbar__submenu-link" href="#e2e-submenu-item">Item de teste</a>
+          </li>
+        </ul>
+      </div>
+    `;
+
+      expect(body).toContain(menuLinks);
+
+      await route.fulfill({
+        response,
+        body: body.replace(menuLinks, `${menuLinks}${submenuFixture}`),
+      });
+    },
+    { times: 1 },
+  );
+};
+
 test("front page renders the Proenem home", async ({ page }) => {
   await page.goto("/");
 
@@ -35,6 +68,7 @@ test("front page renders the Proenem home", async ({ page }) => {
 
 test("front page navbar starts closed on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
+  await installNavbarSubmenuFixture(page);
   await page.goto("/");
 
   const toggle = page.locator(".pro-home-navbar-toggle");
@@ -49,4 +83,200 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
 
   await expect(toggle).toHaveAttribute("aria-expanded", "true");
   await expect(menu).toBeVisible();
+
+  const submenuToggle = menu.locator(".pro-home-navbar-submenu-toggle").first();
+  const submenu = menu.locator(".pen-navbar__submenu").first();
+
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(submenu).toBeHidden();
+
+  await submenuToggle.click();
+
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(submenu).toBeVisible();
+});
+
+test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const title = await page.locator(".pen-hero-section__title").boundingBox();
+  const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+  const cta = await page
+    .locator(".pro-home-hero-action-bar__actions .pen-button")
+    .boundingBox();
+
+  expect(title).not.toBeNull();
+  expect(subtitle).not.toBeNull();
+  expect(cta).not.toBeNull();
+  expect(title.y + title.height).toBeLessThan(subtitle.y);
+  expect(cta.y + cta.height).toBeLessThanOrEqual(844);
+});
+
+test("front page pillars start at the first card and accept a mobile swipe", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const slider = page.locator("[data-pro-home-pillars-slider]");
+  const cards = slider.locator("[data-pro-home-pillar-card]");
+  const cta = page.locator(".pen-pillars-section__copy > .pen-button");
+
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await expect(cards.nth(0)).toContainText("Meta");
+
+  const sliderBox = await slider.boundingBox();
+  const ctaBox = await cta.boundingBox();
+
+  expect(sliderBox).not.toBeNull();
+  expect(ctaBox).not.toBeNull();
+  expect(ctaBox.y).toBeGreaterThan(sliderBox.y + sliderBox.height);
+
+  await slider.dispatchEvent("pointerdown", {
+    clientX: 300,
+    isPrimary: true,
+    pointerId: 1,
+  });
+  await slider.dispatchEvent("pointerup", {
+    clientX: 200,
+    isPrimary: true,
+    pointerId: 1,
+  });
+
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await expect(cards.nth(1)).toContainText("Diagnóstico");
+});
+
+test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const badge = await page.locator(".pen-proof-section__badge").boundingBox();
+  const firstPortrait = await page.locator(".pen-proof-section__image").first().boundingBox();
+
+  expect(badge).not.toBeNull();
+  expect(firstPortrait).not.toBeNull();
+  expect(badge.y + badge.height).toBeLessThanOrEqual(firstPortrait.y);
+});
+
+test("front page platform uses a compact horizontal menu on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const section = page.locator(".pen-platform-showcase");
+  const tabs = page.locator(".pro-home-platform-tabs");
+
+  await expect(tabs.getByRole("tab")).toHaveCount(6);
+  await expect(page.locator(".pro-home-platform-mock__dashboard")).toBeHidden();
+
+  const sectionBox = await section.boundingBox();
+  const activeTabBox = await tabs.locator(".is-active").boundingBox();
+  const tabsBox = await tabs.boundingBox();
+  const tabSizes = await tabs.evaluate((element) => ({
+    clientWidth: element.clientWidth,
+    scrollWidth: element.scrollWidth,
+  }));
+
+  expect(sectionBox).not.toBeNull();
+  expect(activeTabBox).not.toBeNull();
+  expect(tabsBox).not.toBeNull();
+  expect(sectionBox.height).toBeLessThan(1150);
+  expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
+  expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
+  expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
+});
+
+test("front page question cards form two mobile rows without stretching the stamp", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const background = page.locator(".pro-home-question-bank__background");
+  const cards = page.locator(".pen-subject-grid .pro-home-subject-card");
+  const firstCard = await cards.nth(0).boundingBox();
+  const secondCard = await cards.nth(1).boundingBox();
+  const thirdCard = await cards.nth(2).boundingBox();
+
+  await expect(background).toBeHidden();
+  expect(firstCard).not.toBeNull();
+  expect(secondCard).not.toBeNull();
+  expect(thirdCard).not.toBeNull();
+  expect(Math.abs(firstCard.x - secondCard.x)).toBeLessThan(1);
+  expect(secondCard.y).toBeGreaterThan(firstCard.y);
+  expect(thirdCard.x).toBeGreaterThan(firstCard.x);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
+
+test("front page testimonial heading stays inside the mobile viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const heading = await page.locator("#pro-testimonials-title").boundingBox();
+
+  expect(heading).not.toBeNull();
+  expect(heading.x).toBeGreaterThanOrEqual(0);
+  expect(heading.x + heading.width).toBeLessThanOrEqual(390);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
+
+test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const intro = await page.locator(".pro-home-school-section__intro").boundingBox();
+  const photo = await page.locator(".pro-home-school-section__photo-secondary").boundingBox();
+  const cta = await page.locator(".pro-home-school-section__cta").boundingBox();
+
+  expect(intro).not.toBeNull();
+  expect(photo).not.toBeNull();
+  expect(cta).not.toBeNull();
+  expect(photo.y).toBeGreaterThanOrEqual(cta.y + cta.height);
+  expect(Math.abs(photo.x + photo.width - (intro.x + intro.width))).toBeLessThan(1);
+  expect(photo.width / intro.width).toBeGreaterThan(0.5);
+});
+
+test("front page trust badges do not overlap in the WordPress grid", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const footerMeta = page.locator(".pen-site-footer__meta");
+
+  await footerMeta.evaluate((element) => {
+    if (!element.querySelector(".pen-site-footer__trust")) {
+      const trustArea = document.createElement("div");
+
+      trustArea.className =
+        "pen-site-footer__widget-area pen-site-footer__trust";
+      element.prepend(trustArea);
+    }
+  });
+
+  const trustArea = footerMeta.locator(".pen-site-footer__trust");
+
+  await trustArea.evaluate((element) => {
+    element.innerHTML = `
+      <div class="wp-block-group is-layout-grid">
+        <div id="reputation-ra" style="min-height: 80px; width: 160px;"></div>
+        <script type="application/json"></script>
+        <figure class="wp-block-image size-large">
+          <svg width="209" height="50" aria-label="Site seguro"></svg>
+        </figure>
+      </div>
+    `;
+  });
+
+  const reputation = await trustArea.locator("#reputation-ra").boundingBox();
+  const secureSite = await trustArea.locator(".wp-block-image").boundingBox();
+
+  expect(reputation).not.toBeNull();
+  expect(secureSite).not.toBeNull();
+
+  const overlaps =
+    reputation.x < secureSite.x + secureSite.width &&
+    reputation.x + reputation.width > secureSite.x &&
+    reputation.y < secureSite.y + secureSite.height &&
+    reputation.y + reputation.height > secureSite.y;
+
+  expect(overlaps).toBe(false);
 });
