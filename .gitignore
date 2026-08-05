@@ -9,7 +9,9 @@ vendor/
 .npmrc
 .phpunit.result.cache
 .vite/
+.lighthouseci/
 test-results/
 playwright-report/
+reports/
 .wp-env.json.override
 .wp-env.override.json

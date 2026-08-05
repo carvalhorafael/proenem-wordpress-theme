@@ -143,31 +143,31 @@
               {
                 "_id": "student02",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-2.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-2.webp"
                 }
               },
               {
                 "_id": "student03",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
                 }
               },
               {
                 "_id": "student04",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
                 }
               },
               {
                 "_id": "student05",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
                 }
               },
               {
                 "_id": "student06",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-6.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-6.webp"
                 }
               }
             ],
@@ -290,7 +290,7 @@
                 "name": "Lucas Almeida",
                 "role": "Aprovado em Engenharia",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
                 }
               },
               {
@@ -299,7 +299,7 @@
                 "name": "Beatriz Rocha",
                 "role": "Aprovada em Direito",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
                 }
               },
               {
@@ -308,7 +308,7 @@
                 "name": "Pedro Martins",
                 "role": "Aprovado em Psicologia",
                 "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.png"
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
                 }
               }
             ]
@@ -322,10 +322,10 @@
           "isInner": false,
           "settings": {
             "primary_image": {
-              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_1.png"
+              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_1.webp"
             },
             "secondary_image": {
-              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_2.png"
+              "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_2.webp"
             }
           },
           "elements": []

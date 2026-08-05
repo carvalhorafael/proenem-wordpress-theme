@@ -12,6 +12,131 @@ $home_asset_uri = static function ( $filename ) {
 	return PROENEM_THEME_URI . '/assets/images/home/' . $filename;
 };
 
+$home_asset_dimensions = array(
+	'Cancele-quando-voce-quiser.svg' => array( 234, 232 ),
+	'Ellipse-fundo-price.svg'        => array( 133, 133 ),
+	'blue_3_semi-spheres.svg'        => array( 253, 184 ),
+	'check-verified-01.svg'          => array( 70, 70 ),
+	'hero-student-720.webp'          => array( 720, 807 ),
+	'hero-student-780.webp'          => array( 780, 874 ),
+	'hero-student-820.webp'          => array( 820, 919 ),
+	'hero-student.webp'              => array( 919, 1030 ),
+	'pillar-diagnostico-280.webp'    => array( 280, 423 ),
+	'pillar-diagnostico-320.webp'    => array( 320, 484 ),
+	'pillar-diagnostico-360.webp'    => array( 360, 544 ),
+	'pillar-diagnostico.webp'        => array( 407, 615 ),
+	'pillar-execucao-280.webp'       => array( 280, 441 ),
+	'pillar-execucao-320.webp'       => array( 320, 503 ),
+	'pillar-execucao-360.webp'       => array( 360, 566 ),
+	'pillar-execucao.webp'           => array( 382, 601 ),
+	'pillar-meta-520.webp'           => array( 520, 282 ),
+	'pillar-meta.webp'               => array( 760, 412 ),
+	'price_vector_strokes.svg'       => array( 1440, 1418 ),
+	'proof-logo-uerj.png'            => array( 99, 110 ),
+	'proof-logo-uerj.webp'           => array( 99, 110 ),
+	'proof-logo-ufrgs.png'           => array( 117, 94 ),
+	'proof-logo-ufrgs.webp'          => array( 117, 94 ),
+	'proof-logo-ufrj.png'            => array( 206, 102 ),
+	'proof-logo-ufrj.webp'           => array( 206, 102 ),
+	'proof-logo-unicamp.png'         => array( 99, 105 ),
+	'proof-logo-unicamp.webp'        => array( 99, 105 ),
+	'proof-logo-unifesp.png'         => array( 182, 110 ),
+	'proof-logo-unifesp.webp'        => array( 182, 110 ),
+	'proof-logo-usp.png'             => array( 171, 70 ),
+	'proof-logo-usp.webp'            => array( 171, 70 ),
+	'proof-students-1-240.webp'      => array( 240, 299 ),
+	'proof-students-1-360.webp'      => array( 360, 448 ),
+	'proof-students-1.webp'          => array( 470, 585 ),
+	'proof-students-2-240.webp'      => array( 240, 352 ),
+	'proof-students-2-360.webp'      => array( 360, 527 ),
+	'proof-students-2.webp'          => array( 482, 706 ),
+	'proof-students-3-240.webp'      => array( 240, 352 ),
+	'proof-students-3-360.webp'      => array( 360, 527 ),
+	'proof-students-3.webp'          => array( 482, 706 ),
+	'proof-students-4-240.webp'      => array( 240, 352 ),
+	'proof-students-4-360.webp'      => array( 360, 527 ),
+	'proof-students-4.webp'          => array( 482, 706 ),
+	'proof-students-5-240.webp'      => array( 240, 352 ),
+	'proof-students-5-360.webp'      => array( 360, 527 ),
+	'proof-students-5.webp'          => array( 482, 706 ),
+	'proof-students-6-240.webp'      => array( 240, 359 ),
+	'proof-students-6-360.webp'      => array( 360, 538 ),
+	'proof-students-6.webp'          => array( 472, 706 ),
+	'sticker_explore_por_dentro.svg' => array( 313, 119 ),
+	'sticker_explore_questions.svg'  => array( 1393, 965 ),
+	'student_school_1.webp'          => array( 1280, 1508 ),
+	'student_school_2.webp'          => array( 568, 584 ),
+);
+
+$home_responsive_images = array(
+	'hero-student.webp'       => array( 'hero-student-720.webp', 'hero-student-780.webp', 'hero-student-820.webp' ),
+	'pillar-diagnostico.webp' => array( 'pillar-diagnostico-280.webp', 'pillar-diagnostico-320.webp', 'pillar-diagnostico-360.webp' ),
+	'pillar-execucao.webp'    => array( 'pillar-execucao-280.webp', 'pillar-execucao-320.webp', 'pillar-execucao-360.webp' ),
+	'pillar-meta.webp'        => array( 'pillar-meta-520.webp' ),
+	'proof-students-1.webp'   => array( 'proof-students-1-240.webp', 'proof-students-1-360.webp' ),
+	'proof-students-2.webp'   => array( 'proof-students-2-240.webp', 'proof-students-2-360.webp' ),
+	'proof-students-3.webp'   => array( 'proof-students-3-240.webp', 'proof-students-3-360.webp' ),
+	'proof-students-4.webp'   => array( 'proof-students-4-240.webp', 'proof-students-4-360.webp' ),
+	'proof-students-5.webp'   => array( 'proof-students-5-240.webp', 'proof-students-5-360.webp' ),
+	'proof-students-6.webp'   => array( 'proof-students-6-240.webp', 'proof-students-6-360.webp' ),
+);
+
+$home_image_attributes = static function ( $filename, $args = array() ) use ( $home_asset_dimensions ) {
+	$attributes = array(
+		'decoding' => $args['decoding'] ?? 'async',
+		'loading'  => $args['loading'] ?? 'lazy',
+	);
+
+	if ( isset( $home_asset_dimensions[ $filename ] ) ) {
+		$attributes['width']  = (string) $home_asset_dimensions[ $filename ][0];
+		$attributes['height'] = (string) $home_asset_dimensions[ $filename ][1];
+	}
+
+	if ( isset( $args['fetchpriority'] ) ) {
+		$attributes['fetchpriority'] = $args['fetchpriority'];
+	}
+
+	$rendered_attributes = '';
+
+	foreach ( $attributes as $name => $value ) {
+		if ( '' === $value || null === $value ) {
+			continue;
+		}
+
+		$rendered_attributes .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
+	}
+
+	return $rendered_attributes;
+};
+
+$home_image_source_set = static function ( $filename, $sizes ) use ( $home_asset_dimensions, $home_asset_uri, $home_responsive_images ) {
+	if ( ! isset( $home_asset_dimensions[ $filename ], $home_responsive_images[ $filename ] ) ) {
+		return '';
+	}
+
+	$sources = array();
+
+	foreach ( $home_responsive_images[ $filename ] as $variant ) {
+		if ( ! isset( $home_asset_dimensions[ $variant ] ) ) {
+			continue;
+		}
+
+		$sources[] = esc_url( $home_asset_uri( $variant ) ) . ' ' . absint( $home_asset_dimensions[ $variant ][0] ) . 'w';
+	}
+
+	$sources[] = esc_url( $home_asset_uri( $filename ) ) . ' ' . absint( $home_asset_dimensions[ $filename ][0] ) . 'w';
+
+	return sprintf( ' srcset="%s" sizes="%s"', esc_attr( implode( ', ', $sources ) ), esc_attr( $sizes ) );
+};
+
+$home_hero_image_attributes = $home_image_attributes(
+	'hero-student.webp',
+	array(
+		'fetchpriority' => 'high',
+		'loading'       => 'eager',
+	)
+);
+
 $platform_icon_svg = static function ( $icon ) {
 	$icons = array(
 		'clock' => '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 7v5l3 2"></path></svg>',
@@ -94,19 +219,19 @@ $testimonials = array(
 		'quote' => __( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Lucas Almeida', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-3.png',
+		'image' => 'proof-students-3.webp',
 	),
 	array(
 		'quote' => __( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-4.png',
+		'image' => 'proof-students-4.webp',
 	),
 	array(
 		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
 		'name'  => __( 'Pedro Martins', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-5.png',
+		'image' => 'proof-students-5.webp',
 	),
 );
 
@@ -186,7 +311,7 @@ $subjects = array(
 
 	<section class="pen-hero-section" aria-labelledby="pro-home-title">
 		<div class="pen-hero-section__stage">
-			<img class="pen-hero-section__image" src="<?php echo esc_url( $home_asset_uri( 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>">
+			<img class="pen-hero-section__image" src="<?php echo esc_url( $home_asset_uri( 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_hero_image_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'hero-student.webp', '(max-width: 700px) 65vw, 40vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="pen-hero-sticker pen-hero-sticker--pink"><?php esc_html_e( 'Diagnóstico', 'proenem-wordpress-theme' ); ?></span>
 			<span class="pen-hero-sticker pen-hero-sticker--yellow"><?php esc_html_e( 'Plano', 'proenem-wordpress-theme' ); ?></span>
 			<span class="pen-hero-sticker pen-hero-sticker--green"><?php esc_html_e( 'Prática', 'proenem-wordpress-theme' ); ?></span>
@@ -241,7 +366,7 @@ $subjects = array(
 				<button type="button" data-pro-home-pillars-next aria-label="<?php esc_attr_e( 'Próximo pilar', 'proenem-wordpress-theme' ); ?>">›</button>
 			</div>
 			<article class="pen-step-card pen-step-card--blue" data-pro-home-pillar-card>
-				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt="">
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-meta.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-meta.webp', '(max-width: 700px) 40vw, 24vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>01</span>
 				<div>
 					<h3><?php esc_html_e( 'Meta', 'proenem-wordpress-theme' ); ?></h3>
@@ -249,7 +374,7 @@ $subjects = array(
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--featured is-active" data-pro-home-pillar-card>
-				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-diagnostico.webp' ) ); ?>" alt="">
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-diagnostico.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-diagnostico.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-diagnostico.webp', '(max-width: 700px) 28vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>02</span>
 				<div>
 					<h3><?php esc_html_e( 'Diagnóstico', 'proenem-wordpress-theme' ); ?></h3>
@@ -257,7 +382,7 @@ $subjects = array(
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--red" data-pro-home-pillar-card>
-				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-execucao.webp' ) ); ?>" alt="">
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-execucao.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-execucao.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-execucao.webp', '(max-width: 700px) 28vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>03</span>
 				<div>
 					<h3><?php esc_html_e( 'Execução', 'proenem-wordpress-theme' ); ?></h3>
@@ -265,7 +390,7 @@ $subjects = array(
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--pink" data-pro-home-pillar-card>
-				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt="">
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-meta.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-meta.webp', '(max-width: 700px) 40vw, 24vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>04</span>
 				<div>
 					<h3><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></h3>
@@ -278,36 +403,36 @@ $subjects = array(
 	<?php
 	$proof_student_images = array(
 		'proof-students-1.webp',
-		'proof-students-2.png',
-		'proof-students-3.png',
-		'proof-students-4.png',
-		'proof-students-5.png',
-		'proof-students-6.png',
+		'proof-students-2.webp',
+		'proof-students-3.webp',
+		'proof-students-4.webp',
+		'proof-students-5.webp',
+		'proof-students-6.webp',
 	);
 
 	$proof_university_logos = array(
 		array(
-			'file' => 'proof-logo-ufrj.png',
+			'file' => 'proof-logo-ufrj.webp',
 			'name' => __( 'UFRJ', 'proenem-wordpress-theme' ),
 		),
 		array(
-			'file' => 'proof-logo-ufrgs.png',
+			'file' => 'proof-logo-ufrgs.webp',
 			'name' => __( 'UFRGS', 'proenem-wordpress-theme' ),
 		),
 		array(
-			'file' => 'proof-logo-unicamp.png',
+			'file' => 'proof-logo-unicamp.webp',
 			'name' => __( 'Unicamp', 'proenem-wordpress-theme' ),
 		),
 		array(
-			'file' => 'proof-logo-uerj.png',
+			'file' => 'proof-logo-uerj.webp',
 			'name' => __( 'UERJ', 'proenem-wordpress-theme' ),
 		),
 		array(
-			'file' => 'proof-logo-usp.png',
+			'file' => 'proof-logo-usp.webp',
 			'name' => __( 'USP', 'proenem-wordpress-theme' ),
 		),
 		array(
-			'file' => 'proof-logo-unifesp.png',
+			'file' => 'proof-logo-unifesp.webp',
 			'name' => __( 'Unifesp', 'proenem-wordpress-theme' ),
 		),
 	);
@@ -319,7 +444,7 @@ $subjects = array(
 				<span><?php esc_html_e( 'Alunos!', 'proenem-wordpress-theme' ); ?></span>
 			</p>
 			<?php foreach ( $proof_student_images as $proof_student_image ) : ?>
-				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>">
+				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( $proof_student_image ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $proof_student_image, '(max-width: 700px) 18vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php endforeach; ?>
 		</div>
 		<div class="pen-proof-section__strip">
@@ -331,6 +456,7 @@ $subjects = array(
 						class="pen-proof-section__logo"
 						src="<?php echo esc_url( $home_asset_uri( $proof_university_logo['file'] ) ); ?>"
 						alt="<?php echo esc_attr( $proof_university_logo['name'] ); ?>"
+						<?php echo $home_image_attributes( $proof_university_logo['file'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					>
 				<?php endforeach; ?>
 			</div>
@@ -510,7 +636,7 @@ $subjects = array(
 					<?php esc_html_e( 'cada detalhe', 'proenem-wordpress-theme' ); ?>
 				</h2>
 				<p class="pro-home-platform-note">
-					<img src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true">
+					<img src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'sticker_explore_por_dentro.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					<span class="pro-home-platform-note__text"><?php esc_html_e( 'Clique em qualquer recurso e veja como funciona — direto na plataforma.', 'proenem-wordpress-theme' ); ?></span>
 				</p>
 			</header>
@@ -575,7 +701,7 @@ $subjects = array(
 	</section>
 
 	<section id="questoes" class="pen-question-bank-section" aria-labelledby="pro-questions-title">
-		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true">
+		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'sticker_explore_questions.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<h2 id="pro-questions-title">
 			<?php esc_html_e( 'Mais de', 'proenem-wordpress-theme' ); ?>
 			<strong><?php esc_html_e( '50 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
@@ -605,16 +731,16 @@ $subjects = array(
 			<?php esc_html_e( 'Explorar questões grátis', 'proenem-wordpress-theme' ); ?>
 			<span class="pen-button__badge"><?php esc_html_e( 'Sem criar conta', 'proenem-wordpress-theme' ); ?></span>
 		</a>
-		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true">
+		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'blue_3_semi-spheres.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	</section>
 
 	<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
-		<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true">
+		<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'price_vector_strokes.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<div class="pro-home-pricing__header">
 			<div class="pro-home-pricing__seal" aria-hidden="true">
-				<img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true">
-				<img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true">
-				<img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true">
+				<img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Ellipse-fundo-price.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Cancele-quando-voce-quiser.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'check-verified-01.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			</div>
 			<div class="pro-home-pricing__intro">
 				<h2 id="pro-pricing-title">
@@ -664,7 +790,7 @@ $subjects = array(
 							<p><?php echo esc_html( $testimonial['quote'] ); ?></p>
 						</div>
 						<footer>
-							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>">
+							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>"<?php echo $home_image_attributes( $testimonial['image'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $testimonial['image'], '4.35rem' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 							<span>
 								<strong><?php echo esc_html( $testimonial['name'] ); ?></strong>
 								<small><?php echo esc_html( $testimonial['role'] ); ?></small>
@@ -692,7 +818,7 @@ $subjects = array(
 			</div>
 		</div>
 		<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary">
-			<img src="<?php echo esc_url( $home_asset_uri( 'student_school_1.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>">
+			<img src="<?php echo esc_url( $home_asset_uri( 'student_school_1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( 'student_school_1.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		</figure>
 		<div class="pen-audience-section__intro pro-home-school-section__intro">
 			<div>
@@ -703,7 +829,7 @@ $subjects = array(
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>
 				<a class="pen-button pen-button--primary pen-button--lg pro-home-school-section__cta" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 			</div>
-			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.png' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>">
+			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( 'student_school_2.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
 		</div>
 		<div class="pen-feature-grid pen-feature-grid--school">

@@ -45,6 +45,7 @@ npm run i18n
 npm run test:static
 npm run test:php
 npm run test:e2e
+npm run perf:pagespeed -- https://www.exemplo.com/
 npm run validate
 ```
 
@@ -57,6 +58,7 @@ npm run validate
 - `languages/`: catálogos de tradução.
 - `scripts/`: automações de i18n, release e empacotamento.
 - `docs/`: decisões e documentação de desenvolvimento.
+- `docs/performance.md`: fluxo de auditoria PageSpeed/Lighthouse.
 
 ## Design system
 
