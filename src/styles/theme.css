@@ -2307,6 +2307,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   max-width: 43rem;
   overflow: visible;
   position: relative;
+  width: 100%;
   z-index: 2;
 }
 
