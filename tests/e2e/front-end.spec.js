@@ -66,6 +66,22 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
+test("front page FAQ keeps its width when every item is closed", async ({ page }) => {
+  await page.goto("/");
+
+  const items = page.locator(".pen-faq-section__items");
+  const openItem = items.locator("details[open]");
+  const openWidth = await items.evaluate((element) => element.getBoundingClientRect().width);
+
+  await expect(openItem).toHaveCount(1);
+  await openItem.locator("summary").click();
+  await expect(openItem).toHaveCount(0);
+
+  const closedWidth = await items.evaluate((element) => element.getBoundingClientRect().width);
+
+  expect(closedWidth).toBeCloseTo(openWidth, 0);
+});
+
 test("front page navbar starts closed on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await installNavbarSubmenuFixture(page);
