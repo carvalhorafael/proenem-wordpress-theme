@@ -140,3 +140,25 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
 });
+
+test("front page question cards form two mobile rows without stretching the stamp", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const background = page.locator(".pro-home-question-bank__background");
+  const cards = page.locator(".pen-subject-grid .pro-home-subject-card");
+  const firstCard = await cards.nth(0).boundingBox();
+  const secondCard = await cards.nth(1).boundingBox();
+  const thirdCard = await cards.nth(2).boundingBox();
+
+  await expect(background).toBeHidden();
+  expect(firstCard).not.toBeNull();
+  expect(secondCard).not.toBeNull();
+  expect(thirdCard).not.toBeNull();
+  expect(Math.abs(firstCard.x - secondCard.x)).toBeLessThan(1);
+  expect(secondCard.y).toBeGreaterThan(firstCard.y);
+  expect(thirdCard.x).toBeGreaterThan(firstCard.x);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
