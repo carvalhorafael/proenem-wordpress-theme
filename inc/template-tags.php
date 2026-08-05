@@ -1436,7 +1436,9 @@ function proenem_render_site_navbar( $args = array() ) {
 							<?php echo ! empty( $navigation_link['active'] ) ? 'aria-current="page"' : ''; ?>
 							<?php echo $has_submenu ? 'aria-haspopup="true"' : ''; ?>
 						>
-							<?php echo esc_html( $navigation_link['label'] ); ?>
+							<span class="pen-navbar__label" data-label="<?php echo esc_attr( $navigation_link['label'] ); ?>">
+								<span class="pen-navbar__label-text"><?php echo esc_html( $navigation_link['label'] ); ?></span>
+							</span>
 						</a>
 						<?php proenem_render_site_navbar_submenu_toggle( $navigation_link, $submenu_id ); ?>
 						<?php proenem_render_site_navbar_submenu( $navigation_link, $submenu_id ); ?>
@@ -1470,7 +1472,9 @@ function proenem_render_site_navbar( $args = array() ) {
 								<?php echo ! empty( $navigation_action_rel ) ? 'rel="' . esc_attr( $navigation_action_rel ) . '"' : ''; ?>
 								<?php echo $has_submenu ? 'aria-haspopup="true"' : ''; ?>
 							>
-								<?php echo esc_html( $navigation_action['label'] ); ?>
+								<span class="pen-navbar__label" data-label="<?php echo esc_attr( $navigation_action['label'] ); ?>">
+									<span class="pen-navbar__label-text"><?php echo esc_html( $navigation_action['label'] ); ?></span>
+								</span>
 							</a>
 							<?php proenem_render_site_navbar_submenu_toggle( $navigation_action, $submenu_id ); ?>
 							<?php proenem_render_site_navbar_submenu( $navigation_action, $submenu_id ); ?>
