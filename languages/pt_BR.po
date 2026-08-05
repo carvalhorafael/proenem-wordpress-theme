@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.8.2\n"
+"Project-Id-Version: Proenem 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -32,6 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
+#: inc/template-tags.php:1371
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -91,24 +92,24 @@ msgid "Pro Home Hero"
 msgstr "Pro Home Hero"
 
 #: inc/class-proenem-elementor-home-widget-base.php:265
-#: inc/class-proenem-elementor-home-widget-base.php:321
+#: inc/class-proenem-elementor-home-widget-base.php:320
 #: inc/class-proenem-elementor-home-widget-base.php:401
 #: inc/class-proenem-elementor-home-widget-base.php:552
-#: inc/class-proenem-elementor-home-widget-base.php:690
-#: inc/class-proenem-elementor-home-widget-base.php:832
-#: inc/class-proenem-elementor-home-widget-base.php:1023
-#: inc/class-proenem-elementor-home-widget-base.php:1178
-#: inc/class-proenem-elementor-home-widget-base.php:1307
-#: inc/class-proenem-elementor-home-widget-base.php:1408
-#: inc/class-proenem-elementor-home-widget-base.php:1526
-#: inc/class-proenem-elementor-home-widget-base.php:1561
+#: inc/class-proenem-elementor-home-widget-base.php:692
+#: inc/class-proenem-elementor-home-widget-base.php:840
+#: inc/class-proenem-elementor-home-widget-base.php:1034
+#: inc/class-proenem-elementor-home-widget-base.php:1189
+#: inc/class-proenem-elementor-home-widget-base.php:1364
+#: inc/class-proenem-elementor-home-widget-base.php:1465
+#: inc/class-proenem-elementor-home-widget-base.php:1585
+#: inc/class-proenem-elementor-home-widget-base.php:1620
 #: inc/class-proenem-elementor-sales-widget-base.php:306
 #: inc/class-proenem-elementor-sales-widget-base.php:453
 msgid "Conteúdo"
 msgstr "Conteúdo"
 
 #: inc/class-proenem-elementor-home-widget-base.php:266
-#: inc/class-proenem-elementor-home-widget-base.php:1410
+#: inc/class-proenem-elementor-home-widget-base.php:1467
 msgid "Imagem principal"
 msgstr "Imagem principal"
 
@@ -121,151 +122,117 @@ msgstr "Sticker"
 
 #: inc/class-proenem-elementor-home-widget-base.php:267
 #: inc/class-proenem-elementor-home-widget-base.php:470
-#: page-templates/home.php:309
-#: page-templates/home.php:374
+#: page-templates/home.php:315
+#: page-templates/home.php:380
 msgid "Diagnóstico"
 msgstr "Diagnóstico"
 
 #: inc/class-proenem-elementor-home-widget-base.php:268
-#: inc/class-proenem-elementor-home-widget-base.php:484
-#: page-templates/home.php:310
-#: page-templates/home.php:390
-msgid "Performance"
-msgstr "Performance"
+#: inc/class-proenem-elementor-sales-widget-base.php:723
+#: page-templates/home.php:316
+msgid "Plano"
+msgstr "Plano"
 
 #: inc/class-proenem-elementor-home-widget-base.php:269
-#: inc/class-proenem-elementor-home-widget-base.php:423
-#: inc/class-proenem-elementor-home-widget-base.php:463
-#: page-templates/home.php:311
-#: page-templates/home.php:366
-msgid "Meta"
-msgstr "Meta"
+#: page-templates/home.php:317
+msgid "Prática"
+msgstr "Prática"
 
 #: inc/class-proenem-elementor-home-widget-base.php:270
-#: inc/class-proenem-elementor-home-widget-base.php:477
-#: page-templates/home.php:312
-#: page-templates/home.php:382
-msgid "Execução"
-msgstr "Execução"
+#: page-templates/home.php:318
+msgid "Evolução"
+msgstr "Evolução"
 
 #: inc/class-proenem-elementor-home-widget-base.php:271
 msgid "Linha 1"
 msgstr "Linha 1"
 
 #: inc/class-proenem-elementor-home-widget-base.php:271
-#: page-templates/home.php:314
-msgid "Sua"
-msgstr "Sua"
+#: page-templates/home.php:320
+msgid "Sua aprovação não"
+msgstr "Sua aprovação não"
 
 #: inc/class-proenem-elementor-home-widget-base.php:272
-msgid "Linha 2"
-msgstr "Linha 2"
+msgid "Linha 2 antes de sorte"
+msgstr "Linha 2 antes de sorte"
 
 #: inc/class-proenem-elementor-home-widget-base.php:272
-#: page-templates/home.php:315
-msgid "aprovação"
-msgstr "aprovação"
-
-#: inc/class-proenem-elementor-home-widget-base.php:273
-msgid "Linha 3 antes do destaque"
-msgstr "Linha 3 antes do destaque"
-
-#: inc/class-proenem-elementor-home-widget-base.php:273
-#: page-templates/home.php:316
-msgid "não é"
-msgstr "não é"
-
 #: inc/class-proenem-elementor-home-widget-base.php:274
-msgid "Linha 3 destaque"
-msgstr "Linha 3 destaque"
-
-#: inc/class-proenem-elementor-home-widget-base.php:274
-#: page-templates/home.php:316
-msgid "sorte"
-msgstr "sorte"
-
-#: inc/class-proenem-elementor-home-widget-base.php:275
-msgid "Linha 4 antes do destaque"
-msgstr "Linha 4 antes do destaque"
-
-#: inc/class-proenem-elementor-home-widget-base.php:275
-#: page-templates/home.php:317
+#: page-templates/home.php:321
 msgid "é"
 msgstr "é"
 
-#: inc/class-proenem-elementor-home-widget-base.php:276
-msgid "Linha 4 destaque"
-msgstr "Linha 4 destaque"
+#: inc/class-proenem-elementor-home-widget-base.php:273
+msgid "Destaque azul"
+msgstr "Destaque azul"
 
-#: inc/class-proenem-elementor-home-widget-base.php:276
-#: page-templates/home.php:317
+#: inc/class-proenem-elementor-home-widget-base.php:273
+#: page-templates/home.php:321
+msgid "sorte"
+msgstr "sorte"
+
+#: inc/class-proenem-elementor-home-widget-base.php:274
+msgid "Linha 2 entre os destaques"
+msgstr "Linha 2 entre os destaques"
+
+#: inc/class-proenem-elementor-home-widget-base.php:275
+msgid "Destaque amarelo"
+msgstr "Destaque amarelo"
+
+#: inc/class-proenem-elementor-home-widget-base.php:275
+#: page-templates/home.php:321
 msgid "método"
 msgstr "método"
 
+#: inc/class-proenem-elementor-home-widget-base.php:276
+msgid "Subtítulo"
+msgstr "Subtítulo"
+
+#: inc/class-proenem-elementor-home-widget-base.php:276
+#: page-templates/home.php:323
+msgid "A escola te ensina o conteúdo. A Proenem te faz treinar, corrigir e não parar, até a sua nota subir."
+msgstr "A escola te ensina o conteúdo. A Proenem te faz treinar, corrigir e não parar, até a sua nota subir."
+
 #: inc/class-proenem-elementor-home-widget-base.php:286
-#: page-templates/home.php:308
+#: page-templates/home.php:314
 msgid "Estudante sorrindo com cadernos nas mãos."
 msgstr "Estudante sorrindo com cadernos nas mãos."
 
-#: inc/class-proenem-elementor-home-widget-base.php:313
+#: inc/class-proenem-elementor-home-widget-base.php:312
 msgid "Pro Home Barra de Ação"
 msgstr "Pro Home Barra de Ação"
 
-#: inc/class-proenem-elementor-home-widget-base.php:322
-msgid "Texto em destaque"
-msgstr "Texto em destaque"
+#: inc/class-proenem-elementor-home-widget-base.php:321
+#: inc/class-proenem-elementor-home-widget-base.php:556
+msgid "Texto de apoio"
+msgstr "Texto de apoio"
+
+#: inc/class-proenem-elementor-home-widget-base.php:321
+#: page-templates/home.php:330
+msgid "Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar. Você estuda com estratégia, não com mais horas."
+msgstr "Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar. Você estuda com estratégia, não com mais horas."
 
 #: inc/class-proenem-elementor-home-widget-base.php:322
-#: page-templates/home.php:324
-msgid "O Método PRO"
-msgstr "O Método PRO"
+msgid "Botão primário"
+msgstr "Botão primário"
 
-#: inc/class-proenem-elementor-home-widget-base.php:323
-#: inc/class-proenem-elementor-home-widget-base.php:429
-#: inc/class-proenem-elementor-home-widget-base.php:728
-#: inc/class-proenem-elementor-home-widget-base.php:1027
-#: inc/class-proenem-elementor-home-widget-base.php:1182
-#: inc/class-proenem-elementor-home-widget-base.php:1311
-#: inc/class-proenem-elementor-home-widget-base.php:1416
-#: inc/class-proenem-elementor-home-widget-base.php:1442
-#: inc/class-proenem-elementor-home-widget-base.php:1528
-#: inc/class-proenem-elementor-sales-widget-base.php:331
-#: inc/class-proenem-elementor-sales-widget-base.php:468
-#: inc/class-proenem-elementor-sales-widget-base.php:1121
-msgid "Texto"
-msgstr "Texto"
-
-#: inc/class-proenem-elementor-home-widget-base.php:323
-#: page-templates/home.php:325
-msgid "não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
-msgstr "não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
-
-#: inc/class-proenem-elementor-home-widget-base.php:324
+#: inc/class-proenem-elementor-home-widget-base.php:322
 #: inc/class-proenem-elementor-home-widget-base.php:406
-#: inc/class-proenem-elementor-home-widget-base.php:699
-#: inc/class-proenem-elementor-home-widget-base.php:1028
-#: inc/class-proenem-elementor-home-widget-base.php:1529
-#: inc/class-proenem-elementor-sales-widget-base.php:608
-#: inc/class-proenem-elementor-sales-widget-base.php:776
-#: inc/class-proenem-elementor-sales-widget-base.php:1128
-msgid "Botão"
-msgstr "Botão"
-
-#: inc/class-proenem-elementor-home-widget-base.php:324
-#: inc/template-tags.php:335
-#: page-templates/home.php:329
-#: page-templates/home.php:340
-#: page-templates/home.php:791
-#: page-templates/home.php:794
-msgid "Conheça o Método PRO"
-msgstr "Conheça o Método PRO"
-
-#: inc/class-proenem-elementor-home-widget-base.php:325
-#: inc/class-proenem-elementor-home-widget-base.php:407
 #: inc/class-proenem-elementor-home-widget-base.php:701
-#: inc/class-proenem-elementor-home-widget-base.php:1530
-msgid "Link do botão"
-msgstr "Link do botão"
+#: page-templates/home.php:335
+#: page-templates/home.php:357
+#: page-templates/home.php:539
+msgid "Começar grátis"
+msgstr "Começar grátis"
+
+#: inc/class-proenem-elementor-home-widget-base.php:323
+msgid "Link do botão primário"
+msgstr "Link do botão primário"
+
+#: inc/class-proenem-elementor-home-widget-base.php:331
+#: page-templates/home.php:327
+msgid "Comece a estudar com o Método PRO"
+msgstr "Comece a estudar com o Método PRO"
 
 #: inc/class-proenem-elementor-home-widget-base.php:353
 msgid "Pro Home Marquee"
@@ -280,10 +247,10 @@ msgid "Frases, uma por linha"
 msgstr "Frases, uma por linha"
 
 #: inc/class-proenem-elementor-home-widget-base.php:362
-#: inc/class-proenem-elementor-home-widget-base.php:1409
+#: inc/class-proenem-elementor-home-widget-base.php:1466
 msgid ""
-"A engenharia da sua aprovação\n"
-"Troque a sorte pela estratégia\n"
+"Sua aprovação não é sorte. É método.\n"
+"Estude com estratégia, não com mais horas.\n"
 "Conheça o Método PRO"
 msgstr ""
 
@@ -292,9 +259,9 @@ msgid "Pro Home Pilares"
 msgstr "Pro Home Pilares"
 
 #: inc/class-proenem-elementor-home-widget-base.php:402
-#: inc/class-proenem-elementor-home-widget-base.php:691
-#: inc/class-proenem-elementor-home-widget-base.php:1308
-#: inc/class-proenem-elementor-home-widget-base.php:1562
+#: inc/class-proenem-elementor-home-widget-base.php:693
+#: inc/class-proenem-elementor-home-widget-base.php:1365
+#: inc/class-proenem-elementor-home-widget-base.php:1621
 #: inc/class-proenem-elementor-sales-widget-base.php:314
 #: inc/class-proenem-elementor-sales-widget-base.php:577
 #: inc/class-proenem-elementor-sales-widget-base.php:730
@@ -302,16 +269,21 @@ msgid "Selo"
 msgstr "Selo"
 
 #: inc/class-proenem-elementor-home-widget-base.php:402
-#: page-templates/home.php:347
-msgid "Método Pro"
-msgstr "Método Pro"
+#: inc/class-proenem-elementor-home-widget-base.php:1274
+#: inc/class-proenem-elementor-home-widget-base.php:1301
+#: inc/class-proenem-elementor-home-widget-base.php:1470
+#: page-templates/home.php:181
+#: page-templates/home.php:353
+#: page-templates/home.php:826
+msgid "Método PRO"
+msgstr "Método PRO"
 
 #: inc/class-proenem-elementor-home-widget-base.php:403
 #: inc/class-proenem-elementor-home-widget-base.php:421
 #: inc/class-proenem-elementor-home-widget-base.php:555
-#: inc/class-proenem-elementor-home-widget-base.php:1309
-#: inc/class-proenem-elementor-home-widget-base.php:1435
-#: inc/class-proenem-elementor-home-widget-base.php:1527
+#: inc/class-proenem-elementor-home-widget-base.php:1366
+#: inc/class-proenem-elementor-home-widget-base.php:1494
+#: inc/class-proenem-elementor-home-widget-base.php:1586
 #: inc/class-proenem-elementor-sales-widget-base.php:322
 #: inc/class-proenem-elementor-sales-widget-base.php:460
 #: inc/class-proenem-elementor-sales-widget-base.php:559
@@ -323,7 +295,7 @@ msgid "Título"
 msgstr "Título"
 
 #: inc/class-proenem-elementor-home-widget-base.php:403
-#: page-templates/home.php:348
+#: page-templates/home.php:354
 msgid "Os 4 pilares que organizam a sua aprovação"
 msgstr "Os 4 pilares que organizam a sua aprovação"
 
@@ -332,41 +304,72 @@ msgid "Texto 1"
 msgstr "Texto 1"
 
 #: inc/class-proenem-elementor-home-widget-base.php:404
-#: page-templates/home.php:349
-msgid "O Método PRO não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
-msgstr "O Método PRO não é apenas um cronograma, é uma engenharia de resultados dividida em 4 pilares: Meta. Diagnóstico. Execução. Performance."
+#: page-templates/home.php:355
+msgid "O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava."
+msgstr "O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava."
 
 #: inc/class-proenem-elementor-home-widget-base.php:405
 msgid "Texto 2"
 msgstr "Texto 2"
 
 #: inc/class-proenem-elementor-home-widget-base.php:405
-#: page-templates/home.php:350
+#: page-templates/home.php:356
 msgid "O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia."
 msgstr "O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia."
 
 #: inc/class-proenem-elementor-home-widget-base.php:406
-#: inc/class-proenem-elementor-home-widget-base.php:1529
-#: inc/template-tags.php:350
-#: page-templates/home.php:351
-#: page-templates/home.php:844
-msgid "Começar gratuitamente"
-msgstr "Começar gratuitamente"
+#: inc/class-proenem-elementor-home-widget-base.php:701
+#: inc/class-proenem-elementor-home-widget-base.php:1039
+#: inc/class-proenem-elementor-home-widget-base.php:1474
+#: inc/class-proenem-elementor-home-widget-base.php:1588
+#: inc/class-proenem-elementor-sales-widget-base.php:608
+#: inc/class-proenem-elementor-sales-widget-base.php:776
+#: inc/class-proenem-elementor-sales-widget-base.php:1128
+msgid "Botão"
+msgstr "Botão"
+
+#: inc/class-proenem-elementor-home-widget-base.php:407
+#: inc/class-proenem-elementor-home-widget-base.php:703
+#: inc/class-proenem-elementor-home-widget-base.php:1236
+#: inc/class-proenem-elementor-home-widget-base.php:1475
+#: inc/class-proenem-elementor-home-widget-base.php:1589
+msgid "Link do botão"
+msgstr "Link do botão"
 
 #: inc/class-proenem-elementor-home-widget-base.php:413
 msgid "Número"
 msgstr "Número"
 
+#: inc/class-proenem-elementor-home-widget-base.php:423
+#: inc/class-proenem-elementor-home-widget-base.php:463
+#: page-templates/home.php:372
+msgid "Meta"
+msgstr "Meta"
+
+#: inc/class-proenem-elementor-home-widget-base.php:429
+#: inc/class-proenem-elementor-home-widget-base.php:730
+#: inc/class-proenem-elementor-home-widget-base.php:1038
+#: inc/class-proenem-elementor-home-widget-base.php:1193
+#: inc/class-proenem-elementor-home-widget-base.php:1368
+#: inc/class-proenem-elementor-home-widget-base.php:1473
+#: inc/class-proenem-elementor-home-widget-base.php:1501
+#: inc/class-proenem-elementor-home-widget-base.php:1587
+#: inc/class-proenem-elementor-sales-widget-base.php:331
+#: inc/class-proenem-elementor-sales-widget-base.php:468
+#: inc/class-proenem-elementor-sales-widget-base.php:1121
+msgid "Texto"
+msgstr "Texto"
+
 #: inc/class-proenem-elementor-home-widget-base.php:436
-#: inc/class-proenem-elementor-home-widget-base.php:735
-#: inc/class-proenem-elementor-home-widget-base.php:865
-#: inc/class-proenem-elementor-home-widget-base.php:1065
+#: inc/class-proenem-elementor-home-widget-base.php:737
+#: inc/class-proenem-elementor-home-widget-base.php:875
+#: inc/class-proenem-elementor-home-widget-base.php:1076
 msgid "Tom visual"
 msgstr "Tom visual"
 
 #: inc/class-proenem-elementor-home-widget-base.php:450
-#: inc/class-proenem-elementor-home-widget-base.php:561
-#: inc/class-proenem-elementor-home-widget-base.php:1337
+#: inc/class-proenem-elementor-home-widget-base.php:562
+#: inc/class-proenem-elementor-home-widget-base.php:1394
 #: inc/class-proenem-elementor-sales-widget-base.php:368
 msgid "Imagem"
 msgstr "Imagem"
@@ -376,37 +379,47 @@ msgid "Pilares"
 msgstr "Pilares"
 
 #: inc/class-proenem-elementor-home-widget-base.php:464
-#: page-templates/home.php:367
-msgid "Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais."
-msgstr "Transformamos objetivo em plano de estudo claro, com prioridades e metas semanais."
+#: page-templates/home.php:373
+msgid "Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro."
+msgstr "Seu objetivo vira um plano claro, com prioridades e metas semanais. Você sabe exatamente o que estudar primeiro."
 
 #: inc/class-proenem-elementor-home-widget-base.php:471
-#: page-templates/home.php:375
-msgid "Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está."
-msgstr "Mapeamos suas forças e lacunas com simulados adaptativos. Você vê exatamente onde está."
+#: page-templates/home.php:381
+msgid "Simulados adaptativos mapeiam suas forças e lacunas. Você vê, com dados, onde está e o que rende mais nota agora."
+msgstr "Simulados adaptativos mapeiam suas forças e lacunas. Você vê, com dados, onde está e o que rende mais nota agora."
+
+#: inc/class-proenem-elementor-home-widget-base.php:477
+#: page-templates/home.php:388
+msgid "Execução"
+msgstr "Execução"
 
 #: inc/class-proenem-elementor-home-widget-base.php:478
-#: page-templates/home.php:383
-msgid "Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo."
-msgstr "Você sabe o que estudar, quando revisar e como corrigir rota sem perder ritmo."
+#: page-templates/home.php:389
+msgid "O plano diz o que estudar, quando revisar e como corrigir a rota — sem você se perder no meio do caminho."
+msgstr "O plano diz o que estudar, quando revisar e como corrigir a rota — sem você se perder no meio do caminho."
+
+#: inc/class-proenem-elementor-home-widget-base.php:484
+#: page-templates/home.php:396
+msgid "Performance"
+msgstr "Performance"
 
 #: inc/class-proenem-elementor-home-widget-base.php:485
-#: page-templates/home.php:391
-msgid "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável."
-msgstr "Acompanhamos sua evolução para trocar esforço solto por resultado mensurável."
+#: page-templates/home.php:397
+msgid "Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação."
+msgstr "Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação."
 
 #: inc/class-proenem-elementor-home-widget-base.php:517
-#: page-templates/home.php:355
+#: page-templates/home.php:361
 msgid "Navegação dos pilares"
 msgstr "Navegação dos pilares"
 
 #: inc/class-proenem-elementor-home-widget-base.php:518
-#: page-templates/home.php:356
+#: page-templates/home.php:362
 msgid "Pilar anterior"
 msgstr "Pilar anterior"
 
 #: inc/class-proenem-elementor-home-widget-base.php:518
-#: page-templates/home.php:360
+#: page-templates/home.php:366
 msgid "Próximo pilar"
 msgstr "Próximo pilar"
 
@@ -419,7 +432,7 @@ msgid "Badge linha 1"
 msgstr "Badge linha 1"
 
 #: inc/class-proenem-elementor-home-widget-base.php:553
-#: page-templates/home.php:437
+#: page-templates/home.php:443
 msgid "Nossos"
 msgstr "Nossos"
 
@@ -428,630 +441,679 @@ msgid "Badge linha 2"
 msgstr "Badge linha 2"
 
 #: inc/class-proenem-elementor-home-widget-base.php:554
-#: page-templates/home.php:438
+#: page-templates/home.php:444
 msgid "Alunos!"
 msgstr "Alunos!"
 
 #: inc/class-proenem-elementor-home-widget-base.php:555
-#: page-templates/home.php:445
+#: page-templates/home.php:451
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr "+ de 40.000 aprovados em universidades públicas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:568
+#: inc/class-proenem-elementor-home-widget-base.php:556
+#: page-templates/home.php:452
+msgid "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
+msgstr "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
+
+#: inc/class-proenem-elementor-home-widget-base.php:569
 msgid "Imagens de alunos"
 msgstr "Imagens de alunos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:575
+#: inc/class-proenem-elementor-home-widget-base.php:576
 msgid "Aluno"
 msgstr "Aluno"
 
-#: inc/class-proenem-elementor-home-widget-base.php:583
-#: inc/class-proenem-elementor-home-widget-base.php:1190
-#: inc/class-proenem-elementor-home-widget-base.php:1323
+#: inc/class-proenem-elementor-home-widget-base.php:584
+#: inc/class-proenem-elementor-home-widget-base.php:1201
+#: inc/class-proenem-elementor-home-widget-base.php:1380
 #: inc/class-proenem-elementor-sales-widget-base.php:569
 #: inc/class-proenem-elementor-sales-widget-base.php:737
 #: single-material_gratuito.php:46
 msgid "Nome"
 msgstr "Nome"
 
-#: inc/class-proenem-elementor-home-widget-base.php:590
+#: inc/class-proenem-elementor-home-widget-base.php:591
 msgid "Logo"
 msgstr "Logo"
 
-#: inc/class-proenem-elementor-home-widget-base.php:597
+#: inc/class-proenem-elementor-home-widget-base.php:598
 msgid "Logos"
 msgstr "Logos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:656
-#: page-templates/home.php:441
+#: inc/class-proenem-elementor-home-widget-base.php:657
+#: page-templates/home.php:447
 msgid "Aluno aprovado exibindo aprovação."
 msgstr "Aluno aprovado exibindo aprovação."
 
-#: inc/class-proenem-elementor-home-widget-base.php:661
-#: page-templates/home.php:446
+#: inc/class-proenem-elementor-home-widget-base.php:663
+#: page-templates/home.php:453
 msgid "Universidades públicas com alunos aprovados pela Proenem"
 msgstr "Universidades públicas com alunos aprovados pela Proenem"
 
-#: inc/class-proenem-elementor-home-widget-base.php:682
+#: inc/class-proenem-elementor-home-widget-base.php:684
 msgid "Pro Home Dores"
 msgstr "Pro Home Dores"
 
-#: inc/class-proenem-elementor-home-widget-base.php:691
-#: page-templates/home.php:460
+#: inc/class-proenem-elementor-home-widget-base.php:693
+#: page-templates/home.php:467
 msgid "Você se identifica?"
 msgstr "Você se identifica?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:692
-#: inc/class-proenem-elementor-home-widget-base.php:1179
-#: inc/class-proenem-elementor-home-widget-base.php:1563
+#: inc/class-proenem-elementor-home-widget-base.php:694
+#: inc/class-proenem-elementor-home-widget-base.php:1190
+#: inc/class-proenem-elementor-home-widget-base.php:1622
 msgid "Título linha 1"
 msgstr "Título linha 1"
 
-#: inc/class-proenem-elementor-home-widget-base.php:692
-#: page-templates/home.php:462
-#: page-templates/home.php:852
-msgid "Já sentiu que"
-msgstr "Já sentiu que"
+#: inc/class-proenem-elementor-home-widget-base.php:694
+#: page-templates/home.php:469
+msgid "Estuda muito"
+msgstr "Estuda muito"
 
-#: inc/class-proenem-elementor-home-widget-base.php:693
-#: inc/class-proenem-elementor-home-widget-base.php:1413
+#: inc/class-proenem-elementor-home-widget-base.php:695
+#: inc/class-proenem-elementor-home-widget-base.php:1470
 msgid "Destaque 1"
 msgstr "Destaque 1"
 
-#: inc/class-proenem-elementor-home-widget-base.php:693
-#: page-templates/home.php:463
-#: page-templates/home.php:852
-msgid "estuda muito,"
-msgstr "estuda muito,"
+#: inc/class-proenem-elementor-home-widget-base.php:695
+#: page-templates/home.php:470
+msgid "e a nota"
+msgstr "e a nota"
 
-#: inc/class-proenem-elementor-home-widget-base.php:694
-#: inc/class-proenem-elementor-home-widget-base.php:1180
-#: inc/class-proenem-elementor-home-widget-base.php:1564
+#: inc/class-proenem-elementor-home-widget-base.php:696
+#: inc/class-proenem-elementor-home-widget-base.php:1191
+#: inc/class-proenem-elementor-home-widget-base.php:1623
 msgid "Título linha 2"
 msgstr "Título linha 2"
 
-#: inc/class-proenem-elementor-home-widget-base.php:694
-#: page-templates/home.php:465
-#: page-templates/home.php:853
-msgid "mas a nota"
-msgstr "mas a nota"
+#: inc/class-proenem-elementor-home-widget-base.php:696
+#: page-templates/home.php:471
+msgid "não"
+msgstr "não"
 
-#: inc/class-proenem-elementor-home-widget-base.php:695
-#: inc/class-proenem-elementor-home-widget-base.php:1415
+#: inc/class-proenem-elementor-home-widget-base.php:697
+#: inc/class-proenem-elementor-home-widget-base.php:1472
 msgid "Destaque 2"
 msgstr "Destaque 2"
 
-#: inc/class-proenem-elementor-home-widget-base.php:695
-#: page-templates/home.php:466
-#: page-templates/home.php:853
-msgid "não sobe?"
-msgstr "não sobe?"
+#: inc/class-proenem-elementor-home-widget-base.php:697
+#: page-templates/home.php:472
+msgid "sobe?"
+msgstr "sobe?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:696
+#: inc/class-proenem-elementor-home-widget-base.php:698
 msgid "Frase final 1"
 msgstr "Frase final 1"
 
-#: inc/class-proenem-elementor-home-widget-base.php:696
-#: page-templates/home.php:513
-msgid "O problema não é o esforço."
-msgstr "O problema não é o esforço."
+#: inc/class-proenem-elementor-home-widget-base.php:698
+#: page-templates/home.php:532
+msgid "O esforço, sozinho, não basta."
+msgstr "O esforço, sozinho, não basta."
 
-#: inc/class-proenem-elementor-home-widget-base.php:697
+#: inc/class-proenem-elementor-home-widget-base.php:699
 msgid "Frase final 2"
 msgstr "Frase final 2"
 
-#: inc/class-proenem-elementor-home-widget-base.php:697
-#: page-templates/home.php:515
-msgid "É estudar"
-msgstr "É estudar"
+#: inc/class-proenem-elementor-home-widget-base.php:699
+#: page-templates/home.php:534
+msgid "É preciso"
+msgstr "É preciso"
 
-#: inc/class-proenem-elementor-home-widget-base.php:698
+#: inc/class-proenem-elementor-home-widget-base.php:700
 msgid "Destaque final"
 msgstr "Destaque final"
 
-#: inc/class-proenem-elementor-home-widget-base.php:698
-#: page-templates/home.php:516
-msgid "sem método."
-msgstr "sem método."
-
-#: inc/class-proenem-elementor-home-widget-base.php:699
-#: inc/class-proenem-elementor-home-widget-base.php:1028
-#: page-templates/home.php:520
-#: page-templates/home.php:708
-msgid "Comece agora!"
-msgstr "Comece agora!"
-
 #: inc/class-proenem-elementor-home-widget-base.php:700
-#: inc/class-proenem-elementor-home-widget-base.php:1029
+#: page-templates/home.php:535
+msgid "método e acompanhamento."
+msgstr "método e acompanhamento."
+
+#: inc/class-proenem-elementor-home-widget-base.php:702
+#: inc/class-proenem-elementor-home-widget-base.php:1040
 msgid "Badge do botão"
 msgstr "Badge do botão"
 
-#: inc/class-proenem-elementor-home-widget-base.php:700
-#: inc/class-proenem-elementor-home-widget-base.php:1029
-#: page-templates/home.php:521
-#: page-templates/home.php:709
-msgid "É gratuito"
-msgstr "É gratuito"
+#: inc/class-proenem-elementor-home-widget-base.php:702
+#: page-templates/home.php:540
+msgid "é gratuito"
+msgstr "é gratuito"
 
-#: inc/class-proenem-elementor-home-widget-base.php:707
+#: inc/class-proenem-elementor-home-widget-base.php:709
 msgid "Texto antes"
 msgstr "Texto antes"
 
-#: inc/class-proenem-elementor-home-widget-base.php:714
-#: inc/class-proenem-elementor-home-widget-base.php:1181
+#: inc/class-proenem-elementor-home-widget-base.php:716
+#: inc/class-proenem-elementor-home-widget-base.php:1192
 msgid "Destaque"
 msgstr "Destaque"
 
-#: inc/class-proenem-elementor-home-widget-base.php:721
+#: inc/class-proenem-elementor-home-widget-base.php:723
 msgid "Texto depois"
 msgstr "Texto depois"
 
-#: inc/class-proenem-elementor-home-widget-base.php:748
-#: inc/class-proenem-elementor-home-widget-base.php:1449
+#: inc/class-proenem-elementor-home-widget-base.php:750
+#: inc/class-proenem-elementor-home-widget-base.php:1508
 msgid "Cards"
 msgstr "Cards"
 
-#: inc/class-proenem-elementor-home-widget-base.php:753
-#: page-templates/home.php:477
+#: inc/class-proenem-elementor-home-widget-base.php:755
+#: page-templates/home.php:483
 msgid "Estuda"
 msgstr "Estuda"
 
-#: inc/class-proenem-elementor-home-widget-base.php:754
-#: page-templates/home.php:478
+#: inc/class-proenem-elementor-home-widget-base.php:756
+#: page-templates/home.php:484
 msgid "sem direção"
 msgstr "sem direção"
 
-#: inc/class-proenem-elementor-home-widget-base.php:755
-#: page-templates/home.php:480
-msgid "Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece."
-msgstr "Cronogramas bonitos, mas sem priorização. Estuda tudo igual e o resultado não aparece."
+#: inc/class-proenem-elementor-home-widget-base.php:757
+#: page-templates/home.php:486
+msgid "Cronograma bonito, mas sem prioridade. Você estuda tudo igual e o resultado não aparece."
+msgstr "Cronograma bonito, mas sem prioridade. Você estuda tudo igual e o resultado não aparece."
 
-#: inc/class-proenem-elementor-home-widget-base.php:759
-#: page-templates/home.php:491
+#: inc/class-proenem-elementor-home-widget-base.php:761
+#: page-templates/home.php:497
 msgid "Trava"
 msgstr "Trava"
 
-#: inc/class-proenem-elementor-home-widget-base.php:760
-#: page-templates/home.php:492
+#: inc/class-proenem-elementor-home-widget-base.php:762
+#: page-templates/home.php:498
 msgid "em simulados"
 msgstr "em simulados"
 
-#: inc/class-proenem-elementor-home-widget-base.php:761
-#: page-templates/home.php:494
-msgid "A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos."
-msgstr "A nota não sai do lugar. Faz simulados, mas não analisa os erros. Repete os mesmos equívocos."
+#: inc/class-proenem-elementor-home-widget-base.php:763
+#: page-templates/home.php:500
+msgid "A nota empaca. Você faz simulado, mas não analisa o erro — e repete o mesmo tropeço."
+msgstr "A nota empaca. Você faz simulado, mas não analisa o erro — e repete o mesmo tropeço."
 
-#: inc/class-proenem-elementor-home-widget-base.php:765
-#: page-templates/home.php:505
+#: inc/class-proenem-elementor-home-widget-base.php:767
+#: page-templates/home.php:511
 msgid "Ansiedade"
 msgstr "Ansiedade"
 
-#: inc/class-proenem-elementor-home-widget-base.php:766
+#: inc/class-proenem-elementor-home-widget-base.php:768
 msgid "& insegurança"
 msgstr "& insegurança"
 
-#: inc/class-proenem-elementor-home-widget-base.php:767
-#: page-templates/home.php:509
-msgid "Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros."
-msgstr "Pressão familiar, medo de não passar e sensação de estar sempre atrasado em relação aos outros."
+#: inc/class-proenem-elementor-home-widget-base.php:769
+#: page-templates/home.php:515
+msgid "Pressão da família, medo de não passar e a sensação de estar sempre atrasado."
+msgstr "Pressão da família, medo de não passar e a sensação de estar sempre atrasado."
 
-#: inc/class-proenem-elementor-home-widget-base.php:824
+#: inc/class-proenem-elementor-home-widget-base.php:773
+#: page-templates/home.php:525
+msgid "Começa"
+msgstr "Começa"
+
+#: inc/class-proenem-elementor-home-widget-base.php:774
+#: page-templates/home.php:526
+msgid "e abandona"
+msgstr "e abandona"
+
+#: inc/class-proenem-elementor-home-widget-base.php:775
+#: page-templates/home.php:528
+msgid "Começa animado e, em duas semanas, larga. Estudar sozinho é difícil quando ninguém te puxa de volta."
+msgstr "Começa animado e, em duas semanas, larga. Estudar sozinho é difícil quando ninguém te puxa de volta."
+
+#: inc/class-proenem-elementor-home-widget-base.php:832
 msgid "Pro Home Plataforma"
 msgstr "Pro Home Plataforma"
 
-#: inc/class-proenem-elementor-home-widget-base.php:833
-#: inc/class-proenem-elementor-home-widget-base.php:1025
-#: inc/class-proenem-elementor-home-widget-base.php:1310
+#: inc/class-proenem-elementor-home-widget-base.php:841
+#: inc/class-proenem-elementor-home-widget-base.php:1036
+#: inc/class-proenem-elementor-home-widget-base.php:1367
 msgid "Título destaque"
 msgstr "Título destaque"
 
-#: inc/class-proenem-elementor-home-widget-base.php:833
-#: inc/class-proenem-elementor-home-widget-base.php:1024
-#: page-templates/home.php:615
-#: page-templates/home.php:683
+#: inc/class-proenem-elementor-home-widget-base.php:841
+#: page-templates/home.php:634
 msgid "Explore"
 msgstr "Explore"
 
-#: inc/class-proenem-elementor-home-widget-base.php:834
+#: inc/class-proenem-elementor-home-widget-base.php:842
 msgid "Título colorido"
 msgstr "Título colorido"
 
-#: inc/class-proenem-elementor-home-widget-base.php:834
-#: page-templates/home.php:616
+#: inc/class-proenem-elementor-home-widget-base.php:842
+#: page-templates/home.php:635
 msgid "por dentro"
 msgstr "por dentro"
 
-#: inc/class-proenem-elementor-home-widget-base.php:835
+#: inc/class-proenem-elementor-home-widget-base.php:843
 msgid "Título final"
 msgstr "Título final"
 
-#: inc/class-proenem-elementor-home-widget-base.php:835
-#: page-templates/home.php:617
+#: inc/class-proenem-elementor-home-widget-base.php:843
+#: page-templates/home.php:636
 msgid "cada detalhe"
 msgstr "cada detalhe"
 
-#: inc/class-proenem-elementor-home-widget-base.php:836
+#: inc/class-proenem-elementor-home-widget-base.php:844
 msgid "Nota"
 msgstr "Nota"
 
-#: inc/class-proenem-elementor-home-widget-base.php:836
-#: page-templates/home.php:621
-msgid "Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma."
-msgstr "Clique em qualquer item à esquerda e veja exatamente como funciona — direto na plataforma."
+#: inc/class-proenem-elementor-home-widget-base.php:844
+#: page-templates/home.php:640
+msgid "Clique em qualquer recurso e veja como funciona — direto na plataforma."
+msgstr "Clique em qualquer recurso e veja como funciona — direto na plataforma."
 
-#: inc/class-proenem-elementor-home-widget-base.php:842
+#: inc/class-proenem-elementor-home-widget-base.php:845
+msgid "Linha de posicionamento"
+msgstr "Linha de posicionamento"
+
+#: inc/class-proenem-elementor-home-widget-base.php:845
+#: page-templates/home.php:644
+msgid "Não é um acervo de vídeos. É um sistema que te diz"
+msgstr "Não é um acervo de vídeos. É um sistema que te diz"
+
+#: inc/class-proenem-elementor-home-widget-base.php:846
+msgid "Destaque da linha"
+msgstr "Destaque da linha"
+
+#: inc/class-proenem-elementor-home-widget-base.php:846
+#: page-templates/home.php:645
+msgid "o próximo passo."
+msgstr "o próximo passo."
+
+#: inc/class-proenem-elementor-home-widget-base.php:852
 msgid "Aba"
 msgstr "Aba"
 
-#: inc/class-proenem-elementor-home-widget-base.php:849
-#: inc/class-proenem-elementor-home-widget-base.php:1049
-#: inc/class-proenem-elementor-home-widget-base.php:1421
+#: inc/class-proenem-elementor-home-widget-base.php:859
+#: inc/class-proenem-elementor-home-widget-base.php:1060
+#: inc/class-proenem-elementor-home-widget-base.php:1480
 msgid "Ícone"
 msgstr "Ícone"
 
-#: inc/class-proenem-elementor-home-widget-base.php:880
+#: inc/class-proenem-elementor-home-widget-base.php:890
 msgid "Título da tela"
 msgstr "Título da tela"
 
-#: inc/class-proenem-elementor-home-widget-base.php:887
+#: inc/class-proenem-elementor-home-widget-base.php:897
 msgid "Texto da tela"
 msgstr "Texto da tela"
 
-#: inc/class-proenem-elementor-home-widget-base.php:894
+#: inc/class-proenem-elementor-home-widget-base.php:904
 msgid "URL exibida"
 msgstr "URL exibida"
 
-#: inc/class-proenem-elementor-home-widget-base.php:901
+#: inc/class-proenem-elementor-home-widget-base.php:911
 msgid "Bullets, um por linha"
 msgstr "Bullets, um por linha"
 
-#: inc/class-proenem-elementor-home-widget-base.php:908
+#: inc/class-proenem-elementor-home-widget-base.php:918
 msgid "Recursos"
 msgstr "Recursos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:913
-#: page-templates/home.php:188
-#: page-templates/home.php:530
+#: inc/class-proenem-elementor-home-widget-base.php:923
+#: page-templates/home.php:192
+#: page-templates/home.php:549
 msgid "Aulas ao vivo todos os dias"
 msgstr "Aulas ao vivo todos os dias"
 
-#: inc/class-proenem-elementor-home-widget-base.php:916
-#: page-templates/home.php:533
+#: inc/class-proenem-elementor-home-widget-base.php:926
+#: page-templates/home.php:552
 msgid "Aulas ao vivo para manter sua rotina em movimento."
 msgstr "Aulas ao vivo para manter sua rotina em movimento."
 
-#: inc/class-proenem-elementor-home-widget-base.php:917
-#: page-templates/home.php:534
+#: inc/class-proenem-elementor-home-widget-base.php:927
+#: page-templates/home.php:553
 msgid "Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana."
 msgstr "Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana."
 
-#: inc/class-proenem-elementor-home-widget-base.php:919
+#: inc/class-proenem-elementor-home-widget-base.php:929
 msgid ""
 "Agenda diária de aulas\n"
 "Revisões próximas das provas\n"
 "Registro do que você já assistiu"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:922
-#: inc/class-proenem-elementor-home-widget-base.php:1025
-#: page-templates/home.php:543
-#: page-templates/home.php:684
+#: inc/class-proenem-elementor-home-widget-base.php:932
+#: page-templates/home.php:562
 msgid "+50 mil questões"
 msgstr "+50 mil questões"
 
-#: inc/class-proenem-elementor-home-widget-base.php:925
-#: page-templates/home.php:546
+#: inc/class-proenem-elementor-home-widget-base.php:935
+#: page-templates/home.php:565
 msgid "Mais de 50 mil questões para treinar com intenção."
 msgstr "Mais de 50 mil questões para treinar com intenção."
 
-#: inc/class-proenem-elementor-home-widget-base.php:926
-#: page-templates/home.php:547
+#: inc/class-proenem-elementor-home-widget-base.php:936
+#: page-templates/home.php:566
 msgid "Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico."
 msgstr "Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico."
 
-#: inc/class-proenem-elementor-home-widget-base.php:928
+#: inc/class-proenem-elementor-home-widget-base.php:938
 msgid ""
 "Questões por área do conhecimento\n"
 "Resoluções comentadas\n"
 "Histórico de acertos e erros"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:931
-#: page-templates/home.php:556
+#: inc/class-proenem-elementor-home-widget-base.php:941
+#: page-templates/home.php:575
 msgid "Plano personalizado"
 msgstr "Plano personalizado"
 
-#: inc/class-proenem-elementor-home-widget-base.php:934
-#: page-templates/home.php:559
+#: inc/class-proenem-elementor-home-widget-base.php:944
+#: page-templates/home.php:578
 msgid "Plano personalizado para estudar o que mais importa agora."
 msgstr "Plano personalizado para estudar o que mais importa agora."
 
-#: inc/class-proenem-elementor-home-widget-base.php:935
-#: page-templates/home.php:560
+#: inc/class-proenem-elementor-home-widget-base.php:945
+#: page-templates/home.php:579
 msgid "A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução."
 msgstr "A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução."
 
-#: inc/class-proenem-elementor-home-widget-base.php:937
+#: inc/class-proenem-elementor-home-widget-base.php:947
 msgid ""
 "Rotina ajustada por meta\n"
 "Prioridade por lacuna\n"
 "Próximas ações sempre visíveis"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:940
-#: page-templates/home.php:569
+#: inc/class-proenem-elementor-home-widget-base.php:950
+#: page-templates/home.php:588
 msgid "Tutor com IA"
 msgstr "Tutor com IA"
 
-#: inc/class-proenem-elementor-home-widget-base.php:943
-#: page-templates/home.php:572
+#: inc/class-proenem-elementor-home-widget-base.php:953
+#: page-templates/home.php:591
 msgid "Tutor com IA para tirar dúvidas no seu ritmo."
 msgstr "Tutor com IA para tirar dúvidas no seu ritmo."
 
-#: inc/class-proenem-elementor-home-widget-base.php:944
-#: page-templates/home.php:573
+#: inc/class-proenem-elementor-home-widget-base.php:954
+#: page-templates/home.php:592
 msgid "Receba explicações guiadas e volte para o estudo sem perder o contexto da tarefa."
 msgstr "Receba explicações guiadas e volte para o estudo sem perder o contexto da tarefa."
 
-#: inc/class-proenem-elementor-home-widget-base.php:946
+#: inc/class-proenem-elementor-home-widget-base.php:956
 msgid ""
 "Explicação passo a passo\n"
 "Apoio em questões difíceis\n"
 "Disponível durante a rotina"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:949
-#: page-templates/home.php:582
+#: inc/class-proenem-elementor-home-widget-base.php:959
+#: page-templates/home.php:601
 msgid "Correção de redação"
 msgstr "Correção de redação"
 
-#: inc/class-proenem-elementor-home-widget-base.php:952
-#: page-templates/home.php:585
+#: inc/class-proenem-elementor-home-widget-base.php:962
+#: page-templates/home.php:604
 msgid "Correção de redação com devolutiva objetiva."
 msgstr "Correção de redação com devolutiva objetiva."
 
-#: inc/class-proenem-elementor-home-widget-base.php:953
-#: page-templates/home.php:586
+#: inc/class-proenem-elementor-home-widget-base.php:963
+#: page-templates/home.php:605
 msgid "Entenda competência por competência onde melhorar para escrever com mais segurança."
 msgstr "Entenda competência por competência onde melhorar para escrever com mais segurança."
 
-#: inc/class-proenem-elementor-home-widget-base.php:955
+#: inc/class-proenem-elementor-home-widget-base.php:965
 msgid ""
 "Comentários por competência\n"
 "Plano de reescrita\n"
 "Evolução por envio"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:958
-#: page-templates/home.php:595
+#: inc/class-proenem-elementor-home-widget-base.php:968
+#: page-templates/home.php:614
 msgid "Simulados com TRI"
 msgstr "Simulados com TRI"
 
-#: inc/class-proenem-elementor-home-widget-base.php:961
-#: page-templates/home.php:599
+#: inc/class-proenem-elementor-home-widget-base.php:971
+#: page-templates/home.php:618
 msgid "Simulados com a mesma lógica de correção do ENEM."
 msgstr "Simulados com a mesma lógica de correção do ENEM."
 
-#: inc/class-proenem-elementor-home-widget-base.php:962
-#: page-templates/home.php:600
-msgid "Veja sua nota real, evolução por área e onde focar agora."
-msgstr "Veja sua nota real, evolução por área e onde focar agora."
+#: inc/class-proenem-elementor-home-widget-base.php:972
+#: page-templates/home.php:619
+msgid "Veja sua nota real, a evolução por área e onde focar agora."
+msgstr "Veja sua nota real, a evolução por área e onde focar agora."
 
-#: inc/class-proenem-elementor-home-widget-base.php:964
+#: inc/class-proenem-elementor-home-widget-base.php:974
 msgid ""
 "Nota real estimada pelo TRI\n"
 "Comparativo com aprovados\n"
 "Diagnóstico por área e tópico"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:986
-#: page-templates/home.php:625
+#: inc/class-proenem-elementor-home-widget-base.php:997
+#: page-templates/home.php:648
 msgid "Recursos da plataforma"
 msgstr "Recursos da plataforma"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1015
+#: inc/class-proenem-elementor-home-widget-base.php:1026
 msgid "Pro Home Banco de Questões"
 msgstr "Pro Home Banco de Questões"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1024
-#: inc/class-proenem-elementor-home-widget-base.php:1412
+#: inc/class-proenem-elementor-home-widget-base.php:1035
+#: inc/class-proenem-elementor-home-widget-base.php:1469
 msgid "Título antes"
 msgstr "Título antes"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1026
+#: inc/class-proenem-elementor-home-widget-base.php:1035
+#: page-templates/home.php:706
+msgid "Mais de"
+msgstr "Mais de"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1036
+#: page-templates/home.php:707
+msgid "50 mil questões —"
+msgstr "50 mil questões —"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1037
 msgid "Título depois"
 msgstr "Título depois"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1026
-#: page-templates/home.php:685
-msgid "sem precisar criar conta."
-msgstr "sem precisar criar conta."
+#: inc/class-proenem-elementor-home-widget-base.php:1037
+#: page-templates/home.php:708
+msgid "e um plano que diz qual resolver agora."
+msgstr "e um plano que diz qual resolver agora."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1027
-#: page-templates/home.php:687
-msgid "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
-msgstr "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. Escolha uma disciplina e comece agora."
+#: inc/class-proenem-elementor-home-widget-base.php:1038
+#: page-templates/home.php:710
+msgid "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa."
+msgstr "Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1030
+#: inc/class-proenem-elementor-home-widget-base.php:1039
+#: page-templates/home.php:731
+msgid "Explorar questões grátis"
+msgstr "Explorar questões grátis"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1040
+#: page-templates/home.php:732
+msgid "Sem criar conta"
+msgstr "Sem criar conta"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1041
 msgid "Link padrão dos cards"
 msgstr "Link padrão dos cards"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1035
+#: inc/class-proenem-elementor-home-widget-base.php:1046
 msgid "Disciplina"
 msgstr "Disciplina"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1042
+#: inc/class-proenem-elementor-home-widget-base.php:1053
 msgid "Categoria"
 msgstr "Categoria"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1077
+#: inc/class-proenem-elementor-home-widget-base.php:1088
 msgid "Meta questões"
 msgstr "Meta questões"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1079
-#: page-templates/home.php:700
+#: inc/class-proenem-elementor-home-widget-base.php:1090
+#: page-templates/home.php:723
 msgid "512 questões"
 msgstr "512 questões"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1085
+#: inc/class-proenem-elementor-home-widget-base.php:1096
 msgid "Meta aulas"
 msgstr "Meta aulas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1087
-#: page-templates/home.php:701
+#: inc/class-proenem-elementor-home-widget-base.php:1098
+#: page-templates/home.php:724
 msgid "40 aulas"
 msgstr "40 aulas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1093
+#: inc/class-proenem-elementor-home-widget-base.php:1104
 msgid "Disciplinas"
 msgstr "Disciplinas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1098
-#: page-templates/home.php:257
+#: inc/class-proenem-elementor-home-widget-base.php:1109
+#: page-templates/home.php:263
 msgid "Química"
 msgstr "Química"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1099
-#: inc/class-proenem-elementor-home-widget-base.php:1105
-#: page-templates/home.php:258
+#: inc/class-proenem-elementor-home-widget-base.php:1110
+#: inc/class-proenem-elementor-home-widget-base.php:1116
 #: page-templates/home.php:264
+#: page-templates/home.php:270
 msgid "Ciências da Natureza"
 msgstr "Ciências da Natureza"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1104
-#: page-templates/home.php:263
+#: inc/class-proenem-elementor-home-widget-base.php:1115
+#: page-templates/home.php:269
 msgid "Biologia"
 msgstr "Biologia"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1110
-#: inc/class-proenem-elementor-home-widget-base.php:1111
-#: page-templates/home.php:269
-#: page-templates/home.php:270
+#: inc/class-proenem-elementor-home-widget-base.php:1121
+#: inc/class-proenem-elementor-home-widget-base.php:1122
+#: page-templates/home.php:275
+#: page-templates/home.php:276
 msgid "Matemática"
 msgstr "Matemática"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1116
-#: page-templates/home.php:275
+#: inc/class-proenem-elementor-home-widget-base.php:1127
+#: page-templates/home.php:281
 msgid "História"
 msgstr "História"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1117
-#: page-templates/home.php:276
+#: inc/class-proenem-elementor-home-widget-base.php:1128
+#: page-templates/home.php:282
 msgid "Ciências Humanas"
 msgstr "Ciências Humanas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1122
-#: page-templates/home.php:281
+#: inc/class-proenem-elementor-home-widget-base.php:1133
+#: page-templates/home.php:287
 msgid "Inglês"
 msgstr "Inglês"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1123
-#: inc/class-proenem-elementor-home-widget-base.php:1129
-#: page-templates/home.php:282
+#: inc/class-proenem-elementor-home-widget-base.php:1134
+#: inc/class-proenem-elementor-home-widget-base.php:1140
 #: page-templates/home.php:288
+#: page-templates/home.php:294
 msgid "Linguagens"
 msgstr "Linguagens"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1128
-#: page-templates/home.php:287
+#: inc/class-proenem-elementor-home-widget-base.php:1139
+#: page-templates/home.php:293
 msgid "Português"
 msgstr "Português"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1170
+#: inc/class-proenem-elementor-home-widget-base.php:1181
 msgid "Pro Home Planos"
 msgstr "Pro Home Planos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1179
-#: page-templates/home.php:724
-msgid "Investimento que se"
-msgstr "Investimento que se"
+#: inc/class-proenem-elementor-home-widget-base.php:1190
+#: page-templates/home.php:747
+msgid "Comece de graça."
+msgstr "Comece de graça."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1180
-#: page-templates/home.php:725
-msgid "paga em"
-msgstr "paga em"
+#: inc/class-proenem-elementor-home-widget-base.php:1191
+#: page-templates/home.php:748
+msgid "Evolua quando"
+msgstr "Evolua quando"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1181
-#: page-templates/home.php:725
-msgid "uma vaga."
-msgstr "uma vaga."
+#: inc/class-proenem-elementor-home-widget-base.php:1192
+#: page-templates/home.php:748
+msgid "fizer sentido."
+msgstr "fizer sentido."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1182
+#: inc/class-proenem-elementor-home-widget-base.php:1193
 msgid ""
-"Comece grátis. Cancele com 1 clique.\n"
-"7 dias de garantia em todos os planos."
+"Comece grátis, sem cartão. Cancele quando quiser.\n"
+"7 dias de garantia em todos os planos pagos."
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:1183
+#: inc/class-proenem-elementor-home-widget-base.php:1194
 msgid "Botão dos planos"
 msgstr "Botão dos planos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1183
-#: page-templates/home.php:746
+#: inc/class-proenem-elementor-home-widget-base.php:1194
+#: inc/class-proenem-elementor-home-widget-base.php:1279
+#: inc/class-proenem-elementor-home-widget-base.php:1322
+#: page-templates/home.php:185
 msgid "Quero o Método PRO"
 msgstr "Quero o Método PRO"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1184
+#: inc/class-proenem-elementor-home-widget-base.php:1195
 msgid "Link dos planos"
 msgstr "Link dos planos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1197
+#: inc/class-proenem-elementor-home-widget-base.php:1208
 #: inc/class-proenem-elementor-sales-widget-base.php:584
 #: inc/class-proenem-elementor-sales-widget-base.php:752
 msgid "Preço"
 msgstr "Preço"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1204
+#: inc/class-proenem-elementor-home-widget-base.php:1215
 msgid "Resumo"
 msgstr "Resumo"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1211
+#: inc/class-proenem-elementor-home-widget-base.php:1222
 msgid "Benefícios, um por linha"
 msgstr "Benefícios, um por linha"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1218
+#: inc/class-proenem-elementor-home-widget-base.php:1229
+msgid "Texto do botão"
+msgstr "Texto do botão"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1244
+msgid "Plano gratuito"
+msgstr "Plano gratuito"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1252
 msgid "Destacado"
 msgstr "Destacado"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1226
+#: inc/class-proenem-elementor-home-widget-base.php:1260
 #: inc/class-proenem-elementor-sales-widget-base.php:551
 #: inc/class-proenem-elementor-sales-widget-base.php:624
 msgid "Planos"
 msgstr "Planos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1231
+#: inc/class-proenem-elementor-home-widget-base.php:1265
+#: inc/class-proenem-elementor-home-widget-base.php:1300
 #: page-templates/home.php:168
-msgid "Essencial"
-msgstr "Essencial"
+msgid "Grátis"
+msgstr "Grátis"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1233
+#: inc/class-proenem-elementor-home-widget-base.php:1267
 #: page-templates/home.php:170
-msgid "Para começar a estudar com método."
-msgstr "Para começar a estudar com método."
+msgid "Para começar hoje."
+msgstr "Para começar hoje."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1234
+#: inc/class-proenem-elementor-home-widget-base.php:1268
 msgid ""
-"Banco com +50k questões\n"
-"Aulas gravadas completas\n"
-"Cronograma básico\n"
-"Comunidade de alunos"
+"Diagnóstico inicial + nota prevista\n"
+"Banco de +50 mil questões\n"
+"Sem cartão"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:1237
-#: inc/class-proenem-elementor-home-widget-base.php:1413
-#: page-templates/home.php:179
-#: page-templates/home.php:803
-msgid "Método PRO"
-msgstr "Método PRO"
+#: inc/class-proenem-elementor-home-widget-base.php:1269
+#: page-templates/home.php:172
+msgid "Criar conta grátis"
+msgstr "Criar conta grátis"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1239
-#: page-templates/home.php:181
+#: inc/class-proenem-elementor-home-widget-base.php:1276
+#: page-templates/home.php:183
 msgid "O método completo, com IA e mentoria."
 msgstr "O método completo, com IA e mentoria."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1240
+#: inc/class-proenem-elementor-home-widget-base.php:1277
 msgid ""
-"Tudo do Essencial\n"
+"Tudo do Grátis\n"
 "Tutor IA ilimitado 24/7\n"
 "Redação corrigida em 48h\n"
 "Simulados TRI semanais\n"
@@ -1059,17 +1121,19 @@ msgid ""
 "Plano adaptativo por IA"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:1244
-#: page-templates/home.php:193
-msgid "Elite"
-msgstr "Elite"
+#: inc/class-proenem-elementor-home-widget-base.php:1283
+#: inc/class-proenem-elementor-home-widget-base.php:1302
+#: inc/class-proenem-elementor-home-widget-base.php:1322
+#: page-templates/home.php:197
+msgid "Pro Medicina"
+msgstr "Pro Medicina"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1246
-#: page-templates/home.php:195
+#: inc/class-proenem-elementor-home-widget-base.php:1285
+#: page-templates/home.php:199
 msgid "Mentoria 1:1 com aprovados."
 msgstr "Mentoria 1:1 com aprovados."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1247
+#: inc/class-proenem-elementor-home-widget-base.php:1286
 msgid ""
 "Tudo do Método PRO\n"
 "Mentor pessoal aprovado em Medicina\n"
@@ -1077,307 +1141,315 @@ msgid ""
 "Revisão de redação prioritária"
 msgstr ""
 
-#: inc/class-proenem-elementor-home-widget-base.php:1273
-#: page-templates/home.php:734
+#: inc/class-proenem-elementor-home-widget-base.php:1287
+#: inc/class-proenem-elementor-home-widget-base.php:1323
+#: page-templates/home.php:200
+msgid "Quero o Pro Medicina"
+msgstr "Quero o Pro Medicina"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1330
+#: page-templates/home.php:757
 msgid "Mais escolhido"
 msgstr "Mais escolhido"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1274
-#: page-templates/home.php:739
+#: inc/class-proenem-elementor-home-widget-base.php:1331
+#: page-templates/home.php:762
 msgid "R$"
 msgstr "R$"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1274
-#: page-templates/home.php:739
+#: inc/class-proenem-elementor-home-widget-base.php:1331
+#: page-templates/home.php:762
 msgid "ao mês"
 msgstr "ao mês"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1299
+#: inc/class-proenem-elementor-home-widget-base.php:1356
 msgid "Pro Home Depoimentos"
 msgstr "Pro Home Depoimentos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1308
-#: page-templates/home.php:754
+#: inc/class-proenem-elementor-home-widget-base.php:1365
+#: page-templates/home.php:777
 msgid "Aprovados"
 msgstr "Aprovados"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1309
-#: page-templates/home.php:756
-msgid "Quem seguiu o método,"
-msgstr "Quem seguiu o método,"
+#: inc/class-proenem-elementor-home-widget-base.php:1366
+#: page-templates/home.php:779
+msgid "Quem estudou com método,"
+msgstr "Quem estudou com método,"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1310
-#: page-templates/home.php:757
-msgid "conquistou a vaga."
-msgstr "conquistou a vaga."
+#: inc/class-proenem-elementor-home-widget-base.php:1367
+#: page-templates/home.php:780
+msgid "chegou na vaga."
+msgstr "chegou na vaga."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1311
-#: page-templates/home.php:759
-msgid "Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias."
-msgstr "Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias."
+#: inc/class-proenem-elementor-home-widget-base.php:1368
+#: page-templates/home.php:782
+msgid "Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias."
+msgstr "Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1316
+#: inc/class-proenem-elementor-home-widget-base.php:1373
 #: inc/template-tags.php:777
 msgid "Depoimento"
 msgstr "Depoimento"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1330
+#: inc/class-proenem-elementor-home-widget-base.php:1387
 #: inc/class-proenem-elementor-sales-widget-base.php:745
 #: inc/class-proenem-elementor-sales-widget-base.php:891
 msgid "Descrição"
 msgstr "Descrição"
 
 #. Template Name of the theme
-#: inc/class-proenem-elementor-home-widget-base.php:1344
+#: inc/class-proenem-elementor-home-widget-base.php:1401
 #: page-templates/testimonials.php:54
 msgid "Depoimentos"
 msgstr "Depoimentos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1349
-#: page-templates/home.php:207
+#: inc/class-proenem-elementor-home-widget-base.php:1406
+#: page-templates/home.php:213
 msgid "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana."
 msgstr "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1350
-#: page-templates/home.php:208
+#: inc/class-proenem-elementor-home-widget-base.php:1407
+#: page-templates/home.php:214
 msgid "Mariana Costa"
 msgstr "Mariana Costa"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1351
-#: page-templates/home.php:209
+#: inc/class-proenem-elementor-home-widget-base.php:1408
+#: page-templates/home.php:215
 msgid "Aprovada em Medicina"
 msgstr "Aprovada em Medicina"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1355
-#: page-templates/home.php:213
+#: inc/class-proenem-elementor-home-widget-base.php:1412
+#: page-templates/home.php:219
 msgid "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir."
 msgstr "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1356
-#: page-templates/home.php:214
+#: inc/class-proenem-elementor-home-widget-base.php:1413
+#: page-templates/home.php:220
 msgid "Lucas Almeida"
 msgstr "Lucas Almeida"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1357
-#: page-templates/home.php:215
+#: inc/class-proenem-elementor-home-widget-base.php:1414
+#: page-templates/home.php:221
 msgid "Aprovado em Engenharia"
 msgstr "Aprovado em Engenharia"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1361
-#: page-templates/home.php:219
+#: inc/class-proenem-elementor-home-widget-base.php:1418
+#: page-templates/home.php:225
 msgid "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante."
 msgstr "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1362
-#: page-templates/home.php:220
+#: inc/class-proenem-elementor-home-widget-base.php:1419
+#: page-templates/home.php:226
 msgid "Beatriz Rocha"
 msgstr "Beatriz Rocha"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1363
-#: page-templates/home.php:221
+#: inc/class-proenem-elementor-home-widget-base.php:1420
+#: page-templates/home.php:227
 msgid "Aprovada em Direito"
 msgstr "Aprovada em Direito"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1384
-#: page-templates/home.php:780
+#: inc/class-proenem-elementor-home-widget-base.php:1441
+#: page-templates/home.php:803
 msgid "Controles dos depoimentos"
 msgstr "Controles dos depoimentos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1384
-#: page-templates/home.php:781
+#: inc/class-proenem-elementor-home-widget-base.php:1441
+#: page-templates/home.php:804
 msgid "Depoimento anterior"
 msgstr "Depoimento anterior"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1384
-#: page-templates/home.php:782
+#: inc/class-proenem-elementor-home-widget-base.php:1441
+#: page-templates/home.php:805
 msgid "Próximo depoimento"
 msgstr "Próximo depoimento"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1400
+#: inc/class-proenem-elementor-home-widget-base.php:1457
 msgid "Pro Home Escolas"
 msgstr "Pro Home Escolas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1409
+#: inc/class-proenem-elementor-home-widget-base.php:1466
 msgid "Marquee, uma frase por linha"
 msgstr "Marquee, uma frase por linha"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1411
+#: inc/class-proenem-elementor-home-widget-base.php:1468
 msgid "Imagem secundária"
 msgstr "Imagem secundária"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1412
-#: page-templates/home.php:803
+#: inc/class-proenem-elementor-home-widget-base.php:1469
+#: page-templates/home.php:826
 msgid "Leve o"
 msgstr "Leve o"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1414
+#: inc/class-proenem-elementor-home-widget-base.php:1471
 msgid "Título meio"
 msgstr "Título meio"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1414
-#: page-templates/home.php:804
+#: inc/class-proenem-elementor-home-widget-base.php:1471
+#: page-templates/home.php:827
 msgid "para a"
 msgstr "para a"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1415
-#: page-templates/home.php:804
+#: inc/class-proenem-elementor-home-widget-base.php:1472
+#: page-templates/home.php:827
 msgid "sua escola."
 msgstr "sua escola."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1416
-#: page-templates/home.php:806
-msgid "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote."
-msgstr "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM. Plataforma, material didático e acompanhamento em um único pacote."
+#: inc/class-proenem-elementor-home-widget-base.php:1473
+#: page-templates/home.php:829
+msgid "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno."
+msgstr "Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1455
-#: page-templates/home.php:814
+#: inc/class-proenem-elementor-home-widget-base.php:1474
+#: inc/class-proenem-elementor-home-widget-base.php:1588
+#: page-templates/home.php:830
+#: page-templates/home.php:868
+msgid "Falar com nossa equipe"
+msgstr "Falar com nossa equipe"
+
+#: inc/class-proenem-elementor-home-widget-base.php:1514
+#: page-templates/home.php:838
 msgid "Combo plataforma + apostilas"
 msgstr "Combo plataforma + apostilas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1456
-#: page-templates/home.php:815
+#: inc/class-proenem-elementor-home-widget-base.php:1515
+#: page-templates/home.php:839
 msgid "Acesso completo à plataforma, mais o kit de apostilas exclusivas entregue na escola."
 msgstr "Acesso completo à plataforma, mais o kit de apostilas exclusivas entregue na escola."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1460
-#: page-templates/home.php:819
+#: inc/class-proenem-elementor-home-widget-base.php:1519
+#: page-templates/home.php:843
 msgid "Acompanhe cada aluno"
 msgstr "Acompanhe cada aluno"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1461
-#: page-templates/home.php:820
+#: inc/class-proenem-elementor-home-widget-base.php:1520
+#: page-templates/home.php:844
 msgid "Painel exclusivo para coordenadores e professores com desempenho, simulados e frequência em tempo real."
 msgstr "Painel exclusivo para coordenadores e professores com desempenho, simulados e frequência em tempo real."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1465
-#: page-templates/home.php:824
+#: inc/class-proenem-elementor-home-widget-base.php:1524
+#: page-templates/home.php:848
 msgid "Acesso para todos os alunos"
 msgstr "Acesso para todos os alunos"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1466
-#: page-templates/home.php:825
+#: inc/class-proenem-elementor-home-widget-base.php:1525
+#: page-templates/home.php:849
 msgid "Licenças geradas para todas as turmas. Cada aluno tem seu perfil individual e plano personalizado."
 msgstr "Licenças geradas para todas as turmas. Cada aluno tem seu perfil individual e plano personalizado."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1470
-#: page-templates/home.php:829
+#: inc/class-proenem-elementor-home-widget-base.php:1529
+#: page-templates/home.php:853
 msgid "Onboarding dedicado"
 msgstr "Onboarding dedicado"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1471
-#: page-templates/home.php:830
+#: inc/class-proenem-elementor-home-widget-base.php:1530
+#: page-templates/home.php:854
 msgid "Um especialista cuida da implantação, treina os professores e acompanha os primeiros ciclos."
 msgstr "Um especialista cuida da implantação, treina os professores e acompanha os primeiros ciclos."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1496
-#: page-templates/home.php:798
+#: inc/class-proenem-elementor-home-widget-base.php:1555
+#: page-templates/home.php:821
 msgid "Estudante sorrindo em ambiente escolar."
 msgstr "Estudante sorrindo em ambiente escolar."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1497
-#: page-templates/home.php:808
+#: inc/class-proenem-elementor-home-widget-base.php:1556
+#: page-templates/home.php:832
 msgid "Estudante sorrindo com livros ao fundo."
 msgstr "Estudante sorrindo com livros ao fundo."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1518
+#: inc/class-proenem-elementor-home-widget-base.php:1577
 msgid "Pro Home CTA Final"
 msgstr "Pro Home CTA Final"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1527
-#: inc/template-tags.php:345
-msgid "Pronto para transformar a preparação ENEM na sua escola?"
-msgstr "Pronto para transformar a preparação ENEM na sua escola?"
+#: inc/class-proenem-elementor-home-widget-base.php:1586
+msgid "Pronto para transformar a preparação para o ENEM na sua escola?"
+msgstr "Pronto para transformar a preparação para o ENEM na sua escola?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1528
-#: page-templates/home.php:841
-msgid "Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição."
-msgstr "Converse com nossa equipe e receba uma proposta personalizada de acordo com o tamanho e perfil da sua instituição."
+#: inc/class-proenem-elementor-home-widget-base.php:1587
+#: page-templates/home.php:865
+msgid "Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição."
+msgstr "Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1553
+#: inc/class-proenem-elementor-home-widget-base.php:1612
 msgid "Pro Home FAQ"
 msgstr "Pro Home FAQ"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1562
-#: inc/class-proenem-elementor-sales-widget-base.php:1215
-#: inc/template-tags.php:358
-#: page-templates/home.php:850
-msgid "Perguntas frequentes"
-msgstr "Perguntas frequentes"
+#: inc/class-proenem-elementor-home-widget-base.php:1621
+#: page-templates/home.php:874
+msgid "FAQ"
+msgstr "FAQ"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1563
-msgid "Já sentiu que estuda muito,"
-msgstr "Já sentiu que estuda muito,"
+#: inc/class-proenem-elementor-home-widget-base.php:1622
+#: inc/class-proenem-elementor-home-widget-base.php:1642
+#: inc/class-proenem-elementor-sales-widget-base.php:1206
+#: page-templates/home.php:876
+msgid "Perguntas"
+msgstr "Perguntas"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1564
-msgid "mas a nota não sobe?"
-msgstr "mas a nota não sobe?"
+#: inc/class-proenem-elementor-home-widget-base.php:1623
+#: page-templates/home.php:877
+msgid "frequentes"
+msgstr "frequentes"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1569
+#: inc/class-proenem-elementor-home-widget-base.php:1628
 #: inc/class-proenem-elementor-sales-widget-base.php:1222
 msgid "Pergunta"
 msgstr "Pergunta"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1576
+#: inc/class-proenem-elementor-home-widget-base.php:1635
 #: inc/class-proenem-elementor-sales-widget-base.php:1229
 msgid "Resposta"
 msgstr "Resposta"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1583
-#: inc/class-proenem-elementor-sales-widget-base.php:1206
-msgid "Perguntas"
-msgstr "Perguntas"
+#: inc/class-proenem-elementor-home-widget-base.php:1647
+#: inc/template-tags.php:363
+#: page-templates/home.php:240
+msgid "O que é o Método PRO?"
+msgstr "O que é o Método PRO?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1588
-#: page-templates/home.php:234
-msgid "O que é o MÉTODO PRO?"
-msgstr "O que é o MÉTODO PRO?"
+#: inc/class-proenem-elementor-home-widget-base.php:1648
+#: page-templates/home.php:241
+msgid "Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota."
+msgstr "Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1589
-#: page-templates/home.php:235
-msgid "É uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos até a aprovação."
-msgstr "É uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos até a aprovação."
+#: inc/class-proenem-elementor-home-widget-base.php:1651
+#: page-templates/home.php:244
+msgid "Posso começar de graça?"
+msgstr "Posso começar de graça?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1592
-#: inc/template-tags.php:367
-#: page-templates/home.php:238
-msgid "Posso começar a estudar de graça?"
-msgstr "Posso começar a estudar de graça?"
+#: inc/class-proenem-elementor-home-widget-base.php:1652
+#: page-templates/home.php:245
+msgid "Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão."
+msgstr "Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1593
-#: page-templates/home.php:239
-msgid "Sim. Você pode criar uma conta gratuita e acessar o banco de questões, listas e um diagnóstico simplificado."
-msgstr "Sim. Você pode criar uma conta gratuita e acessar o banco de questões, listas e um diagnóstico simplificado."
+#: inc/class-proenem-elementor-home-widget-base.php:1655
+#: page-templates/home.php:248
+msgid "Qual a diferença entre os planos?"
+msgstr "Qual a diferença entre os planos?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1596
-#: inc/template-tags.php:371
-#: page-templates/home.php:242
-msgid "O que é a Aceleração PRO?"
-msgstr "O que é a Aceleração PRO?"
+#: inc/class-proenem-elementor-home-widget-base.php:1656
+#: page-templates/home.php:249
+msgid "O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados."
+msgstr "O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1597
-#: page-templates/home.php:243
-msgid "É o plano para quem quer acompanhamento mais próximo, simulados com TRI, redação corrigida e rotina adaptada por IA."
-msgstr "É o plano para quem quer acompanhamento mais próximo, simulados com TRI, redação corrigida e rotina adaptada por IA."
-
-#: inc/class-proenem-elementor-home-widget-base.php:1600
-#: page-templates/home.php:246
+#: inc/class-proenem-elementor-home-widget-base.php:1659
+#: page-templates/home.php:252
 msgid "Posso entrar em qualquer época do ano?"
 msgstr "Posso entrar em qualquer época do ano?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1601
-#: page-templates/home.php:247
-msgid "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo disponível até a prova."
-msgstr "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo disponível até a prova."
+#: inc/class-proenem-elementor-home-widget-base.php:1660
+#: page-templates/home.php:253
+msgid "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova."
+msgstr "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova."
 
-#: inc/class-proenem-elementor-home-widget-base.php:1604
-#: page-templates/home.php:250
+#: inc/class-proenem-elementor-home-widget-base.php:1663
+#: page-templates/home.php:256
 msgid "E se eu não gostar?"
 msgstr "E se eu não gostar?"
 
-#: inc/class-proenem-elementor-home-widget-base.php:1605
-#: page-templates/home.php:251
-msgid "Você pode cancelar quando quiser. A ideia é experimentar o método sem burocracia e seguir apenas se fizer sentido para sua rotina."
-msgstr "Você pode cancelar quando quiser. A ideia é experimentar o método sem burocracia e seguir apenas se fizer sentido para sua rotina."
+#: inc/class-proenem-elementor-home-widget-base.php:1664
+#: page-templates/home.php:257
+msgid "Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você."
+msgstr "Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você."
 
 #: inc/class-proenem-elementor-sales-widget-base.php:105
 msgid "Pro Navbar"
@@ -1527,10 +1599,6 @@ msgstr "Link"
 msgid "Pro Card de Plano"
 msgstr "Pro Card de Plano"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:723
-msgid "Plano"
-msgstr "Plano"
-
 #: inc/class-proenem-elementor-sales-widget-base.php:846
 msgid "Pro Lista de Benefícios"
 msgstr "Pro Lista de Benefícios"
@@ -1608,6 +1676,11 @@ msgstr "Escolher plano"
 #: inc/class-proenem-elementor-sales-widget-base.php:1185
 msgid "Pro FAQ"
 msgstr "Pro FAQ"
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1215
+#: inc/template-tags.php:358
+msgid "Perguntas frequentes"
+msgstr "Perguntas frequentes"
 
 #: inc/customizer.php:22
 msgid "Scripts do rodapé"
@@ -1777,38 +1850,51 @@ msgid "Destaques Proenem"
 msgstr "Destaques Proenem"
 
 #: inc/template-tags.php:333
-#: page-templates/home.php:339
-#: page-templates/home.php:790
-#: page-templates/home.php:793
 msgid "Troque a sorte pela estratégia"
 msgstr "Troque a sorte pela estratégia"
 
+#: inc/template-tags.php:335
+#: page-templates/home.php:346
+#: page-templates/home.php:814
+#: page-templates/home.php:817
+msgid "Conheça o Método PRO"
+msgstr "Conheça o Método PRO"
+
 #: inc/template-tags.php:337
-#: page-templates/home.php:338
-#: page-templates/home.php:789
-#: page-templates/home.php:792
 msgid "A engenharia da sua aprovação"
 msgstr "A engenharia da sua aprovação"
+
+#: inc/template-tags.php:345
+msgid "Pronto para transformar a preparação ENEM na sua escola?"
+msgstr "Pronto para transformar a preparação ENEM na sua escola?"
 
 #: inc/template-tags.php:346
 msgid "Converse conosco e equipe sua instituição com uma proposta personalizada de acordo com o tamanho e perfil da sua operação."
 msgstr "Converse conosco e equipe sua instituição com uma proposta personalizada de acordo com o tamanho e perfil da sua operação."
 
+#: inc/template-tags.php:350
+msgid "Começar gratuitamente"
+msgstr "Começar gratuitamente"
+
 #: inc/template-tags.php:359
 msgid "Já sentiu que estuda muito, mas a nota não sobe?"
 msgstr "Já sentiu que estuda muito, mas a nota não sobe?"
-
-#: inc/template-tags.php:363
-msgid "O que é o Método PRO?"
-msgstr "O que é o Método PRO?"
 
 #: inc/template-tags.php:364
 msgid "É a metodologia da Proenem para organizar estudo, diagnóstico, prática e revisão em uma rotina clara."
 msgstr "É a metodologia da Proenem para organizar estudo, diagnóstico, prática e revisão em uma rotina clara."
 
+#: inc/template-tags.php:367
+msgid "Posso começar a estudar de graça?"
+msgstr "Posso começar a estudar de graça?"
+
 #: inc/template-tags.php:368
 msgid "Sim. Você pode criar uma conta gratuita e acessar conteúdos iniciais antes de escolher o plano ideal."
 msgstr "Sim. Você pode criar uma conta gratuita e acessar conteúdos iniciais antes de escolher o plano ideal."
+
+#: inc/template-tags.php:371
+msgid "O que é a Aceleração PRO?"
+msgstr "O que é a Aceleração PRO?"
 
 #: inc/template-tags.php:372
 msgid "É uma jornada intensiva para estudantes que precisam acelerar preparação com acompanhamento e foco."
@@ -1904,8 +1990,8 @@ msgid "É método."
 msgstr "É método."
 
 #: inc/template-tags.php:1170
-msgid "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
-msgstr "Construímos a infraestrutura que transforma esforço em resultado. Você estuda, a engenharia faz o resto."
+msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
+msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
 #: inc/template-tags.php:1172
 msgid "Nossas turmas"
@@ -1922,8 +2008,8 @@ msgstr "Links legais"
 #. translators: %s: Current year.
 #: inc/template-tags.php:1215
 #, php-format
-msgid "@%s ProEnem - Grupo Q Educação"
-msgstr "@%s ProEnem - Grupo Q Educação"
+msgid "@%s Proenem - Grupo Q Educação"
+msgstr "@%s Proenem - Grupo Q Educação"
 
 #: inc/template-tags.php:1222
 msgid "Feito com ♥ para você"
@@ -1932,10 +2018,6 @@ msgstr "Feito com ♥ para você"
 #: inc/template-tags.php:1355
 msgid "Navegação principal"
 msgstr "Navegação principal"
-
-#: inc/template-tags.php:1371
-msgid "ProEnem"
-msgstr "ProEnem"
 
 #: inc/template-tags.php:1380
 msgid "Abrir menu"
@@ -2005,246 +2087,254 @@ msgid "Tente limpar os filtros ou cadastre novos materiais gratuitos no WordPres
 msgstr "Tente limpar os filtros ou cadastre novos materiais gratuitos no WordPress."
 
 #. Template Name of the theme
-msgid "ProEnem Home"
-msgstr "ProEnem Home"
+msgid "Proenem Home"
+msgstr "Proenem Home"
 
 #: page-templates/home.php:169
-msgid "39"
-msgstr "39"
-
-#: page-templates/home.php:172
-msgid "Banco com +50k questões"
-msgstr "Banco com +50k questões"
-
-#: page-templates/home.php:173
-msgid "Aulas gravadas completas"
-msgstr "Aulas gravadas completas"
-
-#: page-templates/home.php:174
-msgid "Cronograma básico"
-msgstr "Cronograma básico"
+msgid "0"
+msgstr "0"
 
 #: page-templates/home.php:175
-msgid "Comunidade de alunos"
-msgstr "Comunidade de alunos"
+msgid "Diagnóstico inicial + nota prevista"
+msgstr "Diagnóstico inicial + nota prevista"
 
-#: page-templates/home.php:180
-msgid "99"
-msgstr "99"
+#: page-templates/home.php:176
+msgid "Banco de +50 mil questões"
+msgstr "Banco de +50 mil questões"
 
-#: page-templates/home.php:184
-msgid "Tudo do Essencial"
-msgstr "Tudo do Essencial"
+#: page-templates/home.php:177
+msgid "Sem cartão"
+msgstr "Sem cartão"
 
-#: page-templates/home.php:185
+#: page-templates/home.php:182
+msgid "29"
+msgstr "29"
+
+#: page-templates/home.php:188
+msgid "Tudo do Grátis"
+msgstr "Tudo do Grátis"
+
+#: page-templates/home.php:189
 msgid "Tutor IA ilimitado 24/7"
 msgstr "Tutor IA ilimitado 24/7"
 
-#: page-templates/home.php:186
+#: page-templates/home.php:190
 msgid "Redação corrigida em 48h"
 msgstr "Redação corrigida em 48h"
 
-#: page-templates/home.php:187
+#: page-templates/home.php:191
 msgid "Simulados TRI semanais"
 msgstr "Simulados TRI semanais"
 
-#: page-templates/home.php:189
+#: page-templates/home.php:193
 msgid "Plano adaptativo por IA"
 msgstr "Plano adaptativo por IA"
 
-#: page-templates/home.php:194
-msgid "199"
-msgstr "199"
+#: page-templates/home.php:198
+msgid "39"
+msgstr "39"
 
-#: page-templates/home.php:197
+#: page-templates/home.php:203
 msgid "Tudo do Método PRO"
 msgstr "Tudo do Método PRO"
 
-#: page-templates/home.php:198
+#: page-templates/home.php:204
 msgid "Mentor pessoal aprovado em Medicina"
 msgstr "Mentor pessoal aprovado em Medicina"
 
-#: page-templates/home.php:199
+#: page-templates/home.php:205
 msgid "2 sessões 1:1 por semana"
 msgstr "2 sessões 1:1 por semana"
 
-#: page-templates/home.php:200
+#: page-templates/home.php:206
 msgid "Revisão de redação prioritária"
 msgstr "Revisão de redação prioritária"
 
-#: page-templates/home.php:225
+#: page-templates/home.php:231
 msgid "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade."
 msgstr "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade."
 
-#: page-templates/home.php:226
+#: page-templates/home.php:232
 msgid "Pedro Martins"
 msgstr "Pedro Martins"
 
-#: page-templates/home.php:227
+#: page-templates/home.php:233
 msgid "Aprovado em Psicologia"
 msgstr "Aprovado em Psicologia"
 
-#: page-templates/home.php:300
+#: page-templates/home.php:306
 msgid "Navegação da home"
 msgstr "Navegação da home"
 
-#: page-templates/home.php:410
+#: page-templates/home.php:344
+#: page-templates/home.php:812
+#: page-templates/home.php:815
+msgid "Sua aprovação não é sorte. É método."
+msgstr "Sua aprovação não é sorte. É método."
+
+#: page-templates/home.php:345
+#: page-templates/home.php:813
+#: page-templates/home.php:816
+msgid "Estude com estratégia, não com mais horas."
+msgstr "Estude com estratégia, não com mais horas."
+
+#: page-templates/home.php:416
 msgid "UFRJ"
 msgstr "UFRJ"
 
-#: page-templates/home.php:414
+#: page-templates/home.php:420
 msgid "UFRGS"
 msgstr "UFRGS"
 
-#: page-templates/home.php:418
+#: page-templates/home.php:424
 msgid "Unicamp"
 msgstr "Unicamp"
 
-#: page-templates/home.php:422
+#: page-templates/home.php:428
 msgid "UERJ"
 msgstr "UERJ"
 
-#: page-templates/home.php:426
+#: page-templates/home.php:432
 msgid "USP"
 msgstr "USP"
 
-#: page-templates/home.php:430
+#: page-templates/home.php:436
 msgid "Unifesp"
 msgstr "Unifesp"
 
-#: page-templates/home.php:506
+#: page-templates/home.php:512
 msgid "&"
 msgstr "&"
 
-#: page-templates/home.php:507
+#: page-templates/home.php:513
 msgid "insegurança"
 msgstr "insegurança"
 
-#: page-templates/home.php:535
+#: page-templates/home.php:554
 msgid "proenem.com.br/app/aulas-ao-vivo"
 msgstr "proenem.com.br/app/aulas-ao-vivo"
 
-#: page-templates/home.php:537
+#: page-templates/home.php:556
 msgid "Agenda diária de aulas"
 msgstr "Agenda diária de aulas"
 
-#: page-templates/home.php:538
+#: page-templates/home.php:557
 msgid "Revisões próximas das provas"
 msgstr "Revisões próximas das provas"
 
-#: page-templates/home.php:539
+#: page-templates/home.php:558
 msgid "Registro do que você já assistiu"
 msgstr "Registro do que você já assistiu"
 
-#: page-templates/home.php:548
+#: page-templates/home.php:567
 msgid "proenem.com.br/app/questoes"
 msgstr "proenem.com.br/app/questoes"
 
-#: page-templates/home.php:550
+#: page-templates/home.php:569
 msgid "Questões por área do conhecimento"
 msgstr "Questões por área do conhecimento"
 
-#: page-templates/home.php:551
+#: page-templates/home.php:570
 msgid "Resoluções comentadas"
 msgstr "Resoluções comentadas"
 
-#: page-templates/home.php:552
+#: page-templates/home.php:571
 msgid "Histórico de acertos e erros"
 msgstr "Histórico de acertos e erros"
 
-#: page-templates/home.php:561
+#: page-templates/home.php:580
 msgid "proenem.com.br/app/plano"
 msgstr "proenem.com.br/app/plano"
 
-#: page-templates/home.php:563
+#: page-templates/home.php:582
 msgid "Rotina ajustada por meta"
 msgstr "Rotina ajustada por meta"
 
-#: page-templates/home.php:564
+#: page-templates/home.php:583
 msgid "Prioridade por lacuna"
 msgstr "Prioridade por lacuna"
 
-#: page-templates/home.php:565
+#: page-templates/home.php:584
 msgid "Próximas ações sempre visíveis"
 msgstr "Próximas ações sempre visíveis"
 
-#: page-templates/home.php:574
+#: page-templates/home.php:593
 msgid "proenem.com.br/app/tutor-ia"
 msgstr "proenem.com.br/app/tutor-ia"
 
-#: page-templates/home.php:576
+#: page-templates/home.php:595
 msgid "Explicação passo a passo"
 msgstr "Explicação passo a passo"
 
-#: page-templates/home.php:577
+#: page-templates/home.php:596
 msgid "Apoio em questões difíceis"
 msgstr "Apoio em questões difíceis"
 
-#: page-templates/home.php:578
+#: page-templates/home.php:597
 msgid "Disponível durante a rotina"
 msgstr "Disponível durante a rotina"
 
-#: page-templates/home.php:587
+#: page-templates/home.php:606
 msgid "proenem.com.br/app/redacao"
 msgstr "proenem.com.br/app/redacao"
 
-#: page-templates/home.php:589
+#: page-templates/home.php:608
 msgid "Comentários por competência"
 msgstr "Comentários por competência"
 
-#: page-templates/home.php:590
+#: page-templates/home.php:609
 msgid "Plano de reescrita"
 msgstr "Plano de reescrita"
 
-#: page-templates/home.php:591
+#: page-templates/home.php:610
 msgid "Evolução por envio"
 msgstr "Evolução por envio"
 
-#: page-templates/home.php:601
+#: page-templates/home.php:620
 msgid "proenem.com.br/app/simulados-com-tri"
 msgstr "proenem.com.br/app/simulados-com-tri"
 
-#: page-templates/home.php:603
+#: page-templates/home.php:622
 msgid "Nota real estimada pelo TRI"
 msgstr "Nota real estimada pelo TRI"
 
-#: page-templates/home.php:604
+#: page-templates/home.php:623
 msgid "Comparativo com aprovados"
 msgstr "Comparativo com aprovados"
 
-#: page-templates/home.php:605
+#: page-templates/home.php:624
 msgid "Diagnóstico por área e tópico"
 msgstr "Diagnóstico por área e tópico"
 
-#: page-templates/home.php:727
-msgid "Comece grátis. Cancele com 1 clique."
-msgstr "Comece grátis. Cancele com 1 clique."
+#: page-templates/home.php:750
+msgid "Comece grátis, sem cartão. Cancele quando quiser."
+msgstr "Comece grátis, sem cartão. Cancele quando quiser."
 
-#: page-templates/home.php:727
-msgid "7 dias de garantia em todos os planos."
-msgstr "7 dias de garantia em todos os planos."
+#: page-templates/home.php:750
+msgid "7 dias de garantia em todos os planos pagos."
+msgstr "7 dias de garantia em todos os planos pagos."
 
-#: page-templates/home.php:838
+#: page-templates/home.php:862
 msgid "Pronto para"
 msgstr "Pronto para"
 
-#: page-templates/home.php:838
+#: page-templates/home.php:862
 msgid "transformar"
 msgstr "transformar"
 
-#: page-templates/home.php:838
+#: page-templates/home.php:862
 msgid "a"
 msgstr "a"
 
-#: page-templates/home.php:839
-msgid "preparação"
-msgstr "preparação"
+#: page-templates/home.php:863
+msgid "preparação para o"
+msgstr "preparação para o"
 
-#: page-templates/home.php:839
+#: page-templates/home.php:863
 msgid "ENEM"
 msgstr "ENEM"
 
-#: page-templates/home.php:839
+#: page-templates/home.php:863
 msgid "na sua escola?"
 msgstr "na sua escola?"
 
