@@ -4085,6 +4085,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   max-width: 35rem;
 }
 
+.pro-home .pro-home-school-section__cta {
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 4;
+}
+
 .pro-home .pro-home-school-section__photo-secondary {
   display: block;
   bottom: 0;

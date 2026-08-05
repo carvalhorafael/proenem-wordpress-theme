@@ -29,6 +29,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
   await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
   await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
+  await expect(page.locator(".pro-home-school-section").getByRole("link", { name: /falar com nossa equipe/i })).toHaveAttribute("href", "#faq");
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
