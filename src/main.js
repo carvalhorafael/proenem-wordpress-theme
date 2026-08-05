@@ -119,7 +119,13 @@ document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => 
   });
 
   slider.addEventListener("pointerdown", (event) => {
-    if (!event.isPrimary) {
+    const isNavigationControl =
+      event.target instanceof Element &&
+      event.target.closest(
+        "[data-pro-home-pillars-prev], [data-pro-home-pillars-next]",
+      );
+
+    if (!event.isPrimary || isNavigationControl) {
       return;
     }
 

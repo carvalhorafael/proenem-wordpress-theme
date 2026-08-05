@@ -4491,8 +4491,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   opacity: 1;
   transition:
     opacity 180ms ease,
-    transform 180ms ease,
-    width 180ms ease;
+    transform 180ms ease;
   width: min(13rem, 24vw);
   z-index: 1;
 }
@@ -4624,14 +4623,19 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pro-home-pillars-control button {
+  align-items: center;
   appearance: none;
   background: transparent;
   border: 0;
   color: var(--pen-color-ink);
   cursor: pointer;
+  display: inline-flex;
   font: inherit;
+  height: 1.5rem;
+  justify-content: center;
   line-height: 1;
   padding: 0;
+  width: 1.5rem;
 }
 
 .pro-home .pro-home-pillars-control span {
