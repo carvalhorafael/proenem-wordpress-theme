@@ -4553,6 +4553,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   aspect-ratio: 1 / 0.72;
 }
 
+.pro-home .pen-pillars-section__cards .pen-step-card--pink .pen-step-card__image {
+  object-position: center top;
+}
+
 .pro-home .pen-pillars-section__cards .pen-step-card > div {
   min-height: 5.25rem;
 }

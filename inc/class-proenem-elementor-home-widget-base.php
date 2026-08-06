@@ -484,7 +484,7 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 						'title'  => esc_html__( 'Performance', 'proenem-wordpress-theme' ),
 						'body'   => esc_html__( 'Acompanhamos sua evolução e agimos quando você trava ou some. O esforço vira resultado medido, não sensação.', 'proenem-wordpress-theme' ),
 						'tone'   => 'pink',
-						'image'  => array( 'url' => $this->home_asset_uri( 'pillar-meta.webp' ) ),
+						'image'  => array( 'url' => $this->home_asset_uri( 'student_school_2.webp' ) ),
 					),
 				),
 				'title_field' => '{{{ number }}} - {{{ title }}}',
@@ -500,7 +500,7 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 			'pillar-meta.webp',
 			'pillar-diagnostico.webp',
 			'pillar-execucao.webp',
-			'pillar-meta.webp',
+			'student_school_2.webp',
 		);
 		$this->open_home_wrapper();
 		?>

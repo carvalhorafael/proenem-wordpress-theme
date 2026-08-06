@@ -249,6 +249,9 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
 
   await expect(cards.nth(0)).toHaveClass(/is-active/);
   await expect(cards.nth(0)).toContainText("Meta");
+  await expect(cards.nth(0).locator(".pen-step-card__image")).toHaveAttribute("src", /pillar-meta\.webp$/);
+  await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveAttribute("src", /student_school_2\.webp$/);
+  await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveCSS("object-position", "50% 0%");
 
   const sliderBox = await slider.boundingBox();
   const ctaBox = await cta.boundingBox();
