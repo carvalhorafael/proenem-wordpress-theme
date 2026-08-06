@@ -9,7 +9,11 @@ const installNavbarSubmenuFixture = async (page) => {
       const menuLinks = '<div class="pen-navbar__links">';
       const submenuFixture = `
       <div class="pen-navbar__item pen-navbar__item--has-submenu">
-        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">Teste</a>
+        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">
+          <span class="pen-navbar__label" data-label="Teste principal">
+            <span class="pen-navbar__label-text">Teste principal</span>
+          </span>
+        </a>
         <button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="e2e-navbar-submenu" aria-expanded="false">
           <span class="screen-reader-text">Alternar submenu de teste</span>
           <span aria-hidden="true">⌄</span>
@@ -19,6 +23,13 @@ const installNavbarSubmenuFixture = async (page) => {
             <a class="pen-navbar__submenu-link" href="#e2e-submenu-item">Item de teste</a>
           </li>
         </ul>
+      </div>
+      <div class="pen-navbar__item">
+        <a class="pen-navbar__link" href="#e2e-next-item">
+          <span class="pen-navbar__label" data-label="Próximo item">
+            <span class="pen-navbar__label-text">Próximo item</span>
+          </span>
+        </a>
       </div>
     `;
 
@@ -66,6 +77,70 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
+test("content pages center the Gutenberg layout without centering text", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/?pagename=e2e-content-layout");
+
+  const article = page.locator(".entry--page");
+  const header = article.locator(".entry__header");
+  const content = article.locator(".entry__content");
+  const firstBlock = content.locator(":scope > *").first();
+
+  await expect(content).toHaveClass(/is-layout-constrained/);
+  await expect(firstBlock).toHaveCSS("text-align", "start");
+
+  const articleBox = await article.boundingBox();
+  const headerBox = await header.boundingBox();
+  const contentBox = await content.boundingBox();
+  const firstBlockBox = await firstBlock.boundingBox();
+
+  expect(articleBox).not.toBeNull();
+  expect(headerBox).not.toBeNull();
+  expect(contentBox).not.toBeNull();
+  expect(firstBlockBox).not.toBeNull();
+  expect(contentBox.width).toBeCloseTo(articleBox.width, 0);
+  expect(firstBlockBox.width).toBeLessThan(contentBox.width);
+  expect(firstBlockBox.x - contentBox.x).toBeCloseTo(
+    contentBox.x + contentBox.width - (firstBlockBox.x + firstBlockBox.width),
+    0,
+  );
+  expect(headerBox.x).toBeCloseTo(firstBlockBox.x, 0);
+});
+
+test("front page FAQ keeps its width when every item is closed", async ({ page }) => {
+  await page.goto("/");
+
+  const items = page.locator(".pen-faq-section__items");
+  const openItem = items.locator("details[open]");
+  const openWidth = await items.evaluate((element) => element.getBoundingClientRect().width);
+
+  await expect(openItem).toHaveCount(1);
+  await openItem.locator("summary").click();
+  await expect(openItem).toHaveCount(0);
+
+  const closedWidth = await items.evaluate((element) => element.getBoundingClientRect().width);
+
+  expect(closedWidth).toBeCloseTo(openWidth, 0);
+});
+
+test("front page navbar hover keeps adjacent items in place", async ({ page }) => {
+  await installNavbarSubmenuFixture(page);
+  await page.goto("/");
+
+  const hoveredLink = page.getByRole("link", { name: "Teste principal" });
+  const adjacentLink = page.getByRole("link", { name: "Próximo item" });
+  const initialPosition = await adjacentLink.boundingBox();
+
+  await hoveredLink.hover();
+
+  const hoveredPosition = await adjacentLink.boundingBox();
+
+  expect(initialPosition).not.toBeNull();
+  expect(hoveredPosition).not.toBeNull();
+  expect(hoveredPosition.x).toBeCloseTo(initialPosition.x, 1);
+  await expect(hoveredLink).toHaveCSS("font-weight", "800");
+});
+
 test("front page navbar starts closed on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await installNavbarSubmenuFixture(page);
@@ -111,6 +186,40 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(cta).not.toBeNull();
   expect(title.y + title.height).toBeLessThan(subtitle.y);
   expect(cta.y + cta.height).toBeLessThanOrEqual(844);
+});
+
+test("front page pillar controls move only the cards without shifting the section", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const slider = page.locator("[data-pro-home-pillars-slider]");
+  const section = page.locator(".pen-pillars-section");
+  const cards = slider.locator("[data-pro-home-pillar-card]");
+  const previousButton = slider.locator("[data-pro-home-pillars-prev]");
+  const nextButton = slider.locator("[data-pro-home-pillars-next]");
+
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await nextButton.click();
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await previousButton.click();
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+
+  const heightSamples = await section.evaluate(async (element) => {
+    const samples = [element.getBoundingClientRect().height];
+    const next = element.querySelector("[data-pro-home-pillars-next]");
+
+    next.click();
+
+    for (let frame = 0; frame < 14; frame += 1) {
+      await new Promise(requestAnimationFrame);
+      samples.push(element.getBoundingClientRect().height);
+    }
+
+    return samples;
+  });
+
+  expect(Math.max(...heightSamples) - Math.min(...heightSamples)).toBeLessThan(1);
 });
 
 test("front page pillars start at the first card and accept a mobile swipe", async ({ page }) => {
