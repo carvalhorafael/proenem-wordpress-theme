@@ -56,6 +56,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
   await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
   await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
+  await expect(
+    page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
+      hasText: "Amanda Alves",
+    }),
+  ).toHaveText("Amanda Alves");
+  await expect(page.getByText("Pedro Martins", { exact: true })).toHaveCount(0);
   await expect(page.locator(".pro-home-pain-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
   await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
@@ -216,6 +222,7 @@ test("front page pillar controls move only the cards without shifting the sectio
   const nextButton = slider.locator("[data-pro-home-pillars-next]");
 
   await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await expect(cards.nth(2).locator(":scope > span")).toHaveCSS("color", "rgb(26, 26, 26)");
   await nextButton.click();
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await previousButton.click();

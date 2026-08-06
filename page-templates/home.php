@@ -229,7 +229,7 @@ $testimonials = array(
 	),
 	array(
 		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Pedro Martins', 'proenem-wordpress-theme' ),
+		'name'  => __( 'Amanda Alves', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
 		'image' => 'proof-students-5.webp',
 	),

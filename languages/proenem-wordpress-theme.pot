@@ -2198,7 +2198,7 @@ msgid "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conse
 msgstr ""
 
 #: page-templates/home.php:232
-msgid "Pedro Martins"
+msgid "Amanda Alves"
 msgstr ""
 
 #: page-templates/home.php:233

@@ -4583,6 +4583,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   margin-top: 0.45rem;
 }
 
+.pro-home .pen-pillars-section__cards .pen-step-card > span {
+  color: var(--pen-color-ink);
+}
+
 .pro-home .pen-pillars-section__cards .pen-step-card:not(.is-active) h3 {
   color: inherit;
 }

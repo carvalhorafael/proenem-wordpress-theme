@@ -2213,8 +2213,8 @@ msgid "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conse
 msgstr "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade."
 
 #: page-templates/home.php:232
-msgid "Pedro Martins"
-msgstr "Pedro Martins"
+msgid "Amanda Alves"
+msgstr "Amanda Alves"
 
 #: page-templates/home.php:233
 msgid "Aprovado em Psicologia"
