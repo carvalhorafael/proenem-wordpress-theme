@@ -3264,10 +3264,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pro-home-platform-mock__bullets li {
   align-items: center;
+  background: transparent;
   border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: default;
   display: flex;
   font-size: clamp(0.95rem, 1.4vw, 1.1rem);
   gap: 0.8rem;
+  min-height: 0;
   padding: 0;
 }
 
@@ -3414,10 +3419,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   display: inline-flex;
   height: 3rem;
   justify-content: center;
+  transition: background-color 160ms ease;
   width: 3rem;
 }
 
-.pro-home .pro-home-subject-card--yellow .pro-home-subject-card__icon {
+.pro-home .pen-subject-grid .pro-home-subject-card:hover .pro-home-subject-card__icon,
+.pro-home .pen-subject-grid .pro-home-subject-card:focus-visible .pro-home-subject-card__icon {
   background: #ffe680;
 }
 

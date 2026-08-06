@@ -228,7 +228,81 @@
               "url": "#planos",
               "is_external": "",
               "nofollow": ""
-            }
+            },
+            "subjects": [
+              {
+                "_id": "subject01",
+                "name": "Química",
+                "category": "Ciências da Natureza",
+                "icon": "chemistry",
+                "tone": "pink",
+                "questions": "1524 questões",
+                "classes": "64 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa"
+                }
+              },
+              {
+                "_id": "subject02",
+                "name": "Biologia",
+                "category": "Ciências da Natureza",
+                "icon": "biology",
+                "tone": "pink",
+                "questions": "65381 questões",
+                "classes": "64 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa"
+                }
+              },
+              {
+                "_id": "subject03",
+                "name": "Matemática",
+                "category": "Matemática",
+                "icon": "math",
+                "tone": "pink",
+                "questions": "8735 questões",
+                "classes": "64 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/matematica/a"
+                }
+              },
+              {
+                "_id": "subject04",
+                "name": "História",
+                "category": "Ciências Humanas",
+                "icon": "history",
+                "tone": "pink",
+                "questions": "3129 questões",
+                "classes": "64 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa"
+                }
+              },
+              {
+                "_id": "subject05",
+                "name": "Inglês",
+                "category": "Linguagens",
+                "icon": "english",
+                "tone": "pink",
+                "questions": "11458 questões",
+                "classes": "32 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa"
+                }
+              },
+              {
+                "_id": "subject06",
+                "name": "Português",
+                "category": "Linguagens",
+                "icon": "portuguese",
+                "tone": "pink",
+                "questions": "21457 questões",
+                "classes": "64 aulas",
+                "url": {
+                  "url": "https://estude.proenem.com.br/treino/questoes/s/linguagens/a"
+                }
+              }
+            ]
           },
           "elements": []
         },

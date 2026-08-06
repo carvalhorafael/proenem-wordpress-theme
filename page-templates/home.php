@@ -260,40 +260,58 @@ $faq_items = array(
 
 $subjects = array(
 	array(
-		'name'     => __( 'Química', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'     => 'chemistry',
-		'tone'     => 'yellow',
+		'name'      => __( 'Química', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'      => 'chemistry',
+		'tone'      => 'pink',
+		'questions' => __( '1524 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
 	),
 	array(
-		'name'     => __( 'Biologia', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'     => 'biology',
-		'tone'     => 'pink',
+		'name'      => __( 'Biologia', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'      => 'biology',
+		'tone'      => 'pink',
+		'questions' => __( '65381 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
 	),
 	array(
-		'name'     => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'category' => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'icon'     => 'math',
-		'tone'     => 'pink',
+		'name'      => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'icon'      => 'math',
+		'tone'      => 'pink',
+		'questions' => __( '8735 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
 	),
 	array(
-		'name'     => __( 'História', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-		'icon'     => 'history',
-		'tone'     => 'pink',
+		'name'      => __( 'História', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+		'icon'      => 'history',
+		'tone'      => 'pink',
+		'questions' => __( '3129 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
 	),
 	array(
-		'name'     => __( 'Inglês', 'proenem-wordpress-theme' ),
-		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'     => 'english',
-		'tone'     => 'pink',
+		'name'      => __( 'Inglês', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'      => 'english',
+		'tone'      => 'pink',
+		'questions' => __( '11458 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '32 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
 	),
 	array(
-		'name'     => __( 'Português', 'proenem-wordpress-theme' ),
-		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'     => 'portuguese',
-		'tone'     => 'pink',
+		'name'      => __( 'Português', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'      => 'portuguese',
+		'tone'      => 'pink',
+		'questions' => __( '21457 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
 	),
 );
 
@@ -710,7 +728,7 @@ $subjects = array(
 		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ); ?></p>
 		<div class="pen-subject-grid">
 			<?php foreach ( $subjects as $subject ) : ?>
-				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="#planos">
+				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="<?php echo esc_url( $subject['url'] ); ?>" target="_blank" rel="noopener noreferrer">
 					<span class="pro-home-subject-card__icon" aria-hidden="true">
 						<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is hardcoded in this template.
@@ -720,8 +738,8 @@ $subjects = array(
 					<span class="pro-home-subject-card__body">
 						<strong><?php echo esc_html( $subject['name'] ); ?></strong>
 						<small><?php echo esc_html( $subject['category'] ); ?></small>
-						<span class="pro-home-subject-card__meta"><?php esc_html_e( '512 questões', 'proenem-wordpress-theme' ); ?></span>
-						<span class="pro-home-subject-card__meta"><?php esc_html_e( '40 aulas', 'proenem-wordpress-theme' ); ?></span>
+						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ); ?></span>
+						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ); ?></span>
 					</span>
 					<span class="pro-home-subject-card__arrow" aria-hidden="true">→</span>
 				</a>

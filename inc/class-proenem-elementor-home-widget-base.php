@@ -1038,7 +1038,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Explorar questões grátis', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_badge', esc_html__( 'Badge do botão', 'proenem-wordpress-theme' ), esc_html__( 'Sem criar conta', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link padrão dos cards', 'proenem-wordpress-theme' ), '#planos' );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#planos' );
 		$subjects = new \Elementor\Repeater();
 		$subjects->add_control(
 			'name',
@@ -1083,6 +1083,13 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 			)
 		);
 		$subjects->add_control(
+			'url',
+			array(
+				'label' => esc_html__( 'Link', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::URL,
+			)
+		);
+		$subjects->add_control(
 			'questions',
 			array(
 				'label'   => esc_html__( 'Meta questões', 'proenem-wordpress-theme' ),
@@ -1106,40 +1113,58 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 				'fields'      => $subjects->get_controls(),
 				'default'     => array(
 					array(
-						'name'     => esc_html__( 'Química', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-						'icon'     => 'chemistry',
-						'tone'     => 'yellow',
+						'name'      => esc_html__( 'Química', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+						'icon'      => 'chemistry',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '1524 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa' ),
 					),
 					array(
-						'name'     => esc_html__( 'Biologia', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-						'icon'     => 'biology',
-						'tone'     => 'pink',
+						'name'      => esc_html__( 'Biologia', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+						'icon'      => 'biology',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '65381 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa' ),
 					),
 					array(
-						'name'     => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
-						'icon'     => 'math',
-						'tone'     => 'pink',
+						'name'      => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
+						'icon'      => 'math',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '8735 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a' ),
 					),
 					array(
-						'name'     => esc_html__( 'História', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-						'icon'     => 'history',
-						'tone'     => 'pink',
+						'name'      => esc_html__( 'História', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+						'icon'      => 'history',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '3129 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa' ),
 					),
 					array(
-						'name'     => esc_html__( 'Inglês', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
-						'icon'     => 'english',
-						'tone'     => 'pink',
+						'name'      => esc_html__( 'Inglês', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
+						'icon'      => 'english',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '11458 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '32 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa' ),
 					),
 					array(
-						'name'     => esc_html__( 'Português', 'proenem-wordpress-theme' ),
-						'category' => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
-						'icon'     => 'portuguese',
-						'tone'     => 'pink',
+						'name'      => esc_html__( 'Português', 'proenem-wordpress-theme' ),
+						'category'  => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
+						'icon'      => 'portuguese',
+						'tone'      => 'pink',
+						'questions' => esc_html__( '21457 questões', 'proenem-wordpress-theme' ),
+						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
+						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a' ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1158,7 +1183,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 			<p><?php echo esc_html( $settings['body'] ?? '' ); ?></p>
 			<div class="pen-subject-grid">
 				<?php foreach ( (array) ( $settings['subjects'] ?? array() ) as $subject ) : ?>
-					<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ?? 'pink' ); ?>" href="<?php echo esc_url( $settings['button_url']['url'] ?? '#planos' ); ?>"><span class="pro-home-subject-card__icon" aria-hidden="true"><?php echo $this->subject_icon_svg( $subject['icon'] ?? 'portuguese' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-subject-card__body"><strong><?php echo esc_html( $subject['name'] ?? '' ); ?></strong><small><?php echo esc_html( $subject['category'] ?? '' ); ?></small><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ?? '' ); ?></span><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ?? '' ); ?></span></span><span class="pro-home-subject-card__arrow" aria-hidden="true">→</span></a>
+					<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ?? 'pink' ); ?>" href="<?php echo esc_url( $subject['url']['url'] ?? $settings['button_url']['url'] ?? '#planos' ); ?>" target="_blank" rel="noopener noreferrer"><span class="pro-home-subject-card__icon" aria-hidden="true"><?php echo $this->subject_icon_svg( $subject['icon'] ?? 'portuguese' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-subject-card__body"><strong><?php echo esc_html( $subject['name'] ?? '' ); ?></strong><small><?php echo esc_html( $subject['category'] ?? '' ); ?></small><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ?? '' ); ?></span><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ?? '' ); ?></span></span><span class="pro-home-subject-card__arrow" aria-hidden="true">→</span></a>
 				<?php endforeach; ?>
 			</div>
 			<?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta', $settings['button_badge'] ?? '' ); ?>

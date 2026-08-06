@@ -314,6 +314,28 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
 });
 
+test("front page platform keeps benefit lists informational across every tab", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const tabs = page.locator("[data-pro-home-platform-tab]");
+  const bullets = page.locator("[data-pro-home-platform-bullets]");
+
+  await expect(tabs).toHaveCount(6);
+  await expect(bullets.locator("a, button")).toHaveCount(0);
+
+  for (const tab of await tabs.all()) {
+    await tab.click();
+
+    const items = bullets.locator("li");
+
+    await expect(items).toHaveCount(3);
+    await expect(items.first()).toHaveCSS("cursor", "default");
+    await expect(items.first()).toHaveCSS("box-shadow", "none");
+    await expect(items.first()).toHaveCSS("border-radius", "0px");
+  }
+});
+
 test("front page question cards form two mobile rows without stretching the stamp", async ({
   page,
 }) => {
@@ -334,6 +356,47 @@ test("front page question cards form two mobile rows without stretching the stam
   expect(secondCard.y).toBeGreaterThan(firstCard.y);
   expect(thirdCard.x).toBeGreaterThan(firstCard.x);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
+
+test("front page subject icons turn yellow only on hover or focus", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const cards = page.locator(".pen-subject-grid .pro-home-subject-card");
+  const icons = cards.locator(".pro-home-subject-card__icon");
+  const destinations = [
+    "https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/matematica/a",
+    "https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/linguagens/a",
+  ];
+  const counts = [
+    ["1524 questões", "64 aulas"],
+    ["65381 questões", "64 aulas"],
+    ["8735 questões", "64 aulas"],
+    ["3129 questões", "64 aulas"],
+    ["11458 questões", "32 aulas"],
+    ["21457 questões", "64 aulas"],
+  ];
+
+  await expect(cards).toHaveCount(6);
+
+  for (const [index, icon] of (await icons.all()).entries()) {
+    await expect(icon).toHaveCSS("background-color", "rgb(250, 157, 205)");
+    await expect(cards.nth(index)).toHaveAttribute("href", destinations[index]);
+    await expect(cards.nth(index)).toHaveAttribute("target", "_blank");
+    await expect(cards.nth(index)).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(cards.nth(index).locator(".pro-home-subject-card__meta")).toHaveText(counts[index]);
+  }
+
+  await cards.nth(1).hover();
+  await expect(icons.nth(1)).toHaveCSS("background-color", "rgb(255, 230, 128)");
+  await expect(icons.nth(0)).toHaveCSS("background-color", "rgb(250, 157, 205)");
+
+  await cards.nth(2).focus();
+  await expect(icons.nth(2)).toHaveCSS("background-color", "rgb(255, 230, 128)");
 });
 
 test("front page testimonial heading stays inside the mobile viewport", async ({ page }) => {
