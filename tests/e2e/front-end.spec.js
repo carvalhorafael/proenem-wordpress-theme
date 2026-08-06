@@ -188,6 +188,22 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(cta.y + cta.height).toBeLessThanOrEqual(844);
 });
 
+test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 650 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const hero = await page.locator(".pen-hero-section").boundingBox();
+  const title = await page.locator(".pen-hero-section__title").boundingBox();
+  const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+
+  expect(hero).not.toBeNull();
+  expect(title).not.toBeNull();
+  expect(subtitle).not.toBeNull();
+  expect(subtitle.y - (title.y + title.height)).toBeGreaterThanOrEqual(12);
+  expect(subtitle.y + subtitle.height).toBeLessThanOrEqual(hero.y + hero.height);
+});
+
 test("front page pillar controls move only the cards without shifting the section", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.emulateMedia({ reducedMotion: "reduce" });
