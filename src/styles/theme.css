@@ -4010,8 +4010,9 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pro-home-testimonials__controls {
+  align-items: center;
   display: flex;
-  gap: 1.35rem;
+  gap: clamp(0.75rem, 2vw, 1.35rem);
   justify-content: center;
   margin-top: clamp(2rem, 3.5vw, 2.7rem);
 }
@@ -4040,6 +4041,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pro-home-testimonials__controls button:focus-visible {
   box-shadow: 1px 1px 0 var(--pen-color-ink);
   transform: translate(2px, 2px);
+}
+
+.pro-home .pro-home-testimonials__more {
+  margin-left: clamp(0.75rem, 1.5vw, 1.25rem);
 }
 
 .pro-home .pro-home-school-section {

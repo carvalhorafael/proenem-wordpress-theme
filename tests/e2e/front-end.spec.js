@@ -411,6 +411,40 @@ test("front page testimonial heading stays inside the mobile viewport", async ({
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
 
+test("front page testimonial controls include the external approved-students link", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const controls = page.locator(".pro-home-testimonials__controls");
+  const previous = controls.getByRole("button", { name: "Depoimento anterior" });
+  const next = controls.getByRole("button", { name: "Próximo depoimento" });
+  const more = controls.getByRole("link", { name: "Ver mais" });
+
+  await expect(more).toHaveAttribute("href", "https://aprovados.proenem.com.br/");
+  await expect(more).toHaveAttribute("target", "_blank");
+  await expect(more).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(more).toHaveClass(/pen-button--secondary/);
+  await expect(more).toHaveCSS("background-color", "rgb(255, 255, 255)");
+
+  const [previousBox, nextBox, moreBox] = await Promise.all([
+    previous.boundingBox(),
+    next.boundingBox(),
+    more.boundingBox(),
+  ]);
+
+  expect(previousBox).not.toBeNull();
+  expect(nextBox).not.toBeNull();
+  expect(moreBox).not.toBeNull();
+  expect(Math.abs(previousBox.y - nextBox.y)).toBeLessThan(1);
+  expect(Math.abs(nextBox.y - moreBox.y)).toBeLessThan(1);
+  expect(moreBox.x).toBeGreaterThan(nextBox.x + nextBox.width);
+  expect(moreBox.x - (nextBox.x + nextBox.width)).toBeGreaterThan(
+    nextBox.x - (previousBox.x + previousBox.width),
+  );
+});
+
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

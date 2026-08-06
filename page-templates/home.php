@@ -821,6 +821,7 @@ $subjects = array(
 		<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>">
 			<button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button>
 			<button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button>
+			<a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="https://aprovados.proenem.com.br/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ver mais', 'proenem-wordpress-theme' ); ?></a>
 		</div>
 	</section>
 

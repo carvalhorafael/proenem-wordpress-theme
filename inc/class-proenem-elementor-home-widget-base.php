@@ -1391,6 +1391,8 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 		$this->add_text_control( 'title_line', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( 'Quem estudou com método,', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_emphasis', esc_html__( 'Título destaque', 'proenem-wordpress-theme' ), esc_html__( 'chegou na vaga.', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'more_label', esc_html__( 'Texto do botão', 'proenem-wordpress-theme' ), esc_html__( 'Ver mais', 'proenem-wordpress-theme' ) );
+		$this->add_url_control( 'more_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), 'https://aprovados.proenem.com.br/' );
 		$items = new \Elementor\Repeater();
 		$items->add_control(
 			'quote',
@@ -1463,7 +1465,7 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 			foreach ( (array) ( $settings['testimonials'] ?? array() ) as $index => $testimonial ) :
 				?>
 				<article class="pro-home-testimonial-card<?php echo 1 === $index ? ' is-active' : ''; ?>" data-pro-home-testimonial-card><div class="pro-home-testimonial-card__quote"><span aria-hidden="true">“</span><p><?php echo esc_html( $testimonial['quote'] ?? '' ); ?></p></div><footer><img src="<?php echo esc_url( $this->media_url( $testimonial['image'] ?? array(), $images[ $index ] ?? 'proof-students-1.webp' ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ?? '' ); ?>"><span><strong><?php echo esc_html( $testimonial['name'] ?? '' ); ?></strong><small><?php echo esc_html( $testimonial['role'] ?? '' ); ?></small></span></footer></article><?php endforeach; ?></div></div>
-			<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>"><button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button><button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button></div>
+			<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>"><button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button><button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button><a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="<?php echo esc_url( $settings['more_url']['url'] ?? 'https://aprovados.proenem.com.br/' ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $settings['more_label'] ?? esc_html__( 'Ver mais', 'proenem-wordpress-theme' ) ); ?></a></div>
 		</section>
 		<?php
 		$this->close_home_wrapper();

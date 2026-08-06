@@ -348,6 +348,12 @@
           "widgetType": "pro_home_testimonials",
           "isInner": false,
           "settings": {
+            "more_label": "Ver mais",
+            "more_url": {
+              "url": "https://aprovados.proenem.com.br/",
+              "is_external": "on",
+              "nofollow": ""
+            },
             "testimonials": [
               {
                 "_id": "testim01",
