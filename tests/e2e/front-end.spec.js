@@ -129,6 +129,40 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(cta.y + cta.height).toBeLessThanOrEqual(844);
 });
 
+test("front page pillar controls move only the cards without shifting the section", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const slider = page.locator("[data-pro-home-pillars-slider]");
+  const section = page.locator(".pen-pillars-section");
+  const cards = slider.locator("[data-pro-home-pillar-card]");
+  const previousButton = slider.locator("[data-pro-home-pillars-prev]");
+  const nextButton = slider.locator("[data-pro-home-pillars-next]");
+
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await nextButton.click();
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await previousButton.click();
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
+
+  const heightSamples = await section.evaluate(async (element) => {
+    const samples = [element.getBoundingClientRect().height];
+    const next = element.querySelector("[data-pro-home-pillars-next]");
+
+    next.click();
+
+    for (let frame = 0; frame < 14; frame += 1) {
+      await new Promise(requestAnimationFrame);
+      samples.push(element.getBoundingClientRect().height);
+    }
+
+    return samples;
+  });
+
+  expect(Math.max(...heightSamples) - Math.min(...heightSamples)).toBeLessThan(1);
+});
+
 test("front page pillars start at the first card and accept a mobile swipe", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
