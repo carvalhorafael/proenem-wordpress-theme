@@ -9,7 +9,11 @@ const installNavbarSubmenuFixture = async (page) => {
       const menuLinks = '<div class="pen-navbar__links">';
       const submenuFixture = `
       <div class="pen-navbar__item pen-navbar__item--has-submenu">
-        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">Teste</a>
+        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">
+          <span class="pen-navbar__label" data-label="Teste principal">
+            <span class="pen-navbar__label-text">Teste principal</span>
+          </span>
+        </a>
         <button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="e2e-navbar-submenu" aria-expanded="false">
           <span class="screen-reader-text">Alternar submenu de teste</span>
           <span aria-hidden="true">⌄</span>
@@ -19,6 +23,13 @@ const installNavbarSubmenuFixture = async (page) => {
             <a class="pen-navbar__submenu-link" href="#e2e-submenu-item">Item de teste</a>
           </li>
         </ul>
+      </div>
+      <div class="pen-navbar__item">
+        <a class="pen-navbar__link" href="#e2e-next-item">
+          <span class="pen-navbar__label" data-label="Próximo item">
+            <span class="pen-navbar__label-text">Próximo item</span>
+          </span>
+        </a>
       </div>
     `;
 
@@ -80,6 +91,24 @@ test("front page FAQ keeps its width when every item is closed", async ({ page }
   const closedWidth = await items.evaluate((element) => element.getBoundingClientRect().width);
 
   expect(closedWidth).toBeCloseTo(openWidth, 0);
+});
+
+test("front page navbar hover keeps adjacent items in place", async ({ page }) => {
+  await installNavbarSubmenuFixture(page);
+  await page.goto("/");
+
+  const hoveredLink = page.getByRole("link", { name: "Teste principal" });
+  const adjacentLink = page.getByRole("link", { name: "Próximo item" });
+  const initialPosition = await adjacentLink.boundingBox();
+
+  await hoveredLink.hover();
+
+  const hoveredPosition = await adjacentLink.boundingBox();
+
+  expect(initialPosition).not.toBeNull();
+  expect(hoveredPosition).not.toBeNull();
+  expect(hoveredPosition.x).toBeCloseTo(initialPosition.x, 1);
+  await expect(hoveredLink).toHaveCSS("font-weight", "800");
 });
 
 test("front page navbar starts closed on mobile", async ({ page }) => {

@@ -2061,6 +2061,25 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   font-weight: 500;
 }
 
+.pro-site-navbar .pen-navbar__label,
+.pro-home .pen-navbar__label {
+  display: inline-grid;
+}
+
+.pro-site-navbar .pen-navbar__label::after,
+.pro-site-navbar .pen-navbar__label-text,
+.pro-home .pen-navbar__label::after,
+.pro-home .pen-navbar__label-text {
+  grid-area: 1 / 1;
+}
+
+.pro-site-navbar .pen-navbar__label::after,
+.pro-home .pen-navbar__label::after {
+  content: attr(data-label);
+  font-weight: 800;
+  visibility: hidden;
+}
+
 .pro-site-navbar .pen-navbar__item,
 .pro-home .pen-navbar__item {
   align-items: stretch;
