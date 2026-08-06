@@ -79,7 +79,7 @@ test("front page renders the Proenem home", async ({ page }) => {
 
 test("content pages center the Gutenberg layout without centering text", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/privacy-policy/");
+  await page.goto("/sample-page/");
 
   const article = page.locator(".entry--page");
   const header = article.locator(".entry__header");
