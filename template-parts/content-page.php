@@ -11,7 +11,7 @@
 		<?php the_title( '<h1 class="entry__title">', '</h1>' ); ?>
 	</header>
 
-	<div class="entry__content">
+	<div class="entry__content is-layout-constrained">
 		<?php
 		the_content();
 		wp_link_pages(

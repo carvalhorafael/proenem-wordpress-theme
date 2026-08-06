@@ -77,6 +77,36 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
+test("content pages center the Gutenberg layout without centering text", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/privacy-policy/");
+
+  const article = page.locator(".entry--page");
+  const header = article.locator(".entry__header");
+  const content = article.locator(".entry__content");
+  const firstBlock = content.locator(":scope > *").first();
+
+  await expect(content).toHaveClass(/is-layout-constrained/);
+  await expect(firstBlock).toHaveCSS("text-align", "start");
+
+  const articleBox = await article.boundingBox();
+  const headerBox = await header.boundingBox();
+  const contentBox = await content.boundingBox();
+  const firstBlockBox = await firstBlock.boundingBox();
+
+  expect(articleBox).not.toBeNull();
+  expect(headerBox).not.toBeNull();
+  expect(contentBox).not.toBeNull();
+  expect(firstBlockBox).not.toBeNull();
+  expect(contentBox.width).toBeCloseTo(articleBox.width, 0);
+  expect(firstBlockBox.width).toBeLessThan(contentBox.width);
+  expect(firstBlockBox.x - contentBox.x).toBeCloseTo(
+    contentBox.x + contentBox.width - (firstBlockBox.x + firstBlockBox.width),
+    0,
+  );
+  expect(headerBox.x).toBeCloseTo(firstBlockBox.x, 0);
+});
+
 test("front page FAQ keeps its width when every item is closed", async ({ page }) => {
   await page.goto("/");
 
