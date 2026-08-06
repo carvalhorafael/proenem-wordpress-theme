@@ -1854,7 +1854,12 @@ img {
 .entry__content {
   font-size: 1.0625rem;
   line-height: 1.75;
-  max-width: 760px;
+  width: 100%;
+}
+
+.site-main--page .entry__header {
+  margin-inline: auto;
+  max-width: var(--wp--style--global--content-size, 760px);
 }
 
 .entry__content > *:first-child {
