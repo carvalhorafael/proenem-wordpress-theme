@@ -1499,7 +1499,7 @@ class Proenem_Elementor_Home_Schools_Widget extends Proenem_Elementor_Home_Widge
 		$this->add_text_control( 'title_emphasis_2', esc_html__( 'Destaque 2', 'proenem-wordpress-theme' ), esc_html__( 'sua escola.', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Falar com nossa equipe', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#faq' );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), 'mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola' );
 		$cards = new \Elementor\Repeater();
 		$cards->add_control(
 			'icon',
@@ -1613,7 +1613,7 @@ class Proenem_Elementor_Home_Final_Cta_Widget extends Proenem_Elementor_Home_Wid
 		$this->add_text_control( 'title', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( 'Pronto para transformar a preparação para o ENEM na sua escola?', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Falar com nossa equipe', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#faq' );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), 'mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola' );
 		$this->end_controls_section();
 	}
 

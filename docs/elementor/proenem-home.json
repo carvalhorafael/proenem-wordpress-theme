@@ -406,6 +406,11 @@
             },
             "secondary_image": {
               "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/student_school_2.webp"
+            },
+            "button_url": {
+              "url": "mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola",
+              "is_external": "",
+              "nofollow": ""
             }
           },
           "elements": []
@@ -417,7 +422,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#faq",
+              "url": "mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola",
               "is_external": "",
               "nofollow": ""
             }

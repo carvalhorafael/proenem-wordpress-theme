@@ -846,7 +846,7 @@ $subjects = array(
 					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
 				</h2>
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>
-				<a class="pen-button pen-button--primary pen-button--lg pro-home-school-section__cta" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+				<a class="pen-button pen-button--primary pen-button--lg pro-home-school-section__cta" href="mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 			</div>
 			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( 'student_school_2.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
@@ -884,7 +884,7 @@ $subjects = array(
 			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 		<div class="pen-marketing-cta__actions">
-			<a class="pen-button pen-button--primary pen-button--lg" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+			<a class="pen-button pen-button--primary pen-button--lg" href="mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 	</section>
 

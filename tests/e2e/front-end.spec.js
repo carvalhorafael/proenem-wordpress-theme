@@ -79,7 +79,16 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
   await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
   await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
-  await expect(page.locator(".pro-home-school-section").getByRole("link", { name: /falar com nossa equipe/i })).toHaveAttribute("href", "#faq");
+  const b2bLinks = page
+    .locator(".pro-home-school-section, .pro-home__final-cta")
+    .getByRole("link", { name: /falar com nossa equipe/i });
+  await expect(b2bLinks).toHaveCount(2);
+  for (const link of await b2bLinks.all()) {
+    await expect(link).toHaveAttribute(
+      "href",
+      "mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola",
+    );
+  }
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
