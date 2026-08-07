@@ -187,20 +187,43 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
 });
 
 test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 390, height: 720 });
   await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
 
+  const stage = await page.locator(".pen-hero-section__stage").boundingBox();
+  const image = await page.locator(".pen-hero-section__image").boundingBox();
   const title = await page.locator(".pen-hero-section__title").boundingBox();
   const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+  const support = page.locator(".pro-home-hero-action-bar__support");
+  const supportBox = await support.boundingBox();
+  const supportLineHeight = await support.evaluate((element) =>
+    Number.parseFloat(window.getComputedStyle(element).lineHeight),
+  );
   const cta = await page
     .locator(".pro-home-hero-action-bar__actions .pen-button")
     .boundingBox();
 
+  expect(stage).not.toBeNull();
+  expect(image).not.toBeNull();
   expect(title).not.toBeNull();
   expect(subtitle).not.toBeNull();
+  expect(supportBox).not.toBeNull();
   expect(cta).not.toBeNull();
-  expect(title.y + title.height).toBeLessThan(subtitle.y);
-  expect(cta.y + cta.height).toBeLessThanOrEqual(844);
+  expect(stage.height).toBeLessThanOrEqual(400);
+  expect(image.y).toBeGreaterThanOrEqual(stage.y - 24);
+  await expect(page.locator(".pro-home-hero-section__subtitle")).toHaveCSS("font-size", "18px");
+  await expect(support).toHaveCSS("font-size", "16px");
+  expect(supportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
+  expect(subtitle.y - (title.y + title.height)).toBeGreaterThanOrEqual(12);
+  expect(subtitle.y - (title.y + title.height)).toBeLessThanOrEqual(48);
+  expect(cta.y + cta.height).toBeLessThanOrEqual(720);
+
+  await page.setViewportSize({ width: 360, height: 720 });
+
+  const narrowSupportBox = await support.boundingBox();
+  expect(narrowSupportBox).not.toBeNull();
+  expect(narrowSupportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
 });
 
 test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {

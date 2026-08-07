@@ -4983,20 +4983,27 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__stage {
-    min-height: 32.5rem;
+    min-height: 25rem;
+  }
+
+  .pro-home .pen-hero-section__image {
+    bottom: auto;
+    height: auto;
+    top: -1.5rem;
+    width: min(150vw, 42rem);
   }
 
   .pro-home .pen-hero-section__title {
     font-size: clamp(2.15rem, 10.5vw, 3.15rem);
     letter-spacing: -0.035em;
     line-height: 0.94;
-    top: 42%;
+    top: 50%;
     width: min(96vw, 34rem);
   }
 
   .pro-home .pro-home-hero-section__subtitle {
-    bottom: 1.5rem;
-    font-size: 1.05rem;
+    bottom: 1rem;
+    font-size: 1.125rem;
     top: auto;
     width: min(94vw, 34rem);
   }
@@ -5006,7 +5013,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pro-home-hero-action-bar__support {
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.35;
   }
 
