@@ -189,6 +189,10 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
 test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 720 });
   await page.goto("/");
+  await page.addStyleTag({
+    content:
+      '.pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: "Arial Black", sans-serif !important; }',
+  });
   await page.evaluate(() => document.fonts.ready);
 
   const stage = await page.locator(".pen-hero-section__stage").boundingBox();
@@ -214,6 +218,11 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(image.y).toBeGreaterThanOrEqual(stage.y - 24);
   await expect(page.locator(".pro-home-hero-section__subtitle")).toHaveCSS("font-size", "18px");
   await expect(support).toHaveCSS("font-size", "16px");
+  expect(
+    await page.locator(".pen-hero-section__title-line").evaluateAll((lines) =>
+      Math.max(...lines.map((line) => line.scrollWidth - line.clientWidth)),
+    ),
+  ).toBeLessThanOrEqual(1);
   expect(supportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
   expect(subtitle.y - (title.y + title.height)).toBeGreaterThanOrEqual(12);
   expect(subtitle.y - (title.y + title.height)).toBeLessThanOrEqual(48);
@@ -229,6 +238,10 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
 test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 650 });
   await page.goto("/");
+  await page.addStyleTag({
+    content:
+      '.pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: "Arial Black", sans-serif !important; }',
+  });
   await page.evaluate(() => document.fonts.ready);
 
   const hero = await page.locator(".pen-hero-section").boundingBox();
