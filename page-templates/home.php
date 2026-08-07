@@ -229,7 +229,7 @@ $testimonials = array(
 	),
 	array(
 		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Pedro Martins', 'proenem-wordpress-theme' ),
+		'name'  => __( 'Amanda Alves', 'proenem-wordpress-theme' ),
 		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
 		'image' => 'proof-students-5.webp',
 	),
@@ -260,40 +260,58 @@ $faq_items = array(
 
 $subjects = array(
 	array(
-		'name'     => __( 'Química', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'     => 'chemistry',
-		'tone'     => 'yellow',
+		'name'      => __( 'Química', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'      => 'chemistry',
+		'tone'      => 'pink',
+		'questions' => __( '1524 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
 	),
 	array(
-		'name'     => __( 'Biologia', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'     => 'biology',
-		'tone'     => 'pink',
+		'name'      => __( 'Biologia', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'      => 'biology',
+		'tone'      => 'pink',
+		'questions' => __( '65381 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
 	),
 	array(
-		'name'     => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'category' => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'icon'     => 'math',
-		'tone'     => 'pink',
+		'name'      => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'icon'      => 'math',
+		'tone'      => 'pink',
+		'questions' => __( '8735 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
 	),
 	array(
-		'name'     => __( 'História', 'proenem-wordpress-theme' ),
-		'category' => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-		'icon'     => 'history',
-		'tone'     => 'pink',
+		'name'      => __( 'História', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+		'icon'      => 'history',
+		'tone'      => 'pink',
+		'questions' => __( '3129 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
 	),
 	array(
-		'name'     => __( 'Inglês', 'proenem-wordpress-theme' ),
-		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'     => 'english',
-		'tone'     => 'pink',
+		'name'      => __( 'Inglês', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'      => 'english',
+		'tone'      => 'pink',
+		'questions' => __( '11458 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '32 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
 	),
 	array(
-		'name'     => __( 'Português', 'proenem-wordpress-theme' ),
-		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'     => 'portuguese',
-		'tone'     => 'pink',
+		'name'      => __( 'Português', 'proenem-wordpress-theme' ),
+		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'      => 'portuguese',
+		'tone'      => 'pink',
+		'questions' => __( '21457 questões', 'proenem-wordpress-theme' ),
+		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
+		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
 	),
 );
 
@@ -390,7 +408,7 @@ $subjects = array(
 				</div>
 			</article>
 			<article class="pen-step-card pen-step-card--pink" data-pro-home-pillar-card>
-				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'pillar-meta.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'pillar-meta.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( 'pillar-meta.webp', '(max-width: 700px) 40vw, 24vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				<img class="pen-step-card__image" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.webp' ) ); ?>" alt=""<?php echo $home_image_attributes( 'student_school_2.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<span>04</span>
 				<div>
 					<h3><?php esc_html_e( 'Performance', 'proenem-wordpress-theme' ); ?></h3>
@@ -644,6 +662,10 @@ $subjects = array(
 				<span><?php esc_html_e( 'Não é um acervo de vídeos. É um sistema que te diz', 'proenem-wordpress-theme' ); ?></span>
 				<strong><?php esc_html_e( 'o próximo passo.', 'proenem-wordpress-theme' ); ?></strong>
 			</p>
+			<div class="pen-pillars-slider__control pro-home-platform-tabs__controls" aria-label="<?php esc_attr_e( 'Controles dos recursos', 'proenem-wordpress-theme' ); ?>">
+				<button type="button" data-pro-home-platform-prev aria-label="<?php esc_attr_e( 'Mostrar recursos anteriores', 'proenem-wordpress-theme' ); ?>">←</button>
+				<button type="button" data-pro-home-platform-next aria-label="<?php esc_attr_e( 'Mostrar próximos recursos', 'proenem-wordpress-theme' ); ?>">→</button>
+			</div>
 			<div class="pro-home-platform-body">
 				<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 					<?php foreach ( $platform_items as $index => $item ) : ?>
@@ -710,7 +732,7 @@ $subjects = array(
 		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ); ?></p>
 		<div class="pen-subject-grid">
 			<?php foreach ( $subjects as $subject ) : ?>
-				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="#planos">
+				<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ); ?>" href="<?php echo esc_url( $subject['url'] ); ?>" target="_blank" rel="noopener noreferrer">
 					<span class="pro-home-subject-card__icon" aria-hidden="true">
 						<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is hardcoded in this template.
@@ -720,8 +742,8 @@ $subjects = array(
 					<span class="pro-home-subject-card__body">
 						<strong><?php echo esc_html( $subject['name'] ); ?></strong>
 						<small><?php echo esc_html( $subject['category'] ); ?></small>
-						<span class="pro-home-subject-card__meta"><?php esc_html_e( '512 questões', 'proenem-wordpress-theme' ); ?></span>
-						<span class="pro-home-subject-card__meta"><?php esc_html_e( '40 aulas', 'proenem-wordpress-theme' ); ?></span>
+						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ); ?></span>
+						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ); ?></span>
 					</span>
 					<span class="pro-home-subject-card__arrow" aria-hidden="true">→</span>
 				</a>
@@ -803,6 +825,7 @@ $subjects = array(
 		<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>">
 			<button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button>
 			<button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button>
+			<a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="https://aprovados.proenem.com.br/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ver mais', 'proenem-wordpress-theme' ); ?></a>
 		</div>
 	</section>
 
@@ -827,7 +850,7 @@ $subjects = array(
 					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
 				</h2>
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>
-				<a class="pen-button pen-button--primary pen-button--lg pro-home-school-section__cta" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+				<a class="pen-button pen-button--primary pen-button--lg pro-home-school-section__cta" href="mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 			</div>
 			<img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $home_asset_uri( 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( 'student_school_2.webp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="pro-home-school-section__burst" aria-hidden="true"></span>
@@ -865,7 +888,7 @@ $subjects = array(
 			<p><?php esc_html_e( 'Converse com nossa equipe e receba uma proposta de acordo com o tamanho e o perfil da sua instituição.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 		<div class="pen-marketing-cta__actions">
-			<a class="pen-button pen-button--primary pen-button--lg" href="#faq"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+			<a class="pen-button pen-button--primary pen-button--lg" href="mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola"><?php esc_html_e( 'Falar com nossa equipe', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 	</section>
 

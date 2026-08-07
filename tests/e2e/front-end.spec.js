@@ -56,6 +56,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
   await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
   await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
+  await expect(
+    page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
+      hasText: "Amanda Alves",
+    }),
+  ).toHaveText("Amanda Alves");
+  await expect(page.getByText("Pedro Martins", { exact: true })).toHaveCount(0);
   await expect(page.locator(".pro-home-pain-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
   await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
@@ -73,7 +79,16 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
   await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
   await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
-  await expect(page.locator(".pro-home-school-section").getByRole("link", { name: /falar com nossa equipe/i })).toHaveAttribute("href", "#faq");
+  const b2bLinks = page
+    .locator(".pro-home-school-section, .pro-home__final-cta")
+    .getByRole("link", { name: /falar com nossa equipe/i });
+  await expect(b2bLinks).toHaveCount(2);
+  for (const link of await b2bLinks.all()) {
+    await expect(link).toHaveAttribute(
+      "href",
+      "mailto:pro-receita@questedu.dev?subject=Parceria%20com%20escola",
+    );
+  }
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
@@ -172,20 +187,72 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
 });
 
 test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 390, height: 720 });
   await page.goto("/");
+  await page.addStyleTag({
+    content:
+      '.pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: "Arial Black", sans-serif !important; }',
+  });
+  await page.evaluate(() => document.fonts.ready);
 
+  const stage = await page.locator(".pen-hero-section__stage").boundingBox();
+  const image = await page.locator(".pen-hero-section__image").boundingBox();
   const title = await page.locator(".pen-hero-section__title").boundingBox();
   const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+  const support = page.locator(".pro-home-hero-action-bar__support");
+  const supportBox = await support.boundingBox();
+  const supportLineHeight = await support.evaluate((element) =>
+    Number.parseFloat(window.getComputedStyle(element).lineHeight),
+  );
   const cta = await page
     .locator(".pro-home-hero-action-bar__actions .pen-button")
     .boundingBox();
 
+  expect(stage).not.toBeNull();
+  expect(image).not.toBeNull();
   expect(title).not.toBeNull();
   expect(subtitle).not.toBeNull();
+  expect(supportBox).not.toBeNull();
   expect(cta).not.toBeNull();
-  expect(title.y + title.height).toBeLessThan(subtitle.y);
-  expect(cta.y + cta.height).toBeLessThanOrEqual(844);
+  expect(stage.height).toBeLessThanOrEqual(400);
+  expect(image.y).toBeGreaterThanOrEqual(stage.y - 24);
+  await expect(page.locator(".pro-home-hero-section__subtitle")).toHaveCSS("font-size", "18px");
+  await expect(support).toHaveCSS("font-size", "16px");
+  expect(
+    await page.locator(".pen-hero-section__title-line").evaluateAll((lines) =>
+      Math.max(...lines.map((line) => line.scrollWidth - line.clientWidth)),
+    ),
+  ).toBeLessThanOrEqual(1);
+  expect(supportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
+  expect(subtitle.y - (title.y + title.height)).toBeGreaterThanOrEqual(12);
+  expect(subtitle.y - (title.y + title.height)).toBeLessThanOrEqual(48);
+  expect(cta.y + cta.height).toBeLessThanOrEqual(720);
+
+  await page.setViewportSize({ width: 360, height: 720 });
+
+  const narrowSupportBox = await support.boundingBox();
+  expect(narrowSupportBox).not.toBeNull();
+  expect(narrowSupportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
+});
+
+test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {
+  await page.setViewportSize({ width: 1600, height: 650 });
+  await page.goto("/");
+  await page.addStyleTag({
+    content:
+      '.pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: "Arial Black", sans-serif !important; }',
+  });
+  await page.evaluate(() => document.fonts.ready);
+
+  const hero = await page.locator(".pen-hero-section").boundingBox();
+  const title = await page.locator(".pen-hero-section__title").boundingBox();
+  const subtitle = await page.locator(".pro-home-hero-section__subtitle").boundingBox();
+
+  expect(hero).not.toBeNull();
+  expect(title).not.toBeNull();
+  expect(subtitle).not.toBeNull();
+  expect(subtitle.y - (title.y + title.height)).toBeGreaterThanOrEqual(12);
+  expect(subtitle.y + subtitle.height).toBeLessThanOrEqual(hero.y + hero.height);
 });
 
 test("front page pillar controls move only the cards without shifting the section", async ({ page }) => {
@@ -200,6 +267,7 @@ test("front page pillar controls move only the cards without shifting the sectio
   const nextButton = slider.locator("[data-pro-home-pillars-next]");
 
   await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await expect(cards.nth(2).locator(":scope > span")).toHaveCSS("color", "rgb(26, 26, 26)");
   await nextButton.click();
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await previousButton.click();
@@ -226,19 +294,39 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
 
   const slider = page.locator("[data-pro-home-pillars-slider]");
   const cards = slider.locator("[data-pro-home-pillar-card]");
   const cta = page.locator(".pen-pillars-section__copy > .pen-button");
+  const pill = page.locator(".pen-pillars-section__copy > .pen-section-pill");
+  const title = page.locator(".pen-pillars-section__copy > h2");
+  const paragraphs = page.locator(
+    ".pen-pillars-section__copy > p:not(.pen-section-pill)",
+  );
 
   await expect(cards.nth(0)).toHaveClass(/is-active/);
   await expect(cards.nth(0)).toContainText("Meta");
+  await expect(cards.nth(0).locator(".pen-step-card__image")).toHaveAttribute("src", /pillar-meta\.webp$/);
+  await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveAttribute("src", /student_school_2\.webp$/);
+  await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveCSS("object-position", "50% 0%");
 
+  const pillBox = await pill.boundingBox();
+  const titleBox = await title.boundingBox();
+  const firstParagraphBox = await paragraphs.nth(0).boundingBox();
+  const secondParagraphBox = await paragraphs.nth(1).boundingBox();
   const sliderBox = await slider.boundingBox();
   const ctaBox = await cta.boundingBox();
 
+  expect(pillBox).not.toBeNull();
+  expect(titleBox).not.toBeNull();
+  expect(firstParagraphBox).not.toBeNull();
+  expect(secondParagraphBox).not.toBeNull();
   expect(sliderBox).not.toBeNull();
   expect(ctaBox).not.toBeNull();
+  expect(titleBox.y - (pillBox.y + pillBox.height)).toBeLessThanOrEqual(24);
+  expect(firstParagraphBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
+  expect(secondParagraphBox.y - (firstParagraphBox.y + firstParagraphBox.height)).toBeLessThanOrEqual(20);
   expect(ctaBox.y).toBeGreaterThan(sliderBox.y + sliderBox.height);
 
   await slider.dispatchEvent("pointerdown", {
@@ -254,6 +342,46 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
 
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await expect(cards.nth(1)).toContainText("Diagnóstico");
+});
+
+test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const section = page.locator(".pen-pricing-section");
+  const seal = section.locator(".pro-home-pricing__seal");
+  const title = section.locator(".pro-home-pricing__intro h2");
+  const support = section.locator(".pro-home-pricing__intro p").first();
+  const plans = section.locator(".pen-plan-grid");
+  const freePlanButton = section.locator(".pen-plan-card.is-free .pen-action-link");
+  const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
+
+  const sealBox = await seal.boundingBox();
+  const titleBox = await title.boundingBox();
+  const supportBox = await support.boundingBox();
+  const plansBox = await plans.boundingBox();
+
+  expect(sealBox).not.toBeNull();
+  expect(titleBox).not.toBeNull();
+  expect(supportBox).not.toBeNull();
+  expect(plansBox).not.toBeNull();
+  await expect(title).toHaveCSS("text-align", "center");
+  await expect(support).toHaveCSS("font-size", "16px");
+  await expect(support).toHaveCSS("text-align", "left");
+  await expect(featuredPlanButton).toHaveCSS(
+    "background-color",
+    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
+  );
+  expect(titleBox.y - (sealBox.y + sealBox.height)).toBeLessThanOrEqual(16);
+  expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
+  expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(featuredPlanButton).toHaveCSS(
+    "background-color",
+    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
+  );
 });
 
 test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
@@ -274,13 +402,18 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
 
   const section = page.locator(".pen-platform-showcase");
   const tabs = page.locator(".pro-home-platform-tabs");
+  const controls = page.locator(".pro-home-platform-tabs__controls");
+  const previousButton = controls.locator("[data-pro-home-platform-prev]");
+  const nextButton = controls.locator("[data-pro-home-platform-next]");
 
   await expect(tabs.getByRole("tab")).toHaveCount(6);
+  await expect(controls).toBeVisible();
   await expect(page.locator(".pro-home-platform-mock__dashboard")).toBeHidden();
 
   const sectionBox = await section.boundingBox();
   const activeTabBox = await tabs.locator(".is-active").boundingBox();
   const tabsBox = await tabs.boundingBox();
+  const controlsBox = await controls.boundingBox();
   const tabSizes = await tabs.evaluate((element) => ({
     clientWidth: element.clientWidth,
     scrollWidth: element.scrollWidth,
@@ -289,10 +422,47 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   expect(sectionBox).not.toBeNull();
   expect(activeTabBox).not.toBeNull();
   expect(tabsBox).not.toBeNull();
+  expect(controlsBox).not.toBeNull();
   expect(sectionBox.height).toBeLessThan(1150);
   expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
+  expect(Math.abs(controlsBox.x + controlsBox.width / 2 - (tabsBox.x + tabsBox.width / 2))).toBeLessThan(1);
+
+  await tabs.evaluate((element) => element.scrollTo({ behavior: "auto", left: 0 }));
+  await expect(previousButton).toBeDisabled();
+  await expect(nextButton).toBeEnabled();
+
+  const activeTitle = await page.locator("[data-pro-home-platform-title]").textContent();
+  await nextButton.click();
+  await expect.poll(() => tabs.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  await expect(previousButton).toBeEnabled();
+  await expect(page.locator("[data-pro-home-platform-title]")).toHaveText(activeTitle);
+
+  await page.setViewportSize({ width: 1024, height: 844 });
+  await expect(controls).toBeHidden();
+});
+
+test("front page platform keeps benefit lists informational across every tab", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const tabs = page.locator("[data-pro-home-platform-tab]");
+  const bullets = page.locator("[data-pro-home-platform-bullets]");
+
+  await expect(tabs).toHaveCount(6);
+  await expect(bullets.locator("a, button")).toHaveCount(0);
+
+  for (const tab of await tabs.all()) {
+    await tab.click();
+
+    const items = bullets.locator("li");
+
+    await expect(items).toHaveCount(3);
+    await expect(items.first()).toHaveCSS("cursor", "default");
+    await expect(items.first()).toHaveCSS("box-shadow", "none");
+    await expect(items.first()).toHaveCSS("border-radius", "0px");
+  }
 });
 
 test("front page question cards form two mobile rows without stretching the stamp", async ({
@@ -317,6 +487,47 @@ test("front page question cards form two mobile rows without stretching the stam
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
 });
 
+test("front page subject icons turn yellow only on hover or focus", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const cards = page.locator(".pen-subject-grid .pro-home-subject-card");
+  const icons = cards.locator(".pro-home-subject-card__icon");
+  const destinations = [
+    "https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/matematica/a",
+    "https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa",
+    "https://estude.proenem.com.br/treino/questoes/s/linguagens/a",
+  ];
+  const counts = [
+    ["1524 questões", "64 aulas"],
+    ["65381 questões", "64 aulas"],
+    ["8735 questões", "64 aulas"],
+    ["3129 questões", "64 aulas"],
+    ["11458 questões", "32 aulas"],
+    ["21457 questões", "64 aulas"],
+  ];
+
+  await expect(cards).toHaveCount(6);
+
+  for (const [index, icon] of (await icons.all()).entries()) {
+    await expect(icon).toHaveCSS("background-color", "rgb(250, 157, 205)");
+    await expect(cards.nth(index)).toHaveAttribute("href", destinations[index]);
+    await expect(cards.nth(index)).toHaveAttribute("target", "_blank");
+    await expect(cards.nth(index)).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(cards.nth(index).locator(".pro-home-subject-card__meta")).toHaveText(counts[index]);
+  }
+
+  await cards.nth(1).hover();
+  await expect(icons.nth(1)).toHaveCSS("background-color", "rgb(255, 230, 128)");
+  await expect(icons.nth(0)).toHaveCSS("background-color", "rgb(250, 157, 205)");
+
+  await cards.nth(2).focus();
+  await expect(icons.nth(2)).toHaveCSS("background-color", "rgb(255, 230, 128)");
+});
+
 test("front page testimonial heading stays inside the mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
@@ -327,6 +538,40 @@ test("front page testimonial heading stays inside the mobile viewport", async ({
   expect(heading.x).toBeGreaterThanOrEqual(0);
   expect(heading.x + heading.width).toBeLessThanOrEqual(390);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+});
+
+test("front page testimonial controls include the external approved-students link", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const controls = page.locator(".pro-home-testimonials__controls");
+  const previous = controls.getByRole("button", { name: "Depoimento anterior" });
+  const next = controls.getByRole("button", { name: "Próximo depoimento" });
+  const more = controls.getByRole("link", { name: "Ver mais" });
+
+  await expect(more).toHaveAttribute("href", "https://aprovados.proenem.com.br/");
+  await expect(more).toHaveAttribute("target", "_blank");
+  await expect(more).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(more).toHaveClass(/pen-button--secondary/);
+  await expect(more).toHaveCSS("background-color", "rgb(255, 255, 255)");
+
+  const [previousBox, nextBox, moreBox] = await Promise.all([
+    previous.boundingBox(),
+    next.boundingBox(),
+    more.boundingBox(),
+  ]);
+
+  expect(previousBox).not.toBeNull();
+  expect(nextBox).not.toBeNull();
+  expect(moreBox).not.toBeNull();
+  expect(Math.abs(previousBox.y - nextBox.y)).toBeLessThan(1);
+  expect(Math.abs(nextBox.y - moreBox.y)).toBeLessThan(1);
+  expect(moreBox.x).toBeGreaterThan(nextBox.x + nextBox.width);
+  expect(moreBox.x - (nextBox.x + nextBox.width)).toBeGreaterThan(
+    nextBox.x - (previousBox.x + previousBox.width),
+  );
 });
 
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {

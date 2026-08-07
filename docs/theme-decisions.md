@@ -73,6 +73,22 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#30`; tema `carvalhorafael/proenem-wordpress-theme#87`.
 - Criterio de remocao: atualizar o pacote `@carvalhorafael/proenem-css`, migrar para a classe compartilhada e remover o seletor local.
 
+## 2026-08-06: Listas informativas no platform showcase
+
+- Contexto: o pattern publicado aplica aparencia e cursor de item interativo a qualquer `li` dentro de `.pen-platform-showcase__panel`, incluindo os beneficios sem acao exibidos na tela da plataforma.
+- Decisao: manter as abas do menu esquerdo como controles reais e neutralizar apenas a affordance falsa da lista `.pro-home-platform-mock__bullets`.
+- Adaptacao local: `src/styles/theme.css` remove background, raio, sombra, cursor de clique e altura minima herdados nos itens informativos.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#35`; tema `carvalhorafael/proenem-wordpress-theme#101`.
+- Criterio de remocao: atualizar `@carvalhorafael/proenem-css` para a versao que restringir o estilo interativo a itens explicitos e remover o reset local apos validacao no navegador.
+
+## 2026-08-06: Cor do numero no selo dos pilares
+
+- Contexto: o variant vermelho de `pen-step-card` define texto claro e essa cor e herdada pelo numero 03 dentro do selo amarelo, diferente dos demais pilares.
+- Decisao: fixar localmente `var(--pen-color-ink)` no numero dos quatro cards para manter contraste e consistencia entre variants.
+- Adaptacao local: `src/styles/theme.css` restringe o override aos selos numericos do slider de pilares da home.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#36`; tema `carvalhorafael/proenem-wordpress-theme#102`.
+- Criterio de remocao: atualizar `@carvalhorafael/proenem-css` para a versao que definir a cor ink no selo do `pen-step-card` e remover o override local.
+
 ## 2026-08-04: Grade responsiva com quatro dores na home
 
 - Contexto: a nova estrutura inclui o card `Comeca e abandona`, levando a secao de dores de tres para quatro itens.
