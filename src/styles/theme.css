@@ -4852,6 +4852,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pro-home-hero-section__subtitle {
     margin-top: var(--pen-space-10);
+    max-width: 72rem;
+    width: min(94vw, 72rem);
   }
 }
 
@@ -5015,11 +5017,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__title {
-    font-size: clamp(2.15rem, 10.5vw, 3.15rem);
+    font-size: clamp(2.15rem, 9.75vw, 3.15rem);
     letter-spacing: -0.035em;
     line-height: 0.94;
     top: 50%;
-    width: min(96vw, 34rem);
+    width: min(98vw, 34rem);
+  }
+
+  .pro-home .pen-hero-section__title-line {
+    white-space: nowrap;
   }
 
   .pro-home .pro-home-hero-section__subtitle {
