@@ -182,6 +182,8 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
   const body = screen?.querySelector("[data-pro-home-platform-body]");
   const url = screen?.querySelector("[data-pro-home-platform-url]");
   const bulletList = screen?.querySelector("[data-pro-home-platform-bullets]");
+  const previousButton = section.querySelector("[data-pro-home-platform-prev]");
+  const nextButton = section.querySelector("[data-pro-home-platform-next]");
 
   if (!tabList || !tabs.length || !screen || !title || !body || !url || !bulletList) {
     return;
@@ -197,6 +199,33 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
       left: tab.offsetLeft - (tabList.clientWidth - tab.clientWidth) / 2,
     });
   };
+
+  const updateControls = () => {
+    const maximumScroll = Math.max(0, tabList.scrollWidth - tabList.clientWidth);
+
+    if (previousButton instanceof HTMLButtonElement) {
+      previousButton.disabled = tabList.scrollLeft <= 2;
+    }
+
+    if (nextButton instanceof HTMLButtonElement) {
+      nextButton.disabled = tabList.scrollLeft >= maximumScroll - 2;
+    }
+  };
+
+  const scrollTabs = (direction) => {
+    const firstItem = tabList.querySelector("li");
+    const distance = firstItem?.getBoundingClientRect().width || tabList.clientWidth * 0.7;
+
+    tabList.scrollBy({
+      behavior: "smooth",
+      left: direction * distance,
+    });
+  };
+
+  previousButton?.addEventListener("click", () => scrollTabs(-1));
+  nextButton?.addEventListener("click", () => scrollTabs(1));
+  tabList.addEventListener("scroll", updateControls, { passive: true });
+  window.addEventListener("resize", updateControls);
 
   const renderBullets = (items) => {
     bulletList.replaceChildren(
@@ -235,7 +264,12 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
   const activeTab = tabs.find((tab) => tab.classList.contains("is-active"));
 
   if (activeTab) {
-    window.requestAnimationFrame(() => revealTab(activeTab, "auto"));
+    window.requestAnimationFrame(() => {
+      revealTab(activeTab, "auto");
+      window.requestAnimationFrame(updateControls);
+    });
+  } else {
+    updateControls();
   }
 });
 

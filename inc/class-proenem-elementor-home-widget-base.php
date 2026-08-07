@@ -993,6 +993,7 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 					<p class="pro-home-platform-note"><img src="<?php echo esc_url( $this->home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true"><span class="pro-home-platform-note__text"><?php echo esc_html( $settings['note'] ?? '' ); ?></span></p>
 				</header>
 				<p class="pro-home-platform-guard"><span><?php echo esc_html( $settings['guard_text'] ?? '' ); ?></span> <strong><?php echo esc_html( $settings['guard_emphasis'] ?? '' ); ?></strong></p>
+				<div class="pen-pillars-slider__control pro-home-platform-tabs__controls" aria-label="<?php esc_attr_e( 'Controles dos recursos', 'proenem-wordpress-theme' ); ?>"><button type="button" data-pro-home-platform-prev aria-label="<?php esc_attr_e( 'Mostrar recursos anteriores', 'proenem-wordpress-theme' ); ?>">←</button><button type="button" data-pro-home-platform-next aria-label="<?php esc_attr_e( 'Mostrar próximos recursos', 'proenem-wordpress-theme' ); ?>">→</button></div>
 				<div class="pro-home-platform-body">
 					<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 						<?php foreach ( $items as $index => $item ) : ?>

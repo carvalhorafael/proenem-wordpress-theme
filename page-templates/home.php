@@ -662,6 +662,10 @@ $subjects = array(
 				<span><?php esc_html_e( 'Não é um acervo de vídeos. É um sistema que te diz', 'proenem-wordpress-theme' ); ?></span>
 				<strong><?php esc_html_e( 'o próximo passo.', 'proenem-wordpress-theme' ); ?></strong>
 			</p>
+			<div class="pen-pillars-slider__control pro-home-platform-tabs__controls" aria-label="<?php esc_attr_e( 'Controles dos recursos', 'proenem-wordpress-theme' ); ?>">
+				<button type="button" data-pro-home-platform-prev aria-label="<?php esc_attr_e( 'Mostrar recursos anteriores', 'proenem-wordpress-theme' ); ?>">←</button>
+				<button type="button" data-pro-home-platform-next aria-label="<?php esc_attr_e( 'Mostrar próximos recursos', 'proenem-wordpress-theme' ); ?>">→</button>
+			</div>
 			<div class="pro-home-platform-body">
 				<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 					<?php foreach ( $platform_items as $index => $item ) : ?>

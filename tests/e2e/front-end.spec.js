@@ -281,10 +281,16 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
 
   const slider = page.locator("[data-pro-home-pillars-slider]");
   const cards = slider.locator("[data-pro-home-pillar-card]");
   const cta = page.locator(".pen-pillars-section__copy > .pen-button");
+  const pill = page.locator(".pen-pillars-section__copy > .pen-section-pill");
+  const title = page.locator(".pen-pillars-section__copy > h2");
+  const paragraphs = page.locator(
+    ".pen-pillars-section__copy > p:not(.pen-section-pill)",
+  );
 
   await expect(cards.nth(0)).toHaveClass(/is-active/);
   await expect(cards.nth(0)).toContainText("Meta");
@@ -292,11 +298,22 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
   await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveAttribute("src", /student_school_2\.webp$/);
   await expect(cards.nth(3).locator(".pen-step-card__image")).toHaveCSS("object-position", "50% 0%");
 
+  const pillBox = await pill.boundingBox();
+  const titleBox = await title.boundingBox();
+  const firstParagraphBox = await paragraphs.nth(0).boundingBox();
+  const secondParagraphBox = await paragraphs.nth(1).boundingBox();
   const sliderBox = await slider.boundingBox();
   const ctaBox = await cta.boundingBox();
 
+  expect(pillBox).not.toBeNull();
+  expect(titleBox).not.toBeNull();
+  expect(firstParagraphBox).not.toBeNull();
+  expect(secondParagraphBox).not.toBeNull();
   expect(sliderBox).not.toBeNull();
   expect(ctaBox).not.toBeNull();
+  expect(titleBox.y - (pillBox.y + pillBox.height)).toBeLessThanOrEqual(24);
+  expect(firstParagraphBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
+  expect(secondParagraphBox.y - (firstParagraphBox.y + firstParagraphBox.height)).toBeLessThanOrEqual(20);
   expect(ctaBox.y).toBeGreaterThan(sliderBox.y + sliderBox.height);
 
   await slider.dispatchEvent("pointerdown", {
@@ -312,6 +329,46 @@ test("front page pillars start at the first card and accept a mobile swipe", asy
 
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await expect(cards.nth(1)).toContainText("Diagnóstico");
+});
+
+test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const section = page.locator(".pen-pricing-section");
+  const seal = section.locator(".pro-home-pricing__seal");
+  const title = section.locator(".pro-home-pricing__intro h2");
+  const support = section.locator(".pro-home-pricing__intro p").first();
+  const plans = section.locator(".pen-plan-grid");
+  const freePlanButton = section.locator(".pen-plan-card.is-free .pen-action-link");
+  const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
+
+  const sealBox = await seal.boundingBox();
+  const titleBox = await title.boundingBox();
+  const supportBox = await support.boundingBox();
+  const plansBox = await plans.boundingBox();
+
+  expect(sealBox).not.toBeNull();
+  expect(titleBox).not.toBeNull();
+  expect(supportBox).not.toBeNull();
+  expect(plansBox).not.toBeNull();
+  await expect(title).toHaveCSS("text-align", "center");
+  await expect(support).toHaveCSS("font-size", "16px");
+  await expect(support).toHaveCSS("text-align", "left");
+  await expect(featuredPlanButton).toHaveCSS(
+    "background-color",
+    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
+  );
+  expect(titleBox.y - (sealBox.y + sealBox.height)).toBeLessThanOrEqual(16);
+  expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
+  expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(featuredPlanButton).toHaveCSS(
+    "background-color",
+    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
+  );
 });
 
 test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
@@ -332,13 +389,18 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
 
   const section = page.locator(".pen-platform-showcase");
   const tabs = page.locator(".pro-home-platform-tabs");
+  const controls = page.locator(".pro-home-platform-tabs__controls");
+  const previousButton = controls.locator("[data-pro-home-platform-prev]");
+  const nextButton = controls.locator("[data-pro-home-platform-next]");
 
   await expect(tabs.getByRole("tab")).toHaveCount(6);
+  await expect(controls).toBeVisible();
   await expect(page.locator(".pro-home-platform-mock__dashboard")).toBeHidden();
 
   const sectionBox = await section.boundingBox();
   const activeTabBox = await tabs.locator(".is-active").boundingBox();
   const tabsBox = await tabs.boundingBox();
+  const controlsBox = await controls.boundingBox();
   const tabSizes = await tabs.evaluate((element) => ({
     clientWidth: element.clientWidth,
     scrollWidth: element.scrollWidth,
@@ -347,10 +409,25 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   expect(sectionBox).not.toBeNull();
   expect(activeTabBox).not.toBeNull();
   expect(tabsBox).not.toBeNull();
+  expect(controlsBox).not.toBeNull();
   expect(sectionBox.height).toBeLessThan(1150);
   expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
+  expect(Math.abs(controlsBox.x + controlsBox.width / 2 - (tabsBox.x + tabsBox.width / 2))).toBeLessThan(1);
+
+  await tabs.evaluate((element) => element.scrollTo({ behavior: "auto", left: 0 }));
+  await expect(previousButton).toBeDisabled();
+  await expect(nextButton).toBeEnabled();
+
+  const activeTitle = await page.locator("[data-pro-home-platform-title]").textContent();
+  await nextButton.click();
+  await expect.poll(() => tabs.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  await expect(previousButton).toBeEnabled();
+  await expect(page.locator("[data-pro-home-platform-title]")).toHaveText(activeTitle);
+
+  await page.setViewportSize({ width: 1024, height: 844 });
+  await expect(controls).toBeHidden();
 });
 
 test("front page platform keeps benefit lists informational across every tab", async ({ page }) => {
