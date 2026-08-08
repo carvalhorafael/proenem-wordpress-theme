@@ -3569,45 +3569,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   margin: 1.55rem 0 0;
 }
 
-.pro-home .pro-home-pricing__seal {
-  display: block;
-  height: 11.6rem;
-  left: 0;
-  position: absolute;
-  top: 50%;
-  transform: translate(-0.8rem, -50%);
-  width: 11.6rem;
-}
-
-.pro-home .pro-home-pricing__seal img {
-  display: block;
-  max-width: none;
-  pointer-events: none;
-  position: absolute;
-}
-
-.pro-home .pro-home-pricing__seal-bg {
-  height: 7.35rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 7.35rem;
-}
-
-.pro-home .pro-home-pricing__seal-text {
-  height: 100%;
-  inset: 0;
-  width: 100%;
-}
-
-.pro-home .pro-home-pricing__seal-check {
-  height: 4.55rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 4.55rem;
-}
-
 .pro-home .pen-plan-grid {
   align-items: end;
   display: grid;
@@ -3625,8 +3586,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   box-shadow: var(--pen-shadow-hard-sm);
   color: var(--pen-color-ink);
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 27.75rem;
+  grid-template-rows: auto 1fr auto auto auto;
+  min-height: 31rem;
   overflow: visible;
   padding: 0;
   position: relative;
@@ -3636,7 +3597,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pen-plan-card.is-featured {
   background: #d72f2f;
   color: var(--pen-color-surface);
-  height: 34.375rem;
+  min-height: 37rem;
 }
 
 .pro-home .pen-plan-card.is-free header {
@@ -3645,9 +3606,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pen-plan-card header {
-  min-height: 9.35rem;
+  min-height: 8.5rem;
   padding: 2rem 1.55rem 1.45rem;
-  position: relative;
 }
 
 .pro-home .pen-plan-card.is-featured header {
@@ -3655,7 +3615,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
   background-size: 1.55rem 1.55rem;
-  min-height: 11.6rem;
+  min-height: 9.5rem;
 }
 
 .pro-home .pen-plan-card h3 {
@@ -3663,79 +3623,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   font-weight: 900;
   line-height: 1;
   margin: 0;
-  max-width: 11.5rem;
 }
 
 .pro-home .pen-plan-card header p {
   font-size: 1rem;
   line-height: 1.35;
   margin: 0.9rem 0 0;
-  max-width: 12.5rem;
-}
-
-.pro-home .pen-plan-card header strong {
-  align-items: flex-end;
-  color: var(--pen-color-surface);
-  display: flex;
-  font-size: clamp(4.2rem, 5vw, 5rem);
-  font-weight: 900;
-  gap: 0.25rem;
-  letter-spacing: -0.03em;
-  line-height: 0.78;
-  position: absolute;
-  right: 1.45rem;
-  text-shadow: 4px 4px 0 var(--pen-color-ink);
-  top: 1.5rem;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 2px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card.is-featured header strong {
-  align-items: center;
-  background: var(--pro-home-pricing-star) center / contain no-repeat;
-  border: 0;
-  box-shadow: none;
-  color: var(--pen-color-surface);
-  flex-wrap: wrap;
-  font-size: 4.7rem;
-  height: 8rem;
-  justify-content: center;
-  line-height: 0.72;
-  padding: 1.05rem 1rem;
-  right: 1rem;
-  text-align: center;
-  text-shadow: 4px 4px 0 var(--pen-color-ink);
-  top: -2rem;
-  width: 8rem;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 2px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card header strong span {
-  font-size: 1rem;
-  letter-spacing: 0;
-  line-height: 1;
-  text-shadow: 2px 2px 0 var(--pen-color-ink);
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 1px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card header strong small {
-  display: block;
-  flex-basis: 100%;
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 1;
-  text-align: right;
-  text-shadow: 2px 2px 0 var(--pen-color-ink);
-  text-transform: uppercase;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 1px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card.is-featured header strong small {
-  text-align: center;
 }
 
 .pro-home .pen-plan-card ul {
@@ -3773,6 +3666,75 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   line-height: 1;
   margin-top: 0.15rem;
   width: 0.95rem;
+}
+
+.pro-home .pro-home-plan-card__price {
+  border-bottom: var(--pen-border-brand-xs);
+  display: grid;
+  gap: 0.45rem;
+  justify-items: center;
+  padding: 1.2rem 1.55rem 1.35rem;
+  text-align: center;
+}
+
+.pro-home .pen-plan-card strong.pro-home-plan-card__price-amount {
+  align-items: baseline;
+  color: currentColor;
+  display: flex;
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.55rem, 3.4vw, 3.35rem);
+  font-weight: 900;
+  gap: 0.35rem;
+  justify-content: center;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-shadow: none;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  width: 100%;
+}
+
+.pro-home .pen-plan-card strong.pro-home-plan-card__price-amount span {
+  font-family: var(--pen-font-body);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-shadow: none;
+  text-transform: none;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+}
+
+.pro-home .pro-home-plan-card__price > p {
+  font-size: 0.86rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.pro-home .pro-home-plan-card__guarantee {
+  align-items: center;
+  display: flex;
+  font-weight: 800;
+  gap: 0.45rem;
+  justify-content: center;
+  margin: -0.45rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.pro-home .pro-home-plan-card__guarantee span {
+  align-items: center;
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-xs);
+  border-radius: 999px;
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  height: 1.15rem;
+  justify-content: center;
+  line-height: 1;
+  width: 1.15rem;
 }
 
 .pro-home .pen-plan-card .pen-action-link {
@@ -5361,16 +5323,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     display: block;
   }
 
-  .pro-home .pro-home-pricing__seal {
-    height: 8.1rem;
-    left: auto;
-    margin: 0 auto 1rem;
-    position: relative;
-    top: auto;
-    transform: none;
-    width: 8.1rem;
-  }
-
   .pro-home .pro-home-pricing__intro {
     text-align: left;
   }
@@ -5389,16 +5341,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     margin-top: var(--pen-space-1);
   }
 
-  .pro-home .pro-home-pricing__seal-bg {
-    height: 5.1rem;
-    width: 5.1rem;
-  }
-
-  .pro-home .pro-home-pricing__seal-check {
-    height: 3.2rem;
-    width: 3.2rem;
-  }
-
   .pro-home .pen-plan-grid {
     align-items: stretch;
     grid-template-columns: minmax(0, min(100%, 22.7rem));
@@ -5411,42 +5353,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     min-height: 0;
   }
 
-  .pro-home .pen-plan-card:not(.is-featured) header {
-    column-gap: var(--pen-space-3);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header h3 {
-    align-self: start;
-    grid-column: 1;
-    grid-row: 1;
-    max-width: none;
-    min-width: 0;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header p {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header strong {
-    align-self: start;
-    font-size: 3.25rem;
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-    position: static;
-  }
-
-  .pro-home .pen-plan-card header strong {
-    font-size: 4rem;
-  }
-
-  .pro-home .pen-plan-card.is-featured header strong {
-    font-size: 3.8rem;
-    height: 6.8rem;
-    width: 6.8rem;
+  .pro-home .pen-plan-card strong.pro-home-plan-card__price-amount {
+    font-size: clamp(2.8rem, 14vw, 3.45rem);
   }
 
   .pro-home .pro-home-testimonials {

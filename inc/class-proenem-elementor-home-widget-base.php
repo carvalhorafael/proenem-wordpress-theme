@@ -1352,7 +1352,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 		$this->add_text_control( 'title_line_1', esc_html__( 'Título linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Comece de graça.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_line_2', esc_html__( 'Título linha 2', 'proenem-wordpress-theme' ), esc_html__( 'Evolua quando', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_emphasis', esc_html__( 'Destaque', 'proenem-wordpress-theme' ), esc_html__( 'fizer sentido.', 'proenem-wordpress-theme' ) );
-		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( "Comece grátis, sem cartão. Cancele quando quiser.\n7 dias de garantia em todos os planos pagos.", 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( "Comece grátis, sem cartão.\nNos planos pagos, você tem 7 dias de garantia.", 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão dos planos', 'proenem-wordpress-theme' ), esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ) );
 		$this->add_url_control( 'button_url', esc_html__( 'Link dos planos', 'proenem-wordpress-theme' ), '#faq' );
 
@@ -1368,6 +1368,27 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 			'price',
 			array(
 				'label' => esc_html__( 'Preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plans->add_control(
+			'price_prefix',
+			array(
+				'label' => esc_html__( 'Prefixo do preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plans->add_control(
+			'price_details',
+			array(
+				'label' => esc_html__( 'Detalhes do preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXTAREA,
+			)
+		);
+		$plans->add_control(
+			'guarantee',
+			array(
+				'label' => esc_html__( 'Garantia', 'proenem-wordpress-theme' ),
 				'type'  => \Elementor\Controls_Manager::TEXT,
 			)
 		);
@@ -1424,30 +1445,38 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 				'fields'      => $plans->get_controls(),
 				'default'     => array(
 					array(
-						'name'         => esc_html__( 'Grátis', 'proenem-wordpress-theme' ),
-						'price'        => '0',
-						'summary'      => esc_html__( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-						'features'     => esc_html__( "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão", 'proenem-wordpress-theme' ),
-						'button_label' => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-						'button_url'   => array( 'url' => 'https://estude.proenem.com.br/' ),
-						'free'         => 'yes',
+						'name'          => esc_html__( 'Grátis', 'proenem-wordpress-theme' ),
+						'price_prefix'  => esc_html__( 'R$', 'proenem-wordpress-theme' ),
+						'price'         => '0',
+						'price_details' => esc_html__( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
+						'summary'       => esc_html__( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+						'features'      => esc_html__( "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão", 'proenem-wordpress-theme' ),
+						'button_label'  => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+						'button_url'    => array( 'url' => 'https://estude.proenem.com.br/' ),
+						'free'          => 'yes',
 					),
 					array(
-						'name'         => esc_html__( 'Método PRO', 'proenem-wordpress-theme' ),
-						'price'        => '29',
-						'summary'      => esc_html__( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
-						'features'     => esc_html__( "Tudo do Grátis\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA", 'proenem-wordpress-theme' ),
-						'featured'     => 'yes',
-						'button_label' => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
-						'button_url'   => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+						'name'          => esc_html__( 'Método PRO', 'proenem-wordpress-theme' ),
+						'price_prefix'  => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
+						'price'         => '29,90',
+						'price_details' => '',
+						'guarantee'     => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+						'summary'       => esc_html__( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
+						'features'      => esc_html__( "Tudo do Grátis\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA", 'proenem-wordpress-theme' ),
+						'featured'      => 'yes',
+						'button_label'  => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+						'button_url'    => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
 					),
 					array(
-						'name'         => esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ),
-						'price'        => '39',
-						'summary'      => esc_html__( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
-						'features'     => esc_html__( "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária", 'proenem-wordpress-theme' ),
-						'button_label' => esc_html__( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ),
-						'button_url'   => array( 'url' => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+						'name'          => esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ),
+						'price_prefix'  => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
+						'price'         => '39,90',
+						'price_details' => '',
+						'guarantee'     => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+						'summary'       => esc_html__( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+						'features'      => esc_html__( "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária", 'proenem-wordpress-theme' ),
+						'button_label'  => esc_html__( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ),
+						'button_url'    => array( 'url' => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1457,17 +1486,42 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 	}
 
 	protected function render(): void {
-		$settings          = $this->get_settings_for_display();
-		$default_plan_urls = array(
+		$settings             = $this->get_settings_for_display();
+		$default_plan_urls    = array(
 			esc_html__( 'Grátis', 'proenem-wordpress-theme' )       => array( 'url' => 'https://estude.proenem.com.br/' ),
 			esc_html__( 'Método PRO', 'proenem-wordpress-theme' )  => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
 			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array( 'url' => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+		);
+		$default_plan_pricing = array(
+			esc_html__( 'Grátis', 'proenem-wordpress-theme' ) => array(
+				'legacy_price'  => '0',
+				'price'         => '0',
+				'price_prefix'  => esc_html__( 'R$', 'proenem-wordpress-theme' ),
+				'price_details' => esc_html__( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
+				'guarantee'     => '',
+			),
+			esc_html__( 'Método PRO', 'proenem-wordpress-theme' ) => array(
+				'legacy_price'        => '29',
+				'price'               => '29,90',
+				'price_prefix'        => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
+				'price_details'       => '',
+				'legacy_details_hash' => '2d0e1aabc7b7c5364426f2f7c53dda0b',
+				'guarantee'           => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+			),
+			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array(
+				'legacy_price'        => '39',
+				'price'               => '39,90',
+				'price_prefix'        => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
+				'price_details'       => '',
+				'legacy_details_hash' => '65005b4f9a411b88b703af313ba229cd',
+				'guarantee'           => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+			),
 		);
 		$this->open_home_wrapper();
 		?>
 		<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
 			<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $this->home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true">
-			<div class="pro-home-pricing__header"><div class="pro-home-pricing__seal" aria-hidden="true"><img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $this->home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $this->home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"><img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $this->home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"></div><div class="pro-home-pricing__intro"><h2 id="pro-pricing-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><span class="pro-home-pricing__title-line"><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></span></h2>
+			<div class="pro-home-pricing__header"><div class="pro-home-pricing__intro"><h2 id="pro-pricing-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><span class="pro-home-pricing__title-line"><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></span></h2>
 			<?php
 			foreach ( $this->split_lines( $settings['body'] ?? '' ) as $line ) :
 				?>
@@ -1475,7 +1529,17 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 			<div class="pen-plan-grid">
 				<?php foreach ( (array) ( $settings['plans'] ?? array() ) as $index => $plan ) : ?>
 					<?php
-					$plan_name    = $plan['name'] ?? '';
+					$plan_name     = $plan['name'] ?? '';
+					$pricing       = $default_plan_pricing[ $plan_name ] ?? array();
+					$legacy_price  = ! array_key_exists( 'price_prefix', $plan ) && isset( $pricing['legacy_price'] ) && (string) ( $plan['price'] ?? '' ) === $pricing['legacy_price'];
+					$price         = $legacy_price ? $pricing['price'] : ( $plan['price'] ?? $pricing['price'] ?? '' );
+					$price_prefix  = array_key_exists( 'price_prefix', $plan ) ? $plan['price_prefix'] : ( $pricing['price_prefix'] ?? '' );
+					$price_details = array_key_exists( 'price_details', $plan ) ? $plan['price_details'] : ( $pricing['price_details'] ?? '' );
+					$guarantee     = array_key_exists( 'guarantee', $plan ) ? $plan['guarantee'] : ( $pricing['guarantee'] ?? '' );
+
+					if ( isset( $pricing['legacy_details_hash'] ) && md5( (string) $price_details ) === $pricing['legacy_details_hash'] ) {
+						$price_details = '';
+					}
 					$button_url   = ! empty( $plan['button_url']['url'] )
 						? $plan['button_url']
 						: ( $default_plan_urls[ $plan_name ] ?? $settings['button_url'] ?? array() );
@@ -1490,13 +1554,18 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						if ( ! empty( $plan['featured'] ) ) :
 							?>
 							<span class="pro-home-plan-card__label"><?php esc_html_e( 'Mais escolhido', 'proenem-wordpress-theme' ); ?></span><?php endif; ?>
-						<header><h3><?php echo esc_html( $plan['name'] ?? '' ); ?></h3><p><?php echo esc_html( $plan['summary'] ?? '' ); ?></p><strong <?php echo ! empty( $plan['featured'] ) ? 'style="' . esc_attr( '--pro-home-pricing-star: url(' . esc_url( $this->home_asset_uri( 'pricing_star.svg' ) ) . ');' ) . '"' : ''; ?>><span><?php esc_html_e( 'R$', 'proenem-wordpress-theme' ); ?></span><?php echo esc_html( $plan['price'] ?? '' ); ?><small><?php esc_html_e( 'ao mês', 'proenem-wordpress-theme' ); ?></small></strong></header>
+						<header><h3><?php echo esc_html( $plan['name'] ?? '' ); ?></h3><p><?php echo esc_html( $plan['summary'] ?? '' ); ?></p></header>
 						<ul>
 						<?php
 						foreach ( $this->split_lines( $plan['features'] ?? '' ) as $feature ) :
 							?>
 							<li><?php echo esc_html( $feature ); ?></li><?php endforeach; ?></ul>
+						<div class="pro-home-plan-card__price"><strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $price_prefix ); ?></span><?php echo esc_html( $price ); ?></strong>
+						<?php if ( ! empty( $price_details ) ) : ?>
+							<p><?php echo esc_html( $price_details ); ?></p><?php endif; ?></div>
 						<?php $this->render_home_button( 'plan_button_' . $index, $button_url, $button_label, 'pen-action-link pen-action-link--primary' ); ?>
+						<?php if ( ! empty( $guarantee ) ) : ?>
+							<p class="pro-home-plan-card__guarantee"><span aria-hidden="true">✓</span><?php echo esc_html( $guarantee ); ?></p><?php endif; ?>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -1825,7 +1894,7 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 					),
 					array(
 						'question' => esc_html__( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
-						'answer'   => esc_html__( 'Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você.', 'proenem-wordpress-theme' ),
+						'answer'   => esc_html__( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' ),
 					),
 				),
 				'title_field' => '{{{ question }}}',
@@ -1836,13 +1905,21 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
+		// Persisted Elementor data may still carry the pre-#108 default answer.
+		$legacy_answer_hash = 'dddf1a3143a095745dccc9b13225138f';
+		$updated_answer     = esc_html__( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' );
 		$this->open_home_wrapper();
 		?>
 		<section id="faq" class="pen-faq-section" aria-labelledby="pro-faq-title"><div class="pen-faq-section__header"><span class="pen-pill-eyebrow"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-faq-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?></h2></div><div class="pen-faq-section__items">
 		<?php
 		foreach ( (array) ( $settings['items'] ?? array() ) as $index => $item ) :
+			$answer = $item['answer'] ?? '';
+
+			if ( hash_equals( $legacy_answer_hash, md5( $answer ) ) ) {
+				$answer = $updated_answer;
+			}
 			?>
-			<details class="pen-faq-item" <?php echo 1 === $index ? 'open' : ''; ?>><summary><?php echo esc_html( $item['question'] ?? '' ); ?></summary><p><?php echo esc_html( $item['answer'] ?? '' ); ?></p></details><?php endforeach; ?></div></section>
+			<details class="pen-faq-item" <?php echo 1 === $index ? 'open' : ''; ?>><summary><?php echo esc_html( $item['question'] ?? '' ); ?></summary><p><?php echo esc_html( $answer ); ?></p></details><?php endforeach; ?></div></section>
 		<?php
 		$this->close_home_wrapper();
 	}

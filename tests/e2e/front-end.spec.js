@@ -68,7 +68,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pro-home-platform-guard strong")).toHaveText("o próximo passo.");
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
-  await expect(page.getByText(/comece grátis, sem cartão.*cancele quando quiser/i)).toBeVisible();
+  await expect(page.getByText(/comece grátis, sem cartão.*7 dias de garantia/i)).toBeVisible();
   await expect(page.locator(".pen-plan-card")).toHaveCount(3);
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
@@ -77,8 +77,19 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
+  const methodPlan = page.locator(".pen-plan-card").nth(1);
+  const medicinePlan = page.locator(".pen-plan-card").nth(2);
+  await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
+  await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
+  await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
+  await expect(medicinePlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*39,90/);
+  await expect(medicinePlan).not.toContainText("Plano anual. Total parcelado: R$ 478,80.");
+  await expect(medicinePlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
   await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
   await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
+  await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
+    "pode cancelar dentro desse prazo e usar a garantia",
+  );
   const b2bLinks = page
     .locator(".pro-home-school-section, .pro-home__final-cta")
     .getByRole("link", { name: /falar com nossa equipe/i });
@@ -350,22 +361,20 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   await page.evaluate(() => document.fonts.ready);
 
   const section = page.locator(".pen-pricing-section");
-  const seal = section.locator(".pro-home-pricing__seal");
   const title = section.locator(".pro-home-pricing__intro h2");
   const support = section.locator(".pro-home-pricing__intro p").first();
   const plans = section.locator(".pen-plan-grid");
   const freePlanButton = section.locator(".pen-plan-card.is-free .pen-action-link");
   const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
 
-  const sealBox = await seal.boundingBox();
   const titleBox = await title.boundingBox();
   const supportBox = await support.boundingBox();
   const plansBox = await plans.boundingBox();
 
-  expect(sealBox).not.toBeNull();
   expect(titleBox).not.toBeNull();
   expect(supportBox).not.toBeNull();
   expect(plansBox).not.toBeNull();
+  await expect(section.locator(".pro-home-pricing__seal")).toHaveCount(0);
   await expect(title).toHaveCSS("text-align", "center");
   await expect(support).toHaveCSS("font-size", "16px");
   await expect(support).toHaveCSS("text-align", "left");
@@ -373,7 +382,6 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
     "background-color",
     await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
   );
-  expect(titleBox.y - (sealBox.y + sealBox.height)).toBeLessThanOrEqual(16);
   expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
   expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
 
@@ -382,6 +390,49 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
     "background-color",
     await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
   );
+});
+
+test("front page pricing keeps centered prices and guarantees below paid CTAs without overlap", async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1366, height: 768 },
+    { width: 1600, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+
+    const cards = page.locator(".pen-pricing-section .pen-plan-card");
+
+    for (let index = 0; index < 3; index += 1) {
+      const card = cards.nth(index);
+      const featuresBox = await card.locator("ul").boundingBox();
+      const priceBox = await card.locator(".pro-home-plan-card__price").boundingBox();
+      const ctaBox = await card.locator(".pen-action-link").boundingBox();
+      const cardBox = await card.boundingBox();
+      const priceAlignment = await card
+        .locator(".pro-home-plan-card__price")
+        .evaluate((element) => window.getComputedStyle(element).textAlign);
+
+      expect(featuresBox).not.toBeNull();
+      expect(priceBox).not.toBeNull();
+      expect(ctaBox).not.toBeNull();
+      expect(cardBox).not.toBeNull();
+      expect(priceAlignment).toBe("center");
+      expect(priceBox.y).toBeGreaterThanOrEqual(featuresBox.y + featuresBox.height - 1);
+      expect(ctaBox.y).toBeGreaterThanOrEqual(priceBox.y + priceBox.height - 1);
+
+      if (index > 0) {
+        const guaranteeBox = await card.locator(".pro-home-plan-card__guarantee").boundingBox();
+
+        expect(guaranteeBox).not.toBeNull();
+        expect(guaranteeBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
+        expect(guaranteeBox.y + guaranteeBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      } else {
+        expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      }
+    }
+  }
 });
 
 test("front page keeps the student badge above the mobile portraits", async ({ page }) => {

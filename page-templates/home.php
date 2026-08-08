@@ -169,13 +169,15 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'         => __( 'Grátis', 'proenem-wordpress-theme' ),
-		'price'        => __( '0', 'proenem-wordpress-theme' ),
-		'summary'      => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-		'free'         => true,
-		'button_label' => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-		'button_url'   => 'https://estude.proenem.com.br/',
-		'features'     => array(
+		'name'          => __( 'Grátis', 'proenem-wordpress-theme' ),
+		'price_prefix'  => __( 'R$', 'proenem-wordpress-theme' ),
+		'price'         => __( '0', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+		'free'          => true,
+		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+		'button_url'    => 'https://estude.proenem.com.br/',
+		'features'      => array(
 			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
 			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
 			__( 'Sem cartão', 'proenem-wordpress-theme' ),
@@ -183,7 +185,9 @@ $plans = array(
 	),
 	array(
 		'name'         => __( 'Método PRO', 'proenem-wordpress-theme' ),
-		'price'        => __( '29', 'proenem-wordpress-theme' ),
+		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'        => __( '29,90', 'proenem-wordpress-theme' ),
+		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 		'summary'      => __( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
 		'featured'     => true,
 		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
@@ -199,7 +203,9 @@ $plans = array(
 	),
 	array(
 		'name'         => __( 'Pro Medicina', 'proenem-wordpress-theme' ),
-		'price'        => __( '39', 'proenem-wordpress-theme' ),
+		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'        => __( '39,90', 'proenem-wordpress-theme' ),
+		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 		'summary'      => __( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
 		'button_label' => __( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ),
 		'button_url'   => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
@@ -258,7 +264,7 @@ $faq_items = array(
 	),
 	array(
 		'question' => __( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' ),
 	),
 );
 
@@ -788,17 +794,12 @@ $subjects = array(
 	<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
 		<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'price_vector_strokes.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<div class="pro-home-pricing__header">
-			<div class="pro-home-pricing__seal" aria-hidden="true">
-				<img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Ellipse-fundo-price.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Cancele-quando-voce-quiser.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'check-verified-01.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			</div>
 			<div class="pro-home-pricing__intro">
 				<h2 id="pro-pricing-title">
 					<?php esc_html_e( 'Comece de graça.', 'proenem-wordpress-theme' ); ?><br>
 					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Evolua quando', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'fizer sentido.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Comece grátis, sem cartão. Cancele quando quiser.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( '7 dias de garantia em todos os planos pagos.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Comece grátis, sem cartão.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( 'Nos planos pagos, você tem 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid">
@@ -810,14 +811,22 @@ $subjects = array(
 					<header>
 						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
 						<p><?php echo esc_html( $plan['summary'] ); ?></p>
-						<strong <?php echo ! empty( $plan['featured'] ) ? 'style="' . esc_attr( '--pro-home-pricing-star: url(' . esc_url( $home_asset_uri( 'pricing_star.svg' ) ) . ');' ) . '"' : ''; ?>><span><?php esc_html_e( 'R$', 'proenem-wordpress-theme' ); ?></span><?php echo esc_html( $plan['price'] ); ?><small><?php esc_html_e( 'ao mês', 'proenem-wordpress-theme' ); ?></small></strong>
 					</header>
 					<ul>
 						<?php foreach ( $plan['features'] as $feature ) : ?>
 							<li><?php echo esc_html( $feature ); ?></li>
 						<?php endforeach; ?>
 					</ul>
+					<div class="pro-home-plan-card__price">
+						<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
+						<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+							<p><?php echo esc_html( $plan['price_details'] ); ?></p>
+						<?php endif; ?>
+					</div>
 					<a class="pen-action-link pen-action-link--primary" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
+					<?php if ( ! empty( $plan['guarantee'] ) ) : ?>
+						<p class="pro-home-plan-card__guarantee"><span aria-hidden="true">✓</span><?php echo esc_html( $plan['guarantee'] ); ?></p>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>
