@@ -44,6 +44,16 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	}
 
 	/**
+	 * Build the URL for a bundled platform screenshot.
+	 *
+	 * @param string $filename Asset filename.
+	 * @return string
+	 */
+	protected function platform_asset_uri( $filename ) {
+		return PROENEM_THEME_URI . '/assets/images/platform/' . ltrim( (string) $filename, '/' );
+	}
+
+	/**
 	 * Get a media control URL or fallback asset URL.
 	 *
 	 * @param array  $media Media setting.
@@ -824,6 +834,107 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
  * Pro home platform widget.
  */
 class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widget_Base {
+	/**
+	 * Get bundled screenshot metadata by platform item icon.
+	 *
+	 * @return array<string, array<string, int|string>>
+	 */
+	protected function platform_image_defaults(): array {
+		return array(
+			'clock' => array(
+				'large'  => 'live-960.webp',
+				'small'  => 'live-480.webp',
+				'width'  => 960,
+				'height' => 474,
+				'alt'    => esc_html__( 'Tela da Proenem com a agenda de aulas ao vivo.', 'proenem-wordpress-theme' ),
+			),
+			'book'  => array(
+				'large'  => 'question-bank-960.webp',
+				'small'  => 'question-bank-480.webp',
+				'width'  => 960,
+				'height' => 658,
+				'alt'    => esc_html__( 'Tela do banco de questões da Proenem com filtros e uma questão aberta.', 'proenem-wordpress-theme' ),
+			),
+			'brain' => array(
+				'large'  => 'study-plan-960.webp',
+				'small'  => 'study-plan-480.webp',
+				'width'  => 960,
+				'height' => 653,
+				'alt'    => esc_html__( 'Tela da jornada personalizada da Proenem com o estudo do dia.', 'proenem-wordpress-theme' ),
+			),
+			'edit'  => array(
+				'large'  => 'essay-feedback-960.webp',
+				'small'  => 'essay-feedback-480.webp',
+				'width'  => 960,
+				'height' => 473,
+				'alt'    => esc_html__( 'Tela da correção de redação da Proenem com nota e avaliação por competência.', 'proenem-wordpress-theme' ),
+			),
+			'chart' => array(
+				'large'  => 'simulations-960.webp',
+				'small'  => 'simulations-480.webp',
+				'width'  => 960,
+				'height' => 793,
+				'alt'    => esc_html__( 'Tela de simulados da Proenem.', 'proenem-wordpress-theme' ),
+			),
+		);
+	}
+
+	/**
+	 * Resolve screenshot data for a platform item.
+	 *
+	 * @param array $item Repeater item.
+	 * @return array<string, int|string>
+	 */
+	protected function platform_image_data( $item ): array {
+		$defaults = $this->platform_image_defaults();
+		$fallback = $defaults[ $item['icon'] ?? 'clock' ] ?? $defaults['clock'];
+		$media    = (array) ( $item['image'] ?? array() );
+		$url      = (string) ( $media['url'] ?? '' );
+		$alt      = trim( (string) ( $item['image_alt'] ?? '' ) );
+		$width    = (int) $fallback['width'];
+		$height   = (int) $fallback['height'];
+		$srcset   = '';
+
+		if ( '' === $url || $this->is_elementor_placeholder_url( $url ) ) {
+			$url = $this->platform_asset_uri( $fallback['large'] );
+		}
+
+		if ( false !== strpos( $url, '/assets/images/platform/' . $fallback['large'] ) ) {
+			$url    = $this->platform_asset_uri( $fallback['large'] );
+			$srcset = sprintf(
+				'%s 480w, %s 960w',
+				$this->platform_asset_uri( $fallback['small'] ),
+				$url
+			);
+		} elseif ( ! empty( $media['id'] ) ) {
+			$attachment = wp_get_attachment_image_src( (int) $media['id'], 'full' );
+
+			if ( is_array( $attachment ) ) {
+				$url    = (string) $attachment[0];
+				$width  = (int) $attachment[1];
+				$height = (int) $attachment[2];
+			}
+
+			$srcset = (string) wp_get_attachment_image_srcset( (int) $media['id'], 'full' );
+
+			if ( '' === $alt ) {
+				$alt = trim( (string) get_post_meta( (int) $media['id'], '_wp_attachment_image_alt', true ) );
+			}
+		}
+
+		if ( '' === $alt ) {
+			$alt = (string) $fallback['alt'];
+		}
+
+		return array(
+			'url'    => $url,
+			'srcset' => $srcset,
+			'width'  => $width,
+			'height' => $height,
+			'alt'    => $alt,
+		);
+	}
+
 	public function get_name(): string {
 		return 'pro_home_platform';
 	}
@@ -863,7 +974,6 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 					'clock' => 'Clock',
 					'book'  => 'Book',
 					'brain' => 'Brain',
-					'robot' => 'Robot',
 					'edit'  => 'Edit',
 					'chart' => 'Chart',
 				),
@@ -906,6 +1016,20 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 			)
 		);
 		$items->add_control(
+			'image',
+			array(
+				'label' => esc_html__( 'Tela do recurso', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::MEDIA,
+			)
+		);
+		$items->add_control(
+			'image_alt',
+			array(
+				'label' => esc_html__( 'Texto alternativo da tela', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$items->add_control(
 			'bullets',
 			array(
 				'label' => esc_html__( 'Bullets, um por linha', 'proenem-wordpress-theme' ),
@@ -920,58 +1044,59 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 				'fields'      => $items->get_controls(),
 				'default'     => array(
 					array(
-						'label'   => esc_html__( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
-						'icon'    => 'clock',
-						'tone'    => 'blue',
-						'title'   => esc_html__( 'Aulas ao vivo para manter sua rotina em movimento.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/aulas-ao-vivo',
-						'bullets' => esc_html__( "Agenda diária de aulas\nRevisões próximas das provas\nRegistro do que você já assistiu", 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
+						'icon'      => 'clock',
+						'tone'      => 'blue',
+						'title'     => esc_html__( 'Aulas ao vivo para manter sua rotina em movimento.', 'proenem-wordpress-theme' ),
+						'body'      => esc_html__( 'Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.', 'proenem-wordpress-theme' ),
+						'url'       => 'proenem.com.br/app/aulas-ao-vivo',
+						'image'     => array( 'url' => $this->platform_asset_uri( 'live-960.webp' ) ),
+						'image_alt' => esc_html__( 'Tela da Proenem com a agenda de aulas ao vivo.', 'proenem-wordpress-theme' ),
+						'bullets'   => esc_html__( "Agenda diária de aulas\nRevisões próximas das provas\nRegistro do que você já assistiu", 'proenem-wordpress-theme' ),
 					),
 					array(
-						'label'   => esc_html__( '+50 mil questões', 'proenem-wordpress-theme' ),
-						'icon'    => 'book',
-						'tone'    => 'yellow',
-						'title'   => esc_html__( 'Mais de 50 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/questoes',
-						'bullets' => esc_html__( "Questões por área do conhecimento\nResoluções comentadas\nHistórico de acertos e erros", 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( '+50 mil questões', 'proenem-wordpress-theme' ),
+						'icon'      => 'book',
+						'tone'      => 'yellow',
+						'title'     => esc_html__( 'Mais de 50 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
+						'body'      => esc_html__( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
+						'url'       => 'proenem.com.br/app/questoes',
+						'image'     => array( 'url' => $this->platform_asset_uri( 'question-bank-960.webp' ) ),
+						'image_alt' => esc_html__( 'Tela do banco de questões da Proenem com filtros e uma questão aberta.', 'proenem-wordpress-theme' ),
+						'bullets'   => esc_html__( "Questões por área do conhecimento\nResoluções comentadas\nHistórico de acertos e erros", 'proenem-wordpress-theme' ),
 					),
 					array(
-						'label'   => esc_html__( 'Plano personalizado', 'proenem-wordpress-theme' ),
-						'icon'    => 'brain',
-						'tone'    => 'green',
-						'title'   => esc_html__( 'Plano personalizado para estudar o que mais importa agora.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/plano',
-						'bullets' => esc_html__( "Rotina ajustada por meta\nPrioridade por lacuna\nPróximas ações sempre visíveis", 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( 'Plano personalizado', 'proenem-wordpress-theme' ),
+						'icon'      => 'brain',
+						'tone'      => 'green',
+						'title'     => esc_html__( 'Plano personalizado para estudar o que mais importa agora.', 'proenem-wordpress-theme' ),
+						'body'      => esc_html__( 'A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.', 'proenem-wordpress-theme' ),
+						'url'       => 'proenem.com.br/app/plano',
+						'image'     => array( 'url' => $this->platform_asset_uri( 'study-plan-960.webp' ) ),
+						'image_alt' => esc_html__( 'Tela da jornada personalizada da Proenem com o estudo do dia.', 'proenem-wordpress-theme' ),
+						'bullets'   => esc_html__( "Rotina ajustada por meta\nPrioridade por lacuna\nPróximas ações sempre visíveis", 'proenem-wordpress-theme' ),
 					),
 					array(
-						'label'   => esc_html__( 'Tutor com IA', 'proenem-wordpress-theme' ),
-						'icon'    => 'robot',
-						'tone'    => 'red',
-						'title'   => esc_html__( 'Tutor com IA para tirar dúvidas no seu ritmo.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'Receba explicações guiadas e volte para o estudo sem perder o contexto da tarefa.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/tutor-ia',
-						'bullets' => esc_html__( "Explicação passo a passo\nApoio em questões difíceis\nDisponível durante a rotina", 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( 'Correção de redação', 'proenem-wordpress-theme' ),
+						'icon'      => 'edit',
+						'tone'      => 'blue',
+						'title'     => esc_html__( 'Correção de redação com devolutiva objetiva.', 'proenem-wordpress-theme' ),
+						'body'      => esc_html__( 'Entenda competência por competência onde melhorar para escrever com mais segurança.', 'proenem-wordpress-theme' ),
+						'url'       => 'proenem.com.br/app/redacao',
+						'image'     => array( 'url' => $this->platform_asset_uri( 'essay-feedback-960.webp' ) ),
+						'image_alt' => esc_html__( 'Tela da correção de redação da Proenem com nota e avaliação por competência.', 'proenem-wordpress-theme' ),
+						'bullets'   => esc_html__( "Comentários por competência\nPlano de reescrita\nEvolução por envio", 'proenem-wordpress-theme' ),
 					),
 					array(
-						'label'   => esc_html__( 'Correção de redação', 'proenem-wordpress-theme' ),
-						'icon'    => 'edit',
-						'tone'    => 'blue',
-						'title'   => esc_html__( 'Correção de redação com devolutiva objetiva.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'Entenda competência por competência onde melhorar para escrever com mais segurança.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/redacao',
-						'bullets' => esc_html__( "Comentários por competência\nPlano de reescrita\nEvolução por envio", 'proenem-wordpress-theme' ),
-					),
-					array(
-						'label'   => esc_html__( 'Simulados com TRI', 'proenem-wordpress-theme' ),
-						'icon'    => 'chart',
-						'tone'    => 'active',
-						'title'   => esc_html__( 'Simulados com a mesma lógica de correção do ENEM.', 'proenem-wordpress-theme' ),
-						'body'    => esc_html__( 'Veja sua nota real, a evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
-						'url'     => 'proenem.com.br/app/simulados-com-tri',
-						'bullets' => esc_html__( "Nota real estimada pelo TRI\nComparativo com aprovados\nDiagnóstico por área e tópico", 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( 'Simulados com TRI', 'proenem-wordpress-theme' ),
+						'icon'      => 'chart',
+						'tone'      => 'active',
+						'title'     => esc_html__( 'Simulados com a mesma lógica de correção do ENEM.', 'proenem-wordpress-theme' ),
+						'body'      => esc_html__( 'Veja sua nota real, a evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
+						'url'       => 'proenem.com.br/app/simulados-com-tri',
+						'image'     => array( 'url' => $this->platform_asset_uri( 'simulations-960.webp' ) ),
+						'image_alt' => esc_html__( 'Tela de simulados da Proenem.', 'proenem-wordpress-theme' ),
+						'bullets'   => esc_html__( "Nota real estimada pelo TRI\nComparativo com aprovados\nDiagnóstico por área e tópico", 'proenem-wordpress-theme' ),
 					),
 				),
 				'title_field' => '{{{ label }}}',
@@ -981,9 +1106,20 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 	}
 
 	protected function render(): void {
-		$settings    = $this->get_settings_for_display();
-		$items       = (array) ( $settings['items'] ?? array() );
-		$active_item = $items ? $items[ count( $items ) - 1 ] : array();
+		$settings = $this->get_settings_for_display();
+		$items    = array_values(
+			array_filter(
+				(array) ( $settings['items'] ?? array() ),
+				static fn( $item ) => 'robot' !== ( $item['icon'] ?? '' )
+			)
+		);
+
+		foreach ( $items as $index => $item ) {
+			$items[ $index ]['_image'] = $this->platform_image_data( $item );
+		}
+
+		$active_item  = $items ? $items[ count( $items ) - 1 ] : array();
+		$active_image = (array) ( $active_item['_image'] ?? array() );
 		$this->open_home_wrapper();
 		?>
 		<section class="pen-platform-showcase" aria-labelledby="pro-platform-title" data-pro-home-platform-tabs>
@@ -998,10 +1134,10 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 					<ul class="pro-home-platform-tabs" role="tablist" aria-label="<?php esc_attr_e( 'Recursos da plataforma', 'proenem-wordpress-theme' ); ?>">
 						<?php foreach ( $items as $index => $item ) : ?>
 							<?php $is_active = count( $items ) - 1 === $index; ?>
-							<li role="presentation"><button type="button" class="pro-home-platform-tab pro-home-platform-tab--<?php echo esc_attr( $item['tone'] ?? 'blue' ); ?><?php echo $is_active ? ' is-active' : ''; ?>" role="tab" aria-selected="<?php echo esc_attr( $is_active ? 'true' : 'false' ); ?>" data-pro-home-platform-tab data-title="<?php echo esc_attr( $item['title'] ?? '' ); ?>" data-body="<?php echo esc_attr( $item['body'] ?? '' ); ?>" data-url="<?php echo esc_attr( $item['url'] ?? '' ); ?>" data-bullets="<?php echo esc_attr( wp_json_encode( $this->split_lines( $item['bullets'] ?? '' ) ) ); ?>"><span class="pro-home-platform-tab__icon" aria-hidden="true"><?php echo $this->platform_icon_svg( $item['icon'] ?? 'clock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-platform-tab__label"><?php echo esc_html( $item['label'] ?? '' ); ?></span><span class="pro-home-platform-tab__arrow" aria-hidden="true">→</span></button></li>
+							<li role="presentation"><button type="button" class="pro-home-platform-tab pro-home-platform-tab--<?php echo esc_attr( $item['tone'] ?? 'blue' ); ?><?php echo $is_active ? ' is-active' : ''; ?>" role="tab" aria-selected="<?php echo esc_attr( $is_active ? 'true' : 'false' ); ?>" tabindex="<?php echo esc_attr( $is_active ? '0' : '-1' ); ?>" data-pro-home-platform-tab data-title="<?php echo esc_attr( $item['title'] ?? '' ); ?>" data-body="<?php echo esc_attr( $item['body'] ?? '' ); ?>" data-url="<?php echo esc_attr( $item['url'] ?? '' ); ?>" data-bullets="<?php echo esc_attr( wp_json_encode( $this->split_lines( $item['bullets'] ?? '' ) ) ); ?>" data-image="<?php echo esc_url( $item['_image']['url'] ?? '' ); ?>" data-image-srcset="<?php echo esc_attr( $item['_image']['srcset'] ?? '' ); ?>" data-image-alt="<?php echo esc_attr( $item['_image']['alt'] ?? '' ); ?>" data-image-width="<?php echo esc_attr( $item['_image']['width'] ?? '' ); ?>" data-image-height="<?php echo esc_attr( $item['_image']['height'] ?? '' ); ?>"><span class="pro-home-platform-tab__icon" aria-hidden="true"><?php echo $this->platform_icon_svg( $item['icon'] ?? 'clock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-platform-tab__label"><?php echo esc_html( $item['label'] ?? '' ); ?></span><span class="pro-home-platform-tab__arrow" aria-hidden="true">→</span></button></li>
 						<?php endforeach; ?>
 					</ul>
-					<div class="pen-platform-showcase__screen"><div class="pro-home-platform-mock" data-pro-home-platform-screen><div class="pro-home-platform-browser" aria-hidden="true"><span></span><span></span><span></span><small data-pro-home-platform-url><?php echo esc_html( $active_item['url'] ?? '' ); ?></small></div><div class="pro-home-platform-mock__dashboard" aria-hidden="true"><span></span><span></span><span></span><span></span></div><h3 data-pro-home-platform-title><?php echo esc_html( $active_item['title'] ?? '' ); ?></h3><p data-pro-home-platform-body><?php echo esc_html( $active_item['body'] ?? '' ); ?></p><ul class="pro-home-platform-mock__bullets" data-pro-home-platform-bullets>
+					<div class="pen-platform-showcase__screen"><div class="pro-home-platform-mock" data-pro-home-platform-screen><div class="pro-home-platform-browser" aria-hidden="true"><span></span><span></span><span></span><small data-pro-home-platform-url><?php echo esc_html( $active_item['url'] ?? '' ); ?></small></div><div class="pro-home-platform-mock__media"><img data-pro-home-platform-image src="<?php echo esc_url( $active_image['url'] ?? '' ); ?>"<?php echo ! empty( $active_image['srcset'] ) ? ' srcset="' . esc_attr( $active_image['srcset'] ) . '"' : ''; ?> sizes="(max-width: 760px) calc(100vw - 4.2rem), min(46vw, 48rem)" width="<?php echo esc_attr( $active_image['width'] ?? '' ); ?>" height="<?php echo esc_attr( $active_image['height'] ?? '' ); ?>" alt="<?php echo esc_attr( $active_image['alt'] ?? '' ); ?>" loading="lazy" decoding="async"></div><h3 data-pro-home-platform-title><?php echo esc_html( $active_item['title'] ?? '' ); ?></h3><p data-pro-home-platform-body><?php echo esc_html( $active_item['body'] ?? '' ); ?></p><ul class="pro-home-platform-mock__bullets" data-pro-home-platform-bullets>
 					<?php
 					foreach ( $this->split_lines( $active_item['bullets'] ?? '' ) as $bullet ) :
 						?>
