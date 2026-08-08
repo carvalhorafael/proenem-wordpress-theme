@@ -407,11 +407,53 @@
           "widgetType": "pro_home_pricing",
           "isInner": false,
           "settings": {
+            "body": "Comece grátis, sem cartão.\nNos planos pagos, você tem 7 dias de garantia.",
             "button_url": {
               "url": "#faq",
               "is_external": "",
               "nofollow": ""
-            }
+            },
+            "plans": [
+              {
+                "_id": "planfree",
+                "name": "Grátis",
+                "price_prefix": "R$",
+                "price": "0",
+                "price_details": "Grátis para começar. Sem cartão.",
+                "guarantee": "",
+                "summary": "Para começar hoje.",
+                "features": "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão",
+                "button_label": "Criar conta grátis",
+                "free": "yes",
+                "featured": ""
+              },
+              {
+                "_id": "planpro1",
+                "name": "Método PRO",
+                "price_prefix": "12x de R$",
+                "price": "29,90",
+                "price_details": "",
+                "guarantee": "7 dias de garantia.",
+                "summary": "O método completo, com IA e mentoria.",
+                "features": "Tudo do Grátis\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA",
+                "button_label": "Quero o Método PRO",
+                "free": "",
+                "featured": "yes"
+              },
+              {
+                "_id": "planmed1",
+                "name": "Pro Medicina",
+                "price_prefix": "12x de R$",
+                "price": "39,90",
+                "price_details": "",
+                "guarantee": "7 dias de garantia.",
+                "summary": "Mentoria 1:1 com aprovados.",
+                "features": "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária",
+                "button_label": "Quero o Pro Medicina",
+                "free": "",
+                "featured": ""
+              }
+            ]
           },
           "elements": []
         },
@@ -507,7 +549,35 @@
           "elType": "widget",
           "widgetType": "pro_home_faq",
           "isInner": false,
-          "settings": {},
+          "settings": {
+            "items": [
+              {
+                "_id": "faqitem1",
+                "question": "O que é o Método PRO?",
+                "answer": "Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota."
+              },
+              {
+                "_id": "faqitem2",
+                "question": "Posso começar de graça?",
+                "answer": "Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão."
+              },
+              {
+                "_id": "faqitem3",
+                "question": "Qual a diferença entre os planos?",
+                "answer": "O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados."
+              },
+              {
+                "_id": "faqitem4",
+                "question": "Posso entrar em qualquer época do ano?",
+                "answer": "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova."
+              },
+              {
+                "_id": "faqitem5",
+                "question": "E se eu não gostar?",
+                "answer": "Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia."
+              }
+            ]
+          },
           "elements": []
         }
       ]

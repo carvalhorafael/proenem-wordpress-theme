@@ -119,3 +119,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: a classe `is-free` complementa temporariamente `pen-plan-card`, que nao possui uma variacao gratuita no contrato publicado.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#33`; tema `carvalhorafael/proenem-wordpress-theme#90`.
 - Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para a variacao compartilhada e remover `is-free` quando o design system cobrir o plano gratuito.
+
+## 2026-08-08: Detalhes comerciais nos cards de planos
+
+- Contexto: a home precisa distinguir o valor da parcela e a garantia antes do clique no checkout.
+- Decisao: centralizar a secao de preco em fluxo normal entre a lista de beneficios e o CTA de cada plano; nos planos pagos, posicionar a garantia imediatamente abaixo do CTA.
+- Adaptacao local: as classes `pro-home-plan-card__price`, `pro-home-plan-card__price-amount` e `pro-home-plan-card__guarantee` complementam temporariamente `pen-plan-card`.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#37`; tema `carvalhorafael/proenem-wordpress-theme#128`.
+- Criterio de remocao: atualizar os pacotes publicados, migrar template, widget e JSON para o contrato compartilhado e remover as classes e fallbacks locais.
