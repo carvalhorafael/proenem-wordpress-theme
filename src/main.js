@@ -182,10 +182,11 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
   const body = screen?.querySelector("[data-pro-home-platform-body]");
   const url = screen?.querySelector("[data-pro-home-platform-url]");
   const bulletList = screen?.querySelector("[data-pro-home-platform-bullets]");
+  const image = screen?.querySelector("[data-pro-home-platform-image]");
   const previousButton = section.querySelector("[data-pro-home-platform-prev]");
   const nextButton = section.querySelector("[data-pro-home-platform-next]");
 
-  if (!tabList || !tabs.length || !screen || !title || !body || !url || !bulletList) {
+  if (!tabList || !tabs.length || !screen || !title || !body || !url || !bulletList || !image) {
     return;
   }
 
@@ -238,26 +239,55 @@ document.querySelectorAll("[data-pro-home-platform-tabs]").forEach((section) => 
     );
   };
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((currentTab) => {
-        const isActive = currentTab === tab;
+  const activateTab = (tab) => {
+    tabs.forEach((currentTab) => {
+      const isActive = currentTab === tab;
 
-        currentTab.classList.toggle("is-active", isActive);
-        currentTab.setAttribute("aria-selected", String(isActive));
-      });
+      currentTab.classList.toggle("is-active", isActive);
+      currentTab.setAttribute("aria-selected", String(isActive));
+      currentTab.setAttribute("tabindex", isActive ? "0" : "-1");
+    });
 
-      title.textContent = tab.dataset.title || "";
-      body.textContent = tab.dataset.body || "";
-      url.textContent = tab.dataset.url || "";
+    title.textContent = tab.dataset.title || "";
+    body.textContent = tab.dataset.body || "";
+    url.textContent = tab.dataset.url || "";
+    image.alt = tab.dataset.imageAlt || "";
+    image.srcset = tab.dataset.imageSrcset || "";
+    image.src = tab.dataset.image || "";
+    image.width = Number.parseInt(tab.dataset.imageWidth || "", 10) || image.width;
+    image.height = Number.parseInt(tab.dataset.imageHeight || "", 10) || image.height;
 
-      try {
-        renderBullets(JSON.parse(tab.dataset.bullets || "[]"));
-      } catch {
-        renderBullets([]);
+    try {
+      renderBullets(JSON.parse(tab.dataset.bullets || "[]"));
+    } catch {
+      renderBullets([]);
+    }
+
+    revealTab(tab);
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activateTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      let targetIndex = null;
+
+      if (["ArrowRight", "ArrowDown"].includes(event.key)) {
+        targetIndex = (index + 1) % tabs.length;
+      } else if (["ArrowLeft", "ArrowUp"].includes(event.key)) {
+        targetIndex = (index - 1 + tabs.length) % tabs.length;
+      } else if (event.key === "Home") {
+        targetIndex = 0;
+      } else if (event.key === "End") {
+        targetIndex = tabs.length - 1;
       }
 
-      revealTab(tab);
+      if (targetIndex === null) {
+        return;
+      }
+
+      event.preventDefault();
+      tabs[targetIndex].focus();
+      activateTab(tabs[targetIndex]);
     });
   });
 

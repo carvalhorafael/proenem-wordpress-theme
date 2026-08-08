@@ -311,7 +311,80 @@
           "elType": "widget",
           "widgetType": "pro_home_platform",
           "isInner": false,
-          "settings": {},
+          "settings": {
+            "items": [
+              {
+                "_id": "platform01",
+                "label": "Aulas ao vivo todos os dias",
+                "icon": "clock",
+                "tone": "blue",
+                "title": "Aulas ao vivo para manter sua rotina em movimento.",
+                "body": "Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.",
+                "url": "proenem.com.br/app/aulas-ao-vivo",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/live-960.webp"
+                },
+                "image_alt": "Tela da Proenem com a agenda de aulas ao vivo.",
+                "bullets": "Agenda diária de aulas\nRevisões próximas das provas\nRegistro do que você já assistiu"
+              },
+              {
+                "_id": "platform02",
+                "label": "+50 mil questões",
+                "icon": "book",
+                "tone": "yellow",
+                "title": "Mais de 50 mil questões para treinar com intenção.",
+                "body": "Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.",
+                "url": "proenem.com.br/app/questoes",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/question-bank-960.webp"
+                },
+                "image_alt": "Tela do banco de questões da Proenem com filtros e uma questão aberta.",
+                "bullets": "Questões por área do conhecimento\nResoluções comentadas\nHistórico de acertos e erros"
+              },
+              {
+                "_id": "platform03",
+                "label": "Plano personalizado",
+                "icon": "brain",
+                "tone": "green",
+                "title": "Plano personalizado para estudar o que mais importa agora.",
+                "body": "A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.",
+                "url": "proenem.com.br/app/plano",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/study-plan-960.webp"
+                },
+                "image_alt": "Tela da jornada personalizada da Proenem com o estudo do dia.",
+                "bullets": "Rotina ajustada por meta\nPrioridade por lacuna\nPróximas ações sempre visíveis"
+              },
+              {
+                "_id": "platform04",
+                "label": "Correção de redação",
+                "icon": "edit",
+                "tone": "blue",
+                "title": "Correção de redação com devolutiva objetiva.",
+                "body": "Entenda competência por competência onde melhorar para escrever com mais segurança.",
+                "url": "proenem.com.br/app/redacao",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/essay-feedback-960.webp"
+                },
+                "image_alt": "Tela da correção de redação da Proenem com nota e avaliação por competência.",
+                "bullets": "Comentários por competência\nPlano de reescrita\nEvolução por envio"
+              },
+              {
+                "_id": "platform05",
+                "label": "Simulados com TRI",
+                "icon": "chart",
+                "tone": "active",
+                "title": "Simulados com a mesma lógica de correção do ENEM.",
+                "body": "Veja sua nota real, a evolução por área e onde focar agora.",
+                "url": "proenem.com.br/app/simulados-com-tri",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/simulations-960.webp"
+                },
+                "image_alt": "Tela de simulados da Proenem.",
+                "bullets": "Nota real estimada pelo TRI\nComparativo com aprovados\nDiagnóstico por área e tópico"
+              }
+            ]
+          },
           "elements": []
         },
         {

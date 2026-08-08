@@ -400,17 +400,15 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const section = page.locator(".pen-platform-showcase");
   const tabs = page.locator(".pro-home-platform-tabs");
   const controls = page.locator(".pro-home-platform-tabs__controls");
   const previousButton = controls.locator("[data-pro-home-platform-prev]");
   const nextButton = controls.locator("[data-pro-home-platform-next]");
 
-  await expect(tabs.getByRole("tab")).toHaveCount(6);
+  await expect(tabs.getByRole("tab")).toHaveCount(5);
   await expect(controls).toBeVisible();
-  await expect(page.locator(".pro-home-platform-mock__dashboard")).toBeHidden();
+  await expect(page.locator("[data-pro-home-platform-image]")).toBeVisible();
 
-  const sectionBox = await section.boundingBox();
   const activeTabBox = await tabs.locator(".is-active").boundingBox();
   const tabsBox = await tabs.boundingBox();
   const controlsBox = await controls.boundingBox();
@@ -419,15 +417,17 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
     scrollWidth: element.scrollWidth,
   }));
 
-  expect(sectionBox).not.toBeNull();
   expect(activeTabBox).not.toBeNull();
   expect(tabsBox).not.toBeNull();
   expect(controlsBox).not.toBeNull();
-  expect(sectionBox.height).toBeLessThan(1150);
+  expect(tabsBox.height).toBeLessThan(90);
   expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
   expect(Math.abs(controlsBox.x + controlsBox.width / 2 - (tabsBox.x + tabsBox.width / 2))).toBeLessThan(1);
+
+  const viewportOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(viewportOverflow).toBeLessThanOrEqual(1);
 
   await tabs.evaluate((element) => element.scrollTo({ behavior: "auto", left: 0 }));
   await expect(previousButton).toBeDisabled();
@@ -450,7 +450,7 @@ test("front page platform keeps benefit lists informational across every tab", a
   const tabs = page.locator("[data-pro-home-platform-tab]");
   const bullets = page.locator("[data-pro-home-platform-bullets]");
 
-  await expect(tabs).toHaveCount(6);
+  await expect(tabs).toHaveCount(5);
   await expect(bullets.locator("a, button")).toHaveCount(0);
 
   for (const tab of await tabs.all()) {
@@ -463,6 +463,47 @@ test("front page platform keeps benefit lists informational across every tab", a
     await expect(items.first()).toHaveCSS("box-shadow", "none");
     await expect(items.first()).toHaveCSS("border-radius", "0px");
   }
+});
+
+test("front page platform swaps real screenshots without layout shift", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const tabs = page.locator("[data-pro-home-platform-tab]");
+  const image = page.locator("[data-pro-home-platform-image]");
+  const media = page.locator(".pro-home-platform-mock__media");
+  const expectedImages = [
+    "live-960.webp",
+    "question-bank-960.webp",
+    "study-plan-960.webp",
+    "essay-feedback-960.webp",
+    "simulations-960.webp",
+  ];
+
+  await expect(tabs).toHaveCount(expectedImages.length);
+  await expect(image).toHaveAttribute("loading", "lazy");
+  await expect(image).toHaveAttribute("decoding", "async");
+  await expect(image).toHaveAttribute("width", /\d+/);
+  await expect(image).toHaveAttribute("height", /\d+/);
+
+  const initialMediaBox = await media.boundingBox();
+  expect(initialMediaBox).not.toBeNull();
+
+  for (const [index, expectedImage] of expectedImages.entries()) {
+    await tabs.nth(index).click();
+    await expect(image).toHaveAttribute("src", new RegExp(expectedImage.replace(".", "\\.")));
+    await expect(image).not.toHaveAttribute("alt", "");
+
+    const currentMediaBox = await media.boundingBox();
+    expect(currentMediaBox).not.toBeNull();
+    expect(Math.abs(currentMediaBox.height - initialMediaBox.height)).toBeLessThanOrEqual(1);
+  }
+
+  await tabs.first().focus();
+  await tabs.first().press("ArrowRight");
+  await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+  await expect(tabs.nth(1)).toBeFocused();
+  await expect(image).toHaveAttribute("src", /question-bank-960\.webp/);
 });
 
 test("front page question cards form two mobile rows without stretching the stamp", async ({
