@@ -400,7 +400,6 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const section = page.locator(".pen-platform-showcase");
   const tabs = page.locator(".pro-home-platform-tabs");
   const controls = page.locator(".pro-home-platform-tabs__controls");
   const previousButton = controls.locator("[data-pro-home-platform-prev]");
@@ -410,7 +409,6 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   await expect(controls).toBeVisible();
   await expect(page.locator("[data-pro-home-platform-image]")).toBeVisible();
 
-  const sectionBox = await section.boundingBox();
   const activeTabBox = await tabs.locator(".is-active").boundingBox();
   const tabsBox = await tabs.boundingBox();
   const controlsBox = await controls.boundingBox();
@@ -419,11 +417,10 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
     scrollWidth: element.scrollWidth,
   }));
 
-  expect(sectionBox).not.toBeNull();
   expect(activeTabBox).not.toBeNull();
   expect(tabsBox).not.toBeNull();
   expect(controlsBox).not.toBeNull();
-  expect(sectionBox.height).toBeLessThan(1150);
+  expect(tabsBox.height).toBeLessThan(90);
   expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
