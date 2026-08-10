@@ -709,12 +709,57 @@ function proenem_get_testimonials_placement_meta_key() {
 }
 
 /**
+ * Get the Testimonials course meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_course_meta_key() {
+	return function_exists( 'testimonials_course_meta_key' ) ? testimonials_course_meta_key() : '_testimonials_course';
+}
+
+/**
+ * Get the Testimonials institution meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_institution_meta_key() {
+	return function_exists( 'testimonials_institution_meta_key' ) ? testimonials_institution_meta_key() : '_testimonials_institution';
+}
+
+/**
+ * Get the Testimonials approval year meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_approval_year_meta_key() {
+	return function_exists( 'testimonials_approval_year_meta_key' ) ? testimonials_approval_year_meta_key() : '_testimonials_approval_year';
+}
+
+/**
+ * Get the Testimonials home proof selection meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_home_proof_enabled_meta_key() {
+	return function_exists( 'testimonials_home_proof_enabled_meta_key' ) ? testimonials_home_proof_enabled_meta_key() : '_testimonials_home_proof_enabled';
+}
+
+/**
  * Check whether the Testimonials plugin contract is available.
  *
  * @return bool
  */
 function proenem_testimonials_is_available() {
 	return post_type_exists( proenem_get_testimonials_post_type() ) && taxonomy_exists( proenem_get_testimonials_taxonomy() );
+}
+
+/**
+ * Check whether the verified home proof contract is available.
+ *
+ * @return bool
+ */
+function proenem_testimonials_home_proof_is_available() {
+	return proenem_testimonials_is_available() && function_exists( 'testimonials_is_home_proof_eligible' );
 }
 
 /**
@@ -840,6 +885,203 @@ function proenem_get_testimonial_approved_at( $post_id ) {
  */
 function proenem_get_testimonial_placement( $post_id ) {
 	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_placement_meta_key() );
+}
+
+/**
+ * Get the testimonial course.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_course( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_course_meta_key() );
+}
+
+/**
+ * Get the testimonial institution.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_institution( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_institution_meta_key() );
+}
+
+/**
+ * Get the testimonial approval year.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_approval_year( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_approval_year_meta_key() );
+}
+
+/**
+ * Get verified testimonial records selected for the home proof section.
+ *
+ * @param int[] $requested_ids Optional explicitly selected post IDs.
+ * @param int   $limit Maximum number of records.
+ * @return WP_Post[]
+ */
+function proenem_get_home_proof_testimonials( $requested_ids = array(), $limit = 6 ) {
+	if ( ! proenem_testimonials_home_proof_is_available() ) {
+		return array();
+	}
+
+	$limit         = max( 1, min( 12, absint( $limit ) ) );
+	$requested_ids = array_values( array_unique( array_filter( array_map( 'absint', (array) $requested_ids ) ) ) );
+	$query_args    = array(
+		'ignore_sticky_posts' => true,
+		'meta_key'            => proenem_get_testimonials_home_proof_enabled_meta_key(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- The plugin owns this explicit editorial selection contract.
+		'meta_value'          => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- The query must exclude records not selected for home proof.
+		'no_found_rows'       => true,
+		'order'               => 'DESC',
+		'orderby'             => 'date',
+		'post_status'         => 'publish',
+		'post_type'           => proenem_get_testimonials_post_type(),
+		'posts_per_page'      => $limit,
+		'suppress_filters'    => false,
+	);
+
+	if ( $requested_ids ) {
+		$query_args['orderby']        = 'post__in';
+		$query_args['post__in']       = $requested_ids;
+		$query_args['posts_per_page'] = min( $limit, count( $requested_ids ) );
+	}
+
+	$testimonials = get_posts( $query_args );
+
+	return array_values(
+		array_filter(
+			$testimonials,
+			static function ( $testimonial ) {
+				return $testimonial instanceof WP_Post && testimonials_is_home_proof_eligible( $testimonial->ID );
+			}
+		)
+	);
+}
+
+/**
+ * Get eligible home proof records as Elementor select options.
+ *
+ * @return array<int,string>
+ */
+function proenem_get_home_proof_testimonial_options() {
+	$options = array();
+
+	foreach ( proenem_get_home_proof_testimonials( array(), 12 ) as $testimonial ) {
+		$options[ $testimonial->ID ] = sprintf(
+			/* translators: 1: Student name. 2: Course. 3: Institution. */
+			__( '%1$s — %2$s, %3$s', 'proenem-wordpress-theme' ),
+			proenem_get_testimonial_student_name( $testimonial->ID ),
+			proenem_get_testimonial_course( $testimonial->ID ),
+			proenem_get_testimonial_institution( $testimonial->ID )
+		);
+	}
+
+	return $options;
+}
+
+/**
+ * Replace the unsupported legacy approval count with verifiable copy.
+ *
+ * @param string $copy Persisted or default copy.
+ * @param string $context Copy context: title, support or testimonials.
+ * @return string
+ */
+function proenem_normalize_home_proof_copy( $copy, $context ) {
+	$defaults = array(
+		'title'        => __( 'Aprovações verificadas de alunos da Proenem', 'proenem-wordpress-theme' ),
+		'support'      => __( 'Dados de aprovação conferidos e publicados com autorização.', 'proenem-wordpress-theme' ),
+		'testimonials' => __( 'Conheça histórias de alunos que estudaram com a Proenem.', 'proenem-wordpress-theme' ),
+	);
+	$legacy   = array(
+		'title'        => '+ de 40.000 aprovados em universidades públicas',
+		'support'      => 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.',
+		'testimonials' => 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.',
+	);
+	$copy     = trim( (string) $copy );
+
+	if ( ! isset( $defaults[ $context ] ) ) {
+		return $copy;
+	}
+
+	return '' === $copy || $legacy[ $context ] === $copy ? $defaults[ $context ] : $copy;
+}
+
+/**
+ * Render the shared verified home proof section.
+ *
+ * @param WP_Post[] $testimonials Eligible testimonial records.
+ * @param array     $args Section copy and identifiers.
+ * @return void
+ */
+function proenem_render_home_proof_section( $testimonials, $args = array() ) {
+	$testimonials = array_values( array_filter( (array) $testimonials, static fn( $item ) => $item instanceof WP_Post ) );
+
+	if ( empty( $testimonials ) ) {
+		return;
+	}
+
+	$args = wp_parse_args(
+		$args,
+		array(
+			'badge_line_1' => __( 'Nossos', 'proenem-wordpress-theme' ),
+			'badge_line_2' => __( 'Alunos!', 'proenem-wordpress-theme' ),
+			'heading_id'   => 'pro-proof-title',
+			'section_id'   => 'aprovados',
+			'support'      => proenem_normalize_home_proof_copy( '', 'support' ),
+			'title'        => proenem_normalize_home_proof_copy( '', 'title' ),
+		)
+	);
+	?>
+	<section id="<?php echo esc_attr( $args['section_id'] ); ?>" class="pen-proof-section" aria-labelledby="<?php echo esc_attr( $args['heading_id'] ); ?>">
+		<div class="pen-proof-section__students">
+			<p class="pen-proof-section__badge">
+				<span><?php echo esc_html( $args['badge_line_1'] ); ?></span>
+				<span><?php echo esc_html( $args['badge_line_2'] ); ?></span>
+			</p>
+			<?php foreach ( $testimonials as $testimonial ) : ?>
+				<?php
+				$student_name = proenem_get_testimonial_student_name( $testimonial->ID );
+				$course       = proenem_get_testimonial_course( $testimonial->ID );
+				$institution  = proenem_get_testimonial_institution( $testimonial->ID );
+				$year         = proenem_get_testimonial_approval_year( $testimonial->ID );
+				?>
+				<figure class="pen-proof-section__student pro-home-proof-student">
+					<?php
+					echo get_the_post_thumbnail(
+						$testimonial->ID,
+						'medium_large',
+						array(
+							'alt'      => sprintf(
+								/* translators: %s: Student name. */
+								__( 'Foto de %s.', 'proenem-wordpress-theme' ),
+								$student_name
+							),
+							'class'    => 'pen-proof-section__image',
+							'decoding' => 'async',
+							'loading'  => 'lazy',
+						)
+					); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					?>
+					<figcaption class="pro-home-proof-student__caption">
+						<strong><?php echo esc_html( $student_name ); ?></strong>
+						<span><?php echo esc_html( $course ); ?> · <?php echo esc_html( $institution ); ?></span>
+						<?php if ( $year ) : ?>
+							<time datetime="<?php echo esc_attr( $year ); ?>"><?php echo esc_html( $year ); ?></time>
+						<?php endif; ?>
+					</figcaption>
+				</figure>
+			<?php endforeach; ?>
+		</div>
+		<div class="pen-proof-section__strip">
+			<h2 id="<?php echo esc_attr( $args['heading_id'] ); ?>"><?php echo esc_html( $args['title'] ); ?></h2>
+			<p class="pro-home-proof-support"><?php echo esc_html( $args['support'] ); ?></p>
+		</div>
+	</section>
+	<?php
 }
 
 /**

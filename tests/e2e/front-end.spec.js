@@ -58,7 +58,8 @@ test("front page renders the Proenem home", async ({ page }) => {
     "href",
     "https://estude.proenem.com.br/signup",
   );
-  await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
+  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
+  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
   await expect(
     page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
       hasText: "Amanda Alves",
@@ -576,16 +577,12 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
   }
 });
 
-test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
+test("front page omits unverified proof on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const badge = await page.locator(".pen-proof-section__badge").boundingBox();
-  const firstPortrait = await page.locator(".pen-proof-section__image").first().boundingBox();
-
-  expect(badge).not.toBeNull();
-  expect(firstPortrait).not.toBeNull();
-  expect(badge.y + badge.height).toBeLessThanOrEqual(firstPortrait.y);
+  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
+  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
 });
 
 test("front page platform uses a compact horizontal menu on mobile", async ({ page }) => {

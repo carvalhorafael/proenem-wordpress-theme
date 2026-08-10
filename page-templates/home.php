@@ -429,68 +429,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<?php
-	$proof_student_images = array(
-		'proof-students-1.webp',
-		'proof-students-2.webp',
-		'proof-students-3.webp',
-		'proof-students-4.webp',
-		'proof-students-5.webp',
-		'proof-students-6.webp',
-	);
-
-	$proof_university_logos = array(
-		array(
-			'file' => 'proof-logo-ufrj.webp',
-			'name' => __( 'UFRJ', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-ufrgs.webp',
-			'name' => __( 'UFRGS', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-unicamp.webp',
-			'name' => __( 'Unicamp', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-uerj.webp',
-			'name' => __( 'UERJ', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-usp.webp',
-			'name' => __( 'USP', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-unifesp.webp',
-			'name' => __( 'Unifesp', 'proenem-wordpress-theme' ),
-		),
-	);
-	?>
-	<section id="aprovados" class="pen-proof-section" aria-labelledby="pro-proof-title">
-		<div class="pen-proof-section__students">
-			<p class="pen-proof-section__badge">
-				<span><?php esc_html_e( 'Nossos', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Alunos!', 'proenem-wordpress-theme' ); ?></span>
-			</p>
-			<?php foreach ( $proof_student_images as $proof_student_image ) : ?>
-				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( $proof_student_image ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $proof_student_image, '(max-width: 700px) 18vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php endforeach; ?>
-		</div>
-		<div class="pen-proof-section__strip">
-			<h2 id="pro-proof-title"><?php esc_html_e( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ); ?></h2>
-			<p class="pro-home-proof-support"><?php esc_html_e( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ); ?></p>
-			<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
-				<?php foreach ( $proof_university_logos as $proof_university_logo ) : ?>
-					<img
-						class="pen-proof-section__logo"
-						src="<?php echo esc_url( $home_asset_uri( $proof_university_logo['file'] ) ); ?>"
-						alt="<?php echo esc_attr( $proof_university_logo['name'] ); ?>"
-						<?php echo $home_image_attributes( $proof_university_logo['file'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</section>
+	<?php proenem_render_home_proof_section( proenem_get_home_proof_testimonials() ); ?>
 
 	<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
 		<p class="pen-section-pill"><?php esc_html_e( 'Você se identifica?', 'proenem-wordpress-theme' ); ?></p>
@@ -840,7 +779,7 @@ $subjects = array(
 				<span><?php esc_html_e( 'Quem estudou com método,', 'proenem-wordpress-theme' ); ?></span>
 				<strong><?php esc_html_e( 'chegou na vaga.', 'proenem-wordpress-theme' ); ?></strong>
 			</h2>
-			<p><?php esc_html_e( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php echo esc_html( proenem_normalize_home_proof_copy( '', 'testimonials' ) ); ?></p>
 		</div>
 		<div class="pro-home-testimonials__viewport">
 			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>

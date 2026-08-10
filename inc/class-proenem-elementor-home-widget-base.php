@@ -585,122 +585,40 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
 		$this->add_text_control( 'badge_line_1', esc_html__( 'Badge linha 1', 'proenem-wordpress-theme' ), esc_html__( 'Nossos', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'badge_line_2', esc_html__( 'Badge linha 2', 'proenem-wordpress-theme' ), esc_html__( 'Alunos!', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'title', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ) );
-		$this->add_textarea_control( 'support', esc_html__( 'Texto de apoio', 'proenem-wordpress-theme' ), esc_html__( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ) );
-
-		$students = new \Elementor\Repeater();
-		$students->add_control(
-			'image',
-			array(
-				'label' => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::MEDIA,
-			)
-		);
+		$this->add_text_control( 'title', esc_html__( 'Título', 'proenem-wordpress-theme' ), proenem_normalize_home_proof_copy( '', 'title' ) );
+		$this->add_textarea_control( 'support', esc_html__( 'Texto de apoio', 'proenem-wordpress-theme' ), proenem_normalize_home_proof_copy( '', 'support' ) );
 		$this->add_control(
-			'student_images',
+			'testimonial_ids',
 			array(
-				'label'       => esc_html__( 'Imagens de alunos', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::REPEATER,
-				'fields'      => $students->get_controls(),
-				'default'     => array_map(
-					fn( $file ) => array( 'image' => array( 'url' => $this->home_asset_uri( $file ) ) ),
-					array( 'proof-students-1.webp', 'proof-students-2.webp', 'proof-students-3.webp', 'proof-students-4.webp', 'proof-students-5.webp', 'proof-students-6.webp' )
-				),
-				'title_field' => esc_html__( 'Aluno', 'proenem-wordpress-theme' ),
-			)
-		);
-
-		$logos = new \Elementor\Repeater();
-		$logos->add_control(
-			'name',
-			array(
-				'label' => esc_html__( 'Nome', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXT,
-			)
-		);
-		$logos->add_control(
-			'image',
-			array(
-				'label' => esc_html__( 'Logo', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::MEDIA,
-			)
-		);
-		$this->add_control(
-			'logos',
-			array(
-				'label'       => esc_html__( 'Logos', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::REPEATER,
-				'fields'      => $logos->get_controls(),
-				'default'     => array(
-					array(
-						'name'  => 'UFRJ',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-ufrj.png' ) ),
-					),
-					array(
-						'name'  => 'UFRGS',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-ufrgs.png' ) ),
-					),
-					array(
-						'name'  => 'Unicamp',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-unicamp.png' ) ),
-					),
-					array(
-						'name'  => 'UERJ',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-uerj.png' ) ),
-					),
-					array(
-						'name'  => 'USP',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-usp.png' ) ),
-					),
-					array(
-						'name'  => 'Unifesp',
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-logo-unifesp.png' ) ),
-					),
-				),
-				'title_field' => '{{{ name }}}',
+				'description' => esc_html__( 'Selecione somente registros verificados no plugin Testimonials. Sem seleção, os registros elegíveis mais recentes são usados.', 'proenem-wordpress-theme' ),
+				'label'       => esc_html__( 'Alunos verificados', 'proenem-wordpress-theme' ),
+				'multiple'    => true,
+				'options'     => proenem_get_home_proof_testimonial_options(),
+				'type'        => \Elementor\Controls_Manager::SELECT2,
 			)
 		);
 		$this->end_controls_section();
 	}
 
 	protected function render(): void {
-		$settings = $this->get_settings_for_display();
-		$students = array(
-			'proof-students-1.webp',
-			'proof-students-2.webp',
-			'proof-students-3.webp',
-			'proof-students-4.webp',
-			'proof-students-5.webp',
-			'proof-students-6.webp',
-		);
-		$logos    = array(
-			'proof-logo-ufrj.png',
-			'proof-logo-ufrgs.png',
-			'proof-logo-unicamp.png',
-			'proof-logo-uerj.png',
-			'proof-logo-usp.png',
-			'proof-logo-unifesp.png',
-		);
+		$settings     = $this->get_settings_for_display();
+		$testimonials = proenem_get_home_proof_testimonials( $settings['testimonial_ids'] ?? array() );
+
+		if ( empty( $testimonials ) ) {
+			return;
+		}
+
 		$this->open_home_wrapper();
-		?>
-		<section id="aprovados" class="pen-proof-section" aria-labelledby="pro-proof-title">
-			<div class="pen-proof-section__students">
-				<p class="pen-proof-section__badge"><span><?php echo esc_html( $settings['badge_line_1'] ?? '' ); ?></span><span><?php echo esc_html( $settings['badge_line_2'] ?? '' ); ?></span></p>
-				<?php foreach ( (array) ( $settings['student_images'] ?? array() ) as $index => $student ) : ?>
-					<img class="pen-proof-section__image" src="<?php echo esc_url( $this->media_url( $student['image'] ?? array(), $students[ $index ] ?? 'proof-students-1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>">
-				<?php endforeach; ?>
-			</div>
-			<div class="pen-proof-section__strip">
-				<h2 id="pro-proof-title"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2>
-				<p class="pro-home-proof-support"><?php echo esc_html( $settings['support'] ?? '' ); ?></p>
-				<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
-					<?php foreach ( (array) ( $settings['logos'] ?? array() ) as $index => $logo ) : ?>
-						<img class="pen-proof-section__logo" src="<?php echo esc_url( $this->media_url( $logo['image'] ?? array(), $logos[ $index ] ?? 'proof-logo-ufrj.png' ) ); ?>" alt="<?php echo esc_attr( $logo['name'] ?? '' ); ?>">
-					<?php endforeach; ?>
-				</div>
-			</div>
-		</section>
-		<?php
+		proenem_render_home_proof_section(
+			$testimonials,
+			array(
+				'badge_line_1' => $settings['badge_line_1'] ?? '',
+				'badge_line_2' => $settings['badge_line_2'] ?? '',
+				'heading_id'   => 'pro-proof-title-' . $this->get_id(),
+				'support'      => proenem_normalize_home_proof_copy( $settings['support'] ?? '', 'support' ),
+				'title'        => proenem_normalize_home_proof_copy( $settings['title'] ?? '', 'title' ),
+			)
+		);
 		$this->close_home_wrapper();
 	}
 }
@@ -1653,7 +1571,7 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 		$this->add_text_control( 'eyebrow', esc_html__( 'Selo', 'proenem-wordpress-theme' ), esc_html__( 'Aprovados', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_line', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( 'Quem estudou com método,', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_emphasis', esc_html__( 'Título destaque', 'proenem-wordpress-theme' ), esc_html__( 'chegou na vaga.', 'proenem-wordpress-theme' ) );
-		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'proenem-wordpress-theme' ) );
+		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), proenem_normalize_home_proof_copy( '', 'testimonials' ) );
 		$this->add_text_control( 'more_label', esc_html__( 'Texto do botão', 'proenem-wordpress-theme' ), esc_html__( 'Ver mais', 'proenem-wordpress-theme' ) );
 		$this->add_url_control( 'more_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), 'https://aprovados.proenem.com.br/' );
 		$items = new \Elementor\Repeater();
@@ -1722,7 +1640,7 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 		$this->open_home_wrapper();
 		?>
 		<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
-			<div class="pro-home-testimonials__header"><span class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-testimonials-title"><span><?php echo esc_html( $settings['title_line'] ?? '' ); ?></span><strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p></div>
+			<div class="pro-home-testimonials__header"><span class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-testimonials-title"><span><?php echo esc_html( $settings['title_line'] ?? '' ); ?></span><strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></h2><p><?php echo esc_html( proenem_normalize_home_proof_copy( $settings['body'] ?? '', 'testimonials' ) ); ?></p></div>
 			<div class="pro-home-testimonials__viewport"><div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
 			<?php
 			foreach ( (array) ( $settings['testimonials'] ?? array() ) as $index => $testimonial ) :

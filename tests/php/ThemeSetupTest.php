@@ -123,6 +123,28 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( 'depoimento', proenem_get_testimonials_post_type() );
 		$this->assertSame( 'depoimento_categoria', proenem_get_testimonials_taxonomy() );
 		$this->assertSame( '_testimonials_video_url', proenem_get_testimonials_video_url_meta_key() );
+		$this->assertSame( '_testimonials_course', proenem_get_testimonials_course_meta_key() );
+		$this->assertSame( '_testimonials_institution', proenem_get_testimonials_institution_meta_key() );
+		$this->assertSame( '_testimonials_approval_year', proenem_get_testimonials_approval_year_meta_key() );
+		$this->assertSame( '_testimonials_home_proof_enabled', proenem_get_testimonials_home_proof_enabled_meta_key() );
+		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
+	}
+
+	/**
+	 * Unavailable proof data should produce no anonymous fallback markup.
+	 *
+	 * @return void
+	 */
+	public function test_home_proof_requires_the_verified_plugin_contract() {
+		$this->assertSame( array(), proenem_get_home_proof_testimonials() );
+		$this->assertSame( 'Aprovações verificadas de alunos da Proenem', proenem_normalize_home_proof_copy( '+ de 40.000 aprovados em universidades públicas', 'title' ) );
+		$this->assertSame( 'Conheça histórias de alunos que estudaram com a Proenem.', proenem_normalize_home_proof_copy( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'testimonials' ) );
+
+		ob_start();
+		proenem_render_home_proof_section( array() );
+		$output = ob_get_clean();
+
+		$this->assertSame( '', $output );
 	}
 
 	/**
