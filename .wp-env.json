@@ -3,6 +3,7 @@
   "port": 8898,
   "testsPort": 8899,
   "plugins": [
+    "https://downloads.wordpress.org/plugin/elementor.4.1.4.zip",
     "https://downloads.wordpress.org/plugin/theme-check.latest-stable.zip"
   ],
   "themes": [

@@ -166,7 +166,7 @@ test("front page keeps the navbar sticky and reveals the mobile primary action",
     (element) => element.getBoundingClientRect().top + window.scrollY,
   );
 
-  await page.evaluate(() => window.scrollTo(0, 650));
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
   await expect(persistentLink).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
 
@@ -230,7 +230,7 @@ test("Elementor home fixture uses the same conversion and persistent action cont
     "https://estude.proenem.com.br/treino/questoes",
   );
 
-  await page.evaluate(() => window.scrollTo(0, 650));
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
   const persistentActionBox = await persistentAction.boundingBox();
 
