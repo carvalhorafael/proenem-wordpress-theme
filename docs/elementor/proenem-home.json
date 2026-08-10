@@ -420,44 +420,7 @@
               "is_external": "on",
               "nofollow": ""
             },
-            "testimonials": [
-              {
-                "_id": "testim01",
-                "quote": "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.",
-                "name": "Mariana Costa",
-                "role": "Aprovada em Medicina",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
-                }
-              },
-              {
-                "_id": "testim02",
-                "quote": "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.",
-                "name": "Lucas Almeida",
-                "role": "Aprovado em Engenharia",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
-                }
-              },
-              {
-                "_id": "testim03",
-                "quote": "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.",
-                "name": "Beatriz Rocha",
-                "role": "Aprovada em Direito",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
-                }
-              },
-              {
-                "_id": "testim04",
-                "quote": "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.",
-                "name": "Amanda Alves",
-                "role": "Aprovado em Psicologia",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
-                }
-              }
-            ]
+            "testimonial_ids": []
           },
           "elements": []
         },

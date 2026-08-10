@@ -19,6 +19,40 @@ const expectHomeProofContract = async (page) => {
   return true;
 };
 
+const expectHomeTestimonialsContract = async (page) => {
+  const section = page.locator(".pro-home-testimonials");
+  const sectionCount = await section.count();
+
+  await expect(
+    page.getByText(
+      "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.",
+      { exact: true },
+    ),
+  ).toHaveCount(0);
+
+  if (sectionCount === 0) {
+    return false;
+  }
+
+  await expect(section).toHaveCount(1);
+  const cards = section.locator("[data-pro-home-testimonial-card]:not(.is-clone)");
+  const cardCount = await cards.count();
+
+  expect(cardCount).toBeGreaterThan(0);
+  await expect(cards.locator(".pro-home-testimonial-card__quote p")).toHaveCount(cardCount);
+  await expect(cards.locator("footer img")).toHaveCount(cardCount);
+  await expect(cards.locator("footer strong")).toHaveCount(cardCount);
+  await expect(cards.locator("footer small")).toHaveCount(cardCount);
+
+  for (const card of await cards.all()) {
+    expect((await card.locator(".pro-home-testimonial-card__quote p").innerText()).trim()).not.toBe("");
+    expect((await card.locator("footer strong").innerText()).trim()).not.toBe("");
+    expect((await card.locator("footer small").innerText()).trim()).toContain(" · ");
+  }
+
+  return true;
+};
+
 const installNavbarSubmenuFixture = async (page) => {
   await page.route(
     "**/",
@@ -78,11 +112,7 @@ test("front page renders the Proenem home", async ({ page }) => {
     "https://estude.proenem.com.br/signup",
   );
   await expectHomeProofContract(page);
-  await expect(
-    page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
-      hasText: "Amanda Alves",
-    }),
-  ).toHaveText("Amanda Alves");
+  await expectHomeTestimonialsContract(page);
   await expect(page.getByText("Pedro Martins", { exact: true })).toHaveCount(0);
   await expect(page.locator(".pro-home-pain-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
@@ -249,6 +279,7 @@ test("Elementor home fixture uses the same conversion and persistent action cont
     "https://estude.proenem.com.br/treino/questoes",
   );
   await expectHomeProofContract(page);
+  await expectHomeTestimonialsContract(page);
 
   await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
@@ -800,6 +831,10 @@ test("front page testimonial heading stays inside the mobile viewport", async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
+  if (!(await expectHomeTestimonialsContract(page))) {
+    return;
+  }
+
   const heading = await page.locator("#pro-testimonials-title").boundingBox();
 
   expect(heading).not.toBeNull();
@@ -813,6 +848,10 @@ test("front page testimonial controls include the external approved-students lin
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
+
+  if (!(await expectHomeTestimonialsContract(page))) {
+    return;
+  }
 
   const controls = page.locator(".pro-home-testimonials__controls");
   const previous = controls.getByRole("button", { name: "Depoimento anterior" });
@@ -840,6 +879,13 @@ test("front page testimonial controls include the external approved-students lin
   expect(moreBox.x - (nextBox.x + nextBox.width)).toBeGreaterThan(
     nextBox.x - (previousBox.x + previousBox.width),
   );
+
+  const activeCard = page.locator("[data-pro-home-testimonial-card].is-active");
+  const activeQuote = await activeCard.locator(".pro-home-testimonial-card__quote p").innerText();
+
+  await next.focus();
+  await next.press("Enter");
+  await expect(page.locator("[data-pro-home-testimonial-card].is-active .pro-home-testimonial-card__quote p")).not.toHaveText(activeQuote);
 });
 
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {

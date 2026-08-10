@@ -1142,6 +1142,147 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 }
 
 /**
+ * Get verified testimonial records with an approved quote for the home carousel.
+ *
+ * @param int[] $requested_ids Optional explicitly selected post IDs.
+ * @param int   $limit Maximum number of records.
+ * @return WP_Post[]
+ */
+function proenem_get_home_testimonials( $requested_ids = array(), $limit = 6 ) {
+	$limit = max( 1, min( 12, absint( $limit ) ) );
+
+	return array_slice(
+		array_values(
+			array_filter(
+				proenem_get_home_proof_testimonials( $requested_ids, 12 ),
+				static function ( $testimonial ) {
+					return $testimonial instanceof WP_Post && '' !== trim( proenem_get_testimonial_quote( $testimonial->ID, 40 ) );
+				}
+			)
+		),
+		0,
+		$limit
+	);
+}
+
+/**
+ * Get eligible home carousel records as Elementor select options.
+ *
+ * @return array<int,string>
+ */
+function proenem_get_home_testimonial_options() {
+	$options = array();
+
+	foreach ( proenem_get_home_testimonials( array(), 12 ) as $testimonial ) {
+		$options[ $testimonial->ID ] = sprintf(
+			/* translators: 1: Student name. 2: Course. 3: Institution. */
+			__( '%1$s — %2$s, %3$s', 'proenem-wordpress-theme' ),
+			proenem_get_testimonial_student_name( $testimonial->ID ),
+			proenem_get_testimonial_course( $testimonial->ID ),
+			proenem_get_testimonial_institution( $testimonial->ID )
+		);
+	}
+
+	return $options;
+}
+
+/**
+ * Render the shared verified testimonial carousel on the home.
+ *
+ * @param WP_Post[] $testimonials Eligible testimonial records.
+ * @param array     $args Section copy, link and identifiers.
+ * @return void
+ */
+function proenem_render_home_testimonials_section( $testimonials, $args = array() ) {
+	$testimonials = array_values( array_filter( (array) $testimonials, static fn( $item ) => $item instanceof WP_Post ) );
+
+	if ( empty( $testimonials ) ) {
+		return;
+	}
+
+	$args = wp_parse_args(
+		$args,
+		array(
+			'body'           => proenem_normalize_home_proof_copy( '', 'testimonials' ),
+			'eyebrow'        => __( 'Aprovados', 'proenem-wordpress-theme' ),
+			'heading_id'     => 'pro-testimonials-title',
+			'more_label'     => __( 'Ver mais', 'proenem-wordpress-theme' ),
+			'more_url'       => 'https://aprovados.proenem.com.br/',
+			'section_id'     => 'depoimentos',
+			'title_emphasis' => __( 'chegou na vaga.', 'proenem-wordpress-theme' ),
+			'title_line'     => __( 'Quem estudou com método,', 'proenem-wordpress-theme' ),
+		)
+	);
+
+	$active_index = count( $testimonials ) > 1 ? 1 : 0;
+	?>
+	<section id="<?php echo esc_attr( $args['section_id'] ); ?>" class="pro-home-testimonials" aria-labelledby="<?php echo esc_attr( $args['heading_id'] ); ?>" data-pro-home-testimonials-slider>
+		<div class="pro-home-testimonials__header">
+			<span class="pen-section-pill"><?php echo esc_html( $args['eyebrow'] ); ?></span>
+			<h2 id="<?php echo esc_attr( $args['heading_id'] ); ?>">
+				<span><?php echo esc_html( $args['title_line'] ); ?></span>
+				<strong><?php echo esc_html( $args['title_emphasis'] ); ?></strong>
+			</h2>
+			<p><?php echo esc_html( proenem_normalize_home_proof_copy( $args['body'], 'testimonials' ) ); ?></p>
+		</div>
+		<div class="pro-home-testimonials__viewport">
+			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
+				<?php foreach ( $testimonials as $testimonial_index => $testimonial ) : ?>
+					<?php
+					$student_name = proenem_get_testimonial_student_name( $testimonial->ID );
+					$result       = implode(
+						' · ',
+						array_filter(
+							array(
+								proenem_get_testimonial_course( $testimonial->ID ),
+								proenem_get_testimonial_institution( $testimonial->ID ),
+								proenem_get_testimonial_approval_year( $testimonial->ID ),
+							)
+						)
+					);
+					?>
+					<article class="pro-home-testimonial-card<?php echo $active_index === $testimonial_index ? ' is-active' : ''; ?>" data-pro-home-testimonial-card>
+						<blockquote class="pro-home-testimonial-card__quote">
+							<span aria-hidden="true">“</span>
+							<p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial->ID, 40 ) ); ?></p>
+						</blockquote>
+						<footer>
+							<?php
+							echo get_the_post_thumbnail(
+								$testimonial->ID,
+								'thumbnail',
+								array(
+									'alt'      => sprintf(
+										/* translators: %s: Student name. */
+										__( 'Foto de %s.', 'proenem-wordpress-theme' ),
+										$student_name
+									),
+									'decoding' => 'async',
+									'loading'  => 'lazy',
+								)
+							); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+							<span>
+								<strong><?php echo esc_html( $student_name ); ?></strong>
+								<small><?php echo esc_html( $result ); ?></small>
+							</span>
+						</footer>
+					</article>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>">
+			<?php if ( count( $testimonials ) > 1 ) : ?>
+				<button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button>
+				<button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button>
+			<?php endif; ?>
+			<a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="<?php echo esc_url( $args['more_url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $args['more_label'] ); ?></a>
+		</div>
+	</section>
+	<?php
+}
+
+/**
  * Get the testimonial approval summary.
  *
  * @param int $post_id Post ID.
