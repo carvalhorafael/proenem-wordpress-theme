@@ -41,11 +41,13 @@ Os itens são persistidos no menu WordPress `primary`. O script `scripts/sync-ho
 | Cards de disciplinas | Nome da disciplina | Exploração | Página funcional da disciplina | PHP, repeater Elementor e JSON |
 | Banco de questões | Explorar questões grátis | Exploração | `https://estude.proenem.com.br/treino/questoes` | PHP, widget, JSON e dados persistidos |
 | Plano Grátis | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
-| Método PRO | Quero o Método PRO | Contratação | Checkout Hotmart `W106752534O` | PHP, defaults do widget e dados persistidos |
+| Método PRO | Quero o Método PRO | Contratação | `https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10` | PHP, defaults do widget e dados persistidos |
 | Método PRO Avançado | Quero o Método PRO Avançado | Contratação | `https://medicina.proenem.com.br/` | PHP, defaults do widget, JSON e dados persistidos |
 | Depoimentos | Ver mais | Prova social | `https://aprovados.proenem.com.br/` | PHP, widget e JSON |
 
 O produto Hotmart legado `X99453521F` não corresponde ao Método PRO Avançado. O renderer e a sincronização operacional convertem esse destino persistido para `https://medicina.proenem.com.br/`.
+
+O checkout do Método PRO mantém somente o código da oferta e o modo de checkout. Parâmetros de campanha, UTMs, `src` e identificadores de sessão não fazem parte do destino persistido no tema. Uma futura atribuição dinâmica deve seguir o contrato de mensuração da issue #35.
 
 ## Jornada B2B
 

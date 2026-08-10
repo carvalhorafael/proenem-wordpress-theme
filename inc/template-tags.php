@@ -1757,11 +1757,12 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
  */
 function proenem_get_home_cta_destination( $intent ) {
 	$destinations = array(
-		'advanced'  => 'https://medicina.proenem.com.br/',
-		'plans'     => home_url( '/#planos' ),
-		'questions' => 'https://estude.proenem.com.br/treino/questoes',
-		'signup'    => 'https://estude.proenem.com.br/signup',
-		'study'     => 'https://estude.proenem.com.br/',
+		'advanced'   => 'https://medicina.proenem.com.br/',
+		'method_pro' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10',
+		'plans'      => home_url( '/#planos' ),
+		'questions'  => 'https://estude.proenem.com.br/treino/questoes',
+		'signup'     => 'https://estude.proenem.com.br/signup',
+		'study'      => 'https://estude.proenem.com.br/',
 	);
 
 	$destination = $destinations[ $intent ] ?? '';
@@ -1827,11 +1828,14 @@ function proenem_upgrade_home_cta_link( $link, $intent ) {
 	$is_legacy_advanced_checkout = static function ( $url ) use ( $intent ) {
 		return 'advanced' === $intent && false !== strpos( $url, 'pay.hotmart.com/X99453521F' );
 	};
+	$is_method_pro_checkout      = static function ( $url ) use ( $intent ) {
+		return 'method_pro' === $intent && false !== strpos( $url, 'pay.hotmart.com/W106752534O' );
+	};
 
 	if ( is_array( $link ) ) {
 		$current_url = trim( (string) ( $link['url'] ?? '' ) );
 
-		if ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) ) {
+		if ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) ) {
 			$link['url'] = $canonical_url;
 		}
 
@@ -1840,7 +1844,7 @@ function proenem_upgrade_home_cta_link( $link, $intent ) {
 
 	$current_url = trim( (string) $link );
 
-	return ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) ) ? $canonical_url : $current_url;
+	return ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) ) ? $canonical_url : $current_url;
 }
 
 /**

@@ -1406,7 +1406,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						'features'      => esc_html__( "Tudo do Grátis e mais...\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI", 'proenem-wordpress-theme' ),
 						'featured'      => 'yes',
 						'button_label'  => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
-						'button_url'    => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+						'button_url'    => array( 'url' => proenem_get_home_cta_destination( 'method_pro' ) ),
 					),
 					array(
 						'name'          => esc_html__( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
@@ -1430,7 +1430,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 		$settings                                    = $this->get_settings_for_display();
 		$default_plan_urls                           = array(
 			esc_html__( 'Grátis', 'proenem-wordpress-theme' )       => array( 'url' => proenem_get_home_cta_destination( 'signup' ) ),
-			esc_html__( 'Método PRO', 'proenem-wordpress-theme' )  => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+			esc_html__( 'Método PRO', 'proenem-wordpress-theme' )  => array( 'url' => proenem_get_home_cta_destination( 'method_pro' ) ),
 			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array( 'url' => proenem_get_home_cta_destination( 'advanced' ) ),
 		);
 		$default_plan_pricing                        = array(
@@ -1515,6 +1515,10 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						? $plan['button_url']
 						: ( $default_plan_urls[ $plan_name ] ?? $settings['button_url'] ?? array() );
 					$button_label = $plan['button_label'] ?? $settings['button_label'] ?? '';
+
+					if ( esc_html__( 'Método PRO', 'proenem-wordpress-theme' ) === $plan_name ) {
+						$button_url = proenem_upgrade_home_cta_link( $button_url, 'method_pro' );
+					}
 
 					if ( $advanced_plan_name === $plan_name ) {
 						$button_url = proenem_upgrade_home_cta_link( $button_url, 'advanced' );

@@ -192,6 +192,10 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'signup' ) || $changed;
 				}
 
+				if ( __( 'Método PRO', 'proenem-wordpress-theme' ) === $plan_name ) {
+					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'method_pro' ) || $changed;
+				}
+
 				if ( in_array( $plan_name, array( __( 'Método PRO Avançado', 'proenem-wordpress-theme' ), __( 'Pro Medicina', 'proenem-wordpress-theme' ) ), true ) ) {
 					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'advanced' ) || $changed;
 				}
