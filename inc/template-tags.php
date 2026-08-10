@@ -1273,7 +1273,7 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 
 		$classes = array_filter( (array) $menu_item->classes );
 		$item    = array(
-			'url'      => $menu_item->url,
+			'url'      => proenem_resolve_primary_navigation_url( $menu_item->url, $menu_item->title ),
 			'label'    => $menu_item->title,
 			'target'   => $menu_item->target,
 			'rel'      => $menu_item->xfn,
@@ -1285,7 +1285,7 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 		foreach ( $children[ (int) $menu_item->ID ] ?? array() as $child_menu_item ) {
 			$child_classes      = array_filter( (array) $child_menu_item->classes );
 			$item['children'][] = array(
-				'url'     => $child_menu_item->url,
+				'url'     => proenem_resolve_primary_navigation_url( $child_menu_item->url, $child_menu_item->title ),
 				'label'   => $child_menu_item->title,
 				'target'  => $child_menu_item->target,
 				'rel'     => $child_menu_item->xfn,
@@ -1304,6 +1304,138 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 	}
 
 	return $navigation;
+}
+
+/**
+ * Get a canonical home conversion destination.
+ *
+ * These URLs are presentation-level defaults. Consumers may override them with
+ * the filter when the approved destination changes outside a theme release.
+ *
+ * @param string $intent Conversion intent.
+ * @return string
+ */
+function proenem_get_home_cta_destination( $intent ) {
+	$destinations = array(
+		'advanced'  => 'https://medicina.proenem.com.br/',
+		'plans'     => home_url( '/#planos' ),
+		'questions' => 'https://estude.proenem.com.br/treino/questoes',
+		'signup'    => 'https://estude.proenem.com.br/signup',
+		'study'     => 'https://estude.proenem.com.br/',
+	);
+
+	$destination = $destinations[ $intent ] ?? '';
+
+	/**
+	 * Filter a canonical home conversion destination.
+	 *
+	 * @param string $destination Destination URL.
+	 * @param string $intent      Conversion intent.
+	 */
+	return (string) apply_filters( 'proenem_home_cta_destination', $destination, $intent );
+}
+
+/**
+ * Replace invalid persisted menu placeholders with a compatible destination.
+ *
+ * Persisted WordPress menu data remains the source of truth. This fallback
+ * prevents a literal hash from reaching the rendered navigation before the
+ * operational content sync has been applied to an environment.
+ *
+ * @param string $url   Persisted menu URL.
+ * @param string $label Visible menu label.
+ * @return string
+ */
+function proenem_resolve_primary_navigation_url( $url, $label ) {
+	$url = trim( (string) $url );
+
+	if ( '' !== $url && '#' !== $url ) {
+		return $url;
+	}
+
+	$destinations = array(
+		'aprovados'          => home_url( '/#aprovados' ),
+		'comece-gratis'      => proenem_get_home_cta_destination( 'signup' ),
+		'comecar-gratis'     => proenem_get_home_cta_destination( 'signup' ),
+		'criar-conta-gratis' => proenem_get_home_cta_destination( 'signup' ),
+		'entrar'             => proenem_get_home_cta_destination( 'study' ),
+		'faq'                => home_url( '/#faq' ),
+		'planos'             => proenem_get_home_cta_destination( 'plans' ),
+		'questoes'           => proenem_get_home_cta_destination( 'questions' ),
+	);
+	$label_slug   = sanitize_title( (string) $label );
+	$destination  = $destinations[ $label_slug ] ?? home_url( '/' );
+
+	/**
+	 * Filter the fallback for an invalid persisted primary menu URL.
+	 *
+	 * @param string $destination Resolved destination.
+	 * @param string $label       Visible menu label.
+	 */
+	return (string) apply_filters( 'proenem_primary_navigation_fallback_url', $destination, $label );
+}
+
+/**
+ * Upgrade a legacy Elementor home link to its canonical destination.
+ *
+ * @param array|string $link   Elementor link settings or a URL string.
+ * @param string       $intent Conversion intent.
+ * @return array|string
+ */
+function proenem_upgrade_home_cta_link( $link, $intent ) {
+	$canonical_url               = proenem_get_home_cta_destination( $intent );
+	$is_legacy_advanced_checkout = static function ( $url ) use ( $intent ) {
+		return 'advanced' === $intent && false !== strpos( $url, 'pay.hotmart.com/X99453521F' );
+	};
+
+	if ( is_array( $link ) ) {
+		$current_url = trim( (string) ( $link['url'] ?? '' ) );
+
+		if ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) ) {
+			$link['url'] = $canonical_url;
+		}
+
+		return $link;
+	}
+
+	$current_url = trim( (string) $link );
+
+	return ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) ) ? $canonical_url : $current_url;
+}
+
+/**
+ * Render the temporary mobile persistent conversion action.
+ *
+ * @param array{label?:string,url?:string,threshold?:int} $action Action settings.
+ * @return void
+ */
+function proenem_render_mobile_persistent_action( $action = array() ) {
+	$action = wp_parse_args(
+		$action,
+		array(
+			'label'     => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+			'threshold' => 600,
+			'url'       => proenem_get_home_cta_destination( 'signup' ),
+		)
+	);
+
+	if ( empty( $action['label'] ) || empty( $action['url'] ) ) {
+		return;
+	}
+	?>
+	<aside
+		class="pro-mobile-persistent-action"
+		data-pro-mobile-persistent-action
+		data-scroll-threshold="<?php echo esc_attr( max( 0, absint( $action['threshold'] ) ) ); ?>"
+		hidden
+		aria-label="<?php esc_attr_e( 'Próximo passo', 'proenem-wordpress-theme' ); ?>"
+	>
+		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( $action['url'] ); ?>">
+			<?php echo esc_html( $action['label'] ); ?>
+			<span class="pen-button__arrow" aria-hidden="true">-&gt;</span>
+		</a>
+	</aside>
+	<?php
 }
 
 /**

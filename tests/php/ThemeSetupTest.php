@@ -232,6 +232,69 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Navbar should never render a literal hash saved in the WordPress menu.
+	 *
+	 * @return void
+	 */
+	public function test_navbar_resolves_persisted_hash_destinations() {
+		$menu_id = wp_create_nav_menu( 'Proenem conversion menu' );
+
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'  => 'Planos',
+				'menu-item-url'    => '#',
+				'menu-item-status' => 'publish',
+			)
+		);
+		wp_update_nav_menu_item(
+			$menu_id,
+			0,
+			array(
+				'menu-item-title'   => 'Comece grátis',
+				'menu-item-url'     => '#',
+				'menu-item-status'  => 'publish',
+				'menu-item-classes' => 'pen-navbar-action pen-navbar-action-primary',
+			)
+		);
+
+		$navigation = proenem_get_primary_navigation_items( 'site', $menu_id );
+
+		$this->assertSame( home_url( '/#planos' ), $navigation['links'][0]['url'] );
+		$this->assertSame( 'https://estude.proenem.com.br/signup', $navigation['actions'][0]['url'] );
+	}
+
+	/**
+	 * Mobile persistent action should use the canonical signup contract.
+	 *
+	 * @return void
+	 */
+	public function test_mobile_persistent_action_uses_signup_destination() {
+		ob_start();
+		proenem_render_mobile_persistent_action();
+		$markup = ob_get_clean();
+
+		$this->assertStringContainsString( 'data-pro-mobile-persistent-action', $markup );
+		$this->assertStringContainsString( 'data-scroll-threshold="600"', $markup );
+		$this->assertStringContainsString( 'https://estude.proenem.com.br/signup', $markup );
+		$this->assertStringContainsString( 'Criar conta grátis', $markup );
+	}
+
+	/**
+	 * Legacy advanced-plan checkout URLs should resolve to the approved page.
+	 *
+	 * @return void
+	 */
+	public function test_legacy_advanced_checkout_is_upgraded() {
+		$legacy_link  = array( 'url' => 'https://pay.hotmart.com/X99453521F?off=legacy' );
+		$updated_link = proenem_upgrade_home_cta_link( $legacy_link, 'advanced' );
+
+		$this->assertSame( 'https://medicina.proenem.com.br/', proenem_get_home_cta_destination( 'advanced' ) );
+		$this->assertSame( 'https://medicina.proenem.com.br/', $updated_link['url'] );
+	}
+
+	/**
 	 * The testimonials listing should be exposed as an explicit page template.
 	 *
 	 * @return void

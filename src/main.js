@@ -48,6 +48,74 @@ document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
   });
 });
 
+const persistentMobileActions = Array.from(
+  document.querySelectorAll("[data-pro-mobile-persistent-action]"),
+);
+
+if (persistentMobileActions.length) {
+  const mobileViewport = window.matchMedia("(max-width: 760px)");
+  let updateFrame = null;
+
+  document.documentElement.classList.add("has-pro-mobile-persistent-action");
+
+  const updatePersistentMobileActions = () => {
+    let hasVisibleAction = false;
+    const menuIsOpen = Array.from(document.querySelectorAll("[data-pro-home-navbar]")).some(
+      (navbar) => navbar.classList.contains("is-open"),
+    );
+
+    persistentMobileActions.forEach((action) => {
+      const threshold = Number.parseInt(action.dataset.scrollThreshold || "600", 10);
+      const persistentLink = action.querySelector("a[href]");
+      const inlinePrimaryIsVisible = persistentLink
+        ? Array.from(document.querySelectorAll("a[href]")).some((link) => {
+            if (link === persistentLink || link.href !== persistentLink.href) {
+              return false;
+            }
+
+            const bounds = link.getBoundingClientRect();
+            const visibleHeight = Math.min(bounds.bottom, innerHeight) - Math.max(bounds.top, 0);
+
+            return (
+              bounds.width > 0 &&
+              bounds.height > 0 &&
+              visibleHeight >= Math.min(bounds.height * 0.5, 32)
+            );
+          })
+        : false;
+      const shouldShow =
+        mobileViewport.matches &&
+        window.scrollY >= threshold &&
+        !menuIsOpen &&
+        !inlinePrimaryIsVisible;
+
+      action.hidden = !shouldShow;
+      hasVisibleAction ||= shouldShow;
+    });
+
+    document.documentElement.classList.toggle(
+      "is-pro-mobile-persistent-action-visible",
+      hasVisibleAction,
+    );
+
+    updateFrame = null;
+  };
+
+  const schedulePersistentMobileActionUpdate = () => {
+    if (updateFrame !== null) {
+      return;
+    }
+
+    updateFrame = window.requestAnimationFrame(updatePersistentMobileActions);
+  };
+
+  window.addEventListener("scroll", schedulePersistentMobileActionUpdate, { passive: true });
+  window.addEventListener("resize", schedulePersistentMobileActionUpdate);
+  document.addEventListener("click", schedulePersistentMobileActionUpdate);
+  mobileViewport.addEventListener("change", schedulePersistentMobileActionUpdate);
+  updatePersistentMobileActions();
+}
+
 document.querySelectorAll("[data-pro-home-pillars-slider]").forEach((slider) => {
   const cards = Array.from(slider.querySelectorAll("[data-pro-home-pillar-card]"));
   const previousButton = slider.querySelector("[data-pro-home-pillars-prev]");

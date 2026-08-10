@@ -38,6 +38,25 @@
       },
       "elements": [
         {
+          "id": "a1000000",
+          "elType": "widget",
+          "widgetType": "pro_navbar",
+          "isInner": false,
+          "settings": {
+            "mode": "menu",
+            "menu_id": 0,
+            "aria_label": "Navegação da home",
+            "mobile_cta_enabled": "yes",
+            "mobile_cta_label": "Criar conta grátis",
+            "mobile_cta_url": {
+              "url": "https://estude.proenem.com.br/signup",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
           "id": "a1000002",
           "elType": "widget",
           "widgetType": "pro_home_hero",
@@ -56,7 +75,7 @@
           "isInner": false,
           "settings": {
             "primary_button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
               "is_external": "",
               "nofollow": ""
             }
@@ -78,7 +97,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
               "is_external": "",
               "nofollow": ""
             },
@@ -225,7 +244,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
               "is_external": "",
               "nofollow": ""
             },
@@ -394,7 +413,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/treino/questoes",
               "is_external": "",
               "nofollow": ""
             }
@@ -424,6 +443,11 @@
                 "summary": "Para começar hoje.",
                 "features": "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão",
                 "button_label": "Criar conta grátis",
+                "button_url": {
+                  "url": "https://estude.proenem.com.br/signup",
+                  "is_external": "",
+                  "nofollow": ""
+                },
                 "free": "yes",
                 "featured": ""
               },
@@ -450,6 +474,11 @@
                 "summary": "Aulas ao vivo, revisões e mentoria em grupo.",
                 "features": "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo",
                 "button_label": "Quero o Método PRO Avançado",
+                "button_url": {
+                  "url": "https://medicina.proenem.com.br/",
+                  "is_external": "",
+                  "nofollow": ""
+                },
                 "free": "",
                 "featured": ""
               }

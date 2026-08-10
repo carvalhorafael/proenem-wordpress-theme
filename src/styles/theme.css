@@ -1996,8 +1996,31 @@ body.proenem-home-template {
     ),
     #e23a3a;
   max-width: none;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding: 0;
+}
+
+.site-header,
+.pro-home > .pro-site-navbar,
+.elementor-widget-pro_navbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.admin-bar .site-header,
+.admin-bar .pro-home > .pro-site-navbar,
+.admin-bar .elementor-widget-pro_navbar {
+  top: 32px;
+}
+
+.pro-mobile-persistent-action {
+  display: none;
+}
+
+.pro-mobile-persistent-action[hidden] {
+  display: none !important;
 }
 
 .pro-site-navbar,
@@ -2009,7 +2032,7 @@ body.proenem-home-template {
   left: 50%;
   margin: 0 0 0 -50vw !important;
   max-width: 100vw !important;
-  position: relative;
+  position: sticky !important;
   width: 100vw !important;
 }
 
@@ -4896,6 +4919,50 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .admin-bar .site-header,
+  .admin-bar .pro-home > .pro-site-navbar,
+  .admin-bar .elementor-widget-pro_navbar {
+    top: 46px;
+  }
+
+  html.is-pro-mobile-persistent-action-visible body {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .pro-mobile-persistent-action {
+    align-items: center;
+    background: var(--pen-color-pink-mid);
+    border: 0;
+    border-radius: 0;
+    border-top: var(--pen-border-brand-sm);
+    bottom: 0;
+    box-shadow: 0 -0.25rem 0 var(--pen-color-ink);
+    display: flex;
+    left: 0;
+    padding: 0.65rem max(0.75rem, env(safe-area-inset-right, 0px))
+      calc(0.65rem + env(safe-area-inset-bottom, 0px))
+      max(0.75rem, env(safe-area-inset-left, 0px));
+    position: fixed;
+    right: 0;
+    width: 100%;
+    z-index: 55;
+  }
+
+  .pro-mobile-persistent-action .pen-button {
+    flex: 0 1 34rem;
+    justify-content: center;
+    margin-inline: auto;
+    max-width: 34rem;
+    min-height: 3rem;
+    padding-inline: clamp(0.8rem, 4vw, 1.25rem);
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  html.is-pro-mobile-persistent-action-visible #wpp-icon-btn {
+    bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
   .pro-home .pen-proof-section__students {
     background: var(--pro-home-soft-pink);
     padding-top: 5.25rem;
@@ -5499,7 +5566,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     padding: 3.2rem 1.2rem 4rem;
   }
 
-  .pro-site-navbar,
+  .pro-site-navbar.pen-navbar,
   .pro-home .pen-navbar {
     align-items: center;
     flex-direction: row;
