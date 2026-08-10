@@ -997,9 +997,12 @@ function proenem_normalize_home_proof_copy( $copy, $context ) {
 		'testimonials' => __( 'Conheça histórias de alunos que estudaram com a Proenem.', 'proenem-wordpress-theme' ),
 	);
 	$legacy   = array(
-		'title'        => '+ de 40.000 aprovados em universidades públicas',
-		'support'      => 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.',
-		'testimonials' => 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.',
+		'title'        => array( '+ de 40.000 aprovados em universidades públicas' ),
+		'support'      => array( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.' ),
+		'testimonials' => array(
+			'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.',
+			'Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias.',
+		),
 	);
 	$copy     = trim( (string) $copy );
 
@@ -1007,7 +1010,7 @@ function proenem_normalize_home_proof_copy( $copy, $context ) {
 		return $copy;
 	}
 
-	return '' === $copy || $legacy[ $context ] === $copy ? $defaults[ $context ] : $copy;
+	return '' === $copy || in_array( $copy, $legacy[ $context ], true ) ? $defaults[ $context ] : $copy;
 }
 
 /**

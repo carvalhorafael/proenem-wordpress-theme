@@ -230,6 +230,8 @@ test("Elementor home fixture uses the same conversion and persistent action cont
     "href",
     "https://estude.proenem.com.br/treino/questoes",
   );
+  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
+  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
 
   await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
