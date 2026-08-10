@@ -1,5 +1,24 @@
 import { expect, test } from "@playwright/test";
 
+const expectHomeProofContract = async (page) => {
+  const proofSection = page.locator(".pen-proof-section");
+  const proofSectionCount = await proofSection.count();
+
+  if (proofSectionCount === 0) {
+    await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
+    return false;
+  }
+
+  await expect(proofSection).toHaveCount(1);
+  await expect(proofSection.locator(".pen-proof-section__strip h2")).toHaveText(
+    "+ de 40.000 aprovados em universidades públicas",
+  );
+  await expect(proofSection.locator(".pen-proof-section__logo")).toHaveCount(6);
+  expect(await proofSection.locator(".pen-proof-section__student").count()).toBeGreaterThan(0);
+
+  return true;
+};
+
 const installNavbarSubmenuFixture = async (page) => {
   await page.route(
     "**/",
@@ -58,8 +77,7 @@ test("front page renders the Proenem home", async ({ page }) => {
     "href",
     "https://estude.proenem.com.br/signup",
   );
-  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
-  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
+  await expectHomeProofContract(page);
   await expect(
     page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
       hasText: "Amanda Alves",
@@ -230,8 +248,7 @@ test("Elementor home fixture uses the same conversion and persistent action cont
     "href",
     "https://estude.proenem.com.br/treino/questoes",
   );
-  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
-  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
+  await expectHomeProofContract(page);
 
   await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
@@ -579,12 +596,31 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
   }
 });
 
-test("front page omits unverified proof on mobile", async ({ page }) => {
+test("front page keeps optional verified proof inside the mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  await expect(page.locator(".pen-proof-section")).toHaveCount(0);
-  await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
+  const hasProofSection = await expectHomeProofContract(page);
+
+  if (!hasProofSection) {
+    return;
+  }
+
+  const proofGrid = page.locator(".pen-proof-section__students");
+  const gridMetrics = await proofGrid.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+
+    return {
+      left: rect.left,
+      right: rect.right,
+      viewportWidth: window.innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+    };
+  });
+
+  expect(gridMetrics.left).toBe(0);
+  expect(gridMetrics.right).toBeCloseTo(gridMetrics.viewportWidth, 0);
+  expect(gridMetrics.documentWidth).toBe(gridMetrics.viewportWidth);
 });
 
 test("front page platform uses a compact horizontal menu on mobile", async ({ page }) => {

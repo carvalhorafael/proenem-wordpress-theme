@@ -137,7 +137,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 */
 	public function test_home_proof_requires_the_verified_plugin_contract() {
 		$this->assertSame( array(), proenem_get_home_proof_testimonials() );
-		$this->assertSame( 'Aprovações verificadas de alunos da Proenem', proenem_normalize_home_proof_copy( '+ de 40.000 aprovados em universidades públicas', 'title' ) );
+		$this->assertSame( '+ de 40.000 aprovados em universidades públicas', proenem_normalize_home_proof_copy( 'Aprovações verificadas de alunos da Proenem', 'title' ) );
 		$this->assertSame( 'Conheça histórias de alunos que estudaram com a Proenem.', proenem_normalize_home_proof_copy( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'testimonials' ) );
 		$this->assertSame( 'Conheça histórias de alunos que estudaram com a Proenem.', proenem_normalize_home_proof_copy( 'Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias.', 'testimonials' ) );
 
@@ -173,7 +173,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertArrayNotHasKey( 'student_images', $proof['settings'] );
 		$this->assertArrayNotHasKey( 'logos', $proof['settings'] );
 		$this->assertSame( array(), $proof['settings']['testimonial_ids'] );
-		$this->assertSame( 'Aprovações verificadas de alunos da Proenem', $proof['settings']['title'] );
+		$this->assertSame( '+ de 40.000 aprovados em universidades públicas', $proof['settings']['title'] );
 	}
 
 	/**

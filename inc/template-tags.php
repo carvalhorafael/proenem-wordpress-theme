@@ -940,25 +940,28 @@ function proenem_get_home_proof_testimonials( $requested_ids = array(), $limit =
 		'orderby'             => 'date',
 		'post_status'         => 'publish',
 		'post_type'           => proenem_get_testimonials_post_type(),
-		'posts_per_page'      => $limit,
+		'posts_per_page'      => -1,
 		'suppress_filters'    => false,
 	);
 
 	if ( $requested_ids ) {
-		$query_args['orderby']        = 'post__in';
-		$query_args['post__in']       = $requested_ids;
-		$query_args['posts_per_page'] = min( $limit, count( $requested_ids ) );
+		$query_args['orderby']  = 'post__in';
+		$query_args['post__in'] = $requested_ids;
 	}
 
 	$testimonials = get_posts( $query_args );
 
-	return array_values(
-		array_filter(
-			$testimonials,
-			static function ( $testimonial ) {
-				return $testimonial instanceof WP_Post && testimonials_is_home_proof_eligible( $testimonial->ID );
-			}
-		)
+	return array_slice(
+		array_values(
+			array_filter(
+				$testimonials,
+				static function ( $testimonial ) {
+					return $testimonial instanceof WP_Post && testimonials_is_home_proof_eligible( $testimonial->ID );
+				}
+			)
+		),
+		0,
+		$limit
 	);
 }
 
@@ -984,7 +987,7 @@ function proenem_get_home_proof_testimonial_options() {
 }
 
 /**
- * Replace the unsupported legacy approval count with verifiable copy.
+ * Normalize persisted home proof copy across Elementor revisions.
  *
  * @param string $copy Persisted or default copy.
  * @param string $context Copy context: title, support or testimonials.
@@ -992,13 +995,13 @@ function proenem_get_home_proof_testimonial_options() {
  */
 function proenem_normalize_home_proof_copy( $copy, $context ) {
 	$defaults = array(
-		'title'        => __( 'Aprovações verificadas de alunos da Proenem', 'proenem-wordpress-theme' ),
-		'support'      => __( 'Dados de aprovação conferidos e publicados com autorização.', 'proenem-wordpress-theme' ),
+		'title'        => __( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ),
+		'support'      => __( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ),
 		'testimonials' => __( 'Conheça histórias de alunos que estudaram com a Proenem.', 'proenem-wordpress-theme' ),
 	);
-	$legacy   = array(
-		'title'        => array( '+ de 40.000 aprovados em universidades públicas' ),
-		'support'      => array( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.' ),
+	$replaced = array(
+		'title'        => array( 'Aprovações verificadas de alunos da Proenem' ),
+		'support'      => array( 'Dados de aprovação conferidos e publicados com autorização.' ),
 		'testimonials' => array(
 			'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.',
 			'Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias.',
@@ -1010,7 +1013,7 @@ function proenem_normalize_home_proof_copy( $copy, $context ) {
 		return $copy;
 	}
 
-	return '' === $copy || in_array( $copy, $legacy[ $context ], true ) ? $defaults[ $context ] : $copy;
+	return '' === $copy || in_array( $copy, $replaced[ $context ], true ) ? $defaults[ $context ] : $copy;
 }
 
 /**
@@ -1022,6 +1025,44 @@ function proenem_normalize_home_proof_copy( $copy, $context ) {
  */
 function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 	$testimonials = array_values( array_filter( (array) $testimonials, static fn( $item ) => $item instanceof WP_Post ) );
+	$universities = array(
+		array(
+			'name'   => __( 'UFRJ', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-ufrj.webp',
+			'width'  => 206,
+			'height' => 102,
+		),
+		array(
+			'name'   => __( 'UFRGS', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-ufrgs.webp',
+			'width'  => 117,
+			'height' => 94,
+		),
+		array(
+			'name'   => __( 'Unicamp', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-unicamp.webp',
+			'width'  => 99,
+			'height' => 105,
+		),
+		array(
+			'name'   => __( 'UERJ', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-uerj.webp',
+			'width'  => 99,
+			'height' => 110,
+		),
+		array(
+			'name'   => __( 'USP', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-usp.webp',
+			'width'  => 171,
+			'height' => 70,
+		),
+		array(
+			'name'   => __( 'Unifesp', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-unifesp.webp',
+			'width'  => 182,
+			'height' => 110,
+		),
+	);
 
 	if ( empty( $testimonials ) ) {
 		return;
@@ -1040,7 +1081,7 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 	);
 	?>
 	<section id="<?php echo esc_attr( $args['section_id'] ); ?>" class="pen-proof-section" aria-labelledby="<?php echo esc_attr( $args['heading_id'] ); ?>">
-		<div class="pen-proof-section__students">
+		<div class="pen-proof-section__students pro-home-proof-students">
 			<p class="pen-proof-section__badge">
 				<span><?php echo esc_html( $args['badge_line_1'] ); ?></span>
 				<span><?php echo esc_html( $args['badge_line_2'] ); ?></span>
@@ -1069,11 +1110,11 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 						)
 					); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
-					<figcaption class="pro-home-proof-student__caption">
-						<strong><?php echo esc_html( $student_name ); ?></strong>
-						<span><?php echo esc_html( $course ); ?> · <?php echo esc_html( $institution ); ?></span>
+					<figcaption class="pen-proof-section__caption pro-home-proof-student__caption">
+						<strong class="pen-proof-section__student-name"><?php echo esc_html( $student_name ); ?></strong>
+						<span class="pen-proof-section__student-result"><?php echo esc_html( $course ); ?> · <?php echo esc_html( $institution ); ?></span>
 						<?php if ( $year ) : ?>
-							<time datetime="<?php echo esc_attr( $year ); ?>"><?php echo esc_html( $year ); ?></time>
+							<time class="pen-proof-section__student-year" datetime="<?php echo esc_attr( $year ); ?>"><?php echo esc_html( $year ); ?></time>
 						<?php endif; ?>
 					</figcaption>
 				</figure>
@@ -1082,6 +1123,19 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 		<div class="pen-proof-section__strip">
 			<h2 id="<?php echo esc_attr( $args['heading_id'] ); ?>"><?php echo esc_html( $args['title'] ); ?></h2>
 			<p class="pro-home-proof-support"><?php echo esc_html( $args['support'] ); ?></p>
+			<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
+				<?php foreach ( $universities as $university ) : ?>
+					<img
+						class="pen-proof-section__logo"
+						src="<?php echo esc_url( get_theme_file_uri( '/assets/images/home/' . $university['file'] ) ); ?>"
+						alt="<?php echo esc_attr( $university['name'] ); ?>"
+						width="<?php echo esc_attr( $university['width'] ); ?>"
+						height="<?php echo esc_attr( $university['height'] ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
+				<?php endforeach; ?>
+			</div>
 		</div>
 	</section>
 	<?php

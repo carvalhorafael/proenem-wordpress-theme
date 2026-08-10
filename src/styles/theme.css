@@ -2862,6 +2862,53 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   width: 190px;
 }
 
+.pro-home .pro-home-proof-students {
+  background: var(--pro-home-soft-pink);
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+}
+
+.pro-home .pro-home-proof-student {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  color: var(--pen-color-ink);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  margin: 0;
+  min-width: 0;
+}
+
+.pro-home .pro-home-proof-student .pen-proof-section__image {
+  border: 0;
+  border-bottom: var(--pen-border-brand-xs);
+  display: block;
+  height: auto;
+}
+
+.pro-home .pro-home-proof-student__caption {
+  align-content: start;
+  display: grid;
+  gap: var(--pen-space-1);
+  padding: clamp(var(--pen-space-3), 2vw, var(--pen-space-5));
+}
+
+.pro-home .pen-proof-section__student-name {
+  font-family: var(--pen-font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1;
+}
+
+.pro-home .pen-proof-section__student-result {
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: var(--pen-font-weight-ui);
+  line-height: 1.35;
+}
+
+.pro-home .pen-proof-section__student-year {
+  color: var(--pen-color-ink-muted);
+  font-size: var(--pen-text-sm);
+  line-height: 1.35;
+}
+
 .pro-home .pen-proof-section__strip {
   background:
     linear-gradient(135deg, rgb(0 0 0 / 10%) 25%, transparent 25%) 0 0 / 12px 12px,
@@ -4965,7 +5012,16 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pen-proof-section__students {
     background: var(--pro-home-soft-pink);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     padding-top: 5.25rem;
+  }
+
+  .pro-home .pro-home-proof-student__caption {
+    padding: var(--pen-space-3);
+  }
+
+  .pro-home .pen-proof-section__student-name {
+    font-size: 1rem;
   }
 
   .pro-home .pen-proof-section__badge {
