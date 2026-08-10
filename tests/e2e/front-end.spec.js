@@ -54,7 +54,10 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação não");
   await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
   await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
+  await expect(page.getByRole("link", { name: /criar conta grátis/i }).first()).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
   await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
   await expect(
     page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
@@ -73,7 +76,10 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
-  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute("href", "https://estude.proenem.com.br/");
+  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toBeVisible();
@@ -102,7 +108,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   );
   await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveAttribute(
     "href",
-    /pay\.hotmart\.com\/X99453521F/,
+    "https://medicina.proenem.com.br/",
   );
   await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
     "pode cancelar dentro desse prazo e usar a garantia",
@@ -118,6 +124,124 @@ test("front page renders the Proenem home", async ({ page }) => {
     );
   }
   await expect(page.locator(".pen-site-footer")).toBeVisible();
+});
+
+test("front page keeps conversion actions compatible with their labels", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.locator(".pro-home > .pro-site-navbar")).toHaveCSS("position", "sticky");
+
+  const signupActions = page.getByRole("link", { name: /criar conta grátis/i });
+  const questionAction = page.getByRole("link", { name: /explorar questões grátis/i });
+
+  expect(await signupActions.count()).toBeGreaterThanOrEqual(4);
+
+  for (const action of await signupActions.all()) {
+    await expect(action).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+  }
+
+  await expect(questionAction).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/treino/questoes",
+  );
+  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+});
+
+test("front page keeps the navbar sticky and reveals the mobile primary action", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const navbar = page.locator(".pro-home > .pro-site-navbar");
+  const hero = page.locator(".pen-hero-section");
+  const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
+  const persistentLink = persistentAction.getByRole("link", { name: /criar conta grátis/i });
+  const supportButton = page.locator("#wpp-icon-btn");
+  const toggle = navbar.locator(".pro-home-navbar-toggle");
+
+  await expect(navbar).toHaveCSS("position", "sticky");
+  await expect(persistentAction).toBeHidden();
+
+  const navbarHeight = await navbar.evaluate((element) => element.getBoundingClientRect().height);
+  const heroDocumentTop = await hero.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeVisible();
+  await expect(persistentLink).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+
+  const stickyBox = await navbar.boundingBox();
+  const actionBox = await persistentAction.boundingBox();
+  const scrolledNavbarHeight = await navbar.evaluate((element) => element.getBoundingClientRect().height);
+  const scrolledHeroDocumentTop = await hero.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+
+  expect(stickyBox).not.toBeNull();
+  expect(actionBox).not.toBeNull();
+  expect(stickyBox.y).toBe(0);
+  expect(scrolledNavbarHeight).toBe(navbarHeight);
+  expect(scrolledHeroDocumentTop).toBeCloseTo(heroDocumentTop, 0);
+  expect(actionBox.x).toBe(0);
+  expect(actionBox.width).toBe(390);
+  expect(actionBox.y + actionBox.height).toBeCloseTo(844, 0);
+  await expect(persistentAction).toHaveCSS("border-radius", "0px");
+
+  if (await supportButton.count()) {
+    const supportBox = await supportButton.boundingBox();
+
+    expect(supportBox).not.toBeNull();
+    expect(supportBox.y + supportBox.height).toBeLessThanOrEqual(actionBox.y - 8);
+  }
+
+  await toggle.click();
+  await expect(persistentAction).toBeHidden();
+  await toggle.click();
+  await expect(persistentAction).toBeVisible();
+
+  await page.locator(".pen-plan-card.is-free .pen-action-link").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeHidden();
+});
+
+test("Elementor home fixture uses the same conversion and persistent action contracts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?pagename=e2e-elementor-home");
+
+  const navbarWidget = page.locator(".elementor-widget-pro_navbar");
+  const navbar = navbarWidget.locator(".pro-site-navbar");
+  const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
+
+  await expect(navbarWidget).toBeVisible();
+  await expect(navbarWidget).toHaveCSS("position", "sticky");
+  await expect(navbar).toHaveCSS("flex-direction", "row");
+
+  const navbarBox = await navbar.boundingBox();
+  const logoBox = await navbar.locator(".pen-brand-logo").boundingBox();
+  const toggleBox = await navbar.locator(".pro-home-navbar-toggle").boundingBox();
+
+  expect(navbarBox).not.toBeNull();
+  expect(logoBox).not.toBeNull();
+  expect(toggleBox).not.toBeNull();
+  expect(navbarBox.height).toBeLessThanOrEqual(80);
+  expect(Math.abs(logoBox.y + logoBox.height / 2 - (toggleBox.y + toggleBox.height / 2))).toBeLessThanOrEqual(1);
+  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/treino/questoes",
+  );
+
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeVisible();
+  const persistentActionBox = await persistentAction.boundingBox();
+
+  expect(persistentActionBox).not.toBeNull();
+  expect(persistentActionBox.x).toBe(0);
+  expect(persistentActionBox.width).toBe(390);
+  expect(persistentActionBox.y + persistentActionBox.height).toBeCloseTo(844, 0);
+  await expect(persistentAction.getByRole("link", { name: /criar conta grátis/i })).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
 });
 
 test("content pages center the Gutenberg layout without centering text", async ({ page }) => {

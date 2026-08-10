@@ -217,6 +217,29 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	}
 
 	/**
+	 * Upgrade legacy home CTA settings without overriding explicit destinations.
+	 *
+	 * @param array|string $link Elementor link settings or URL.
+	 * @param string       $intent Conversion intent.
+	 * @return array|string
+	 */
+	protected function home_cta_link( $link, $intent ) {
+		return proenem_upgrade_home_cta_link( $link, $intent );
+	}
+
+	/**
+	 * Upgrade the legacy primary CTA label in persisted Elementor content.
+	 *
+	 * @param string $label Persisted label.
+	 * @return string
+	 */
+	protected function home_primary_cta_label( $label ) {
+		return esc_html__( 'Começar grátis', 'proenem-wordpress-theme' ) === $label
+			? esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' )
+			: $label;
+	}
+
+	/**
 	 * Render a small inline icon used by home cards.
 	 *
 	 * @param string $icon Icon slug.
@@ -329,8 +352,8 @@ class Proenem_Elementor_Home_Action_Bar_Widget extends Proenem_Elementor_Home_Wi
 	protected function register_controls(): void {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
 		$this->add_textarea_control( 'body', esc_html__( 'Texto de apoio', 'proenem-wordpress-theme' ), esc_html__( 'Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar. Você estuda com estratégia, não com mais horas.', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'primary_button_label', esc_html__( 'Botão primário', 'proenem-wordpress-theme' ), esc_html__( 'Começar grátis', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'primary_button_url', esc_html__( 'Link do botão primário', 'proenem-wordpress-theme' ), '#planos' );
+		$this->add_text_control( 'primary_button_label', esc_html__( 'Botão primário', 'proenem-wordpress-theme' ), esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ) );
+		$this->add_url_control( 'primary_button_url', esc_html__( 'Link do botão primário', 'proenem-wordpress-theme' ), proenem_get_home_cta_destination( 'signup' ) );
 		$this->end_controls_section();
 	}
 
@@ -343,7 +366,7 @@ class Proenem_Elementor_Home_Action_Bar_Widget extends Proenem_Elementor_Home_Wi
 				<p class="pro-home-hero-action-bar__support"><?php echo esc_html( $settings['body'] ?? '' ); ?></p>
 			</div>
 			<div class="pen-hero-action-bar__action pro-home-hero-action-bar__actions">
-				<?php $this->render_home_button( 'primary_button_url', $settings['primary_button_url'] ?? array(), $settings['primary_button_label'] ?? '', 'pen-button pen-button--primary pen-button--md' ); ?>
+				<?php $this->render_home_button( 'primary_button_url', $this->home_cta_link( $settings['primary_button_url'] ?? array(), 'signup' ), $this->home_primary_cta_label( $settings['primary_button_label'] ?? '' ), 'pen-button pen-button--primary pen-button--md' ); ?>
 			</div>
 		</aside>
 		<?php
@@ -413,8 +436,8 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 		$this->add_text_control( 'title', esc_html__( 'Título', 'proenem-wordpress-theme' ), esc_html__( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body_1', esc_html__( 'Texto 1', 'proenem-wordpress-theme' ), esc_html__( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body_2', esc_html__( 'Texto 2', 'proenem-wordpress-theme' ), esc_html__( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Começar grátis', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#planos' );
+		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ) );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), proenem_get_home_cta_destination( 'signup' ) );
 
 		$repeater = new \Elementor\Repeater();
 		$repeater->add_control(
@@ -520,7 +543,7 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 				<h2 id="pro-pillars-title"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2>
 				<p><?php echo esc_html( $settings['body_1'] ?? '' ); ?></p>
 				<p><?php echo esc_html( $settings['body_2'] ?? '' ); ?></p>
-				<?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--md' ); ?>
+				<?php $this->render_home_button( 'button_url', $this->home_cta_link( $settings['button_url'] ?? array(), 'signup' ), $this->home_primary_cta_label( $settings['button_label'] ?? '' ), 'pen-button pen-button--primary pen-button--md' ); ?>
 			</div>
 			<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 				<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -708,9 +731,9 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 		$this->add_text_control( 'statement_1', esc_html__( 'Frase final 1', 'proenem-wordpress-theme' ), esc_html__( 'O esforço, sozinho, não basta.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'statement_2', esc_html__( 'Frase final 2', 'proenem-wordpress-theme' ), esc_html__( 'É preciso', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'statement_emphasis', esc_html__( 'Destaque final', 'proenem-wordpress-theme' ), esc_html__( 'método e acompanhamento.', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Começar grátis', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_badge', esc_html__( 'Badge do botão', 'proenem-wordpress-theme' ), esc_html__( 'é gratuito', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#planos' );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), proenem_get_home_cta_destination( 'signup' ) );
 
 		$cards = new \Elementor\Repeater();
 		$cards->add_control(
@@ -822,7 +845,7 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 				<?php endforeach; ?>
 			</div>
 			<p class="pro-home-pain-section__statement"><span><?php echo esc_html( $settings['statement_1'] ?? '' ); ?></span><span><?php echo esc_html( $settings['statement_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['statement_emphasis'] ?? '' ); ?></strong></span></p>
-			<?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--md pro-home-pain-section__cta', $settings['button_badge'] ?? '' ); ?>
+			<?php $this->render_home_button( 'button_url', $this->home_cta_link( $settings['button_url'] ?? array(), 'signup' ), $this->home_primary_cta_label( $settings['button_label'] ?? '' ), 'pen-button pen-button--primary pen-button--md pro-home-pain-section__cta', $settings['button_badge'] ?? '' ); ?>
 			<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span><span class="pro-home-pain-section__shape pro-home-pain-section__shape--pink" aria-hidden="true"></span>
 		</section>
 		<?php
@@ -1175,7 +1198,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Explorar questões grátis', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_badge', esc_html__( 'Badge do botão', 'proenem-wordpress-theme' ), esc_html__( 'Sem criar conta', 'proenem-wordpress-theme' ) );
-		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), '#planos' );
+		$this->add_url_control( 'button_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), proenem_get_home_cta_destination( 'questions' ) );
 		$subjects = new \Elementor\Repeater();
 		$subjects->add_control(
 			'name',
@@ -1323,7 +1346,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 					<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ?? 'pink' ); ?>" href="<?php echo esc_url( $subject['url']['url'] ?? $settings['button_url']['url'] ?? '#planos' ); ?>" target="_blank" rel="noopener noreferrer"><span class="pro-home-subject-card__icon" aria-hidden="true"><?php echo $this->subject_icon_svg( $subject['icon'] ?? 'portuguese' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-subject-card__body"><strong><?php echo esc_html( $subject['name'] ?? '' ); ?></strong><small><?php echo esc_html( $subject['category'] ?? '' ); ?></small><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ?? '' ); ?></span><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ?? '' ); ?></span></span><span class="pro-home-subject-card__arrow" aria-hidden="true">→</span></a>
 				<?php endforeach; ?>
 			</div>
-			<?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta', $settings['button_badge'] ?? '' ); ?>
+			<?php $this->render_home_button( 'button_url', $this->home_cta_link( $settings['button_url'] ?? array(), 'questions' ), $settings['button_label'] ?? '', 'pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta', $settings['button_badge'] ?? '' ); ?>
 			<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $this->home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true">
 		</section>
 		<?php
@@ -1476,7 +1499,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						'summary'       => esc_html__( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' ),
 						'features'      => esc_html__( "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo", 'proenem-wordpress-theme' ),
 						'button_label'  => esc_html__( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' ),
-						'button_url'    => array( 'url' => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+						'button_url'    => array( 'url' => proenem_get_home_cta_destination( 'advanced' ) ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1488,9 +1511,9 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 	protected function render(): void {
 		$settings                                    = $this->get_settings_for_display();
 		$default_plan_urls                           = array(
-			esc_html__( 'Grátis', 'proenem-wordpress-theme' )       => array( 'url' => 'https://estude.proenem.com.br/' ),
+			esc_html__( 'Grátis', 'proenem-wordpress-theme' )       => array( 'url' => proenem_get_home_cta_destination( 'signup' ) ),
 			esc_html__( 'Método PRO', 'proenem-wordpress-theme' )  => array( 'url' => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
-			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array( 'url' => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761' ),
+			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array( 'url' => proenem_get_home_cta_destination( 'advanced' ) ),
 		);
 		$default_plan_pricing                        = array(
 			esc_html__( 'Grátis', 'proenem-wordpress-theme' ) => array(
@@ -1574,6 +1597,10 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						? $plan['button_url']
 						: ( $default_plan_urls[ $plan_name ] ?? $settings['button_url'] ?? array() );
 					$button_label = $plan['button_label'] ?? $settings['button_label'] ?? '';
+
+					if ( $advanced_plan_name === $plan_name ) {
+						$button_url = proenem_upgrade_home_cta_link( $button_url, 'advanced' );
+					}
 
 					if ( $is_legacy_advanced_plan && in_array( $button_label, array( esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ), esc_html__( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ) ), true ) ) {
 						$button_label = esc_html__( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' );

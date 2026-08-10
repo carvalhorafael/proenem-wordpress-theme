@@ -176,7 +176,7 @@ $plans = array(
 		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
 		'free'          => true,
 		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-		'button_url'    => 'https://estude.proenem.com.br/',
+		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
 		'features'      => array(
 			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
 			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
@@ -208,7 +208,7 @@ $plans = array(
 		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 		'summary'      => __( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' ),
 		'button_label' => __( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' ),
-		'button_url'   => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
+		'button_url'   => proenem_get_home_cta_destination( 'advanced' ),
 		'features'     => array(
 			__( 'Tudo do PRO e mais...', 'proenem-wordpress-theme' ),
 			__( 'Aulas ao vivo', 'proenem-wordpress-theme' ),
@@ -335,6 +335,7 @@ $subjects = array(
 			'context'    => 'home',
 		)
 	);
+	proenem_render_mobile_persistent_action();
 	?>
 
 	<section class="pen-hero-section" aria-labelledby="pro-home-title">
@@ -359,8 +360,8 @@ $subjects = array(
 			</p>
 		</div>
 		<div class="pen-hero-action-bar__action pro-home-hero-action-bar__actions">
-			<a class="pen-button pen-button--primary pen-button--md" href="#planos">
-				<?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?>
+			<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
+				<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
 				<span class="pen-button__arrow" aria-hidden="true">-></span>
 			</a>
 		</div>
@@ -382,7 +383,7 @@ $subjects = array(
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
 			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-			<a class="pen-button pen-button--primary pen-button--md" href="#planos"><?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>"><?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -563,8 +564,8 @@ $subjects = array(
 				<strong><?php esc_html_e( 'método e acompanhamento.', 'proenem-wordpress-theme' ); ?></strong>
 			</span>
 		</p>
-		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="#planos">
-			<?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?>
+		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
+			<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
 			<span class="pen-button__badge"><?php esc_html_e( 'é gratuito', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span>
@@ -784,7 +785,7 @@ $subjects = array(
 				</a>
 			<?php endforeach; ?>
 		</div>
-		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="#planos">
+		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'questions' ) ); ?>">
 			<?php esc_html_e( 'Explorar questões grátis', 'proenem-wordpress-theme' ); ?>
 			<span class="pen-button__badge"><?php esc_html_e( 'Sem criar conta', 'proenem-wordpress-theme' ); ?></span>
 		</a>
