@@ -144,3 +144,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: `pro-mobile-persistent-action` compoe o botao publicado dentro de uma barra fixa de largura total no rodape mobile, exibida apos 600 px, com safe area e reposicionamento temporario do suporte flutuante enquanto a barra estiver visivel.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#38`; tema `carvalhorafael/proenem-wordpress-theme#110`.
 - Criterio de remocao: atualizar `@carvalhorafael/proenem-css` e `@carvalhorafael/proenem-web`, migrar para o pattern publicado e remover markup, CSS e JavaScript locais da barra persistente.
+
+## 2026-08-10: Prova social verificavel na home
+
+- Contexto: a faixa de aprovados mantinha imagens e instituicoes sem identificacao individual verificavel, enquanto o claim de mais de 40 mil aprovados nao possuia fonte, periodo e metodologia confirmados.
+- Decisao: o tema renderiza a faixa somente com registros que o plugin Testimonials declare elegiveis para a home; sem registros elegiveis, a secao inteira permanece ausente.
+- Persistencia: `docs/elementor/proenem-home.json` nao inclui mais fotos anonimas nem configuracao editorial duplicada de logos no widget. O renderer compartilhado preserva as seis logos institucionais como assets de apresentacao, e `scripts/sync-home-proof.php` mantem template e paginas Elementor alinhados.
+- Responsabilidade: identificacao, curso, instituicao, ano, evidencia, verificacao, consentimento e selecao editorial pertencem ao plugin, para sobreviver a trocas de tema.
+- Excecao editorial: por orientacao explicita, o claim `+ de 40.000 aprovados em universidades publicas` e o apoio original permanecem na faixa. A origem, o periodo e a metodologia do numero continuam sem documentacao no repositorio e precisam ser confirmados para satisfazer integralmente a issue #111.
+- Adaptacao local: as classes `pro-home-proof-students`, `pro-home-proof-student` e `pro-home-proof-student__caption` complementam temporariamente o pattern publicado com grade variavel e identificacao individual legivel.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#39`; tema `carvalhorafael/proenem-wordpress-theme#132`.
+- Criterio de remocao: atualizar os pacotes publicados, adotar as classes compartilhadas de figura e legenda e remover os seletores locais quando o design system cobrir o contrato.

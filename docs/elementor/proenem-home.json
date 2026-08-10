@@ -152,88 +152,9 @@
           "widgetType": "pro_home_proof",
           "isInner": false,
           "settings": {
-            "student_images": [
-              {
-                "_id": "student01",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
-                }
-              },
-              {
-                "_id": "student02",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-2.webp"
-                }
-              },
-              {
-                "_id": "student03",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
-                }
-              },
-              {
-                "_id": "student04",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
-                }
-              },
-              {
-                "_id": "student05",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
-                }
-              },
-              {
-                "_id": "student06",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-6.webp"
-                }
-              }
-            ],
-            "logos": [
-              {
-                "_id": "logo01",
-                "name": "UFRJ",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrj.png"
-                }
-              },
-              {
-                "_id": "logo02",
-                "name": "UFRGS",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrgs.png"
-                }
-              },
-              {
-                "_id": "logo03",
-                "name": "Unicamp",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unicamp.png"
-                }
-              },
-              {
-                "_id": "logo04",
-                "name": "UERJ",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-uerj.png"
-                }
-              },
-              {
-                "_id": "logo05",
-                "name": "USP",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-usp.png"
-                }
-              },
-              {
-                "_id": "logo06",
-                "name": "Unifesp",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unifesp.png"
-                }
-              }
-            ]
+            "title": "+ de 40.000 aprovados em universidades públicas",
+            "support": "Alunos reais, aprovados em algumas das universidades mais concorridas do país.",
+            "testimonial_ids": []
           },
           "elements": []
         },
@@ -492,6 +413,7 @@
           "widgetType": "pro_home_testimonials",
           "isInner": false,
           "settings": {
+            "body": "Conheça histórias de alunos que estudaram com a Proenem.",
             "more_label": "Ver mais",
             "more_url": {
               "url": "https://aprovados.proenem.com.br/",
