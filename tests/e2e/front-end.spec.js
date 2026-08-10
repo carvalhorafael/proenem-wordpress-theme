@@ -75,18 +75,35 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute("href", "https://estude.proenem.com.br/");
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 3, name: "Método PRO" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
   const methodPlan = page.locator(".pen-plan-card").nth(1);
-  const medicinePlan = page.locator(".pen-plan-card").nth(2);
+  const advancedPlan = page.locator(".pen-plan-card").nth(2);
+  await expect(methodPlan).toContainText("Tudo do Grátis e mais...");
+  await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
+  await expect(methodPlan).toContainText("2 correções de redação mensais");
+  await expect(methodPlan).toContainText("Aulas gravadas com os melhores professores");
+  await expect(methodPlan).toContainText("PDFs completos");
+  await expect(methodPlan).toContainText("Simulados com nota TRI");
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
   await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
-  await expect(medicinePlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*39,90/);
-  await expect(medicinePlan).not.toContainText("Plano anual. Total parcelado: R$ 478,80.");
-  await expect(medicinePlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
-  await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
-  await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
+  await expect(advancedPlan).toContainText("Tudo do PRO e mais...");
+  await expect(advancedPlan).toContainText("Aulas ao vivo");
+  await expect(advancedPlan).toContainText("Revisões ao vivo");
+  await expect(advancedPlan).toContainText("Mentoria em grupo");
+  await expect(advancedPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*39,90/);
+  await expect(advancedPlan).not.toContainText("Plano anual. Total parcelado: R$ 478,80.");
+  await expect(advancedPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
+  await expect(page.getByRole("link", { name: /^quero o método pro$/i })).toHaveAttribute(
+    "href",
+    /pay\.hotmart\.com\/W106752534O/,
+  );
+  await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveAttribute(
+    "href",
+    /pay\.hotmart\.com\/X99453521F/,
+  );
   await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
     "pode cancelar dentro desse prazo e usar a garantia",
   );

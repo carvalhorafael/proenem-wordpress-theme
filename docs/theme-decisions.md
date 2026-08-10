@@ -127,3 +127,10 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: as classes `pro-home-plan-card__price`, `pro-home-plan-card__price-amount` e `pro-home-plan-card__guarantee` complementam temporariamente `pen-plan-card`.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#37`; tema `carvalhorafael/proenem-wordpress-theme#128`.
 - Criterio de remocao: atualizar os pacotes publicados, migrar template, widget e JSON para o contrato compartilhado e remover as classes e fallbacks locais.
+
+## 2026-08-10: Metodo PRO Avancado substitui a oferta de Medicina
+
+- Contexto: a definicao comercial provisoria remove o plano Pro Medicina da home e organiza as ofertas pagas como Metodo PRO e Metodo PRO Avancado.
+- Decisao: manter a mesma hierarquia visual e o contrato de preco existente, alterando apenas nome, resumo, beneficios, CTA e textos relacionados. O plano avancado nao recebe identidade visual medica.
+- Paridade: template PHP, defaults e compatibilidade do widget Elementor, JSON de importacao e conteudo persistido devem exibir o mesmo contrato editorial.
+- Compatibilidade: o renderer atualiza apenas valores persistidos que ainda sejam identicos ao contrato antigo, sem sobrescrever customizacoes editoriais posteriores.
