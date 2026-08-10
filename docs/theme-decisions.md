@@ -155,3 +155,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: as classes `pro-home-proof-students`, `pro-home-proof-student` e `pro-home-proof-student__caption` complementam temporariamente o pattern publicado com grade variavel e identificacao individual legivel.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#39`; tema `carvalhorafael/proenem-wordpress-theme#132`.
 - Criterio de remocao: atualizar os pacotes publicados, adotar as classes compartilhadas de figura e legenda e remover os seletores locais quando o design system cobrir o contrato.
+
+## 2026-08-10: Depoimentos reais no carrossel da home
+
+- Contexto: o carrossel inferior da home mantinha quatro relatos, nomes, descricoes e imagens ficticios duplicados no template PHP e no widget Elementor.
+- Decisao: o carrossel consome somente registros que o plugin Testimonials declare elegiveis para a home e que possuam relato ou excerto nao vazio. Sem registros elegiveis, a secao inteira permanece ausente.
+- Fonte canonica: publicacao, imagem destacada, nome, curso, instituicao, ano, evidencia, verificacao, consentimento, selecao editorial e relato pertencem ao CPT do plugin. O tema limita, ordena e apresenta os registros.
+- Elementor: o widget permite selecionar IDs elegiveis ou, sem selecao, usa os registros mais recentes. `scripts/sync-home-testimonials.php` remove os repeaters legados das paginas persistidas e preserva a copia e o link editorial.
+- Fallbacks: o ano e opcional e so aparece quando preenchido; curso e instituicao sao obrigatorios pelo contrato do plugin; nenhum texto de aluno e inventado pelo tema.
+- Testes: PHPUnit protege a ausencia de fallback ficticio e o modelo Elementor; Playwright protege os dois estados validos, os controles do carrossel e a ausencia de overflow.

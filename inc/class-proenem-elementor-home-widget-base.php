@@ -1574,81 +1574,41 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), proenem_normalize_home_proof_copy( '', 'testimonials' ) );
 		$this->add_text_control( 'more_label', esc_html__( 'Texto do botão', 'proenem-wordpress-theme' ), esc_html__( 'Ver mais', 'proenem-wordpress-theme' ) );
 		$this->add_url_control( 'more_url', esc_html__( 'Link do botão', 'proenem-wordpress-theme' ), 'https://aprovados.proenem.com.br/' );
-		$items = new \Elementor\Repeater();
-		$items->add_control(
-			'quote',
-			array(
-				'label' => esc_html__( 'Depoimento', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXTAREA,
-			)
-		);
-		$items->add_control(
-			'name',
-			array(
-				'label' => esc_html__( 'Nome', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXT,
-			)
-		);
-		$items->add_control(
-			'role',
-			array(
-				'label' => esc_html__( 'Descrição', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXT,
-			)
-		);
-		$items->add_control(
-			'image',
-			array(
-				'label' => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::MEDIA,
-			)
-		);
 		$this->add_control(
-			'testimonials',
+			'testimonial_ids',
 			array(
-				'label'       => esc_html__( 'Depoimentos', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::REPEATER,
-				'fields'      => $items->get_controls(),
-				'default'     => array(
-					array(
-						'quote' => esc_html__( 'O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.', 'proenem-wordpress-theme' ),
-						'name'  => esc_html__( 'Mariana Costa', 'proenem-wordpress-theme' ),
-						'role'  => esc_html__( 'Aprovada em Medicina', 'proenem-wordpress-theme' ),
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-1.webp' ) ),
-					),
-					array(
-						'quote' => esc_html__( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
-						'name'  => esc_html__( 'Lucas Almeida', 'proenem-wordpress-theme' ),
-						'role'  => esc_html__( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-3.webp' ) ),
-					),
-					array(
-						'quote' => esc_html__( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
-						'name'  => esc_html__( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
-						'role'  => esc_html__( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-						'image' => array( 'url' => $this->home_asset_uri( 'proof-students-4.webp' ) ),
-					),
-				),
-				'title_field' => '{{{ name }}}',
+				'description' => esc_html__( 'Selecione somente depoimentos verificados, autorizados e com relato. Sem seleção, os registros elegíveis mais recentes são usados.', 'proenem-wordpress-theme' ),
+				'label'       => esc_html__( 'Depoimentos verificados', 'proenem-wordpress-theme' ),
+				'multiple'    => true,
+				'options'     => proenem_get_home_testimonial_options(),
+				'type'        => \Elementor\Controls_Manager::SELECT2,
 			)
 		);
 		$this->end_controls_section();
 	}
 
 	protected function render(): void {
-		$settings = $this->get_settings_for_display();
+		$settings     = $this->get_settings_for_display();
+		$testimonials = proenem_get_home_testimonials( $settings['testimonial_ids'] ?? array() );
+
+		if ( empty( $testimonials ) ) {
+			return;
+		}
+
 		$this->open_home_wrapper();
-		?>
-		<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
-			<div class="pro-home-testimonials__header"><span class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-testimonials-title"><span><?php echo esc_html( $settings['title_line'] ?? '' ); ?></span><strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></h2><p><?php echo esc_html( proenem_normalize_home_proof_copy( $settings['body'] ?? '', 'testimonials' ) ); ?></p></div>
-			<div class="pro-home-testimonials__viewport"><div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
-			<?php
-			foreach ( (array) ( $settings['testimonials'] ?? array() ) as $index => $testimonial ) :
-				?>
-				<article class="pro-home-testimonial-card<?php echo 1 === $index ? ' is-active' : ''; ?>" data-pro-home-testimonial-card><div class="pro-home-testimonial-card__quote"><span aria-hidden="true">“</span><p><?php echo esc_html( $testimonial['quote'] ?? '' ); ?></p></div><footer><img src="<?php echo esc_url( $this->media_url( $testimonial['image'] ?? array(), $images[ $index ] ?? 'proof-students-1.webp' ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ?? '' ); ?>"><span><strong><?php echo esc_html( $testimonial['name'] ?? '' ); ?></strong><small><?php echo esc_html( $testimonial['role'] ?? '' ); ?></small></span></footer></article><?php endforeach; ?></div></div>
-			<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>"><button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button><button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button><a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="<?php echo esc_url( $settings['more_url']['url'] ?? 'https://aprovados.proenem.com.br/' ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $settings['more_label'] ?? esc_html__( 'Ver mais', 'proenem-wordpress-theme' ) ); ?></a></div>
-		</section>
-		<?php
+		proenem_render_home_testimonials_section(
+			$testimonials,
+			array(
+				'body'           => $settings['body'] ?? '',
+				'eyebrow'        => $settings['eyebrow'] ?? '',
+				'heading_id'     => 'pro-testimonials-title-' . $this->get_id(),
+				'more_label'     => $settings['more_label'] ?? '',
+				'more_url'       => $settings['more_url']['url'] ?? 'https://aprovados.proenem.com.br/',
+				'section_id'     => 'depoimentos',
+				'title_emphasis' => $settings['title_emphasis'] ?? '',
+				'title_line'     => $settings['title_line'] ?? '',
+			)
+		);
 		$this->close_home_wrapper();
 	}
 }

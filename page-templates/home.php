@@ -218,33 +218,6 @@ $plans = array(
 	),
 );
 
-$testimonials = array(
-	array(
-		'quote' => __( 'O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Mariana Costa', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovada em Medicina', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-1.webp',
-	),
-	array(
-		'quote' => __( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Lucas Almeida', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-3.webp',
-	),
-	array(
-		'quote' => __( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-4.webp',
-	),
-	array(
-		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Amanda Alves', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-5.webp',
-	),
-);
-
 $faq_items = array(
 	array(
 		'question' => __( 'O que é o Método PRO?', 'proenem-wordpress-theme' ),
@@ -772,40 +745,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
-		<div class="pro-home-testimonials__header">
-			<span class="pen-section-pill"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></span>
-			<h2 id="pro-testimonials-title">
-				<span><?php esc_html_e( 'Quem estudou com método,', 'proenem-wordpress-theme' ); ?></span>
-				<strong><?php esc_html_e( 'chegou na vaga.', 'proenem-wordpress-theme' ); ?></strong>
-			</h2>
-			<p><?php echo esc_html( proenem_normalize_home_proof_copy( '', 'testimonials' ) ); ?></p>
-		</div>
-		<div class="pro-home-testimonials__viewport">
-			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
-				<?php foreach ( $testimonials as $testimonial_index => $testimonial ) : ?>
-					<article class="pro-home-testimonial-card<?php echo 1 === $testimonial_index ? ' is-active' : ''; ?>" data-pro-home-testimonial-card>
-						<div class="pro-home-testimonial-card__quote">
-							<span aria-hidden="true">“</span>
-							<p><?php echo esc_html( $testimonial['quote'] ); ?></p>
-						</div>
-						<footer>
-							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>"<?php echo $home_image_attributes( $testimonial['image'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $testimonial['image'], '4.35rem' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-							<span>
-								<strong><?php echo esc_html( $testimonial['name'] ); ?></strong>
-								<small><?php echo esc_html( $testimonial['role'] ); ?></small>
-							</span>
-						</footer>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		</div>
-		<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>">
-			<button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button>
-			<button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button>
-			<a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="https://aprovados.proenem.com.br/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ver mais', 'proenem-wordpress-theme' ); ?></a>
-		</div>
-	</section>
+	<?php proenem_render_home_testimonials_section( proenem_get_home_testimonials() ); ?>
 
 	<section class="pen-audience-section pro-home-school-section" aria-labelledby="pro-school-title">
 		<div class="pro-home-school-section__marquee" aria-hidden="true">

@@ -137,12 +137,19 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 */
 	public function test_home_proof_requires_the_verified_plugin_contract() {
 		$this->assertSame( array(), proenem_get_home_proof_testimonials() );
+		$this->assertSame( array(), proenem_get_home_testimonials() );
 		$this->assertSame( '+ de 40.000 aprovados em universidades públicas', proenem_normalize_home_proof_copy( 'Aprovações verificadas de alunos da Proenem', 'title' ) );
 		$this->assertSame( 'Conheça histórias de alunos que estudaram com a Proenem.', proenem_normalize_home_proof_copy( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'testimonials' ) );
 		$this->assertSame( 'Conheça histórias de alunos que estudaram com a Proenem.', proenem_normalize_home_proof_copy( 'Mais de 40 mil alunos já foram aprovados com a ProEnem. Conheça algumas histórias.', 'testimonials' ) );
 
 		ob_start();
 		proenem_render_home_proof_section( array() );
+		$output = ob_get_clean();
+
+		$this->assertSame( '', $output );
+
+		ob_start();
+		proenem_render_home_testimonials_section( array() );
 		$output = ob_get_clean();
 
 		$this->assertSame( '', $output );
@@ -174,6 +181,32 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertArrayNotHasKey( 'logos', $proof['settings'] );
 		$this->assertSame( array(), $proof['settings']['testimonial_ids'] );
 		$this->assertSame( '+ de 40.000 aprovados em universidades públicas', $proof['settings']['title'] );
+	}
+
+	/**
+	 * Elementor testimonial data should come from eligible plugin records.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_home_model_uses_the_verified_testimonials_contract() {
+		$model        = json_decode( (string) file_get_contents( PROENEM_THEME_DIR . '/docs/elementor/proenem-home.json' ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$stack        = $model['content'] ?? array();
+		$testimonials = null;
+
+		while ( $stack ) {
+			$element = array_pop( $stack );
+
+			if ( 'pro_home_testimonials' === ( $element['widgetType'] ?? '' ) ) {
+				$testimonials = $element;
+				break;
+			}
+
+			$stack = array_merge( $stack, $element['elements'] ?? array() );
+		}
+
+		$this->assertIsArray( $testimonials );
+		$this->assertArrayNotHasKey( 'testimonials', $testimonials['settings'] );
+		$this->assertSame( array(), $testimonials['settings']['testimonial_ids'] );
 	}
 
 	/**
