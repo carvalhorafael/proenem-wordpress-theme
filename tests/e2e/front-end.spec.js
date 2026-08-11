@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const expectHomeProofContract = async (page) => {
@@ -51,6 +52,49 @@ const expectHomeTestimonialsContract = async (page) => {
   }
 
   return true;
+};
+
+const expectMinimumTouchTargets = async (targets, minimumSize = 44) => {
+  const boxes = await targets.evaluateAll((elements) =>
+    elements.map((element) => {
+      const bounds = element.getBoundingClientRect();
+
+      return {
+        height: bounds.height,
+        label: element.getAttribute("aria-label") || element.textContent.trim(),
+        width: bounds.width,
+        x: bounds.x,
+        y: bounds.y,
+      };
+    }),
+  );
+
+  expect(boxes.length).toBeGreaterThan(0);
+
+  for (const box of boxes) {
+    expect(box.label).not.toBe("");
+    expect(box.width).toBeGreaterThanOrEqual(minimumSize);
+    expect(box.height).toBeGreaterThanOrEqual(minimumSize);
+  }
+
+  return boxes;
+};
+
+const expectTargetsNotToOverlap = (boxes) => {
+  for (const [index, current] of boxes.entries()) {
+    for (const next of boxes.slice(index + 1)) {
+      const overlapWidth = Math.max(
+        0,
+        Math.min(current.x + current.width, next.x + next.width) - Math.max(current.x, next.x),
+      );
+      const overlapHeight = Math.max(
+        0,
+        Math.min(current.y + current.height, next.y + next.height) - Math.max(current.y, next.y),
+      );
+
+      expect(overlapWidth * overlapHeight).toBeLessThanOrEqual(0.5);
+    }
+  }
 };
 
 const installNavbarSubmenuFixture = async (page) => {
@@ -480,6 +524,12 @@ test("front page pillar controls move only the cards without shifting the sectio
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await previousButton.click();
   await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await nextButton.focus();
+  await nextButton.press("Enter");
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await previousButton.focus();
+  await previousButton.press("Enter");
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
 
   const heightSamples = await section.evaluate(async (element) => {
     const samples = [element.getBoundingClientRect().height];
@@ -702,8 +752,108 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   await expect(previousButton).toBeEnabled();
   await expect(page.locator("[data-pro-home-platform-title]")).toHaveText(activeTitle);
 
+  const scrollPositionBeforeKeyboard = await tabs.evaluate((element) => element.scrollLeft);
+
+  await previousButton.focus();
+  await previousButton.press("Enter");
+  await expect.poll(() => tabs.evaluate((element) => element.scrollLeft)).toBeLessThan(
+    scrollPositionBeforeKeyboard,
+  );
+
   await page.setViewportSize({ width: 1024, height: 844 });
   await expect(controls).toBeHidden();
+});
+
+test("front page mobile priority actions keep stable 44px touch targets", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const footer = page.locator(".pen-site-footer");
+
+  await footer.evaluate((element) => {
+    const links = element.querySelector(".pen-site-footer__links");
+
+    if (links && !links.querySelector(".pen-site-footer__column a")) {
+      links.insertAdjacentHTML(
+        "beforeend",
+        '<section class="pen-site-footer__column"><ul class="pen-site-footer__menu"><li><a href="#e2e-footer-class">Turma E2E</a></li></ul></section>',
+      );
+    }
+
+    if (!element.querySelector(".pen-site-footer__legal-menu a")) {
+      element.querySelector(".pen-site-footer__meta")?.insertAdjacentHTML(
+        "beforebegin",
+        '<nav class="pen-site-footer__legal"><ul class="pen-site-footer__legal-menu"><li><a href="#e2e-footer-legal">Termos E2E</a></li></ul></nav>',
+      );
+    }
+
+    if (!element.querySelector(".pen-site-footer__social a")) {
+      element.querySelector(".pen-site-footer__top-widgets")?.insertAdjacentHTML(
+        "beforeend",
+        '<div class="pen-site-footer__social"><a href="#e2e-footer-social" aria-label="Instagram da Proenem"><span aria-hidden="true">◎</span></a></div>',
+      );
+    }
+  });
+
+  const targetGroups = [
+    page.locator(".pro-home-pillars-control button"),
+    page.locator(".pro-home-platform-tabs__controls button"),
+    footer.locator(
+      ".pen-site-footer__column a, .pen-site-footer__legal-menu a, .pen-site-footer__social a, .pen-site-footer__copyright",
+    ),
+  ];
+  const testimonialTargets = page.locator(
+    ".pro-home-testimonials__controls button, .pro-home-testimonials__controls a",
+  );
+
+  if ((await testimonialTargets.count()) > 0) {
+    targetGroups.push(testimonialTargets);
+  }
+
+  for (const targets of targetGroups) {
+    expectTargetsNotToOverlap(await expectMinimumTouchTargets(targets));
+  }
+
+  const focusTargets = [
+    page.locator("[data-pro-home-pillars-next]"),
+    page.locator(".pro-home-platform-tabs__controls button:not(:disabled)").first(),
+    footer.locator(".pen-site-footer__column a").first(),
+  ];
+
+  if ((await testimonialTargets.count()) > 0) {
+    focusTargets.push(testimonialTargets.first());
+  }
+
+  for (const target of focusTargets) {
+    await target.scrollIntoViewIfNeeded();
+
+    const beforeFocus = await target.boundingBox();
+
+    await target.focus();
+    await expect(target).toBeFocused();
+    await expect(target).toHaveCSS("outline-style", "solid");
+
+    const afterFocus = await target.boundingBox();
+
+    expect(beforeFocus).not.toBeNull();
+    expect(afterFocus).not.toBeNull();
+    expect(afterFocus).toEqual(beforeFocus);
+  }
+
+  const accessibilityScan = await new AxeBuilder({ page })
+    .include(
+      ".pen-pillars-section, .pen-platform-showcase, .pro-home-testimonials, .pen-site-footer",
+    )
+    .analyze();
+
+  expect(
+    accessibilityScan.violations.map(({ id, nodes }) => ({
+      id,
+      targets: nodes.map((node) => node.target),
+    })),
+  ).toEqual([]);
 });
 
 test("front page platform keeps benefit lists informational across every tab", async ({ page }) => {

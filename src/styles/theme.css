@@ -2595,7 +2595,14 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pen-site-footer__column a:hover,
 .pen-site-footer__column a:focus-visible {
-  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+.pen-site-footer__column a:hover::after,
+.pen-site-footer__column a:focus-visible::after {
+  transform: none;
 }
 
 .pen-site-footer__legal,
@@ -2629,7 +2636,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pen-site-footer__legal-menu a:hover,
 .pen-site-footer__legal-menu a:focus-visible {
   color: var(--pen-color-surface);
-  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+.pen-site-footer a:focus-visible,
+.pen-site-footer button:focus-visible {
+  outline: 3px solid var(--pen-color-surface);
+  outline-offset: 3px;
 }
 
 .pen-site-footer__meta {
@@ -3149,9 +3164,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   min-height: clamp(3.9rem, 5vw, 4.65rem);
   padding: 0.85rem clamp(0.95rem, 1.8vw, 1.25rem);
   text-align: left;
-  transition:
-    background-color 160ms ease,
-    font-weight 160ms ease;
+  transition: background-color 160ms ease;
   width: 100%;
 }
 
@@ -3162,7 +3175,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pro-home-platform-tab.is-active {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .pro-home .pro-home-platform-tab__icon,
@@ -3952,6 +3965,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   scrollbar-width: none;
 }
 
+.pro-home .pro-home-testimonials__track:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 3px;
+}
+
 .pro-home .pro-home-testimonials__track::-webkit-scrollbar {
   display: none;
 }
@@ -4056,16 +4074,19 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   height: 3rem;
   justify-content: center;
   line-height: 1;
-  transition:
-    box-shadow 160ms ease,
-    transform 160ms ease;
+  transition: box-shadow 160ms ease;
   width: 6.2rem;
 }
 
 .pro-home .pro-home-testimonials__controls button:hover,
 .pro-home .pro-home-testimonials__controls button:focus-visible {
   box-shadow: 1px 1px 0 var(--pen-color-ink);
-  transform: translate(2px, 2px);
+  transform: none;
+}
+
+.pro-home .pro-home-testimonials__controls button:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 3px;
 }
 
 .pro-home .pro-home-testimonials__more {
@@ -4682,7 +4703,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   border-radius: var(--pen-radius-pill);
   display: flex;
   gap: 0.8rem;
-  height: 1.5rem;
+  box-sizing: border-box;
+  min-height: 2.75rem;
   justify-content: center;
   left: 8%;
   padding-inline: 0.5rem;
@@ -4700,11 +4722,17 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  height: 1.5rem;
+  height: 2.75rem;
   justify-content: center;
   line-height: 1;
   padding: 0;
-  width: 1.5rem;
+  width: 2.75rem;
+}
+
+.pro-home .pro-home-pillars-control button:focus-visible,
+.pro-home .pro-home-platform-tabs__controls button:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 2px;
 }
 
 .pro-home .pro-home-pillars-control span {
@@ -5244,7 +5272,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pro-home-platform-tabs__controls button {
-    height: 2rem;
+    height: 2.75rem;
     width: 2.75rem;
   }
 
@@ -5816,6 +5844,23 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     align-items: flex-start;
     display: grid;
     gap: 0.75rem;
+  }
+
+  .pen-site-footer__column a,
+  .pen-site-footer__legal-menu a,
+  .pen-site-footer__social a,
+  .pen-site-footer__social button,
+  .pen-site-footer__copyright {
+    align-items: center;
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+
+  .pen-site-footer__social a,
+  .pen-site-footer__social button {
+    justify-content: center;
+    min-width: 2.75rem;
   }
 
   .pen-site-footer__meta {

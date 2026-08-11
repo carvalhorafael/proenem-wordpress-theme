@@ -171,3 +171,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: publicar o limiar arredondado `Mais de 60 mil questoes`, sustentado pelo banco publico com 65.461 registros em 2026-08-10, e remover dos cards todas as contagens exatas de questoes e aulas.
 - Responsabilidade: os cards permanecem como atalhos editoriais com as URLs aprovadas; o tema nao passa a calcular nem sincronizar dados volateis do catalogo da plataforma.
 - Persistencia: `docs/home-question-bank.md` registra a fonte e a regra de atualizacao, enquanto `scripts/sync-home-question-bank.php` atualiza a copy e remove metadados legados das paginas Elementor persistidas.
+
+## 2026-08-11: Areas de toque moveis da home
+
+- Contexto: a validacao da home em 390x844 encontrou controles e links prioritarios menores que 44x44 CSS px nos pilares, na paginacao movel da plataforma e no rodape.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` publica os controles de `pen-pillars-slider__control` com 36x36 px e nao garante altura minima para as acoes de `pen-site-footer`.
+- Decisao: complementar localmente os contratos em `src/styles/theme.css`, preservando icones compactos dentro de alvos de pelo menos 44x44 px e usando foco visivel sem alteracao de geometria.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#114`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
+- Criterio de remocao: atualizar os pacotes para a versao que resolver a issue do design system, remover os seletores locais de tamanho/foco e confirmar novamente a cobertura E2E em 390x844.
