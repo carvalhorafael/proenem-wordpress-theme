@@ -118,12 +118,15 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
   await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
   await expect(page.locator(".pro-home-platform-guard strong")).toHaveText("o próximo passo.");
+  await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
+  await expect(page.getByText("+60 mil questões", { exact: true })).toBeVisible();
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
   await expect(page.getByText(/comece grátis, sem cartão.*7 dias de garantia/i)).toBeVisible();
   await expect(page.locator(".pen-plan-card")).toHaveCount(3);
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
+  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Banco de +60 mil questões");
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute(
     "href",
@@ -278,6 +281,8 @@ test("Elementor home fixture uses the same conversion and persistent action cont
     "href",
     "https://estude.proenem.com.br/treino/questoes",
   );
+  await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
+  await expect(page.locator(".pro-home-subject-card__meta")).toHaveCount(0);
   await expectHomeProofContract(page);
   await expectHomeTestimonialsContract(page);
 
@@ -800,23 +805,34 @@ test("front page subject icons turn yellow only on hover or focus", async ({ pag
     "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa",
     "https://estude.proenem.com.br/treino/questoes/s/linguagens/a",
   ];
-  const counts = [
-    ["1524 questões", "64 aulas"],
-    ["65381 questões", "64 aulas"],
-    ["8735 questões", "64 aulas"],
-    ["3129 questões", "64 aulas"],
-    ["11458 questões", "32 aulas"],
-    ["21457 questões", "64 aulas"],
-  ];
-
   await expect(cards).toHaveCount(6);
+  await expect(cards.locator(".pro-home-subject-card__meta")).toHaveCount(0);
 
   for (const [index, icon] of (await icons.all()).entries()) {
+    const card = cards.nth(index);
+
     await expect(icon).toHaveCSS("background-color", "rgb(250, 157, 205)");
-    await expect(cards.nth(index)).toHaveAttribute("href", destinations[index]);
-    await expect(cards.nth(index)).toHaveAttribute("target", "_blank");
-    await expect(cards.nth(index)).toHaveAttribute("rel", "noopener noreferrer");
-    await expect(cards.nth(index).locator(".pro-home-subject-card__meta")).toHaveText(counts[index]);
+    await expect(card).toHaveAttribute("href", destinations[index]);
+    await expect(card).toHaveAttribute("target", "_blank");
+    await expect(card).toHaveAttribute("rel", "noopener noreferrer");
+
+    const centerOffsets = await card.evaluate((element) => {
+      const cardBox = element.getBoundingClientRect();
+      const cardCenter = cardBox.top + cardBox.height / 2;
+
+      return [
+        ".pro-home-subject-card__icon",
+        ".pro-home-subject-card__body",
+        ".pro-home-subject-card__arrow",
+      ].map((selector) => {
+        const childBox = element.querySelector(selector).getBoundingClientRect();
+        return Math.abs(childBox.top + childBox.height / 2 - cardCenter);
+      });
+    });
+
+    for (const offset of centerOffsets) {
+      expect(offset).toBeLessThanOrEqual(1);
+    }
   }
 
   await cards.nth(1).hover();
