@@ -1987,8 +1987,8 @@ msgid "Unicamp"
 msgstr "Unicamp"
 
 #: inc/template-tags.php:1048
-msgid "UERJ"
-msgstr "UERJ"
+msgid "UFMG"
+msgstr "UFMG"
 
 #: inc/template-tags.php:1054
 msgid "USP"

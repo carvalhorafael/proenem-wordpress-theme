@@ -160,7 +160,7 @@ const sizedVariants = [
 ];
 
 const logoVariants = [
-  "proof-logo-uerj.png",
+  "proof-logo-ufmg.png",
   "proof-logo-ufrgs.png",
   "proof-logo-ufrj.png",
   "proof-logo-unicamp.png",

@@ -1972,7 +1972,7 @@ msgid "Unicamp"
 msgstr ""
 
 #: inc/template-tags.php:1048
-msgid "UERJ"
+msgid "UFMG"
 msgstr ""
 
 #: inc/template-tags.php:1054
