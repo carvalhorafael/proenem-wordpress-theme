@@ -179,7 +179,7 @@ $plans = array(
 		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
 		'features'      => array(
 			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
-			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Banco de +60 mil questões', 'proenem-wordpress-theme' ),
 			__( 'Sem cartão', 'proenem-wordpress-theme' ),
 		),
 	),
@@ -243,58 +243,46 @@ $faq_items = array(
 
 $subjects = array(
 	array(
-		'name'      => __( 'Química', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'      => 'chemistry',
-		'tone'      => 'pink',
-		'questions' => __( '1524 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
+		'name'     => __( 'Química', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'chemistry',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
 	),
 	array(
-		'name'      => __( 'Biologia', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'      => 'biology',
-		'tone'      => 'pink',
-		'questions' => __( '65381 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
+		'name'     => __( 'Biologia', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'biology',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
 	),
 	array(
-		'name'      => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'icon'      => 'math',
-		'tone'      => 'pink',
-		'questions' => __( '8735 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
+		'name'     => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'category' => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'icon'     => 'math',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
 	),
 	array(
-		'name'      => __( 'História', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-		'icon'      => 'history',
-		'tone'      => 'pink',
-		'questions' => __( '3129 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
+		'name'     => __( 'História', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+		'icon'     => 'history',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
 	),
 	array(
-		'name'      => __( 'Inglês', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'      => 'english',
-		'tone'      => 'pink',
-		'questions' => __( '11458 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '32 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
+		'name'     => __( 'Inglês', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'english',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
 	),
 	array(
-		'name'      => __( 'Português', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'      => 'portuguese',
-		'tone'      => 'pink',
-		'questions' => __( '21457 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
+		'name'     => __( 'Português', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'portuguese',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
 	),
 );
 
@@ -505,10 +493,10 @@ $subjects = array(
 			),
 		),
 		array(
-			'label'        => __( '+50 mil questões', 'proenem-wordpress-theme' ),
+			'label'        => __( '+60 mil questões', 'proenem-wordpress-theme' ),
 			'icon'         => 'book',
 			'tone'         => 'yellow',
-			'title'        => __( 'Mais de 50 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
+			'title'        => __( 'Mais de 60 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
 			'body'         => __( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
 			'url'          => __( 'proenem.com.br/app/questoes', 'proenem-wordpress-theme' ),
 			'image'        => 'question-bank-960.webp',
@@ -674,7 +662,7 @@ $subjects = array(
 		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'sticker_explore_questions.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<h2 id="pro-questions-title">
 			<?php esc_html_e( 'Mais de', 'proenem-wordpress-theme' ); ?>
-			<strong><?php esc_html_e( '50 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
+			<strong><?php esc_html_e( '60 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
 			<?php esc_html_e( 'e um plano que diz qual resolver agora.', 'proenem-wordpress-theme' ); ?>
 		</h2>
 		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ); ?></p>
@@ -690,8 +678,6 @@ $subjects = array(
 					<span class="pro-home-subject-card__body">
 						<strong><?php echo esc_html( $subject['name'] ); ?></strong>
 						<small><?php echo esc_html( $subject['category'] ); ?></small>
-						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ); ?></span>
-						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ); ?></span>
 					</span>
 					<span class="pro-home-subject-card__arrow" aria-hidden="true">→</span>
 				</a>

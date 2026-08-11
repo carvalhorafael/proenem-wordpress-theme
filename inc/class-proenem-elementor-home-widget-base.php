@@ -996,10 +996,10 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 						'bullets'   => esc_html__( "Agenda diária de aulas\nRevisões próximas das provas\nRegistro do que você já assistiu", 'proenem-wordpress-theme' ),
 					),
 					array(
-						'label'     => esc_html__( '+50 mil questões', 'proenem-wordpress-theme' ),
+						'label'     => esc_html__( '+60 mil questões', 'proenem-wordpress-theme' ),
 						'icon'      => 'book',
 						'tone'      => 'yellow',
-						'title'     => esc_html__( 'Mais de 50 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
+						'title'     => esc_html__( 'Mais de 60 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
 						'body'      => esc_html__( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
 						'url'       => 'proenem.com.br/app/questoes',
 						'image'     => array( 'url' => $this->platform_asset_uri( 'question-bank-960.webp' ) ),
@@ -1111,7 +1111,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 	protected function register_controls(): void {
 		$this->start_controls_section( 'content_section', array( 'label' => esc_html__( 'Conteúdo', 'proenem-wordpress-theme' ) ) );
 		$this->add_text_control( 'title_prefix', esc_html__( 'Título antes', 'proenem-wordpress-theme' ), esc_html__( 'Mais de', 'proenem-wordpress-theme' ) );
-		$this->add_text_control( 'title_emphasis', esc_html__( 'Título destaque', 'proenem-wordpress-theme' ), esc_html__( '50 mil questões —', 'proenem-wordpress-theme' ) );
+		$this->add_text_control( 'title_emphasis', esc_html__( 'Título destaque', 'proenem-wordpress-theme' ), esc_html__( '60 mil questões —', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'title_suffix', esc_html__( 'Título depois', 'proenem-wordpress-theme' ), esc_html__( 'e um plano que diz qual resolver agora.', 'proenem-wordpress-theme' ) );
 		$this->add_textarea_control( 'body', esc_html__( 'Texto', 'proenem-wordpress-theme' ), esc_html__( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ) );
 		$this->add_text_control( 'button_label', esc_html__( 'Botão', 'proenem-wordpress-theme' ), esc_html__( 'Explorar questões grátis', 'proenem-wordpress-theme' ) );
@@ -1167,22 +1167,6 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
-		$subjects->add_control(
-			'questions',
-			array(
-				'label'   => esc_html__( 'Meta questões', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( '512 questões', 'proenem-wordpress-theme' ),
-			)
-		);
-		$subjects->add_control(
-			'classes',
-			array(
-				'label'   => esc_html__( 'Meta aulas', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( '40 aulas', 'proenem-wordpress-theme' ),
-			)
-		);
 		$this->add_control(
 			'subjects',
 			array(
@@ -1191,58 +1175,46 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 				'fields'      => $subjects->get_controls(),
 				'default'     => array(
 					array(
-						'name'      => esc_html__( 'Química', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-						'icon'      => 'chemistry',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '1524 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa' ),
+						'name'     => esc_html__( 'Química', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+						'icon'     => 'chemistry',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa' ),
 					),
 					array(
-						'name'      => esc_html__( 'Biologia', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-						'icon'      => 'biology',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '65381 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa' ),
+						'name'     => esc_html__( 'Biologia', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+						'icon'     => 'biology',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa' ),
 					),
 					array(
-						'name'      => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
-						'icon'      => 'math',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '8735 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a' ),
+						'name'     => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Matemática', 'proenem-wordpress-theme' ),
+						'icon'     => 'math',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a' ),
 					),
 					array(
-						'name'      => esc_html__( 'História', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-						'icon'      => 'history',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '3129 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa' ),
+						'name'     => esc_html__( 'História', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+						'icon'     => 'history',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa' ),
 					),
 					array(
-						'name'      => esc_html__( 'Inglês', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
-						'icon'      => 'english',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '11458 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '32 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa' ),
+						'name'     => esc_html__( 'Inglês', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
+						'icon'     => 'english',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa' ),
 					),
 					array(
-						'name'      => esc_html__( 'Português', 'proenem-wordpress-theme' ),
-						'category'  => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
-						'icon'      => 'portuguese',
-						'tone'      => 'pink',
-						'questions' => esc_html__( '21457 questões', 'proenem-wordpress-theme' ),
-						'classes'   => esc_html__( '64 aulas', 'proenem-wordpress-theme' ),
-						'url'       => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a' ),
+						'name'     => esc_html__( 'Português', 'proenem-wordpress-theme' ),
+						'category' => esc_html__( 'Linguagens', 'proenem-wordpress-theme' ),
+						'icon'     => 'portuguese',
+						'tone'     => 'pink',
+						'url'      => array( 'url' => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a' ),
 					),
 				),
 				'title_field' => '{{{ name }}}',
@@ -1261,7 +1233,7 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 			<p><?php echo esc_html( $settings['body'] ?? '' ); ?></p>
 			<div class="pen-subject-grid">
 				<?php foreach ( (array) ( $settings['subjects'] ?? array() ) as $subject ) : ?>
-					<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ?? 'pink' ); ?>" href="<?php echo esc_url( $subject['url']['url'] ?? $settings['button_url']['url'] ?? '#planos' ); ?>" target="_blank" rel="noopener noreferrer"><span class="pro-home-subject-card__icon" aria-hidden="true"><?php echo $this->subject_icon_svg( $subject['icon'] ?? 'portuguese' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-subject-card__body"><strong><?php echo esc_html( $subject['name'] ?? '' ); ?></strong><small><?php echo esc_html( $subject['category'] ?? '' ); ?></small><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ?? '' ); ?></span><span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ?? '' ); ?></span></span><span class="pro-home-subject-card__arrow" aria-hidden="true">→</span></a>
+					<a class="pro-home-subject-card pro-home-subject-card--<?php echo esc_attr( $subject['tone'] ?? 'pink' ); ?>" href="<?php echo esc_url( $subject['url']['url'] ?? $settings['button_url']['url'] ?? '#planos' ); ?>" target="_blank" rel="noopener noreferrer"><span class="pro-home-subject-card__icon" aria-hidden="true"><?php echo $this->subject_icon_svg( $subject['icon'] ?? 'portuguese' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><span class="pro-home-subject-card__body"><strong><?php echo esc_html( $subject['name'] ?? '' ); ?></strong><small><?php echo esc_html( $subject['category'] ?? '' ); ?></small></span><span class="pro-home-subject-card__arrow" aria-hidden="true">→</span></a>
 				<?php endforeach; ?>
 			</div>
 			<?php $this->render_home_button( 'button_url', $this->home_cta_link( $settings['button_url'] ?? array(), 'questions' ), $settings['button_label'] ?? '', 'pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta', $settings['button_badge'] ?? '' ); ?>
@@ -1391,7 +1363,7 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						'price'         => '0',
 						'price_details' => esc_html__( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
 						'summary'       => esc_html__( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-						'features'      => esc_html__( "Diagnóstico inicial + nota prevista\nBanco de +50 mil questões\nSem cartão", 'proenem-wordpress-theme' ),
+						'features'      => esc_html__( "Diagnóstico inicial + nota prevista\nBanco de +60 mil questões\nSem cartão", 'proenem-wordpress-theme' ),
 						'button_label'  => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
 						'button_url'    => array( 'url' => 'https://estude.proenem.com.br/' ),
 						'free'          => 'yes',

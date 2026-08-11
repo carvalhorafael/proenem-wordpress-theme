@@ -164,3 +164,10 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Elementor: o widget permite selecionar IDs elegiveis ou, sem selecao, usa os registros mais recentes. `scripts/sync-home-testimonials.php` remove os repeaters legados das paginas persistidas e preserva a copia e o link editorial.
 - Fallbacks: o ano e opcional e so aparece quando preenchido; curso e instituicao sao obrigatorios pelo contrato do plugin; nenhum texto de aluno e inventado pelo tema.
 - Testes: PHPUnit protege a ausencia de fallback ficticio e o modelo Elementor; Playwright protege os dois estados validos, os controles do carrossel e a ausencia de overflow.
+
+## 2026-08-10: Volume editorial do banco de questoes
+
+- Contexto: a home misturava o claim global de mais de 50 mil questoes com contagens exatas e quantidades de aulas sem fonte estavel nos cards de disciplinas.
+- Decisao: publicar o limiar arredondado `Mais de 60 mil questoes`, sustentado pelo banco publico com 65.461 registros em 2026-08-10, e remover dos cards todas as contagens exatas de questoes e aulas.
+- Responsabilidade: os cards permanecem como atalhos editoriais com as URLs aprovadas; o tema nao passa a calcular nem sincronizar dados volateis do catalogo da plataforma.
+- Persistencia: `docs/home-question-bank.md` registra a fonte e a regra de atualizacao, enquanto `scripts/sync-home-question-bank.php` atualiza a copy e remove metadados legados das paginas Elementor persistidas.
