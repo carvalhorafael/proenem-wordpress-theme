@@ -1226,7 +1226,7 @@ function proenem_render_home_testimonials_section( $testimonials, $args = array(
 			<p><?php echo esc_html( proenem_normalize_home_proof_copy( $args['body'], 'testimonials' ) ); ?></p>
 		</div>
 		<div class="pro-home-testimonials__viewport">
-			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
+			<div class="pro-home-testimonials__track" role="group" aria-labelledby="<?php echo esc_attr( $args['heading_id'] ); ?>" tabindex="0" data-pro-home-testimonials-track>
 				<?php foreach ( $testimonials as $testimonial_index => $testimonial ) : ?>
 					<?php
 					$student_name = proenem_get_testimonial_student_name( $testimonial->ID );
