@@ -38,6 +38,25 @@
       },
       "elements": [
         {
+          "id": "a1000000",
+          "elType": "widget",
+          "widgetType": "pro_navbar",
+          "isInner": false,
+          "settings": {
+            "mode": "menu",
+            "menu_id": 0,
+            "aria_label": "Navegação da home",
+            "mobile_cta_enabled": "yes",
+            "mobile_cta_label": "Criar conta grátis",
+            "mobile_cta_url": {
+              "url": "https://estude.proenem.com.br/signup",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
           "id": "a1000002",
           "elType": "widget",
           "widgetType": "pro_home_hero",
@@ -56,7 +75,7 @@
           "isInner": false,
           "settings": {
             "primary_button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
               "is_external": "",
               "nofollow": ""
             }
@@ -78,7 +97,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
               "is_external": "",
               "nofollow": ""
             },
@@ -133,88 +152,9 @@
           "widgetType": "pro_home_proof",
           "isInner": false,
           "settings": {
-            "student_images": [
-              {
-                "_id": "student01",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
-                }
-              },
-              {
-                "_id": "student02",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-2.webp"
-                }
-              },
-              {
-                "_id": "student03",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
-                }
-              },
-              {
-                "_id": "student04",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
-                }
-              },
-              {
-                "_id": "student05",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
-                }
-              },
-              {
-                "_id": "student06",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-6.webp"
-                }
-              }
-            ],
-            "logos": [
-              {
-                "_id": "logo01",
-                "name": "UFRJ",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrj.png"
-                }
-              },
-              {
-                "_id": "logo02",
-                "name": "UFRGS",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-ufrgs.png"
-                }
-              },
-              {
-                "_id": "logo03",
-                "name": "Unicamp",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unicamp.png"
-                }
-              },
-              {
-                "_id": "logo04",
-                "name": "UERJ",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-uerj.png"
-                }
-              },
-              {
-                "_id": "logo05",
-                "name": "USP",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-usp.png"
-                }
-              },
-              {
-                "_id": "logo06",
-                "name": "Unifesp",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-logo-unifesp.png"
-                }
-              }
-            ]
+            "title": "+ de 40.000 aprovados em universidades públicas",
+            "support": "Alunos reais, aprovados em algumas das universidades mais concorridas do país.",
+            "testimonial_ids": []
           },
           "elements": []
         },
@@ -225,7 +165,103 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "#planos",
+              "url": "https://estude.proenem.com.br/signup",
+              "is_external": "",
+              "nofollow": ""
+            }
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000008",
+          "elType": "widget",
+          "widgetType": "pro_home_platform",
+          "isInner": false,
+          "settings": {
+            "items": [
+              {
+                "_id": "platform01",
+                "label": "Aulas ao vivo todos os dias",
+                "icon": "clock",
+                "tone": "blue",
+                "title": "Aulas ao vivo para manter sua rotina em movimento.",
+                "body": "Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.",
+                "url": "proenem.com.br/app/aulas-ao-vivo",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/live-960.webp"
+                },
+                "image_alt": "Tela da Proenem com a agenda de aulas ao vivo.",
+                "bullets": "Agenda diária de aulas\nRevisões próximas das provas\nRegistro do que você já assistiu"
+              },
+              {
+                "_id": "platform02",
+                "label": "+60 mil questões",
+                "icon": "book",
+                "tone": "yellow",
+                "title": "Mais de 60 mil questões para treinar com intenção.",
+                "body": "Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.",
+                "url": "proenem.com.br/app/questoes",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/question-bank-960.webp"
+                },
+                "image_alt": "Tela do banco de questões da Proenem com filtros e uma questão aberta.",
+                "bullets": "Questões por área do conhecimento\nResoluções comentadas\nHistórico de acertos e erros"
+              },
+              {
+                "_id": "platform03",
+                "label": "Plano personalizado",
+                "icon": "brain",
+                "tone": "green",
+                "title": "Plano personalizado para estudar o que mais importa agora.",
+                "body": "A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.",
+                "url": "proenem.com.br/app/plano",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/study-plan-960.webp"
+                },
+                "image_alt": "Tela da jornada personalizada da Proenem com o estudo do dia.",
+                "bullets": "Rotina ajustada por meta\nPrioridade por lacuna\nPróximas ações sempre visíveis"
+              },
+              {
+                "_id": "platform04",
+                "label": "Correção de redação",
+                "icon": "edit",
+                "tone": "blue",
+                "title": "Correção de redação com devolutiva objetiva.",
+                "body": "Entenda competência por competência onde melhorar para escrever com mais segurança.",
+                "url": "proenem.com.br/app/redacao",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/essay-feedback-960.webp"
+                },
+                "image_alt": "Tela da correção de redação da Proenem com nota e avaliação por competência.",
+                "bullets": "Comentários por competência\nPlano de reescrita\nEvolução por envio"
+              },
+              {
+                "_id": "platform05",
+                "label": "Simulados com TRI",
+                "icon": "chart",
+                "tone": "active",
+                "title": "Simulados com a mesma lógica de correção do ENEM.",
+                "body": "Veja sua nota real, a evolução por área e onde focar agora.",
+                "url": "proenem.com.br/app/simulados-com-tri",
+                "image": {
+                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/simulations-960.webp"
+                },
+                "image_alt": "Tela de simulados da Proenem.",
+                "bullets": "Nota real estimada pelo TRI\nComparativo com aprovados\nDiagnóstico por área e tópico"
+              }
+            ]
+          },
+          "elements": []
+        },
+        {
+          "id": "a1000009",
+          "elType": "widget",
+          "widgetType": "pro_home_questions",
+          "isInner": false,
+          "settings": {
+            "title_emphasis": "60 mil questões —",
+            "button_url": {
+              "url": "https://estude.proenem.com.br/treino/questoes",
               "is_external": "",
               "nofollow": ""
             },
@@ -236,8 +272,6 @@
                 "category": "Ciências da Natureza",
                 "icon": "chemistry",
                 "tone": "pink",
-                "questions": "1524 questões",
-                "classes": "64 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa"
                 }
@@ -248,8 +282,6 @@
                 "category": "Ciências da Natureza",
                 "icon": "biology",
                 "tone": "pink",
-                "questions": "65381 questões",
-                "classes": "64 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa"
                 }
@@ -260,8 +292,6 @@
                 "category": "Matemática",
                 "icon": "math",
                 "tone": "pink",
-                "questions": "8735 questões",
-                "classes": "64 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/matematica/a"
                 }
@@ -272,8 +302,6 @@
                 "category": "Ciências Humanas",
                 "icon": "history",
                 "tone": "pink",
-                "questions": "3129 questões",
-                "classes": "64 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa"
                 }
@@ -284,8 +312,6 @@
                 "category": "Linguagens",
                 "icon": "english",
                 "tone": "pink",
-                "questions": "11458 questões",
-                "classes": "32 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa"
                 }
@@ -296,8 +322,6 @@
                 "category": "Linguagens",
                 "icon": "portuguese",
                 "tone": "pink",
-                "questions": "21457 questões",
-                "classes": "64 aulas",
                 "url": {
                   "url": "https://estude.proenem.com.br/treino/questoes/s/linguagens/a"
                 }
@@ -307,38 +331,68 @@
           "elements": []
         },
         {
-          "id": "a1000008",
-          "elType": "widget",
-          "widgetType": "pro_home_platform",
-          "isInner": false,
-          "settings": {},
-          "elements": []
-        },
-        {
-          "id": "a1000009",
-          "elType": "widget",
-          "widgetType": "pro_home_questions",
-          "isInner": false,
-          "settings": {
-            "button_url": {
-              "url": "#planos",
-              "is_external": "",
-              "nofollow": ""
-            }
-          },
-          "elements": []
-        },
-        {
           "id": "a1000010",
           "elType": "widget",
           "widgetType": "pro_home_pricing",
           "isInner": false,
           "settings": {
+            "body": "Comece grátis, sem cartão.\nNos planos pagos, você tem 7 dias de garantia.",
             "button_url": {
               "url": "#faq",
               "is_external": "",
               "nofollow": ""
-            }
+            },
+            "plans": [
+              {
+                "_id": "planfree",
+                "name": "Grátis",
+                "price_prefix": "R$",
+                "price": "0",
+                "price_details": "Grátis para começar. Sem cartão.",
+                "guarantee": "",
+                "summary": "Para começar hoje.",
+                "features": "Diagnóstico inicial + nota prevista\nBanco de +60 mil questões\nSem cartão",
+                "button_label": "Criar conta grátis",
+                "button_url": {
+                  "url": "https://estude.proenem.com.br/signup",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "free": "yes",
+                "featured": ""
+              },
+              {
+                "_id": "planpro1",
+                "name": "Método PRO",
+                "price_prefix": "12x de R$",
+                "price": "29,90",
+                "price_details": "",
+                "guarantee": "7 dias de garantia.",
+                "summary": "Preparação completa até o dia da prova.",
+                "features": "Tudo do Grátis e mais...\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI",
+                "button_label": "Quero o Método PRO",
+                "free": "",
+                "featured": "yes"
+              },
+              {
+                "_id": "planadvanced1",
+                "name": "Método PRO Avançado",
+                "price_prefix": "12x de R$",
+                "price": "39,90",
+                "price_details": "",
+                "guarantee": "7 dias de garantia.",
+                "summary": "Aulas ao vivo, revisões e mentoria em grupo.",
+                "features": "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo",
+                "button_label": "Quero o Método PRO Avançado",
+                "button_url": {
+                  "url": "https://medicina.proenem.com.br/",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "free": "",
+                "featured": ""
+              }
+            ]
           },
           "elements": []
         },
@@ -348,50 +402,14 @@
           "widgetType": "pro_home_testimonials",
           "isInner": false,
           "settings": {
+            "body": "Conheça histórias de alunos que estudaram com a Proenem.",
             "more_label": "Ver mais",
             "more_url": {
               "url": "https://aprovados.proenem.com.br/",
               "is_external": "on",
               "nofollow": ""
             },
-            "testimonials": [
-              {
-                "_id": "testim01",
-                "quote": "O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.",
-                "name": "Mariana Costa",
-                "role": "Aprovada em Medicina",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-1.webp"
-                }
-              },
-              {
-                "_id": "testim02",
-                "quote": "A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.",
-                "name": "Lucas Almeida",
-                "role": "Aprovado em Engenharia",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-3.webp"
-                }
-              },
-              {
-                "_id": "testim03",
-                "quote": "Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.",
-                "name": "Beatriz Rocha",
-                "role": "Aprovada em Direito",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-4.webp"
-                }
-              },
-              {
-                "_id": "testim04",
-                "quote": "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.",
-                "name": "Amanda Alves",
-                "role": "Aprovado em Psicologia",
-                "image": {
-                  "url": "/wp-content/themes/proenem-wordpress-theme/assets/images/home/proof-students-5.webp"
-                }
-              }
-            ]
+            "testimonial_ids": []
           },
           "elements": []
         },
@@ -434,7 +452,35 @@
           "elType": "widget",
           "widgetType": "pro_home_faq",
           "isInner": false,
-          "settings": {},
+          "settings": {
+            "items": [
+              {
+                "_id": "faqitem1",
+                "question": "O que é o Método PRO?",
+                "answer": "Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota."
+              },
+              {
+                "_id": "faqitem2",
+                "question": "Posso começar de graça?",
+                "answer": "Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão."
+              },
+              {
+                "_id": "faqitem3",
+                "question": "Qual a diferença entre os planos?",
+                "answer": "O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo."
+              },
+              {
+                "_id": "faqitem4",
+                "question": "Posso entrar em qualquer época do ano?",
+                "answer": "Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova."
+              },
+              {
+                "_id": "faqitem5",
+                "question": "E se eu não gostar?",
+                "answer": "Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia."
+              }
+            ]
+          },
           "elements": []
         }
       ]

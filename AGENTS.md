@@ -129,6 +129,7 @@ Regra padrao:
 - criar uma branch de trabalho antes de alterar codigo;
 - usar prefixo `codex/` para branches criadas por agentes;
 - fazer commits pequenos e intencionais;
+- ao concluir um trabalho destinado a resolver uma issue, incluir no corpo do commit final `Closes #<id>` para registrar a intencao e fechar a issue quando o commit chegar a branch padrao;
 - fazer push da branch para `origin` quando solicitado;
 - abrir PRs pequenos por padrao.
 

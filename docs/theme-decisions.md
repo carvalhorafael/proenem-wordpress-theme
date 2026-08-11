@@ -119,3 +119,63 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Adaptacao local: a classe `is-free` complementa temporariamente `pen-plan-card`, que nao possui uma variacao gratuita no contrato publicado.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#33`; tema `carvalhorafael/proenem-wordpress-theme#90`.
 - Criterio de remocao: atualizar os pacotes publicados, migrar template e widget para a variacao compartilhada e remover `is-free` quando o design system cobrir o plano gratuito.
+
+## 2026-08-08: Detalhes comerciais nos cards de planos
+
+- Contexto: a home precisa distinguir o valor da parcela e a garantia antes do clique no checkout.
+- Decisao: centralizar a secao de preco em fluxo normal entre a lista de beneficios e o CTA de cada plano; nos planos pagos, posicionar a garantia imediatamente abaixo do CTA.
+- Adaptacao local: as classes `pro-home-plan-card__price`, `pro-home-plan-card__price-amount` e `pro-home-plan-card__guarantee` complementam temporariamente `pen-plan-card`.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#37`; tema `carvalhorafael/proenem-wordpress-theme#128`.
+- Criterio de remocao: atualizar os pacotes publicados, migrar template, widget e JSON para o contrato compartilhado e remover as classes e fallbacks locais.
+
+## 2026-08-10: Metodo PRO Avancado substitui a oferta de Medicina
+
+- Contexto: a definicao comercial provisoria remove o plano Pro Medicina da home e organiza as ofertas pagas como Metodo PRO e Metodo PRO Avancado.
+- Decisao: manter a mesma hierarquia visual e o contrato de preco existente, alterando apenas nome, resumo, beneficios, CTA e textos relacionados. O plano avancado nao recebe identidade visual medica.
+- Paridade: template PHP, defaults e compatibilidade do widget Elementor, JSON de importacao e conteudo persistido devem exibir o mesmo contrato editorial.
+- Compatibilidade: o renderer atualiza apenas valores persistidos que ainda sejam identicos ao contrato antigo, sem sobrescrever customizacoes editoriais posteriores.
+
+## 2026-08-10: Jornada de conversao e CTA mobile persistente
+
+- Contexto: labels de cadastro e exploracao da home levavam para `#planos`, o menu WordPress mantinha itens com destino `#` e o mobile atravessava varias dobras sem uma acao de conversao visivel.
+- Decisao: documentar a taxonomia em `docs/home-cta-map.md`, direcionar cadastro para `/signup`, exploracao para o banco de questoes e manter `#planos` apenas para consulta de ofertas.
+- Persistencia: `scripts/sync-home-conversion.php` atualiza de forma idempotente o menu principal e paginas Elementor que contenham os widgets da home. O renderer preserva um fallback seguro enquanto a sincronizacao nao tiver sido executada no ambiente.
+- Sticky: o host da navbar permanece no fluxo com `position: sticky`, evitando salto de layout em template PHP, header convencional e widget Elementor.
+- Adaptacao local: `pro-mobile-persistent-action` compoe o botao publicado dentro de uma barra fixa de largura total no rodape mobile, exibida apos 600 px, com safe area e reposicionamento temporario do suporte flutuante enquanto a barra estiver visivel.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#38`; tema `carvalhorafael/proenem-wordpress-theme#110`.
+- Criterio de remocao: atualizar `@carvalhorafael/proenem-css` e `@carvalhorafael/proenem-web`, migrar para o pattern publicado e remover markup, CSS e JavaScript locais da barra persistente.
+
+## 2026-08-10: Prova social verificavel na home
+
+- Contexto: a faixa de aprovados mantinha imagens e instituicoes sem identificacao individual verificavel, enquanto o claim de mais de 40 mil aprovados nao possuia fonte, periodo e metodologia confirmados.
+- Decisao: o tema renderiza a faixa somente com registros que o plugin Testimonials declare elegiveis para a home; sem registros elegiveis, a secao inteira permanece ausente.
+- Persistencia: `docs/elementor/proenem-home.json` nao inclui mais fotos anonimas nem configuracao editorial duplicada de logos no widget. O renderer compartilhado preserva as seis logos institucionais como assets de apresentacao, e `scripts/sync-home-proof.php` mantem template e paginas Elementor alinhados.
+- Responsabilidade: identificacao, curso, instituicao, ano, evidencia, verificacao, consentimento e selecao editorial pertencem ao plugin, para sobreviver a trocas de tema.
+- Excecao editorial: por orientacao explicita, o claim `+ de 40.000 aprovados em universidades publicas` e o apoio original permanecem na faixa. A origem, o periodo e a metodologia do numero continuam sem documentacao no repositorio e precisam ser confirmados para satisfazer integralmente a issue #111.
+- Adaptacao local: as classes `pro-home-proof-students`, `pro-home-proof-student` e `pro-home-proof-student__caption` complementam temporariamente o pattern publicado com grade variavel e identificacao individual legivel.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#39`; tema `carvalhorafael/proenem-wordpress-theme#132`.
+- Criterio de remocao: atualizar os pacotes publicados, adotar as classes compartilhadas de figura e legenda e remover os seletores locais quando o design system cobrir o contrato.
+
+## 2026-08-10: Depoimentos reais no carrossel da home
+
+- Contexto: o carrossel inferior da home mantinha quatro relatos, nomes, descricoes e imagens ficticios duplicados no template PHP e no widget Elementor.
+- Decisao: o carrossel consome somente registros que o plugin Testimonials declare elegiveis para a home e que possuam relato ou excerto nao vazio. Sem registros elegiveis, a secao inteira permanece ausente.
+- Fonte canonica: publicacao, imagem destacada, nome, curso, instituicao, ano, evidencia, verificacao, consentimento, selecao editorial e relato pertencem ao CPT do plugin. O tema limita, ordena e apresenta os registros.
+- Elementor: o widget permite selecionar IDs elegiveis ou, sem selecao, usa os registros mais recentes. `scripts/sync-home-testimonials.php` remove os repeaters legados das paginas persistidas e preserva a copia e o link editorial.
+- Fallbacks: o ano e opcional e so aparece quando preenchido; curso e instituicao sao obrigatorios pelo contrato do plugin; nenhum texto de aluno e inventado pelo tema.
+- Testes: PHPUnit protege a ausencia de fallback ficticio e o modelo Elementor; Playwright protege os dois estados validos, os controles do carrossel e a ausencia de overflow.
+
+## 2026-08-10: Volume editorial do banco de questoes
+
+- Contexto: a home misturava o claim global de mais de 50 mil questoes com contagens exatas e quantidades de aulas sem fonte estavel nos cards de disciplinas.
+- Decisao: publicar o limiar arredondado `Mais de 60 mil questoes`, sustentado pelo banco publico com 65.461 registros em 2026-08-10, e remover dos cards todas as contagens exatas de questoes e aulas.
+- Responsabilidade: os cards permanecem como atalhos editoriais com as URLs aprovadas; o tema nao passa a calcular nem sincronizar dados volateis do catalogo da plataforma.
+- Persistencia: `docs/home-question-bank.md` registra a fonte e a regra de atualizacao, enquanto `scripts/sync-home-question-bank.php` atualiza a copy e remove metadados legados das paginas Elementor persistidas.
+
+## 2026-08-11: Areas de toque moveis da home
+
+- Contexto: a validacao da home em 390x844 encontrou controles e links prioritarios menores que 44x44 CSS px nos pilares, na paginacao movel da plataforma e no rodape.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` publica os controles de `pen-pillars-slider__control` com 36x36 px e nao garante altura minima para as acoes de `pen-site-footer`.
+- Decisao: complementar localmente os contratos em `src/styles/theme.css`, preservando icones compactos dentro de alvos de pelo menos 44x44 px e usando foco visivel sem alteracao de geometria.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#114`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
+- Criterio de remocao: atualizar os pacotes para a versao que resolver a issue do design system, remover os seletores locais de tamanho/foco e confirmar novamente a cobertura E2E em 390x844.

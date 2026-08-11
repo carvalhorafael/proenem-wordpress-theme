@@ -190,6 +190,44 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 			)
 		);
 
+		$this->add_control(
+			'mobile_cta_enabled',
+			array(
+				'label'        => esc_html__( 'CTA persistente no mobile', 'proenem-wordpress-theme' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+			)
+		);
+
+		$this->add_control(
+			'mobile_cta_label',
+			array(
+				'label'       => esc_html__( 'Texto do CTA mobile', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+				'condition'   => array(
+					'mobile_cta_enabled' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'mobile_cta_url',
+			array(
+				'label'       => esc_html__( 'Destino do CTA mobile', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::URL,
+				'default'     => array(
+					'url' => proenem_get_home_cta_destination( 'signup' ),
+				),
+				'label_block' => true,
+				'condition'   => array(
+					'mobile_cta_enabled' => 'yes',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -210,6 +248,17 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 				'menu_id'    => absint( $settings['menu_id'] ?? 0 ),
 			)
 		);
+
+		if ( 'yes' === ( $settings['mobile_cta_enabled'] ?? '' ) ) {
+			$mobile_cta_url = proenem_upgrade_home_cta_link( $settings['mobile_cta_url'] ?? array(), 'signup' );
+
+			proenem_render_mobile_persistent_action(
+				array(
+					'label' => $settings['mobile_cta_label'] ?? __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+					'url'   => is_array( $mobile_cta_url ) ? ( $mobile_cta_url['url'] ?? '' ) : $mobile_cta_url,
+				)
+			);
+		}
 	}
 }
 

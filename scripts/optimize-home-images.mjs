@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import sharp from "sharp";
 
 const imageDir = resolve("assets/images/home");
+const platformImageDir = resolve("assets/images/platform");
 const reportDir = resolve("reports/images");
 
 const targets = [
@@ -167,6 +168,29 @@ const logoVariants = [
   "proof-logo-usp.png",
 ];
 
+const platformVariants = [
+  {
+    input: "Ao vivo.png",
+    outputStem: "live",
+  },
+  {
+    input: "banco de questões.png",
+    outputStem: "question-bank",
+  },
+  {
+    input: "plano personalizado.png",
+    outputStem: "study-plan",
+  },
+  {
+    input: "Correção redação.png",
+    outputStem: "essay-feedback",
+  },
+  {
+    input: "simulado.png",
+    outputStem: "simulations",
+  },
+];
+
 function formatBytes(bytes) {
   if (bytes < 1024) {
     return `${bytes} B`;
@@ -320,6 +344,42 @@ async function createLogoVariant(filename) {
   };
 }
 
+async function createPlatformVariant(target, width) {
+  const inputPath = resolve(platformImageDir, target.input);
+  const output = `${target.outputStem}-${width}.webp`;
+  const outputPath = resolve(platformImageDir, output);
+  const inputStats = await stat(inputPath);
+  const inputMetadata = await sharp(inputPath).metadata();
+
+  await sharp(inputPath)
+    .rotate()
+    .resize({
+      width,
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: 82,
+      effort: 6,
+      smartSubsample: true,
+    })
+    .toFile(outputPath);
+
+  const outputStats = await stat(outputPath);
+  const outputMetadata = await sharp(outputPath).metadata();
+  const savings = 1 - outputStats.size / inputStats.size;
+
+  return {
+    input: `platform/${target.input}`,
+    output: `platform/${output}`,
+    originalSize: inputStats.size,
+    optimizedSize: outputStats.size,
+    originalDimensions: `${inputMetadata.width || "?"}x${inputMetadata.height || "?"}`,
+    optimizedDimensions: `${outputMetadata.width || "?"}x${outputMetadata.height || "?"}`,
+    quality: 82,
+    savingsPercent: Number((savings * 100).toFixed(1)),
+  };
+}
+
 function markdownReport(results) {
   const lines = [
     "# Home Image Optimization",
@@ -373,6 +433,16 @@ async function main() {
     console.log(
       `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
     );
+  }
+
+  for (const target of platformVariants) {
+    for (const width of [480, 960]) {
+      const result = await createPlatformVariant(target, width);
+      results.push(result);
+      console.log(
+        `${result.input} -> ${result.output}: ${formatBytes(result.originalSize)} -> ${formatBytes(result.optimizedSize)} (${result.savingsPercent}% smaller)`
+      );
+    }
   }
 
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");

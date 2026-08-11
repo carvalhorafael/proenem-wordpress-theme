@@ -12,6 +12,10 @@ $home_asset_uri = static function ( $filename ) {
 	return PROENEM_THEME_URI . '/assets/images/home/' . $filename;
 };
 
+$platform_asset_uri = static function ( $filename ) {
+	return PROENEM_THEME_URI . '/assets/images/platform/' . $filename;
+};
+
 $home_asset_dimensions = array(
 	'Cancele-quando-voce-quiser.svg' => array( 234, 232 ),
 	'Ellipse-fundo-price.svg'        => array( 133, 133 ),
@@ -165,73 +169,52 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'         => __( 'Grátis', 'proenem-wordpress-theme' ),
-		'price'        => __( '0', 'proenem-wordpress-theme' ),
-		'summary'      => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-		'free'         => true,
-		'button_label' => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-		'button_url'   => 'https://estude.proenem.com.br/',
-		'features'     => array(
+		'name'          => __( 'Grátis', 'proenem-wordpress-theme' ),
+		'price_prefix'  => __( 'R$', 'proenem-wordpress-theme' ),
+		'price'         => __( '0', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+		'free'          => true,
+		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
+		'features'      => array(
 			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
-			__( 'Banco de +50 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Banco de +60 mil questões', 'proenem-wordpress-theme' ),
 			__( 'Sem cartão', 'proenem-wordpress-theme' ),
 		),
 	),
 	array(
 		'name'         => __( 'Método PRO', 'proenem-wordpress-theme' ),
-		'price'        => __( '29', 'proenem-wordpress-theme' ),
-		'summary'      => __( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ),
+		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'        => __( '29,90', 'proenem-wordpress-theme' ),
+		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'Preparação completa até o dia da prova.', 'proenem-wordpress-theme' ),
 		'featured'     => true,
 		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
-		'button_url'   => 'https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
+		'button_url'   => proenem_get_home_cta_destination( 'method_pro' ),
 		'features'     => array(
-			__( 'Tudo do Grátis', 'proenem-wordpress-theme' ),
-			__( 'Tutor IA ilimitado 24/7', 'proenem-wordpress-theme' ),
-			__( 'Redação corrigida em 48h', 'proenem-wordpress-theme' ),
-			__( 'Simulados TRI semanais', 'proenem-wordpress-theme' ),
-			__( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
-			__( 'Plano adaptativo por IA', 'proenem-wordpress-theme' ),
+			__( 'Tudo do Grátis e mais...', 'proenem-wordpress-theme' ),
+			__( 'Cronograma personalizado completo até o dia da prova', 'proenem-wordpress-theme' ),
+			__( '2 correções de redação mensais', 'proenem-wordpress-theme' ),
+			__( 'Aulas gravadas com os melhores professores', 'proenem-wordpress-theme' ),
+			__( 'PDFs completos', 'proenem-wordpress-theme' ),
+			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
 		),
 	),
 	array(
-		'name'         => __( 'Pro Medicina', 'proenem-wordpress-theme' ),
-		'price'        => __( '39', 'proenem-wordpress-theme' ),
-		'summary'      => __( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
-		'button_label' => __( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ),
-		'button_url'   => 'https://pay.hotmart.com/X99453521F?off=lbkw5g1v&checkoutMode=10&sck=840a4659-9249-4e9e-b943-394125799631%7Cbb1085ae-fc84-40d9-9ad8-32eb2eef0a12%7Cfb.2.1777574086004.45888125744280900%7Cfb.2.1783428142223.PAZXh0bgNhZW0BMABhZGlkAas1IVNH2dlzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaeGaJoO3UWnxmB_FPt7WJzVedbbajtscom7Z-q_GbxTGt6HOk0N-JSEu1dR4w_aem_W-gssY72mqkgkaSoDvB06g&utm_source=meta_Instagram_Feed&utm_campaign=cmv_vendas_aon_rmkt_proenem_PQ&utm_medium=cpc&utm_content=padrao_b_junho+%E2%80%94+C%C3%B3pia&utm_term=envolvimento_30d_60d_checkout_junho&utm_id=120242587602430761&src=meta_Instagram_Feed%7Ccmv_vendas_aon_rmkt_proenem_PQ%7Ccpc%7Cpadrao_b_junho+%E2%80%94+C%C3%B3pia%7Cenvolvimento_30d_60d_checkout_junho%7C120242587602430761',
+		'name'         => __( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
+		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'        => __( '39,90', 'proenem-wordpress-theme' ),
+		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' ),
+		'button_label' => __( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' ),
+		'button_url'   => proenem_get_home_cta_destination( 'advanced' ),
 		'features'     => array(
-			__( 'Tudo do Método PRO', 'proenem-wordpress-theme' ),
-			__( 'Mentor pessoal aprovado em Medicina', 'proenem-wordpress-theme' ),
-			__( '2 sessões 1:1 por semana', 'proenem-wordpress-theme' ),
-			__( 'Revisão de redação prioritária', 'proenem-wordpress-theme' ),
+			__( 'Tudo do PRO e mais...', 'proenem-wordpress-theme' ),
+			__( 'Aulas ao vivo', 'proenem-wordpress-theme' ),
+			__( 'Revisões ao vivo', 'proenem-wordpress-theme' ),
+			__( 'Mentoria em grupo', 'proenem-wordpress-theme' ),
 		),
-	),
-);
-
-$testimonials = array(
-	array(
-		'quote' => __( 'O Método PRO me deu clareza para estudar o que realmente importava. Parei de acumular tarefas e comecei a enxergar evolução semana a semana.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Mariana Costa', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovada em Medicina', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-1.webp',
-	),
-	array(
-		'quote' => __( 'A rotina ficou simples de seguir. Os simulados, o diagnóstico e a correção de redação mostravam exatamente onde eu precisava insistir.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Lucas Almeida', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovado em Engenharia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-3.webp',
-	),
-	array(
-		'quote' => __( 'Eu estudava muito, mas sem direção. Com o método, consegui organizar minhas prioridades e chegar na prova muito mais confiante.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Beatriz Rocha', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovada em Direito', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-4.webp',
-	),
-	array(
-		'quote' => __( 'Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.', 'proenem-wordpress-theme' ),
-		'name'  => __( 'Amanda Alves', 'proenem-wordpress-theme' ),
-		'role'  => __( 'Aprovado em Psicologia', 'proenem-wordpress-theme' ),
-		'image' => 'proof-students-5.webp',
 	),
 );
 
@@ -246,7 +229,7 @@ $faq_items = array(
 	),
 	array(
 		'question' => __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO adiciona tutor com IA, redação corrigida, simulados TRI e plano adaptativo; o Pro Medicina inclui mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
@@ -254,64 +237,52 @@ $faq_items = array(
 	),
 	array(
 		'question' => __( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Cancele quando quiser, em 1 clique. A ideia é experimentar o método sem burocracia e seguir só se fizer sentido para você.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' ),
 	),
 );
 
 $subjects = array(
 	array(
-		'name'      => __( 'Química', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'      => 'chemistry',
-		'tone'      => 'pink',
-		'questions' => __( '1524 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
+		'name'     => __( 'Química', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'chemistry',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/uimica-rganica/natureza/sa',
 	),
 	array(
-		'name'      => __( 'Biologia', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
-		'icon'      => 'biology',
-		'tone'      => 'pink',
-		'questions' => __( '65381 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
+		'name'     => __( 'Biologia', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências da Natureza', 'proenem-wordpress-theme' ),
+		'icon'     => 'biology',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/iologia-como-ciencia/natureza/sa',
 	),
 	array(
-		'name'      => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Matemática', 'proenem-wordpress-theme' ),
-		'icon'      => 'math',
-		'tone'      => 'pink',
-		'questions' => __( '8735 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
+		'name'     => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'category' => __( 'Matemática', 'proenem-wordpress-theme' ),
+		'icon'     => 'math',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/matematica/a',
 	),
 	array(
-		'name'      => __( 'História', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
-		'icon'      => 'history',
-		'tone'      => 'pink',
-		'questions' => __( '3129 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
+		'name'     => __( 'História', 'proenem-wordpress-theme' ),
+		'category' => __( 'Ciências Humanas', 'proenem-wordpress-theme' ),
+		'icon'     => 'history',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/istiria-eral/humanas/sa',
 	),
 	array(
-		'name'      => __( 'Inglês', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'      => 'english',
-		'tone'      => 'pink',
-		'questions' => __( '11458 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '32 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
+		'name'     => __( 'Inglês', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'english',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa',
 	),
 	array(
-		'name'      => __( 'Português', 'proenem-wordpress-theme' ),
-		'category'  => __( 'Linguagens', 'proenem-wordpress-theme' ),
-		'icon'      => 'portuguese',
-		'tone'      => 'pink',
-		'questions' => __( '21457 questões', 'proenem-wordpress-theme' ),
-		'classes'   => __( '64 aulas', 'proenem-wordpress-theme' ),
-		'url'       => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
+		'name'     => __( 'Português', 'proenem-wordpress-theme' ),
+		'category' => __( 'Linguagens', 'proenem-wordpress-theme' ),
+		'icon'     => 'portuguese',
+		'tone'     => 'pink',
+		'url'      => 'https://estude.proenem.com.br/treino/questoes/s/linguagens/a',
 	),
 );
 
@@ -325,6 +296,7 @@ $subjects = array(
 			'context'    => 'home',
 		)
 	);
+	proenem_render_mobile_persistent_action();
 	?>
 
 	<section class="pen-hero-section" aria-labelledby="pro-home-title">
@@ -349,8 +321,8 @@ $subjects = array(
 			</p>
 		</div>
 		<div class="pen-hero-action-bar__action pro-home-hero-action-bar__actions">
-			<a class="pen-button pen-button--primary pen-button--md" href="#planos">
-				<?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?>
+			<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
+				<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
 				<span class="pen-button__arrow" aria-hidden="true">-></span>
 			</a>
 		</div>
@@ -372,7 +344,7 @@ $subjects = array(
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
 			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-			<a class="pen-button pen-button--primary pen-button--md" href="#planos"><?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>"><?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -418,68 +390,7 @@ $subjects = array(
 		</div>
 	</section>
 
-	<?php
-	$proof_student_images = array(
-		'proof-students-1.webp',
-		'proof-students-2.webp',
-		'proof-students-3.webp',
-		'proof-students-4.webp',
-		'proof-students-5.webp',
-		'proof-students-6.webp',
-	);
-
-	$proof_university_logos = array(
-		array(
-			'file' => 'proof-logo-ufrj.webp',
-			'name' => __( 'UFRJ', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-ufrgs.webp',
-			'name' => __( 'UFRGS', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-unicamp.webp',
-			'name' => __( 'Unicamp', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-uerj.webp',
-			'name' => __( 'UERJ', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-usp.webp',
-			'name' => __( 'USP', 'proenem-wordpress-theme' ),
-		),
-		array(
-			'file' => 'proof-logo-unifesp.webp',
-			'name' => __( 'Unifesp', 'proenem-wordpress-theme' ),
-		),
-	);
-	?>
-	<section id="aprovados" class="pen-proof-section" aria-labelledby="pro-proof-title">
-		<div class="pen-proof-section__students">
-			<p class="pen-proof-section__badge">
-				<span><?php esc_html_e( 'Nossos', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Alunos!', 'proenem-wordpress-theme' ); ?></span>
-			</p>
-			<?php foreach ( $proof_student_images as $proof_student_image ) : ?>
-				<img class="pen-proof-section__image" src="<?php echo esc_url( $home_asset_uri( $proof_student_image ) ); ?>" alt="<?php esc_attr_e( 'Aluno aprovado exibindo aprovação.', 'proenem-wordpress-theme' ); ?>"<?php echo $home_image_attributes( $proof_student_image ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $proof_student_image, '(max-width: 700px) 18vw, 8vw' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php endforeach; ?>
-		</div>
-		<div class="pen-proof-section__strip">
-			<h2 id="pro-proof-title"><?php esc_html_e( '+ de 40.000 aprovados em universidades públicas', 'proenem-wordpress-theme' ); ?></h2>
-			<p class="pro-home-proof-support"><?php esc_html_e( 'Alunos reais, aprovados em algumas das universidades mais concorridas do país.', 'proenem-wordpress-theme' ); ?></p>
-			<div class="pen-proof-section__logos" aria-label="<?php esc_attr_e( 'Universidades públicas com alunos aprovados pela Proenem', 'proenem-wordpress-theme' ); ?>">
-				<?php foreach ( $proof_university_logos as $proof_university_logo ) : ?>
-					<img
-						class="pen-proof-section__logo"
-						src="<?php echo esc_url( $home_asset_uri( $proof_university_logo['file'] ) ); ?>"
-						alt="<?php echo esc_attr( $proof_university_logo['name'] ); ?>"
-						<?php echo $home_image_attributes( $proof_university_logo['file'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					>
-				<?php endforeach; ?>
-			</div>
-		</div>
-	</section>
+	<?php proenem_render_home_proof_section( proenem_get_home_proof_testimonials() ); ?>
 
 	<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
 		<p class="pen-section-pill"><?php esc_html_e( 'Você se identifica?', 'proenem-wordpress-theme' ); ?></p>
@@ -553,8 +464,8 @@ $subjects = array(
 				<strong><?php esc_html_e( 'método e acompanhamento.', 'proenem-wordpress-theme' ); ?></strong>
 			</span>
 		</p>
-		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="#planos">
-			<?php esc_html_e( 'Começar grátis', 'proenem-wordpress-theme' ); ?>
+		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
+			<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
 			<span class="pen-button__badge"><?php esc_html_e( 'é gratuito', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span>
@@ -564,79 +475,91 @@ $subjects = array(
 	<?php
 	$platform_items       = array(
 		array(
-			'label'   => __( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
-			'icon'    => 'clock',
-			'tone'    => 'blue',
-			'title'   => __( 'Aulas ao vivo para manter sua rotina em movimento.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/aulas-ao-vivo', 'proenem-wordpress-theme' ),
-			'bullets' => array(
+			'label'        => __( 'Aulas ao vivo todos os dias', 'proenem-wordpress-theme' ),
+			'icon'         => 'clock',
+			'tone'         => 'blue',
+			'title'        => __( 'Aulas ao vivo para manter sua rotina em movimento.', 'proenem-wordpress-theme' ),
+			'body'         => __( 'Entre em salas guiadas por professores e acompanhe os temas mais importantes da semana.', 'proenem-wordpress-theme' ),
+			'url'          => __( 'proenem.com.br/app/aulas-ao-vivo', 'proenem-wordpress-theme' ),
+			'image'        => 'live-960.webp',
+			'image_sm'     => 'live-480.webp',
+			'image_width'  => 960,
+			'image_height' => 474,
+			'image_alt'    => __( 'Tela da Proenem com a agenda de aulas ao vivo.', 'proenem-wordpress-theme' ),
+			'bullets'      => array(
 				__( 'Agenda diária de aulas', 'proenem-wordpress-theme' ),
 				__( 'Revisões próximas das provas', 'proenem-wordpress-theme' ),
 				__( 'Registro do que você já assistiu', 'proenem-wordpress-theme' ),
 			),
 		),
 		array(
-			'label'   => __( '+50 mil questões', 'proenem-wordpress-theme' ),
-			'icon'    => 'book',
-			'tone'    => 'yellow',
-			'title'   => __( 'Mais de 50 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/questoes', 'proenem-wordpress-theme' ),
-			'bullets' => array(
+			'label'        => __( '+60 mil questões', 'proenem-wordpress-theme' ),
+			'icon'         => 'book',
+			'tone'         => 'yellow',
+			'title'        => __( 'Mais de 60 mil questões para treinar com intenção.', 'proenem-wordpress-theme' ),
+			'body'         => __( 'Filtre por disciplina, assunto e dificuldade para transformar prática em diagnóstico.', 'proenem-wordpress-theme' ),
+			'url'          => __( 'proenem.com.br/app/questoes', 'proenem-wordpress-theme' ),
+			'image'        => 'question-bank-960.webp',
+			'image_sm'     => 'question-bank-480.webp',
+			'image_width'  => 960,
+			'image_height' => 658,
+			'image_alt'    => __( 'Tela do banco de questões da Proenem com filtros e uma questão aberta.', 'proenem-wordpress-theme' ),
+			'bullets'      => array(
 				__( 'Questões por área do conhecimento', 'proenem-wordpress-theme' ),
 				__( 'Resoluções comentadas', 'proenem-wordpress-theme' ),
 				__( 'Histórico de acertos e erros', 'proenem-wordpress-theme' ),
 			),
 		),
 		array(
-			'label'   => __( 'Plano personalizado', 'proenem-wordpress-theme' ),
-			'icon'    => 'brain',
-			'tone'    => 'green',
-			'title'   => __( 'Plano personalizado para estudar o que mais importa agora.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/plano', 'proenem-wordpress-theme' ),
-			'bullets' => array(
+			'label'        => __( 'Plano personalizado', 'proenem-wordpress-theme' ),
+			'icon'         => 'brain',
+			'tone'         => 'green',
+			'title'        => __( 'Plano personalizado para estudar o que mais importa agora.', 'proenem-wordpress-theme' ),
+			'body'         => __( 'A plataforma organiza prioridades a partir da sua meta, tempo disponível e evolução.', 'proenem-wordpress-theme' ),
+			'url'          => __( 'proenem.com.br/app/plano', 'proenem-wordpress-theme' ),
+			'image'        => 'study-plan-960.webp',
+			'image_sm'     => 'study-plan-480.webp',
+			'image_width'  => 960,
+			'image_height' => 653,
+			'image_alt'    => __( 'Tela da jornada personalizada da Proenem com o estudo do dia.', 'proenem-wordpress-theme' ),
+			'bullets'      => array(
 				__( 'Rotina ajustada por meta', 'proenem-wordpress-theme' ),
 				__( 'Prioridade por lacuna', 'proenem-wordpress-theme' ),
 				__( 'Próximas ações sempre visíveis', 'proenem-wordpress-theme' ),
 			),
 		),
 		array(
-			'label'   => __( 'Tutor com IA', 'proenem-wordpress-theme' ),
-			'icon'    => 'robot',
-			'tone'    => 'red',
-			'title'   => __( 'Tutor com IA para tirar dúvidas no seu ritmo.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Receba explicações guiadas e volte para o estudo sem perder o contexto da tarefa.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/tutor-ia', 'proenem-wordpress-theme' ),
-			'bullets' => array(
-				__( 'Explicação passo a passo', 'proenem-wordpress-theme' ),
-				__( 'Apoio em questões difíceis', 'proenem-wordpress-theme' ),
-				__( 'Disponível durante a rotina', 'proenem-wordpress-theme' ),
-			),
-		),
-		array(
-			'label'   => __( 'Correção de redação', 'proenem-wordpress-theme' ),
-			'icon'    => 'edit',
-			'tone'    => 'blue',
-			'title'   => __( 'Correção de redação com devolutiva objetiva.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Entenda competência por competência onde melhorar para escrever com mais segurança.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/redacao', 'proenem-wordpress-theme' ),
-			'bullets' => array(
+			'label'        => __( 'Correção de redação', 'proenem-wordpress-theme' ),
+			'icon'         => 'edit',
+			'tone'         => 'blue',
+			'title'        => __( 'Correção de redação com devolutiva objetiva.', 'proenem-wordpress-theme' ),
+			'body'         => __( 'Entenda competência por competência onde melhorar para escrever com mais segurança.', 'proenem-wordpress-theme' ),
+			'url'          => __( 'proenem.com.br/app/redacao', 'proenem-wordpress-theme' ),
+			'image'        => 'essay-feedback-960.webp',
+			'image_sm'     => 'essay-feedback-480.webp',
+			'image_width'  => 960,
+			'image_height' => 473,
+			'image_alt'    => __( 'Tela da correção de redação da Proenem com nota e avaliação por competência.', 'proenem-wordpress-theme' ),
+			'bullets'      => array(
 				__( 'Comentários por competência', 'proenem-wordpress-theme' ),
 				__( 'Plano de reescrita', 'proenem-wordpress-theme' ),
 				__( 'Evolução por envio', 'proenem-wordpress-theme' ),
 			),
 		),
 		array(
-			'label'   => __( 'Simulados com TRI', 'proenem-wordpress-theme' ),
-			'icon'    => 'chart',
-			'tone'    => 'active',
-			'active'  => true,
-			'title'   => __( 'Simulados com a mesma lógica de correção do ENEM.', 'proenem-wordpress-theme' ),
-			'body'    => __( 'Veja sua nota real, a evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
-			'url'     => __( 'proenem.com.br/app/simulados-com-tri', 'proenem-wordpress-theme' ),
-			'bullets' => array(
+			'label'        => __( 'Simulados com TRI', 'proenem-wordpress-theme' ),
+			'icon'         => 'chart',
+			'tone'         => 'active',
+			'active'       => true,
+			'title'        => __( 'Simulados com a mesma lógica de correção do ENEM.', 'proenem-wordpress-theme' ),
+			'body'         => __( 'Veja sua nota real, a evolução por área e onde focar agora.', 'proenem-wordpress-theme' ),
+			'url'          => __( 'proenem.com.br/app/simulados-com-tri', 'proenem-wordpress-theme' ),
+			'image'        => 'simulations-960.webp',
+			'image_sm'     => 'simulations-480.webp',
+			'image_width'  => 960,
+			'image_height' => 793,
+			'image_alt'    => __( 'Tela de simulados da Proenem.', 'proenem-wordpress-theme' ),
+			'bullets'      => array(
 				__( 'Nota real estimada pelo TRI', 'proenem-wordpress-theme' ),
 				__( 'Comparativo com aprovados', 'proenem-wordpress-theme' ),
 				__( 'Diagnóstico por área e tópico', 'proenem-wordpress-theme' ),
@@ -676,11 +599,17 @@ $subjects = array(
 								class="pro-home-platform-tab pro-home-platform-tab--<?php echo esc_attr( $item['tone'] ); ?><?php echo $is_active ? ' is-active' : ''; ?>"
 								role="tab"
 								aria-selected="<?php echo esc_attr( $is_active ? 'true' : 'false' ); ?>"
+								tabindex="<?php echo esc_attr( $is_active ? '0' : '-1' ); ?>"
 								data-pro-home-platform-tab
 								data-title="<?php echo esc_attr( $item['title'] ); ?>"
 								data-body="<?php echo esc_attr( $item['body'] ); ?>"
 								data-url="<?php echo esc_attr( $item['url'] ); ?>"
 								data-bullets="<?php echo esc_attr( wp_json_encode( $item['bullets'] ) ); ?>"
+								data-image="<?php echo esc_url( $platform_asset_uri( $item['image'] ) ); ?>"
+								data-image-srcset="<?php echo esc_attr( esc_url( $platform_asset_uri( $item['image_sm'] ) ) . ' 480w, ' . esc_url( $platform_asset_uri( $item['image'] ) ) . ' 960w' ); ?>"
+								data-image-alt="<?php echo esc_attr( $item['image_alt'] ); ?>"
+								data-image-width="<?php echo esc_attr( $item['image_width'] ); ?>"
+								data-image-height="<?php echo esc_attr( $item['image_height'] ); ?>"
 							>
 								<span class="pro-home-platform-tab__icon" aria-hidden="true">
 									<?php
@@ -702,11 +631,18 @@ $subjects = array(
 							<span></span>
 							<small data-pro-home-platform-url><?php echo esc_html( $platform_active_item['url'] ); ?></small>
 						</div>
-						<div class="pro-home-platform-mock__dashboard" aria-hidden="true">
-							<span></span>
-							<span></span>
-							<span></span>
-							<span></span>
+						<div class="pro-home-platform-mock__media">
+							<img
+								data-pro-home-platform-image
+								src="<?php echo esc_url( $platform_asset_uri( $platform_active_item['image'] ) ); ?>"
+								srcset="<?php echo esc_attr( esc_url( $platform_asset_uri( $platform_active_item['image_sm'] ) ) . ' 480w, ' . esc_url( $platform_asset_uri( $platform_active_item['image'] ) ) . ' 960w' ); ?>"
+								sizes="(max-width: 760px) calc(100vw - 4.2rem), min(46vw, 48rem)"
+								width="<?php echo esc_attr( $platform_active_item['image_width'] ); ?>"
+								height="<?php echo esc_attr( $platform_active_item['image_height'] ); ?>"
+								alt="<?php echo esc_attr( $platform_active_item['image_alt'] ); ?>"
+								loading="lazy"
+								decoding="async"
+							>
 						</div>
 						<h3 data-pro-home-platform-title><?php echo esc_html( $platform_active_item['title'] ); ?></h3>
 						<p data-pro-home-platform-body><?php echo esc_html( $platform_active_item['body'] ); ?></p>
@@ -726,7 +662,7 @@ $subjects = array(
 		<img class="pro-home-question-bank__background" src="<?php echo esc_url( $home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'sticker_explore_questions.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<h2 id="pro-questions-title">
 			<?php esc_html_e( 'Mais de', 'proenem-wordpress-theme' ); ?>
-			<strong><?php esc_html_e( '50 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
+			<strong><?php esc_html_e( '60 mil questões —', 'proenem-wordpress-theme' ); ?></strong><br>
 			<?php esc_html_e( 'e um plano que diz qual resolver agora.', 'proenem-wordpress-theme' ); ?>
 		</h2>
 		<p><?php esc_html_e( 'Questões do ENEM e dos principais vestibulares, com resolução em vídeo. O método escolhe as certas para a sua meta; você só executa.', 'proenem-wordpress-theme' ); ?></p>
@@ -742,14 +678,12 @@ $subjects = array(
 					<span class="pro-home-subject-card__body">
 						<strong><?php echo esc_html( $subject['name'] ); ?></strong>
 						<small><?php echo esc_html( $subject['category'] ); ?></small>
-						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['questions'] ); ?></span>
-						<span class="pro-home-subject-card__meta"><?php echo esc_html( $subject['classes'] ); ?></span>
 					</span>
 					<span class="pro-home-subject-card__arrow" aria-hidden="true">→</span>
 				</a>
 			<?php endforeach; ?>
 		</div>
-		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="#planos">
+		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'questions' ) ); ?>">
 			<?php esc_html_e( 'Explorar questões grátis', 'proenem-wordpress-theme' ); ?>
 			<span class="pen-button__badge"><?php esc_html_e( 'Sem criar conta', 'proenem-wordpress-theme' ); ?></span>
 		</a>
@@ -759,17 +693,12 @@ $subjects = array(
 	<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
 		<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'price_vector_strokes.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<div class="pro-home-pricing__header">
-			<div class="pro-home-pricing__seal" aria-hidden="true">
-				<img class="pro-home-pricing__seal-bg" src="<?php echo esc_url( $home_asset_uri( 'Ellipse-fundo-price.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Ellipse-fundo-price.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<img class="pro-home-pricing__seal-text" src="<?php echo esc_url( $home_asset_uri( 'Cancele-quando-voce-quiser.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'Cancele-quando-voce-quiser.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-				<img class="pro-home-pricing__seal-check" src="<?php echo esc_url( $home_asset_uri( 'check-verified-01.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'check-verified-01.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			</div>
 			<div class="pro-home-pricing__intro">
 				<h2 id="pro-pricing-title">
 					<?php esc_html_e( 'Comece de graça.', 'proenem-wordpress-theme' ); ?><br>
 					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Evolua quando', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'fizer sentido.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Comece grátis, sem cartão. Cancele quando quiser.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( '7 dias de garantia em todos os planos pagos.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Comece grátis, sem cartão.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( 'Nos planos pagos, você tem 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid">
@@ -781,53 +710,28 @@ $subjects = array(
 					<header>
 						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
 						<p><?php echo esc_html( $plan['summary'] ); ?></p>
-						<strong <?php echo ! empty( $plan['featured'] ) ? 'style="' . esc_attr( '--pro-home-pricing-star: url(' . esc_url( $home_asset_uri( 'pricing_star.svg' ) ) . ');' ) . '"' : ''; ?>><span><?php esc_html_e( 'R$', 'proenem-wordpress-theme' ); ?></span><?php echo esc_html( $plan['price'] ); ?><small><?php esc_html_e( 'ao mês', 'proenem-wordpress-theme' ); ?></small></strong>
 					</header>
 					<ul>
 						<?php foreach ( $plan['features'] as $feature ) : ?>
 							<li><?php echo esc_html( $feature ); ?></li>
 						<?php endforeach; ?>
 					</ul>
+					<div class="pro-home-plan-card__price">
+						<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
+						<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+							<p><?php echo esc_html( $plan['price_details'] ); ?></p>
+						<?php endif; ?>
+					</div>
 					<a class="pen-action-link pen-action-link--primary" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
+					<?php if ( ! empty( $plan['guarantee'] ) ) : ?>
+						<p class="pro-home-plan-card__guarantee"><span aria-hidden="true">✓</span><?php echo esc_html( $plan['guarantee'] ); ?></p>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>
 	</section>
 
-	<section id="depoimentos" class="pro-home-testimonials" aria-labelledby="pro-testimonials-title" data-pro-home-testimonials-slider>
-		<div class="pro-home-testimonials__header">
-			<span class="pen-section-pill"><?php esc_html_e( 'Aprovados', 'proenem-wordpress-theme' ); ?></span>
-			<h2 id="pro-testimonials-title">
-				<span><?php esc_html_e( 'Quem estudou com método,', 'proenem-wordpress-theme' ); ?></span>
-				<strong><?php esc_html_e( 'chegou na vaga.', 'proenem-wordpress-theme' ); ?></strong>
-			</h2>
-			<p><?php esc_html_e( 'Mais de 40 mil alunos já foram aprovados com a Proenem. Conheça algumas histórias.', 'proenem-wordpress-theme' ); ?></p>
-		</div>
-		<div class="pro-home-testimonials__viewport">
-			<div class="pro-home-testimonials__track" data-pro-home-testimonials-track>
-				<?php foreach ( $testimonials as $testimonial_index => $testimonial ) : ?>
-					<article class="pro-home-testimonial-card<?php echo 1 === $testimonial_index ? ' is-active' : ''; ?>" data-pro-home-testimonial-card>
-						<div class="pro-home-testimonial-card__quote">
-							<span aria-hidden="true">“</span>
-							<p><?php echo esc_html( $testimonial['quote'] ); ?></p>
-						</div>
-						<footer>
-							<img src="<?php echo esc_url( $home_asset_uri( $testimonial['image'] ) ); ?>" alt="<?php echo esc_attr( $testimonial['name'] ); ?>"<?php echo $home_image_attributes( $testimonial['image'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo $home_image_source_set( $testimonial['image'], '4.35rem' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-							<span>
-								<strong><?php echo esc_html( $testimonial['name'] ); ?></strong>
-								<small><?php echo esc_html( $testimonial['role'] ); ?></small>
-							</span>
-						</footer>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		</div>
-		<div class="pro-home-testimonials__controls" aria-label="<?php esc_attr_e( 'Controles dos depoimentos', 'proenem-wordpress-theme' ); ?>">
-			<button type="button" data-pro-home-testimonials-prev aria-label="<?php esc_attr_e( 'Depoimento anterior', 'proenem-wordpress-theme' ); ?>">←</button>
-			<button type="button" data-pro-home-testimonials-next aria-label="<?php esc_attr_e( 'Próximo depoimento', 'proenem-wordpress-theme' ); ?>">→</button>
-			<a class="pen-button pen-button--secondary pen-button--md pro-home-testimonials__more" href="https://aprovados.proenem.com.br/" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Ver mais', 'proenem-wordpress-theme' ); ?></a>
-		</div>
-	</section>
+	<?php proenem_render_home_testimonials_section( proenem_get_home_testimonials() ); ?>
 
 	<section class="pen-audience-section pro-home-school-section" aria-labelledby="pro-school-title">
 		<div class="pro-home-school-section__marquee" aria-hidden="true">

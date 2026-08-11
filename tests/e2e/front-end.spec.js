@@ -1,4 +1,101 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+
+const expectHomeProofContract = async (page) => {
+  const proofSection = page.locator(".pen-proof-section");
+  const proofSectionCount = await proofSection.count();
+
+  if (proofSectionCount === 0) {
+    await expect(page.getByText(/40 mil|40\.000/i)).toHaveCount(0);
+    return false;
+  }
+
+  await expect(proofSection).toHaveCount(1);
+  await expect(proofSection.locator(".pen-proof-section__strip h2")).toHaveText(
+    "+ de 40.000 aprovados em universidades públicas",
+  );
+  await expect(proofSection.locator(".pen-proof-section__logo")).toHaveCount(6);
+  expect(await proofSection.locator(".pen-proof-section__student").count()).toBeGreaterThan(0);
+
+  return true;
+};
+
+const expectHomeTestimonialsContract = async (page) => {
+  const section = page.locator(".pro-home-testimonials");
+  const sectionCount = await section.count();
+
+  await expect(
+    page.getByText(
+      "Ter um plano claro mudou tudo. Eu sabia o que fazer a cada semana e conseguia medir se estava avançando de verdade.",
+      { exact: true },
+    ),
+  ).toHaveCount(0);
+
+  if (sectionCount === 0) {
+    return false;
+  }
+
+  await expect(section).toHaveCount(1);
+  const cards = section.locator("[data-pro-home-testimonial-card]:not(.is-clone)");
+  const cardCount = await cards.count();
+
+  expect(cardCount).toBeGreaterThan(0);
+  await expect(cards.locator(".pro-home-testimonial-card__quote p")).toHaveCount(cardCount);
+  await expect(cards.locator("footer img")).toHaveCount(cardCount);
+  await expect(cards.locator("footer strong")).toHaveCount(cardCount);
+  await expect(cards.locator("footer small")).toHaveCount(cardCount);
+
+  for (const card of await cards.all()) {
+    expect((await card.locator(".pro-home-testimonial-card__quote p").innerText()).trim()).not.toBe("");
+    expect((await card.locator("footer strong").innerText()).trim()).not.toBe("");
+    expect((await card.locator("footer small").innerText()).trim()).toContain(" · ");
+  }
+
+  return true;
+};
+
+const expectMinimumTouchTargets = async (targets, minimumSize = 44) => {
+  const boxes = await targets.evaluateAll((elements) =>
+    elements.map((element) => {
+      const bounds = element.getBoundingClientRect();
+
+      return {
+        height: bounds.height,
+        label: element.getAttribute("aria-label") || element.textContent.trim(),
+        width: bounds.width,
+        x: bounds.x,
+        y: bounds.y,
+      };
+    }),
+  );
+
+  expect(boxes.length).toBeGreaterThan(0);
+
+  for (const box of boxes) {
+    expect(box.label).not.toBe("");
+    expect(box.width).toBeGreaterThanOrEqual(minimumSize);
+    expect(box.height).toBeGreaterThanOrEqual(minimumSize);
+  }
+
+  return boxes;
+};
+
+const expectTargetsNotToOverlap = (boxes) => {
+  for (const [index, current] of boxes.entries()) {
+    for (const next of boxes.slice(index + 1)) {
+      const overlapWidth = Math.max(
+        0,
+        Math.min(current.x + current.width, next.x + next.width) - Math.max(current.x, next.x),
+      );
+      const overlapHeight = Math.max(
+        0,
+        Math.min(current.y + current.height, next.y + next.height) - Math.max(current.y, next.y),
+      );
+
+      expect(overlapWidth * overlapHeight).toBeLessThanOrEqual(0.5);
+    }
+  }
+};
 
 const installNavbarSubmenuFixture = async (page) => {
   await page.route(
@@ -54,31 +151,64 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação não");
   await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
   await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: /começar grátis/i }).first()).toHaveAttribute("href", "#planos");
-  await expect(page.getByText(/alunos reais, aprovados em algumas das universidades/i)).toBeVisible();
-  await expect(
-    page.locator("[data-pro-home-testimonial-card]:not(.is-clone) strong", {
-      hasText: "Amanda Alves",
-    }),
-  ).toHaveText("Amanda Alves");
+  await expect(page.getByRole("link", { name: /criar conta grátis/i }).first()).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
+  await expectHomeProofContract(page);
+  await expectHomeTestimonialsContract(page);
   await expect(page.getByText("Pedro Martins", { exact: true })).toHaveCount(0);
   await expect(page.locator(".pro-home-pain-card")).toHaveCount(4);
   await expect(page.getByRole("heading", { level: 3, name: /começa e abandona/i })).toBeVisible();
   await expect(page.locator(".pro-home-platform-guard")).toContainText("Não é um acervo de vídeos. É um sistema que te diz");
   await expect(page.locator(".pro-home-platform-guard strong")).toHaveText("o próximo passo.");
+  await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
+  await expect(page.getByText("+60 mil questões", { exact: true })).toBeVisible();
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
-  await expect(page.getByText(/comece grátis, sem cartão.*cancele quando quiser/i)).toBeVisible();
+  await expect(page.getByText(/comece grátis, sem cartão.*7 dias de garantia/i)).toBeVisible();
   await expect(page.locator(".pen-plan-card")).toHaveCount(3);
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
+  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Banco de +60 mil questões");
   await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
-  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute("href", "https://estude.proenem.com.br/");
+  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 3, name: "Método PRO" })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute("href", /pay\.hotmart\.com\/W106752534O/);
-  await expect(page.getByRole("link", { name: /quero o pro medicina/i })).toHaveAttribute("href", /pay\.hotmart\.com\/X99453521F/);
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
+  const methodPlan = page.locator(".pen-plan-card").nth(1);
+  const advancedPlan = page.locator(".pen-plan-card").nth(2);
+  await expect(methodPlan).toContainText("Tudo do Grátis e mais...");
+  await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
+  await expect(methodPlan).toContainText("2 correções de redação mensais");
+  await expect(methodPlan).toContainText("Aulas gravadas com os melhores professores");
+  await expect(methodPlan).toContainText("PDFs completos");
+  await expect(methodPlan).toContainText("Simulados com nota TRI");
+  await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
+  await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
+  await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
+  await expect(advancedPlan).toContainText("Tudo do PRO e mais...");
+  await expect(advancedPlan).toContainText("Aulas ao vivo");
+  await expect(advancedPlan).toContainText("Revisões ao vivo");
+  await expect(advancedPlan).toContainText("Mentoria em grupo");
+  await expect(advancedPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*39,90/);
+  await expect(advancedPlan).not.toContainText("Plano anual. Total parcelado: R$ 478,80.");
+  await expect(advancedPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
+  await expect(page.getByRole("link", { name: /^quero o método pro$/i })).toHaveAttribute(
+    "href",
+    /pay\.hotmart\.com\/W106752534O/,
+  );
+  await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveAttribute(
+    "href",
+    "https://medicina.proenem.com.br/",
+  );
+  await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
+    "pode cancelar dentro desse prazo e usar a garantia",
+  );
   const b2bLinks = page
     .locator(".pro-home-school-section, .pro-home__final-cta")
     .getByRole("link", { name: /falar com nossa equipe/i });
@@ -90,6 +220,128 @@ test("front page renders the Proenem home", async ({ page }) => {
     );
   }
   await expect(page.locator(".pen-site-footer")).toBeVisible();
+});
+
+test("front page keeps conversion actions compatible with their labels", async ({ page }) => {
+  await page.goto("/");
+
+  await expect(page.locator(".pro-home > .pro-site-navbar")).toHaveCSS("position", "sticky");
+
+  const signupActions = page.getByRole("link", { name: /criar conta grátis/i });
+  const questionAction = page.getByRole("link", { name: /explorar questões grátis/i });
+
+  expect(await signupActions.count()).toBeGreaterThanOrEqual(4);
+
+  for (const action of await signupActions.all()) {
+    await expect(action).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+  }
+
+  await expect(questionAction).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/treino/questoes",
+  );
+  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+});
+
+test("front page keeps the navbar sticky and reveals the mobile primary action", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const navbar = page.locator(".pro-home > .pro-site-navbar");
+  const hero = page.locator(".pen-hero-section");
+  const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
+  const persistentLink = persistentAction.getByRole("link", { name: /criar conta grátis/i });
+  const supportButton = page.locator("#wpp-icon-btn");
+  const toggle = navbar.locator(".pro-home-navbar-toggle");
+
+  await expect(navbar).toHaveCSS("position", "sticky");
+  await expect(persistentAction).toBeHidden();
+
+  const navbarHeight = await navbar.evaluate((element) => element.getBoundingClientRect().height);
+  const heroDocumentTop = await hero.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeVisible();
+  await expect(persistentLink).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+
+  const stickyBox = await navbar.boundingBox();
+  const actionBox = await persistentAction.boundingBox();
+  const scrolledNavbarHeight = await navbar.evaluate((element) => element.getBoundingClientRect().height);
+  const scrolledHeroDocumentTop = await hero.evaluate(
+    (element) => element.getBoundingClientRect().top + window.scrollY,
+  );
+
+  expect(stickyBox).not.toBeNull();
+  expect(actionBox).not.toBeNull();
+  expect(stickyBox.y).toBe(0);
+  expect(scrolledNavbarHeight).toBe(navbarHeight);
+  expect(scrolledHeroDocumentTop).toBeCloseTo(heroDocumentTop, 0);
+  expect(actionBox.x).toBe(0);
+  expect(actionBox.width).toBe(390);
+  expect(actionBox.y + actionBox.height).toBeCloseTo(844, 0);
+  await expect(persistentAction).toHaveCSS("border-radius", "0px");
+
+  if (await supportButton.count()) {
+    const supportBox = await supportButton.boundingBox();
+
+    expect(supportBox).not.toBeNull();
+    expect(supportBox.y + supportBox.height).toBeLessThanOrEqual(actionBox.y - 8);
+  }
+
+  await toggle.click();
+  await expect(persistentAction).toBeHidden();
+  await toggle.click();
+  await expect(persistentAction).toBeVisible();
+
+  await page.locator(".pen-plan-card.is-free .pen-action-link").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeHidden();
+});
+
+test("Elementor home fixture uses the same conversion and persistent action contracts", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?pagename=e2e-elementor-home");
+
+  const navbarWidget = page.locator(".elementor-widget-pro_navbar");
+  const navbar = navbarWidget.locator(".pro-site-navbar");
+  const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
+
+  await expect(navbarWidget).toBeVisible();
+  await expect(navbarWidget).toHaveCSS("position", "sticky");
+  await expect(navbar).toHaveCSS("flex-direction", "row");
+
+  const navbarBox = await navbar.boundingBox();
+  const logoBox = await navbar.locator(".pen-brand-logo").boundingBox();
+  const toggleBox = await navbar.locator(".pro-home-navbar-toggle").boundingBox();
+
+  expect(navbarBox).not.toBeNull();
+  expect(logoBox).not.toBeNull();
+  expect(toggleBox).not.toBeNull();
+  expect(navbarBox.height).toBeLessThanOrEqual(80);
+  expect(Math.abs(logoBox.y + logoBox.height / 2 - (toggleBox.y + toggleBox.height / 2))).toBeLessThanOrEqual(1);
+  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/treino/questoes",
+  );
+  await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
+  await expect(page.locator(".pro-home-subject-card__meta")).toHaveCount(0);
+  await expectHomeProofContract(page);
+  await expectHomeTestimonialsContract(page);
+
+  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await expect(persistentAction).toBeVisible();
+  const persistentActionBox = await persistentAction.boundingBox();
+
+  expect(persistentActionBox).not.toBeNull();
+  expect(persistentActionBox.x).toBe(0);
+  expect(persistentActionBox.width).toBe(390);
+  expect(persistentActionBox.y + persistentActionBox.height).toBeCloseTo(844, 0);
+  await expect(persistentAction.getByRole("link", { name: /criar conta grátis/i })).toHaveAttribute(
+    "href",
+    "https://estude.proenem.com.br/signup",
+  );
 });
 
 test("content pages center the Gutenberg layout without centering text", async ({ page }) => {
@@ -272,6 +524,12 @@ test("front page pillar controls move only the cards without shifting the sectio
   await expect(cards.nth(1)).toHaveClass(/is-active/);
   await previousButton.click();
   await expect(cards.nth(0)).toHaveClass(/is-active/);
+  await nextButton.focus();
+  await nextButton.press("Enter");
+  await expect(cards.nth(1)).toHaveClass(/is-active/);
+  await previousButton.focus();
+  await previousButton.press("Enter");
+  await expect(cards.nth(0)).toHaveClass(/is-active/);
 
   const heightSamples = await section.evaluate(async (element) => {
     const samples = [element.getBoundingClientRect().height];
@@ -350,22 +608,20 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   await page.evaluate(() => document.fonts.ready);
 
   const section = page.locator(".pen-pricing-section");
-  const seal = section.locator(".pro-home-pricing__seal");
   const title = section.locator(".pro-home-pricing__intro h2");
   const support = section.locator(".pro-home-pricing__intro p").first();
   const plans = section.locator(".pen-plan-grid");
   const freePlanButton = section.locator(".pen-plan-card.is-free .pen-action-link");
   const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
 
-  const sealBox = await seal.boundingBox();
   const titleBox = await title.boundingBox();
   const supportBox = await support.boundingBox();
   const plansBox = await plans.boundingBox();
 
-  expect(sealBox).not.toBeNull();
   expect(titleBox).not.toBeNull();
   expect(supportBox).not.toBeNull();
   expect(plansBox).not.toBeNull();
+  await expect(section.locator(".pro-home-pricing__seal")).toHaveCount(0);
   await expect(title).toHaveCSS("text-align", "center");
   await expect(support).toHaveCSS("font-size", "16px");
   await expect(support).toHaveCSS("text-align", "left");
@@ -373,7 +629,6 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
     "background-color",
     await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
   );
-  expect(titleBox.y - (sealBox.y + sealBox.height)).toBeLessThanOrEqual(16);
   expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
   expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
 
@@ -384,33 +639,89 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   );
 });
 
-test("front page keeps the student badge above the mobile portraits", async ({ page }) => {
+test("front page pricing keeps centered prices and guarantees below paid CTAs without overlap", async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1366, height: 768 },
+    { width: 1600, height: 900 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+
+    const cards = page.locator(".pen-pricing-section .pen-plan-card");
+
+    for (let index = 0; index < 3; index += 1) {
+      const card = cards.nth(index);
+      const featuresBox = await card.locator("ul").boundingBox();
+      const priceBox = await card.locator(".pro-home-plan-card__price").boundingBox();
+      const ctaBox = await card.locator(".pen-action-link").boundingBox();
+      const cardBox = await card.boundingBox();
+      const priceAlignment = await card
+        .locator(".pro-home-plan-card__price")
+        .evaluate((element) => window.getComputedStyle(element).textAlign);
+
+      expect(featuresBox).not.toBeNull();
+      expect(priceBox).not.toBeNull();
+      expect(ctaBox).not.toBeNull();
+      expect(cardBox).not.toBeNull();
+      expect(priceAlignment).toBe("center");
+      expect(priceBox.y).toBeGreaterThanOrEqual(featuresBox.y + featuresBox.height - 1);
+      expect(ctaBox.y).toBeGreaterThanOrEqual(priceBox.y + priceBox.height - 1);
+
+      if (index > 0) {
+        const guaranteeBox = await card.locator(".pro-home-plan-card__guarantee").boundingBox();
+
+        expect(guaranteeBox).not.toBeNull();
+        expect(guaranteeBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
+        expect(guaranteeBox.y + guaranteeBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      } else {
+        expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      }
+    }
+  }
+});
+
+test("front page keeps optional verified proof inside the mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const badge = await page.locator(".pen-proof-section__badge").boundingBox();
-  const firstPortrait = await page.locator(".pen-proof-section__image").first().boundingBox();
+  const hasProofSection = await expectHomeProofContract(page);
 
-  expect(badge).not.toBeNull();
-  expect(firstPortrait).not.toBeNull();
-  expect(badge.y + badge.height).toBeLessThanOrEqual(firstPortrait.y);
+  if (!hasProofSection) {
+    return;
+  }
+
+  const proofGrid = page.locator(".pen-proof-section__students");
+  const gridMetrics = await proofGrid.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+
+    return {
+      left: rect.left,
+      right: rect.right,
+      viewportWidth: window.innerWidth,
+      documentWidth: document.documentElement.scrollWidth,
+    };
+  });
+
+  expect(gridMetrics.left).toBe(0);
+  expect(gridMetrics.right).toBeCloseTo(gridMetrics.viewportWidth, 0);
+  expect(gridMetrics.documentWidth).toBe(gridMetrics.viewportWidth);
 });
 
 test("front page platform uses a compact horizontal menu on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const section = page.locator(".pen-platform-showcase");
   const tabs = page.locator(".pro-home-platform-tabs");
   const controls = page.locator(".pro-home-platform-tabs__controls");
   const previousButton = controls.locator("[data-pro-home-platform-prev]");
   const nextButton = controls.locator("[data-pro-home-platform-next]");
 
-  await expect(tabs.getByRole("tab")).toHaveCount(6);
+  await expect(tabs.getByRole("tab")).toHaveCount(5);
   await expect(controls).toBeVisible();
-  await expect(page.locator(".pro-home-platform-mock__dashboard")).toBeHidden();
+  await expect(page.locator("[data-pro-home-platform-image]")).toBeVisible();
 
-  const sectionBox = await section.boundingBox();
   const activeTabBox = await tabs.locator(".is-active").boundingBox();
   const tabsBox = await tabs.boundingBox();
   const controlsBox = await controls.boundingBox();
@@ -419,15 +730,17 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
     scrollWidth: element.scrollWidth,
   }));
 
-  expect(sectionBox).not.toBeNull();
   expect(activeTabBox).not.toBeNull();
   expect(tabsBox).not.toBeNull();
   expect(controlsBox).not.toBeNull();
-  expect(sectionBox.height).toBeLessThan(1150);
+  expect(tabsBox.height).toBeLessThan(90);
   expect(tabSizes.scrollWidth).toBeGreaterThan(tabSizes.clientWidth);
   expect(activeTabBox.x).toBeGreaterThanOrEqual(tabsBox.x - 1);
   expect(activeTabBox.x + activeTabBox.width).toBeLessThanOrEqual(tabsBox.x + tabsBox.width + 1);
   expect(Math.abs(controlsBox.x + controlsBox.width / 2 - (tabsBox.x + tabsBox.width / 2))).toBeLessThan(1);
+
+  const viewportOverflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(viewportOverflow).toBeLessThanOrEqual(1);
 
   await tabs.evaluate((element) => element.scrollTo({ behavior: "auto", left: 0 }));
   await expect(previousButton).toBeDisabled();
@@ -439,8 +752,108 @@ test("front page platform uses a compact horizontal menu on mobile", async ({ pa
   await expect(previousButton).toBeEnabled();
   await expect(page.locator("[data-pro-home-platform-title]")).toHaveText(activeTitle);
 
+  const scrollPositionBeforeKeyboard = await tabs.evaluate((element) => element.scrollLeft);
+
+  await previousButton.focus();
+  await previousButton.press("Enter");
+  await expect.poll(() => tabs.evaluate((element) => element.scrollLeft)).toBeLessThan(
+    scrollPositionBeforeKeyboard,
+  );
+
   await page.setViewportSize({ width: 1024, height: 844 });
   await expect(controls).toBeHidden();
+});
+
+test("front page mobile priority actions keep stable 44px touch targets", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  const footer = page.locator(".pen-site-footer");
+
+  await footer.evaluate((element) => {
+    const links = element.querySelector(".pen-site-footer__links");
+
+    if (links && !links.querySelector(".pen-site-footer__column a")) {
+      links.insertAdjacentHTML(
+        "beforeend",
+        '<section class="pen-site-footer__column"><ul class="pen-site-footer__menu"><li><a href="#e2e-footer-class">Turma E2E</a></li></ul></section>',
+      );
+    }
+
+    if (!element.querySelector(".pen-site-footer__legal-menu a")) {
+      element.querySelector(".pen-site-footer__meta")?.insertAdjacentHTML(
+        "beforebegin",
+        '<nav class="pen-site-footer__legal"><ul class="pen-site-footer__legal-menu"><li><a href="#e2e-footer-legal">Termos E2E</a></li></ul></nav>',
+      );
+    }
+
+    if (!element.querySelector(".pen-site-footer__social a")) {
+      element.querySelector(".pen-site-footer__top-widgets")?.insertAdjacentHTML(
+        "beforeend",
+        '<div class="pen-site-footer__social"><a href="#e2e-footer-social" aria-label="Instagram da Proenem"><span aria-hidden="true">◎</span></a></div>',
+      );
+    }
+  });
+
+  const targetGroups = [
+    page.locator(".pro-home-pillars-control button"),
+    page.locator(".pro-home-platform-tabs__controls button"),
+    footer.locator(
+      ".pen-site-footer__column a, .pen-site-footer__legal-menu a, .pen-site-footer__social a, .pen-site-footer__copyright",
+    ),
+  ];
+  const testimonialTargets = page.locator(
+    ".pro-home-testimonials__controls button, .pro-home-testimonials__controls a",
+  );
+
+  if ((await testimonialTargets.count()) > 0) {
+    targetGroups.push(testimonialTargets);
+  }
+
+  for (const targets of targetGroups) {
+    expectTargetsNotToOverlap(await expectMinimumTouchTargets(targets));
+  }
+
+  const focusTargets = [
+    page.locator("[data-pro-home-pillars-next]"),
+    page.locator(".pro-home-platform-tabs__controls button:not(:disabled)").first(),
+    footer.locator(".pen-site-footer__column a").first(),
+  ];
+
+  if ((await testimonialTargets.count()) > 0) {
+    focusTargets.push(testimonialTargets.first());
+  }
+
+  for (const target of focusTargets) {
+    await target.scrollIntoViewIfNeeded();
+
+    const beforeFocus = await target.boundingBox();
+
+    await target.focus();
+    await expect(target).toBeFocused();
+    await expect(target).toHaveCSS("outline-style", "solid");
+
+    const afterFocus = await target.boundingBox();
+
+    expect(beforeFocus).not.toBeNull();
+    expect(afterFocus).not.toBeNull();
+    expect(afterFocus).toEqual(beforeFocus);
+  }
+
+  const accessibilityScan = await new AxeBuilder({ page })
+    .include(
+      ".pen-pillars-section, .pen-platform-showcase, .pro-home-testimonials, .pen-site-footer",
+    )
+    .analyze();
+
+  expect(
+    accessibilityScan.violations.map(({ id, nodes }) => ({
+      id,
+      targets: nodes.map((node) => node.target),
+    })),
+  ).toEqual([]);
 });
 
 test("front page platform keeps benefit lists informational across every tab", async ({ page }) => {
@@ -450,7 +863,7 @@ test("front page platform keeps benefit lists informational across every tab", a
   const tabs = page.locator("[data-pro-home-platform-tab]");
   const bullets = page.locator("[data-pro-home-platform-bullets]");
 
-  await expect(tabs).toHaveCount(6);
+  await expect(tabs).toHaveCount(5);
   await expect(bullets.locator("a, button")).toHaveCount(0);
 
   for (const tab of await tabs.all()) {
@@ -463,6 +876,47 @@ test("front page platform keeps benefit lists informational across every tab", a
     await expect(items.first()).toHaveCSS("box-shadow", "none");
     await expect(items.first()).toHaveCSS("border-radius", "0px");
   }
+});
+
+test("front page platform swaps real screenshots without layout shift", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+
+  const tabs = page.locator("[data-pro-home-platform-tab]");
+  const image = page.locator("[data-pro-home-platform-image]");
+  const media = page.locator(".pro-home-platform-mock__media");
+  const expectedImages = [
+    "live-960.webp",
+    "question-bank-960.webp",
+    "study-plan-960.webp",
+    "essay-feedback-960.webp",
+    "simulations-960.webp",
+  ];
+
+  await expect(tabs).toHaveCount(expectedImages.length);
+  await expect(image).toHaveAttribute("loading", "lazy");
+  await expect(image).toHaveAttribute("decoding", "async");
+  await expect(image).toHaveAttribute("width", /\d+/);
+  await expect(image).toHaveAttribute("height", /\d+/);
+
+  const initialMediaBox = await media.boundingBox();
+  expect(initialMediaBox).not.toBeNull();
+
+  for (const [index, expectedImage] of expectedImages.entries()) {
+    await tabs.nth(index).click();
+    await expect(image).toHaveAttribute("src", new RegExp(expectedImage.replace(".", "\\.")));
+    await expect(image).not.toHaveAttribute("alt", "");
+
+    const currentMediaBox = await media.boundingBox();
+    expect(currentMediaBox).not.toBeNull();
+    expect(Math.abs(currentMediaBox.height - initialMediaBox.height)).toBeLessThanOrEqual(1);
+  }
+
+  await tabs.first().focus();
+  await tabs.first().press("ArrowRight");
+  await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
+  await expect(tabs.nth(1)).toBeFocused();
+  await expect(image).toHaveAttribute("src", /question-bank-960\.webp/);
 });
 
 test("front page question cards form two mobile rows without stretching the stamp", async ({
@@ -501,23 +955,34 @@ test("front page subject icons turn yellow only on hover or focus", async ({ pag
     "https://estude.proenem.com.br/treino/questoes/s/nsino-da-ingua-strangeira-nglesa/linguagens/sa",
     "https://estude.proenem.com.br/treino/questoes/s/linguagens/a",
   ];
-  const counts = [
-    ["1524 questões", "64 aulas"],
-    ["65381 questões", "64 aulas"],
-    ["8735 questões", "64 aulas"],
-    ["3129 questões", "64 aulas"],
-    ["11458 questões", "32 aulas"],
-    ["21457 questões", "64 aulas"],
-  ];
-
   await expect(cards).toHaveCount(6);
+  await expect(cards.locator(".pro-home-subject-card__meta")).toHaveCount(0);
 
   for (const [index, icon] of (await icons.all()).entries()) {
+    const card = cards.nth(index);
+
     await expect(icon).toHaveCSS("background-color", "rgb(250, 157, 205)");
-    await expect(cards.nth(index)).toHaveAttribute("href", destinations[index]);
-    await expect(cards.nth(index)).toHaveAttribute("target", "_blank");
-    await expect(cards.nth(index)).toHaveAttribute("rel", "noopener noreferrer");
-    await expect(cards.nth(index).locator(".pro-home-subject-card__meta")).toHaveText(counts[index]);
+    await expect(card).toHaveAttribute("href", destinations[index]);
+    await expect(card).toHaveAttribute("target", "_blank");
+    await expect(card).toHaveAttribute("rel", "noopener noreferrer");
+
+    const centerOffsets = await card.evaluate((element) => {
+      const cardBox = element.getBoundingClientRect();
+      const cardCenter = cardBox.top + cardBox.height / 2;
+
+      return [
+        ".pro-home-subject-card__icon",
+        ".pro-home-subject-card__body",
+        ".pro-home-subject-card__arrow",
+      ].map((selector) => {
+        const childBox = element.querySelector(selector).getBoundingClientRect();
+        return Math.abs(childBox.top + childBox.height / 2 - cardCenter);
+      });
+    });
+
+    for (const offset of centerOffsets) {
+      expect(offset).toBeLessThanOrEqual(1);
+    }
   }
 
   await cards.nth(1).hover();
@@ -532,6 +997,10 @@ test("front page testimonial heading stays inside the mobile viewport", async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
+  if (!(await expectHomeTestimonialsContract(page))) {
+    return;
+  }
+
   const heading = await page.locator("#pro-testimonials-title").boundingBox();
 
   expect(heading).not.toBeNull();
@@ -545,6 +1014,10 @@ test("front page testimonial controls include the external approved-students lin
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
+
+  if (!(await expectHomeTestimonialsContract(page))) {
+    return;
+  }
 
   const controls = page.locator(".pro-home-testimonials__controls");
   const previous = controls.getByRole("button", { name: "Depoimento anterior" });
@@ -572,6 +1045,13 @@ test("front page testimonial controls include the external approved-students lin
   expect(moreBox.x - (nextBox.x + nextBox.width)).toBeGreaterThan(
     nextBox.x - (previousBox.x + previousBox.width),
   );
+
+  const activeCard = page.locator("[data-pro-home-testimonial-card].is-active");
+  const activeQuote = await activeCard.locator(".pro-home-testimonial-card__quote p").innerText();
+
+  await next.focus();
+  await next.press("Enter");
+  await expect(page.locator("[data-pro-home-testimonial-card].is-active .pro-home-testimonial-card__quote p")).not.toHaveText(activeQuote);
 });
 
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {

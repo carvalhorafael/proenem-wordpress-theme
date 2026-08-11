@@ -1996,8 +1996,31 @@ body.proenem-home-template {
     ),
     #e23a3a;
   max-width: none;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   padding: 0;
+}
+
+.site-header,
+.pro-home > .pro-site-navbar,
+.elementor-widget-pro_navbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.admin-bar .site-header,
+.admin-bar .pro-home > .pro-site-navbar,
+.admin-bar .elementor-widget-pro_navbar {
+  top: 32px;
+}
+
+.pro-mobile-persistent-action {
+  display: none;
+}
+
+.pro-mobile-persistent-action[hidden] {
+  display: none !important;
 }
 
 .pro-site-navbar,
@@ -2009,7 +2032,7 @@ body.proenem-home-template {
   left: 50%;
   margin: 0 0 0 -50vw !important;
   max-width: 100vw !important;
-  position: relative;
+  position: sticky !important;
   width: 100vw !important;
 }
 
@@ -2572,7 +2595,14 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pen-site-footer__column a:hover,
 .pen-site-footer__column a:focus-visible {
-  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+.pen-site-footer__column a:hover::after,
+.pen-site-footer__column a:focus-visible::after {
+  transform: none;
 }
 
 .pen-site-footer__legal,
@@ -2606,7 +2636,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pen-site-footer__legal-menu a:hover,
 .pen-site-footer__legal-menu a:focus-visible {
   color: var(--pen-color-surface);
-  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.2em;
+}
+
+.pen-site-footer a:focus-visible,
+.pen-site-footer button:focus-visible {
+  outline: 3px solid var(--pen-color-surface);
+  outline-offset: 3px;
 }
 
 .pen-site-footer__meta {
@@ -2837,6 +2875,53 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     2px 2px 0 var(--pen-color-ink);
   transform: translate(-50%, -47%) rotate(-4deg);
   width: 190px;
+}
+
+.pro-home .pro-home-proof-students {
+  background: var(--pro-home-soft-pink);
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+}
+
+.pro-home .pro-home-proof-student {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  color: var(--pen-color-ink);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  margin: 0;
+  min-width: 0;
+}
+
+.pro-home .pro-home-proof-student .pen-proof-section__image {
+  border: 0;
+  border-bottom: var(--pen-border-brand-xs);
+  display: block;
+  height: auto;
+}
+
+.pro-home .pro-home-proof-student__caption {
+  align-content: start;
+  display: grid;
+  gap: var(--pen-space-1);
+  padding: clamp(var(--pen-space-3), 2vw, var(--pen-space-5));
+}
+
+.pro-home .pen-proof-section__student-name {
+  font-family: var(--pen-font-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1;
+}
+
+.pro-home .pen-proof-section__student-result {
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: var(--pen-font-weight-ui);
+  line-height: 1.35;
+}
+
+.pro-home .pen-proof-section__student-year {
+  color: var(--pen-color-ink-muted);
+  font-size: var(--pen-text-sm);
+  line-height: 1.35;
 }
 
 .pro-home .pen-proof-section__strip {
@@ -3079,9 +3164,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   min-height: clamp(3.9rem, 5vw, 4.65rem);
   padding: 0.85rem clamp(0.95rem, 1.8vw, 1.25rem);
   text-align: left;
-  transition:
-    background-color 160ms ease,
-    font-weight 160ms ease;
+  transition: background-color 160ms ease;
   width: 100%;
 }
 
@@ -3092,7 +3175,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pro-home-platform-tab.is-active {
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .pro-home .pro-home-platform-tab__icon,
@@ -3162,14 +3245,14 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   border-bottom-right-radius: clamp(1.1rem, 2vw, 1.8rem);
   min-height: clamp(35rem, 48vw, 45rem);
   overflow: hidden;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  padding: clamp(1.5rem, 3vw, 2.75rem);
   place-items: center;
 }
 
 .pro-home .pen-platform-showcase__screen > div {
   background: var(--pen-color-surface);
   border-radius: clamp(1.2rem, 2vw, 2rem);
-  max-width: 39rem;
+  max-width: 48rem;
   padding: clamp(1.45rem, 3vw, 2.2rem);
   width: 100%;
 }
@@ -3221,27 +3304,22 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   white-space: nowrap;
 }
 
-.pro-home .pro-home-platform-mock__dashboard {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.pro-home .pro-home-platform-mock__dashboard span {
-  background:
-    linear-gradient(var(--pen-color-ink), var(--pen-color-ink)) 1rem calc(100% - 1rem) / 62% 0.34rem no-repeat,
-    linear-gradient(#e7e7ea, #e7e7ea) 1rem calc(100% - 1rem) / calc(100% - 2rem) 0.34rem no-repeat,
-    var(--pen-color-surface);
+.pro-home .pro-home-platform-mock__media {
+  aspect-ratio: 16 / 9;
+  background: #f7f7f8;
   border: 1px solid #e5e5e8;
-  border-radius: 0.75rem;
-  min-height: 4.4rem;
+  border-radius: clamp(0.75rem, 1.5vw, 1.1rem);
+  display: grid;
+  overflow: hidden;
+  place-items: center;
 }
 
-.pro-home .pro-home-platform-mock__dashboard span:nth-child(2),
-.pro-home .pro-home-platform-mock__dashboard span:nth-child(4) {
-  background-size:
-    78% 0.34rem,
-    calc(100% - 2rem) 0.34rem;
+.pro-home .pro-home-platform-mock__media img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  object-position: center top;
+  width: 100%;
 }
 
 .pro-home .pro-home-platform-mock h3 {
@@ -3403,6 +3481,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   width: clamp(18.5rem, 26vw, 22.6rem);
 }
 
+.pro-home .pen-subject-grid .pro-home-subject-card > .pro-home-subject-card__icon,
+.pro-home .pen-subject-grid .pro-home-subject-card > .pro-home-subject-card__body,
+.pro-home .pen-subject-grid .pro-home-subject-card > .pro-home-subject-card__arrow {
+  margin-top: 0;
+}
+
 .pro-home .pen-subject-grid .pro-home-subject-card:hover,
 .pro-home .pen-subject-grid .pro-home-subject-card:focus-visible {
   box-shadow: 1px 1px 0 var(--pen-color-ink);
@@ -3463,18 +3547,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   line-height: 1;
   margin-top: 0.15rem;
   text-transform: uppercase;
-}
-
-.pro-home .pen-subject-grid .pro-home-subject-card__meta {
-  color: var(--pen-color-ink);
-  display: block;
-  font-size: 0.68rem;
-  line-height: 1.2;
-  margin-top: 0.42rem;
-}
-
-.pro-home .pen-subject-grid .pro-home-subject-card__meta + .pro-home-subject-card__meta {
-  margin-top: 0.12rem;
 }
 
 .pro-home .pro-home-subject-card__arrow {
@@ -3574,45 +3646,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   margin: 1.55rem 0 0;
 }
 
-.pro-home .pro-home-pricing__seal {
-  display: block;
-  height: 11.6rem;
-  left: 0;
-  position: absolute;
-  top: 50%;
-  transform: translate(-0.8rem, -50%);
-  width: 11.6rem;
-}
-
-.pro-home .pro-home-pricing__seal img {
-  display: block;
-  max-width: none;
-  pointer-events: none;
-  position: absolute;
-}
-
-.pro-home .pro-home-pricing__seal-bg {
-  height: 7.35rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 7.35rem;
-}
-
-.pro-home .pro-home-pricing__seal-text {
-  height: 100%;
-  inset: 0;
-  width: 100%;
-}
-
-.pro-home .pro-home-pricing__seal-check {
-  height: 4.55rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 4.55rem;
-}
-
 .pro-home .pen-plan-grid {
   align-items: end;
   display: grid;
@@ -3630,8 +3663,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   box-shadow: var(--pen-shadow-hard-sm);
   color: var(--pen-color-ink);
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 27.75rem;
+  grid-template-rows: auto 1fr auto auto auto;
+  min-height: 31rem;
   overflow: visible;
   padding: 0;
   position: relative;
@@ -3641,7 +3674,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pen-plan-card.is-featured {
   background: #d72f2f;
   color: var(--pen-color-surface);
-  height: 34.375rem;
+  min-height: 37rem;
 }
 
 .pro-home .pen-plan-card.is-free header {
@@ -3650,9 +3683,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pen-plan-card header {
-  min-height: 9.35rem;
+  min-height: 8.5rem;
   padding: 2rem 1.55rem 1.45rem;
-  position: relative;
 }
 
 .pro-home .pen-plan-card.is-featured header {
@@ -3660,7 +3692,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
   background-size: 1.55rem 1.55rem;
-  min-height: 11.6rem;
+  min-height: 9.5rem;
 }
 
 .pro-home .pen-plan-card h3 {
@@ -3668,79 +3700,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   font-weight: 900;
   line-height: 1;
   margin: 0;
-  max-width: 11.5rem;
 }
 
 .pro-home .pen-plan-card header p {
   font-size: 1rem;
   line-height: 1.35;
   margin: 0.9rem 0 0;
-  max-width: 12.5rem;
-}
-
-.pro-home .pen-plan-card header strong {
-  align-items: flex-end;
-  color: var(--pen-color-surface);
-  display: flex;
-  font-size: clamp(4.2rem, 5vw, 5rem);
-  font-weight: 900;
-  gap: 0.25rem;
-  letter-spacing: -0.03em;
-  line-height: 0.78;
-  position: absolute;
-  right: 1.45rem;
-  text-shadow: 4px 4px 0 var(--pen-color-ink);
-  top: 1.5rem;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 2px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card.is-featured header strong {
-  align-items: center;
-  background: var(--pro-home-pricing-star) center / contain no-repeat;
-  border: 0;
-  box-shadow: none;
-  color: var(--pen-color-surface);
-  flex-wrap: wrap;
-  font-size: 4.7rem;
-  height: 8rem;
-  justify-content: center;
-  line-height: 0.72;
-  padding: 1.05rem 1rem;
-  right: 1rem;
-  text-align: center;
-  text-shadow: 4px 4px 0 var(--pen-color-ink);
-  top: -2rem;
-  width: 8rem;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 2px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card header strong span {
-  font-size: 1rem;
-  letter-spacing: 0;
-  line-height: 1;
-  text-shadow: 2px 2px 0 var(--pen-color-ink);
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 1px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card header strong small {
-  display: block;
-  flex-basis: 100%;
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0;
-  line-height: 1;
-  text-align: right;
-  text-shadow: 2px 2px 0 var(--pen-color-ink);
-  text-transform: uppercase;
-  -webkit-text-fill-color: var(--pen-color-surface);
-  -webkit-text-stroke: 1px var(--pen-color-ink);
-}
-
-.pro-home .pen-plan-card.is-featured header strong small {
-  text-align: center;
 }
 
 .pro-home .pen-plan-card ul {
@@ -3778,6 +3743,75 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   line-height: 1;
   margin-top: 0.15rem;
   width: 0.95rem;
+}
+
+.pro-home .pro-home-plan-card__price {
+  border-bottom: var(--pen-border-brand-xs);
+  display: grid;
+  gap: 0.45rem;
+  justify-items: center;
+  padding: 1.2rem 1.55rem 1.35rem;
+  text-align: center;
+}
+
+.pro-home .pen-plan-card strong.pro-home-plan-card__price-amount {
+  align-items: baseline;
+  color: currentColor;
+  display: flex;
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.55rem, 3.4vw, 3.35rem);
+  font-weight: 900;
+  gap: 0.35rem;
+  justify-content: center;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-shadow: none;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  width: 100%;
+}
+
+.pro-home .pen-plan-card strong.pro-home-plan-card__price-amount span {
+  font-family: var(--pen-font-body);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-shadow: none;
+  text-transform: none;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+}
+
+.pro-home .pro-home-plan-card__price > p {
+  font-size: 0.86rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.pro-home .pro-home-plan-card__guarantee {
+  align-items: center;
+  display: flex;
+  font-weight: 800;
+  gap: 0.45rem;
+  justify-content: center;
+  margin: -0.45rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.pro-home .pro-home-plan-card__guarantee span {
+  align-items: center;
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-xs);
+  border-radius: 999px;
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  height: 1.15rem;
+  justify-content: center;
+  line-height: 1;
+  width: 1.15rem;
 }
 
 .pro-home .pen-plan-card .pen-action-link {
@@ -3931,6 +3965,11 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   scrollbar-width: none;
 }
 
+.pro-home .pro-home-testimonials__track:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 3px;
+}
+
 .pro-home .pro-home-testimonials__track::-webkit-scrollbar {
   display: none;
 }
@@ -4035,16 +4074,19 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   height: 3rem;
   justify-content: center;
   line-height: 1;
-  transition:
-    box-shadow 160ms ease,
-    transform 160ms ease;
+  transition: box-shadow 160ms ease;
   width: 6.2rem;
 }
 
 .pro-home .pro-home-testimonials__controls button:hover,
 .pro-home .pro-home-testimonials__controls button:focus-visible {
   box-shadow: 1px 1px 0 var(--pen-color-ink);
-  transform: translate(2px, 2px);
+  transform: none;
+}
+
+.pro-home .pro-home-testimonials__controls button:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 3px;
 }
 
 .pro-home .pro-home-testimonials__more {
@@ -4661,7 +4703,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   border-radius: var(--pen-radius-pill);
   display: flex;
   gap: 0.8rem;
-  height: 1.5rem;
+  box-sizing: border-box;
+  min-height: 2.75rem;
   justify-content: center;
   left: 8%;
   padding-inline: 0.5rem;
@@ -4679,11 +4722,17 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  height: 1.5rem;
+  height: 2.75rem;
   justify-content: center;
   line-height: 1;
   padding: 0;
-  width: 1.5rem;
+  width: 2.75rem;
+}
+
+.pro-home .pro-home-pillars-control button:focus-visible,
+.pro-home .pro-home-platform-tabs__controls button:focus-visible {
+  outline: 3px solid var(--pen-color-ink);
+  outline-offset: 2px;
 }
 
 .pro-home .pro-home-pillars-control span {
@@ -4939,9 +4988,62 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 @media (max-width: 760px) {
+  .admin-bar .site-header,
+  .admin-bar .pro-home > .pro-site-navbar,
+  .admin-bar .elementor-widget-pro_navbar {
+    top: 46px;
+  }
+
+  html.is-pro-mobile-persistent-action-visible body {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .pro-mobile-persistent-action {
+    align-items: center;
+    background: var(--pen-color-pink-mid);
+    border: 0;
+    border-radius: 0;
+    border-top: var(--pen-border-brand-sm);
+    bottom: 0;
+    box-shadow: 0 -0.25rem 0 var(--pen-color-ink);
+    display: flex;
+    left: 0;
+    padding: 0.65rem max(0.75rem, env(safe-area-inset-right, 0px))
+      calc(0.65rem + env(safe-area-inset-bottom, 0px))
+      max(0.75rem, env(safe-area-inset-left, 0px));
+    position: fixed;
+    right: 0;
+    width: 100%;
+    z-index: 55;
+  }
+
+  .pro-mobile-persistent-action .pen-button {
+    flex: 0 1 34rem;
+    justify-content: center;
+    margin-inline: auto;
+    max-width: 34rem;
+    min-height: 3rem;
+    padding-inline: clamp(0.8rem, 4vw, 1.25rem);
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  html.is-pro-mobile-persistent-action-visible #wpp-icon-btn {
+    bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
   .pro-home .pen-proof-section__students {
     background: var(--pro-home-soft-pink);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     padding-top: 5.25rem;
+  }
+
+  .pro-home .pro-home-proof-student__caption {
+    padding: var(--pen-space-3);
+  }
+
+  .pro-home .pen-proof-section__student-name {
+    font-size: 1rem;
   }
 
   .pro-home .pen-proof-section__badge {
@@ -5170,7 +5272,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pro-home-platform-tabs__controls button {
-    height: 2rem;
+    height: 2.75rem;
     width: 2.75rem;
   }
 
@@ -5229,16 +5331,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-home .pen-platform-showcase__screen > div {
     border-radius: 1.1rem;
-    padding: 1.25rem;
+    gap: 0.75rem;
+    padding: 1rem;
   }
 
-  .pro-home .pro-home-platform-mock__dashboard {
+  .pro-home .pro-home-platform-browser {
     display: none;
-  }
-
-  .pro-home .pro-home-platform-browser small {
-    margin-left: 0.25rem;
-    min-width: 0;
   }
 
   .pro-home .pro-home-platform-star {
@@ -5333,10 +5431,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     font-size: 0.68rem;
   }
 
-  .pro-home .pen-subject-grid .pro-home-subject-card__meta {
-    font-size: 0.82rem;
-  }
-
   .pro-home .pro-home-question-bank__shape {
     bottom: -1.1rem;
     height: 2.9rem;
@@ -5370,16 +5464,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     display: block;
   }
 
-  .pro-home .pro-home-pricing__seal {
-    height: 8.1rem;
-    left: auto;
-    margin: 0 auto 1rem;
-    position: relative;
-    top: auto;
-    transform: none;
-    width: 8.1rem;
-  }
-
   .pro-home .pro-home-pricing__intro {
     text-align: left;
   }
@@ -5398,16 +5482,6 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     margin-top: var(--pen-space-1);
   }
 
-  .pro-home .pro-home-pricing__seal-bg {
-    height: 5.1rem;
-    width: 5.1rem;
-  }
-
-  .pro-home .pro-home-pricing__seal-check {
-    height: 3.2rem;
-    width: 3.2rem;
-  }
-
   .pro-home .pen-plan-grid {
     align-items: stretch;
     grid-template-columns: minmax(0, min(100%, 22.7rem));
@@ -5420,42 +5494,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     min-height: 0;
   }
 
-  .pro-home .pen-plan-card:not(.is-featured) header {
-    column-gap: var(--pen-space-3);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header h3 {
-    align-self: start;
-    grid-column: 1;
-    grid-row: 1;
-    max-width: none;
-    min-width: 0;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header p {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .pro-home .pen-plan-card:not(.is-featured) header strong {
-    align-self: start;
-    font-size: 3.25rem;
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-    position: static;
-  }
-
-  .pro-home .pen-plan-card header strong {
-    font-size: 4rem;
-  }
-
-  .pro-home .pen-plan-card.is-featured header strong {
-    font-size: 3.8rem;
-    height: 6.8rem;
-    width: 6.8rem;
+  .pro-home .pen-plan-card strong.pro-home-plan-card__price-amount {
+    font-size: clamp(2.8rem, 14vw, 3.45rem);
   }
 
   .pro-home .pro-home-testimonials {
@@ -5600,7 +5640,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     padding: 3.2rem 1.2rem 4rem;
   }
 
-  .pro-site-navbar,
+  .pro-site-navbar.pen-navbar,
   .pro-home .pen-navbar {
     align-items: center;
     flex-direction: row;
@@ -5804,6 +5844,23 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     align-items: flex-start;
     display: grid;
     gap: 0.75rem;
+  }
+
+  .pen-site-footer__column a,
+  .pen-site-footer__legal-menu a,
+  .pen-site-footer__social a,
+  .pen-site-footer__social button,
+  .pen-site-footer__copyright {
+    align-items: center;
+    display: inline-flex;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+
+  .pen-site-footer__social a,
+  .pen-site-footer__social button {
+    justify-content: center;
+    min-width: 2.75rem;
   }
 
   .pen-site-footer__meta {
