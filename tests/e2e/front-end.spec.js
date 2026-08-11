@@ -15,6 +15,8 @@ const expectHomeProofContract = async (page) => {
     "+ de 40.000 aprovados em universidades públicas",
   );
   await expect(proofSection.locator(".pen-proof-section__logo")).toHaveCount(6);
+  await expect(proofSection.locator('.pen-proof-section__logo[alt="UFMG"]')).toBeVisible();
+  await expect(proofSection.locator('.pen-proof-section__logo[alt="UERJ"]')).toHaveCount(0);
   expect(await proofSection.locator(".pen-proof-section__student").count()).toBeGreaterThan(0);
 
   return true;

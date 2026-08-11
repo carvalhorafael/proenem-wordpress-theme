@@ -1045,10 +1045,10 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 			'height' => 105,
 		),
 		array(
-			'name'   => __( 'UERJ', 'proenem-wordpress-theme' ),
-			'file'   => 'proof-logo-uerj.webp',
-			'width'  => 99,
-			'height' => 110,
+			'name'   => __( 'UFMG', 'proenem-wordpress-theme' ),
+			'file'   => 'proof-logo-ufmg.webp',
+			'width'  => 206,
+			'height' => 88,
 		),
 		array(
 			'name'   => __( 'USP', 'proenem-wordpress-theme' ),
