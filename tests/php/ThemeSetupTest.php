@@ -184,6 +184,31 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Elementor import data should expose only the two current home plans.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_home_model_uses_the_current_plan_contract() {
+		$model   = json_decode( (string) file_get_contents( PROENEM_THEME_DIR . '/docs/elementor/proenem-home.json' ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$stack   = $model['content'] ?? array();
+		$pricing = null;
+
+		while ( $stack ) {
+			$element = array_pop( $stack );
+
+			if ( 'pro_home_pricing' === ( $element['widgetType'] ?? '' ) ) {
+				$pricing = $element;
+				break;
+			}
+
+			$stack = array_merge( $stack, $element['elements'] ?? array() );
+		}
+
+		$this->assertIsArray( $pricing );
+		$this->assertSame( array( 'Grátis', 'Método PRO' ), array_column( $pricing['settings']['plans'], 'name' ) );
+	}
+
+	/**
 	 * Elementor testimonial data should come from eligible plugin records.
 	 *
 	 * @return void

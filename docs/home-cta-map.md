@@ -42,10 +42,9 @@ Os itens são persistidos no menu WordPress `primary`. O script `scripts/sync-ho
 | Banco de questões | Explorar questões grátis | Exploração | `https://estude.proenem.com.br/treino/questoes` | PHP, widget, JSON e dados persistidos |
 | Plano Grátis | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
 | Método PRO | Quero o Método PRO | Contratação | `https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10` | PHP, defaults do widget e dados persistidos |
-| Método PRO Avançado | Quero o Método PRO Avançado | Contratação | `https://medicina.proenem.com.br/` | PHP, defaults do widget, JSON e dados persistidos |
 | Depoimentos | Ver mais | Prova social | `https://aprovados.proenem.com.br/` | PHP, widget e JSON |
 
-O produto Hotmart legado `X99453521F` não corresponde ao Método PRO Avançado. O renderer e a sincronização operacional convertem esse destino persistido para `https://medicina.proenem.com.br/`.
+O Método PRO Avançado está fora da oferta atual. O destino `advanced` permanece no contrato interno somente para compatibilidade e uma possível reativação futura; o renderer e a sincronização operacional não exibem dados persistidos dessa oferta.
 
 O checkout do Método PRO mantém somente o código da oferta e o modo de checkout. Parâmetros de campanha, UTMs, `src` e identificadores de sessão não fazem parte do destino persistido no tema. Uma futura atribuição dinâmica deve seguir o contrato de mensuração da issue #35.
 
@@ -62,9 +61,10 @@ Após publicar o tema em um ambiente que já possua menu ou home Elementor persi
 
 ```bash
 wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-conversion.php
+wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-plans.php
 ```
 
-O script é idempotente e atua somente no menu `primary` e em páginas Elementor que contenham o widget `pro_home_hero`. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
+Os scripts são idempotentes. O primeiro atualiza o menu `primary` e os destinos de conversão conhecidos; o segundo remove a oferta avançada e atualiza a FAQ somente em páginas Elementor que ainda tenham os valores editoriais conhecidos. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
 
 ## Gap temporário do design system
 

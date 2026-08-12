@@ -373,24 +373,6 @@
                 "button_label": "Quero o Método PRO",
                 "free": "",
                 "featured": "yes"
-              },
-              {
-                "_id": "planadvanced1",
-                "name": "Método PRO Avançado",
-                "price_prefix": "12x de R$",
-                "price": "39,90",
-                "price_details": "",
-                "guarantee": "7 dias de garantia.",
-                "summary": "Aulas ao vivo, revisões e mentoria em grupo.",
-                "features": "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo",
-                "button_label": "Quero o Método PRO Avançado",
-                "button_url": {
-                  "url": "https://medicina.proenem.com.br/",
-                  "is_external": "",
-                  "nofollow": ""
-                },
-                "free": "",
-                "featured": ""
               }
             ]
           },
@@ -467,7 +449,7 @@
               {
                 "_id": "faqitem3",
                 "question": "Qual a diferença entre os planos?",
-                "answer": "O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo."
+                "answer": "O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI."
               },
               {
                 "_id": "faqitem4",
