@@ -6,6 +6,7 @@ enhanceProenemWeb(document);
 
 document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
   const toggle = navbar.querySelector(".pro-home-navbar-toggle");
+  const mobileViewport = window.matchMedia("(max-width: 760px)");
   const submenuToggles = Array.from(
     navbar.querySelectorAll(".pro-home-navbar-submenu-toggle"),
   );
@@ -14,20 +15,56 @@ document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
     return;
   }
 
+  const setSubmenuExpanded = (submenuToggle, expanded) => {
+    const item = submenuToggle.closest(".pen-navbar__item");
+    const primaryTrigger = item?.querySelector(
+      ":scope > .pen-navbar__link, :scope > .pen-navbar__action",
+    );
+
+    item?.classList.toggle("is-submenu-open", expanded);
+    submenuToggle.setAttribute("aria-expanded", String(expanded));
+    primaryTrigger?.setAttribute("aria-expanded", String(expanded));
+  };
+
+  const toggleSubmenu = (submenuToggle) => {
+    const item = submenuToggle.closest(".pen-navbar__item");
+
+    if (!item) {
+      return;
+    }
+
+    const willOpen = !item.classList.contains("is-submenu-open");
+
+    submenuToggles.forEach((currentToggle) => {
+      setSubmenuExpanded(currentToggle, currentToggle === submenuToggle && willOpen);
+    });
+  };
+
   toggle.addEventListener("click", () => {
     const isOpen = navbar.classList.toggle("is-open");
 
     toggle.setAttribute("aria-expanded", String(isOpen));
 
     if (!isOpen) {
-      submenuToggles.forEach((submenuToggle) => {
-        submenuToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
-        submenuToggle.setAttribute("aria-expanded", "false");
-      });
+      submenuToggles.forEach((submenuToggle) => setSubmenuExpanded(submenuToggle, false));
     }
   });
 
   submenuToggles.forEach((submenuToggle) => {
+    const primaryTrigger = submenuToggle
+      .closest(".pen-navbar__item")
+      ?.querySelector(":scope > .pen-navbar__link, :scope > .pen-navbar__action");
+
+    primaryTrigger?.setAttribute("aria-expanded", "false");
+    primaryTrigger?.addEventListener("click", (event) => {
+      if (!mobileViewport.matches) {
+        return;
+      }
+
+      event.preventDefault();
+      toggleSubmenu(submenuToggle);
+    });
+
     submenuToggle.addEventListener("click", () => {
       const item = submenuToggle.closest(".pen-navbar__item");
 
@@ -35,15 +72,7 @@ document.querySelectorAll("[data-pro-home-navbar]").forEach((navbar) => {
         return;
       }
 
-      const willOpen = !item.classList.contains("is-submenu-open");
-
-      submenuToggles.forEach((currentToggle) => {
-        currentToggle.closest(".pen-navbar__item")?.classList.remove("is-submenu-open");
-        currentToggle.setAttribute("aria-expanded", "false");
-      });
-
-      item.classList.toggle("is-submenu-open", willOpen);
-      submenuToggle.setAttribute("aria-expanded", String(willOpen));
+      toggleSubmenu(submenuToggle);
     });
   });
 });
