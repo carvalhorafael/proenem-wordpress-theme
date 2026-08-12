@@ -1,5 +1,5 @@
 {
-  "core": null,
+  "core": "https://wordpress.org/wordpress-7.0.4.zip",
   "port": 8898,
   "testsPort": 8899,
   "plugins": [

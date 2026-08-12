@@ -135,6 +135,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Paridade: template PHP, defaults e compatibilidade do widget Elementor, JSON de importacao e conteudo persistido devem exibir o mesmo contrato editorial.
 - Compatibilidade: o renderer atualiza apenas valores persistidos que ainda sejam identicos ao contrato antigo, sem sobrescrever customizacoes editoriais posteriores.
 
+## 2026-08-12: Oferta atual limitada a Gratis e Metodo PRO
+
+- Contexto: a terceira oferta sera retomada no futuro, mas a home atual deve apresentar somente os planos Gratis e Metodo PRO.
+- Decisao: remover o Metodo PRO Avancado do template PHP, dos defaults Elementor e do modelo de importacao; a grade passa a ter duas colunas centralizadas no desktop e uma coluna no mobile.
+- Persistencia: o renderer nao exibe Metodo PRO Avancado nem o nome legado Pro Medicina em paginas Elementor ainda nao sincronizadas. `scripts/sync-home-plans.php` remove somente essas ofertas conhecidas e atualiza a resposta conhecida da FAQ, preservando outras customizacoes editoriais.
+- Reativacao futura: o repeater generico e o destino interno `advanced` permanecem disponiveis, mas a oferta so deve voltar mediante uma nova decisao comercial e atualizacao coordenada dos tres caminhos de renderizacao.
+- Design system: a mudanca reutiliza o contrato existente e a adaptacao local ja acompanhada pelas issues do plano gratuito; nao cria um novo gap.
+
 ## 2026-08-10: Jornada de conversao e CTA mobile persistente
 
 - Contexto: labels de cadastro e exploracao da home levavam para `#planos`, o menu WordPress mantinha itens com destino `#` e o mobile atravessava varias dobras sem uma acao de conversao visivel.

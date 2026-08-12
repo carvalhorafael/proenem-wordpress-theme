@@ -15,6 +15,8 @@ const expectHomeProofContract = async (page) => {
     "+ de 40.000 aprovados em universidades públicas",
   );
   await expect(proofSection.locator(".pen-proof-section__logo")).toHaveCount(6);
+  await expect(proofSection.locator('.pen-proof-section__logo[alt="UFMG"]')).toBeVisible();
+  await expect(proofSection.locator('.pen-proof-section__logo[alt="UERJ"]')).toHaveCount(0);
   expect(await proofSection.locator(".pen-proof-section__student").count()).toBeGreaterThan(0);
 
   return true;
@@ -167,7 +169,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
   await expect(page.getByText(/comece grátis, sem cartão.*7 dias de garantia/i)).toBeVisible();
-  await expect(page.locator(".pen-plan-card")).toHaveCount(3);
+  await expect(page.locator(".pen-plan-card")).toHaveCount(2);
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
   await expect(page.locator(".pen-plan-card.is-free")).toContainText("Banco de +60 mil questões");
@@ -178,10 +180,9 @@ test("front page renders the Proenem home", async ({ page }) => {
   );
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO", exact: true })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
   const methodPlan = page.locator(".pen-plan-card").nth(1);
-  const advancedPlan = page.locator(".pen-plan-card").nth(2);
   await expect(methodPlan).toContainText("Tudo do Grátis e mais...");
   await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
   await expect(methodPlan).toContainText("2 correções de redação mensais");
@@ -191,21 +192,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
   await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
-  await expect(advancedPlan).toContainText("Tudo do PRO e mais...");
-  await expect(advancedPlan).toContainText("Aulas ao vivo");
-  await expect(advancedPlan).toContainText("Revisões ao vivo");
-  await expect(advancedPlan).toContainText("Mentoria em grupo");
-  await expect(advancedPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*39,90/);
-  await expect(advancedPlan).not.toContainText("Plano anual. Total parcelado: R$ 478,80.");
-  await expect(advancedPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
   await expect(page.getByRole("link", { name: /^quero o método pro$/i })).toHaveAttribute(
     "href",
     /pay\.hotmart\.com\/W106752534O/,
   );
-  await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveAttribute(
-    "href",
-    "https://medicina.proenem.com.br/",
-  );
+  await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveCount(0);
+  await expect(page.locator(".pen-faq-section")).not.toContainText("Método PRO Avançado");
   await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
     "pode cancelar dentro desse prazo e usar a garantia",
   );
@@ -329,6 +321,9 @@ test("Elementor home fixture uses the same conversion and persistent action cont
   await expect(page.locator(".pro-home-subject-card__meta")).toHaveCount(0);
   await expectHomeProofContract(page);
   await expectHomeTestimonialsContract(page);
+  await expect(page.locator(".pen-pricing-section .pen-plan-card")).toHaveCount(2);
+  await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
+  await expect(page.locator(".pen-faq-section")).not.toContainText("Método PRO Avançado");
 
   await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
@@ -649,9 +644,18 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
     await page.goto("/");
     await page.evaluate(() => document.fonts.ready);
 
+    const section = page.locator(".pen-pricing-section");
+    const grid = section.locator(".pen-plan-grid");
     const cards = page.locator(".pen-pricing-section .pen-plan-card");
+    const sectionBox = await section.boundingBox();
+    const gridBox = await grid.boundingBox();
 
-    for (let index = 0; index < 3; index += 1) {
+    await expect(cards).toHaveCount(2);
+    expect(sectionBox).not.toBeNull();
+    expect(gridBox).not.toBeNull();
+    expect(Math.abs(gridBox.x + gridBox.width / 2 - (sectionBox.x + sectionBox.width / 2))).toBeLessThanOrEqual(1);
+
+    for (let index = 0; index < 2; index += 1) {
       const card = cards.nth(index);
       const featuresBox = await card.locator("ul").boundingBox();
       const priceBox = await card.locator(".pro-home-plan-card__price").boundingBox();
