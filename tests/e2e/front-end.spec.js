@@ -108,7 +108,7 @@ const installNavbarSubmenuFixture = async (page) => {
       const menuLinks = '<div class="pen-navbar__links">';
       const submenuFixture = `
       <div class="pen-navbar__item pen-navbar__item--has-submenu">
-        <a class="pen-navbar__action pen-navbar__action--secondary" href="https://estude.proenem.com.br/" aria-haspopup="true">
+        <a class="pen-navbar__action pen-navbar__action--secondary" href="https://estude.proenem.com.br/" aria-haspopup="true" data-e2e-navbar-submenu-trigger>
           <span class="pen-navbar__label" data-label="Entrar">
             <span class="pen-navbar__label-text">Entrar</span>
           </span>
@@ -392,7 +392,7 @@ test("front page navbar hover keeps adjacent items in place", async ({ page }) =
   await installNavbarSubmenuFixture(page);
   await page.goto("/");
 
-  const hoveredLink = page.getByRole("link", { name: "Teste principal" });
+  const hoveredLink = page.locator("[data-e2e-navbar-submenu-trigger]");
   const adjacentLink = page.getByRole("link", { name: "Próximo item" });
   const initialPosition = await adjacentLink.boundingBox();
 
@@ -425,9 +425,7 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
   await expect(menu).toBeVisible();
 
   const submenuToggle = menu.locator(".pro-home-navbar-submenu-toggle").first();
-  const submenuPrimaryTrigger = menu.locator(
-    ".pen-navbar__item--has-submenu > .pen-navbar__action",
-  ).first();
+  const submenuPrimaryTrigger = menu.locator("[data-e2e-navbar-submenu-trigger]");
   const submenu = menu.locator(".pen-navbar__submenu").first();
   const initialUrl = page.url();
 
