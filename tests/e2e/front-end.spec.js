@@ -108,18 +108,21 @@ const installNavbarSubmenuFixture = async (page) => {
       const menuLinks = '<div class="pen-navbar__links">';
       const submenuFixture = `
       <div class="pen-navbar__item pen-navbar__item--has-submenu">
-        <a class="pen-navbar__link" href="#e2e-submenu" aria-haspopup="true">
-          <span class="pen-navbar__label" data-label="Teste principal">
-            <span class="pen-navbar__label-text">Teste principal</span>
+        <a class="pen-navbar__action pen-navbar__action--secondary" href="https://estude.proenem.com.br/" aria-haspopup="true">
+          <span class="pen-navbar__label" data-label="Entrar">
+            <span class="pen-navbar__label-text">Entrar</span>
           </span>
         </a>
         <button class="pro-home-navbar-submenu-toggle" type="button" aria-controls="e2e-navbar-submenu" aria-expanded="false">
-          <span class="screen-reader-text">Alternar submenu de teste</span>
+          <span class="screen-reader-text">Alternar submenu de Entrar</span>
           <span aria-hidden="true">⌄</span>
         </button>
         <ul id="e2e-navbar-submenu" class="pen-navbar__submenu">
           <li class="pen-navbar__submenu-item">
-            <a class="pen-navbar__submenu-link" href="#e2e-submenu-item">Item de teste</a>
+            <a class="pen-navbar__submenu-link" href="https://estude.proenem.com.br/">Acesse Proenem</a>
+          </li>
+          <li class="pen-navbar__submenu-item">
+            <a class="pen-navbar__submenu-link" href="https://medicina.proenem.com.br/">Acesse Promedicina</a>
           </li>
         </ul>
       </div>
@@ -422,15 +425,28 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
   await expect(menu).toBeVisible();
 
   const submenuToggle = menu.locator(".pro-home-navbar-submenu-toggle").first();
+  const submenuPrimaryTrigger = menu.locator(
+    ".pen-navbar__item--has-submenu > .pen-navbar__action",
+  ).first();
   const submenu = menu.locator(".pen-navbar__submenu").first();
+  const initialUrl = page.url();
 
   await expect(submenuToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(submenuPrimaryTrigger).toHaveAttribute("aria-expanded", "false");
   await expect(submenu).toBeHidden();
+
+  await submenuPrimaryTrigger.click();
+
+  expect(page.url()).toBe(initialUrl);
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(submenuPrimaryTrigger).toHaveAttribute("aria-expanded", "true");
+  await expect(submenu).toBeVisible();
 
   await submenuToggle.click();
 
-  await expect(submenuToggle).toHaveAttribute("aria-expanded", "true");
-  await expect(submenu).toBeVisible();
+  await expect(submenuToggle).toHaveAttribute("aria-expanded", "false");
+  await expect(submenuPrimaryTrigger).toHaveAttribute("aria-expanded", "false");
+  await expect(submenu).toBeHidden();
 });
 
 test("front page keeps the hero CTA inside the first mobile fold", async ({ page }) => {
