@@ -1380,17 +1380,6 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						'button_label'  => esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
 						'button_url'    => array( 'url' => proenem_get_home_cta_destination( 'method_pro' ) ),
 					),
-					array(
-						'name'          => esc_html__( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
-						'price_prefix'  => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
-						'price'         => '39,90',
-						'price_details' => '',
-						'guarantee'     => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-						'summary'       => esc_html__( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' ),
-						'features'      => esc_html__( "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo", 'proenem-wordpress-theme' ),
-						'button_label'  => esc_html__( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' ),
-						'button_url'    => array( 'url' => proenem_get_home_cta_destination( 'advanced' ) ),
-					),
 				),
 				'title_field' => '{{{ name }}}',
 			)
@@ -1399,13 +1388,12 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 	}
 
 	protected function render(): void {
-		$settings                                    = $this->get_settings_for_display();
-		$default_plan_urls                           = array(
-			esc_html__( 'Grátis', 'proenem-wordpress-theme' )       => array( 'url' => proenem_get_home_cta_destination( 'signup' ) ),
-			esc_html__( 'Método PRO', 'proenem-wordpress-theme' )  => array( 'url' => proenem_get_home_cta_destination( 'method_pro' ) ),
-			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array( 'url' => proenem_get_home_cta_destination( 'advanced' ) ),
+		$settings               = $this->get_settings_for_display();
+		$default_plan_urls      = array(
+			esc_html__( 'Grátis', 'proenem-wordpress-theme' )      => array( 'url' => proenem_get_home_cta_destination( 'signup' ) ),
+			esc_html__( 'Método PRO', 'proenem-wordpress-theme' ) => array( 'url' => proenem_get_home_cta_destination( 'method_pro' ) ),
 		);
-		$default_plan_pricing                        = array(
+		$default_plan_pricing   = array(
 			esc_html__( 'Grátis', 'proenem-wordpress-theme' ) => array(
 				'legacy_price'  => '0',
 				'price'         => '0',
@@ -1421,19 +1409,11 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 				'legacy_details_hash' => '2d0e1aabc7b7c5364426f2f7c53dda0b',
 				'guarantee'           => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 			),
-			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ) => array(
-				'legacy_price'        => '39',
-				'price'               => '39,90',
-				'price_prefix'        => esc_html__( '12x de R$', 'proenem-wordpress-theme' ),
-				'price_details'       => '',
-				'legacy_details_hash' => '65005b4f9a411b88b703af313ba229cd',
-				'guarantee'           => esc_html__( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-			),
 		);
-		$advanced_plan_name                          = esc_html__( 'Método PRO Avançado', 'proenem-wordpress-theme' );
-		$legacy_advanced_plan_name                   = esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' );
-		$default_plan_urls[ $advanced_plan_name ]    = $default_plan_urls[ $legacy_advanced_plan_name ];
-		$default_plan_pricing[ $advanced_plan_name ] = $default_plan_pricing[ $legacy_advanced_plan_name ];
+		$unavailable_plan_names = array(
+			esc_html__( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
+			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ),
+		);
 		$this->open_home_wrapper();
 		?>
 		<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
@@ -1446,10 +1426,14 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 			<div class="pen-plan-grid">
 				<?php foreach ( (array) ( $settings['plans'] ?? array() ) as $index => $plan ) : ?>
 					<?php
-					$plan_name               = $plan['name'] ?? '';
-					$summary                 = $plan['summary'] ?? '';
-					$features                = $plan['features'] ?? '';
-					$is_legacy_advanced_plan = $legacy_advanced_plan_name === $plan_name;
+					$plan_name = $plan['name'] ?? '';
+
+					if ( in_array( $plan_name, $unavailable_plan_names, true ) ) {
+						continue;
+					}
+
+					$summary  = $plan['summary'] ?? '';
+					$features = $plan['features'] ?? '';
 
 					if ( esc_html__( 'Método PRO', 'proenem-wordpress-theme' ) === $plan_name ) {
 						if ( esc_html__( 'O método completo, com IA e mentoria.', 'proenem-wordpress-theme' ) === $summary ) {
@@ -1458,18 +1442,6 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 
 						if ( esc_html__( "Tudo do Grátis\nTutor IA ilimitado 24/7\nRedação corrigida em 48h\nSimulados TRI semanais\nAulas ao vivo todos os dias\nPlano adaptativo por IA", 'proenem-wordpress-theme' ) === $features ) {
 							$features = esc_html__( "Tudo do Grátis e mais...\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI", 'proenem-wordpress-theme' );
-						}
-					}
-
-					if ( $is_legacy_advanced_plan ) {
-						$plan_name = $advanced_plan_name;
-
-						if ( esc_html__( 'Mentoria 1:1 com aprovados.', 'proenem-wordpress-theme' ) === $summary ) {
-							$summary = esc_html__( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' );
-						}
-
-						if ( esc_html__( "Tudo do Método PRO\nMentor pessoal aprovado em Medicina\n2 sessões 1:1 por semana\nRevisão de redação prioritária", 'proenem-wordpress-theme' ) === $features ) {
-							$features = esc_html__( "Tudo do PRO e mais...\nAulas ao vivo\nRevisões ao vivo\nMentoria em grupo", 'proenem-wordpress-theme' );
 						}
 					}
 
@@ -1492,13 +1464,6 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 						$button_url = proenem_upgrade_home_cta_link( $button_url, 'method_pro' );
 					}
 
-					if ( $advanced_plan_name === $plan_name ) {
-						$button_url = proenem_upgrade_home_cta_link( $button_url, 'advanced' );
-					}
-
-					if ( $is_legacy_advanced_plan && in_array( $button_label, array( esc_html__( 'Quero o Método PRO', 'proenem-wordpress-theme' ), esc_html__( 'Quero o Pro Medicina', 'proenem-wordpress-theme' ) ), true ) ) {
-						$button_label = esc_html__( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' );
-					}
 					?>
 					<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
 						<?php
@@ -1797,7 +1762,7 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 					),
 					array(
 						'question' => esc_html__( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-						'answer'   => esc_html__( 'O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo.', 'proenem-wordpress-theme' ),
+						'answer'   => esc_html__( 'O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
 					),
 					array(
 						'question' => esc_html__( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
@@ -1816,11 +1781,14 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
-		// Persisted Elementor data may still carry the pre-#108 default answer.
-		$legacy_answer_hash       = 'dddf1a3143a095745dccc9b13225138f';
-		$updated_answer           = esc_html__( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' );
-		$legacy_plans_answer_hash = 'c04c5e89549191e3cc7ebfc768fc43be';
-		$updated_plans_answer     = esc_html__( 'O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo.', 'proenem-wordpress-theme' );
+		// Persisted Elementor data may still carry known answers from earlier plan contracts.
+		$legacy_answer_hash         = 'dddf1a3143a095745dccc9b13225138f';
+		$updated_answer             = esc_html__( 'Você tem 7 dias após a compra para experimentar o plano. Se não gostar, pode cancelar dentro desse prazo e usar a garantia.', 'proenem-wordpress-theme' );
+		$legacy_plans_answer_hashes = array(
+			'c04c5e89549191e3cc7ebfc768fc43be',
+			'318df6b370eb72cd06b15467e92de841',
+		);
+		$updated_plans_answer       = esc_html__( 'O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' );
 		$this->open_home_wrapper();
 		?>
 		<section id="faq" class="pen-faq-section" aria-labelledby="pro-faq-title"><div class="pen-faq-section__header"><span class="pen-pill-eyebrow"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-faq-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?></h2></div><div class="pen-faq-section__items">
@@ -1832,7 +1800,7 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 				$answer = $updated_answer;
 			}
 
-			if ( hash_equals( $legacy_plans_answer_hash, md5( $answer ) ) ) {
+			if ( in_array( md5( $answer ), $legacy_plans_answer_hashes, true ) ) {
 				$answer = $updated_plans_answer;
 			}
 			?>

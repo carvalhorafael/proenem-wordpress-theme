@@ -201,21 +201,6 @@ $plans = array(
 			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
 		),
 	),
-	array(
-		'name'         => __( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
-		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
-		'price'        => __( '39,90', 'proenem-wordpress-theme' ),
-		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-		'summary'      => __( 'Aulas ao vivo, revisões e mentoria em grupo.', 'proenem-wordpress-theme' ),
-		'button_label' => __( 'Quero o Método PRO Avançado', 'proenem-wordpress-theme' ),
-		'button_url'   => proenem_get_home_cta_destination( 'advanced' ),
-		'features'     => array(
-			__( 'Tudo do PRO e mais...', 'proenem-wordpress-theme' ),
-			__( 'Aulas ao vivo', 'proenem-wordpress-theme' ),
-			__( 'Revisões ao vivo', 'proenem-wordpress-theme' ),
-			__( 'Mentoria em grupo', 'proenem-wordpress-theme' ),
-		),
-	),
 );
 
 $faq_items = array(
@@ -229,7 +214,7 @@ $faq_items = array(
 	),
 	array(
 		'question' => __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'O grátis oferece diagnóstico e questões; o Método PRO inclui cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI; o Método PRO Avançado adiciona aulas e revisões ao vivo e mentoria em grupo.', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
