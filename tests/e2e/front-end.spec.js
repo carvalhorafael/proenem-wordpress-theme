@@ -108,7 +108,7 @@ const installNavbarSubmenuFixture = async (page) => {
       const menuLinks = '<div class="pen-navbar__links">';
       const submenuFixture = `
       <div class="pen-navbar__item pen-navbar__item--has-submenu">
-        <a class="pen-navbar__action pen-navbar__action--secondary" href="https://estude.proenem.com.br/" aria-haspopup="true" data-e2e-navbar-submenu-trigger>
+        <a class="pen-navbar__action pen-navbar__action--secondary" href="#" aria-haspopup="true" data-e2e-navbar-submenu-trigger>
           <span class="pen-navbar__label" data-label="Entrar">
             <span class="pen-navbar__label-text">Entrar</span>
           </span>
@@ -235,7 +235,9 @@ test("front page keeps conversion actions compatible with their labels", async (
     "href",
     "https://estude.proenem.com.br/treino/questoes",
   );
-  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+  await expect(
+    page.locator(".pro-home > .pro-site-navbar").getByRole("link", { name: "Entrar", exact: true }),
+  ).toHaveAttribute("href", "#");
 });
 
 test("front page keeps the navbar sticky and reveals the mobile primary action", async ({ page }) => {
@@ -315,7 +317,9 @@ test("Elementor home fixture uses the same conversion and persistent action cont
   expect(toggleBox).not.toBeNull();
   expect(navbarBox.height).toBeLessThanOrEqual(80);
   expect(Math.abs(logoBox.y + logoBox.height / 2 - (toggleBox.y + toggleBox.height / 2))).toBeLessThanOrEqual(1);
-  await expect(page.locator('.pro-site-navbar a[href="#"]')).toHaveCount(0);
+  await expect(
+    navbar.getByRole("link", { name: "Entrar", exact: true, includeHidden: true }),
+  ).toHaveAttribute("href", "#");
   await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveAttribute(
     "href",
     "https://estude.proenem.com.br/treino/questoes",
@@ -396,6 +400,7 @@ test("front page navbar hover keeps adjacent items in place", async ({ page }) =
   const adjacentLink = page.getByRole("link", { name: "Próximo item" });
   const initialPosition = await adjacentLink.boundingBox();
 
+  await expect(hoveredLink).toHaveAttribute("href", "#");
   await hoveredLink.hover();
 
   const hoveredPosition = await adjacentLink.boundingBox();
@@ -429,6 +434,7 @@ test("front page navbar starts closed on mobile", async ({ page }) => {
   const submenu = menu.locator(".pen-navbar__submenu").first();
   const initialUrl = page.url();
 
+  await expect(submenuPrimaryTrigger).toHaveAttribute("href", "#");
   await expect(submenuToggle).toHaveAttribute("aria-expanded", "false");
   await expect(submenuPrimaryTrigger).toHaveAttribute("aria-expanded", "false");
   await expect(submenu).toBeHidden();
