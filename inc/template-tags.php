@@ -1713,7 +1713,7 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 
 		$classes = array_filter( (array) $menu_item->classes );
 		$item    = array(
-			'url'      => proenem_resolve_primary_navigation_url( $menu_item->url, $menu_item->title ),
+			'url'      => $menu_item->url,
 			'label'    => $menu_item->title,
 			'target'   => $menu_item->target,
 			'rel'      => $menu_item->xfn,
@@ -1725,7 +1725,7 @@ function proenem_get_primary_navigation_items( $context = 'site', $menu_id = 0 )
 		foreach ( $children[ (int) $menu_item->ID ] ?? array() as $child_menu_item ) {
 			$child_classes      = array_filter( (array) $child_menu_item->classes );
 			$item['children'][] = array(
-				'url'     => proenem_resolve_primary_navigation_url( $child_menu_item->url, $child_menu_item->title ),
+				'url'     => $child_menu_item->url,
 				'label'   => $child_menu_item->title,
 				'target'  => $child_menu_item->target,
 				'rel'     => $child_menu_item->xfn,
@@ -1774,46 +1774,6 @@ function proenem_get_home_cta_destination( $intent ) {
 	 * @param string $intent      Conversion intent.
 	 */
 	return (string) apply_filters( 'proenem_home_cta_destination', $destination, $intent );
-}
-
-/**
- * Replace invalid persisted menu placeholders with a compatible destination.
- *
- * Persisted WordPress menu data remains the source of truth. This fallback
- * prevents a literal hash from reaching the rendered navigation before the
- * operational content sync has been applied to an environment.
- *
- * @param string $url   Persisted menu URL.
- * @param string $label Visible menu label.
- * @return string
- */
-function proenem_resolve_primary_navigation_url( $url, $label ) {
-	$url = trim( (string) $url );
-
-	if ( '' !== $url && '#' !== $url ) {
-		return $url;
-	}
-
-	$destinations = array(
-		'aprovados'          => home_url( '/#aprovados' ),
-		'comece-gratis'      => proenem_get_home_cta_destination( 'signup' ),
-		'comecar-gratis'     => proenem_get_home_cta_destination( 'signup' ),
-		'criar-conta-gratis' => proenem_get_home_cta_destination( 'signup' ),
-		'entrar'             => proenem_get_home_cta_destination( 'study' ),
-		'faq'                => home_url( '/#faq' ),
-		'planos'             => proenem_get_home_cta_destination( 'plans' ),
-		'questoes'           => proenem_get_home_cta_destination( 'questions' ),
-	);
-	$label_slug   = sanitize_title( (string) $label );
-	$destination  = $destinations[ $label_slug ] ?? home_url( '/' );
-
-	/**
-	 * Filter the fallback for an invalid persisted primary menu URL.
-	 *
-	 * @param string $destination Resolved destination.
-	 * @param string $label       Visible menu label.
-	 */
-	return (string) apply_filters( 'proenem_primary_navigation_fallback_url', $destination, $label );
 }
 
 /**
