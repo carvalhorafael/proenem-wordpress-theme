@@ -5,6 +5,92 @@
  * @package Proenem
  */
 
+/**
+ * Add a published custom link to the E2E navigation menu.
+ *
+ * @param int                 $menu_id Menu term ID.
+ * @param array<string,mixed> $args    Menu item arguments.
+ * @return int
+ * @throws RuntimeException When WordPress cannot create the menu item.
+ */
+function proenem_e2e_add_menu_item( $menu_id, $args ) {
+	$item_id = wp_update_nav_menu_item(
+		$menu_id,
+		0,
+		array_merge(
+			array(
+				'menu-item-status' => 'publish',
+			),
+			$args
+		)
+	);
+
+	if ( is_wp_error( $item_id ) ) {
+		throw new RuntimeException( esc_html( $item_id->get_error_message() ) );
+	}
+
+	return (int) $item_id;
+}
+
+$menu_name    = 'Proenem E2E Primary Navigation';
+$fixture_menu = wp_get_nav_menu_object( $menu_name );
+
+if ( $fixture_menu ) {
+	$menu_id            = (int) $fixture_menu->term_id;
+	$fixture_menu_items = wp_get_nav_menu_items( $menu_id );
+
+	if ( is_array( $fixture_menu_items ) ) {
+		foreach ( $fixture_menu_items as $menu_item ) {
+			wp_delete_post( $menu_item->ID, true );
+		}
+	}
+} else {
+	$menu_id = wp_create_nav_menu( $menu_name );
+
+	if ( is_wp_error( $menu_id ) ) {
+		throw new RuntimeException( esc_html( $menu_id->get_error_message() ) );
+	}
+}
+
+proenem_e2e_add_menu_item(
+	$menu_id,
+	array(
+		'menu-item-title'   => 'Comece grátis',
+		'menu-item-url'     => 'https://estude.proenem.com.br/signup',
+		'menu-item-classes' => 'pen-navbar-action pen-navbar-action-primary',
+	)
+);
+
+$login_item_id = proenem_e2e_add_menu_item(
+	$menu_id,
+	array(
+		'menu-item-title'   => 'Entrar',
+		'menu-item-url'     => '#',
+		'menu-item-classes' => 'pen-navbar-action pen-navbar-action-secondary',
+	)
+);
+
+proenem_e2e_add_menu_item(
+	$menu_id,
+	array(
+		'menu-item-title'     => 'Acessar Proenem',
+		'menu-item-url'       => 'https://app.proenem.com.br/',
+		'menu-item-parent-id' => $login_item_id,
+	)
+);
+proenem_e2e_add_menu_item(
+	$menu_id,
+	array(
+		'menu-item-title'     => 'Acessar Promedicina',
+		'menu-item-url'       => 'https://app.promedicina.com.br/',
+		'menu-item-parent-id' => $login_item_id,
+	)
+);
+
+$menu_locations            = (array) get_theme_mod( 'nav_menu_locations', array() );
+$menu_locations['primary'] = $menu_id;
+set_theme_mod( 'nav_menu_locations', $menu_locations );
+
 $fixture = get_page_by_path( 'e2e-content-layout', OBJECT, 'page' );
 
 $postarr = array(
