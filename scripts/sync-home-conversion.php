@@ -214,34 +214,6 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 	return $changed;
 }
 
-$menu_updates   = 0;
-$menu_locations = get_nav_menu_locations();
-$primary_menu   = absint( $menu_locations['primary'] ?? 0 );
-
-if ( $primary_menu ) {
-	$menu_destinations = array(
-		'Aprovados'      => home_url( '/#aprovados' ),
-		'Comece grátis'  => proenem_get_home_cta_destination( 'signup' ),
-		'Criar conta grátis' => proenem_get_home_cta_destination( 'signup' ),
-		'Entrar'         => proenem_get_home_cta_destination( 'study' ),
-		'FAQ'            => home_url( '/#faq' ),
-		'Planos'         => proenem_get_home_cta_destination( 'plans' ),
-		'Questões'       => proenem_get_home_cta_destination( 'questions' ),
-	);
-
-	foreach ( wp_get_nav_menu_items( $primary_menu ) ?: array() as $menu_item ) {
-		$destination = $menu_destinations[ $menu_item->title ] ?? '';
-
-		if ( ! $destination || $destination === $menu_item->url ) {
-			continue;
-		}
-
-		update_post_meta( $menu_item->ID, '_menu_item_url', esc_url_raw( $destination ) );
-		clean_post_cache( $menu_item->ID );
-		++$menu_updates;
-	}
-}
-
 $elementor_updates = 0;
 $pages             = get_posts(
 	array(
@@ -276,7 +248,6 @@ if ( class_exists( '\Elementor\Plugin' ) ) {
 	\Elementor\Plugin::$instance->files_manager->clear_cache();
 }
 
-proenem_issue_110_log( sprintf( 'Primary menu items updated: %d', $menu_updates ) );
 proenem_issue_110_log( sprintf( 'Elementor home pages updated: %d', $elementor_updates ) );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {

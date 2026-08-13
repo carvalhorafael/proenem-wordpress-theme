@@ -135,6 +135,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Paridade: template PHP, defaults e compatibilidade do widget Elementor, JSON de importacao e conteudo persistido devem exibir o mesmo contrato editorial.
 - Compatibilidade: o renderer atualiza apenas valores persistidos que ainda sejam identicos ao contrato antigo, sem sobrescrever customizacoes editoriais posteriores.
 
+## 2026-08-13: Menu WordPress como fonte dos destinos da navbar
+
+- Contexto: o fallback de conversao substituia URLs vazias ou `#` com base no label do item, fazendo o HTML divergir da configuracao salva no menu `primary`.
+- Decisao: preservar literalmente no renderer as URLs dos itens principais e subitens do menu WordPress, inclusive `#`.
+- Persistencia: `scripts/sync-home-conversion.php` deixa de reescrever o menu `primary` e permanece restrito a dados Elementor da home.
+- Compatibilidade: o comportamento mobile de itens com submenu continua cancelando a navegacao e alternando o dropdown; no desktop, o navegador recebe o destino configurado no WordPress.
+
 ## 2026-08-12: Oferta atual limitada a Gratis e Metodo PRO
 
 - Contexto: a terceira oferta sera retomada no futuro, mas a home atual deve apresentar somente os planos Gratis e Metodo PRO.
@@ -147,7 +154,7 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 
 - Contexto: labels de cadastro e exploracao da home levavam para `#planos`, o menu WordPress mantinha itens com destino `#` e o mobile atravessava varias dobras sem uma acao de conversao visivel.
 - Decisao: documentar a taxonomia em `docs/home-cta-map.md`, direcionar cadastro para `/signup`, exploracao para o banco de questoes e manter `#planos` apenas para consulta de ofertas.
-- Persistencia: `scripts/sync-home-conversion.php` atualiza de forma idempotente o menu principal e paginas Elementor que contenham os widgets da home. O renderer preserva um fallback seguro enquanto a sincronizacao nao tiver sido executada no ambiente.
+- Persistencia: `scripts/sync-home-conversion.php` atualizava de forma idempotente o menu principal e paginas Elementor que contenham os widgets da home. A parcela desta decisao que reescrevia o menu foi substituida pela decisao de 2026-08-13; a sincronizacao permanece apenas para dados Elementor.
 - Sticky: o host da navbar permanece no fluxo com `position: sticky`, evitando salto de layout em template PHP, header convencional e widget Elementor.
 - Adaptacao local: `pro-mobile-persistent-action` compoe o botao publicado dentro de uma barra fixa de largura total no rodape mobile, exibida apos 600 px, com safe area e reposicionamento temporario do suporte flutuante enquanto a barra estiver visivel.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#38`; tema `carvalhorafael/proenem-wordpress-theme#110`.

@@ -16,7 +16,7 @@ Em um mesmo contexto deve existir no máximo uma ação primária e uma secundá
 
 ## Navbar
 
-Os itens são persistidos no menu WordPress `primary`. O script `scripts/sync-home-conversion.php` corrige os destinos conhecidos. O renderer também impede que um `href="#"` chegue ao front-end antes da sincronização operacional.
+Os itens e seus destinos são definidos pelo menu WordPress `primary`. O renderer preserva literalmente a URL configurada para cada item, inclusive `#`; scripts operacionais do tema não reescrevem esse menu.
 
 | Label | Intenção | Destino |
 | --- | --- | --- |
@@ -26,7 +26,7 @@ Os itens são persistidos no menu WordPress `primary`. O script `scripts/sync-ho
 | FAQ | Navegação | `/#faq` |
 | Materiais gratuitos | Exploração | Página WordPress de materiais gratuitos |
 | Comece grátis | Primário | `https://estude.proenem.com.br/signup` |
-| Entrar | Acesso | `https://estude.proenem.com.br/` |
+| Entrar | Acesso | Destino persistido no menu WordPress |
 | Acessar Proenem | Acesso | Destino persistido no submenu |
 | Acessar Promedicina | Acesso | Destino persistido no submenu |
 
@@ -64,7 +64,7 @@ wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-convers
 wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-plans.php
 ```
 
-Os scripts são idempotentes. O primeiro atualiza o menu `primary` e os destinos de conversão conhecidos; o segundo remove a oferta avançada e atualiza a FAQ somente em páginas Elementor que ainda tenham os valores editoriais conhecidos. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
+Os scripts são idempotentes e não alteram o menu `primary`. O primeiro atualiza os destinos de conversão conhecidos somente em páginas Elementor; o segundo remove a oferta avançada e atualiza a FAQ somente em páginas Elementor que ainda tenham os valores editoriais conhecidos. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
 
 ## Gap temporário do design system
 

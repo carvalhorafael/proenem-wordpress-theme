@@ -256,7 +256,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 			0,
 			array(
 				'menu-item-title'   => 'Entrar',
-				'menu-item-url'     => '#entrar',
+				'menu-item-url'     => '#',
 				'menu-item-status'  => 'publish',
 				'menu-item-classes' => 'pen-navbar-action pen-navbar-action-secondary',
 			)
@@ -287,9 +287,12 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertCount( 1, $navigation['actions'] );
 		$this->assertSame( 'Entrar', $navigation['actions'][0]['label'] );
+		$this->assertSame( '#', $navigation['actions'][0]['url'] );
 		$this->assertCount( 2, $navigation['actions'][0]['children'] );
 		$this->assertSame( 'Acessar Proenem', $navigation['actions'][0]['children'][0]['label'] );
+		$this->assertSame( 'https://app.proenem.com.br/', $navigation['actions'][0]['children'][0]['url'] );
 		$this->assertSame( 'Acessar Promedicina', $navigation['actions'][0]['children'][1]['label'] );
+		$this->assertSame( 'https://app.promedicina.com.br/', $navigation['actions'][0]['children'][1]['url'] );
 	}
 
 	/**
@@ -341,11 +344,11 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Navbar should never render a literal hash saved in the WordPress menu.
+	 * Navbar should preserve literal hashes saved in the WordPress menu.
 	 *
 	 * @return void
 	 */
-	public function test_navbar_resolves_persisted_hash_destinations() {
+	public function test_navbar_preserves_persisted_hash_destinations() {
 		$menu_id = wp_create_nav_menu( 'Proenem conversion menu' );
 
 		wp_update_nav_menu_item(
@@ -370,8 +373,8 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$navigation = proenem_get_primary_navigation_items( 'site', $menu_id );
 
-		$this->assertSame( home_url( '/#planos' ), $navigation['links'][0]['url'] );
-		$this->assertSame( 'https://estude.proenem.com.br/signup', $navigation['actions'][0]['url'] );
+		$this->assertSame( '#', $navigation['links'][0]['url'] );
+		$this->assertSame( '#', $navigation['actions'][0]['url'] );
 	}
 
 	/**
