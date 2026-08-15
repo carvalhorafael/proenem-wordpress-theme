@@ -153,9 +153,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-navbar")).toBeVisible();
   await expect(page.getByRole("heading", { level: 1, name: /sua aprovação/i })).toBeVisible();
   await expect(page.locator(".pen-hero-section__title-line")).toHaveCount(2);
-  await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação não");
-  await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
-  await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
+  await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação no");
+  await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("ENEM começa aqui.");
+  await expect(page.getByText(/a Proenem orienta sua preparação/i)).toBeVisible();
+  await expect(page.locator(".pro-home-hero-action-bar__support")).toHaveText(
+    "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova.",
+  );
   await expect(page.getByRole("link", { name: /criar conta grátis/i }).first()).toHaveAttribute(
     "href",
     "https://estude.proenem.com.br/signup",
@@ -495,11 +498,29 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(subtitle.y - (title.y + title.height)).toBeLessThanOrEqual(48);
   expect(cta.y + cta.height).toBeLessThanOrEqual(720);
 
+  await page.addStyleTag({
+    content:
+      ".pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: sans-serif !important; }",
+  });
+  await page.evaluate(() => document.fonts.ready);
+
+  const fallbackTitle = await page.locator(".pen-hero-section__title").boundingBox();
+  const fallbackSubtitle = await page
+    .locator(".pro-home-hero-section__subtitle")
+    .boundingBox();
+
+  expect(fallbackTitle).not.toBeNull();
+  expect(fallbackSubtitle).not.toBeNull();
+  expect(fallbackSubtitle.y - (fallbackTitle.y + fallbackTitle.height)).toBeGreaterThanOrEqual(12);
+  expect(fallbackSubtitle.y - (fallbackTitle.y + fallbackTitle.height)).toBeLessThanOrEqual(48);
+
   await page.setViewportSize({ width: 360, height: 720 });
 
-  const narrowSupportBox = await support.boundingBox();
-  expect(narrowSupportBox).not.toBeNull();
-  expect(narrowSupportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
+  const narrowCta = await page
+    .locator(".pro-home-hero-action-bar__actions .pen-button")
+    .boundingBox();
+  expect(narrowCta).not.toBeNull();
+  expect(narrowCta.y + narrowCta.height).toBeLessThanOrEqual(720);
 });
 
 test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {

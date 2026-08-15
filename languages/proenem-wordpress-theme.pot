@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.14.1\n"
+"Project-Id-Version: Proenem 0.15.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -153,17 +153,11 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:304
 #: page-templates/home.php:295
-msgid "Sua aprovação não"
+msgid "Sua aprovação no"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:305
-msgid "Linha 2 antes de sorte"
-msgstr ""
-
-#: inc/class-proenem-elementor-home-widget-base.php:305
-#: inc/class-proenem-elementor-home-widget-base.php:307
-#: page-templates/home.php:296
-msgid "é"
+msgid "Linha 2 antes do destaque"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:306
@@ -172,11 +166,17 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:306
 #: page-templates/home.php:296
-msgid "sorte"
+#: page-templates/home.php:775
+msgid "ENEM"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:307
 msgid "Linha 2 entre os destaques"
+msgstr ""
+
+#: inc/class-proenem-elementor-home-widget-base.php:307
+#: page-templates/home.php:296
+msgid "começa"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:308
@@ -185,7 +185,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:308
 #: page-templates/home.php:296
-msgid "método"
+msgid "aqui."
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:309
@@ -194,7 +194,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:309
 #: page-templates/home.php:298
-msgid "A escola te ensina o conteúdo. A Proenem te faz treinar, corrigir e não parar, até a sua nota subir."
+msgid "A Proenem orienta sua preparação e acompanha sua evolução até a prova."
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:319
@@ -213,7 +213,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:354
 #: page-templates/home.php:305
-msgid "Diagnóstico, plano de estudo, prática guiada e redação corrigida num só lugar. Você estuda com estratégia, não com mais horas."
+msgid "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova."
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:355
@@ -2287,10 +2287,6 @@ msgstr ""
 
 #: page-templates/home.php:775
 msgid "preparação para o"
-msgstr ""
-
-#: page-templates/home.php:775
-msgid "ENEM"
 msgstr ""
 
 #: page-templates/home.php:775

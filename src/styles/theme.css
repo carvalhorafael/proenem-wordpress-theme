@@ -5119,7 +5119,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pen-hero-section__title {
-    font-size: clamp(2.15rem, 9.75vw, 3.15rem);
+    font-size: clamp(2.15rem, 9.5vw, 3.15rem);
     letter-spacing: -0.035em;
     line-height: 0.94;
     top: 50%;
@@ -5131,9 +5131,9 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pro-home-hero-section__subtitle {
-    bottom: 1rem;
+    bottom: auto;
     font-size: 1.125rem;
-    top: auto;
+    top: 72%;
     width: min(94vw, 34rem);
   }
 
