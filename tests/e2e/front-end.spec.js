@@ -498,6 +498,22 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
   expect(subtitle.y - (title.y + title.height)).toBeLessThanOrEqual(48);
   expect(cta.y + cta.height).toBeLessThanOrEqual(720);
 
+  await page.addStyleTag({
+    content:
+      ".pro-home .pen-hero-section__title, .pro-home .pro-home-hero-section__subtitle { font-family: sans-serif !important; }",
+  });
+  await page.evaluate(() => document.fonts.ready);
+
+  const fallbackTitle = await page.locator(".pen-hero-section__title").boundingBox();
+  const fallbackSubtitle = await page
+    .locator(".pro-home-hero-section__subtitle")
+    .boundingBox();
+
+  expect(fallbackTitle).not.toBeNull();
+  expect(fallbackSubtitle).not.toBeNull();
+  expect(fallbackSubtitle.y - (fallbackTitle.y + fallbackTitle.height)).toBeGreaterThanOrEqual(12);
+  expect(fallbackSubtitle.y - (fallbackTitle.y + fallbackTitle.height)).toBeLessThanOrEqual(48);
+
   await page.setViewportSize({ width: 360, height: 720 });
 
   const narrowSupportBox = await support.boundingBox();

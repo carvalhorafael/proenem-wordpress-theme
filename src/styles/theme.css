@@ -5131,9 +5131,9 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-home .pro-home-hero-section__subtitle {
-    bottom: 1rem;
+    bottom: auto;
     font-size: 1.125rem;
-    top: auto;
+    top: 72%;
     width: min(94vw, 34rem);
   }
 
