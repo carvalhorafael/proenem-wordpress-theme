@@ -516,9 +516,11 @@ test("front page keeps the hero CTA inside the first mobile fold", async ({ page
 
   await page.setViewportSize({ width: 360, height: 720 });
 
-  const narrowSupportBox = await support.boundingBox();
-  expect(narrowSupportBox).not.toBeNull();
-  expect(narrowSupportBox.height).toBeLessThanOrEqual(supportLineHeight * 4.05);
+  const narrowCta = await page
+    .locator(".pro-home-hero-action-bar__actions .pen-button")
+    .boundingBox();
+  expect(narrowCta).not.toBeNull();
+  expect(narrowCta.y + narrowCta.height).toBeLessThanOrEqual(720);
 });
 
 test("front page separates the hero subtitle on wide and short screens", async ({ page }) => {
