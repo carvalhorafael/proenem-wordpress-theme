@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.14.1
+Stable tag: 0.15.0
 License: Proprietary
 License URI: LICENSE.md
 

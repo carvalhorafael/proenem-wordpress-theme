@@ -153,9 +153,12 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-navbar")).toBeVisible();
   await expect(page.getByRole("heading", { level: 1, name: /sua aprovação/i })).toBeVisible();
   await expect(page.locator(".pen-hero-section__title-line")).toHaveCount(2);
-  await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação não");
-  await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("é sorte é método");
-  await expect(page.getByText(/a escola te ensina o conteúdo/i)).toBeVisible();
+  await expect(page.locator(".pen-hero-section__title-line").nth(0)).toHaveText("Sua aprovação no");
+  await expect(page.locator(".pen-hero-section__title-line").nth(1)).toHaveText("ENEM começa aqui.");
+  await expect(page.getByText(/a Proenem orienta sua preparação/i)).toBeVisible();
+  await expect(page.locator(".pro-home-hero-action-bar__support")).toHaveText(
+    "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova.",
+  );
   await expect(page.getByRole("link", { name: /criar conta grátis/i }).first()).toHaveAttribute(
     "href",
     "https://estude.proenem.com.br/signup",
