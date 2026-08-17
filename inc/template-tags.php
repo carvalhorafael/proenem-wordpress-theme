@@ -1791,11 +1791,20 @@ function proenem_upgrade_home_cta_link( $link, $intent ) {
 	$is_method_pro_checkout      = static function ( $url ) use ( $intent ) {
 		return 'method_pro' === $intent && false !== strpos( $url, 'pay.hotmart.com/W106752534O' );
 	};
+	$is_legacy_free_destination  = static function ( $url ) use ( $intent ) {
+		if ( 'plans' !== $intent ) {
+			return false;
+		}
+
+		$url = untrailingslashit( $url );
+
+		return false !== strpos( $url, 'estude.proenem.com.br/signup' ) || 'https://estude.proenem.com.br/treino/questoes' === $url;
+	};
 
 	if ( is_array( $link ) ) {
 		$current_url = trim( (string) ( $link['url'] ?? '' ) );
 
-		if ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) ) {
+		if ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) || $is_legacy_free_destination( $current_url ) ) {
 			$link['url'] = $canonical_url;
 		}
 
@@ -1804,7 +1813,7 @@ function proenem_upgrade_home_cta_link( $link, $intent ) {
 
 	$current_url = trim( (string) $link );
 
-	return ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) ) ? $canonical_url : $current_url;
+	return ( '' === $current_url || '#planos' === $current_url || '#' === $current_url || $is_legacy_advanced_checkout( $current_url ) || $is_method_pro_checkout( $current_url ) || $is_legacy_free_destination( $current_url ) ) ? $canonical_url : $current_url;
 }
 
 /**
@@ -1817,9 +1826,9 @@ function proenem_render_mobile_persistent_action( $action = array() ) {
 	$action = wp_parse_args(
 		$action,
 		array(
-			'label'     => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+			'label'     => __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
 			'threshold' => 600,
-			'url'       => proenem_get_home_cta_destination( 'signup' ),
+			'url'       => proenem_get_home_cta_destination( 'plans' ),
 		)
 	);
 

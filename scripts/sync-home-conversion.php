@@ -86,9 +86,9 @@ function proenem_issue_110_ensure_navbar( &$elements ) {
 						'menu_id'            => 0,
 						'aria_label'         => __( 'Navegação da home', 'proenem-wordpress-theme' ),
 						'mobile_cta_enabled' => 'yes',
-						'mobile_cta_label'   => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+						'mobile_cta_label'   => __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
 						'mobile_cta_url'     => array(
-							'url' => proenem_get_home_cta_destination( 'signup' ),
+							'url' => proenem_get_home_cta_destination( 'plans' ),
 						),
 					),
 					'elements'   => array(),
@@ -129,6 +129,28 @@ function proenem_issue_110_upgrade_url( &$settings, $key, $intent ) {
 }
 
 /**
+ * Set a canonical URL while preserving Elementor link metadata.
+ *
+ * @param array<string,mixed> $settings Widget settings.
+ * @param string              $key Setting key.
+ * @param string              $intent Conversion intent.
+ * @return bool Whether the setting changed.
+ */
+function proenem_issue_110_set_url( &$settings, $key, $intent ) {
+	$current   = $settings[ $key ] ?? array();
+	$canonical = proenem_get_home_cta_destination( $intent );
+	$updated   = is_array( $current ) ? array_merge( $current, array( 'url' => $canonical ) ) : $canonical;
+
+	if ( $updated === $current ) {
+		return false;
+	}
+
+	$settings[ $key ] = $updated;
+
+	return true;
+}
+
+/**
  * Upgrade home conversion settings throughout an Elementor tree.
  *
  * @param array<int,array<string,mixed>> $elements Elementor elements.
@@ -149,7 +171,7 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 			$navbar_settings = array(
 				'mode'               => 'menu',
 				'mobile_cta_enabled' => 'yes',
-				'mobile_cta_label'   => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+				'mobile_cta_label'   => __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
 			);
 
 			foreach ( $navbar_settings as $key => $value ) {
@@ -159,48 +181,128 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 				}
 			}
 
-			$changed = proenem_issue_110_upgrade_url( $settings, 'mobile_cta_url', 'signup' ) || $changed;
+			$changed = proenem_issue_110_set_url( $settings, 'mobile_cta_url', 'plans' ) || $changed;
 		}
 
-		$signup_widgets = array(
-			'pro_home_action_bar' => 'primary_button_url',
-			'pro_home_pain'       => 'button_url',
-			'pro_home_pillars'    => 'button_url',
+		$conversion_widgets = array(
+			'pro_home_action_bar' => array(
+				'label'     => __( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ),
+				'label_key' => 'primary_button_label',
+				'url_key'   => 'primary_button_url',
+			),
+			'pro_home_pain'       => array(
+				'badge'     => __( '7 dias de garantia', 'proenem-wordpress-theme' ),
+				'label'     => __( 'Comece agora', 'proenem-wordpress-theme' ),
+				'label_key' => 'button_label',
+				'url_key'   => 'button_url',
+			),
+			'pro_home_pillars'    => array(
+				'label'     => __( 'Ver a Turma Intensiva', 'proenem-wordpress-theme' ),
+				'label_key' => 'button_label',
+				'url_key'   => 'button_url',
+			),
+			'pro_home_questions'  => array(
+				'badge'     => __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
+				'label'     => __( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ),
+				'label_key' => 'button_label',
+				'url_key'   => 'button_url',
+			),
 		);
 
-		if ( isset( $signup_widgets[ $widget_type ] ) ) {
-			$url_key = $signup_widgets[ $widget_type ];
-			$changed = proenem_issue_110_upgrade_url( $settings, $url_key, 'signup' ) || $changed;
+		if ( isset( $conversion_widgets[ $widget_type ] ) ) {
+			$conversion = $conversion_widgets[ $widget_type ];
+			$changed    = proenem_issue_110_set_url( $settings, $conversion['url_key'], 'plans' ) || $changed;
 
-			$label_key = 'pro_home_action_bar' === $widget_type ? 'primary_button_label' : 'button_label';
-
-			if ( empty( $settings[ $label_key ] ) || __( 'Começar grátis', 'proenem-wordpress-theme' ) === $settings[ $label_key ] ) {
-				$settings[ $label_key ] = __( 'Criar conta grátis', 'proenem-wordpress-theme' );
+			if ( ( $settings[ $conversion['label_key'] ] ?? '' ) !== $conversion['label'] ) {
+				$settings[ $conversion['label_key'] ] = $conversion['label'];
 				$changed                = true;
+			}
+
+			if ( isset( $conversion['badge'] ) && ( $settings['button_badge'] ?? '' ) !== $conversion['badge'] ) {
+				$settings['button_badge'] = $conversion['badge'];
+				$changed                  = true;
 			}
 		}
 
-		if ( 'pro_home_questions' === $widget_type ) {
-			$changed = proenem_issue_110_upgrade_url( $settings, 'button_url', 'questions' ) || $changed;
-		}
-
 		if ( 'pro_home_pricing' === $widget_type && ! empty( $settings['plans'] ) && is_array( $settings['plans'] ) ) {
+			$pricing_settings = array(
+				'body'             => __( "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões.\nComece agora com 7 dias de garantia.", 'proenem-wordpress-theme' ),
+				'title_emphasis'   => __( 'até a prova.', 'proenem-wordpress-theme' ),
+				'title_line_1'     => __( 'Sua preparação completa.', 'proenem-wordpress-theme' ),
+				'title_line_2'     => __( 'Do diagnóstico', 'proenem-wordpress-theme' ),
+			);
+
+			foreach ( $pricing_settings as $key => $value ) {
+				if ( ( $settings[ $key ] ?? '' ) !== $value ) {
+					$settings[ $key ] = $value;
+					$changed          = true;
+				}
+			}
+
+			$available_plans = array();
+
 			foreach ( $settings['plans'] as &$plan ) {
 				$plan_name = $plan['name'] ?? '';
 
-				if ( __( 'Grátis', 'proenem-wordpress-theme' ) === $plan_name ) {
-					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'signup' ) || $changed;
+				if ( __( 'Grátis', 'proenem-wordpress-theme' ) === $plan_name || ! empty( $plan['free'] ) ) {
+					$changed = true;
+					continue;
 				}
 
-				if ( __( 'Método PRO', 'proenem-wordpress-theme' ) === $plan_name ) {
-					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'method_pro' ) || $changed;
+				if ( in_array( $plan_name, array( __( 'Método PRO', 'proenem-wordpress-theme' ), __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ) ), true ) ) {
+					$intensive_settings = array(
+						'button_label' => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
+						'features'     => __( "Diagnóstico inicial, nota prevista e banco de +60 mil questões\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI", 'proenem-wordpress-theme' ),
+						'name'         => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
+					);
+
+					foreach ( $intensive_settings as $key => $value ) {
+						if ( ( $plan[ $key ] ?? '' ) !== $value ) {
+							$plan[ $key ] = $value;
+							$changed       = true;
+						}
+					}
+
+					$changed = proenem_issue_110_set_url( $plan, 'button_url', 'method_pro' ) || $changed;
 				}
 
 				if ( in_array( $plan_name, array( __( 'Método PRO Avançado', 'proenem-wordpress-theme' ), __( 'Pro Medicina', 'proenem-wordpress-theme' ) ), true ) ) {
 					$changed = proenem_issue_110_upgrade_url( $plan, 'button_url', 'advanced' ) || $changed;
 				}
+
+				$available_plans[] = $plan;
 			}
 			unset( $plan );
+
+			$settings['plans'] = $available_plans;
+		}
+
+		if ( 'pro_home_faq' === $widget_type && ! empty( $settings['items'] ) && is_array( $settings['items'] ) ) {
+			$updated_items = array();
+
+			foreach ( $settings['items'] as $item ) {
+				$question = $item['question'] ?? '';
+
+				if ( __( 'Posso começar de graça?', 'proenem-wordpress-theme' ) === $question ) {
+					$changed = true;
+					continue;
+				}
+
+				if ( __( 'O que é o Método PRO?', 'proenem-wordpress-theme' ) === $question ) {
+					$item['question'] = __( 'O que é a Turma Intensiva 2026?', 'proenem-wordpress-theme' );
+					$changed          = true;
+				}
+
+				if ( __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ) === $question ) {
+					$item['question'] = __( 'O que está incluído na Turma Intensiva?', 'proenem-wordpress-theme' );
+					$item['answer']   = __( 'Diagnóstico inicial, nota prevista, banco de mais de 60 mil questões, cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' );
+					$changed          = true;
+				}
+
+				$updated_items[] = $item;
+			}
+
+			$settings['items'] = $updated_items;
 		}
 
 		if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
@@ -214,7 +316,41 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 	return $changed;
 }
 
+/**
+ * Update the known primary-menu conversion item without touching custom links.
+ *
+ * @return int Number of updated items.
+ */
+function proenem_issue_110_sync_primary_menu() {
+	$locations = get_nav_menu_locations();
+	$menu_id   = absint( $locations['primary'] ?? 0 );
+
+	if ( ! $menu_id ) {
+		return 0;
+	}
+
+	$updated = 0;
+
+	foreach ( wp_get_nav_menu_items( $menu_id ) ?: array() as $item ) {
+		if ( ! in_array( $item->title, array( 'Comece grátis', 'Criar conta grátis' ), true ) ) {
+			continue;
+		}
+
+		wp_update_post(
+			array(
+				'ID'         => $item->ID,
+				'post_title' => __( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ),
+			)
+		);
+		update_post_meta( $item->ID, '_menu_item_url', proenem_get_home_cta_destination( 'plans' ) );
+		++$updated;
+	}
+
+	return $updated;
+}
+
 $elementor_updates = 0;
+$menu_updates      = proenem_issue_110_sync_primary_menu();
 $pages             = get_posts(
 	array(
 		'fields'         => 'ids',
@@ -249,6 +385,7 @@ if ( class_exists( '\Elementor\Plugin' ) ) {
 }
 
 proenem_issue_110_log( sprintf( 'Elementor home pages updated: %d', $elementor_updates ) );
+proenem_issue_110_log( sprintf( 'Primary menu items updated: %d', $menu_updates ) );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	WP_CLI::success( 'Home conversion data is synchronized.' );

@@ -3585,6 +3585,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   overflow: hidden;
   padding: clamp(3.2rem, 5vw, 4.5rem) clamp(1rem, 4vw, 3rem) clamp(5rem, 8vw, 7rem);
   position: relative;
+  scroll-margin-top: 5rem;
   text-align: center;
 }
 
@@ -3650,10 +3651,10 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   align-items: end;
   display: grid;
   gap: clamp(1.7rem, 2.5vw, 2.2rem);
-  grid-template-columns: repeat(2, minmax(0, 22.7rem));
+  grid-template-columns: minmax(0, 22.7rem);
   justify-content: center;
   margin: clamp(4.2rem, 6vw, 5.8rem) auto 0;
-  max-width: 47.6rem;
+  max-width: 22.7rem;
 }
 
 .pro-home .pen-plan-card {

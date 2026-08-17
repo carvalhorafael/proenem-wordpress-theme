@@ -6,8 +6,8 @@ Este documento define o contrato de conversão da home da Proenem. Ele cobre o t
 
 | Tipo | Intenção | Regra de destino |
 | --- | --- | --- |
-| Primário | Criar uma conta gratuita | `https://estude.proenem.com.br/signup` |
-| Secundário | Consultar as ofertas | `/#planos` |
+| Primário | Conhecer a Turma Intensiva | `/#planos` |
+| Secundário | Consultar a oferta e o preço | `/#planos` |
 | Exploração | Experimentar uma parte específica da plataforma | Destino funcional correspondente na plataforma |
 | Contratação | Comprar um plano pago | Checkout aprovado da oferta correspondente |
 | B2B | Falar sobre parceria com escola | Fluxo institucional separado |
@@ -25,7 +25,7 @@ Os itens e seus destinos são definidos pelo menu WordPress `primary`. O rendere
 | Aprovados | Navegação | `/#aprovados` |
 | FAQ | Navegação | `/#faq` |
 | Materiais gratuitos | Exploração | Página WordPress de materiais gratuitos |
-| Comece grátis | Primário | `https://estude.proenem.com.br/signup` |
+| Conheça a Turma Intensiva | Primário | `/#planos` |
 | Entrar | Acesso | Destino persistido no menu WordPress |
 | Acessar Proenem | Acesso | Destino persistido no submenu |
 | Acessar Promedicina | Acesso | Destino persistido no submenu |
@@ -34,19 +34,18 @@ Os itens e seus destinos são definidos pelo menu WordPress `primary`. O rendere
 
 | Posição | Label | Intenção | Destino | Fontes |
 | --- | --- | --- | --- | --- |
-| Barra de ação do hero | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
-| Método PRO, pilares | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
-| Dores, após método e acompanhamento | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
-| Barra mobile após 600 px | Criar conta grátis | Primário persistente | `https://estude.proenem.com.br/signup` | Renderer compartilhado do navbar e widget Elementor |
+| Barra de ação do hero | Conheça a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
+| Método PRO, pilares | Ver a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
+| Dores, após método e acompanhamento | Comece agora | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
+| Barra mobile após 600 px | Ver plano e preço | Primário persistente | `/#planos` | Renderer compartilhado do navbar e widget Elementor |
 | Cards de disciplinas | Nome da disciplina | Exploração | Página funcional da disciplina | PHP, repeater Elementor e JSON |
-| Banco de questões | Explorar questões grátis | Exploração | `https://estude.proenem.com.br/treino/questoes` | PHP, widget, JSON e dados persistidos |
-| Plano Grátis | Criar conta grátis | Primário | `https://estude.proenem.com.br/signup` | PHP, widget, JSON e dados persistidos |
-| Método PRO | Quero o Método PRO | Contratação | `https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10` | PHP, defaults do widget e dados persistidos |
+| Banco de questões | Conheça a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
+| Turma Intensiva 2026 | Quero a Turma Intensiva | Contratação | `https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10` | PHP, defaults do widget e dados persistidos |
 | Depoimentos | Ver mais | Prova social | `https://aprovados.proenem.com.br/` | PHP, widget e JSON |
 
-O Método PRO Avançado está fora da oferta atual. O destino `advanced` permanece no contrato interno somente para compatibilidade e uma possível reativação futura; o renderer e a sincronização operacional não exibem dados persistidos dessa oferta.
+O plano Grátis e o Método PRO Avançado estão fora da oferta atual da home. O destino `advanced` permanece no contrato interno somente para compatibilidade e uma possível reativação futura; o renderer e a sincronização operacional não exibem dados persistidos dessas ofertas.
 
-O checkout do Método PRO mantém somente o código da oferta e o modo de checkout. Parâmetros de campanha, UTMs, `src` e identificadores de sessão não fazem parte do destino persistido no tema. Uma futura atribuição dinâmica deve seguir o contrato de mensuração da issue #35.
+O checkout da Turma Intensiva mantém somente o código da oferta e o modo de checkout. Parâmetros de campanha, UTMs, `src` e identificadores de sessão não fazem parte do destino persistido no tema. Uma futura atribuição dinâmica deve seguir o contrato de mensuração da issue #35.
 
 ## Jornada B2B
 
@@ -64,7 +63,9 @@ wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-convers
 wp eval-file wp-content/themes/proenem-wordpress-theme/scripts/sync-home-plans.php
 ```
 
-Os scripts são idempotentes e não alteram o menu `primary`. O primeiro atualiza os destinos de conversão conhecidos somente em páginas Elementor; o segundo remove a oferta avançada e atualiza a FAQ somente em páginas Elementor que ainda tenham os valores editoriais conhecidos. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
+Os scripts são idempotentes. O primeiro atualiza os destinos de conversão conhecidos nas páginas Elementor e troca no menu `primary` somente itens com os rótulos legados `Comece grátis` ou `Criar conta grátis`; o segundo remove a oferta avançada e atualiza a FAQ somente em páginas Elementor que ainda tenham os valores editoriais conhecidos. Depois da execução, revise visualmente a home e confirme os links antes de promover o ambiente.
+
+Antes da publicação, abra o checkout aprovado e confirme o nome da Turma Intensiva, preço, garantia e ausência de mensagens de oferta expirada.
 
 ## Gap temporário do design system
 
