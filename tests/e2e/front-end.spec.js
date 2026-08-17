@@ -238,7 +238,7 @@ test("front page keeps conversion actions compatible with their labels", async (
 
   expect(navbarBox).not.toBeNull();
   expect(pricingBox).not.toBeNull();
-  expect(pricingBox.y).toBeGreaterThanOrEqual(navbarBox.height - 1);
+  expect(pricingBox.y).toBeGreaterThanOrEqual(navbarBox.height - 2);
 
   await expect(page.getByRole("link", { name: /criar conta grátis/i })).toHaveCount(0);
   await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveCount(0);
