@@ -47,9 +47,9 @@
             "menu_id": 0,
             "aria_label": "Navegação da home",
             "mobile_cta_enabled": "yes",
-            "mobile_cta_label": "Criar conta grátis",
+            "mobile_cta_label": "Ver plano e preço",
             "mobile_cta_url": {
-              "url": "https://estude.proenem.com.br/signup",
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             }
@@ -82,7 +82,7 @@
           "settings": {
             "body": "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova.",
             "primary_button_url": {
-              "url": "https://estude.proenem.com.br/signup",
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             }
@@ -104,7 +104,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "https://estude.proenem.com.br/signup",
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             },
@@ -172,7 +172,7 @@
           "isInner": false,
           "settings": {
             "button_url": {
-              "url": "https://estude.proenem.com.br/signup",
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             }
@@ -268,7 +268,7 @@
           "settings": {
             "title_emphasis": "60 mil questões —",
             "button_url": {
-              "url": "https://estude.proenem.com.br/treino/questoes",
+              "url": "#planos",
               "is_external": "",
               "nofollow": ""
             },
@@ -343,7 +343,7 @@
           "widgetType": "pro_home_pricing",
           "isInner": false,
           "settings": {
-            "body": "Comece grátis, sem cartão.\nNos planos pagos, você tem 7 dias de garantia.",
+            "body": "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões.\nComece agora com 7 dias de garantia.",
             "button_url": {
               "url": "#faq",
               "is_external": "",
@@ -351,33 +351,15 @@
             },
             "plans": [
               {
-                "_id": "planfree",
-                "name": "Grátis",
-                "price_prefix": "R$",
-                "price": "0",
-                "price_details": "Grátis para começar. Sem cartão.",
-                "guarantee": "",
-                "summary": "Para começar hoje.",
-                "features": "Diagnóstico inicial + nota prevista\nBanco de +60 mil questões\nSem cartão",
-                "button_label": "Criar conta grátis",
-                "button_url": {
-                  "url": "https://estude.proenem.com.br/signup",
-                  "is_external": "",
-                  "nofollow": ""
-                },
-                "free": "yes",
-                "featured": ""
-              },
-              {
                 "_id": "planpro1",
-                "name": "Método PRO",
+                "name": "Turma Intensiva 2026",
                 "price_prefix": "12x de R$",
                 "price": "29,90",
                 "price_details": "",
                 "guarantee": "7 dias de garantia.",
                 "summary": "Preparação completa até o dia da prova.",
-                "features": "Tudo do Grátis e mais...\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI",
-                "button_label": "Quero o Método PRO",
+                "features": "Diagnóstico inicial, nota prevista e banco de +60 mil questões\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI",
+                "button_label": "Quero a Turma Intensiva",
                 "free": "",
                 "featured": "yes"
               }
@@ -445,18 +427,13 @@
             "items": [
               {
                 "_id": "faqitem1",
-                "question": "O que é o Método PRO?",
+                "question": "O que é a Turma Intensiva 2026?",
                 "answer": "Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota."
               },
               {
                 "_id": "faqitem2",
-                "question": "Posso começar de graça?",
-                "answer": "Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão."
-              },
-              {
-                "_id": "faqitem3",
-                "question": "Qual a diferença entre os planos?",
-                "answer": "O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI."
+                "question": "O que está incluído na Turma Intensiva?",
+                "answer": "Diagnóstico inicial, nota prevista, banco de mais de 60 mil questões, cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI."
               },
               {
                 "_id": "faqitem4",

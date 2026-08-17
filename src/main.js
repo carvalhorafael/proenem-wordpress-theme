@@ -96,27 +96,34 @@ if (persistentMobileActions.length) {
     persistentMobileActions.forEach((action) => {
       const threshold = Number.parseInt(action.dataset.scrollThreshold || "600", 10);
       const persistentLink = action.querySelector("a[href]");
+      const isVisibleInViewport = (element) => {
+        const bounds = element.getBoundingClientRect();
+        const visibleHeight = Math.min(bounds.bottom, innerHeight) - Math.max(bounds.top, 0);
+
+        return (
+          bounds.width > 0 &&
+          bounds.height > 0 &&
+          visibleHeight >= Math.min(bounds.height * 0.5, 32)
+        );
+      };
       const inlinePrimaryIsVisible = persistentLink
         ? Array.from(document.querySelectorAll("a[href]")).some((link) => {
             if (link === persistentLink || link.href !== persistentLink.href) {
               return false;
             }
 
-            const bounds = link.getBoundingClientRect();
-            const visibleHeight = Math.min(bounds.bottom, innerHeight) - Math.max(bounds.top, 0);
-
-            return (
-              bounds.width > 0 &&
-              bounds.height > 0 &&
-              visibleHeight >= Math.min(bounds.height * 0.5, 32)
-            );
+            return isVisibleInViewport(link);
           })
         : false;
+      const purchaseActionIsVisible = Array.from(
+        document.querySelectorAll(".pen-pricing-section .pen-action-link"),
+      ).some(isVisibleInViewport);
       const shouldShow =
         mobileViewport.matches &&
         window.scrollY >= threshold &&
         !menuIsOpen &&
-        !inlinePrimaryIsVisible;
+        !inlinePrimaryIsVisible &&
+        !purchaseActionIsVisible;
 
       action.hidden = !shouldShow;
       hasVisibleAction ||= shouldShow;

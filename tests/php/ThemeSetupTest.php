@@ -184,7 +184,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Elementor import data should expose only the two current home plans.
+	 * Elementor import data should expose only the current paid home plan.
 	 *
 	 * @return void
 	 */
@@ -205,7 +205,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		}
 
 		$this->assertIsArray( $pricing );
-		$this->assertSame( array( 'Grátis', 'Método PRO' ), array_column( $pricing['settings']['plans'], 'name' ) );
+		$this->assertSame( array( 'Turma Intensiva 2026' ), array_column( $pricing['settings']['plans'], 'name' ) );
 	}
 
 	/**
@@ -378,19 +378,19 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Mobile persistent action should use the canonical signup contract.
+	 * Mobile persistent action should use the canonical plans contract.
 	 *
 	 * @return void
 	 */
-	public function test_mobile_persistent_action_uses_signup_destination() {
+	public function test_mobile_persistent_action_uses_plans_destination() {
 		ob_start();
 		proenem_render_mobile_persistent_action();
 		$markup = ob_get_clean();
 
 		$this->assertStringContainsString( 'data-pro-mobile-persistent-action', $markup );
 		$this->assertStringContainsString( 'data-scroll-threshold="600"', $markup );
-		$this->assertStringContainsString( 'https://estude.proenem.com.br/signup', $markup );
-		$this->assertStringContainsString( 'Criar conta grátis', $markup );
+		$this->assertStringContainsString( home_url( '/#planos' ), $markup );
+		$this->assertStringContainsString( 'Ver plano e preço', $markup );
 	}
 
 	/**
@@ -404,6 +404,20 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertSame( 'https://medicina.proenem.com.br/', proenem_get_home_cta_destination( 'advanced' ) );
 		$this->assertSame( 'https://medicina.proenem.com.br/', $updated_link['url'] );
+	}
+
+	/**
+	 * Legacy free destinations should converge on the paid-plan section.
+	 *
+	 * @return void
+	 */
+	public function test_legacy_free_destinations_are_upgraded_to_plans() {
+		$signup_link    = array( 'url' => 'https://estude.proenem.com.br/signup' );
+		$questions_link = array( 'url' => 'https://estude.proenem.com.br/treino/questoes' );
+		$plans_url      = proenem_get_home_cta_destination( 'plans' );
+
+		$this->assertSame( $plans_url, proenem_upgrade_home_cta_link( $signup_link, 'plans' )['url'] );
+		$this->assertSame( $plans_url, proenem_upgrade_home_cta_link( $questions_link, 'plans' )['url'] );
 	}
 
 	/**

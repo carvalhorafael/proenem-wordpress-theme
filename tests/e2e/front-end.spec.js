@@ -159,9 +159,9 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pro-home-hero-action-bar__support")).toHaveText(
     "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova.",
   );
-  await expect(page.getByRole("link", { name: /criar conta grátis/i }).first()).toHaveAttribute(
+  await expect(page.getByRole("link", { name: /conheça a turma intensiva/i }).first()).toHaveAttribute(
     "href",
-    "https://estude.proenem.com.br/signup",
+    "http://localhost:8898/#planos",
   );
   await expectHomeProofContract(page);
   await expectHomeTestimonialsContract(page);
@@ -173,23 +173,16 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
   await expect(page.getByText("+60 mil questões", { exact: true })).toBeVisible();
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
-  await expect(page.getByRole("heading", { level: 2, name: /comece de graça.*evolua quando fizer sentido/i })).toBeVisible();
-  await expect(page.getByText(/comece grátis, sem cartão.*7 dias de garantia/i)).toBeVisible();
-  await expect(page.locator(".pen-plan-card")).toHaveCount(2);
-  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Grátis");
-  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Diagnóstico inicial + nota prevista");
-  await expect(page.locator(".pen-plan-card.is-free")).toContainText("Banco de +60 mil questões");
-  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveText(/criar conta grátis/i);
-  await expect(page.locator(".pen-plan-card.is-free .pen-action-link")).toHaveAttribute(
-    "href",
-    "https://estude.proenem.com.br/signup",
-  );
+  await expect(page.getByRole("heading", { level: 2, name: /sua preparação completa.*do diagnóstico até a prova/i })).toBeVisible();
+  await expect(page.getByText(/turma intensiva 2026.*7 dias de garantia/i)).toBeVisible();
+  await expect(page.locator(".pen-plan-card")).toHaveCount(1);
+  await expect(page.locator(".pen-plan-card.is-free")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 3, name: "Método PRO", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Turma Intensiva 2026", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
-  const methodPlan = page.locator(".pen-plan-card").nth(1);
-  await expect(methodPlan).toContainText("Tudo do Grátis e mais...");
+  const methodPlan = page.locator(".pen-plan-card").first();
+  await expect(methodPlan).toContainText("Diagnóstico inicial, nota prevista e banco de +60 mil questões");
   await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
   await expect(methodPlan).toContainText("2 correções de redação mensais");
   await expect(methodPlan).toContainText("Aulas gravadas com os melhores professores");
@@ -198,12 +191,14 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
   await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
-  await expect(page.getByRole("link", { name: /^quero o método pro$/i })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: /^quero a turma intensiva$/i })).toHaveAttribute(
     "href",
     /pay\.hotmart\.com\/W106752534O/,
   );
   await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveCount(0);
   await expect(page.locator(".pen-faq-section")).not.toContainText("Método PRO Avançado");
+  await expect(page.locator(".pen-faq-section")).not.toContainText("Posso começar de graça?");
+  await expect(page.locator(".pen-faq-section")).toContainText("O que está incluído na Turma Intensiva?");
   await expect(page.locator(".pen-faq-item", { hasText: "E se eu não gostar?" })).toContainText(
     "pode cancelar dentro desse prazo e usar a garantia",
   );
@@ -225,19 +220,28 @@ test("front page keeps conversion actions compatible with their labels", async (
 
   await expect(page.locator(".pro-home > .pro-site-navbar")).toHaveCSS("position", "sticky");
 
-  const signupActions = page.getByRole("link", { name: /criar conta grátis/i });
-  const questionAction = page.getByRole("link", { name: /explorar questões grátis/i });
+  const planActions = page.locator(
+    ".pro-home > .pro-site-navbar a[href*='#planos'], .pro-home-hero-action-bar a, .pen-pillars-section__copy > a, .pro-home-pain-section__cta, .pro-home-question-bank__cta",
+  );
 
-  expect(await signupActions.count()).toBeGreaterThanOrEqual(4);
+  expect(await planActions.count()).toBeGreaterThanOrEqual(5);
 
-  for (const action of await signupActions.all()) {
-    await expect(action).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+  for (const action of await planActions.all()) {
+    await expect(action).toHaveAttribute("href", "http://localhost:8898/#planos");
   }
 
-  await expect(questionAction).toHaveAttribute(
-    "href",
-    "https://estude.proenem.com.br/treino/questoes",
-  );
+  await page.locator(".pro-home-hero-action-bar").getByRole("link").click();
+  await expect(page).toHaveURL(/#planos$/);
+
+  const navbarBox = await page.locator(".pro-home > .pro-site-navbar").boundingBox();
+  const pricingBox = await page.locator("#planos").boundingBox();
+
+  expect(navbarBox).not.toBeNull();
+  expect(pricingBox).not.toBeNull();
+  expect(pricingBox.y).toBeGreaterThanOrEqual(navbarBox.height - 2);
+
+  await expect(page.getByRole("link", { name: /criar conta grátis/i })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveCount(0);
   await expect(
     page.locator(".pro-home > .pro-site-navbar").getByRole("link", { name: "Entrar", exact: true }),
   ).toHaveAttribute("href", "#");
@@ -250,7 +254,7 @@ test("front page keeps the navbar sticky and reveals the mobile primary action",
   const navbar = page.locator(".pro-home > .pro-site-navbar");
   const hero = page.locator(".pen-hero-section");
   const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
-  const persistentLink = persistentAction.getByRole("link", { name: /criar conta grátis/i });
+  const persistentLink = persistentAction.getByRole("link", { name: /ver plano e preço/i });
   const supportButton = page.locator("#wpp-icon-btn");
   const toggle = navbar.locator(".pro-home-navbar-toggle");
 
@@ -262,9 +266,9 @@ test("front page keeps the navbar sticky and reveals the mobile primary action",
     (element) => element.getBoundingClientRect().top + window.scrollY,
   );
 
-  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await page.locator(".pen-platform-showcase").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
-  await expect(persistentLink).toHaveAttribute("href", "https://estude.proenem.com.br/signup");
+  await expect(persistentLink).toHaveAttribute("href", "http://localhost:8898/#planos");
 
   const stickyBox = await navbar.boundingBox();
   const actionBox = await persistentAction.boundingBox();
@@ -295,7 +299,7 @@ test("front page keeps the navbar sticky and reveals the mobile primary action",
   await toggle.click();
   await expect(persistentAction).toBeVisible();
 
-  await page.locator(".pen-plan-card.is-free .pen-action-link").scrollIntoViewIfNeeded();
+  await page.locator(".pen-plan-card .pen-action-link").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeHidden();
 });
 
@@ -323,19 +327,20 @@ test("Elementor home fixture uses the same conversion and persistent action cont
   await expect(
     navbar.getByRole("link", { name: "Entrar", exact: true, includeHidden: true }),
   ).toHaveAttribute("href", "#");
-  await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: /conheça a turma intensiva/i }).last()).toHaveAttribute(
     "href",
-    "https://estude.proenem.com.br/treino/questoes",
+    "http://localhost:8898/#planos",
   );
   await expect(page.locator(".pen-question-bank-section h2")).toContainText("60 mil questões");
   await expect(page.locator(".pro-home-subject-card__meta")).toHaveCount(0);
   await expectHomeProofContract(page);
   await expectHomeTestimonialsContract(page);
-  await expect(page.locator(".pen-pricing-section .pen-plan-card")).toHaveCount(2);
+  await expect(page.locator(".pen-pricing-section .pen-plan-card")).toHaveCount(1);
+  await expect(page.getByRole("heading", { level: 3, name: "Turma Intensiva 2026" })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
   await expect(page.locator(".pen-faq-section")).not.toContainText("Método PRO Avançado");
 
-  await page.locator(".pen-question-bank-section").scrollIntoViewIfNeeded();
+  await page.locator(".pen-platform-showcase").scrollIntoViewIfNeeded();
   await expect(persistentAction).toBeVisible();
   const persistentActionBox = await persistentAction.boundingBox();
 
@@ -343,9 +348,9 @@ test("Elementor home fixture uses the same conversion and persistent action cont
   expect(persistentActionBox.x).toBe(0);
   expect(persistentActionBox.width).toBe(390);
   expect(persistentActionBox.y + persistentActionBox.height).toBeCloseTo(844, 0);
-  await expect(persistentAction.getByRole("link", { name: /criar conta grátis/i })).toHaveAttribute(
+  await expect(persistentAction.getByRole("link", { name: /ver plano e preço/i })).toHaveAttribute(
     "href",
-    "https://estude.proenem.com.br/signup",
+    "http://localhost:8898/#planos",
   );
 });
 
@@ -647,7 +652,6 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   const title = section.locator(".pro-home-pricing__intro h2");
   const support = section.locator(".pro-home-pricing__intro p").first();
   const plans = section.locator(".pen-plan-grid");
-  const freePlanButton = section.locator(".pen-plan-card.is-free .pen-action-link");
   const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
 
   const titleBox = await title.boundingBox();
@@ -661,18 +665,12 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   await expect(title).toHaveCSS("text-align", "center");
   await expect(support).toHaveCSS("font-size", "16px");
   await expect(support).toHaveCSS("text-align", "left");
-  await expect(featuredPlanButton).toHaveCSS(
-    "background-color",
-    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
-  );
+  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(255, 214, 0)");
   expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
   expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
 
   await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(featuredPlanButton).toHaveCSS(
-    "background-color",
-    await freePlanButton.evaluate((element) => window.getComputedStyle(element).backgroundColor),
-  );
+  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(255, 214, 0)");
 });
 
 test("front page pricing keeps centered prices and guarantees below paid CTAs without overlap", async ({ page }) => {
@@ -691,12 +689,12 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
     const sectionBox = await section.boundingBox();
     const gridBox = await grid.boundingBox();
 
-    await expect(cards).toHaveCount(2);
+    await expect(cards).toHaveCount(1);
     expect(sectionBox).not.toBeNull();
     expect(gridBox).not.toBeNull();
     expect(Math.abs(gridBox.x + gridBox.width / 2 - (sectionBox.x + sectionBox.width / 2))).toBeLessThanOrEqual(1);
 
-    for (let index = 0; index < 2; index += 1) {
+    for (let index = 0; index < 1; index += 1) {
       const card = cards.nth(index);
       const featuresBox = await card.locator("ul").boundingBox();
       const priceBox = await card.locator(".pro-home-plan-card__price").boundingBox();
@@ -714,15 +712,11 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
       expect(priceBox.y).toBeGreaterThanOrEqual(featuresBox.y + featuresBox.height - 1);
       expect(ctaBox.y).toBeGreaterThanOrEqual(priceBox.y + priceBox.height - 1);
 
-      if (index > 0) {
-        const guaranteeBox = await card.locator(".pro-home-plan-card__guarantee").boundingBox();
+      const guaranteeBox = await card.locator(".pro-home-plan-card__guarantee").boundingBox();
 
-        expect(guaranteeBox).not.toBeNull();
-        expect(guaranteeBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
-        expect(guaranteeBox.y + guaranteeBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
-      } else {
-        expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
-      }
+      expect(guaranteeBox).not.toBeNull();
+      expect(guaranteeBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
+      expect(guaranteeBox.y + guaranteeBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
     }
   }
 });

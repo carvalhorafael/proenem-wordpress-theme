@@ -169,31 +169,16 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'          => __( 'Grátis', 'proenem-wordpress-theme' ),
-		'price_prefix'  => __( 'R$', 'proenem-wordpress-theme' ),
-		'price'         => __( '0', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
-		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-		'free'          => true,
-		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
-		'features'      => array(
-			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
-			__( 'Banco de +60 mil questões', 'proenem-wordpress-theme' ),
-			__( 'Sem cartão', 'proenem-wordpress-theme' ),
-		),
-	),
-	array(
-		'name'         => __( 'Método PRO', 'proenem-wordpress-theme' ),
+		'name'         => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
 		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
 		'price'        => __( '29,90', 'proenem-wordpress-theme' ),
 		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 		'summary'      => __( 'Preparação completa até o dia da prova.', 'proenem-wordpress-theme' ),
 		'featured'     => true,
-		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'button_label' => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
 		'button_url'   => proenem_get_home_cta_destination( 'method_pro' ),
 		'features'     => array(
-			__( 'Tudo do Grátis e mais...', 'proenem-wordpress-theme' ),
+			__( 'Diagnóstico inicial, nota prevista e banco de +60 mil questões', 'proenem-wordpress-theme' ),
 			__( 'Cronograma personalizado completo até o dia da prova', 'proenem-wordpress-theme' ),
 			__( '2 correções de redação mensais', 'proenem-wordpress-theme' ),
 			__( 'Aulas gravadas com os melhores professores', 'proenem-wordpress-theme' ),
@@ -205,16 +190,12 @@ $plans = array(
 
 $faq_items = array(
 	array(
-		'question' => __( 'O que é o Método PRO?', 'proenem-wordpress-theme' ),
+		'question' => __( 'O que é a Turma Intensiva 2026?', 'proenem-wordpress-theme' ),
 		'answer'   => __( 'Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota.', 'proenem-wordpress-theme' ),
 	),
 	array(
-		'question' => __( 'Posso começar de graça?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Sim. Você cria uma conta gratuita e acessa o banco de questões, listas e um diagnóstico inicial com nota prevista — sem cartão.', 'proenem-wordpress-theme' ),
-	),
-	array(
-		'question' => __( 'Qual a diferença entre os planos?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'O Grátis oferece diagnóstico e questões. O Método PRO acrescenta cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
+		'question' => __( 'O que está incluído na Turma Intensiva?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Diagnóstico inicial, nota prevista, banco de mais de 60 mil questões, cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
@@ -306,8 +287,8 @@ $subjects = array(
 			</p>
 		</div>
 		<div class="pen-hero-action-bar__action pro-home-hero-action-bar__actions">
-			<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
-				<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
+			<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
+				<?php esc_html_e( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ); ?>
 				<span class="pen-button__arrow" aria-hidden="true">-></span>
 			</a>
 		</div>
@@ -329,7 +310,7 @@ $subjects = array(
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
 			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>"><?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>"><?php esc_html_e( 'Ver a Turma Intensiva', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -449,9 +430,9 @@ $subjects = array(
 				<strong><?php esc_html_e( 'método e acompanhamento.', 'proenem-wordpress-theme' ); ?></strong>
 			</span>
 		</p>
-		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'signup' ) ); ?>">
-			<?php esc_html_e( 'Criar conta grátis', 'proenem-wordpress-theme' ); ?>
-			<span class="pen-button__badge"><?php esc_html_e( 'é gratuito', 'proenem-wordpress-theme' ); ?></span>
+		<a class="pen-button pen-button--primary pen-button--md pro-home-pain-section__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
+			<?php esc_html_e( 'Comece agora', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( '7 dias de garantia', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--blue" aria-hidden="true"></span>
 		<span class="pro-home-pain-section__shape pro-home-pain-section__shape--pink" aria-hidden="true"></span>
@@ -668,9 +649,9 @@ $subjects = array(
 				</a>
 			<?php endforeach; ?>
 		</div>
-		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'questions' ) ); ?>">
-			<?php esc_html_e( 'Explorar questões grátis', 'proenem-wordpress-theme' ); ?>
-			<span class="pen-button__badge"><?php esc_html_e( 'Sem criar conta', 'proenem-wordpress-theme' ); ?></span>
+		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
+			<?php esc_html_e( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( 'Ver plano e preço', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'blue_3_semi-spheres.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	</section>
@@ -680,17 +661,17 @@ $subjects = array(
 		<div class="pro-home-pricing__header">
 			<div class="pro-home-pricing__intro">
 				<h2 id="pro-pricing-title">
-					<?php esc_html_e( 'Comece de graça.', 'proenem-wordpress-theme' ); ?><br>
-					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Evolua quando', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'fizer sentido.', 'proenem-wordpress-theme' ); ?></strong></span>
+					<?php esc_html_e( 'Sua preparação completa.', 'proenem-wordpress-theme' ); ?><br>
+					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Do diagnóstico', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'até a prova.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Comece grátis, sem cartão.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( 'Nos planos pagos, você tem 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões.', 'proenem-wordpress-theme' ); ?><br><?php esc_html_e( 'Comece agora com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid">
 			<?php foreach ( $plans as $plan ) : ?>
 				<article class="pen-plan-card<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
-					<?php if ( ! empty( $plan['featured'] ) ) : ?>
-						<span class="pro-home-plan-card__label"><?php esc_html_e( 'Mais escolhido', 'proenem-wordpress-theme' ); ?></span>
+				<?php if ( ! empty( $plan['featured'] ) ) : ?>
+					<span class="pro-home-plan-card__label"><?php esc_html_e( 'Oferta 2026', 'proenem-wordpress-theme' ); ?></span>
 					<?php endif; ?>
 					<header>
 						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
