@@ -205,7 +205,7 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 			array(
 				'label'       => esc_html__( 'Texto do CTA mobile', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
-				'default'     => esc_html__( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+				'default'     => esc_html__( 'Ver plano e preço', 'proenem-wordpress-theme' ),
 				'label_block' => true,
 				'condition'   => array(
 					'mobile_cta_enabled' => 'yes',
@@ -219,7 +219,7 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 				'label'       => esc_html__( 'Destino do CTA mobile', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::URL,
 				'default'     => array(
-					'url' => proenem_get_home_cta_destination( 'signup' ),
+					'url' => proenem_get_home_cta_destination( 'plans' ),
 				),
 				'label_block' => true,
 				'condition'   => array(
@@ -250,11 +250,11 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 		);
 
 		if ( 'yes' === ( $settings['mobile_cta_enabled'] ?? '' ) ) {
-			$mobile_cta_url = proenem_upgrade_home_cta_link( $settings['mobile_cta_url'] ?? array(), 'signup' );
+			$mobile_cta_url = proenem_upgrade_home_cta_link( $settings['mobile_cta_url'] ?? array(), 'plans' );
 
 			proenem_render_mobile_persistent_action(
 				array(
-					'label' => $settings['mobile_cta_label'] ?? __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+					'label' => $settings['mobile_cta_label'] ?? __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
 					'url'   => is_array( $mobile_cta_url ) ? ( $mobile_cta_url['url'] ?? '' ) : $mobile_cta_url,
 				)
 			);

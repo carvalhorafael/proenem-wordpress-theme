@@ -55,8 +55,8 @@ if ( $fixture_menu ) {
 proenem_e2e_add_menu_item(
 	$menu_id,
 	array(
-		'menu-item-title'   => 'Comece grátis',
-		'menu-item-url'     => 'https://estude.proenem.com.br/signup',
+		'menu-item-title'   => 'Conheça a Turma Intensiva',
+		'menu-item-url'     => home_url( '/#planos' ),
 		'menu-item-classes' => 'pen-navbar-action pen-navbar-action-primary',
 	)
 );
