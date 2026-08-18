@@ -779,7 +779,7 @@ function proenem_is_testimonials_surface() {
  * @return string
  */
 function proenem_get_testimonials_url() {
-	return home_url( '/depoimentos/' );
+	return home_url( '/aprovados/' );
 }
 
 /**
