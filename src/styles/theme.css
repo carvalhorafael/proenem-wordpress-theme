@@ -1672,8 +1672,11 @@ img {
   margin-top: clamp(var(--pen-space-4, 1rem), 2vw, var(--pen-space-6, 1.5rem));
 }
 
-.pro-testimonial-single__approval + p {
-  margin-top: clamp(var(--pen-space-4, 1rem), 2vw, var(--pen-space-6, 1.5rem));
+.pro-testimonial-single__excerpt {
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  margin: clamp(var(--pen-space-4, 1rem), 2vw, var(--pen-space-6, 1.5rem)) 0 0;
+  max-width: 42rem;
 }
 
 .pro-testimonial-single__media {
@@ -1721,23 +1724,6 @@ img {
   font-weight: 900;
   line-height: 1.08;
   margin: 0;
-}
-
-.pro-testimonial-single__aside-quote {
-  color: var(--pen-color-ink);
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.45;
-  margin: 0;
-}
-
-.pro-testimonial-single__aside-quote::before {
-  content: "“";
-}
-
-.pro-testimonial-single__aside-quote::after {
-  content: "”";
 }
 
 .pen-article-body .wp-block-image,

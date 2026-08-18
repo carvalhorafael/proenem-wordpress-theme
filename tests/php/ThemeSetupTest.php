@@ -431,6 +431,20 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The individual testimonial should show an explicit excerpt only in its hero.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_uses_explicit_excerpt_without_repeating_it_in_aside() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-depoimento.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringNotContainsString( 'proenem_get_testimonial_quote', $template );
+		$this->assertStringContainsString( 'has_excerpt( $testimonial_id )', $template );
+		$this->assertSame( 1, substr_count( $template, 'pro-testimonial-single__excerpt' ) );
+		$this->assertSame( 1, substr_count( $template, 'the_content();' ) );
+	}
+
+	/**
 	 * Required plugin dependency contracts should be declared by plugin file.
 	 *
 	 * @return void
