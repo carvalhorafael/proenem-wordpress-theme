@@ -29,6 +29,7 @@ get_header();
 		$excerpt                 = has_excerpt( $testimonial_id ) ? get_the_excerpt( $testimonial_id ) : '';
 		$video_url               = proenem_get_testimonial_video_url( $testimonial_id );
 		$video_embed             = $video_url ? wp_oembed_get( $video_url ) : '';
+		$is_portrait_image       = ! $video_embed && proenem_testimonial_has_portrait_image( $testimonial_id );
 		$share_url               = get_permalink( $testimonial_id );
 		$share_title             = sprintf(
 			/* translators: %s: Student name. */
@@ -55,7 +56,7 @@ get_header();
 						<p class="pro-testimonial-single__excerpt"><?php echo esc_html( $excerpt ); ?></p>
 					<?php endif; ?>
 				</div>
-				<figure class="pro-material-single__cover pro-testimonial-single__media">
+				<figure class="pro-material-single__cover pro-testimonial-single__media<?php echo $is_portrait_image ? ' pro-testimonial-single__media--portrait' : ''; ?>">
 					<?php if ( $video_embed ) : ?>
 						<?php echo wp_kses( $video_embed, proenem_get_oembed_allowed_html() ); ?>
 					<?php else : ?>
