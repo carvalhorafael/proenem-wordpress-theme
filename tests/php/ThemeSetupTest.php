@@ -103,6 +103,15 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonials links should use the public approval listing slug.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_url_uses_approved_students_slug() {
+		$this->assertSame( '/aprovados/', wp_parse_url( proenem_get_testimonials_url(), PHP_URL_PATH ) );
+	}
+
+	/**
 	 * Free Materials fallbacks should expose the expected portable identifiers.
 	 *
 	 * @return void
@@ -126,6 +135,8 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( '_testimonials_course', proenem_get_testimonials_course_meta_key() );
 		$this->assertSame( '_testimonials_institution', proenem_get_testimonials_institution_meta_key() );
 		$this->assertSame( '_testimonials_approval_year', proenem_get_testimonials_approval_year_meta_key() );
+		$this->assertSame( '_testimonials_preparation_time', proenem_get_testimonials_preparation_time_meta_key() );
+		$this->assertSame( '_testimonials_main_tip', proenem_get_testimonials_main_tip_meta_key() );
 		$this->assertSame( '_testimonials_home_proof_enabled', proenem_get_testimonials_home_proof_enabled_meta_key() );
 		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
 	}
@@ -442,6 +453,29 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'has_excerpt( $testimonial_id )', $template );
 		$this->assertSame( 1, substr_count( $template, 'pro-testimonial-single__excerpt' ) );
 		$this->assertSame( 1, substr_count( $template, 'the_content();' ) );
+	}
+
+	/**
+	 * The testimonial approval card should use the structured plugin fields.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_renders_structured_approval_card() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-depoimento.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$script   = (string) file_get_contents( PROENEM_THEME_DIR . '/src/main.js' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'proenem_get_testimonial_placement', $template );
+		$this->assertStringContainsString( 'proenem_get_testimonial_course', $template );
+		$this->assertStringContainsString( 'proenem_get_testimonial_institution', $template );
+		$this->assertStringContainsString( 'proenem_get_testimonial_approval_year', $template );
+		$this->assertStringContainsString( 'proenem_get_testimonial_preparation_time', $template );
+		$this->assertStringContainsString( 'proenem_get_testimonial_main_tip', $template );
+		$this->assertStringContainsString( '$has_structured_approval', $template );
+		$this->assertStringContainsString( 'data-pro-testimonial-share', $template );
+		$this->assertStringContainsString( 'Compartilhar esta conquista', $template );
+		$this->assertStringNotContainsString( 'Assistir à entrevista', $template );
+		$this->assertStringContainsString( 'navigator.share', $script );
+		$this->assertStringContainsString( 'copyTextToClipboard', $script );
 	}
 
 	/**
