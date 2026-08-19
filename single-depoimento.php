@@ -20,7 +20,7 @@ get_header();
 		$approved_at    = proenem_get_testimonial_approved_at( $testimonial_id );
 		$placement      = proenem_get_testimonial_placement( $testimonial_id );
 		$approval_label = proenem_get_testimonial_approval_summary( $testimonial_id );
-		$quote          = proenem_get_testimonial_quote( $testimonial_id, 34 );
+		$excerpt        = has_excerpt( $testimonial_id ) ? get_the_excerpt( $testimonial_id ) : '';
 		$video_url      = proenem_get_testimonial_video_url( $testimonial_id );
 		$video_embed    = $video_url ? wp_oembed_get( $video_url ) : '';
 		?>
@@ -31,7 +31,9 @@ get_header();
 					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
 					<h1 id="pro-testimonial-title"><?php echo esc_html( $student_name ); ?></h1>
 					<p class="pro-testimonial-single__approval"><?php echo esc_html( $approval_label ); ?></p>
-					<p><?php echo esc_html( $quote ); ?></p>
+					<?php if ( $excerpt ) : ?>
+						<p class="pro-testimonial-single__excerpt"><?php echo esc_html( $excerpt ); ?></p>
+					<?php endif; ?>
 				</div>
 				<figure class="pro-material-single__cover pro-testimonial-single__media">
 					<?php if ( $video_embed ) : ?>
@@ -65,7 +67,6 @@ get_header();
 							</div>
 						<?php endif; ?>
 					</dl>
-					<p class="pro-testimonial-single__aside-quote"><?php echo esc_html( $quote ); ?></p>
 					<a class="pen-button pen-button--primary pen-button--md pro-material-download__button" href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
 						<?php esc_html_e( 'Ver depoimentos', 'proenem-wordpress-theme' ); ?>
 						<span class="pen-button__arrow" aria-hidden="true">↗</span>

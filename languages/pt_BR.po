@@ -2354,18 +2354,18 @@ msgstr "Buscar..."
 msgid "← Depoimentos"
 msgstr "← Depoimentos"
 
-#: single-depoimento.php:51
+#: single-depoimento.php:53
 #: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
 msgstr "Navegacao da pagina"
 
-#: single-depoimento.php:63
+#: single-depoimento.php:65
 msgid "Onde passou"
 msgstr "Onde passou"
 
-#: single-depoimento.php:70
+#: single-depoimento.php:71
 msgid "Ver depoimentos"
 msgstr "Ver depoimentos"
 
