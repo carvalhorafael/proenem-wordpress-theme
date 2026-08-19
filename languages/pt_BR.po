@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.17.0\n"
+"Project-Id-Version: Proenem 0.18.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -1776,6 +1776,14 @@ msgstr "Rodapé - Formas de pagamento"
 msgid "Rodapé - Dados da empresa"
 msgstr "Rodapé - Dados da empresa"
 
+#: inc/setup.php:91
+msgid "Footer - Página de depoimento"
+msgstr "Footer - Página de depoimento"
+
+#: inc/setup.php:96
+msgid "Widgets adicionados aqui aparecem ao final das páginas individuais de depoimentos."
+msgstr "Widgets adicionados aqui aparecem ao final das páginas individuais de depoimentos."
+
 #. translators: %s: Widget area name.
 #: inc/setup.php:99
 #, php-format
@@ -2396,73 +2404,73 @@ msgstr "A aprovação de %s"
 msgid "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 msgstr "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 
-#: single-depoimento.php:51
-msgid "← Depoimentos"
-msgstr "← Depoimentos"
-
-#: single-depoimento.php:74
+#: single-depoimento.php:73
 #: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
 msgstr "Navegacao da pagina"
 
-#: single-depoimento.php:82
+#: single-depoimento.php:81
 msgid "Ficha da aprovação"
 msgstr "Ficha da aprovação"
 
-#: single-depoimento.php:87
+#: single-depoimento.php:86
 msgid "Colocação"
 msgstr "Colocação"
 
-#: single-depoimento.php:93
+#: single-depoimento.php:92
 msgid "Onde passou"
 msgstr "Onde passou"
 
-#: single-depoimento.php:99
+#: single-depoimento.php:98
 msgid "Curso"
 msgstr "Curso"
 
-#: single-depoimento.php:105
+#: single-depoimento.php:104
 msgid "Instituição"
 msgstr "Instituição"
 
-#: single-depoimento.php:111
+#: single-depoimento.php:110
 msgid "Ano"
 msgstr "Ano"
 
-#: single-depoimento.php:117
+#: single-depoimento.php:116
 msgid "Tempo de preparação"
 msgstr "Tempo de preparação"
 
-#: single-depoimento.php:124
+#: single-depoimento.php:123
 msgid "Meu superpoder"
 msgstr "Meu superpoder"
 
-#: single-depoimento.php:136
+#: single-depoimento.php:135
 msgid "Compartilhar esta conquista"
 msgstr "Compartilhar esta conquista"
 
-#: single-depoimento.php:140
+#: single-depoimento.php:139
 msgid "Compartilhar em"
 msgstr "Compartilhar em"
 
+#: single-depoimento.php:144
 #: single-depoimento.php:145
-#: single-depoimento.php:146
 msgid "Copiar link"
 msgstr "Copiar link"
 
-#: single-depoimento.php:145
+#: single-depoimento.php:144
 msgid "Link copiado"
 msgstr "Link copiado"
 
-#: single-depoimento.php:145
+#: single-depoimento.php:144
 msgid "Não foi possível copiar"
 msgstr "Não foi possível copiar"
 
-#: single-depoimento.php:153
-msgid "Ver outros depoimentos"
-msgstr "Ver outros depoimentos"
+#: single-depoimento.php:152
+msgid "Ver outros aprovados"
+msgstr "Ver outros aprovados"
+
+#: single-depoimento.php:158
+msgid "Footer da página de depoimento"
+msgstr "Footer da página de depoimento"
 
 #: single-material_gratuito.php:23
 msgid "← Materiais gratuitos"

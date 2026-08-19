@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.17.0\n"
+"Project-Id-Version: Proenem 0.18.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -1761,6 +1761,14 @@ msgstr ""
 msgid "Rodapé - Dados da empresa"
 msgstr ""
 
+#: inc/setup.php:91
+msgid "Footer - Página de depoimento"
+msgstr ""
+
+#: inc/setup.php:96
+msgid "Widgets adicionados aqui aparecem ao final das páginas individuais de depoimentos."
+msgstr ""
+
 #. translators: %s: Widget area name.
 #: inc/setup.php:99
 #, php-format
@@ -2381,72 +2389,72 @@ msgstr ""
 msgid "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 msgstr ""
 
-#: single-depoimento.php:51
-msgid "← Depoimentos"
-msgstr ""
-
-#: single-depoimento.php:74
+#: single-depoimento.php:73
 #: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
 msgstr ""
 
-#: single-depoimento.php:82
+#: single-depoimento.php:81
 msgid "Ficha da aprovação"
 msgstr ""
 
-#: single-depoimento.php:87
+#: single-depoimento.php:86
 msgid "Colocação"
 msgstr ""
 
-#: single-depoimento.php:93
+#: single-depoimento.php:92
 msgid "Onde passou"
 msgstr ""
 
-#: single-depoimento.php:99
+#: single-depoimento.php:98
 msgid "Curso"
 msgstr ""
 
-#: single-depoimento.php:105
+#: single-depoimento.php:104
 msgid "Instituição"
 msgstr ""
 
-#: single-depoimento.php:111
+#: single-depoimento.php:110
 msgid "Ano"
 msgstr ""
 
-#: single-depoimento.php:117
+#: single-depoimento.php:116
 msgid "Tempo de preparação"
 msgstr ""
 
-#: single-depoimento.php:124
+#: single-depoimento.php:123
 msgid "Meu superpoder"
 msgstr ""
 
-#: single-depoimento.php:136
+#: single-depoimento.php:135
 msgid "Compartilhar esta conquista"
 msgstr ""
 
-#: single-depoimento.php:140
+#: single-depoimento.php:139
 msgid "Compartilhar em"
 msgstr ""
 
+#: single-depoimento.php:144
 #: single-depoimento.php:145
-#: single-depoimento.php:146
 msgid "Copiar link"
 msgstr ""
 
-#: single-depoimento.php:145
+#: single-depoimento.php:144
 msgid "Link copiado"
 msgstr ""
 
-#: single-depoimento.php:145
+#: single-depoimento.php:144
 msgid "Não foi possível copiar"
 msgstr ""
 
-#: single-depoimento.php:153
-msgid "Ver outros depoimentos"
+#: single-depoimento.php:152
+msgid "Ver outros aprovados"
+msgstr ""
+
+#: single-depoimento.php:158
+msgid "Footer da página de depoimento"
 msgstr ""
 
 #: single-material_gratuito.php:23
