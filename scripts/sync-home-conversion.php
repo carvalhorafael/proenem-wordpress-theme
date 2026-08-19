@@ -226,7 +226,7 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 
 		if ( 'pro_home_pricing' === $widget_type && ! empty( $settings['plans'] ) && is_array( $settings['plans'] ) ) {
 			$pricing_settings = array(
-				'body'             => __( "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões.\nComece agora com 7 dias de garantia.", 'proenem-wordpress-theme' ),
+				'body'             => __( 'Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões. Comece agora com 7 dias de garantia.', 'proenem-wordpress-theme' ),
 				'title_emphasis'   => __( 'até a prova.', 'proenem-wordpress-theme' ),
 				'title_line_1'     => __( 'Sua preparação completa.', 'proenem-wordpress-theme' ),
 				'title_line_2'     => __( 'Do diagnóstico', 'proenem-wordpress-theme' ),
@@ -251,9 +251,11 @@ function proenem_issue_110_upgrade_elementor_tree( &$elements ) {
 
 				if ( in_array( $plan_name, array( __( 'Método PRO', 'proenem-wordpress-theme' ), __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ) ), true ) ) {
 					$intensive_settings = array(
-						'button_label' => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
-						'features'     => __( "Diagnóstico inicial, nota prevista e banco de +60 mil questões\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI", 'proenem-wordpress-theme' ),
-						'name'         => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
+						'button_label'  => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
+						'features'      => __( "Cronograma semanal\nCorreção de redação\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrão ENEM\nRevisões inteligentes por matéria\nMais de 50 mil questões para praticar\n6 meses de acesso", 'proenem-wordpress-theme' ),
+						'guarantee'     => __( 'Garantia de 7 dias', 'proenem-wordpress-theme' ),
+						'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
+						'price_details' => __( 'ou R$ 306,90 à vista', 'proenem-wordpress-theme' ),
 					);
 
 					foreach ( $intensive_settings as $key => $value ) {

@@ -736,6 +736,24 @@ function proenem_get_testimonials_approval_year_meta_key() {
 }
 
 /**
+ * Get the Testimonials preparation time meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_preparation_time_meta_key() {
+	return function_exists( 'testimonials_preparation_time_meta_key' ) ? testimonials_preparation_time_meta_key() : '_testimonials_preparation_time';
+}
+
+/**
+ * Get the Testimonials main tip meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_main_tip_meta_key() {
+	return function_exists( 'testimonials_main_tip_meta_key' ) ? testimonials_main_tip_meta_key() : '_testimonials_main_tip';
+}
+
+/**
  * Get the Testimonials home proof selection meta key.
  *
  * @return string
@@ -779,7 +797,7 @@ function proenem_is_testimonials_surface() {
  * @return string
  */
 function proenem_get_testimonials_url() {
-	return home_url( '/depoimentos/' );
+	return home_url( '/aprovados/' );
 }
 
 /**
@@ -915,6 +933,26 @@ function proenem_get_testimonial_institution( $post_id ) {
  */
 function proenem_get_testimonial_approval_year( $post_id ) {
 	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_approval_year_meta_key() );
+}
+
+/**
+ * Get the testimonial preparation time.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_preparation_time( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_preparation_time_meta_key() );
+}
+
+/**
+ * Get the testimonial main approval tip.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_testimonial_main_tip( $post_id ) {
+	return proenem_get_testimonial_string_meta( $post_id, proenem_get_testimonials_main_tip_meta_key() );
 }
 
 /**
@@ -1325,6 +1363,50 @@ function proenem_get_testimonial_video_url( $post_id ) {
 }
 
 /**
+ * Render social preview metadata for an individual testimonial.
+ *
+ * @return void
+ */
+function proenem_render_testimonial_social_meta() {
+	if ( ! is_singular( proenem_get_testimonials_post_type() ) ) {
+		return;
+	}
+
+	$post_id          = get_queried_object_id();
+	$student_name     = proenem_get_testimonial_student_name( $post_id );
+	$approval_summary = proenem_get_testimonial_approval_summary( $post_id );
+	$main_tip         = proenem_get_testimonial_main_tip( $post_id );
+	$excerpt          = has_excerpt( $post_id ) ? get_the_excerpt( $post_id ) : '';
+	$description      = $main_tip ? $main_tip : ( $excerpt ? $excerpt : $approval_summary );
+	$title            = sprintf(
+		/* translators: 1: Student name. 2: Approval summary. */
+		__( '%1$s: %2$s', 'proenem-wordpress-theme' ),
+		$student_name,
+		$approval_summary
+	);
+	$url          = get_permalink( $post_id );
+	$image        = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
+	$twitter_card = $image ? 'summary_large_image' : 'summary';
+	?>
+	<meta property="og:type" content="article">
+	<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+	<meta property="og:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
+	<meta property="og:url" content="<?php echo esc_url( $url ); ?>">
+	<meta name="twitter:card" content="<?php echo esc_attr( $twitter_card ); ?>">
+	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php if ( $image ) : ?>
+		<meta property="og:image" content="<?php echo esc_url( $image[0] ); ?>">
+		<meta property="og:image:width" content="<?php echo esc_attr( (string) $image[1] ); ?>">
+		<meta property="og:image:height" content="<?php echo esc_attr( (string) $image[2] ); ?>">
+		<meta name="twitter:image" content="<?php echo esc_url( $image[0] ); ?>">
+	<?php endif; ?>
+	<?php
+}
+add_action( 'wp_head', 'proenem_render_testimonial_social_meta', 5 );
+
+/**
  * Get a YouTube video ID from common YouTube URL formats.
  *
  * @param string $url Video URL.
@@ -1378,6 +1460,27 @@ function proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) {
 	$image = proenem_get_post_image_slot( $post_id, 'large' );
 
 	return $image['src'];
+}
+
+/**
+ * Check whether a testimonial featured image uses a portrait orientation.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function proenem_testimonial_has_portrait_image( $post_id ) {
+	$thumbnail_id = get_post_thumbnail_id( $post_id );
+
+	if ( ! $thumbnail_id ) {
+		return false;
+	}
+
+	$metadata = wp_get_attachment_metadata( $thumbnail_id );
+
+	return is_array( $metadata )
+		&& ! empty( $metadata['width'] )
+		&& ! empty( $metadata['height'] )
+		&& (int) $metadata['height'] > (int) $metadata['width'];
 }
 
 /**
@@ -1437,6 +1540,7 @@ function proenem_render_testimonial_card( $post_id ) {
 	$video_url      = proenem_get_testimonial_video_url( $post_id );
 	$embed_url      = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
 	$thumbnail_url  = $video_url ? proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) : proenem_get_post_image_slot( $post_id, 'large' )['src'];
+	$is_portrait    = ! $video_url && proenem_testimonial_has_portrait_image( $post_id );
 	$student_name   = proenem_get_testimonial_student_name( $post_id );
 	$approval_label = proenem_get_testimonial_approval_summary( $post_id );
 
@@ -1444,9 +1548,9 @@ function proenem_render_testimonial_card( $post_id ) {
 		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
 	}
 	?>
-	<article class="pro-testimonial-card-wrap" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+	<article class="pro-testimonial-card-wrap<?php echo $is_portrait ? ' pro-testimonial-card-wrap--portrait' : ''; ?>" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
 		<div class="testimonials-card pro-testimonial-card">
-			<div class="pro-testimonial-card__video" data-pro-testimonial-video>
+			<div class="pro-testimonial-card__video<?php echo $is_portrait ? ' pro-testimonial-card__video--portrait' : ''; ?>" data-pro-testimonial-video>
 				<?php if ( $embed_url ) : ?>
 					<button
 						class="pro-testimonial-card__play"

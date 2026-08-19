@@ -849,3 +849,79 @@ document.querySelectorAll("[data-pro-materials-filter]").forEach((form) => {
 
   render();
 });
+
+const copyTextToClipboard = async (text) => {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.append(textarea);
+  textarea.select();
+
+  const copied = document.execCommand("copy");
+
+  textarea.remove();
+
+  if (!copied) {
+    throw new Error("Copy command failed");
+  }
+};
+
+document.querySelectorAll("[data-pro-testimonial-share]").forEach((shareDetails) => {
+  const summary = shareDetails.querySelector("summary");
+  const copyButton = shareDetails.querySelector("[data-pro-testimonial-copy-link]");
+  const status = shareDetails.querySelector("[data-pro-testimonial-share-status]");
+  const shareData = {
+    title: shareDetails.dataset.shareTitle || document.title,
+    text: shareDetails.dataset.shareText || "",
+    url: shareDetails.dataset.shareUrl || window.location.href,
+  };
+
+  summary?.addEventListener("click", async (event) => {
+    if (typeof navigator.share !== "function") {
+      return;
+    }
+
+    event.preventDefault();
+
+    try {
+      await navigator.share(shareData);
+    } catch (error) {
+      if (error?.name !== "AbortError") {
+        shareDetails.open = true;
+      }
+    }
+  });
+
+  copyButton?.addEventListener("click", async () => {
+    const copyLabel = copyButton.dataset.copyLabel || copyButton.textContent;
+    const copiedLabel = copyButton.dataset.copiedLabel || copyLabel;
+    const errorLabel = copyButton.dataset.copyErrorLabel || copyLabel;
+
+    try {
+      await copyTextToClipboard(shareData.url);
+      copyButton.textContent = copiedLabel;
+
+      if (status) {
+        status.textContent = copiedLabel;
+      }
+    } catch {
+      copyButton.textContent = errorLabel;
+
+      if (status) {
+        status.textContent = errorLabel;
+      }
+    }
+
+    window.setTimeout(() => {
+      copyButton.textContent = copyLabel;
+    }, 2400);
+  });
+});
