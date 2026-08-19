@@ -1463,6 +1463,27 @@ function proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) {
 }
 
 /**
+ * Check whether a testimonial featured image uses a portrait orientation.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function proenem_testimonial_has_portrait_image( $post_id ) {
+	$thumbnail_id = get_post_thumbnail_id( $post_id );
+
+	if ( ! $thumbnail_id ) {
+		return false;
+	}
+
+	$metadata = wp_get_attachment_metadata( $thumbnail_id );
+
+	return is_array( $metadata )
+		&& ! empty( $metadata['width'] )
+		&& ! empty( $metadata['height'] )
+		&& (int) $metadata['height'] > (int) $metadata['width'];
+}
+
+/**
  * Get an embeddable video URL with autoplay for inline testimonial playback.
  *
  * @param string $video_url Video URL.
@@ -1519,6 +1540,7 @@ function proenem_render_testimonial_card( $post_id ) {
 	$video_url      = proenem_get_testimonial_video_url( $post_id );
 	$embed_url      = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
 	$thumbnail_url  = $video_url ? proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) : proenem_get_post_image_slot( $post_id, 'large' )['src'];
+	$is_portrait    = ! $video_url && proenem_testimonial_has_portrait_image( $post_id );
 	$student_name   = proenem_get_testimonial_student_name( $post_id );
 	$approval_label = proenem_get_testimonial_approval_summary( $post_id );
 
@@ -1526,9 +1548,9 @@ function proenem_render_testimonial_card( $post_id ) {
 		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
 	}
 	?>
-	<article class="pro-testimonial-card-wrap" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+	<article class="pro-testimonial-card-wrap<?php echo $is_portrait ? ' pro-testimonial-card-wrap--portrait' : ''; ?>" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
 		<div class="testimonials-card pro-testimonial-card">
-			<div class="pro-testimonial-card__video" data-pro-testimonial-video>
+			<div class="pro-testimonial-card__video<?php echo $is_portrait ? ' pro-testimonial-card__video--portrait' : ''; ?>" data-pro-testimonial-video>
 				<?php if ( $embed_url ) : ?>
 					<button
 						class="pro-testimonial-card__play"

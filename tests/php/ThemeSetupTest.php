@@ -112,6 +112,43 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonial image orientation should follow attachment metadata.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_portrait_detection_uses_featured_image_dimensions() {
+		$post_id       = self::factory()->post->create();
+		$attachment_id = self::factory()->post->create(
+			array(
+				'post_mime_type' => 'image/jpeg',
+				'post_status'    => 'inherit',
+				'post_type'      => 'attachment',
+			)
+		);
+
+		$this->assertFalse( proenem_testimonial_has_portrait_image( $post_id ) );
+
+		update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
+		wp_update_attachment_metadata(
+			$attachment_id,
+			array(
+				'width'  => 480,
+				'height' => 720,
+			)
+		);
+		$this->assertTrue( proenem_testimonial_has_portrait_image( $post_id ) );
+
+		wp_update_attachment_metadata(
+			$attachment_id,
+			array(
+				'width'  => 1280,
+				'height' => 720,
+			)
+		);
+		$this->assertFalse( proenem_testimonial_has_portrait_image( $post_id ) );
+	}
+
+	/**
 	 * Free Materials fallbacks should expose the expected portable identifiers.
 	 *
 	 * @return void

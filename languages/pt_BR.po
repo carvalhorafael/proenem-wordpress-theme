@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2025
+#: inc/template-tags.php:2047
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -927,7 +927,7 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:1911
+#: inc/template-tags.php:1933
 #: page-templates/home.php:654
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
@@ -1883,17 +1883,17 @@ msgid "Acessar material"
 msgstr "Acessar material"
 
 #: inc/template-tags.php:617
-#: inc/template-tags.php:1576
+#: inc/template-tags.php:1598
 msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1577
+#: inc/template-tags.php:1599
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1581
+#: inc/template-tags.php:1603
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -1984,88 +1984,88 @@ msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1538
+#: inc/template-tags.php:1560
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr "Reproduzir vídeo de %s"
 
-#: inc/template-tags.php:1556
+#: inc/template-tags.php:1578
 msgid "Ver história completa"
 msgstr "Ver história completa"
 
-#: inc/template-tags.php:1593
+#: inc/template-tags.php:1615
 msgid "Filtrar depoimentos"
 msgstr "Filtrar depoimentos"
 
-#: inc/template-tags.php:1623
+#: inc/template-tags.php:1645
 msgid "Matérias lecionadas"
 msgstr "Matérias lecionadas"
 
-#: inc/template-tags.php:1624
+#: inc/template-tags.php:1646
 msgid "Gabaritos"
 msgstr "Gabaritos"
 
-#: inc/template-tags.php:1625
+#: inc/template-tags.php:1647
 msgid "Ferramentas"
 msgstr "Ferramentas"
 
-#: inc/template-tags.php:1686
+#: inc/template-tags.php:1708
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: inc/template-tags.php:1688
+#: inc/template-tags.php:1710
 msgid "Sua aprovação"
 msgstr "Sua aprovação"
 
-#: inc/template-tags.php:1689
+#: inc/template-tags.php:1711
 msgid "não é sorte."
 msgstr "não é sorte."
 
-#: inc/template-tags.php:1690
+#: inc/template-tags.php:1712
 msgid "É método."
 msgstr "É método."
 
-#: inc/template-tags.php:1692
+#: inc/template-tags.php:1714
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
-#: inc/template-tags.php:1694
+#: inc/template-tags.php:1716
 msgid "Nossas turmas"
 msgstr "Nossas turmas"
 
-#: inc/template-tags.php:1702
+#: inc/template-tags.php:1724
 msgid "Links do rodapé"
 msgstr "Links do rodapé"
 
-#: inc/template-tags.php:1711
+#: inc/template-tags.php:1733
 msgid "Links legais"
 msgstr "Links legais"
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1737
+#: inc/template-tags.php:1759
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr "@%s Proenem - Grupo Q Educação"
 
-#: inc/template-tags.php:1744
+#: inc/template-tags.php:1766
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:1926
+#: inc/template-tags.php:1948
 msgid "Próximo passo"
 msgstr "Próximo passo"
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:1990
+#: inc/template-tags.php:2012
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr "Alternar submenu de %s"
 
-#: inc/template-tags.php:2009
+#: inc/template-tags.php:2031
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:2034
+#: inc/template-tags.php:2056
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
@@ -2357,82 +2357,82 @@ msgid "Search..."
 msgstr "Buscar..."
 
 #. translators: %s: Student name.
-#: single-depoimento.php:35
+#: single-depoimento.php:36
 #, php-format
 msgid "A aprovação de %s"
 msgstr "A aprovação de %s"
 
 #. translators: 1: Student name. 2: Approval summary.
-#: single-depoimento.php:40
+#: single-depoimento.php:41
 #, php-format
 msgid "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 msgstr "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 
-#: single-depoimento.php:50
+#: single-depoimento.php:51
 msgid "← Depoimentos"
 msgstr "← Depoimentos"
 
-#: single-depoimento.php:73
+#: single-depoimento.php:74
 #: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
 msgstr "Navegacao da pagina"
 
-#: single-depoimento.php:81
+#: single-depoimento.php:82
 msgid "Ficha da aprovação"
 msgstr "Ficha da aprovação"
 
-#: single-depoimento.php:86
+#: single-depoimento.php:87
 msgid "Colocação"
 msgstr "Colocação"
 
-#: single-depoimento.php:92
+#: single-depoimento.php:93
 msgid "Onde passou"
 msgstr "Onde passou"
 
-#: single-depoimento.php:98
+#: single-depoimento.php:99
 msgid "Curso"
 msgstr "Curso"
 
-#: single-depoimento.php:104
+#: single-depoimento.php:105
 msgid "Instituição"
 msgstr "Instituição"
 
-#: single-depoimento.php:110
+#: single-depoimento.php:111
 msgid "Ano"
 msgstr "Ano"
 
-#: single-depoimento.php:116
+#: single-depoimento.php:117
 msgid "Tempo de preparação"
 msgstr "Tempo de preparação"
 
-#: single-depoimento.php:123
+#: single-depoimento.php:124
 msgid "Meu superpoder"
 msgstr "Meu superpoder"
 
-#: single-depoimento.php:135
+#: single-depoimento.php:136
 msgid "Compartilhar esta conquista"
 msgstr "Compartilhar esta conquista"
 
-#: single-depoimento.php:139
+#: single-depoimento.php:140
 msgid "Compartilhar em"
 msgstr "Compartilhar em"
 
-#: single-depoimento.php:144
 #: single-depoimento.php:145
+#: single-depoimento.php:146
 msgid "Copiar link"
 msgstr "Copiar link"
 
-#: single-depoimento.php:144
+#: single-depoimento.php:145
 msgid "Link copiado"
 msgstr "Link copiado"
 
-#: single-depoimento.php:144
+#: single-depoimento.php:145
 msgid "Não foi possível copiar"
 msgstr "Não foi possível copiar"
 
-#: single-depoimento.php:152
+#: single-depoimento.php:153
 msgid "Ver outros depoimentos"
 msgstr "Ver outros depoimentos"
 
