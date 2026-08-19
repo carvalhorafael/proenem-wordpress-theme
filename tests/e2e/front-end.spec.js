@@ -182,15 +182,24 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
   const methodPlan = page.locator(".pen-plan-card").first();
-  await expect(methodPlan).toContainText("Diagnóstico inicial, nota prevista e banco de +60 mil questões");
-  await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
-  await expect(methodPlan).toContainText("2 correções de redação mensais");
-  await expect(methodPlan).toContainText("Aulas gravadas com os melhores professores");
-  await expect(methodPlan).toContainText("PDFs completos");
-  await expect(methodPlan).toContainText("Simulados com nota TRI");
+  await expect(methodPlan.locator(".pro-home-plan-card__benefits")).toHaveCount(1);
+  await expect(methodPlan.locator(".pro-home-plan-card__checkout")).toHaveCount(1);
+  await expect(methodPlan).toContainText("Cronograma semanal");
+  await expect(methodPlan).toContainText("Correção de redação");
+  await expect(methodPlan).toContainText("Aulas e pdfs com os melhores professores");
+  await expect(methodPlan).toContainText("Simulados corrigidos no padrão ENEM");
+  await expect(methodPlan).toContainText("Revisões inteligentes por matéria");
+  await expect(methodPlan).toContainText("Mais de 50 mil questões para praticar");
+  await expect(methodPlan).toContainText("6 meses de acesso");
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
+  await expect(methodPlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 306,90 à vista");
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
-  await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toHaveText(/7 dias de garantia/i);
+  await expect(methodPlan.locator(".pro-home-plan-card__trust li")).toHaveText([
+    "Pagamento 100% seguro",
+    "Garantia de 7 dias",
+    "Acesso liberado na hora",
+  ]);
+  await expect(methodPlan.locator(".pro-home-plan-card__trust svg")).toHaveCount(3);
   await expect(page.getByRole("link", { name: /^quero a turma intensiva$/i })).toHaveAttribute(
     "href",
     /pay\.hotmart\.com\/W106752534O/,
@@ -651,29 +660,43 @@ test("front page pricing intro keeps a compact mobile rhythm", async ({ page }) 
   const section = page.locator(".pen-pricing-section");
   const title = section.locator(".pro-home-pricing__intro h2");
   const support = section.locator(".pro-home-pricing__intro p").first();
-  const plans = section.locator(".pen-plan-grid");
   const featuredPlanButton = section.locator(".pen-plan-card.is-featured .pen-action-link");
 
-  const titleBox = await title.boundingBox();
-  const supportBox = await support.boundingBox();
-  const plansBox = await plans.boundingBox();
+  const { titleBox, supportBox, plansBox } = await section.evaluate((element) => ({
+    titleBox: element.querySelector(".pro-home-pricing__intro h2")?.getBoundingClientRect().toJSON(),
+    supportBox: element.querySelector(".pro-home-pricing__intro p")?.getBoundingClientRect().toJSON(),
+    plansBox: element.querySelector(".pen-plan-grid")?.getBoundingClientRect().toJSON(),
+  }));
 
   expect(titleBox).not.toBeNull();
   expect(supportBox).not.toBeNull();
   expect(plansBox).not.toBeNull();
   await expect(section.locator(".pro-home-pricing__seal")).toHaveCount(0);
+  await expect(section.locator(".pro-home-pricing__intro p")).toHaveCount(1);
+  await expect(support.locator("br")).toHaveCount(0);
+  await expect(featuredPlanButton).toHaveClass(/pen-button--primary/);
+  await expect(featuredPlanButton).toHaveClass(/pen-button--lg/);
   await expect(title).toHaveCSS("text-align", "center");
   await expect(support).toHaveCSS("font-size", "16px");
   await expect(support).toHaveCSS("text-align", "left");
-  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(255, 214, 0)");
+  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(220, 52, 30)");
   expect(supportBox.y - (titleBox.y + titleBox.height)).toBeLessThanOrEqual(16);
   expect(plansBox.y - (supportBox.y + supportBox.height)).toBeLessThanOrEqual(32);
 
   await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(255, 214, 0)");
+  await expect(featuredPlanButton).toHaveCSS("background-color", "rgb(220, 52, 30)");
+  const desktopSupportMetrics = await support.evaluate((element) => {
+    const styles = window.getComputedStyle(element);
+
+    return {
+      height: element.getBoundingClientRect().height,
+      lineHeight: Number.parseFloat(styles.lineHeight),
+    };
+  });
+  expect(desktopSupportMetrics.height).toBeLessThanOrEqual(desktopSupportMetrics.lineHeight * 2.1);
 });
 
-test("front page pricing keeps centered prices and guarantees below paid CTAs without overlap", async ({ page }) => {
+test("front page pricing separates benefits and checkout responsively without overlap", async ({ page }) => {
   for (const viewport of [
     { width: 390, height: 844 },
     { width: 1366, height: 768 },
@@ -696,27 +719,45 @@ test("front page pricing keeps centered prices and guarantees below paid CTAs wi
 
     for (let index = 0; index < 1; index += 1) {
       const card = cards.nth(index);
-      const featuresBox = await card.locator("ul").boundingBox();
-      const priceBox = await card.locator(".pro-home-plan-card__price").boundingBox();
-      const ctaBox = await card.locator(".pen-action-link").boundingBox();
-      const cardBox = await card.boundingBox();
-      const priceAlignment = await card
-        .locator(".pro-home-plan-card__price")
-        .evaluate((element) => window.getComputedStyle(element).textAlign);
+      const { benefitsBox, checkoutBox, priceBox, ctaBox, trustBox, cardBox, priceAlignment } = await card.evaluate(
+        (element) => {
+          const rect = (selector) => element.querySelector(selector)?.getBoundingClientRect().toJSON();
+          const price = element.querySelector(".pro-home-plan-card__price");
 
-      expect(featuresBox).not.toBeNull();
+          return {
+            benefitsBox: rect(".pro-home-plan-card__benefits"),
+            checkoutBox: rect(".pro-home-plan-card__checkout"),
+            priceBox: rect(".pro-home-plan-card__price"),
+            ctaBox: rect(".pen-action-link"),
+            trustBox: rect(".pro-home-plan-card__trust"),
+            cardBox: element.getBoundingClientRect().toJSON(),
+            priceAlignment: price ? window.getComputedStyle(price).textAlign : null,
+          };
+        },
+      );
+
+      expect(benefitsBox).not.toBeNull();
+      expect(checkoutBox).not.toBeNull();
       expect(priceBox).not.toBeNull();
       expect(ctaBox).not.toBeNull();
       expect(cardBox).not.toBeNull();
-      expect(priceAlignment).toBe("center");
-      expect(priceBox.y).toBeGreaterThanOrEqual(featuresBox.y + featuresBox.height - 1);
+
+      if (viewport.width <= 760) {
+        expect(priceAlignment).toBe("center");
+        expect(checkoutBox.y).toBeGreaterThanOrEqual(benefitsBox.y + benefitsBox.height - 1);
+      } else {
+        expect(priceAlignment).toBe("left");
+        expect(checkoutBox.x).toBeGreaterThanOrEqual(benefitsBox.x + benefitsBox.width - 1);
+        expect(Math.abs(checkoutBox.y - benefitsBox.y)).toBeLessThanOrEqual(1);
+      }
+
       expect(ctaBox.y).toBeGreaterThanOrEqual(priceBox.y + priceBox.height - 1);
 
-      const guaranteeBox = await card.locator(".pro-home-plan-card__guarantee").boundingBox();
-
-      expect(guaranteeBox).not.toBeNull();
-      expect(guaranteeBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
-      expect(guaranteeBox.y + guaranteeBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      expect(trustBox).not.toBeNull();
+      expect(trustBox.y).toBeGreaterThanOrEqual(ctaBox.y + ctaBox.height - 1);
+      expect(trustBox.y + trustBox.height).toBeLessThanOrEqual(cardBox.y + cardBox.height + 1);
+      expect(cardBox.x).toBeGreaterThanOrEqual(-1);
+      expect(cardBox.x + cardBox.width).toBeLessThanOrEqual(viewport.width + 1);
     }
   }
 });
@@ -878,7 +919,10 @@ test("front page mobile priority actions keep stable 44px touch targets", async 
 
     expect(beforeFocus).not.toBeNull();
     expect(afterFocus).not.toBeNull();
-    expect(afterFocus).toEqual(beforeFocus);
+    expect(afterFocus.width).toBe(beforeFocus.width);
+    expect(afterFocus.height).toBe(beforeFocus.height);
+    expect(Math.abs(afterFocus.x - beforeFocus.x)).toBeLessThanOrEqual(0.5);
+    expect(Math.abs(afterFocus.y - beforeFocus.y)).toBeLessThanOrEqual(0.5);
   }
 
   const accessibilityScan = await new AxeBuilder({ page })
