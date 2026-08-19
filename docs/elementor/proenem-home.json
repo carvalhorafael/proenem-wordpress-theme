@@ -343,7 +343,7 @@
           "widgetType": "pro_home_pricing",
           "isInner": false,
           "settings": {
-            "body": "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões.\nComece agora com 7 dias de garantia.",
+            "body": "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões. Comece agora com 7 dias de garantia.",
             "button_url": {
               "url": "#faq",
               "is_external": "",
@@ -355,10 +355,10 @@
                 "name": "Turma Intensiva 2026",
                 "price_prefix": "12x de R$",
                 "price": "29,90",
-                "price_details": "",
-                "guarantee": "7 dias de garantia.",
+                "price_details": "ou R$ 306,90 à vista",
+                "guarantee": "Garantia de 7 dias",
                 "summary": "Preparação completa até o dia da prova.",
-                "features": "Diagnóstico inicial, nota prevista e banco de +60 mil questões\nCronograma personalizado completo até o dia da prova\n2 correções de redação mensais\nAulas gravadas com os melhores professores\nPDFs completos\nSimulados com nota TRI",
+                "features": "Cronograma semanal\nCorreção de redação\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrão ENEM\nRevisões inteligentes por matéria\nMais de 50 mil questões para praticar\n6 meses de acesso",
                 "button_label": "Quero a Turma Intensiva",
                 "free": "",
                 "featured": "yes"
