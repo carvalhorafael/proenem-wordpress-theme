@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2062
+#: inc/template-tags.php:2076
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -928,7 +928,7 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:1948
+#: inc/template-tags.php:1962
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
@@ -1931,12 +1931,12 @@ msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1614
+#: inc/template-tags.php:1628
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1618
+#: inc/template-tags.php:1632
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -2027,92 +2027,96 @@ msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1575
+#: inc/template-tags.php:1581
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr "Reproduzir vídeo de %s"
 
-#: inc/template-tags.php:1593
-msgid "Ver história completa"
-msgstr "Ver história completa"
+#: inc/template-tags.php:1591
+msgid "Aprovação"
+msgstr "Aprovação"
 
-#: inc/template-tags.php:1613
+#: inc/template-tags.php:1607
+msgid "Conheça esta história"
+msgstr "Conheça esta história"
+
+#: inc/template-tags.php:1627
 msgid "Filtre por tipo de conquista"
 msgstr "Filtre por tipo de conquista"
 
-#: inc/template-tags.php:1630
+#: inc/template-tags.php:1644
 msgid "Ver histórias"
 msgstr "Ver histórias"
 
-#: inc/template-tags.php:1660
+#: inc/template-tags.php:1674
 msgid "Matérias lecionadas"
 msgstr "Matérias lecionadas"
 
-#: inc/template-tags.php:1661
+#: inc/template-tags.php:1675
 msgid "Gabaritos"
 msgstr "Gabaritos"
 
-#: inc/template-tags.php:1662
+#: inc/template-tags.php:1676
 msgid "Ferramentas"
 msgstr "Ferramentas"
 
-#: inc/template-tags.php:1723
+#: inc/template-tags.php:1737
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: inc/template-tags.php:1725
+#: inc/template-tags.php:1739
 msgid "Sua aprovação"
 msgstr "Sua aprovação"
 
-#: inc/template-tags.php:1726
+#: inc/template-tags.php:1740
 msgid "não é sorte."
 msgstr "não é sorte."
 
-#: inc/template-tags.php:1727
+#: inc/template-tags.php:1741
 msgid "É método."
 msgstr "É método."
 
-#: inc/template-tags.php:1729
+#: inc/template-tags.php:1743
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
-#: inc/template-tags.php:1731
+#: inc/template-tags.php:1745
 msgid "Nossas turmas"
 msgstr "Nossas turmas"
 
-#: inc/template-tags.php:1739
+#: inc/template-tags.php:1753
 msgid "Links do rodapé"
 msgstr "Links do rodapé"
 
-#: inc/template-tags.php:1748
+#: inc/template-tags.php:1762
 msgid "Links legais"
 msgstr "Links legais"
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1774
+#: inc/template-tags.php:1788
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr "@%s Proenem - Grupo Q Educação"
 
-#: inc/template-tags.php:1781
+#: inc/template-tags.php:1795
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:1963
+#: inc/template-tags.php:1977
 msgid "Próximo passo"
 msgstr "Próximo passo"
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2027
+#: inc/template-tags.php:2041
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr "Alternar submenu de %s"
 
-#: inc/template-tags.php:2046
+#: inc/template-tags.php:2060
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:2071
+#: inc/template-tags.php:2085
 msgid "Abrir menu"
 msgstr "Abrir menu"
 

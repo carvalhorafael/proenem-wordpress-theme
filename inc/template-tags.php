@@ -1550,14 +1550,20 @@ function proenem_get_oembed_allowed_html() {
  * @return void
  */
 function proenem_render_testimonial_card( $post_id ) {
-	$category_terms = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
-	$category_slugs = array();
-	$video_url      = proenem_get_testimonial_video_url( $post_id );
-	$embed_url      = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
-	$thumbnail_url  = $video_url ? proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) : proenem_get_post_image_slot( $post_id, 'large' )['src'];
-	$is_portrait    = ! $video_url && proenem_testimonial_has_portrait_image( $post_id );
-	$student_name   = proenem_get_testimonial_student_name( $post_id );
-	$approval_label = proenem_get_testimonial_approval_summary( $post_id );
+	$category_terms     = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
+	$category_slugs     = array();
+	$video_url          = proenem_get_testimonial_video_url( $post_id );
+	$embed_url          = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
+	$image_slot         = proenem_get_post_image_slot( $post_id, 'large' );
+	$thumbnail_url      = $video_url ? proenem_get_testimonial_video_thumbnail_url( $post_id, $video_url ) : $image_slot['src'];
+	$thumbnail_alt      = $video_url ? '' : $image_slot['alt'];
+	$is_portrait        = ! $video_url && proenem_testimonial_has_portrait_image( $post_id );
+	$student_name       = proenem_get_testimonial_student_name( $post_id );
+	$course             = proenem_get_testimonial_course( $post_id );
+	$institution        = proenem_get_testimonial_institution( $post_id );
+	$placement          = proenem_get_testimonial_placement( $post_id );
+	$approval_label     = proenem_get_testimonial_approval_summary( $post_id );
+	$achievement_detail = implode( ' · ', array_filter( array( $placement, $institution ) ) );
 
 	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
 		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
@@ -1578,19 +1584,27 @@ function proenem_render_testimonial_card( $post_id ) {
 						<span aria-hidden="true"></span>
 					</button>
 				<?php else : ?>
-					<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+					<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $thumbnail_alt ); ?>">
+				<?php endif; ?>
+				<?php if ( $course || $approval_label ) : ?>
+					<span class="pro-testimonial-card__result">
+						<small><?php esc_html_e( 'Aprovação', 'proenem-wordpress-theme' ); ?></small>
+						<strong><?php echo esc_html( $course ? $course : $approval_label ); ?></strong>
+					</span>
 				<?php endif; ?>
 			</div>
 			<div class="pro-testimonial-card__body">
+				<header class="pro-testimonial-card__student">
+					<h4><?php echo esc_html( $student_name ); ?></h4>
+					<?php if ( $achievement_detail ) : ?>
+						<p><?php echo esc_html( $achievement_detail ); ?></p>
+					<?php endif; ?>
+				</header>
 				<blockquote class="testimonials-card__quote">
-					<p><?php echo esc_html( proenem_get_testimonial_quote( $post_id, 40 ) ); ?></p>
+					<p><?php echo esc_html( proenem_get_testimonial_quote( $post_id, 30 ) ); ?></p>
 				</blockquote>
-				<footer class="pro-testimonial-card__footer">
-					<strong><?php echo esc_html( $student_name ); ?></strong>
-					<p><?php echo esc_html( $approval_label ); ?></p>
-				</footer>
 				<a class="testimonials-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
-					<?php esc_html_e( 'Ver história completa', 'proenem-wordpress-theme' ); ?>
+					<?php esc_html_e( 'Conheça esta história', 'proenem-wordpress-theme' ); ?>
 					<span aria-hidden="true">→</span>
 				</a>
 			</div>
