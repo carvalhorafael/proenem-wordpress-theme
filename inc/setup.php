@@ -84,19 +84,26 @@ add_action( 'init', 'proenem_register_block_styles' );
  */
 function proenem_register_widget_areas() {
 	$widget_areas = array(
-		'footer-social'       => __( 'Rodapé - Redes sociais', 'proenem-wordpress-theme' ),
-		'footer-trust'        => __( 'Rodapé - Selos de confiança', 'proenem-wordpress-theme' ),
-		'footer-payment'      => __( 'Rodapé - Formas de pagamento', 'proenem-wordpress-theme' ),
-		'footer-company-info' => __( 'Rodapé - Dados da empresa', 'proenem-wordpress-theme' ),
+		'footer-social'           => __( 'Rodapé - Redes sociais', 'proenem-wordpress-theme' ),
+		'footer-trust'            => __( 'Rodapé - Selos de confiança', 'proenem-wordpress-theme' ),
+		'footer-payment'          => __( 'Rodapé - Formas de pagamento', 'proenem-wordpress-theme' ),
+		'footer-company-info'     => __( 'Rodapé - Dados da empresa', 'proenem-wordpress-theme' ),
+		'testimonial-page-footer' => __( 'Footer - Página de depoimento', 'proenem-wordpress-theme' ),
 	);
 
 	foreach ( $widget_areas as $id => $name ) {
+		if ( 'testimonial-page-footer' === $id ) {
+			$description = __( 'Widgets adicionados aqui aparecem ao final das páginas individuais de depoimentos.', 'proenem-wordpress-theme' );
+		} else {
+			/* translators: %s: Widget area name. */
+			$description = sprintf( __( 'Widgets added here appear in %s.', 'proenem-wordpress-theme' ), $name );
+		}
+
 		register_sidebar(
 			array(
 				'id'            => $id,
 				'name'          => $name,
-				/* translators: %s: Widget area name. */
-				'description'   => sprintf( __( 'Widgets added here appear in %s.', 'proenem-wordpress-theme' ), $name ),
+				'description'   => $description,
 				'before_widget' => '<section id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</section>',
 				'before_title'  => '<h2 class="widget-title">',

@@ -49,6 +49,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'footer-trust', $wp_registered_sidebars );
 		$this->assertArrayHasKey( 'footer-payment', $wp_registered_sidebars );
 		$this->assertArrayHasKey( 'footer-company-info', $wp_registered_sidebars );
+		$this->assertArrayHasKey( 'testimonial-page-footer', $wp_registered_sidebars );
 		$this->assertArrayNotHasKey( 'footer-1', $wp_registered_sidebars );
 		$this->assertArrayNotHasKey( 'footer-2', $wp_registered_sidebars );
 		$this->assertArrayNotHasKey( 'footer-3', $wp_registered_sidebars );
@@ -491,6 +492,18 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'has_excerpt( $testimonial_id )', $template );
 		$this->assertSame( 1, substr_count( $template, 'pro-testimonial-single__excerpt' ) );
 		$this->assertSame( 1, substr_count( $template, 'the_content();' ) );
+	}
+
+	/**
+	 * The individual testimonial should expose its configurable footer widget area.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_renders_footer_widget_area() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-depoimento.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( "is_active_sidebar( 'testimonial-page-footer' )", $template );
+		$this->assertStringContainsString( "dynamic_sidebar( 'testimonial-page-footer' )", $template );
 	}
 
 	/**

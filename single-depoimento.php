@@ -48,7 +48,6 @@ get_header();
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-testimonial-single' ); ?>>
 			<section class="pro-material-single__hero pro-testimonial-single__hero" aria-labelledby="pro-testimonial-title">
 				<div class="pro-material-single__hero-copy">
-					<a class="pro-material-single__back" href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>"><?php esc_html_e( '← Depoimentos', 'proenem-wordpress-theme' ); ?></a>
 					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
 					<h1 id="pro-testimonial-title"><?php echo esc_html( $student_name ); ?></h1>
 					<p class="pro-testimonial-single__approval"><?php echo esc_html( $approval_label ); ?></p>
@@ -150,11 +149,16 @@ get_header();
 						</div>
 					</details>
 					<a class="pro-testimonial-single__all-link" href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
-						<?php esc_html_e( 'Ver outros depoimentos', 'proenem-wordpress-theme' ); ?>
+						<?php esc_html_e( 'Ver outros aprovados', 'proenem-wordpress-theme' ); ?>
 						<span aria-hidden="true">↗</span>
 					</a>
 				</aside>
 			</div>
+			<?php if ( is_active_sidebar( 'testimonial-page-footer' ) ) : ?>
+				<section class="pro-testimonial-single__footer-widgets" aria-label="<?php esc_attr_e( 'Footer da página de depoimento', 'proenem-wordpress-theme' ); ?>">
+					<?php dynamic_sidebar( 'testimonial-page-footer' ); ?>
+				</section>
+			<?php endif; ?>
 		</article>
 	<?php endwhile; ?>
 </main>
