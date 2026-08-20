@@ -178,6 +178,8 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( '_testimonials_home_proof_enabled', proenem_get_testimonials_home_proof_enabled_meta_key() );
 		$this->assertSame( home_url( '/aprovados/' ), proenem_get_testimonials_url() );
 		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
+		$this->assertNull( proenem_get_featured_testimonial() );
+		$this->assertSame( array(), proenem_get_testimonials_hero_selection() );
 	}
 
 	/**
@@ -492,6 +494,11 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'has_excerpt( $testimonial_id )', $template );
 		$this->assertSame( 1, substr_count( $template, 'pro-testimonial-single__excerpt' ) );
 		$this->assertSame( 1, substr_count( $template, 'the_content();' ) );
+		$this->assertStringContainsString( "esc_html_e( 'Mural de aprovados'", $template );
+		$this->assertStringContainsString( 'href="#pro-testimonial-story"', $template );
+		$this->assertStringContainsString( "__( '%1\$s em %2\$s'", $template );
+		$this->assertStringContainsString( "__( 'A história de %s'", $template );
+		$this->assertStringContainsString( 'id="pro-testimonial-story"', $template );
 	}
 
 	/**
@@ -521,6 +528,12 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'proenem_get_testimonial_approval_year', $template );
 		$this->assertStringContainsString( 'proenem_get_testimonial_preparation_time', $template );
 		$this->assertStringContainsString( 'proenem_get_testimonial_main_tip', $template );
+		$this->assertStringContainsString( 'proenem_get_related_testimonial_ids', $template );
+		$this->assertStringContainsString( 'proenem_render_testimonial_card( $related_testimonial_id )', $template );
+		$this->assertStringContainsString( 'Outras histórias para continuar acreditando.', $template );
+		$this->assertStringContainsString( 'id="pro-testimonial-next-title"', $template );
+		$this->assertStringContainsString( "proenem_get_home_cta_destination( 'plans' )", $template );
+		$this->assertStringContainsString( 'Agora é a sua vez de construir uma história para este mural.', $template );
 		$this->assertStringContainsString( '$has_structured_approval', $template );
 		$this->assertStringContainsString( 'data-pro-testimonial-share', $template );
 		$this->assertStringContainsString( 'Compartilhar esta conquista', $template );
