@@ -194,6 +194,30 @@ $featured_testimonial = proenem_get_featured_testimonial();
 			</section>
 		</div>
 	</section>
+
+	<section class="pro-testimonials-next" aria-labelledby="pro-testimonials-next-title">
+		<div class="pro-testimonials-next__inner">
+			<div class="pro-testimonials-next__copy">
+				<span class="pro-testimonials-next__eyebrow"><?php esc_html_e( 'Seu próximo capítulo', 'proenem-wordpress-theme' ); ?></span>
+				<h2 id="pro-testimonials-next-title"><?php esc_html_e( 'Agora é a sua vez de construir uma história para este mural.', 'proenem-wordpress-theme' ); ?></h2>
+				<p><?php esc_html_e( 'Você não precisa ter todo o caminho resolvido. Precisa de um plano, apoio para continuar e coragem para dar o próximo passo.', 'proenem-wordpress-theme' ); ?></p>
+				<div class="pro-testimonials-next__actions">
+					<a class="pen-button pen-button--secondary pen-button--lg" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
+						<?php esc_html_e( 'Quero começar minha preparação', 'proenem-wordpress-theme' ); ?>
+						<span aria-hidden="true">→</span>
+					</a>
+					<a class="pro-testimonials-next__back" href="#pro-testimonials-results-title"><?php esc_html_e( 'Rever as histórias', 'proenem-wordpress-theme' ); ?></a>
+				</div>
+			</div>
+
+			<div class="pro-testimonials-next__mural" aria-hidden="true">
+				<span><?php esc_html_e( 'Próxima aprovação', 'proenem-wordpress-theme' ); ?></span>
+				<strong><?php esc_html_e( 'Seu nome', 'proenem-wordpress-theme' ); ?></strong>
+				<p><?php esc_html_e( 'pode estar aqui.', 'proenem-wordpress-theme' ); ?></p>
+				<small>✦ 2026 ✦</small>
+			</div>
+		</div>
+	</section>
 </main>
 
 <?php

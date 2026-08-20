@@ -2414,6 +2414,38 @@ msgstr ""
 msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
 msgstr ""
 
+#: page-templates/testimonials.php:201
+msgid "Seu próximo capítulo"
+msgstr ""
+
+#: page-templates/testimonials.php:202
+msgid "Agora é a sua vez de construir uma história para este mural."
+msgstr ""
+
+#: page-templates/testimonials.php:203
+msgid "Você não precisa ter todo o caminho resolvido. Precisa de um plano, apoio para continuar e coragem para dar o próximo passo."
+msgstr ""
+
+#: page-templates/testimonials.php:206
+msgid "Quero começar minha preparação"
+msgstr ""
+
+#: page-templates/testimonials.php:209
+msgid "Rever as histórias"
+msgstr ""
+
+#: page-templates/testimonials.php:214
+msgid "Próxima aprovação"
+msgstr ""
+
+#: page-templates/testimonials.php:215
+msgid "Seu nome"
+msgstr ""
+
+#: page-templates/testimonials.php:216
+msgid "pode estar aqui."
+msgstr ""
+
 #. translators: %s: Search query.
 #: search.php:17
 #, php-format
