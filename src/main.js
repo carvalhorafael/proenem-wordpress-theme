@@ -850,6 +850,100 @@ document.querySelectorAll("[data-pro-materials-filter]").forEach((form) => {
   render();
 });
 
+document.querySelectorAll("[data-pro-testimonials-filter]").forEach((form) => {
+  const grid = document.querySelector("[data-pro-testimonials-grid]");
+  const count = document.querySelector("[data-pro-testimonials-count]");
+  const emptyState = document.querySelector("[data-pro-testimonials-empty]");
+  const clearLink = form.querySelector("[data-pro-testimonials-clear]");
+  const cards = Array.from(document.querySelectorAll("[data-pro-testimonial-card]"));
+  const checkboxes = Array.from(form.querySelectorAll('input[name="depoimento_categoria[]"]'));
+
+  if (!grid || !cards.length || !checkboxes.length) {
+    return;
+  }
+
+  const getCardCategories = (card) => {
+    try {
+      return JSON.parse(card.dataset.testimonialCategories || "[]");
+    } catch {
+      return [];
+    }
+  };
+
+  const updateUrl = (selectedCategories) => {
+    const url = new URL(window.location.href);
+
+    url.searchParams.delete("depoimento_categoria[]");
+    url.searchParams.delete("depoimento_categoria");
+
+    selectedCategories.forEach((category) => {
+      url.searchParams.append("depoimento_categoria[]", category);
+    });
+
+    window.history.replaceState({}, "", url);
+  };
+
+  const render = () => {
+    const selectedCategories = checkboxes
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const cardCategories = getCardCategories(card);
+      const isVisible =
+        selectedCategories.length === 0 ||
+        selectedCategories.some((category) => cardCategories.includes(category));
+
+      card.hidden = !isVisible;
+
+      if (isVisible) {
+        visibleCount += 1;
+      }
+    });
+
+    if (count) {
+      const countTemplate =
+        visibleCount === 1
+          ? count.dataset.countTemplateSingular || "%s"
+          : count.dataset.countTemplatePlural || "%s";
+
+      count.textContent = countTemplate.replace("%s", visibleCount.toLocaleString("pt-BR"));
+    }
+
+    if (emptyState) {
+      emptyState.hidden = visibleCount !== 0;
+    }
+
+    if (clearLink) {
+      clearLink.hidden = selectedCategories.length === 0;
+    }
+
+    updateUrl(selectedCategories);
+  };
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    render();
+  });
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", render);
+  });
+
+  clearLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+
+    render();
+  });
+
+  render();
+});
+
 const copyTextToClipboard = async (text) => {
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(text);

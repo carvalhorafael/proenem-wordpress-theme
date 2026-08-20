@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.18.0\n"
+"Project-Id-Version: Proenem 0.19.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2047
+#: inc/template-tags.php:2258
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -442,7 +442,7 @@ msgid "Badge linha 1"
 msgstr "Badge linha 1"
 
 #: inc/class-proenem-elementor-home-widget-base.php:591
-#: inc/template-tags.php:1112
+#: inc/template-tags.php:1306
 msgid "Nossos"
 msgstr "Nossos"
 
@@ -451,7 +451,7 @@ msgid "Badge linha 2"
 msgstr "Badge linha 2"
 
 #: inc/class-proenem-elementor-home-widget-base.php:592
-#: inc/template-tags.php:1113
+#: inc/template-tags.php:1307
 msgid "Alunos!"
 msgstr "Alunos!"
 
@@ -928,7 +928,7 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:1933
+#: inc/template-tags.php:2144
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
@@ -1214,22 +1214,22 @@ msgid "Pro Home Depoimentos"
 msgstr "Pro Home Depoimentos"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1529
-#: inc/template-tags.php:1245
+#: inc/template-tags.php:1439
 msgid "Aprovados"
 msgstr "Aprovados"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1530
-#: inc/template-tags.php:1251
+#: inc/template-tags.php:1445
 msgid "Quem estudou com método,"
 msgstr "Quem estudou com método,"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1531
-#: inc/template-tags.php:1250
+#: inc/template-tags.php:1444
 msgid "chegou na vaga."
 msgstr "chegou na vaga."
 
 #: inc/class-proenem-elementor-home-widget-base.php:1533
-#: inc/template-tags.php:1247
+#: inc/template-tags.php:1441
 msgid "Ver mais"
 msgstr "Ver mais"
 
@@ -1927,17 +1927,16 @@ msgid "Acessar material"
 msgstr "Acessar material"
 
 #: inc/template-tags.php:617
-#: inc/template-tags.php:1598
 msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1599
+#: inc/template-tags.php:1810
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1603
+#: inc/template-tags.php:1814
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -1945,171 +1944,179 @@ msgstr "Nenhuma categoria cadastrada ainda."
 msgid "Filtrar materiais"
 msgstr "Filtrar materiais"
 
-#: inc/template-tags.php:840
+#: inc/template-tags.php:912
 msgid "Depoimento"
 msgstr "Depoimento"
 
 #. translators: 1: Student name. 2: Course. 3: Institution.
-#: inc/template-tags.php:1017
-#: inc/template-tags.php:1217
+#: inc/template-tags.php:1211
+#: inc/template-tags.php:1411
 #, php-format
 msgid "%1$s — %2$s, %3$s"
 msgstr "%1$s — %2$s, %3$s"
 
-#: inc/template-tags.php:1036
+#: inc/template-tags.php:1230
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr "+ de 40.000 aprovados em universidades públicas"
 
-#: inc/template-tags.php:1037
+#: inc/template-tags.php:1231
 msgid "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
 msgstr "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
 
-#: inc/template-tags.php:1038
+#: inc/template-tags.php:1232
 msgid "Conheça histórias de alunos que estudaram com a Proenem."
 msgstr "Conheça histórias de alunos que estudaram com a Proenem."
 
-#: inc/template-tags.php:1068
+#: inc/template-tags.php:1262
 msgid "UFRJ"
 msgstr "UFRJ"
 
-#: inc/template-tags.php:1074
+#: inc/template-tags.php:1268
 msgid "UFRGS"
 msgstr "UFRGS"
 
-#: inc/template-tags.php:1080
+#: inc/template-tags.php:1274
 msgid "Unicamp"
 msgstr "Unicamp"
 
-#: inc/template-tags.php:1086
+#: inc/template-tags.php:1280
 msgid "UFMG"
 msgstr "UFMG"
 
-#: inc/template-tags.php:1092
+#: inc/template-tags.php:1286
 msgid "USP"
 msgstr "USP"
 
-#: inc/template-tags.php:1098
+#: inc/template-tags.php:1292
 msgid "Unifesp"
 msgstr "Unifesp"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1142
-#: inc/template-tags.php:1295
+#: inc/template-tags.php:1336
+#: inc/template-tags.php:1489
 #, php-format
 msgid "Foto de %s."
 msgstr "Foto de %s."
 
-#: inc/template-tags.php:1164
+#: inc/template-tags.php:1358
 msgid "Universidades públicas com alunos aprovados pela Proenem"
 msgstr "Universidades públicas com alunos aprovados pela Proenem"
 
-#: inc/template-tags.php:1312
+#: inc/template-tags.php:1506
 msgid "Controles dos depoimentos"
 msgstr "Controles dos depoimentos"
 
-#: inc/template-tags.php:1314
+#: inc/template-tags.php:1508
 msgid "Depoimento anterior"
 msgstr "Depoimento anterior"
 
-#: inc/template-tags.php:1315
+#: inc/template-tags.php:1509
 msgid "Próximo depoimento"
 msgstr "Próximo depoimento"
 
 #. translators: 1: Student placement. 2: Where the student was approved.
-#: inc/template-tags.php:1336
+#: inc/template-tags.php:1530
 #, php-format
 msgid "%1$s · %2$s"
 msgstr "%1$s · %2$s"
 
 #. translators: 1: Student name. 2: Approval summary.
-#: inc/template-tags.php:1383
+#: inc/template-tags.php:1577
 #, php-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1560
+#: inc/template-tags.php:1763
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr "Reproduzir vídeo de %s"
 
-#: inc/template-tags.php:1578
-msgid "Ver história completa"
-msgstr "Ver história completa"
+#: inc/template-tags.php:1773
+msgid "Aprovação"
+msgstr "Aprovação"
 
-#: inc/template-tags.php:1615
-msgid "Filtrar depoimentos"
-msgstr "Filtrar depoimentos"
+#: inc/template-tags.php:1789
+msgid "Conheça esta história"
+msgstr "Conheça esta história"
 
-#: inc/template-tags.php:1645
+#: inc/template-tags.php:1809
+msgid "Filtre por tipo de conquista"
+msgstr "Filtre por tipo de conquista"
+
+#: inc/template-tags.php:1826
+msgid "Ver histórias"
+msgstr "Ver histórias"
+
+#: inc/template-tags.php:1856
 msgid "Matérias lecionadas"
 msgstr "Matérias lecionadas"
 
-#: inc/template-tags.php:1646
+#: inc/template-tags.php:1857
 msgid "Gabaritos"
 msgstr "Gabaritos"
 
-#: inc/template-tags.php:1647
+#: inc/template-tags.php:1858
 msgid "Ferramentas"
 msgstr "Ferramentas"
 
-#: inc/template-tags.php:1708
+#: inc/template-tags.php:1919
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: inc/template-tags.php:1710
+#: inc/template-tags.php:1921
 msgid "Sua aprovação"
 msgstr "Sua aprovação"
 
-#: inc/template-tags.php:1711
+#: inc/template-tags.php:1922
 msgid "não é sorte."
 msgstr "não é sorte."
 
-#: inc/template-tags.php:1712
+#: inc/template-tags.php:1923
 msgid "É método."
 msgstr "É método."
 
-#: inc/template-tags.php:1714
+#: inc/template-tags.php:1925
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
-#: inc/template-tags.php:1716
+#: inc/template-tags.php:1927
 msgid "Nossas turmas"
 msgstr "Nossas turmas"
 
-#: inc/template-tags.php:1724
+#: inc/template-tags.php:1935
 msgid "Links do rodapé"
 msgstr "Links do rodapé"
 
-#: inc/template-tags.php:1733
+#: inc/template-tags.php:1944
 msgid "Links legais"
 msgstr "Links legais"
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1759
+#: inc/template-tags.php:1970
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr "@%s Proenem - Grupo Q Educação"
 
-#: inc/template-tags.php:1766
+#: inc/template-tags.php:1977
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:1948
+#: inc/template-tags.php:2159
 msgid "Próximo passo"
 msgstr "Próximo passo"
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2012
+#: inc/template-tags.php:2223
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr "Alternar submenu de %s"
 
-#: inc/template-tags.php:2031
+#: inc/template-tags.php:2242
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:2056
+#: inc/template-tags.php:2267
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
@@ -2333,49 +2340,146 @@ msgid "na sua escola?"
 msgstr "na sua escola?"
 
 #. Template Name of the theme
-#: page-templates/testimonials.php:54
 msgid "Depoimentos"
 msgstr "Depoimentos"
 
-#: page-templates/testimonials.php:55
-msgid "Histórias reais de quem estudou com a Proenem"
-msgstr "Histórias reais de quem estudou com a Proenem"
+#: page-templates/testimonials.php:58
+#: single-depoimento.php:67
+msgid "Mural de aprovados"
+msgstr "Mural de aprovados"
 
-#: page-templates/testimonials.php:56
-msgid "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
-msgstr "Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação."
+#: page-templates/testimonials.php:59
+msgid "Um dia, seu nome pode estar aqui."
+msgstr "Um dia, seu nome pode estar aqui."
 
-#: page-templates/testimonials.php:61
+#: page-templates/testimonials.php:60
+msgid "Conheça estudantes que transformaram rotina, estratégia e constância em aprovação. Histórias reais, caminhos diferentes e uma conquista em comum."
+msgstr "Conheça estudantes que transformaram rotina, estratégia e constância em aprovação. Histórias reais, caminhos diferentes e uma conquista em comum."
+
+#: page-templates/testimonials.php:62
+msgid "Conhecer as histórias"
+msgstr "Conhecer as histórias"
+
+#: page-templates/testimonials.php:68
+msgid "Estudantes em destaque"
+msgstr "Estudantes em destaque"
+
+#. translators: 1: Time away from studying. 2: Student first name. 3: Course.
+#: page-templates/testimonials.php:104
+#, php-format
+msgid "Depois de %1$s, %2$s conquistou uma vaga em %3$s."
+msgstr "Depois de %1$s, %2$s conquistou uma vaga em %3$s."
+
+#. translators: %s: Student first name.
+#: page-templates/testimonials.php:111
+#, php-format
+msgid "Conheça a história de %s."
+msgstr "Conheça a história de %s."
+
+#: page-templates/testimonials.php:121
+msgid "História em destaque"
+msgstr "História em destaque"
+
+#. translators: %s: Student first name.
+#: page-templates/testimonials.php:134
+#, php-format
+msgid "Conheça a história de %s"
+msgstr "Conheça a história de %s"
+
+#: page-templates/testimonials.php:147
+msgid "Encontre sua referência"
+msgstr "Encontre sua referência"
+
+#: page-templates/testimonials.php:148
+msgid "Toda aprovação começa quando alguém acredita que também consegue."
+msgstr "Toda aprovação começa quando alguém acredita que também consegue."
+
+#: page-templates/testimonials.php:149
+msgid "Explore histórias, reconheça caminhos possíveis e encontre a inspiração para continuar construindo a sua."
+msgstr "Explore histórias, reconheça caminhos possíveis e encontre a inspiração para continuar construindo a sua."
+
+#: page-templates/testimonials.php:153
 msgid "Filtros de depoimentos"
 msgstr "Filtros de depoimentos"
 
-#: page-templates/testimonials.php:67
-msgid "Todos os depoimentos"
-msgstr "Todos os depoimentos"
+#: page-templates/testimonials.php:159
+msgid "Histórias reais. Conquistas possíveis."
+msgstr "Histórias reais. Conquistas possíveis."
 
 #. translators: %s: Number of testimonials found.
-#: page-templates/testimonials.php:72
+#: page-templates/testimonials.php:164
+#: page-templates/testimonials.php:171
 #, php-format
 msgid "%s depoimento publicado"
 msgid_plural "%s depoimentos publicados"
 msgstr[0] "%s depoimento publicado"
 msgstr[1] "%s depoimentos publicados"
 
-#: page-templates/testimonials.php:82
+#. translators: %s: Number of testimonials found.
+#: page-templates/testimonials.php:166
+#, php-format
+msgid "%s depoimentos publicados"
+msgstr "%s depoimentos publicados"
+
+#: page-templates/testimonials.php:181
 msgid "Plugin Testimonials não está ativo."
 msgstr "Plugin Testimonials não está ativo."
 
-#: page-templates/testimonials.php:83
+#: page-templates/testimonials.php:182
 msgid "Ative o plugin para publicar e listar depoimentos nesta página."
 msgstr "Ative o plugin para publicar e listar depoimentos nesta página."
 
-#: page-templates/testimonials.php:99
+#: page-templates/testimonials.php:198
+#: page-templates/testimonials.php:204
 msgid "Nenhum depoimento encontrado."
 msgstr "Nenhum depoimento encontrado."
 
-#: page-templates/testimonials.php:100
+#: page-templates/testimonials.php:199
+msgid "Tente selecionar outra conquista ou limpar os filtros."
+msgstr "Tente selecionar outra conquista ou limpar os filtros."
+
+#: page-templates/testimonials.php:205
 msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
 msgstr "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
+
+#: page-templates/testimonials.php:216
+#: single-depoimento.php:227
+msgid "Seu próximo capítulo"
+msgstr "Seu próximo capítulo"
+
+#: page-templates/testimonials.php:217
+#: single-depoimento.php:228
+msgid "Agora é a sua vez de construir uma história para este mural."
+msgstr "Agora é a sua vez de construir uma história para este mural."
+
+#: page-templates/testimonials.php:218
+#: single-depoimento.php:229
+msgid "Você não precisa ter todo o caminho resolvido. Precisa de um plano, apoio para continuar e coragem para dar o próximo passo."
+msgstr "Você não precisa ter todo o caminho resolvido. Precisa de um plano, apoio para continuar e coragem para dar o próximo passo."
+
+#: page-templates/testimonials.php:221
+#: single-depoimento.php:232
+msgid "Quero começar minha preparação"
+msgstr "Quero começar minha preparação"
+
+#: page-templates/testimonials.php:224
+msgid "Rever as histórias"
+msgstr "Rever as histórias"
+
+#: page-templates/testimonials.php:229
+#: single-depoimento.php:240
+msgid "Próxima aprovação"
+msgstr "Próxima aprovação"
+
+#: page-templates/testimonials.php:230
+#: single-depoimento.php:241
+msgid "Seu nome"
+msgstr "Seu nome"
+
+#: page-templates/testimonials.php:231
+#: single-depoimento.php:242
+msgid "pode estar aqui."
+msgstr "pode estar aqui."
 
 #. translators: %s: Search query.
 #: search.php:17
@@ -2393,82 +2497,107 @@ msgid "Search..."
 msgstr "Buscar..."
 
 #. translators: %s: Student name.
-#: single-depoimento.php:36
+#: single-depoimento.php:39
 #, php-format
 msgid "A aprovação de %s"
 msgstr "A aprovação de %s"
 
 #. translators: 1: Student name. 2: Approval summary.
-#: single-depoimento.php:41
+#: single-depoimento.php:44
 #, php-format
 msgid "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 msgstr "%1$s conquistou %2$s. Conheça essa história de aprovação na Proenem."
 
-#: single-depoimento.php:73
+#. translators: 1: Placement. 2: Course name.
+#: single-depoimento.php:54
+#, php-format
+msgid "%1$s em %2$s"
+msgstr "%1$s em %2$s"
+
+#: single-depoimento.php:80
+msgid "Ler a história"
+msgstr "Ler a história"
+
+#. translators: %s: Student first name.
+#: single-depoimento.php:101
+#, php-format
+msgid "A história de %s"
+msgstr "A história de %s"
+
+#: single-depoimento.php:112
 #: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
 msgstr "Navegacao da pagina"
 
-#: single-depoimento.php:81
+#: single-depoimento.php:120
 msgid "Ficha da aprovação"
 msgstr "Ficha da aprovação"
 
-#: single-depoimento.php:86
+#: single-depoimento.php:125
 msgid "Colocação"
 msgstr "Colocação"
 
-#: single-depoimento.php:92
+#: single-depoimento.php:131
 msgid "Onde passou"
 msgstr "Onde passou"
 
-#: single-depoimento.php:98
+#: single-depoimento.php:137
 msgid "Curso"
 msgstr "Curso"
 
-#: single-depoimento.php:104
+#: single-depoimento.php:143
 msgid "Instituição"
 msgstr "Instituição"
 
-#: single-depoimento.php:110
+#: single-depoimento.php:149
 msgid "Ano"
 msgstr "Ano"
 
-#: single-depoimento.php:116
+#: single-depoimento.php:155
 msgid "Tempo de preparação"
 msgstr "Tempo de preparação"
 
-#: single-depoimento.php:123
+#: single-depoimento.php:162
 msgid "Meu superpoder"
 msgstr "Meu superpoder"
 
-#: single-depoimento.php:135
+#: single-depoimento.php:174
 msgid "Compartilhar esta conquista"
 msgstr "Compartilhar esta conquista"
 
-#: single-depoimento.php:139
+#: single-depoimento.php:178
 msgid "Compartilhar em"
 msgstr "Compartilhar em"
 
-#: single-depoimento.php:144
-#: single-depoimento.php:145
+#: single-depoimento.php:183
+#: single-depoimento.php:184
 msgid "Copiar link"
 msgstr "Copiar link"
 
-#: single-depoimento.php:144
+#: single-depoimento.php:183
 msgid "Link copiado"
 msgstr "Link copiado"
 
-#: single-depoimento.php:144
+#: single-depoimento.php:183
 msgid "Não foi possível copiar"
 msgstr "Não foi possível copiar"
 
-#: single-depoimento.php:152
+#: single-depoimento.php:191
 msgid "Ver outros aprovados"
 msgstr "Ver outros aprovados"
 
-#: single-depoimento.php:158
+#: single-depoimento.php:201
+msgid "Outras histórias para continuar acreditando."
+msgstr "Outras histórias para continuar acreditando."
+
+#: single-depoimento.php:203
+#: single-depoimento.php:235
+msgid "Ver todo o mural"
+msgstr "Ver todo o mural"
+
+#: single-depoimento.php:218
 msgid "Footer da página de depoimento"
 msgstr "Footer da página de depoimento"
 

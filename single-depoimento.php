@@ -15,8 +15,9 @@ get_header();
 
 		$testimonial_id          = get_the_ID();
 		$media_image             = proenem_get_post_image_slot( $testimonial_id, 'full' );
-		$category_name           = proenem_get_testimonial_category_label( $testimonial_id );
 		$student_name            = proenem_get_testimonial_student_name( $testimonial_id );
+		$student_name_parts      = preg_split( '/\s+/', trim( $student_name ) );
+		$student_first_name      = $student_name_parts[0] ?? $student_name;
 		$approved_at             = proenem_get_testimonial_approved_at( $testimonial_id );
 		$placement               = proenem_get_testimonial_placement( $testimonial_id );
 		$course                  = proenem_get_testimonial_course( $testimonial_id );
@@ -26,6 +27,8 @@ get_header();
 		$main_tip                = proenem_get_testimonial_main_tip( $testimonial_id );
 		$has_structured_approval = $course || $institution || $approval_year;
 		$approval_label          = proenem_get_testimonial_approval_summary( $testimonial_id );
+		$hero_approval_label     = $approval_label;
+		$related_testimonial_ids = proenem_get_related_testimonial_ids( $testimonial_id, 3 );
 		$excerpt                 = has_excerpt( $testimonial_id ) ? get_the_excerpt( $testimonial_id ) : '';
 		$video_url               = proenem_get_testimonial_video_url( $testimonial_id );
 		$video_embed             = $video_url ? wp_oembed_get( $video_url ) : '';
@@ -44,16 +47,39 @@ get_header();
 		);
 		$share_message     = rawurlencode( $share_text . ' ' . $share_url );
 		$encoded_share_url = rawurlencode( $share_url );
+
+		if ( $placement && $course ) {
+			$hero_approval_label = sprintf(
+				/* translators: 1: Placement. 2: Course name. */
+				__( '%1$s em %2$s', 'proenem-wordpress-theme' ),
+				$placement,
+				$course
+			);
+		} elseif ( $course ) {
+			$hero_approval_label = $course;
+		}
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-testimonial-single' ); ?>>
 			<section class="pro-material-single__hero pro-testimonial-single__hero" aria-labelledby="pro-testimonial-title">
 				<div class="pro-material-single__hero-copy">
-					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
+					<a class="pen-section-pill pro-testimonial-single__back" href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
+						<span aria-hidden="true">←</span>
+						<?php esc_html_e( 'Mural de aprovados', 'proenem-wordpress-theme' ); ?>
+					</a>
 					<h1 id="pro-testimonial-title"><?php echo esc_html( $student_name ); ?></h1>
-					<p class="pro-testimonial-single__approval"><?php echo esc_html( $approval_label ); ?></p>
+					<p class="pro-testimonial-single__approval">
+						<span><?php echo esc_html( $hero_approval_label ); ?></span>
+						<?php if ( $institution ) : ?>
+							<span class="pro-testimonial-single__approval-institution"><?php echo esc_html( $institution ); ?></span>
+						<?php endif; ?>
+					</p>
 					<?php if ( $excerpt ) : ?>
 						<p class="pro-testimonial-single__excerpt"><?php echo esc_html( $excerpt ); ?></p>
 					<?php endif; ?>
+					<a class="pen-button pen-button--secondary pen-button--md pro-testimonial-single__story-link" href="#pro-testimonial-story">
+						<?php esc_html_e( 'Ler a história', 'proenem-wordpress-theme' ); ?>
+						<span class="pen-button__arrow" aria-hidden="true">↓</span>
+					</a>
 				</div>
 				<figure class="pro-material-single__cover pro-testimonial-single__media<?php echo $is_portrait_image ? ' pro-testimonial-single__media--portrait' : ''; ?>">
 					<?php if ( $video_embed ) : ?>
@@ -65,7 +91,20 @@ get_header();
 			</section>
 
 			<div class="pro-material-single__layout pro-testimonial-single__layout">
-				<div class="pro-material-single__content pro-testimonial-single__content">
+				<div id="pro-testimonial-story" class="pro-material-single__content pro-testimonial-single__content" aria-labelledby="pro-testimonial-story-title">
+					<header class="pro-testimonial-single__story-header">
+						<h2 id="pro-testimonial-story-title">
+							<?php
+							echo esc_html(
+								sprintf(
+									/* translators: %s: Student first name. */
+									__( 'A história de %s', 'proenem-wordpress-theme' ),
+									$student_first_name
+								)
+							);
+							?>
+						</h2>
+					</header>
 					<?php
 					the_content();
 					wp_link_pages(
@@ -154,11 +193,58 @@ get_header();
 					</a>
 				</aside>
 			</div>
+
+			<?php if ( $related_testimonial_ids ) : ?>
+				<section class="pro-testimonial-single__related" aria-labelledby="pro-testimonial-related-title">
+					<div class="pro-testimonial-single__related-inner">
+						<header class="pro-testimonial-single__related-header">
+							<h2 id="pro-testimonial-related-title"><?php esc_html_e( 'Outras histórias para continuar acreditando.', 'proenem-wordpress-theme' ); ?></h2>
+							<a href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
+								<?php esc_html_e( 'Ver todo o mural', 'proenem-wordpress-theme' ); ?>
+								<span aria-hidden="true">→</span>
+							</a>
+						</header>
+						<div class="pro-testimonials-grid pro-testimonial-single__related-grid">
+							<?php
+							foreach ( $related_testimonial_ids as $related_testimonial_id ) {
+								proenem_render_testimonial_card( $related_testimonial_id );
+							}
+							?>
+						</div>
+					</div>
+				</section>
+			<?php endif; ?>
 			<?php if ( is_active_sidebar( 'testimonial-page-footer' ) ) : ?>
 				<section class="pro-testimonial-single__footer-widgets" aria-label="<?php esc_attr_e( 'Footer da página de depoimento', 'proenem-wordpress-theme' ); ?>">
 					<?php dynamic_sidebar( 'testimonial-page-footer' ); ?>
 				</section>
 			<?php endif; ?>
+
+			<div class="pro-testimonial-single__next-wrap">
+				<section class="pro-testimonials-next" aria-labelledby="pro-testimonial-next-title">
+					<div class="pro-testimonials-next__inner">
+						<div class="pro-testimonials-next__copy">
+							<span class="pro-testimonials-next__eyebrow"><?php esc_html_e( 'Seu próximo capítulo', 'proenem-wordpress-theme' ); ?></span>
+							<h2 id="pro-testimonial-next-title"><?php esc_html_e( 'Agora é a sua vez de construir uma história para este mural.', 'proenem-wordpress-theme' ); ?></h2>
+							<p><?php esc_html_e( 'Você não precisa ter todo o caminho resolvido. Precisa de um plano, apoio para continuar e coragem para dar o próximo passo.', 'proenem-wordpress-theme' ); ?></p>
+							<div class="pro-testimonials-next__actions">
+								<a class="pen-button pen-button--secondary pen-button--lg" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
+									<?php esc_html_e( 'Quero começar minha preparação', 'proenem-wordpress-theme' ); ?>
+									<span aria-hidden="true">→</span>
+								</a>
+								<a class="pro-testimonials-next__back" href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>"><?php esc_html_e( 'Ver todo o mural', 'proenem-wordpress-theme' ); ?></a>
+							</div>
+						</div>
+
+						<div class="pro-testimonials-next__mural" aria-hidden="true">
+							<span><?php esc_html_e( 'Próxima aprovação', 'proenem-wordpress-theme' ); ?></span>
+							<strong><?php esc_html_e( 'Seu nome', 'proenem-wordpress-theme' ); ?></strong>
+							<p><?php esc_html_e( 'pode estar aqui.', 'proenem-wordpress-theme' ); ?></p>
+							<small>✦ 2026 ✦</small>
+						</div>
+					</div>
+				</section>
+			</div>
 		</article>
 	<?php endwhile; ?>
 </main>
