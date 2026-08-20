@@ -140,52 +140,60 @@ $featured_testimonial = proenem_get_featured_testimonial();
 		</section>
 	<?php endif; ?>
 
-	<div class="pro-materials-layout pro-testimonials-layout">
-		<aside class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de depoimentos', 'proenem-wordpress-theme' ); ?>">
-			<?php proenem_render_testimonial_category_filters( $terms, $selected_slugs ); ?>
-		</aside>
+	<section class="pro-testimonials-wall" aria-labelledby="pro-testimonials-results-title">
+		<header class="pro-testimonials-wall__intro">
+			<span class="pro-testimonials-wall__eyebrow"><?php esc_html_e( 'Encontre sua referência', 'proenem-wordpress-theme' ); ?></span>
+			<h2 id="pro-testimonials-results-title"><?php esc_html_e( 'Toda aprovação começa quando alguém acredita que também consegue.', 'proenem-wordpress-theme' ); ?></h2>
+			<p><?php esc_html_e( 'Explore histórias, reconheça caminhos possíveis e encontre a inspiração para continuar construindo a sua.', 'proenem-wordpress-theme' ); ?></p>
+		</header>
 
-		<section class="pro-materials-results pro-testimonials-results" aria-labelledby="pro-testimonials-results-title">
-			<div class="pro-materials-results__header">
-				<h2 id="pro-testimonials-results-title"><?php esc_html_e( 'Todos os depoimentos', 'proenem-wordpress-theme' ); ?></h2>
-				<p>
+		<div class="pro-materials-layout pro-testimonials-layout">
+			<aside class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de depoimentos', 'proenem-wordpress-theme' ); ?>">
+				<?php proenem_render_testimonial_category_filters( $terms, $selected_slugs ); ?>
+			</aside>
+
+			<section class="pro-materials-results pro-testimonials-results" aria-labelledby="pro-testimonials-list-title">
+				<div class="pro-materials-results__header">
+					<h3 id="pro-testimonials-list-title"><?php esc_html_e( 'Histórias reais. Conquistas possíveis.', 'proenem-wordpress-theme' ); ?></h3>
+					<p>
+						<?php
+						printf(
+							/* translators: %s: Number of testimonials found. */
+							esc_html( _n( '%s depoimento publicado', '%s depoimentos publicados', $total_testimonials, 'proenem-wordpress-theme' ) ),
+							esc_html( number_format_i18n( $total_testimonials ) )
+						);
+						?>
+					</p>
+				</div>
+
+				<?php if ( ! proenem_testimonials_is_available() ) : ?>
 					<?php
-					printf(
-						/* translators: %s: Number of testimonials found. */
-						esc_html( _n( '%s depoimento publicado', '%s depoimentos publicados', $total_testimonials, 'proenem-wordpress-theme' ) ),
-						esc_html( number_format_i18n( $total_testimonials ) )
+					proenem_render_testimonials_empty_state(
+						__( 'Plugin Testimonials não está ativo.', 'proenem-wordpress-theme' ),
+						__( 'Ative o plugin para publicar e listar depoimentos nesta página.', 'proenem-wordpress-theme' )
 					);
 					?>
-				</p>
-			</div>
-
-			<?php if ( ! proenem_testimonials_is_available() ) : ?>
-				<?php
-				proenem_render_testimonials_empty_state(
-					__( 'Plugin Testimonials não está ativo.', 'proenem-wordpress-theme' ),
-					__( 'Ative o plugin para publicar e listar depoimentos nesta página.', 'proenem-wordpress-theme' )
-				);
-				?>
-			<?php elseif ( $testimonials_query->have_posts() ) : ?>
-				<div class="pro-testimonials-grid">
+				<?php elseif ( $testimonials_query->have_posts() ) : ?>
+					<div class="pro-testimonials-grid">
+						<?php
+						while ( $testimonials_query->have_posts() ) :
+							$testimonials_query->the_post();
+							proenem_render_testimonial_card( get_the_ID() );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</div>
+				<?php else : ?>
 					<?php
-					while ( $testimonials_query->have_posts() ) :
-						$testimonials_query->the_post();
-						proenem_render_testimonial_card( get_the_ID() );
-					endwhile;
-					wp_reset_postdata();
+					proenem_render_testimonials_empty_state(
+						__( 'Nenhum depoimento encontrado.', 'proenem-wordpress-theme' ),
+						__( 'Tente limpar os filtros ou cadastre novos depoimentos no WordPress.', 'proenem-wordpress-theme' )
+					);
 					?>
-				</div>
-			<?php else : ?>
-				<?php
-				proenem_render_testimonials_empty_state(
-					__( 'Nenhum depoimento encontrado.', 'proenem-wordpress-theme' ),
-					__( 'Tente limpar os filtros ou cadastre novos depoimentos no WordPress.', 'proenem-wordpress-theme' )
-				);
-				?>
-			<?php endif; ?>
-		</section>
-	</div>
+				<?php endif; ?>
+			</section>
+		</div>
+	</section>
 </main>
 
 <?php

@@ -1610,7 +1610,7 @@ function proenem_render_testimonial_category_filters( $terms, $selected_slugs ) 
 	?>
 	<form class="pro-materials-filter pro-testimonials-filter" method="get" action="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
 		<div class="pro-materials-filter__header">
-			<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
+			<strong><?php esc_html_e( 'Filtre por tipo de conquista', 'proenem-wordpress-theme' ); ?></strong>
 			<a href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>"<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
 		</div>
 		<div class="pro-materials-filter__options">
@@ -1627,7 +1627,7 @@ function proenem_render_testimonial_category_filters( $terms, $selected_slugs ) 
 			<?php endif; ?>
 		</div>
 		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
-			<?php esc_html_e( 'Filtrar depoimentos', 'proenem-wordpress-theme' ); ?>
+			<?php esc_html_e( 'Ver histórias', 'proenem-wordpress-theme' ); ?>
 		</button>
 	</form>
 	<?php
