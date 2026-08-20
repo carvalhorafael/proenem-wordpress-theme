@@ -1167,7 +1167,10 @@ img {
   white-space: nowrap;
 }
 
-.pro-testimonials-page,
+.pro-testimonials-page {
+  background: #fff;
+}
+
 .pro-testimonial-single-page {
   background:
     linear-gradient(rgb(27 29 35 / 0.045) 1px, transparent 1px),
@@ -1295,15 +1298,15 @@ img {
   background: var(--pen-color-canvas);
   border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-12, 3rem), 8vw, var(--pen-space-20, 5rem))
+  padding: clamp(var(--pen-space-8, 2rem), 4vw, var(--pen-space-12, 3rem))
     clamp(var(--pen-space-5, 1.25rem), 8vw, var(--pen-space-12, 3rem));
 }
 
 .pro-testimonials-featured__inner {
   align-items: center;
   display: grid;
-  gap: clamp(var(--pen-space-8, 2rem), 7vw, var(--pen-space-16, 4rem));
-  grid-template-columns: minmax(20rem, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(var(--pen-space-8, 2rem), 5vw, 3.5rem);
+  grid-template-columns: minmax(18rem, 0.76fr) minmax(0, 1.24fr);
   margin-inline: auto;
   max-width: 82rem;
 }
@@ -1313,9 +1316,12 @@ img {
   border: var(--pen-border-brand-sm);
   border-radius: 1rem;
   box-shadow: var(--pen-shadow-hard-lg);
+  justify-self: center;
   margin: 0;
+  max-width: 21rem;
   overflow: hidden;
   transform: rotate(-2deg);
+  width: 100%;
 }
 
 .pro-testimonials-featured__media img {
@@ -1342,22 +1348,22 @@ img {
 
 .pro-testimonials-featured h2 {
   font-family: var(--pen-font-body);
-  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
   font-weight: 900;
-  line-height: 0.96;
-  margin: var(--pen-space-4, 1rem) 0 0;
-  max-width: 13ch;
+  line-height: 0.98;
+  margin: var(--pen-space-3, 0.75rem) 0 0;
+  max-width: 16ch;
 }
 
 .pro-testimonials-featured blockquote {
   border: 0;
-  margin: clamp(var(--pen-space-6, 1.5rem), 3vw, var(--pen-space-8, 2rem)) 0 0;
+  margin: var(--pen-space-4, 1rem) 0 0;
   padding: 0;
 }
 
 .pro-testimonials-featured blockquote p {
   color: var(--pen-color-ink-muted);
-  font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
   font-weight: 600;
   line-height: 1.5;
   margin: 0;
@@ -1375,7 +1381,7 @@ img {
 .pro-testimonials-featured__student {
   display: grid;
   gap: 0.18rem;
-  margin-top: var(--pen-space-5, 1.25rem);
+  margin-top: var(--pen-space-4, 1rem);
 }
 
 .pro-testimonials-featured__student strong {
@@ -1390,7 +1396,7 @@ img {
 }
 
 .pro-testimonials-featured__action {
-  margin-top: var(--pen-space-6, 1.5rem);
+  margin-top: var(--pen-space-4, 1rem);
 }
 
 .pro-testimonials-wall {
@@ -1398,14 +1404,14 @@ img {
     radial-gradient(circle at 88% 10%, rgba(255, 214, 0, 0.2), transparent 22rem),
     var(--pen-color-surface);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-12, 3rem), 8vw, var(--pen-space-20, 6rem)) 0;
+  padding: clamp(var(--pen-space-12, 3rem), 5vw, var(--pen-space-16, 4rem)) 0;
 }
 
 .pro-testimonials-wall__intro {
   align-items: end;
   display: grid;
-  gap: clamp(var(--pen-space-5, 1.25rem), 4vw, var(--pen-space-10, 3rem));
-  grid-template-columns: minmax(0, 1.4fr) minmax(17rem, 0.6fr);
+  gap: clamp(var(--pen-space-5, 1.25rem), 3vw, var(--pen-space-8, 2rem));
+  grid-template-columns: minmax(0, 1.65fr) minmax(16rem, 0.35fr);
   margin-inline: auto;
   max-width: 82rem;
   padding-inline: clamp(var(--pen-space-5, 1.25rem), 8vw, var(--pen-space-12, 3rem));
@@ -1422,12 +1428,12 @@ img {
 
 .pro-testimonials-wall__intro h2 {
   font-family: var(--pen-font-body);
-  font-size: clamp(2.4rem, 5.3vw, 4.9rem);
+  font-size: clamp(2.25rem, 3.5vw, 3.4rem);
   font-weight: 900;
   letter-spacing: -0.045em;
   line-height: 0.96;
   margin: 0;
-  max-width: 18ch;
+  max-width: none;
   scroll-margin-top: 9rem;
 }
 
@@ -1444,7 +1450,7 @@ img {
   gap: clamp(var(--pen-space-8, 2rem), 5vw, var(--pen-space-12, 3rem));
   grid-template-columns: minmax(0, 1fr);
   padding-bottom: 0;
-  padding-top: clamp(var(--pen-space-10, 2.5rem), 6vw, var(--pen-space-16, 4rem));
+  padding-top: clamp(var(--pen-space-8, 2rem), 4vw, var(--pen-space-12, 3rem));
 }
 
 .pro-testimonials-filter {
@@ -1551,6 +1557,10 @@ img {
 
 .pro-testimonial-card-wrap {
   display: grid;
+}
+
+.pro-testimonial-card-wrap[hidden] {
+  display: none;
 }
 
 .testimonials-card.pro-testimonial-card {
@@ -1742,10 +1752,12 @@ img {
 
 .pro-testimonials-next {
   background: #c9002b;
+  border-bottom: 3px solid #1f2c27;
   border-top: 3px solid #1f2c27;
   color: #fff;
+  margin-bottom: clamp(7rem, 10vw, 10rem);
   overflow: hidden;
-  padding: clamp(var(--pen-space-12, 3rem), 8vw, var(--pen-space-20, 6rem)) clamp(var(--pen-space-5, 1.25rem), 8vw, var(--pen-space-12, 3rem));
+  padding: clamp(var(--pen-space-10, 2.5rem), 3vw, var(--pen-space-12, 3rem)) clamp(var(--pen-space-5, 1.25rem), 8vw, var(--pen-space-12, 3rem));
   position: relative;
 }
 
@@ -1766,7 +1778,7 @@ img {
 .pro-testimonials-next__inner {
   align-items: center;
   display: grid;
-  gap: clamp(var(--pen-space-10, 2.5rem), 8vw, var(--pen-space-20, 6rem));
+  gap: clamp(var(--pen-space-8, 2rem), 6vw, 4.5rem);
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
   margin-inline: auto;
   max-width: 76rem;
@@ -1794,21 +1806,21 @@ img {
 .pro-testimonials-next h2 {
   color: inherit;
   font-family: var(--pen-font-body);
-  font-size: clamp(2.65rem, 5.6vw, 5rem);
+  font-size: clamp(2.5rem, 4.2vw, 3.75rem);
   font-weight: 900;
   letter-spacing: -0.055em;
-  line-height: 0.94;
-  margin: clamp(var(--pen-space-6, 1.5rem), 4vw, var(--pen-space-8, 2rem)) 0 0;
-  max-width: 14ch;
+  line-height: 0.96;
+  margin: clamp(var(--pen-space-5, 1.25rem), 2vw, var(--pen-space-6, 1.5rem)) 0 0;
+  max-width: 17ch;
   scroll-margin-top: 9rem;
 }
 
 .pro-testimonials-next__copy > p {
   color: rgba(255, 255, 255, 0.88);
-  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
   font-weight: 600;
-  line-height: 1.5;
-  margin: var(--pen-space-6, 1.5rem) 0 0;
+  line-height: 1.42;
+  margin: var(--pen-space-4, 1rem) 0 0;
   max-width: 35rem;
 }
 
@@ -1817,7 +1829,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: var(--pen-space-5, 1.25rem);
-  margin-top: var(--pen-space-8, 2rem);
+  margin-top: var(--pen-space-6, 1.5rem);
 }
 
 .pro-testimonials-next__actions .pen-button {
@@ -1841,7 +1853,7 @@ img {
   color: #1f2c27;
   display: grid;
   justify-items: center;
-  padding: clamp(var(--pen-space-8, 2rem), 6vw, var(--pen-space-12, 3rem)) var(--pen-space-6, 1.5rem);
+  padding: clamp(1.75rem, 3vw, 2.5rem) var(--pen-space-6, 1.5rem);
   position: relative;
   text-align: center;
   transform: rotate(3deg);
@@ -1866,16 +1878,16 @@ img {
 }
 
 .pro-testimonials-next__mural strong {
-  font-size: clamp(3.2rem, 7vw, 6.25rem);
+  font-size: clamp(3rem, 5.5vw, 4.75rem);
   font-weight: 900;
   letter-spacing: -0.07em;
   line-height: 0.84;
-  margin-top: var(--pen-space-8, 2rem);
+  margin-top: var(--pen-space-5, 1.25rem);
   text-transform: uppercase;
 }
 
 .pro-testimonials-next__mural p {
-  font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
   font-weight: 900;
   line-height: 1;
   margin: var(--pen-space-3, 0.75rem) 0 0;
@@ -1886,7 +1898,7 @@ img {
   font-size: 0.86rem;
   font-weight: 900;
   letter-spacing: 0.12em;
-  margin-top: var(--pen-space-8, 2rem);
+  margin-top: var(--pen-space-6, 1.5rem);
   padding-top: var(--pen-space-3, 0.75rem);
 }
 
@@ -5685,7 +5697,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
   .pro-testimonials-featured__media {
     justify-self: center;
-    max-width: 34rem;
+    max-width: 21rem;
     width: 100%;
   }
 
@@ -5745,11 +5757,12 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 @media (max-width: 760px) {
   .pro-testimonials-next {
+    padding-block: var(--pen-space-10, 2.5rem);
     padding-inline: var(--pen-space-4, 1rem);
   }
 
   .pro-testimonials-next h2 {
-    font-size: clamp(2.45rem, 12vw, 3.5rem);
+    font-size: clamp(2.2rem, 10vw, 3rem);
   }
 
   .pro-testimonials-next__actions,
@@ -5762,7 +5775,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-testimonials-wall {
-    padding-top: var(--pen-space-12, 3rem);
+    padding-top: var(--pen-space-10, 2.5rem);
   }
 
   .pro-testimonials-wall__intro {
@@ -5770,7 +5783,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-testimonials-wall__intro h2 {
-    font-size: clamp(2.25rem, 11vw, 3.4rem);
+    font-size: clamp(2.1rem, 9vw, 2.75rem);
   }
 
   .pro-testimonials-filter .pro-materials-filter__options {
@@ -6022,23 +6035,23 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-testimonials-featured {
-    padding: var(--pen-space-10, 2.5rem) var(--pen-space-5, 1.25rem);
+    padding: var(--pen-space-8, 2rem) var(--pen-space-5, 1.25rem);
   }
 
   .pro-testimonials-featured__inner {
-    gap: var(--pen-space-8, 2rem);
+    gap: var(--pen-space-6, 1.5rem);
   }
 
   .pro-testimonials-featured__media {
-    max-width: 24rem;
+    max-width: 17rem;
   }
 
   .pro-testimonials-featured h2 {
-    font-size: clamp(2.25rem, 11vw, 3.4rem);
+    font-size: clamp(2rem, 9vw, 2.75rem);
   }
 
   .pro-testimonials-featured blockquote p {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
   }
 
   .pro-testimonials-featured__action {

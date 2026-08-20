@@ -796,6 +796,27 @@ function proenem_get_featured_testimonial() {
 }
 
 /**
+ * Get testimonials selected by the plugin for the approved students hero.
+ *
+ * @param int $limit Maximum number of testimonials.
+ * @return WP_Post[]
+ */
+function proenem_get_testimonials_hero_selection( $limit = 3 ) {
+	if ( ! proenem_testimonials_is_available() || ! function_exists( 'testimonials_get_hero_testimonials' ) ) {
+		return array();
+	}
+
+	$hero_testimonials = testimonials_get_hero_testimonials( min( 3, max( 1, (int) $limit ) ) );
+
+	return array_values(
+		array_filter(
+			$hero_testimonials,
+			static fn( $testimonial ) => $testimonial instanceof WP_Post
+		)
+	);
+}
+
+/**
  * Check whether the current request belongs to the Testimonials surface.
  *
  * @return bool
@@ -1546,10 +1567,11 @@ function proenem_get_oembed_allowed_html() {
 /**
  * Render a testimonial card for theme-owned testimonial archives.
  *
- * @param int $post_id Post ID.
+ * @param int      $post_id        Post ID.
+ * @param string[] $selected_slugs Selected testimonial category slugs.
  * @return void
  */
-function proenem_render_testimonial_card( $post_id ) {
+function proenem_render_testimonial_card( $post_id, $selected_slugs = array() ) {
 	$category_terms     = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
 	$category_slugs     = array();
 	$video_url          = proenem_get_testimonial_video_url( $post_id );
@@ -1568,8 +1590,10 @@ function proenem_render_testimonial_card( $post_id ) {
 	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
 		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
 	}
+
+	$is_visible = empty( $selected_slugs ) || (bool) array_intersect( $selected_slugs, $category_slugs );
 	?>
-	<article class="pro-testimonial-card-wrap<?php echo $is_portrait ? ' pro-testimonial-card-wrap--portrait' : ''; ?>" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+	<article class="pro-testimonial-card-wrap<?php echo $is_portrait ? ' pro-testimonial-card-wrap--portrait' : ''; ?>" data-pro-testimonial-card data-testimonial-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>"<?php echo $is_visible ? '' : ' hidden'; ?>>
 		<div class="testimonials-card pro-testimonial-card">
 			<div class="pro-testimonial-card__video<?php echo $is_portrait ? ' pro-testimonial-card__video--portrait' : ''; ?>" data-pro-testimonial-video>
 				<?php if ( $embed_url ) : ?>
@@ -1622,10 +1646,10 @@ function proenem_render_testimonial_card( $post_id ) {
  */
 function proenem_render_testimonial_category_filters( $terms, $selected_slugs ) {
 	?>
-	<form class="pro-materials-filter pro-testimonials-filter" method="get" action="<?php echo esc_url( proenem_get_testimonials_url() ); ?>">
+	<form class="pro-materials-filter pro-testimonials-filter" method="get" action="<?php echo esc_url( proenem_get_testimonials_url() ); ?>" data-pro-testimonials-filter>
 		<div class="pro-materials-filter__header">
 			<strong><?php esc_html_e( 'Filtre por tipo de conquista', 'proenem-wordpress-theme' ); ?></strong>
-			<a href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>"<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+			<a href="<?php echo esc_url( proenem_get_testimonials_url() ); ?>" data-pro-testimonials-clear<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
 		</div>
 		<div class="pro-materials-filter__options">
 			<?php if ( empty( $terms ) ) : ?>

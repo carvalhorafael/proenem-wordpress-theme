@@ -33,21 +33,23 @@ $testimonials_query_args = array(
 	'ignore_sticky_posts' => true,
 );
 
-if ( ! empty( $selected_slugs ) ) {
-	// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Category filtering is the expected query contract for this listing page.
-	$testimonials_query_args['tax_query'] = array(
-		array(
-			'taxonomy' => $testimonials_taxonomy,
-			'field'    => 'slug',
-			'terms'    => $selected_slugs,
-		),
-	);
-}
-
 $testimonials_query   = proenem_testimonials_is_available() ? new WP_Query( $testimonials_query_args ) : null;
-$total_testimonials   = $testimonials_query instanceof WP_Query ? (int) $testimonials_query->found_posts : 0;
-$hero_testimonials    = proenem_get_home_proof_testimonials( array(), 3 );
+$total_testimonials   = 0;
+$hero_testimonials    = proenem_get_testimonials_hero_selection( 3 );
 $featured_testimonial = proenem_get_featured_testimonial();
+
+if ( $testimonials_query instanceof WP_Query ) {
+	foreach ( $testimonials_query->posts as $testimonial_post ) {
+		$testimonial_terms = get_the_terms( $testimonial_post->ID, $testimonials_taxonomy );
+		$testimonial_slugs = ! empty( $testimonial_terms ) && ! is_wp_error( $testimonial_terms )
+			? wp_list_pluck( $testimonial_terms, 'slug' )
+			: array();
+
+		if ( empty( $selected_slugs ) || array_intersect( $selected_slugs, $testimonial_slugs ) ) {
+			++$total_testimonials;
+		}
+	}
+}
 ?>
 
 <main id="primary" class="site-main pro-materials-page pro-testimonials-page">
@@ -155,7 +157,14 @@ $featured_testimonial = proenem_get_featured_testimonial();
 			<section class="pro-materials-results pro-testimonials-results" aria-labelledby="pro-testimonials-list-title">
 				<div class="pro-materials-results__header">
 					<h3 id="pro-testimonials-list-title"><?php esc_html_e( 'Histórias reais. Conquistas possíveis.', 'proenem-wordpress-theme' ); ?></h3>
-					<p>
+					<p
+						data-pro-testimonials-count
+						aria-live="polite"
+						<?php /* translators: %s: Number of testimonials found. */ ?>
+						data-count-template-singular="<?php esc_attr_e( '%s depoimento publicado', 'proenem-wordpress-theme' ); ?>"
+						<?php /* translators: %s: Number of testimonials found. */ ?>
+						data-count-template-plural="<?php esc_attr_e( '%s depoimentos publicados', 'proenem-wordpress-theme' ); ?>"
+					>
 						<?php
 						printf(
 							/* translators: %s: Number of testimonials found. */
@@ -174,14 +183,20 @@ $featured_testimonial = proenem_get_featured_testimonial();
 					);
 					?>
 				<?php elseif ( $testimonials_query->have_posts() ) : ?>
-					<div class="pro-testimonials-grid">
+					<div class="pro-testimonials-grid" data-pro-testimonials-grid>
 						<?php
 						while ( $testimonials_query->have_posts() ) :
 							$testimonials_query->the_post();
-							proenem_render_testimonial_card( get_the_ID() );
+							proenem_render_testimonial_card( get_the_ID(), $selected_slugs );
 						endwhile;
 						wp_reset_postdata();
 						?>
+					</div>
+
+					<div class="pro-materials-empty pro-testimonials-empty"<?php echo 0 === $total_testimonials ? '' : ' hidden'; ?> data-pro-testimonials-empty>
+						<span aria-hidden="true">✦</span>
+						<h3><?php esc_html_e( 'Nenhum depoimento encontrado.', 'proenem-wordpress-theme' ); ?></h3>
+						<p><?php esc_html_e( 'Tente selecionar outra conquista ou limpar os filtros.', 'proenem-wordpress-theme' ); ?></p>
 					</div>
 				<?php else : ?>
 					<?php
