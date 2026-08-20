@@ -44,9 +44,10 @@ if ( ! empty( $selected_slugs ) ) {
 	);
 }
 
-$testimonials_query = proenem_testimonials_is_available() ? new WP_Query( $testimonials_query_args ) : null;
-$total_testimonials = $testimonials_query instanceof WP_Query ? (int) $testimonials_query->found_posts : 0;
-$hero_testimonials  = proenem_get_home_proof_testimonials( array(), 3 );
+$testimonials_query   = proenem_testimonials_is_available() ? new WP_Query( $testimonials_query_args ) : null;
+$total_testimonials   = $testimonials_query instanceof WP_Query ? (int) $testimonials_query->found_posts : 0;
+$hero_testimonials    = proenem_get_home_proof_testimonials( array(), 3 );
+$featured_testimonial = proenem_get_featured_testimonial();
 ?>
 
 <main id="primary" class="site-main pro-materials-page pro-testimonials-page">
@@ -83,6 +84,61 @@ $hero_testimonials  = proenem_get_home_proof_testimonials( array(), 3 );
 			</div>
 		<?php endif; ?>
 	</section>
+
+	<?php if ( $featured_testimonial instanceof WP_Post ) : ?>
+		<?php
+		$featured_id               = $featured_testimonial->ID;
+		$featured_image            = proenem_get_post_image_slot( $featured_id, 'large' );
+		$featured_name             = proenem_get_testimonial_student_name( $featured_id );
+		$featured_first_name_parts = preg_split( '/\s+/', $featured_name );
+		$featured_first_name       = $featured_first_name_parts ? $featured_first_name_parts[0] : $featured_name;
+		$featured_course           = proenem_get_testimonial_course( $featured_id );
+		$featured_institution      = proenem_get_testimonial_institution( $featured_id );
+		$featured_preparation      = proenem_get_testimonial_preparation_time( $featured_id );
+		$featured_quote            = proenem_get_testimonial_quote( $featured_id, 44 );
+		$featured_title            = $featured_preparation
+			? sprintf(
+				/* translators: 1: Time away from studying. 2: Student first name. 3: Course. */
+				__( 'Depois de %1$s, %2$s conquistou uma vaga em %3$s.', 'proenem-wordpress-theme' ),
+				$featured_preparation,
+				$featured_first_name,
+				$featured_course
+			)
+			: sprintf(
+				/* translators: %s: Student first name. */
+				__( 'Conheça a história de %s.', 'proenem-wordpress-theme' ),
+				$featured_first_name
+			);
+		?>
+		<section class="pro-testimonials-featured" aria-labelledby="pro-testimonials-featured-title">
+			<div class="pro-testimonials-featured__inner">
+				<figure class="pro-testimonials-featured__media">
+					<img src="<?php echo esc_url( $featured_image['src'] ); ?>" alt="<?php echo esc_attr( $featured_image['alt'] ); ?>">
+				</figure>
+				<div class="pro-testimonials-featured__copy">
+					<span class="pro-testimonials-featured__eyebrow"><?php esc_html_e( 'História em destaque', 'proenem-wordpress-theme' ); ?></span>
+					<h2 id="pro-testimonials-featured-title"><?php echo esc_html( $featured_title ); ?></h2>
+					<blockquote>
+						<p><?php echo esc_html( $featured_quote ); ?></p>
+					</blockquote>
+					<div class="pro-testimonials-featured__student">
+						<strong><?php echo esc_html( $featured_name ); ?></strong>
+						<span><?php echo esc_html( implode( ' · ', array_filter( array( $featured_course, $featured_institution ) ) ) ); ?></span>
+					</div>
+					<a class="pen-button pen-button--primary pen-button--md pro-testimonials-featured__action" href="<?php echo esc_url( get_permalink( $featured_id ) ); ?>">
+						<?php
+						printf(
+							/* translators: %s: Student first name. */
+							esc_html__( 'Conheça a história de %s', 'proenem-wordpress-theme' ),
+							esc_html( $featured_first_name )
+						);
+						?>
+						<span aria-hidden="true">→</span>
+					</a>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
 
 	<div class="pro-materials-layout pro-testimonials-layout">
 		<aside class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de depoimentos', 'proenem-wordpress-theme' ); ?>">

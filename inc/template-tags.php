@@ -781,6 +781,21 @@ function proenem_testimonials_home_proof_is_available() {
 }
 
 /**
+ * Get the testimonial selected by the plugin as the featured story.
+ *
+ * @return WP_Post|null
+ */
+function proenem_get_featured_testimonial() {
+	if ( ! proenem_testimonials_is_available() || ! function_exists( 'testimonials_get_featured_story' ) ) {
+		return null;
+	}
+
+	$featured_testimonial = testimonials_get_featured_story();
+
+	return $featured_testimonial instanceof WP_Post ? $featured_testimonial : null;
+}
+
+/**
  * Check whether the current request belongs to the Testimonials surface.
  *
  * @return bool

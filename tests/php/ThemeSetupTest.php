@@ -178,6 +178,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( '_testimonials_home_proof_enabled', proenem_get_testimonials_home_proof_enabled_meta_key() );
 		$this->assertSame( home_url( '/aprovados/' ), proenem_get_testimonials_url() );
 		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
+		$this->assertNull( proenem_get_featured_testimonial() );
 	}
 
 	/**

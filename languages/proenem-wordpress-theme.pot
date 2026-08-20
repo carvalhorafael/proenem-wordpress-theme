@@ -17,7 +17,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2047
+#: inc/template-tags.php:2062
 msgid "Proenem"
 msgstr ""
 
@@ -427,7 +427,7 @@ msgid "Badge linha 1"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:591
-#: inc/template-tags.php:1112
+#: inc/template-tags.php:1127
 msgid "Nossos"
 msgstr ""
 
@@ -436,7 +436,7 @@ msgid "Badge linha 2"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:592
-#: inc/template-tags.php:1113
+#: inc/template-tags.php:1128
 msgid "Alunos!"
 msgstr ""
 
@@ -913,7 +913,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:1933
+#: inc/template-tags.php:1948
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr ""
@@ -1199,22 +1199,22 @@ msgid "Pro Home Depoimentos"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1529
-#: inc/template-tags.php:1245
+#: inc/template-tags.php:1260
 msgid "Aprovados"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1530
-#: inc/template-tags.php:1251
+#: inc/template-tags.php:1266
 msgid "Quem estudou com método,"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1531
-#: inc/template-tags.php:1250
+#: inc/template-tags.php:1265
 msgid "chegou na vaga."
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1533
-#: inc/template-tags.php:1247
+#: inc/template-tags.php:1262
 msgid "Ver mais"
 msgstr ""
 
@@ -1912,17 +1912,17 @@ msgid "Acessar material"
 msgstr ""
 
 #: inc/template-tags.php:617
-#: inc/template-tags.php:1598
+#: inc/template-tags.php:1613
 msgid "Categorias"
 msgstr ""
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1599
+#: inc/template-tags.php:1614
 msgid "Limpar filtros"
 msgstr ""
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1603
+#: inc/template-tags.php:1618
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr ""
 
@@ -1930,171 +1930,171 @@ msgstr ""
 msgid "Filtrar materiais"
 msgstr ""
 
-#: inc/template-tags.php:840
+#: inc/template-tags.php:855
 msgid "Depoimento"
 msgstr ""
 
 #. translators: 1: Student name. 2: Course. 3: Institution.
-#: inc/template-tags.php:1017
-#: inc/template-tags.php:1217
+#: inc/template-tags.php:1032
+#: inc/template-tags.php:1232
 #, php-format
 msgid "%1$s — %2$s, %3$s"
 msgstr ""
 
-#: inc/template-tags.php:1036
+#: inc/template-tags.php:1051
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr ""
 
-#: inc/template-tags.php:1037
+#: inc/template-tags.php:1052
 msgid "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
 msgstr ""
 
-#: inc/template-tags.php:1038
+#: inc/template-tags.php:1053
 msgid "Conheça histórias de alunos que estudaram com a Proenem."
 msgstr ""
 
-#: inc/template-tags.php:1068
+#: inc/template-tags.php:1083
 msgid "UFRJ"
 msgstr ""
 
-#: inc/template-tags.php:1074
+#: inc/template-tags.php:1089
 msgid "UFRGS"
 msgstr ""
 
-#: inc/template-tags.php:1080
+#: inc/template-tags.php:1095
 msgid "Unicamp"
 msgstr ""
 
-#: inc/template-tags.php:1086
+#: inc/template-tags.php:1101
 msgid "UFMG"
 msgstr ""
 
-#: inc/template-tags.php:1092
+#: inc/template-tags.php:1107
 msgid "USP"
 msgstr ""
 
-#: inc/template-tags.php:1098
+#: inc/template-tags.php:1113
 msgid "Unifesp"
 msgstr ""
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1142
-#: inc/template-tags.php:1295
+#: inc/template-tags.php:1157
+#: inc/template-tags.php:1310
 #, php-format
 msgid "Foto de %s."
 msgstr ""
 
-#: inc/template-tags.php:1164
+#: inc/template-tags.php:1179
 msgid "Universidades públicas com alunos aprovados pela Proenem"
 msgstr ""
 
-#: inc/template-tags.php:1312
+#: inc/template-tags.php:1327
 msgid "Controles dos depoimentos"
 msgstr ""
 
-#: inc/template-tags.php:1314
+#: inc/template-tags.php:1329
 msgid "Depoimento anterior"
 msgstr ""
 
-#: inc/template-tags.php:1315
+#: inc/template-tags.php:1330
 msgid "Próximo depoimento"
 msgstr ""
 
 #. translators: 1: Student placement. 2: Where the student was approved.
-#: inc/template-tags.php:1336
+#: inc/template-tags.php:1351
 #, php-format
 msgid "%1$s · %2$s"
 msgstr ""
 
 #. translators: 1: Student name. 2: Approval summary.
-#: inc/template-tags.php:1383
+#: inc/template-tags.php:1398
 #, php-format
 msgid "%1$s: %2$s"
 msgstr ""
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1560
+#: inc/template-tags.php:1575
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr ""
 
-#: inc/template-tags.php:1578
+#: inc/template-tags.php:1593
 msgid "Ver história completa"
 msgstr ""
 
-#: inc/template-tags.php:1615
+#: inc/template-tags.php:1630
 msgid "Filtrar depoimentos"
 msgstr ""
 
-#: inc/template-tags.php:1645
+#: inc/template-tags.php:1660
 msgid "Matérias lecionadas"
 msgstr ""
 
-#: inc/template-tags.php:1646
+#: inc/template-tags.php:1661
 msgid "Gabaritos"
 msgstr ""
 
-#: inc/template-tags.php:1647
+#: inc/template-tags.php:1662
 msgid "Ferramentas"
 msgstr ""
 
-#: inc/template-tags.php:1708
+#: inc/template-tags.php:1723
 msgid "Manifesto Proenem"
 msgstr ""
 
-#: inc/template-tags.php:1710
+#: inc/template-tags.php:1725
 msgid "Sua aprovação"
 msgstr ""
 
-#: inc/template-tags.php:1711
+#: inc/template-tags.php:1726
 msgid "não é sorte."
 msgstr ""
 
-#: inc/template-tags.php:1712
+#: inc/template-tags.php:1727
 msgid "É método."
 msgstr ""
 
-#: inc/template-tags.php:1714
+#: inc/template-tags.php:1729
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr ""
 
-#: inc/template-tags.php:1716
+#: inc/template-tags.php:1731
 msgid "Nossas turmas"
 msgstr ""
 
-#: inc/template-tags.php:1724
+#: inc/template-tags.php:1739
 msgid "Links do rodapé"
 msgstr ""
 
-#: inc/template-tags.php:1733
+#: inc/template-tags.php:1748
 msgid "Links legais"
 msgstr ""
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1759
+#: inc/template-tags.php:1774
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr ""
 
-#: inc/template-tags.php:1766
+#: inc/template-tags.php:1781
 msgid "Feito com ♥ para você"
 msgstr ""
 
-#: inc/template-tags.php:1948
+#: inc/template-tags.php:1963
 msgid "Próximo passo"
 msgstr ""
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2012
+#: inc/template-tags.php:2027
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr ""
 
-#: inc/template-tags.php:2031
+#: inc/template-tags.php:2046
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:2056
+#: inc/template-tags.php:2071
 msgid "Abrir menu"
 msgstr ""
 
@@ -2321,55 +2321,77 @@ msgstr ""
 msgid "Depoimentos"
 msgstr ""
 
-#: page-templates/testimonials.php:55
+#: page-templates/testimonials.php:56
 msgid "Mural de aprovados"
 msgstr ""
 
-#: page-templates/testimonials.php:56
+#: page-templates/testimonials.php:57
 msgid "Um dia, seu nome pode estar aqui."
 msgstr ""
 
-#: page-templates/testimonials.php:57
+#: page-templates/testimonials.php:58
 msgid "Conheça estudantes que transformaram rotina, estratégia e constância em aprovação. Histórias reais, caminhos diferentes e uma conquista em comum."
 msgstr ""
 
-#: page-templates/testimonials.php:59
+#: page-templates/testimonials.php:60
 msgid "Conhecer as histórias"
 msgstr ""
 
-#: page-templates/testimonials.php:65
+#: page-templates/testimonials.php:66
 msgid "Estudantes em destaque"
 msgstr ""
 
-#: page-templates/testimonials.php:88
+#. translators: 1: Time away from studying. 2: Student first name. 3: Course.
+#: page-templates/testimonials.php:102
+#, php-format
+msgid "Depois de %1$s, %2$s conquistou uma vaga em %3$s."
+msgstr ""
+
+#. translators: %s: Student first name.
+#: page-templates/testimonials.php:109
+#, php-format
+msgid "Conheça a história de %s."
+msgstr ""
+
+#: page-templates/testimonials.php:119
+msgid "História em destaque"
+msgstr ""
+
+#. translators: %s: Student first name.
+#: page-templates/testimonials.php:132
+#, php-format
+msgid "Conheça a história de %s"
+msgstr ""
+
+#: page-templates/testimonials.php:144
 msgid "Filtros de depoimentos"
 msgstr ""
 
-#: page-templates/testimonials.php:94
+#: page-templates/testimonials.php:150
 msgid "Todos os depoimentos"
 msgstr ""
 
 #. translators: %s: Number of testimonials found.
-#: page-templates/testimonials.php:99
+#: page-templates/testimonials.php:155
 #, php-format
 msgid "%s depoimento publicado"
 msgid_plural "%s depoimentos publicados"
 msgstr[0] ""
 msgstr[1] ""
 
-#: page-templates/testimonials.php:109
+#: page-templates/testimonials.php:165
 msgid "Plugin Testimonials não está ativo."
 msgstr ""
 
-#: page-templates/testimonials.php:110
+#: page-templates/testimonials.php:166
 msgid "Ative o plugin para publicar e listar depoimentos nesta página."
 msgstr ""
 
-#: page-templates/testimonials.php:126
+#: page-templates/testimonials.php:182
 msgid "Nenhum depoimento encontrado."
 msgstr ""
 
-#: page-templates/testimonials.php:127
+#: page-templates/testimonials.php:183
 msgid "Tente limpar os filtros ou cadastre novos depoimentos no WordPress."
 msgstr ""
 
