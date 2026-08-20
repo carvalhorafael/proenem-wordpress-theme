@@ -46,15 +46,42 @@ if ( ! empty( $selected_slugs ) ) {
 
 $testimonials_query = proenem_testimonials_is_available() ? new WP_Query( $testimonials_query_args ) : null;
 $total_testimonials = $testimonials_query instanceof WP_Query ? (int) $testimonials_query->found_posts : 0;
+$hero_testimonials  = proenem_get_home_proof_testimonials( array(), 3 );
 ?>
 
 <main id="primary" class="site-main pro-materials-page pro-testimonials-page">
 	<section class="pro-materials-hero pro-testimonials-hero" aria-labelledby="pro-testimonials-title">
 		<div class="pro-materials-hero__copy">
-			<span class="pen-section-pill"><?php esc_html_e( 'Depoimentos', 'proenem-wordpress-theme' ); ?></span>
-			<h1 id="pro-testimonials-title"><?php esc_html_e( 'Histórias reais de quem estudou com a Proenem', 'proenem-wordpress-theme' ); ?></h1>
-			<p><?php esc_html_e( 'Conheça trajetórias, conquistas e mudanças de rotina de estudantes que usaram a Proenem para avançar na preparação.', 'proenem-wordpress-theme' ); ?></p>
+			<span class="pen-section-pill"><?php esc_html_e( 'Mural de aprovados', 'proenem-wordpress-theme' ); ?></span>
+			<h1 id="pro-testimonials-title"><?php esc_html_e( 'Um dia, seu nome pode estar aqui.', 'proenem-wordpress-theme' ); ?></h1>
+			<p><?php esc_html_e( 'Conheça estudantes que transformaram rotina, estratégia e constância em aprovação. Histórias reais, caminhos diferentes e uma conquista em comum.', 'proenem-wordpress-theme' ); ?></p>
+			<a class="pen-button pen-button--secondary pen-button--md pro-testimonials-hero__action" href="#pro-testimonials-results-title">
+				<?php esc_html_e( 'Conhecer as histórias', 'proenem-wordpress-theme' ); ?>
+				<span aria-hidden="true">↓</span>
+			</a>
 		</div>
+
+		<?php if ( $hero_testimonials ) : ?>
+			<div class="pro-testimonials-hero__stage" aria-label="<?php esc_attr_e( 'Estudantes em destaque', 'proenem-wordpress-theme' ); ?>">
+				<?php foreach ( $hero_testimonials as $index => $hero_testimonial ) : ?>
+					<?php
+					$hero_id          = $hero_testimonial->ID;
+					$hero_image       = proenem_get_post_image_slot( $hero_id, 'large' );
+					$hero_name        = proenem_get_testimonial_student_name( $hero_id );
+					$hero_course      = proenem_get_testimonial_course( $hero_id );
+					$hero_institution = proenem_get_testimonial_institution( $hero_id );
+					$hero_result      = implode( ' · ', array_filter( array( $hero_course, $hero_institution ) ) );
+					?>
+					<figure class="pro-testimonials-hero__student pro-testimonials-hero__student--<?php echo esc_attr( (string) ( $index + 1 ) ); ?>">
+						<img src="<?php echo esc_url( $hero_image['src'] ); ?>" alt="<?php echo esc_attr( $hero_image['alt'] ); ?>">
+						<figcaption>
+							<strong><?php echo esc_html( $hero_name ); ?></strong>
+							<span><?php echo esc_html( $hero_result ); ?></span>
+						</figcaption>
+					</figure>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 	</section>
 
 	<div class="pro-materials-layout pro-testimonials-layout">
