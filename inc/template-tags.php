@@ -727,6 +727,42 @@ function proenem_get_testimonials_institution_meta_key() {
 }
 
 /**
+ * Get the Testimonials verification status meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_verification_status_meta_key() {
+	return function_exists( 'testimonials_verification_status_meta_key' ) ? testimonials_verification_status_meta_key() : '_testimonials_verification_status';
+}
+
+/**
+ * Get the Testimonials publication consent status meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_publication_consent_status_meta_key() {
+	return function_exists( 'testimonials_publication_consent_status_meta_key' ) ? testimonials_publication_consent_status_meta_key() : '_testimonials_publication_consent_status';
+}
+
+/**
+ * Get the Testimonials featured story meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_featured_story_meta_key() {
+	return function_exists( 'testimonials_featured_story_meta_key' ) ? testimonials_featured_story_meta_key() : '_testimonials_featured_story';
+}
+
+/**
+ * Get the Testimonials hero selection meta key.
+ *
+ * @return string
+ */
+function proenem_get_testimonials_hero_enabled_meta_key() {
+	return function_exists( 'testimonials_hero_enabled_meta_key' ) ? testimonials_hero_enabled_meta_key() : '_testimonials_hero_enabled';
+}
+
+/**
  * Get the Testimonials approval year meta key.
  *
  * @return string
@@ -894,6 +930,128 @@ function proenem_get_testimonial_quote( $post_id, $word_count = 30 ) {
 	}
 
 	return wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_id ) ), $word_count );
+}
+
+/**
+ * Get testimonial IDs related to an individual approval story.
+ *
+ * Selection prioritizes verified, consented testimonials from the same course,
+ * institution, editorial selections and testimonial terms, then falls back to
+ * recent eligible stories.
+ *
+ * @param int $post_id Current testimonial post ID.
+ * @param int $limit   Maximum number of related testimonials.
+ * @return int[]
+ */
+function proenem_get_related_testimonial_ids( $post_id, $limit = 3 ) {
+	$post_id = absint( $post_id );
+	$limit   = max( 1, absint( $limit ) );
+
+	if ( ! $post_id || proenem_get_testimonials_post_type() !== get_post_type( $post_id ) ) {
+		return array();
+	}
+
+	$course                 = proenem_get_testimonial_course( $post_id );
+	$institution            = proenem_get_testimonial_institution( $post_id );
+	$terms                  = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
+	$term_ids               = empty( $terms ) || is_wp_error( $terms ) ? array() : wp_list_pluck( $terms, 'term_id' );
+	$eligibility_meta_query = array(
+		'relation' => 'AND',
+		array(
+			'key'   => proenem_get_testimonials_verification_status_meta_key(),
+			'value' => 'verified',
+		),
+		array(
+			'key'   => proenem_get_testimonials_publication_consent_status_meta_key(),
+			'value' => 'confirmed',
+		),
+	);
+	$priorities             = array();
+
+	if ( $course ) {
+		$priorities[] = array(
+			'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => proenem_get_testimonials_course_meta_key(),
+					'value' => $course,
+				),
+			),
+		);
+	}
+
+	if ( $institution ) {
+		$priorities[] = array(
+			'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => proenem_get_testimonials_institution_meta_key(),
+					'value' => $institution,
+				),
+			),
+		);
+	}
+
+	$priorities[] = array(
+		'meta_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+			'relation' => 'OR',
+			array(
+				'key'   => proenem_get_testimonials_hero_enabled_meta_key(),
+				'value' => '1',
+			),
+			array(
+				'key'   => proenem_get_testimonials_featured_story_meta_key(),
+				'value' => '1',
+			),
+		),
+	);
+
+	if ( $term_ids ) {
+		$priorities[] = array(
+			'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+				array(
+					'taxonomy' => proenem_get_testimonials_taxonomy(),
+					'field'    => 'term_id',
+					'terms'    => array_map( 'absint', $term_ids ),
+				),
+			),
+		);
+	}
+
+	$priorities[] = array();
+	$related_ids  = array();
+
+	foreach ( $priorities as $priority_args ) {
+		$remaining = $limit - count( $related_ids );
+
+		if ( $remaining <= 0 ) {
+			break;
+		}
+
+		$priority_meta_query         = isset( $priority_args['meta_query'] ) ? $priority_args['meta_query'] : array();
+		$priority_args['meta_query'] = $eligibility_meta_query; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+
+		if ( $priority_meta_query ) {
+			$priority_args['meta_query'][] = $priority_meta_query;
+		}
+
+		$query_args = array_merge(
+			array(
+				'fields'           => 'ids',
+				'no_found_rows'    => true,
+				'order'            => 'DESC',
+				'orderby'          => 'date',
+				'post__not_in'     => array_merge( array( $post_id ), $related_ids ),
+				'post_status'      => 'publish',
+				'post_type'        => proenem_get_testimonials_post_type(),
+				'posts_per_page'   => $remaining,
+				'suppress_filters' => false,
+			),
+			$priority_args
+		);
+
+		$related_ids = array_merge( $related_ids, array_map( 'absint', get_posts( $query_args ) ) );
+	}
+
+	return array_slice( array_values( array_unique( $related_ids ) ), 0, $limit );
 }
 
 /**
