@@ -1188,7 +1188,9 @@ function proenem_get_home_proof_testimonials( $requested_ids = array(), $limit =
 			array_filter(
 				$testimonials,
 				static function ( $testimonial ) {
-					return $testimonial instanceof WP_Post && testimonials_is_home_proof_eligible( $testimonial->ID );
+					return $testimonial instanceof WP_Post
+						&& testimonials_is_home_proof_eligible( $testimonial->ID )
+						&& has_post_thumbnail( $testimonial->ID );
 				}
 			)
 		),
@@ -1326,22 +1328,24 @@ function proenem_render_home_proof_section( $testimonials, $args = array() ) {
 				$year         = proenem_get_testimonial_approval_year( $testimonial->ID );
 				?>
 				<figure class="pen-proof-section__student pro-home-proof-student">
-					<?php
-					echo get_the_post_thumbnail(
-						$testimonial->ID,
-						'medium_large',
-						array(
-							'alt'      => sprintf(
-								/* translators: %s: Student name. */
-								__( 'Foto de %s.', 'proenem-wordpress-theme' ),
-								$student_name
-							),
-							'class'    => 'pen-proof-section__image',
-							'decoding' => 'async',
-							'loading'  => 'lazy',
-						)
-					); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					?>
+					<div class="pro-home-proof-student__media">
+						<?php
+						echo get_the_post_thumbnail(
+							$testimonial->ID,
+							'medium_large',
+							array(
+								'alt'      => sprintf(
+									/* translators: %s: Student name. */
+									__( 'Foto de %s.', 'proenem-wordpress-theme' ),
+									$student_name
+								),
+								'class'    => 'pen-proof-section__image',
+								'decoding' => 'async',
+								'loading'  => 'lazy',
+							)
+						); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						?>
+					</div>
 					<figcaption class="pen-proof-section__caption pro-home-proof-student__caption">
 						<strong class="pen-proof-section__student-name"><?php echo esc_html( $student_name ); ?></strong>
 						<span class="pen-proof-section__student-result"><?php echo esc_html( $course ); ?> · <?php echo esc_html( $institution ); ?></span>
