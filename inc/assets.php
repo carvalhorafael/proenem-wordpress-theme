@@ -84,6 +84,16 @@ function proenem_disable_approved_students_emoji_assets() {
 add_action( 'wp', 'proenem_disable_approved_students_emoji_assets' );
 
 /**
+ * Check whether a testimonial body needs WordPress block styles.
+ *
+ * @param int $post_id Testimonial post ID.
+ * @return bool
+ */
+function proenem_testimonial_uses_blocks( $post_id ) {
+	return has_blocks( $post_id );
+}
+
+/**
  * Remove block-library CSS from custom templates without block content.
  *
  * The home and approved-students listing are rendered by PHP template markup
@@ -93,7 +103,7 @@ add_action( 'wp', 'proenem_disable_approved_students_emoji_assets' );
  * @return void
  */
 function proenem_dequeue_custom_template_block_assets() {
-	$plain_testimonial = is_singular( proenem_get_testimonials_post_type() ) && ! has_blocks( get_queried_object_id() );
+	$plain_testimonial = is_singular( proenem_get_testimonials_post_type() ) && ! proenem_testimonial_uses_blocks( get_queried_object_id() );
 
 	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! is_page_template( 'page-templates/testimonials.php' ) && ! $plain_testimonial ) {
 		return;

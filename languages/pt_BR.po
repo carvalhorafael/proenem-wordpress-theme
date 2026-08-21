@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.19.0\n"
+"Project-Id-Version: Proenem 0.20.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2258
+#: inc/template-tags.php:2264
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -928,7 +928,7 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:2144
+#: inc/template-tags.php:2150
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
@@ -1931,12 +1931,12 @@ msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1810
+#: inc/template-tags.php:1816
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1814
+#: inc/template-tags.php:1820
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -2027,96 +2027,96 @@ msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1763
+#: inc/template-tags.php:1765
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr "Reproduzir vídeo de %s"
 
-#: inc/template-tags.php:1773
+#: inc/template-tags.php:1775
 msgid "Aprovação"
 msgstr "Aprovação"
 
-#: inc/template-tags.php:1789
+#: inc/template-tags.php:1795
 msgid "Conheça esta história"
 msgstr "Conheça esta história"
 
-#: inc/template-tags.php:1809
+#: inc/template-tags.php:1815
 msgid "Filtre por tipo de conquista"
 msgstr "Filtre por tipo de conquista"
 
-#: inc/template-tags.php:1826
+#: inc/template-tags.php:1832
 msgid "Ver histórias"
 msgstr "Ver histórias"
 
-#: inc/template-tags.php:1856
+#: inc/template-tags.php:1862
 msgid "Matérias lecionadas"
 msgstr "Matérias lecionadas"
 
-#: inc/template-tags.php:1857
+#: inc/template-tags.php:1863
 msgid "Gabaritos"
 msgstr "Gabaritos"
 
-#: inc/template-tags.php:1858
+#: inc/template-tags.php:1864
 msgid "Ferramentas"
 msgstr "Ferramentas"
 
-#: inc/template-tags.php:1919
+#: inc/template-tags.php:1925
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: inc/template-tags.php:1921
+#: inc/template-tags.php:1927
 msgid "Sua aprovação"
 msgstr "Sua aprovação"
 
-#: inc/template-tags.php:1922
+#: inc/template-tags.php:1928
 msgid "não é sorte."
 msgstr "não é sorte."
 
-#: inc/template-tags.php:1923
+#: inc/template-tags.php:1929
 msgid "É método."
 msgstr "É método."
 
-#: inc/template-tags.php:1925
+#: inc/template-tags.php:1931
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
-#: inc/template-tags.php:1927
+#: inc/template-tags.php:1933
 msgid "Nossas turmas"
 msgstr "Nossas turmas"
 
-#: inc/template-tags.php:1935
+#: inc/template-tags.php:1941
 msgid "Links do rodapé"
 msgstr "Links do rodapé"
 
-#: inc/template-tags.php:1944
+#: inc/template-tags.php:1950
 msgid "Links legais"
 msgstr "Links legais"
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1970
+#: inc/template-tags.php:1976
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr "@%s Proenem - Grupo Q Educação"
 
-#: inc/template-tags.php:1977
+#: inc/template-tags.php:1983
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:2159
+#: inc/template-tags.php:2165
 msgid "Próximo passo"
 msgstr "Próximo passo"
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2223
+#: inc/template-tags.php:2229
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr "Alternar submenu de %s"
 
-#: inc/template-tags.php:2242
+#: inc/template-tags.php:2248
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:2267
+#: inc/template-tags.php:2273
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
