@@ -520,6 +520,70 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The approved-students listing should not load styles and scripts it cannot use.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_listing_dequeues_unrelated_assets() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/testimonials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		wp_enqueue_style( 'wp-block-library', 'https://example.com/block-library.css', array(), '1.0.0' );
+		wp_enqueue_style( 'crm-leads-capture-free-material', 'https://example.com/capture.css', array(), '1.0.0' );
+		wp_enqueue_script( 'crm-leads-capture-free-material', 'https://example.com/capture.js', array(), '1.0.0', true );
+
+		proenem_dequeue_custom_template_block_assets();
+		proenem_dequeue_unused_capture_assets();
+
+		$this->assertFalse( wp_style_is( 'wp-block-library', 'enqueued' ) );
+		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+	}
+
+	/**
+	 * Individual stories should retain block styles while dropping capture assets.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_retains_block_styles_only() {
+		if ( ! post_type_exists( 'depoimento' ) ) {
+			register_post_type(
+				'depoimento',
+				array(
+					'public' => true,
+				)
+			);
+		}
+
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'depoimento',
+			)
+		);
+
+		$this->go_to( get_permalink( $post_id ) );
+
+		wp_enqueue_style( 'wp-block-library', 'https://example.com/block-library.css', array(), '1.0.0' );
+		wp_enqueue_style( 'crm-leads-capture-free-material', 'https://example.com/capture.css', array(), '1.0.0' );
+		wp_enqueue_script( 'crm-leads-capture-free-material', 'https://example.com/capture.js', array(), '1.0.0', true );
+
+		proenem_dequeue_custom_template_block_assets();
+		proenem_dequeue_unused_capture_assets();
+
+		$this->assertTrue( wp_style_is( 'wp-block-library', 'enqueued' ) );
+		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+	}
+
+	/**
 	 * The individual testimonial should show an explicit excerpt only in its hero.
 	 *
 	 * @return void
