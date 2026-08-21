@@ -545,6 +545,10 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertFalse( wp_style_is( 'wp-block-library', 'enqueued' ) );
 		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
 		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
 	}
 
 	/**
@@ -581,6 +585,37 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertTrue( wp_style_is( 'wp-block-library', 'enqueued' ) );
 		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
 		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
+	}
+
+	/**
+	 * Approved-students surfaces should use native emoji rendering.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_disable_wordpress_emoji_assets() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/testimonials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		proenem_disable_approved_students_emoji_assets();
+
+		$this->assertFalse( has_action( 'wp_head', 'print_emoji_detection_script' ) );
+		$this->assertFalse( has_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' ) );
+		$this->assertFalse( has_action( 'wp_print_styles', 'print_emoji_styles' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
 	}
 
 	/**

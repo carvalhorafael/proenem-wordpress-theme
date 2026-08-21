@@ -65,6 +65,25 @@ function proenem_is_approved_students_surface() {
 }
 
 /**
+ * Let modern browsers render emoji natively on approved-students surfaces.
+ *
+ * These templates use native text symbols and do not require WordPress's
+ * Twemoji compatibility scripts or their image fallback styles.
+ *
+ * @return void
+ */
+function proenem_disable_approved_students_emoji_assets() {
+	if ( ! proenem_is_approved_students_surface() ) {
+		return;
+	}
+
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+}
+add_action( 'wp', 'proenem_disable_approved_students_emoji_assets' );
+
+/**
  * Remove block-library CSS from custom templates without block content.
  *
  * The home and approved-students listing are rendered by PHP template markup
