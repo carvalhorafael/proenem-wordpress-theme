@@ -1192,6 +1192,52 @@ test("approved-students final CTA fits narrow mobile viewports", async ({ page }
   }
 });
 
+test("approved-students mobile links keep 44px touch targets", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.locator("main").first();
+
+  await main.evaluate((element) => {
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <section data-e2e-testimonial-touch-targets>
+          <div class="pro-testimonial-single__hero">
+            <a class="pen-section-pill" href="#mural">Mural de aprovados</a>
+          </div>
+          <article class="pro-testimonial-card">
+            <a class="testimonials-card__action" href="#historia">Conheça esta história</a>
+          </article>
+          <div class="pro-testimonial-single__share-links">
+            <a href="#whatsapp">WhatsApp</a>
+            <a href="#facebook">Facebook</a>
+            <button type="button">Copiar link</button>
+          </div>
+          <a class="pro-testimonial-single__all-link" href="#outros">Ver outros aprovados</a>
+          <div class="pro-testimonial-single__related-header">
+            <a href="#todos">Ver todo o mural</a>
+          </div>
+          <div class="pro-testimonials-next__actions">
+            <a class="pro-testimonials-next__back" href="#rever">Rever as histórias</a>
+          </div>
+        </section>
+      `,
+    );
+  });
+
+  const fixture = page.locator("[data-e2e-testimonial-touch-targets]");
+  const targets = fixture.locator("a, button");
+
+  for (const viewport of [
+    { height: 700, width: 320 },
+    { height: 844, width: 390 },
+  ]) {
+    await page.setViewportSize(viewport);
+    expectTargetsNotToOverlap(await expectMinimumTouchTargets(targets));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+  }
+});
+
 test("site footer keeps every navigation column inside tablet viewports", async ({ page }) => {
   await page.goto("/");
 

@@ -210,3 +210,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: entre 761 e 980 px, Matérias lecionadas ocupa a primeira linha da area de links e Gabaritos e Ferramentas formam duas colunas abaixo, sem aplicar ao tablet todo o comportamento da navegacao mobile.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#184`; design system `carvalhorafael/proenem-design-system-brand-guide#43`.
 - Criterio de remocao: atualizar o pacote para a versao que publicar o layout tablet, remover o override local e revalidar 390, 768, 980 e desktop.
+
+## 2026-08-21: Areas de toque moveis em Aprovados
+
+- Contexto: a auditoria de `/aprovados/` e das paginas individuais encontrou links prioritarios com menos de 44 px de altura em viewports de 320 e 390 px.
+- Gap do design system: o contrato geral de area minima de toque segue aberto e nao cobre, nos pacotes publicados, o pill usado como link, a acao dos cards e os links secundarios e de compartilhamento desta composicao.
+- Decisao: ate 760 px, complementar esses elementos com area minima de 44x44 CSS px, preservando textos, cores, foco visivel e geometria desktop.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#185`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
+- Criterio de remocao: atualizar os pacotes para a versao que publicar o contrato compartilhado, remover os seletores locais e revalidar os alvos em 320 e 390 px.

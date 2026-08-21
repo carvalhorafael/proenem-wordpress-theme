@@ -6162,6 +6162,24 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     max-width: 12ch;
   }
 
+  .pro-testimonial-single__hero .pen-section-pill,
+  .pro-testimonial-card .testimonials-card__action,
+  .pro-testimonial-single__share-links a,
+  .pro-testimonial-single__share-links button,
+  .pro-testimonial-single__all-link,
+  .pro-testimonial-single__related-header a,
+  .pro-testimonials-next__back {
+    align-items: center;
+    display: inline-flex;
+    min-height: 2.75rem;
+  }
+
+  .pro-testimonial-single__share-links a,
+  .pro-testimonial-single__share-links button {
+    min-width: 2.75rem;
+    padding-inline: var(--pen-space-2, 0.5rem);
+  }
+
   .pro-testimonials-next {
     padding-block: var(--pen-space-10, 2.5rem);
     padding-inline: var(--pen-space-4, 1rem);
