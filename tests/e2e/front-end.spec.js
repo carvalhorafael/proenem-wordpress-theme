@@ -773,6 +773,7 @@ test("front page keeps optional verified proof inside the mobile viewport", asyn
   }
 
   const proofGrid = page.locator(".pen-proof-section__students");
+  const proofBadge = proofGrid.locator(".pen-proof-section__badge");
   const gridMetrics = await proofGrid.evaluate((element) => {
     const rect = element.getBoundingClientRect();
 
@@ -787,6 +788,49 @@ test("front page keeps optional verified proof inside the mobile viewport", asyn
   expect(gridMetrics.left).toBe(0);
   expect(gridMetrics.right).toBeCloseTo(gridMetrics.viewportWidth, 0);
   expect(gridMetrics.documentWidth).toBe(gridMetrics.viewportWidth);
+
+  const gridBox = await proofGrid.boundingBox();
+  const badgeBox = await proofBadge.boundingBox();
+
+  expect(gridBox).not.toBeNull();
+  expect(badgeBox).not.toBeNull();
+  expect(badgeBox.y).toBeGreaterThanOrEqual(gridBox.y);
+});
+
+test("front page keeps verified proof photos compact on desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 2934, height: 900 });
+  await page.goto("/");
+
+  const hasProofSection = await expectHomeProofContract(page);
+
+  if (!hasProofSection) {
+    return;
+  }
+
+  const photos = page.locator(".pro-home-proof-student .pen-proof-section__image");
+  const proofGrid = page.locator(".pen-proof-section__students");
+  const photoCount = await photos.count();
+  const studentCount = await page.locator(".pro-home-proof-student").count();
+  const cardPositions = await page.locator(".pro-home-proof-student").evaluateAll((cards) =>
+    cards.map((card) => Math.round(card.getBoundingClientRect().top)),
+  );
+
+  expect(photoCount).toBe(studentCount);
+  expect(photoCount).toBeLessThanOrEqual(6);
+  expect(new Set(cardPositions).size).toBe(1);
+  await expect(proofGrid).toHaveCSS("overflow-x", "visible");
+
+  for (const photo of await photos.all()) {
+    const box = await photo.boundingBox();
+    const cardBox = await photo.locator("xpath=ancestor::figure[1]").boundingBox();
+
+    expect(box).not.toBeNull();
+    expect(cardBox).not.toBeNull();
+    expect(box.height / box.width).toBeGreaterThanOrEqual(1.32);
+    expect(box.height / box.width).toBeLessThanOrEqual(1.34);
+    expect(box.width).toBeLessThanOrEqual(cardBox.width);
+    expect(cardBox.height).toBeLessThanOrEqual(box.height + 180);
+  }
 });
 
 test("front page platform uses a compact horizontal menu on mobile", async ({ page }) => {
