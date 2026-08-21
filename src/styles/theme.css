@@ -1696,6 +1696,7 @@ img {
   gap: 0.25rem;
 }
 
+.pro-testimonial-card__student h3,
 .pro-testimonial-card__student h4 {
   color: var(--pen-color-ink);
   font-size: clamp(1.2rem, 1.8vw, 1.55rem);

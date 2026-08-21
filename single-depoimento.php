@@ -207,7 +207,7 @@ get_header();
 						<div class="pro-testimonials-grid pro-testimonial-single__related-grid">
 							<?php
 							foreach ( $related_testimonial_ids as $related_testimonial_id ) {
-								proenem_render_testimonial_card( $related_testimonial_id );
+								proenem_render_testimonial_card( $related_testimonial_id, array(), 3 );
 							}
 							?>
 						</div>

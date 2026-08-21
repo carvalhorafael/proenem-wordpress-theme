@@ -150,6 +150,31 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonial cards should expose the heading level required by their section.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_card_supports_related_section_heading_level() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => 'Estudante Teste',
+			)
+		);
+
+		ob_start();
+		proenem_render_testimonial_card( $post_id );
+		$listing_card = ob_get_clean();
+
+		ob_start();
+		proenem_render_testimonial_card( $post_id, array(), 3 );
+		$related_card = ob_get_clean();
+
+		$this->assertStringContainsString( '<h4>Estudante Teste</h4>', $listing_card );
+		$this->assertStringContainsString( '<h3>Estudante Teste</h3>', $related_card );
+		$this->assertStringNotContainsString( '<h4>Estudante Teste</h4>', $related_card );
+	}
+
+	/**
 	 * Free Materials fallbacks should expose the expected portable identifiers.
 	 *
 	 * @return void
@@ -483,6 +508,18 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonial filters should not create a complementary landmark inside the results region.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_filters_avoid_nested_landmarks() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/testimonials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '<div class="pro-materials-layout__sidebar"', $template );
+		$this->assertStringNotContainsString( '<aside class="pro-materials-layout__sidebar"', $template );
+	}
+
+	/**
 	 * The individual testimonial should show an explicit excerpt only in its hero.
 	 *
 	 * @return void
@@ -529,7 +566,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'proenem_get_testimonial_preparation_time', $template );
 		$this->assertStringContainsString( 'proenem_get_testimonial_main_tip', $template );
 		$this->assertStringContainsString( 'proenem_get_related_testimonial_ids', $template );
-		$this->assertStringContainsString( 'proenem_render_testimonial_card( $related_testimonial_id )', $template );
+		$this->assertStringContainsString( 'proenem_render_testimonial_card( $related_testimonial_id, array(), 3 )', $template );
 		$this->assertStringContainsString( 'Outras histórias para continuar acreditando.', $template );
 		$this->assertStringContainsString( 'id="pro-testimonial-next-title"', $template );
 		$this->assertStringContainsString( "proenem_get_home_cta_destination( 'plans' )", $template );
