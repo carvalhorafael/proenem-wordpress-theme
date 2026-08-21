@@ -167,7 +167,7 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Persistencia: `docs/elementor/proenem-home.json` nao inclui mais fotos anonimas nem configuracao editorial duplicada de logos no widget. O renderer compartilhado preserva as seis logos institucionais como assets de apresentacao, e `scripts/sync-home-proof.php` mantem template e paginas Elementor alinhados.
 - Responsabilidade: identificacao, curso, instituicao, ano, evidencia, verificacao, consentimento e selecao editorial pertencem ao plugin, para sobreviver a trocas de tema.
 - Excecao editorial: por orientacao explicita, o claim `+ de 40.000 aprovados em universidades publicas` e o apoio original permanecem na faixa. A origem, o periodo e a metodologia do numero continuam sem documentacao no repositorio e precisam ser confirmados para satisfazer integralmente a issue #111.
-- Adaptacao local: as classes `pro-home-proof-students`, `pro-home-proof-student` e `pro-home-proof-student__caption` complementam temporariamente o pattern publicado com grade variavel e identificacao individual legivel.
+- Adaptacao local: as classes `pro-home-proof-students`, `pro-home-proof-student`, `pro-home-proof-student__media` e `pro-home-proof-student__caption` complementam temporariamente o pattern publicado com grade variavel, midia de proporcao estavel e identificacao individual legivel.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#39`; tema `carvalhorafael/proenem-wordpress-theme#132`.
 - Criterio de remocao: atualizar os pacotes publicados, adotar as classes compartilhadas de figura e legenda e remover os seletores locais quando o design system cobrir o contrato.
 

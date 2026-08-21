@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.20.0\n"
+"Project-Id-Version: Proenem 0.20.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -32,7 +32,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2264
+#: inc/template-tags.php:2268
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -442,7 +442,7 @@ msgid "Badge linha 1"
 msgstr "Badge linha 1"
 
 #: inc/class-proenem-elementor-home-widget-base.php:591
-#: inc/template-tags.php:1306
+#: inc/template-tags.php:1308
 msgid "Nossos"
 msgstr "Nossos"
 
@@ -451,7 +451,7 @@ msgid "Badge linha 2"
 msgstr "Badge linha 2"
 
 #: inc/class-proenem-elementor-home-widget-base.php:592
-#: inc/template-tags.php:1307
+#: inc/template-tags.php:1309
 msgid "Alunos!"
 msgstr "Alunos!"
 
@@ -928,7 +928,7 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:2150
+#: inc/template-tags.php:2154
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
@@ -1214,22 +1214,22 @@ msgid "Pro Home Depoimentos"
 msgstr "Pro Home Depoimentos"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1529
-#: inc/template-tags.php:1439
+#: inc/template-tags.php:1443
 msgid "Aprovados"
 msgstr "Aprovados"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1530
-#: inc/template-tags.php:1445
+#: inc/template-tags.php:1449
 msgid "Quem estudou com método,"
 msgstr "Quem estudou com método,"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1531
-#: inc/template-tags.php:1444
+#: inc/template-tags.php:1448
 msgid "chegou na vaga."
 msgstr "chegou na vaga."
 
 #: inc/class-proenem-elementor-home-widget-base.php:1533
-#: inc/template-tags.php:1441
+#: inc/template-tags.php:1445
 msgid "Ver mais"
 msgstr "Ver mais"
 
@@ -1931,12 +1931,12 @@ msgid "Categorias"
 msgstr "Categorias"
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1816
+#: inc/template-tags.php:1820
 msgid "Limpar filtros"
 msgstr "Limpar filtros"
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1820
+#: inc/template-tags.php:1824
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr "Nenhuma categoria cadastrada ainda."
 
@@ -1949,174 +1949,174 @@ msgid "Depoimento"
 msgstr "Depoimento"
 
 #. translators: 1: Student name. 2: Course. 3: Institution.
-#: inc/template-tags.php:1211
-#: inc/template-tags.php:1411
+#: inc/template-tags.php:1213
+#: inc/template-tags.php:1415
 #, php-format
 msgid "%1$s — %2$s, %3$s"
 msgstr "%1$s — %2$s, %3$s"
 
-#: inc/template-tags.php:1230
+#: inc/template-tags.php:1232
 msgid "+ de 40.000 aprovados em universidades públicas"
 msgstr "+ de 40.000 aprovados em universidades públicas"
 
-#: inc/template-tags.php:1231
+#: inc/template-tags.php:1233
 msgid "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
 msgstr "Alunos reais, aprovados em algumas das universidades mais concorridas do país."
 
-#: inc/template-tags.php:1232
+#: inc/template-tags.php:1234
 msgid "Conheça histórias de alunos que estudaram com a Proenem."
 msgstr "Conheça histórias de alunos que estudaram com a Proenem."
 
-#: inc/template-tags.php:1262
+#: inc/template-tags.php:1264
 msgid "UFRJ"
 msgstr "UFRJ"
 
-#: inc/template-tags.php:1268
+#: inc/template-tags.php:1270
 msgid "UFRGS"
 msgstr "UFRGS"
 
-#: inc/template-tags.php:1274
+#: inc/template-tags.php:1276
 msgid "Unicamp"
 msgstr "Unicamp"
 
-#: inc/template-tags.php:1280
+#: inc/template-tags.php:1282
 msgid "UFMG"
 msgstr "UFMG"
 
-#: inc/template-tags.php:1286
+#: inc/template-tags.php:1288
 msgid "USP"
 msgstr "USP"
 
-#: inc/template-tags.php:1292
+#: inc/template-tags.php:1294
 msgid "Unifesp"
 msgstr "Unifesp"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1336
-#: inc/template-tags.php:1489
+#: inc/template-tags.php:1339
+#: inc/template-tags.php:1493
 #, php-format
 msgid "Foto de %s."
 msgstr "Foto de %s."
 
-#: inc/template-tags.php:1358
+#: inc/template-tags.php:1362
 msgid "Universidades públicas com alunos aprovados pela Proenem"
 msgstr "Universidades públicas com alunos aprovados pela Proenem"
 
-#: inc/template-tags.php:1506
+#: inc/template-tags.php:1510
 msgid "Controles dos depoimentos"
 msgstr "Controles dos depoimentos"
 
-#: inc/template-tags.php:1508
+#: inc/template-tags.php:1512
 msgid "Depoimento anterior"
 msgstr "Depoimento anterior"
 
-#: inc/template-tags.php:1509
+#: inc/template-tags.php:1513
 msgid "Próximo depoimento"
 msgstr "Próximo depoimento"
 
 #. translators: 1: Student placement. 2: Where the student was approved.
-#: inc/template-tags.php:1530
+#: inc/template-tags.php:1534
 #, php-format
 msgid "%1$s · %2$s"
 msgstr "%1$s · %2$s"
 
 #. translators: 1: Student name. 2: Approval summary.
-#: inc/template-tags.php:1577
+#: inc/template-tags.php:1581
 #, php-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1765
+#: inc/template-tags.php:1769
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr "Reproduzir vídeo de %s"
 
-#: inc/template-tags.php:1775
+#: inc/template-tags.php:1779
 msgid "Aprovação"
 msgstr "Aprovação"
 
-#: inc/template-tags.php:1795
+#: inc/template-tags.php:1799
 msgid "Conheça esta história"
 msgstr "Conheça esta história"
 
-#: inc/template-tags.php:1815
+#: inc/template-tags.php:1819
 msgid "Filtre por tipo de conquista"
 msgstr "Filtre por tipo de conquista"
 
-#: inc/template-tags.php:1832
+#: inc/template-tags.php:1836
 msgid "Ver histórias"
 msgstr "Ver histórias"
 
-#: inc/template-tags.php:1862
+#: inc/template-tags.php:1866
 msgid "Matérias lecionadas"
 msgstr "Matérias lecionadas"
 
-#: inc/template-tags.php:1863
+#: inc/template-tags.php:1867
 msgid "Gabaritos"
 msgstr "Gabaritos"
 
-#: inc/template-tags.php:1864
+#: inc/template-tags.php:1868
 msgid "Ferramentas"
 msgstr "Ferramentas"
 
-#: inc/template-tags.php:1925
+#: inc/template-tags.php:1929
 msgid "Manifesto Proenem"
 msgstr "Manifesto Proenem"
 
-#: inc/template-tags.php:1927
+#: inc/template-tags.php:1931
 msgid "Sua aprovação"
 msgstr "Sua aprovação"
 
-#: inc/template-tags.php:1928
+#: inc/template-tags.php:1932
 msgid "não é sorte."
 msgstr "não é sorte."
 
-#: inc/template-tags.php:1929
+#: inc/template-tags.php:1933
 msgid "É método."
 msgstr "É método."
 
-#: inc/template-tags.php:1931
+#: inc/template-tags.php:1935
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 
-#: inc/template-tags.php:1933
+#: inc/template-tags.php:1937
 msgid "Nossas turmas"
 msgstr "Nossas turmas"
 
-#: inc/template-tags.php:1941
+#: inc/template-tags.php:1945
 msgid "Links do rodapé"
 msgstr "Links do rodapé"
 
-#: inc/template-tags.php:1950
+#: inc/template-tags.php:1954
 msgid "Links legais"
 msgstr "Links legais"
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1976
+#: inc/template-tags.php:1980
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr "@%s Proenem - Grupo Q Educação"
 
-#: inc/template-tags.php:1983
+#: inc/template-tags.php:1987
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
 
-#: inc/template-tags.php:2165
+#: inc/template-tags.php:2169
 msgid "Próximo passo"
 msgstr "Próximo passo"
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2229
+#: inc/template-tags.php:2233
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr "Alternar submenu de %s"
 
-#: inc/template-tags.php:2248
+#: inc/template-tags.php:2252
 msgid "Navegação principal"
 msgstr "Navegação principal"
 
-#: inc/template-tags.php:2273
+#: inc/template-tags.php:2277
 msgid "Abrir menu"
 msgstr "Abrir menu"
 
