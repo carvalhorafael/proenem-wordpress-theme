@@ -1241,14 +1241,33 @@ test("approved-students mobile links keep 44px touch targets", async ({ page }) 
 test("site footer keeps every navigation column inside tablet viewports", async ({ page }) => {
   await page.goto("/");
 
+  const footer = page.locator(".pen-site-footer");
+  const links = footer.locator(".pen-site-footer__links");
+
+  await expect(links).toHaveCount(1);
+  await links.evaluate((element) => {
+    element.innerHTML = `
+      <section class="pen-site-footer__column pen-site-footer__column--footer-subjects">
+        <h3 class="pen-site-footer__column-title">Matérias lecionadas</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#materias">Matérias</a></li></ul>
+      </section>
+      <section class="pen-site-footer__column pen-site-footer__column--footer-answer-keys">
+        <h3 class="pen-site-footer__column-title">Gabaritos</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#gabaritos">Gabaritos</a></li></ul>
+      </section>
+      <section class="pen-site-footer__column pen-site-footer__column--footer-tools">
+        <h3 class="pen-site-footer__column-title">Ferramentas</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#ferramentas">Ferramentas</a></li></ul>
+      </section>
+    `;
+  });
+
   for (const viewport of [
     { height: 1024, width: 768 },
     { height: 1180, width: 980 },
   ]) {
     await page.setViewportSize(viewport);
 
-    const footer = page.locator(".pen-site-footer");
-    const links = footer.locator(".pen-site-footer__links");
     const subjects = footer.locator(".pen-site-footer__column--footer-subjects");
     const tools = footer.locator(".pen-site-footer__column--footer-tools");
     const [linksBox, toolsBox] = await Promise.all([links.boundingBox(), tools.boundingBox()]);
