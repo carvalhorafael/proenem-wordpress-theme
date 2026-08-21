@@ -6164,8 +6164,15 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
     width: 100%;
   }
 
+  .pro-testimonials-next__copy,
+  .pro-testimonials-next__mural {
+    min-width: 0;
+  }
+
   .pro-testimonials-next__actions .pen-button {
     justify-content: center;
+    text-align: center;
+    white-space: normal;
   }
 
   .pro-testimonials-wall {

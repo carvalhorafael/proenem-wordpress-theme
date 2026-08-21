@@ -194,3 +194,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: complementar localmente os contratos em `src/styles/theme.css`, preservando icones compactos dentro de alvos de pelo menos 44x44 px e usando foco visivel sem alteracao de geometria.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#114`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
 - Criterio de remocao: atualizar os pacotes para a versao que resolver a issue do design system, remover os seletores locais de tamanho/foco e confirmar novamente a cobertura E2E em 390x844.
+
+## 2026-08-21: Label longo no CTA final de Aprovados
+
+- Contexto: o CTA final compartilhado por `/aprovados/` e pelas paginas individuais usa um `pen-button--lg` cujo label excede a largura util de viewports entre 320 e 390 px.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` aplica `white-space: nowrap` a todo `pen-button` e nao publica uma variante para quebra controlada de labels longos em containers estreitos.
+- Decisao: permitir quebra centralizada somente em `.pro-testimonials-next__actions .pen-button` ate 760 px e remover a pressao de largura intrinseca dos itens da grade, preservando o contrato compartilhado nos demais botoes e no desktop.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#183`; design system `carvalhorafael/proenem-design-system-brand-guide#42`.
+- Criterio de remocao: atualizar o pacote para a versao que publicar o contrato responsivo, remover o override local e revalidar 320, 390 e desktop.

@@ -1137,6 +1137,61 @@ test("front page testimonial controls include the external approved-students lin
   await expect(page.locator("[data-pro-home-testimonial-card].is-active .pro-home-testimonial-card__quote p")).not.toHaveText(activeQuote);
 });
 
+test("approved-students final CTA fits narrow mobile viewports", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.locator("main").first();
+
+  await main.evaluate((element) => {
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <section class="pro-testimonials-next" data-e2e-testimonials-next>
+          <div class="pro-testimonials-next__inner">
+            <div class="pro-testimonials-next__copy">
+              <span class="pro-testimonials-next__eyebrow">Seu próximo capítulo</span>
+              <h2>Agora é a sua vez de construir uma história para este mural.</h2>
+              <p>Você não precisa ter todo o caminho resolvido. Precisa de um plano e coragem para dar o próximo passo.</p>
+              <div class="pro-testimonials-next__actions">
+                <a class="pen-button pen-button--secondary pen-button--lg" href="#planos">
+                  Quero começar minha preparação
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a class="pro-testimonials-next__back" href="#">Rever as histórias</a>
+              </div>
+            </div>
+            <div class="pro-testimonials-next__mural" aria-hidden="true">
+              <span>Próxima aprovação</span>
+              <strong>Seu nome</strong>
+              <p>pode estar aqui.</p>
+              <small>✦ 2026 ✦</small>
+            </div>
+          </div>
+        </section>
+      `,
+    );
+  });
+
+  for (const viewport of [
+    { height: 700, width: 320 },
+    { height: 844, width: 390 },
+  ]) {
+    await page.setViewportSize(viewport);
+
+    const section = page.locator("[data-e2e-testimonials-next]");
+    const copy = await section.locator(".pro-testimonials-next__copy").boundingBox();
+    const button = await section.locator(".pen-button").boundingBox();
+
+    expect(copy).not.toBeNull();
+    expect(button).not.toBeNull();
+    expect(copy.x).toBeGreaterThanOrEqual(0);
+    expect(copy.x + copy.width).toBeLessThanOrEqual(viewport.width);
+    expect(button.x).toBeGreaterThanOrEqual(0);
+    expect(button.x + button.width).toBeLessThanOrEqual(viewport.width);
+    expect(button.height).toBeGreaterThanOrEqual(44);
+  }
+});
+
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
