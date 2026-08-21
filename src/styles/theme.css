@@ -6135,6 +6135,18 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 }
 
+@media (min-width: 761px) and (max-width: 980px) {
+  .pen-site-footer__links {
+    gap: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-width: 0;
+  }
+
+  .pen-site-footer__column--footer-subjects {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 760px) {
   .pro-testimonial-single__story-header h2 {
     white-space: normal;

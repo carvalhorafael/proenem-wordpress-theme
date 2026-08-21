@@ -1192,6 +1192,32 @@ test("approved-students final CTA fits narrow mobile viewports", async ({ page }
   }
 });
 
+test("site footer keeps every navigation column inside tablet viewports", async ({ page }) => {
+  await page.goto("/");
+
+  for (const viewport of [
+    { height: 1024, width: 768 },
+    { height: 1180, width: 980 },
+  ]) {
+    await page.setViewportSize(viewport);
+
+    const footer = page.locator(".pen-site-footer");
+    const links = footer.locator(".pen-site-footer__links");
+    const subjects = footer.locator(".pen-site-footer__column--footer-subjects");
+    const tools = footer.locator(".pen-site-footer__column--footer-tools");
+    const [linksBox, toolsBox] = await Promise.all([links.boundingBox(), tools.boundingBox()]);
+
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+    expect(linksBox).not.toBeNull();
+    expect(toolsBox).not.toBeNull();
+    expect(linksBox.x).toBeGreaterThanOrEqual(0);
+    expect(linksBox.x + linksBox.width).toBeLessThanOrEqual(viewport.width);
+    expect(toolsBox.x + toolsBox.width).toBeLessThanOrEqual(viewport.width);
+    await expect(subjects).toHaveCSS("grid-column-start", "1");
+    await expect(subjects).toHaveCSS("grid-column-end", "-1");
+  }
+});
+
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

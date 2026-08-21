@@ -202,3 +202,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: permitir quebra centralizada somente em `.pro-testimonials-next__actions .pen-button` ate 760 px e remover a pressao de largura intrinseca dos itens da grade, preservando o contrato compartilhado nos demais botoes e no desktop.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#183`; design system `carvalhorafael/proenem-design-system-brand-guide#42`.
 - Criterio de remocao: atualizar o pacote para a versao que publicar o contrato responsivo, remover o override local e revalidar 320, 390 e desktop.
+
+## 2026-08-21: Composicao tablet do footer
+
+- Contexto: em 768 px, o footer mantinha o manifesto e uma grade desktop de tres grupos de links lado a lado, expandindo o documento para 945 px e deixando a coluna Ferramentas fora da tela.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` so publica a transicao do footer para uma coluna em 760 px e nao possui uma composicao intermediaria para tablets em retrato.
+- Decisao: entre 761 e 980 px, Matérias lecionadas ocupa a primeira linha da area de links e Gabaritos e Ferramentas formam duas colunas abaixo, sem aplicar ao tablet todo o comportamento da navegacao mobile.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#184`; design system `carvalhorafael/proenem-design-system-brand-guide#43`.
+- Criterio de remocao: atualizar o pacote para a versao que publicar o layout tablet, remover o override local e revalidar 390, 768, 980 e desktop.
