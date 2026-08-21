@@ -1137,6 +1137,215 @@ test("front page testimonial controls include the external approved-students lin
   await expect(page.locator("[data-pro-home-testimonial-card].is-active .pro-home-testimonial-card__quote p")).not.toHaveText(activeQuote);
 });
 
+test("approved-students final CTA fits narrow mobile viewports", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.locator("main").first();
+
+  await main.evaluate((element) => {
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <section class="pro-testimonials-next" data-e2e-testimonials-next>
+          <div class="pro-testimonials-next__inner">
+            <div class="pro-testimonials-next__copy">
+              <span class="pro-testimonials-next__eyebrow">Seu próximo capítulo</span>
+              <h2>Agora é a sua vez de construir uma história para este mural.</h2>
+              <p>Você não precisa ter todo o caminho resolvido. Precisa de um plano e coragem para dar o próximo passo.</p>
+              <div class="pro-testimonials-next__actions">
+                <a class="pen-button pen-button--secondary pen-button--lg" href="#planos">
+                  Quero começar minha preparação
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a class="pro-testimonials-next__back" href="#">Rever as histórias</a>
+              </div>
+            </div>
+            <div class="pro-testimonials-next__mural" aria-hidden="true">
+              <span>Próxima aprovação</span>
+              <strong>Seu nome</strong>
+              <p>pode estar aqui.</p>
+              <small>✦ 2026 ✦</small>
+            </div>
+          </div>
+        </section>
+      `,
+    );
+  });
+
+  for (const viewport of [
+    { height: 700, width: 320 },
+    { height: 844, width: 390 },
+  ]) {
+    await page.setViewportSize(viewport);
+
+    const section = page.locator("[data-e2e-testimonials-next]");
+    const copy = await section.locator(".pro-testimonials-next__copy").boundingBox();
+    const button = await section.locator(".pen-button").boundingBox();
+
+    expect(copy).not.toBeNull();
+    expect(button).not.toBeNull();
+    expect(copy.x).toBeGreaterThanOrEqual(0);
+    expect(copy.x + copy.width).toBeLessThanOrEqual(viewport.width);
+    expect(button.x).toBeGreaterThanOrEqual(0);
+    expect(button.x + button.width).toBeLessThanOrEqual(viewport.width);
+    expect(button.height).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test("approved-students mobile links keep 44px touch targets", async ({ page }) => {
+  await page.goto("/");
+
+  const main = page.locator("main").first();
+
+  await main.evaluate((element) => {
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <section data-e2e-testimonial-touch-targets>
+          <div class="pro-testimonial-single__hero">
+            <a class="pen-section-pill" href="#mural">Mural de aprovados</a>
+          </div>
+          <article class="pro-testimonial-card">
+            <a class="testimonials-card__action" href="#historia">Conheça esta história</a>
+          </article>
+          <div class="pro-testimonial-single__share-links">
+            <a href="#whatsapp">WhatsApp</a>
+            <a href="#facebook">Facebook</a>
+            <button type="button">Copiar link</button>
+          </div>
+          <a class="pro-testimonial-single__all-link" href="#outros">Ver outros aprovados</a>
+          <div class="pro-testimonial-single__related-header">
+            <a href="#todos">Ver todo o mural</a>
+          </div>
+          <div class="pro-testimonials-next__actions">
+            <a class="pro-testimonials-next__back" href="#rever">Rever as histórias</a>
+          </div>
+        </section>
+      `,
+    );
+  });
+
+  const fixture = page.locator("[data-e2e-testimonial-touch-targets]");
+  const targets = fixture.locator("a, button");
+
+  for (const viewport of [
+    { height: 700, width: 320 },
+    { height: 844, width: 390 },
+  ]) {
+    await page.setViewportSize(viewport);
+    expectTargetsNotToOverlap(await expectMinimumTouchTargets(targets));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+  }
+});
+
+test("site footer keeps every navigation column inside tablet viewports", async ({ page }) => {
+  await page.goto("/");
+
+  const footer = page.locator(".pen-site-footer");
+  const links = footer.locator(".pen-site-footer__links");
+
+  await expect(links).toHaveCount(1);
+  await links.evaluate((element) => {
+    element.innerHTML = `
+      <section class="pen-site-footer__column pen-site-footer__column--footer-subjects">
+        <h3 class="pen-site-footer__column-title">Matérias lecionadas</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#materias">Matérias</a></li></ul>
+      </section>
+      <section class="pen-site-footer__column pen-site-footer__column--footer-answer-keys">
+        <h3 class="pen-site-footer__column-title">Gabaritos</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#gabaritos">Gabaritos</a></li></ul>
+      </section>
+      <section class="pen-site-footer__column pen-site-footer__column--footer-tools">
+        <h3 class="pen-site-footer__column-title">Ferramentas</h3>
+        <ul class="pen-site-footer__menu"><li><a href="#ferramentas">Ferramentas</a></li></ul>
+      </section>
+    `;
+  });
+
+  for (const viewport of [
+    { height: 1024, width: 768 },
+    { height: 1180, width: 980 },
+  ]) {
+    await page.setViewportSize(viewport);
+
+    const subjects = footer.locator(".pen-site-footer__column--footer-subjects");
+    const tools = footer.locator(".pen-site-footer__column--footer-tools");
+    const [linksBox, toolsBox] = await Promise.all([links.boundingBox(), tools.boundingBox()]);
+
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+    expect(linksBox).not.toBeNull();
+    expect(toolsBox).not.toBeNull();
+    expect(linksBox.x).toBeGreaterThanOrEqual(0);
+    expect(linksBox.x + linksBox.width).toBeLessThanOrEqual(viewport.width);
+    expect(toolsBox.x + toolsBox.width).toBeLessThanOrEqual(viewport.width);
+    await expect(subjects).toHaveCSS("grid-column-start", "1");
+    await expect(subjects).toHaveCSS("grid-column-end", "-1");
+  }
+});
+
+test("approved-students filters expose vertical overflow on mobile", async ({ page }) => {
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto("/");
+
+  await page.locator("main").first().evaluate((element) => {
+    const options = Array.from({ length: 7 }, (_, index) => `
+      <label class="pro-materials-filter__option">
+        <input type="checkbox" name="category[]" value="category-${index + 1}">
+        <span>Conquista de referência ${index + 1}</span>
+        <small>${index + 1}</small>
+      </label>
+    `).join("");
+
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <form class="pro-materials-filter pro-testimonials-filter" data-e2e-testimonials-filter>
+          <div class="pro-materials-filter__header">
+            <strong>Filtre por tipo de conquista</strong>
+          </div>
+          <div class="pro-materials-filter__options">${options}</div>
+          <button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="button">
+            Ver histórias
+          </button>
+        </form>
+      `,
+    );
+  });
+
+  const options = page.locator("[data-e2e-testimonials-filter] .pro-materials-filter__options");
+  const metrics = await options.evaluate((element) => {
+    const bounds = element.getBoundingClientRect();
+    const items = Array.from(element.children).map((item) => {
+      const itemBounds = item.getBoundingClientRect();
+
+      return {
+        bottom: itemBounds.bottom,
+        top: itemBounds.top,
+      };
+    });
+
+    return {
+      clientHeight: element.clientHeight,
+      clientWidth: element.clientWidth,
+      fourthItem: items[3],
+      optionsBottom: bounds.bottom,
+      overflowX: getComputedStyle(element).overflowX,
+      overflowY: getComputedStyle(element).overflowY,
+      scrollHeight: element.scrollHeight,
+      scrollWidth: element.scrollWidth,
+      thirdItem: items[2],
+    };
+  });
+
+  expect(metrics.overflowX).toBe("hidden");
+  expect(metrics.overflowY).toBe("auto");
+  expect(metrics.scrollHeight).toBeGreaterThan(metrics.clientHeight);
+  expect(metrics.scrollWidth).toBe(metrics.clientWidth);
+  expect(metrics.thirdItem.bottom).toBeLessThanOrEqual(metrics.optionsBottom);
+  expect(metrics.fourthItem.top).toBeLessThan(metrics.optionsBottom);
+  expect(metrics.fourthItem.bottom).toBeGreaterThan(metrics.optionsBottom);
+});
+
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

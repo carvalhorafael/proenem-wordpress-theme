@@ -150,9 +150,9 @@ if ( $testimonials_query instanceof WP_Query ) {
 		</header>
 
 		<div class="pro-materials-layout pro-testimonials-layout">
-			<aside class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de depoimentos', 'proenem-wordpress-theme' ); ?>">
+			<div class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de depoimentos', 'proenem-wordpress-theme' ); ?>">
 				<?php proenem_render_testimonial_category_filters( $terms, $selected_slugs ); ?>
-			</aside>
+			</div>
 
 			<section class="pro-materials-results pro-testimonials-results" aria-labelledby="pro-testimonials-list-title">
 				<div class="pro-materials-results__header">

@@ -1727,9 +1727,10 @@ function proenem_get_oembed_allowed_html() {
  *
  * @param int      $post_id        Post ID.
  * @param string[] $selected_slugs Selected testimonial category slugs.
+ * @param int      $heading_level  Student name heading level. Supports 3 or 4.
  * @return void
  */
-function proenem_render_testimonial_card( $post_id, $selected_slugs = array() ) {
+function proenem_render_testimonial_card( $post_id, $selected_slugs = array(), $heading_level = 4 ) {
 	$category_terms     = get_the_terms( $post_id, proenem_get_testimonials_taxonomy() );
 	$category_slugs     = array();
 	$video_url          = proenem_get_testimonial_video_url( $post_id );
@@ -1744,6 +1745,7 @@ function proenem_render_testimonial_card( $post_id, $selected_slugs = array() ) 
 	$placement          = proenem_get_testimonial_placement( $post_id );
 	$approval_label     = proenem_get_testimonial_approval_summary( $post_id );
 	$achievement_detail = implode( ' · ', array_filter( array( $placement, $institution ) ) );
+	$heading_level      = 3 === (int) $heading_level ? 3 : 4;
 
 	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
 		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
@@ -1777,7 +1779,11 @@ function proenem_render_testimonial_card( $post_id, $selected_slugs = array() ) 
 			</div>
 			<div class="pro-testimonial-card__body">
 				<header class="pro-testimonial-card__student">
-					<h4><?php echo esc_html( $student_name ); ?></h4>
+					<?php if ( 3 === $heading_level ) : ?>
+						<h3><?php echo esc_html( $student_name ); ?></h3>
+					<?php else : ?>
+						<h4><?php echo esc_html( $student_name ); ?></h4>
+					<?php endif; ?>
 					<?php if ( $achievement_detail ) : ?>
 						<p><?php echo esc_html( $achievement_detail ); ?></p>
 					<?php endif; ?>

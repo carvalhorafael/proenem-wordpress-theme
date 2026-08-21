@@ -194,3 +194,27 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: complementar localmente os contratos em `src/styles/theme.css`, preservando icones compactos dentro de alvos de pelo menos 44x44 px e usando foco visivel sem alteracao de geometria.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#114`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
 - Criterio de remocao: atualizar os pacotes para a versao que resolver a issue do design system, remover os seletores locais de tamanho/foco e confirmar novamente a cobertura E2E em 390x844.
+
+## 2026-08-21: Label longo no CTA final de Aprovados
+
+- Contexto: o CTA final compartilhado por `/aprovados/` e pelas paginas individuais usa um `pen-button--lg` cujo label excede a largura util de viewports entre 320 e 390 px.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` aplica `white-space: nowrap` a todo `pen-button` e nao publica uma variante para quebra controlada de labels longos em containers estreitos.
+- Decisao: permitir quebra centralizada somente em `.pro-testimonials-next__actions .pen-button` ate 760 px e remover a pressao de largura intrinseca dos itens da grade, preservando o contrato compartilhado nos demais botoes e no desktop.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#183`; design system `carvalhorafael/proenem-design-system-brand-guide#42`.
+- Criterio de remocao: atualizar o pacote para a versao que publicar o contrato responsivo, remover o override local e revalidar 320, 390 e desktop.
+
+## 2026-08-21: Composicao tablet do footer
+
+- Contexto: em 768 px, o footer mantinha o manifesto e uma grade desktop de tres grupos de links lado a lado, expandindo o documento para 945 px e deixando a coluna Ferramentas fora da tela.
+- Gap do design system: `@carvalhorafael/proenem-css@0.3.0` so publica a transicao do footer para uma coluna em 760 px e nao possui uma composicao intermediaria para tablets em retrato.
+- Decisao: entre 761 e 980 px, Matérias lecionadas ocupa a primeira linha da area de links e Gabaritos e Ferramentas formam duas colunas abaixo, sem aplicar ao tablet todo o comportamento da navegacao mobile.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#184`; design system `carvalhorafael/proenem-design-system-brand-guide#43`.
+- Criterio de remocao: atualizar o pacote para a versao que publicar o layout tablet, remover o override local e revalidar 390, 768, 980 e desktop.
+
+## 2026-08-21: Areas de toque moveis em Aprovados
+
+- Contexto: a auditoria de `/aprovados/` e das paginas individuais encontrou links prioritarios com menos de 44 px de altura em viewports de 320 e 390 px.
+- Gap do design system: o contrato geral de area minima de toque segue aberto e nao cobre, nos pacotes publicados, o pill usado como link, a acao dos cards e os links secundarios e de compartilhamento desta composicao.
+- Decisao: ate 760 px, complementar esses elementos com area minima de 44x44 CSS px, preservando textos, cores, foco visivel e geometria desktop.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#185`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
+- Criterio de remocao: atualizar os pacotes para a versao que publicar o contrato compartilhado, remover os seletores locais e revalidar os alvos em 320 e 390 px.
