@@ -1218,6 +1218,69 @@ test("site footer keeps every navigation column inside tablet viewports", async 
   }
 });
 
+test("approved-students filters expose vertical overflow on mobile", async ({ page }) => {
+  await page.setViewportSize({ height: 844, width: 390 });
+  await page.goto("/");
+
+  await page.locator("main").first().evaluate((element) => {
+    const options = Array.from({ length: 7 }, (_, index) => `
+      <label class="pro-materials-filter__option">
+        <input type="checkbox" name="category[]" value="category-${index + 1}">
+        <span>Conquista de referência ${index + 1}</span>
+        <small>${index + 1}</small>
+      </label>
+    `).join("");
+
+    element.insertAdjacentHTML(
+      "beforeend",
+      `
+        <form class="pro-materials-filter pro-testimonials-filter" data-e2e-testimonials-filter>
+          <div class="pro-materials-filter__header">
+            <strong>Filtre por tipo de conquista</strong>
+          </div>
+          <div class="pro-materials-filter__options">${options}</div>
+          <button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="button">
+            Ver histórias
+          </button>
+        </form>
+      `,
+    );
+  });
+
+  const options = page.locator("[data-e2e-testimonials-filter] .pro-materials-filter__options");
+  const metrics = await options.evaluate((element) => {
+    const bounds = element.getBoundingClientRect();
+    const items = Array.from(element.children).map((item) => {
+      const itemBounds = item.getBoundingClientRect();
+
+      return {
+        bottom: itemBounds.bottom,
+        top: itemBounds.top,
+      };
+    });
+
+    return {
+      clientHeight: element.clientHeight,
+      clientWidth: element.clientWidth,
+      fourthItem: items[3],
+      optionsBottom: bounds.bottom,
+      overflowX: getComputedStyle(element).overflowX,
+      overflowY: getComputedStyle(element).overflowY,
+      scrollHeight: element.scrollHeight,
+      scrollWidth: element.scrollWidth,
+      thirdItem: items[2],
+    };
+  });
+
+  expect(metrics.overflowX).toBe("hidden");
+  expect(metrics.overflowY).toBe("auto");
+  expect(metrics.scrollHeight).toBeGreaterThan(metrics.clientHeight);
+  expect(metrics.scrollWidth).toBe(metrics.clientWidth);
+  expect(metrics.thirdItem.bottom).toBeLessThanOrEqual(metrics.optionsBottom);
+  expect(metrics.fourthItem.top).toBeLessThan(metrics.optionsBottom);
+  expect(metrics.fourthItem.bottom).toBeGreaterThan(metrics.optionsBottom);
+});
+
 test("front page school photo anchors to the mobile card edge below the CTA", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

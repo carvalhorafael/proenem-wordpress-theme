@@ -6200,16 +6200,37 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   }
 
   .pro-testimonials-filter .pro-materials-filter__options {
-    flex-wrap: nowrap;
-    margin-inline: calc(var(--pen-space-4, 1rem) * -1);
-    overflow-x: auto;
-    padding: 0 var(--pen-space-4, 1rem) var(--pen-space-2, 0.5rem);
-    scroll-snap-type: x proximity;
+    display: grid;
+    max-height: 13.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: var(--pen-space-2, 0.5rem);
+    scrollbar-color: #1f2c27 rgba(31, 44, 39, 0.12);
+    scrollbar-gutter: stable;
+    scrollbar-width: auto;
+    scroll-snap-type: y proximity;
+  }
+
+  .pro-testimonials-filter .pro-materials-filter__options::-webkit-scrollbar {
+    width: 0.65rem;
+  }
+
+  .pro-testimonials-filter .pro-materials-filter__options::-webkit-scrollbar-track {
+    background: rgba(31, 44, 39, 0.12);
+    border-radius: var(--pen-radius-pill, 999px);
+  }
+
+  .pro-testimonials-filter .pro-materials-filter__options::-webkit-scrollbar-thumb {
+    background: #1f2c27;
+    border: 2px solid #fff8e5;
+    border-radius: var(--pen-radius-pill, 999px);
   }
 
   .pro-testimonials-filter .pro-materials-filter__option {
     flex: 0 0 auto;
+    min-height: 3.5rem;
     scroll-snap-align: start;
+    width: 100%;
   }
 
   .pro-testimonials-filter .pro-materials-filter__submit {
