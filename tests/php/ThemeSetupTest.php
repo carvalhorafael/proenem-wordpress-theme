@@ -552,11 +552,11 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Individual stories should retain block styles while dropping capture assets.
+	 * Individual stories with Gutenberg content should retain block styles.
 	 *
 	 * @return void
 	 */
-	public function test_testimonial_single_retains_block_styles_only() {
+	public function test_testimonial_single_with_blocks_retains_block_styles() {
 		if ( ! post_type_exists( 'depoimento' ) ) {
 			register_post_type(
 				'depoimento',
@@ -568,8 +568,9 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$post_id = self::factory()->post->create(
 			array(
-				'post_status' => 'publish',
-				'post_type'   => 'depoimento',
+				'post_content' => '<!-- wp:paragraph --><p>História em blocos.</p><!-- /wp:paragraph -->',
+				'post_status'  => 'publish',
+				'post_type'    => 'depoimento',
 			)
 		);
 
@@ -585,6 +586,41 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertTrue( wp_style_is( 'wp-block-library', 'enqueued' ) );
 		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
 		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
+	}
+
+	/**
+	 * Individual stories without Gutenberg blocks should drop block styles.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_without_blocks_dequeues_block_styles() {
+		if ( ! post_type_exists( 'depoimento' ) ) {
+			register_post_type(
+				'depoimento',
+				array(
+					'public' => true,
+				)
+			);
+		}
+
+		$post_id = self::factory()->post->create(
+			array(
+				'post_content' => 'História em texto clássico.',
+				'post_status'  => 'publish',
+				'post_type'    => 'depoimento',
+			)
+		);
+
+		$this->go_to( get_permalink( $post_id ) );
+
+		wp_enqueue_style( 'wp-block-library', 'https://example.com/block-library.css', array(), '1.0.0' );
+		proenem_dequeue_custom_template_block_assets();
+
+		$this->assertFalse( wp_style_is( 'wp-block-library', 'enqueued' ) );
 
 		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
 		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );

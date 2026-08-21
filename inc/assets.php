@@ -87,14 +87,15 @@ add_action( 'wp', 'proenem_disable_approved_students_emoji_assets' );
  * Remove block-library CSS from custom templates without block content.
  *
  * The home and approved-students listing are rendered by PHP template markup
- * instead of post block content, so the default frontend block stylesheet only
- * adds render-blocking bytes there. Individual stories retain it because their
- * body can contain Gutenberg blocks.
+ * instead of post block content. Individual stories retain the stylesheet only
+ * when their body contains Gutenberg block markup.
  *
  * @return void
  */
 function proenem_dequeue_custom_template_block_assets() {
-	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! is_page_template( 'page-templates/testimonials.php' ) ) {
+	$plain_testimonial = is_singular( proenem_get_testimonials_post_type() ) && ! has_blocks( get_queried_object_id() );
+
+	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! is_page_template( 'page-templates/testimonials.php' ) && ! $plain_testimonial ) {
 		return;
 	}
 
