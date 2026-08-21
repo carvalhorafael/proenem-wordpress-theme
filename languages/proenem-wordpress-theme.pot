@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.19.0\n"
+"Project-Id-Version: Proenem 0.20.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 #: inc/elementor-sales-widgets.php:55
-#: inc/template-tags.php:2258
+#: inc/template-tags.php:2264
 msgid "Proenem"
 msgstr ""
 
@@ -913,7 +913,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1123
 #: inc/class-proenem-elementor-sales-widget-base.php:208
 #: inc/class-proenem-elementor-sales-widget-base.php:257
-#: inc/template-tags.php:2144
+#: inc/template-tags.php:2150
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
 msgstr ""
@@ -1916,12 +1916,12 @@ msgid "Categorias"
 msgstr ""
 
 #: inc/template-tags.php:618
-#: inc/template-tags.php:1810
+#: inc/template-tags.php:1816
 msgid "Limpar filtros"
 msgstr ""
 
 #: inc/template-tags.php:622
-#: inc/template-tags.php:1814
+#: inc/template-tags.php:1820
 msgid "Nenhuma categoria cadastrada ainda."
 msgstr ""
 
@@ -2012,96 +2012,96 @@ msgid "%1$s: %2$s"
 msgstr ""
 
 #. translators: %s: Student name.
-#: inc/template-tags.php:1763
+#: inc/template-tags.php:1765
 #, php-format
 msgid "Reproduzir vídeo de %s"
 msgstr ""
 
-#: inc/template-tags.php:1773
+#: inc/template-tags.php:1775
 msgid "Aprovação"
 msgstr ""
 
-#: inc/template-tags.php:1789
+#: inc/template-tags.php:1795
 msgid "Conheça esta história"
 msgstr ""
 
-#: inc/template-tags.php:1809
+#: inc/template-tags.php:1815
 msgid "Filtre por tipo de conquista"
 msgstr ""
 
-#: inc/template-tags.php:1826
+#: inc/template-tags.php:1832
 msgid "Ver histórias"
 msgstr ""
 
-#: inc/template-tags.php:1856
+#: inc/template-tags.php:1862
 msgid "Matérias lecionadas"
 msgstr ""
 
-#: inc/template-tags.php:1857
+#: inc/template-tags.php:1863
 msgid "Gabaritos"
 msgstr ""
 
-#: inc/template-tags.php:1858
+#: inc/template-tags.php:1864
 msgid "Ferramentas"
 msgstr ""
 
-#: inc/template-tags.php:1919
+#: inc/template-tags.php:1925
 msgid "Manifesto Proenem"
 msgstr ""
 
-#: inc/template-tags.php:1921
+#: inc/template-tags.php:1927
 msgid "Sua aprovação"
 msgstr ""
 
-#: inc/template-tags.php:1922
+#: inc/template-tags.php:1928
 msgid "não é sorte."
 msgstr ""
 
-#: inc/template-tags.php:1923
+#: inc/template-tags.php:1929
 msgid "É método."
 msgstr ""
 
-#: inc/template-tags.php:1925
+#: inc/template-tags.php:1931
 msgid "Construímos a infraestrutura que transforma esforço em resultado: método, ritmo e correção de rota. Você estuda com estratégia — e não estuda sozinho."
 msgstr ""
 
-#: inc/template-tags.php:1927
+#: inc/template-tags.php:1933
 msgid "Nossas turmas"
 msgstr ""
 
-#: inc/template-tags.php:1935
+#: inc/template-tags.php:1941
 msgid "Links do rodapé"
 msgstr ""
 
-#: inc/template-tags.php:1944
+#: inc/template-tags.php:1950
 msgid "Links legais"
 msgstr ""
 
 #. translators: %s: Current year.
-#: inc/template-tags.php:1970
+#: inc/template-tags.php:1976
 #, php-format
 msgid "@%s Proenem - Grupo Q Educação"
 msgstr ""
 
-#: inc/template-tags.php:1977
+#: inc/template-tags.php:1983
 msgid "Feito com ♥ para você"
 msgstr ""
 
-#: inc/template-tags.php:2159
+#: inc/template-tags.php:2165
 msgid "Próximo passo"
 msgstr ""
 
 #. translators: %s: Navigation item label.
-#: inc/template-tags.php:2223
+#: inc/template-tags.php:2229
 #, php-format
 msgid "Alternar submenu de %s"
 msgstr ""
 
-#: inc/template-tags.php:2242
+#: inc/template-tags.php:2248
 msgid "Navegação principal"
 msgstr ""
 
-#: inc/template-tags.php:2267
+#: inc/template-tags.php:2273
 msgid "Abrir menu"
 msgstr ""
 

@@ -150,6 +150,31 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonial cards should expose the heading level required by their section.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_card_supports_related_section_heading_level() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => 'Estudante Teste',
+			)
+		);
+
+		ob_start();
+		proenem_render_testimonial_card( $post_id );
+		$listing_card = ob_get_clean();
+
+		ob_start();
+		proenem_render_testimonial_card( $post_id, array(), 3 );
+		$related_card = ob_get_clean();
+
+		$this->assertStringContainsString( '<h4>Estudante Teste</h4>', $listing_card );
+		$this->assertStringContainsString( '<h3>Estudante Teste</h3>', $related_card );
+		$this->assertStringNotContainsString( '<h4>Estudante Teste</h4>', $related_card );
+	}
+
+	/**
 	 * Free Materials fallbacks should expose the expected portable identifiers.
 	 *
 	 * @return void
@@ -483,6 +508,109 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Testimonial filters should not create a complementary landmark inside the results region.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_filters_avoid_nested_landmarks() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/testimonials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '<div class="pro-materials-layout__sidebar"', $template );
+		$this->assertStringNotContainsString( '<aside class="pro-materials-layout__sidebar"', $template );
+	}
+
+	/**
+	 * The approved-students listing should not load styles and scripts it cannot use.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_listing_dequeues_unrelated_assets() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/testimonials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		wp_enqueue_style( 'wp-block-library', 'https://example.com/block-library.css', array(), '1.0.0' );
+		wp_enqueue_style( 'crm-leads-capture-free-material', 'https://example.com/capture.css', array(), '1.0.0' );
+		wp_enqueue_script( 'crm-leads-capture-free-material', 'https://example.com/capture.js', array(), '1.0.0', true );
+
+		proenem_dequeue_custom_template_block_assets();
+		proenem_dequeue_unused_capture_assets();
+
+		$this->assertFalse( wp_style_is( 'wp-block-library', 'enqueued' ) );
+		$this->assertFalse( wp_style_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+		$this->assertFalse( wp_script_is( 'crm-leads-capture-free-material', 'enqueued' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
+	}
+
+	/**
+	 * Individual stories with Gutenberg content should retain block styles.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_with_blocks_retains_block_styles() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_content' => '<!-- wp:paragraph --><p>História em blocos.</p><!-- /wp:paragraph -->',
+				'post_status'  => 'publish',
+			)
+		);
+
+		$this->assertTrue( proenem_testimonial_uses_blocks( $post_id ) );
+	}
+
+	/**
+	 * Individual stories without Gutenberg blocks should drop block styles.
+	 *
+	 * @return void
+	 */
+	public function test_testimonial_single_without_blocks_dequeues_block_styles() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_content' => 'História em texto clássico.',
+				'post_status'  => 'publish',
+			)
+		);
+
+		$this->assertFalse( proenem_testimonial_uses_blocks( $post_id ) );
+	}
+
+	/**
+	 * Approved-students surfaces should use native emoji rendering.
+	 *
+	 * @return void
+	 */
+	public function test_testimonials_disable_wordpress_emoji_assets() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/testimonials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		proenem_disable_approved_students_emoji_assets();
+
+		$this->assertFalse( has_action( 'wp_head', 'print_emoji_detection_script' ) );
+		$this->assertFalse( has_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' ) );
+		$this->assertFalse( has_action( 'wp_print_styles', 'print_emoji_styles' ) );
+
+		add_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		add_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+		add_action( 'wp_print_styles', 'print_emoji_styles' );
+	}
+
+	/**
 	 * The individual testimonial should show an explicit excerpt only in its hero.
 	 *
 	 * @return void
@@ -529,7 +657,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'proenem_get_testimonial_preparation_time', $template );
 		$this->assertStringContainsString( 'proenem_get_testimonial_main_tip', $template );
 		$this->assertStringContainsString( 'proenem_get_related_testimonial_ids', $template );
-		$this->assertStringContainsString( 'proenem_render_testimonial_card( $related_testimonial_id )', $template );
+		$this->assertStringContainsString( 'proenem_render_testimonial_card( $related_testimonial_id, array(), 3 )', $template );
 		$this->assertStringContainsString( 'Outras histórias para continuar acreditando.', $template );
 		$this->assertStringContainsString( 'id="pro-testimonial-next-title"', $template );
 		$this->assertStringContainsString( "proenem_get_home_cta_destination( 'plans' )", $template );

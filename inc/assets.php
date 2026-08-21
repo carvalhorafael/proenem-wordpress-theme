@@ -56,39 +56,80 @@ function proenem_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'proenem_enqueue_assets' );
 
 /**
- * Remove block-library CSS from the custom home template.
+ * Check whether the current request renders an approved-students surface.
  *
- * The home is rendered by PHP template markup instead of post block content, so
- * the default frontend block stylesheet only adds render-blocking bytes there.
+ * @return bool
+ */
+function proenem_is_approved_students_surface() {
+	return is_page_template( 'page-templates/testimonials.php' ) || is_singular( proenem_get_testimonials_post_type() );
+}
+
+/**
+ * Let modern browsers render emoji natively on approved-students surfaces.
+ *
+ * These templates use native text symbols and do not require WordPress's
+ * Twemoji compatibility scripts or their image fallback styles.
  *
  * @return void
  */
-function proenem_dequeue_home_block_assets() {
-	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) ) {
+function proenem_disable_approved_students_emoji_assets() {
+	if ( ! proenem_is_approved_students_surface() ) {
+		return;
+	}
+
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+}
+add_action( 'wp', 'proenem_disable_approved_students_emoji_assets' );
+
+/**
+ * Check whether a testimonial body needs WordPress block styles.
+ *
+ * @param int $post_id Testimonial post ID.
+ * @return bool
+ */
+function proenem_testimonial_uses_blocks( $post_id ) {
+	return has_blocks( $post_id );
+}
+
+/**
+ * Remove block-library CSS from custom templates without block content.
+ *
+ * The home and approved-students listing are rendered by PHP template markup
+ * instead of post block content. Individual stories retain the stylesheet only
+ * when their body contains Gutenberg block markup.
+ *
+ * @return void
+ */
+function proenem_dequeue_custom_template_block_assets() {
+	$plain_testimonial = is_singular( proenem_get_testimonials_post_type() ) && ! proenem_testimonial_uses_blocks( get_queried_object_id() );
+
+	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! is_page_template( 'page-templates/testimonials.php' ) && ! $plain_testimonial ) {
 		return;
 	}
 
 	wp_dequeue_style( 'wp-block-library' );
 }
-add_action( 'wp_enqueue_scripts', 'proenem_dequeue_home_block_assets', 100 );
+add_action( 'wp_enqueue_scripts', 'proenem_dequeue_custom_template_block_assets', 100 );
 
 /**
- * Remove capture plugin assets from the custom home template.
+ * Remove capture plugin assets from surfaces without a capture form.
  *
- * The free-material capture form is not rendered on the home, so these assets
- * can stay limited to the material surfaces that actually need them.
+ * The free-material capture form is not rendered on the home or approved-student
+ * pages, so these assets can stay limited to the material surfaces that need them.
  *
  * @return void
  */
-function proenem_dequeue_home_capture_assets() {
-	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) ) {
+function proenem_dequeue_unused_capture_assets() {
+	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! proenem_is_approved_students_surface() ) {
 		return;
 	}
 
 	wp_dequeue_style( 'crm-leads-capture-free-material' );
 	wp_dequeue_script( 'crm-leads-capture-free-material' );
 }
-add_action( 'wp_enqueue_scripts', 'proenem_dequeue_home_capture_assets', 100 );
+add_action( 'wp_enqueue_scripts', 'proenem_dequeue_unused_capture_assets', 100 );
 
 /**
  * Enqueue block editor assets.
