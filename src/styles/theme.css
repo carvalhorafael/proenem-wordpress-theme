@@ -579,6 +579,29 @@
   white-space: nowrap;
 }
 
+.pro-sales-countdown__units {
+  display: flex;
+  gap: var(--pen-space-4, 1rem);
+}
+
+.pro-sales-countdown__unit {
+  display: grid;
+  gap: 0.1rem;
+  justify-items: center;
+  min-width: 3rem;
+}
+
+.pro-sales-countdown__unit strong {
+  font-size: 1.85rem;
+  line-height: 1;
+}
+
+.pro-sales-countdown__unit small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .pro-sales-pricing__grid,
 .pro-sales-benefits__grid {
   display: grid;

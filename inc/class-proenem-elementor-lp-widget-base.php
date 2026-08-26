@@ -175,6 +175,19 @@ class Proenem_Elementor_Lp_Metrics_Widget extends Proenem_Elementor_Lp_Widget_Ba
  */
 class Proenem_Elementor_Lp_Offer_Highlight_Widget extends Proenem_Elementor_Lp_Widget_Base {
 	/**
+	 * Keep the widget out of the editor panel.
+	 *
+	 * Obsolete: this is a plan card without the price fields, so
+	 * `pro_pricing_grid` covers the case. The class stays registered so pages
+	 * that already use this widget keep rendering.
+	 *
+	 * @return bool
+	 */
+	public function show_in_panel(): bool {
+		return false;
+	}
+
+	/**
 	 * Get widget name.
 	 *
 	 * @return string
@@ -189,7 +202,7 @@ class Proenem_Elementor_Lp_Offer_Highlight_Widget extends Proenem_Elementor_Lp_W
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Pro LP Destaque de Oferta', 'proenem-wordpress-theme' );
+		return esc_html__( 'Pro LP Destaque de Oferta (obsoleto)', 'proenem-wordpress-theme' );
 	}
 
 	/**

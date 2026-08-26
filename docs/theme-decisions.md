@@ -344,3 +344,19 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Alternativa descartada: fundir em um widget com variante. Trocaria clareza de intencao editorial por economia de widget, com risco em pagina publicada.
 - Papeis: `pro_offer_hero` e a primeira faixa e dona do `h1`; `pro_lp_spotlight` e faixa de meio de pagina com bullets e lado invertivel; `pro_cta` e faixa minima de chamada.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Aposentadoria de widget preserva pagina publicada
+
+- Contexto: `pro_pricing_card` e `pro_lp_offer_highlight` foram consolidados em `pro_pricing_grid`, mas `/lp/intenisva/` em producao usa o primeiro, e o Elementor guarda `widgetType` em post meta. Remover a classe faria a secao deixar de renderizar na pagina publicada.
+- Decisao: manter as classes registradas com `show_in_panel()` retornando falso e `(obsoleto)` no titulo visivel. Pagina existente continua identica; ninguem adiciona um novo pelo painel.
+- Alternativas descartadas: alias de `widgetType`, que exigiria mapear controles antigos para o formato de plano da grade; e migrar a pagina publicada antes de remover, que mexeria em conteudo no ar para uma pagina que sera remontada de novo no template kit.
+- Criterio de remocao definitiva: quando `/lp/intenisva/` for remontada com `pro_pricing_grid`, remover as duas classes e a nota de obsolescencia.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Contador de oferta com contagem real
+
+- Contexto: `pro_offer_countdown` renderizava o valor do controle de data como texto visivel, `2026-12-31 23:59`, sem formatacao e sem contagem. A descricao do proprio controle admitia que a contagem ficou para depois.
+- Decisao: formatar a data no servidor com `wp_date()` no fuso do WordPress, emitir `datetime` em ISO 8601 e adicionar contagem por JavaScript progressivo em dias, horas e minutos.
+- Degradacao: sem JavaScript, a data formatada permanece visivel. Depois do prazo, o texto de encerramento substitui a contagem.
+- Internacionalizacao: os rotulos das unidades vem do PHP por marcacao propria, e nao de string no JavaScript, o que mantem tudo no catalogo e dispensa plural no cliente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.

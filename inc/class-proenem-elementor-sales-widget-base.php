@@ -1115,12 +1115,45 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 			array(
 				'label'       => esc_html__( 'Data final', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::DATE_TIME,
-				'description' => esc_html__( 'Usada como informação exibida. A contagem dinâmica pode ser adicionada em uma próxima etapa.', 'proenem-wordpress-theme' ),
+				'description' => esc_html__( 'A contagem usa o fuso configurado no WordPress. Sem JavaScript, a data formatada é exibida.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$this->add_control(
+			'expired_label',
+			array(
+				'label'       => esc_html__( 'Texto após o encerramento', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => esc_html__( 'Oferta encerrada', 'proenem-wordpress-theme' ),
+				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
 
 		$this->add_section_layout_controls();
+	}
+
+	/**
+	 * Parse the deadline control using the site timezone.
+	 *
+	 * @param string $value Raw control value.
+	 * @return DateTimeImmutable|null
+	 */
+	protected function parse_deadline( $value ) {
+		$value = trim( (string) $value );
+
+		if ( '' === $value ) {
+			return null;
+		}
+
+		foreach ( array( 'Y-m-d H:i:s', 'Y-m-d H:i', 'Y-m-d' ) as $format ) {
+			$date = DateTimeImmutable::createFromFormat( $format, $value, wp_timezone() );
+
+			if ( $date instanceof DateTimeImmutable ) {
+				return $date;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -1130,6 +1163,7 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
+		$deadline = $this->parse_deadline( $settings['deadline'] ?? '' );
 		$this->add_section_render_attributes( $settings, 'pro-sales-countdown', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
@@ -1137,9 +1171,30 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 					<div>
 					<?php $this->render_section_header( $settings ); ?>
 					</div>
-				<?php if ( ! empty( $settings['deadline'] ) ) : ?>
-						<time class="pro-sales-countdown__date" datetime="<?php echo esc_attr( $settings['deadline'] ); ?>">
-							<?php echo esc_html( $settings['deadline'] ); ?>
+				<?php if ( $deadline ) : ?>
+						<time
+							class="pro-sales-countdown__date"
+							datetime="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
+							data-pro-countdown="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
+							data-pro-countdown-expired="<?php echo esc_attr( $settings['expired_label'] ?? '' ); ?>"
+						>
+							<span class="pro-sales-countdown__fallback" data-pro-countdown-fallback>
+								<?php echo esc_html( wp_date( 'd/m/Y H\hi', $deadline->getTimestamp() ) ); ?>
+							</span>
+							<span class="pro-sales-countdown__units" data-pro-countdown-units hidden>
+								<span class="pro-sales-countdown__unit">
+									<strong data-pro-countdown-days>00</strong>
+									<small><?php esc_html_e( 'dias', 'proenem-wordpress-theme' ); ?></small>
+								</span>
+								<span class="pro-sales-countdown__unit">
+									<strong data-pro-countdown-hours>00</strong>
+									<small><?php esc_html_e( 'horas', 'proenem-wordpress-theme' ); ?></small>
+								</span>
+								<span class="pro-sales-countdown__unit">
+									<strong data-pro-countdown-minutes>00</strong>
+									<small><?php esc_html_e( 'min', 'proenem-wordpress-theme' ); ?></small>
+								</span>
+							</span>
 						</time>
 					<?php endif; ?>
 				</div>
@@ -1310,6 +1365,19 @@ class Proenem_Elementor_Pricing_Card_Widget extends Proenem_Elementor_Sales_Widg
 	}
 
 	/**
+	 * Keep the widget out of the editor panel.
+	 *
+	 * Obsolete: `pro_pricing_grid` with a single plan renders the same card and
+	 * also brings the section header. The class stays registered so pages that
+	 * already use this widget keep rendering.
+	 *
+	 * @return bool
+	 */
+	public function show_in_panel(): bool {
+		return false;
+	}
+
+	/**
 	 * Get widget name.
 	 *
 	 * @return string
@@ -1324,7 +1392,7 @@ class Proenem_Elementor_Pricing_Card_Widget extends Proenem_Elementor_Sales_Widg
 	 * @return string
 	 */
 	public function get_title(): string {
-		return esc_html__( 'Pro Card de Plano', 'proenem-wordpress-theme' );
+		return esc_html__( 'Pro Card de Plano (obsoleto)', 'proenem-wordpress-theme' );
 	}
 
 	/**

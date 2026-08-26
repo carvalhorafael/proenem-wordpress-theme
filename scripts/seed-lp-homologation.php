@@ -255,6 +255,16 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpcount02',
+		'pro_offer_countdown',
+		array(
+			'title'         => 'Contador com prazo encerrado',
+			'body'          => 'Deve exibir o texto de encerramento em vez da contagem.',
+			'deadline'      => '2020-01-01 00:00',
+			'expired_label' => 'Oferta encerrada',
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpcompare01',
 		'pro_plans_comparison',
 		array(

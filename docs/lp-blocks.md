@@ -244,17 +244,37 @@ Os 13 widgets da home permanecem isolados por decisao explicita e nao entram na 
 | `pro_faq` | manter | unico widget de perguntas fora da home |
 | `pro_lp_video_story` | manter | unico com fachada de video |
 | `pro_pricing_grid` | manter, absorve os outros dois do grupo | com um plano ja renderiza card centralizado de 544 px com preco, preco a vista e selos, e traz cabecalho de secao |
-| `pro_pricing_card` | aposentar | renderiza a 544 px com a mesma sequencia de filhos da grade com um plano; e um plano da grade sem cabecalho de secao |
-| `pro_lp_offer_highlight` | aposentar | renderiza a 544 px com a mesma sequencia de filhos, sem os campos de preco; `__summary` e `__name` sao os mesmos papeis de `__description` e do heading do plano |
+| `pro_pricing_card` | aposentado, oculto do painel | renderiza a 544 px com a mesma sequencia de filhos da grade com um plano; e um plano da grade sem cabecalho de secao |
+| `pro_lp_offer_highlight` | aposentado, oculto do painel | renderiza a 544 px com a mesma sequencia de filhos, sem os campos de preco; `__summary` e `__name` sao os mesmos papeis de `__description` e do heading do plano |
 | `pro_offer_hero` | manter, escopo congelado | primeira faixa da pagina, dona do `h1`, com imagem de fundo e cards de prova |
 | `pro_lp_spotlight` | manter, escopo congelado | faixa de meio de pagina, com bullets e lado invertivel |
 | `pro_cta` | manter, escopo congelado | subconjunto estrito do hero, mas a intencao de faixa minima e legitima e esta em uso |
 | `pro_benefits_list` | manter | grade de cards com icone, titulo e corpo |
 | `pro_lp_metrics` | manter | grade de numeros com tipografia de display; estrutura parecida, peso semantico diferente |
-| `pro_offer_countdown` | terminar ou aposentar | o campo de data renderiza como texto de maquina visivel, `2026-12-31 23:59`, sem formatacao e sem contagem. Promete contador e entrega string |
+| `pro_offer_countdown` | terminado | renderizava a data como texto de maquina visivel, `2026-12-31 23:59`, sem formatacao e sem contagem. Agora tem contagem real |
 | `pro_plans_comparison` | manter dormente | tabela funcional, com wrapper de rolagem; nenhuma secao mapeada usa, mas comparativo e pedido recorrente |
 
-Saldo: 14 widgets, 11 mantidos, 2 aposentados no grupo de oferta e 1 pendente de decisao.
+Saldo: 14 widgets, 12 mantidos e 2 aposentados no grupo de oferta.
+
+### Aposentadoria sem quebrar pagina publicada
+
+`/lp/intenisva/` em producao usa `pro_pricing_card`, e o Elementor guarda `widgetType` em post meta: remover a classe faria a secao deixar de renderizar.
+
+Decisao: os dois widgets aposentados sobrevivem como classe registrada, com `show_in_panel()` retornando falso e `(obsoleto)` no titulo visivel. Paginas que ja os usam continuam renderizando identicas; ninguem consegue adicionar um novo pelo painel. A remocao definitiva fica para quando a pagina publicada for remontada.
+
+Medido: 25 widgets no painel, 2 ocultos, e os dois ocultos continuam renderizando na pagina de homologacao.
+
+### Contador de oferta
+
+O widget prometia contagem e entregava a string crua do controle. Agora:
+
+- o servidor formata a data com `wp_date()` no fuso configurado no WordPress e emite `datetime` em ISO 8601;
+- a contagem dinamica entra por JavaScript progressivo, em dias, horas e minutos, atualizando a cada minuto;
+- sem JavaScript, a data formatada permanece visivel;
+- depois do prazo, o texto de encerramento substitui a contagem;
+- os rotulos das unidades vem do PHP, para continuarem traduziveis, o que dispensa plural no JavaScript.
+
+Medido na pagina de homologacao: prazo futuro exibe `127:09:31` em dias, horas e minutos; prazo passado exibe `Oferta encerrada` e esconde as unidades.
 
 Escopo congelado significa que o grupo de faixa de texto nao recebe controle novo sem revisao do papel dos tres. `pro_cta` e subconjunto do hero: crescer os dois em paralelo recria a convergencia que aconteceu no grupo de oferta.
 

@@ -593,6 +593,69 @@ document.querySelectorAll("[data-pro-testimonial-play]").forEach((button) => {
   });
 });
 
+// Offer countdown: the server renders the formatted deadline, and the live
+// countdown only replaces it when JavaScript runs. Unit labels come from PHP so
+// they stay translatable.
+document.querySelectorAll("[data-pro-countdown]").forEach((element) => {
+  const target = Date.parse(element.dataset.proCountdown);
+
+  if (Number.isNaN(target)) {
+    return;
+  }
+
+  const fallback = element.querySelector("[data-pro-countdown-fallback]");
+  const units = element.querySelector("[data-pro-countdown-units]");
+  const days = element.querySelector("[data-pro-countdown-days]");
+  const hours = element.querySelector("[data-pro-countdown-hours]");
+  const minutes = element.querySelector("[data-pro-countdown-minutes]");
+
+  if (!fallback || !units || !days || !hours || !minutes) {
+    return;
+  }
+
+  const pad = (value) => String(value).padStart(2, "0");
+
+  const expire = () => {
+    const expiredLabel = element.dataset.proCountdownExpired || "";
+
+    if (!expiredLabel) {
+      return;
+    }
+
+    units.hidden = true;
+    fallback.hidden = false;
+    fallback.textContent = expiredLabel;
+  };
+
+  const tick = () => {
+    const remaining = target - Date.now();
+
+    if (remaining <= 0) {
+      expire();
+      return false;
+    }
+
+    const totalMinutes = Math.floor(remaining / 60000);
+
+    days.textContent = pad(Math.floor(totalMinutes / 1440));
+    hours.textContent = pad(Math.floor((totalMinutes % 1440) / 60));
+    minutes.textContent = pad(totalMinutes % 60);
+
+    fallback.hidden = true;
+    units.hidden = false;
+
+    return true;
+  };
+
+  if (tick()) {
+    const timer = setInterval(() => {
+      if (!tick()) {
+        clearInterval(timer);
+      }
+    }, 60000);
+  }
+});
+
 // Landing page video story: the embed is only requested after the click, so no
 // third party is contacted while the page loads.
 document.querySelectorAll("[data-pro-lp-video-play]").forEach((button) => {
