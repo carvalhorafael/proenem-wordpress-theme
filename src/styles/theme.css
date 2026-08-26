@@ -187,17 +187,6 @@
   line-height: 1.1;
 }
 
-.pro-sales-benefit__icon {
-  display: inline-flex;
-}
-
-.pro-sales-benefit__icon img {
-  display: block;
-  height: 2rem;
-  object-fit: contain;
-  width: 2rem;
-}
-
 .pro-sales-benefit--highlight {
   background: var(--pen-color-yellow-brand, #ffe45c);
   box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
@@ -728,19 +717,68 @@
 
 .pro-sales-benefit {
   display: grid;
-  gap: var(--pen-space-3, 0.75rem);
+  gap: var(--pen-space-2, 0.5rem);
+  padding: clamp(1.15rem, 2.4vw, 1.65rem);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
-.pro-sales-benefit > span {
+/* Cards reset the browser paragraph margin, which was adding dead vertical
+   space on top of the grid gap. */
+.pro-sales-benefit > p,
+.pro-sales-benefit > .pro-sales-badge {
+  margin: 0;
+}
+
+.pro-sales-benefit > h3 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.pro-sales-benefit > p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.pro-sales-benefit__icon {
   align-items: center;
   background: var(--pen-color-yellow, #ffe45c);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: 50%;
   display: inline-flex;
+  font-size: 0.9rem;
   font-weight: 900;
-  height: 2rem;
+  height: 1.75rem;
   justify-content: center;
-  width: 2rem;
+  width: 1.75rem;
+}
+
+.pro-sales-benefit__icon svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+/* Same feedback as the buttons: the card fills and shifts under the pointer. */
+.pro-sales-benefit:hover,
+.pro-sales-benefit:focus-within {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+  box-shadow: 2px 2px 0 var(--pen-color-ink, #111827);
+  transform: translate(2px, 2px);
+}
+
+.pro-sales-benefit--highlight:hover,
+.pro-sales-benefit--highlight:focus-within {
+  background: var(--pen-color-canvas-white, #ffffff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-sales-benefit {
+    transition: box-shadow 160ms ease, background-color 160ms ease;
+  }
+
+  .pro-sales-benefit:hover,
+  .pro-sales-benefit:focus-within {
+    transform: none;
+  }
 }
 
 .pro-sales-comparison__scroll {

@@ -1768,8 +1768,12 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 			'icon',
 			array(
 				'label'       => esc_html__( 'Ícone', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::MEDIA,
-				'description' => esc_html__( 'Use um ícone da biblioteca da marca. Sem imagem, o item mantém o marcador padrão.', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::ICONS,
+				'default'     => array(
+					'value'   => 'fas fa-check',
+					'library' => 'fa-solid',
+				),
+				'description' => esc_html__( 'Escolha na biblioteca de ícones ou envie um SVG próprio. Sem ícone, o item mantém o marcador padrão.', 'proenem-wordpress-theme' ),
 			)
 		);
 		$repeater->add_control(
@@ -1826,17 +1830,21 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 						$is_highlight   = 'yes' === ( $item['highlight'] ?? '' );
 						$benefit_class  = 'pro-sales-card pro-sales-benefit';
 						$benefit_class .= $is_highlight ? ' pro-sales-benefit--highlight' : '';
-						$icon_url       = ! empty( $item['icon']['url'] ) && ! $this->is_elementor_placeholder( $item['icon']['url'] ) ? $item['icon']['url'] : '';
+						$has_icon       = ! empty( $item['icon']['value'] ) && class_exists( '\Elementor\Icons_Manager' );
 						?>
 							<article class="<?php echo esc_attr( $benefit_class ); ?>">
 								<?php if ( $is_highlight && ! empty( $item['badge'] ) ) : ?>
 									<p class="pro-sales-badge"><?php echo esc_html( $item['badge'] ); ?></p>
 								<?php endif; ?>
-								<?php if ( $icon_url ) : ?>
-									<span class="pro-sales-benefit__icon"><img src="<?php echo esc_url( $icon_url ); ?>" alt="" width="32" height="32" loading="lazy" decoding="async"></span>
-								<?php else : ?>
-									<span aria-hidden="true">✓</span>
-								<?php endif; ?>
+								<span class="pro-sales-benefit__icon" aria-hidden="true">
+									<?php
+									if ( $has_icon ) {
+										\Elementor\Icons_Manager::render_icon( $item['icon'], array( 'aria-hidden' => 'true' ) );
+									} else {
+										echo '&#10003;';
+									}
+									?>
+								</span>
 								<h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
 								<?php if ( ! empty( $item['body'] ) ) : ?>
 									<p><?php echo esc_html( $item['body'] ); ?></p>

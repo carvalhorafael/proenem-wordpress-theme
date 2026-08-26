@@ -153,8 +153,11 @@ $elementor_data = array(
 				array(
 					'_id'   => 'b1',
 					'title' => 'Diagnostico da sua nota',
-					'body'  => 'Item com icone da biblioteca.',
-					'icon'  => array( 'url' => get_template_directory_uri() . '/assets/images/brand/logo_proenem.svg' ),
+					'body'  => 'Item com icone escolhido na biblioteca.',
+					'icon'  => array(
+						'value'   => 'fas fa-chart-line',
+						'library' => 'fa-solid',
+					),
 				),
 				array(
 					'_id'   => 'b2',
