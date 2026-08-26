@@ -218,3 +218,26 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: ate 760 px, complementar esses elementos com area minima de 44x44 CSS px, preservando textos, cores, foco visivel e geometria desktop.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#185`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
 - Criterio de remocao: atualizar os pacotes para a versao que publicar o contrato compartilhado, remover os seletores locais e revalidar os alvos em 320 e 390 px.
+
+## 2026-08-26: Inventario das LPs de campanha como contrato de trabalho
+
+- Contexto: as LPs de campanha em producao (`intensiva.proenem.com.br` e `intensiva.proenem.com.br/redacao`) sao uma aplicacao React/Next fora do tema, com tokens Tailwind proprios, enquanto a LP equivalente no WordPress (`/lp/intenisva/`, CPT `sales_page`) usa apenas seis widgets e cobre uma fracao das secoes.
+- Decisao: versionar o inventario das secoes em `docs/lp-blocks.md` e tratar esse arquivo como contrato de trabalho das fases de evolucao dos widgets de LP, antes de criar ou alterar qualquer widget.
+- Fronteira: o inventario descreve secoes e gaps; ele nao define copy definitiva de campanha nem substitui especificacao de marketing.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191` como issue pai e `#193` para esta etapa.
+
+## 2026-08-26: LPs traduzidas para a linguagem visual publicada da Proenem
+
+- Contexto: reproduzir a aparencia da aplicacao de campanha exigiria importar tokens Tailwind que nao existem nos pacotes publicados do design system, criando adaptacao local ampla e permanente no tema.
+- Decisao: traduzir as secoes das LPs de campanha para a linguagem visual publicada da Proenem, consumindo os contratos `pen-*` e o que o site ja usa hoje, em vez de replicar os tokens da aplicacao de campanha.
+- Consequencia: a LP no WordPress pode divergir visualmente da LP de campanha atual. A paridade exigida e de secoes, hierarquia de conversao e conteudo, nao de pixel.
+- Fronteira: quando um contrato necessario nao existir nos pacotes publicados, o tema pode criar adaptacao local temporaria, sempre com o par de issues obrigatorio de design system e de debito no tema.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191` e `#198`.
+
+## 2026-08-26: Namespace `pro_lp_*` separado dos widgets da home
+
+- Contexto: os widgets `pro_home_*` carregam a copy da home fatiada nos controles (`title_line_1`, `title_emphasis_2`, `statement_1`) e emitem IDs de heading fixos como `pro-home-title` e `pro-final-title`. Duas instancias na mesma pagina produzem ID duplicado. A LP `/lp/intenisva/` ja reusa `pro_home_marquee` e `pro_home_faq` fora da home.
+- Decisao: os widgets genericos de pagina de venda usam o prefixo tecnico `pro_lp_` e categoria propria no editor; os widgets `pro_home_*` permanecem como widgets exclusivos da home e nao recebem generalizacao retroativa.
+- Complemento: os IDs de heading passam a ser derivados do ID do widget Elementor, e o cabecalho de secao (`eyebrow`, `title`, `body`, `tone`, `anchor_id`) vira contrato compartilhado no base class de vendas.
+- Fronteira: nenhuma LP existente deve quebrar; os widgets `pro_home_*` continuam registrados e funcionais onde ja estao em uso.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.

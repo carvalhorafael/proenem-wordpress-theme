@@ -1,0 +1,127 @@
+# Blocos das LPs de campanha
+
+Este documento e o inventario de referencia das paginas de venda da Proenem. Ele existe para que a evolucao dos widgets Elementor de LP seja feita contra as secoes realmente usadas em campanha, e nao contra suposicao.
+
+Trabalho coordenado pela issue pai `carvalhorafael/proenem-wordpress-theme#191`.
+
+## Fontes analisadas
+
+Data da analise: 2026-08-26.
+
+| Fonte | O que e | Camada visual |
+| --- | --- | --- |
+| `https://intensiva.proenem.com.br/` | LP de campanha da Turma Intensiva ENEM 2026, em producao | aplicacao React/Next fora do tema, com tokens Tailwind proprios (`bg-surface`, `bg-brand`, `border-border`) |
+| `https://intensiva.proenem.com.br/redacao` | variacao da mesma campanha com foco em redacao | mesma aplicacao React/Next |
+| `https://proenem.com.br/lp/intenisva/` | LP equivalente ja dentro do WordPress | CPT `sales_page` do plugin `sales-page`, template Elementor Canvas |
+
+A LP que ja esta no WordPress usa apenas seis widgets: `pro_offer_hero`, `pro_offer_countdown`, `pro_benefits_list`, `pro_pricing_card`, `pro_home_marquee` e `pro_home_faq`. Ela cobre uma fracao do que a LP de campanha entrega.
+
+## Inventario secao por secao
+
+A coluna "cobertura" descreve o widget mais proximo hoje registrado em `inc/elementor-sales-widgets.php`.
+
+### 1. Header sticky de conversao
+
+- Composicao: logo e um unico CTA (`Garantir minha vaga`), fixo no topo, com fundo translucido.
+- Cobertura: `pro_navbar`, com controles `mode`, `menu_id`, `aria_label` e CTA mobile.
+- Gap: falta um modo de LP sem menu de navegacao, com CTA unico sempre visivel e destino em ancora interna.
+
+### 2. Hero de campanha
+
+- Composicao: eyebrow (`TURMA INTENSIVA ENEM 2026`), titulo, paragrafo de dor, CTA primario, linha de microcopy (`Vagas limitadas • Inicio hoje • Acesso imediato`) e imagem de fundo com tres cards flutuantes de mockup (`Cronograma pronto / Semana 1 de 12`, `Redacao 940 / Corrigida em 10 dias`, `Organizacao diaria / 4-5 tarefas hoje`).
+- Cobertura: `pro_offer_hero`, com `eyebrow`, `title`, `body`, `image`, `primary_label`, `primary_url`, `secondary_label` e `secondary_url`.
+- Gap: linha de microcopy de confianca, imagem tratada como fundo da secao e nao como imagem lateral, e repeater de cards flutuantes de prova.
+
+### 3. O metodo
+
+- Composicao: eyebrow (`O METODO`), titulo, corpo e quatro cards com icone, titulo e descricao (`Diagnostico da sua nota`, `Cronograma pronto`, `Correcao de redacao`, `Evolucao acompanhada`). Na variacao de redacao, um dos cards recebe badge `DESTAQUE` e tratamento visual diferenciado.
+- Cobertura: `pro_benefits_list`, com `title`, `body` e repeater `items`. `pro_home_pillars` resolve algo parecido, mas com a copy da home fatiada nos controles.
+- Gap: icone por item, controle de colunas de dois a quatro, item em destaque com badge e eyebrow de secao.
+
+### 4. Prova social, destaque de oferta e metricas
+
+Uma unica faixa concentra tres blocos distintos.
+
+- Prova social: titulo (`Mais de 44 mil aprovados confiaram no PROENEM`) e paragrafo de apoio.
+- Destaque de oferta: badge de urgencia (`INICIO HOJE!`), nome do produto, subtitulo, cinco bullets e CTA.
+- Metricas: tres pares valor e rotulo (`+44.000 alunos aprovados`, `4,9/5 avaliacao media`, `12 anos de experiencia`).
+- Cobertura: `pro_home_proof` cobre prova social, porem preso a IDs do CPT de depoimento, sem espaco para numeros editoriais livres. Nada cobre o destaque de oferta nem as metricas.
+- Gap: dois widgets novos, uma faixa de metricas e um card de destaque de oferta.
+
+### 5. Plano de estudos
+
+- Composicao: eyebrow (`PLANO DE ESTUDOS`), titulo, corpo, tres bullets e mockup de produto ao lado, com indicadores de progresso.
+- Cobertura: `pro_home_platform` resolve um padrao parecido, mas com titulo fatiado em `title_span`, `title_strong` e `title_tail` e com copy da home nos defaults.
+- Gap: um spotlight generico de midia mais copy, com bullets, CTA opcional e lado invertivel.
+
+### 6. Redacao
+
+- Composicao: mesmo padrao da secao anterior, com mockup do outro lado. Na variacao de redacao a secao ganha um paragrafo extra e CTA proprio.
+- Cobertura: nenhuma especifica.
+- Gap: atendido pelo mesmo spotlight da secao 5, o que confirma a necessidade do controle de lado.
+
+### 7. Oferta
+
+- Composicao: ancora `#oferta`, eyebrow (`VAGAS POR TEMPO LIMITADO`), titulo, corpo e um card unico centralizado com nome do plano, subtitulo de acesso, sete features, preco parcelado (`12x de R$ 29,90`), preco a vista (`ou R$ 306,90 a vista`), CTA e tres selos de confianca (`Pagamento 100% seguro`, `Garantia de 7 dias`, `Acesso liberado na hora`).
+- Cobertura: `pro_pricing_card` cobre nome, descricao, features, preco, recorrencia, badge e CTA. `pro_pricing_grid` cobre a grade com titulo de secao.
+- Gap: parcelamento e preco a vista como campos distintos, linha de selos de confianca, cabecalho de secao com eyebrow e corpo, e layout de card unico centralizado.
+
+### 8. Historia real
+
+- Composicao: eyebrow (`HISTORIA REAL`), titulo, corpo, video incorporado e CTA em link.
+- Cobertura: nenhuma.
+- Gap: widget novo de depoimento em video.
+
+### 9. Aprovados
+
+- Composicao: titulo, corpo e tres cards com foto, nome, curso e universidade e badge de aprovacao.
+- Cobertura: `pro_home_testimonials`, alimentado por IDs do CPT de depoimento.
+- Gap: limite de itens e layout adequado quando o widget e usado fora da home.
+
+### 10. CTA final
+
+- Composicao: eyebrow (`A RETA FINAL COMECOU`), titulo, corpo, CTA e microcopy (`Acesso imediato • Garantia de 7 dias • Vagas limitadas`), em faixa de cor de marca.
+- Cobertura: `pro_cta`, com `title`, `body`, `button_label` e `button_url`.
+- Gap: eyebrow, microcopy abaixo do botao e variante de faixa de marca.
+
+### 11. Footer minimo
+
+- Composicao: logo e linha de copyright.
+- Cobertura: `pro_footer`, que renderiza o footer completo do site.
+- Gap: modo minimo para LP.
+
+## Resumo do gap
+
+| Necessidade | Encaminhamento | Fase |
+| --- | --- | --- |
+| Faixa de metricas | widget novo `pro_lp_metrics` | 2 |
+| Card de destaque de oferta | widget novo `pro_lp_offer_highlight` | 2 |
+| Spotlight de midia mais copy | widget novo `pro_lp_spotlight` | 2 |
+| Depoimento em video | widget novo `pro_lp_video_story` | 2 |
+| Modo LP da navbar | melhoria em `pro_navbar` | 3 |
+| Microcopy, fundo e cards flutuantes no hero | melhoria em `pro_offer_hero` | 3 |
+| Icones, colunas e item em destaque | melhoria em `pro_benefits_list` | 3 |
+| Parcelamento, preco a vista e selos | melhoria em `pro_pricing_card` | 3 |
+| Eyebrow e corpo na grade de planos | melhoria em `pro_pricing_grid` | 3 |
+| Eyebrow, microcopy e faixa de marca | melhoria em `pro_cta` | 3 |
+| Modo minimo do footer | melhoria em `pro_footer` | 3 |
+| Limite e layout de LP nos depoimentos | melhoria em `pro_home_testimonials` | 3 |
+| Cabecalho de secao compartilhado | fundacao comum no base class | 1 |
+| IDs de heading unicos por instancia | fundacao comum no base class | 1 |
+| Template kits, assets condicionais, ancora e CTA fixo mobile | camada de pagina | 4 |
+
+## Achados estruturais
+
+1. Os widgets `pro_home_*` nao sao reutilizaveis em LP. Os controles carregam a copy da home fatiada na propria estrutura (`title_line_1`, `title_emphasis_2`, `statement_1`) e o markup emite IDs fixos como `pro-home-title` e `pro-final-title`. Duas instancias na mesma pagina produzem ID duplicado, o que quebra a associacao de `aria-labelledby` e prejudica semantica e SEO. A LP `/lp/intenisva/` ja usa `pro_home_marquee` e `pro_home_faq` fora da home.
+2. Nao existe cabecalho de secao compartilhado. Cada widget resolve eyebrow, titulo, corpo e tom de fundo do seu jeito, embora as LPs alternem fundo a cada secao. O padrao precisa virar contrato comum, com `eyebrow`, `title`, `body`, `tone` e `anchor_id`.
+3. Nao existe camada de pagina de LP. O repositorio publica apenas `docs/elementor/proenem-home.json`. Falta template kit importavel de LP, carregamento condicional de estilos para `sales_page`, ancora suave para a secao de oferta e CTA fixo no mobile.
+4. As LPs de campanha nao consomem os contratos publicados do design system. Elas usam tokens Tailwind proprios. A traducao para a linguagem visual publicada da Proenem pode revelar contratos ausentes nos pacotes `@carvalhorafael/proenem-*`, e cada ausencia precisa do par de issues previsto no `AGENTS.md`.
+
+## Como este inventario e usado
+
+- Fase 1 (`#194`) implementa a fundacao dos itens 1 e 2 dos achados estruturais.
+- Fase 2 (`#195`) cria os quatro widgets novos do resumo de gap.
+- Fase 3 (`#196`) executa as oito melhorias do resumo de gap.
+- Fase 4 (`#197`) resolve o achado estrutural 3.
+- Fase 5 (`#198`) resolve o achado estrutural 4 abrindo o par de issues de design system e de debito no tema.
+- Fase 6 (`#199`) fecha o ciclo com testes, i18n, performance e homologacao.
