@@ -390,6 +390,34 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpcount03',
+		'pro_offer_countdown',
+		array(
+			'title'            => 'Contador de 15 minutos a partir da visita',
+			'body'             => 'Conta minutos e segundos. Recarregar a pagina continua de onde parou.',
+			'mode'             => 'duration',
+			'duration_minutes' => 15,
+			'duration_scope'   => 'session',
+			'expired_label'    => 'Tempo esgotado',
+			'tone'             => 'surface',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpcount04',
+		'pro_offer_countdown',
+		array(
+			'title'            => 'Contador fixo no topo apos rolar 20%',
+			'body'             => 'Fica no lugar ate 20% de rolagem e depois pina no topo.',
+			'mode'             => 'duration',
+			'duration_minutes' => 20,
+			'duration_scope'   => 'session',
+			'expired_label'    => 'Tempo esgotado',
+			'sticky'           => 'yes',
+			'sticky_after'     => 20,
+			'tone'             => 'brand',
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpcompare01',
 		'pro_plans_comparison',
 		array(

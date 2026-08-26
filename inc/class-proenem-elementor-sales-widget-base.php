@@ -1357,11 +1357,57 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 			)
 		);
 		$this->add_control(
+			'mode',
+			array(
+				'label'   => esc_html__( 'Tipo de contagem', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'deadline',
+				'options' => array(
+					'deadline' => esc_html__( 'Até uma data e hora', 'proenem-wordpress-theme' ),
+					'duration' => esc_html__( 'Minutos a partir da visita', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
+		$this->add_control(
 			'deadline',
 			array(
 				'label'       => esc_html__( 'Data final', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::DATE_TIME,
 				'description' => esc_html__( 'A contagem usa o fuso configurado no WordPress. Sem JavaScript, a data formatada é exibida.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'mode' => 'deadline',
+				),
+			)
+		);
+		$this->add_control(
+			'duration_minutes',
+			array(
+				'label'       => esc_html__( 'Minutos disponíveis', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'min'         => 1,
+				'max'         => 240,
+				'step'        => 1,
+				'default'     => 15,
+				'description' => esc_html__( 'A contagem começa quando a pessoa abre a página e continua de onde parou se ela recarregar.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'mode' => 'duration',
+				),
+			)
+		);
+		$this->add_control(
+			'duration_scope',
+			array(
+				'label'       => esc_html__( 'Quando a contagem reinicia', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'session',
+				'options'     => array(
+					'session' => esc_html__( 'A cada nova sessão do navegador', 'proenem-wordpress-theme' ),
+					'visitor' => esc_html__( 'Nunca, uma vez por navegador', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'Uma vez por navegador é mais honesto com quem volta depois, mas mantém a oferta encerrada para essa pessoa.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'mode' => 'duration',
+				),
 			)
 		);
 		$this->add_control(
@@ -1373,6 +1419,42 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 				'label_block' => true,
 			)
 		);
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'sticky_section',
+			array(
+				'label' => esc_html__( 'Fixar no topo', 'proenem-wordpress-theme' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_control(
+			'sticky',
+			array(
+				'label'        => esc_html__( 'Fixar no topo ao rolar', 'proenem-wordpress-theme' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+				'description'  => esc_html__( 'A faixa segue no lugar até o percentual de rolagem escolhido e depois fica fixa no topo.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
+			'sticky_after',
+			array(
+				'label'     => esc_html__( 'Aparecer após rolar (%)', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::NUMBER,
+				'min'       => 0,
+				'max'       => 90,
+				'step'      => 5,
+				'default'   => 20,
+				'condition' => array(
+					'sticky' => 'yes',
+				),
+			)
+		);
+
 		$this->end_controls_section();
 
 		$this->add_section_layout_controls();
@@ -1408,26 +1490,56 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 	 * @return void
 	 */
 	protected function render(): void {
-		$settings = $this->get_settings_for_display();
-		$deadline = $this->parse_deadline( $settings['deadline'] ?? '' );
+		$settings  = $this->get_settings_for_display();
+		$mode      = 'duration' === ( $settings['mode'] ?? 'deadline' ) ? 'duration' : 'deadline';
+		$deadline  = 'deadline' === $mode ? $this->parse_deadline( $settings['deadline'] ?? '' ) : null;
+		$minutes   = max( 1, absint( $settings['duration_minutes'] ?? 15 ) );
+		$is_sticky = 'yes' === ( $settings['sticky'] ?? '' );
+		$has_clock = 'duration' === $mode || $deadline instanceof DateTimeImmutable;
+
 		$this->add_section_render_attributes( $settings, 'pro-sales-countdown', ! empty( $settings['title'] ) );
+
+		if ( $is_sticky ) {
+			$this->add_render_attribute(
+				'section',
+				array(
+					'class'                 => 'pro-sales-countdown-sticky',
+					'data-pro-sticky'       => 'true',
+					'data-pro-sticky-after' => (string) absint( $settings['sticky_after'] ?? 20 ),
+				)
+			);
+		}
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 					<div>
 					<?php $this->render_section_header( $settings ); ?>
 					</div>
-				<?php if ( $deadline ) : ?>
+				<?php if ( $has_clock ) : ?>
 						<time
 							class="pro-sales-countdown__date"
-							datetime="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
-							data-pro-countdown="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
+							<?php if ( $deadline ) : ?>
+								datetime="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
+								data-pro-countdown="<?php echo esc_attr( $deadline->format( DATE_ATOM ) ); ?>"
+							<?php else : ?>
+								datetime="<?php echo esc_attr( 'PT' . $minutes . 'M' ); ?>"
+								data-pro-countdown-duration="<?php echo esc_attr( (string) $minutes ); ?>"
+								data-pro-countdown-scope="<?php echo esc_attr( 'visitor' === ( $settings['duration_scope'] ?? 'session' ) ? 'visitor' : 'session' ); ?>"
+								data-pro-countdown-key="<?php echo esc_attr( $this->widget_dom_id( 'countdown' ) ); ?>"
+							<?php endif; ?>
 							data-pro-countdown-expired="<?php echo esc_attr( $settings['expired_label'] ?? '' ); ?>"
 						>
 							<span class="pro-sales-countdown__fallback" data-pro-countdown-fallback>
-								<?php echo esc_html( wp_date( 'd/m/Y H\hi', $deadline->getTimestamp() ) ); ?>
+								<?php
+								if ( $deadline ) {
+									echo esc_html( wp_date( 'd/m/Y H\hi', $deadline->getTimestamp() ) );
+								} else {
+									printf( '%02d:00', (int) $minutes );
+								}
+								?>
 							</span>
 							<span class="pro-sales-countdown__units" data-pro-countdown-units hidden>
+							<?php if ( $deadline ) : ?>
 								<span class="pro-sales-countdown__unit">
 									<strong data-pro-countdown-days>00</strong>
 									<small><?php esc_html_e( 'dias', 'proenem-wordpress-theme' ); ?></small>
@@ -1440,6 +1552,16 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 									<strong data-pro-countdown-minutes>00</strong>
 									<small><?php esc_html_e( 'min', 'proenem-wordpress-theme' ); ?></small>
 								</span>
+							<?php else : ?>
+								<span class="pro-sales-countdown__unit">
+									<strong data-pro-countdown-minutes>00</strong>
+									<small><?php esc_html_e( 'min', 'proenem-wordpress-theme' ); ?></small>
+								</span>
+								<span class="pro-sales-countdown__unit">
+									<strong data-pro-countdown-seconds>00</strong>
+									<small><?php esc_html_e( 'seg', 'proenem-wordpress-theme' ); ?></small>
+								</span>
+							<?php endif; ?>
 							</span>
 						</time>
 					<?php endif; ?>

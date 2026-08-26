@@ -723,6 +723,58 @@
   white-space: nowrap;
 }
 
+/* Faixa fixa: a barra so e pinada depois do percentual de rolagem escolhido, e
+   o espaco que ela deixa fica reservado pelo wrapper, para nao haver salto.
+   Pinada, ela precisa virar barra: no formato de secao ocuparia quase metade da
+   viewport, entao o texto de apoio sai e a escala cai. */
+.pro-sales-countdown-sticky.is-pro-sticky-pinned {
+  box-shadow: 0 2px 0 var(--pen-color-ink, #1a1a1a);
+  inset-block-start: 0;
+  inset-inline: 0;
+  padding-block: 0;
+  position: fixed;
+  z-index: 90;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  gap: var(--pen-space-4, 1rem);
+  padding-block: var(--pen-space-3, 0.75rem);
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown > div > p:not(.pro-sales-eyebrow),
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-eyebrow {
+  display: none;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-section-title {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin: 0;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__date {
+  padding: 0.35rem 0.75rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit {
+  min-width: 2.25rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit strong {
+  font-size: 1.15rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit small {
+  font-size: 0.65rem;
+}
+
+/* Contagem encerrada nao precisa mais ocupar o topo. */
+.pro-sales-countdown-sticky.is-pro-countdown-expired.is-pro-sticky-pinned {
+  position: static;
+}
+
 .pro-sales-countdown__units {
   display: flex;
   gap: var(--pen-space-4, 1rem);
