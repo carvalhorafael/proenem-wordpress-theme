@@ -94,6 +94,14 @@ class Proenem_Elementor_Lp_Metrics_Widget extends Proenem_Elementor_Lp_Widget_Ba
 
 		$repeater = new \Elementor\Repeater();
 		$repeater->add_control(
+			'icon',
+			array(
+				'label'       => esc_html__( 'Ícone', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::ICONS,
+				'description' => esc_html__( 'Opcional. Sem ícone escolhido, nada é exibido acima do número.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$repeater->add_control(
 			'value',
 			array(
 				'label'   => esc_html__( 'Número', 'proenem-wordpress-theme' ),
@@ -159,6 +167,11 @@ class Proenem_Elementor_Lp_Metrics_Widget extends Proenem_Elementor_Lp_Widget_Ba
 							<?php continue; ?>
 						<?php endif; ?>
 							<li class="pro-lp-metric">
+							<?php if ( ! empty( $item['icon']['value'] ) && class_exists( '\Elementor\Icons_Manager' ) ) : ?>
+									<span class="pro-lp-metric__icon" aria-hidden="true">
+										<?php \Elementor\Icons_Manager::render_icon( $item['icon'], array( 'aria-hidden' => 'true' ) ); ?>
+									</span>
+								<?php endif; ?>
 								<span class="pro-lp-metric__value"><?php echo esc_html( $item['value'] ?? '' ); ?></span>
 								<span class="pro-lp-metric__label"><?php echo esc_html( $item['label'] ?? '' ); ?></span>
 							</li>

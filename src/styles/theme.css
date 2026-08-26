@@ -275,6 +275,11 @@
    Proenem LP widgets
    --------------------------------------------------------------------------- */
 
+/* Cabecalho e metricas centralizados. */
+.pro-lp-metrics {
+  text-align: center;
+}
+
 .pro-lp-metrics__grid {
   display: grid;
   gap: var(--pen-space-5, 1.25rem);
@@ -289,6 +294,20 @@
   display: grid;
   gap: var(--pen-space-2, 0.5rem);
   text-align: center;
+}
+
+.pro-lp-metric__icon {
+  align-items: center;
+  display: inline-flex;
+  font-size: 3rem;
+  justify-content: center;
+  line-height: 1;
+  margin-inline: auto;
+}
+
+.pro-lp-metric__icon svg {
+  height: 3rem;
+  width: 3rem;
 }
 
 .pro-lp-metric__value {

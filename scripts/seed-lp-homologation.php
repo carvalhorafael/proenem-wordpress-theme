@@ -226,7 +226,59 @@ $elementor_data = array(
 		'lpmetrics01',
 		'pro_lp_metrics',
 		array(
-			'tone' => 'surface',
+			'eyebrow' => 'Prova social',
+			'title'   => 'Mais de 44 mil aprovados confiaram no PROENEM.',
+			'body'    => 'Cabecalho, texto e metricas centralizados, com icone acima de cada numero.',
+			'tone'    => 'surface',
+			'items'   => array(
+				array(
+					'_id'   => 'm1',
+					'icon'  => array(
+						'value'   => 'fas fa-trophy',
+						'library' => 'fa-solid',
+					),
+					'value' => '+44.000',
+					'label' => 'alunos aprovados nas melhores universidades',
+				),
+				array(
+					'_id'   => 'm2',
+					'icon'  => array(
+						'value'   => 'fas fa-star',
+						'library' => 'fa-solid',
+					),
+					'value' => '4,9/5',
+					'label' => 'avaliacao media dos alunos',
+				),
+				array(
+					'_id'   => 'm3',
+					'icon'  => array(
+						'value'   => 'fas fa-clock',
+						'library' => 'fa-solid',
+					),
+					'value' => '12 anos',
+					'label' => 'de experiencia aprovando alunos no ENEM',
+				),
+			),
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpmetrics02',
+		'pro_lp_metrics',
+		array(
+			'title' => 'Metricas sem icone escolhido',
+			'body'  => 'Nenhum icone deve ser exibido acima dos numeros.',
+			'items' => array(
+				array(
+					'_id'   => 'n1',
+					'value' => '+50 mil',
+					'label' => 'questoes para praticar',
+				),
+				array(
+					'_id'   => 'n2',
+					'value' => '400',
+					'label' => 'temas de redacao com textos de apoio',
+				),
+			),
 		)
 	),
 	proenem_lp_homologation_container(
