@@ -117,6 +117,53 @@ Uma unica faixa concentra tres blocos distintos.
 3. Nao existe camada de pagina de LP. O repositorio publica apenas `docs/elementor/proenem-home.json`. Falta template kit importavel de LP, carregamento condicional de estilos para `sales_page`, ancora suave para a secao de oferta e CTA fixo no mobile.
 4. As LPs de campanha nao consomem os contratos publicados do design system. Elas usam tokens Tailwind proprios. A traducao para a linguagem visual publicada da Proenem pode revelar contratos ausentes nos pacotes `@carvalhorafael/proenem-*`, e cada ausencia precisa do par de issues previsto no `AGENTS.md`.
 
+## Fundacao compartilhada dos widgets de LP
+
+Implementada na Fase 1 (`#194`).
+
+### Categoria e base
+
+- `proenem-sales` continua sendo a categoria dos widgets ja publicados, incluindo as secoes da home.
+- `proenem-lp` e a categoria dos widgets genericos de pagina de venda.
+- `Proenem_Elementor_Lp_Widget_Base`, em `inc/class-proenem-elementor-lp-widget-base.php`, e a base dos widgets `pro_lp_*`. Ela define a categoria e os keywords de LP e herda o contrato de secao do base class de vendas.
+
+### Contrato de secao
+
+Disponivel em `Proenem_Elementor_Sales_Widget_Base` e usado pelos widgets de vendas e de LP.
+
+| Membro | Papel |
+| --- | --- |
+| `add_section_header_controls()` | registra `eyebrow`, `title` e `body`; cada chave e opcional, entao o widget mantem a ordem de painel que ja tinha |
+| `add_section_layout_controls()` | abre um painel `Seção` com `tone` e `anchor_id` |
+| `add_section_anchor_control()` | registra apenas `anchor_id`, com default para secoes que ja tem ancora publicada |
+| `add_section_render_attributes()` | monta classe, ancora e `aria-labelledby` do wrapper da secao |
+| `render_section_header()` | imprime selo, titulo e texto com o id de heading unico |
+| `section_heading_id()` | id de heading derivado do id do widget Elementor |
+| `section_anchor()` | ancora saneada da instancia, com fallback |
+| `widget_dom_id()` | qualquer id de DOM derivado do id do widget |
+
+Valores de `tone`:
+
+- `default`: nenhuma classe extra, a secao mantem a aparencia atual;
+- `surface`: fundo `--pen-color-surface`, que alterna contra o canvas `--pen-color-background` da pagina;
+- `brand`: fundo `--pen-color-proenem-red` com texto `--pen-color-on-red`.
+
+Fronteira: `tone` pinta uma faixa contida na largura maxima do widget. Faixa de sangria total e decisao da camada de pagina, na Fase 4.
+
+### Ancoras dos widgets da home
+
+Os widgets `pro_home_pillars`, `pro_home_questions`, `pro_home_pricing`, `pro_home_faq` e `pro_home_testimonials` emitiam ancora fixa (`metodo`, `questoes`, `planos`, `faq`, `depoimentos`), que sao destinos dos CTAs. Agora a ancora vem do controle `anchor_id`, com esses mesmos valores como default. O comportamento de uma instancia por pagina nao muda, e duas instancias podem receber ancoras diferentes.
+
+### Pagina de homologacao
+
+`scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.
+
+```bash
+npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/seed-lp-homologation.php
+```
+
+A pagina fica em `http://localhost:8898/lp/homologacao-widgets-lp/`.
+
 ## Como este inventario e usado
 
 - Fase 1 (`#194`) implementa a fundacao dos itens 1 e 2 dos achados estruturais.

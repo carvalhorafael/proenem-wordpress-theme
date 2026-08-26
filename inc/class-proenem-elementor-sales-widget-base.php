@@ -81,6 +81,261 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			</a>
 			<?php
 	}
+
+	/**
+	 * Build a DOM id scoped to this widget instance.
+	 *
+	 * Elementor renders the same widget more than once per page, so ids that
+	 * come from a constant produce duplicated markup.
+	 *
+	 * @param string $suffix Id suffix.
+	 * @return string
+	 */
+	protected function widget_dom_id( $suffix ) {
+		$parts     = array( str_replace( '_', '-', (string) $this->get_name() ), (string) $suffix );
+		$widget_id = (string) $this->get_id();
+
+		if ( '' !== $widget_id ) {
+			$parts[] = $widget_id;
+		}
+
+		return sanitize_html_class( implode( '-', $parts ) );
+	}
+
+	/**
+	 * Get the heading id of the section rendered by this widget instance.
+	 *
+	 * @return string
+	 */
+	protected function section_heading_id() {
+		return $this->widget_dom_id( 'title' );
+	}
+
+	/**
+	 * Register the shared section header controls.
+	 *
+	 * Only the keys passed in $args are registered, so each widget keeps the
+	 * editor panel order it already had while sharing the same contract.
+	 *
+	 * @param array $args {
+	 *     Optional. Control defaults.
+	 *
+	 *     @type string|null $eyebrow    Eyebrow default. Null skips the control.
+	 *     @type string|null $title      Title default. Null skips the control.
+	 *     @type string      $title_type Title control type, `text` or `textarea`.
+	 *     @type string|null $body       Body default. Null skips the control.
+	 *     @type string      $body_type  Body control type, `textarea` or `wysiwyg`.
+	 * }
+	 * @return void
+	 */
+	protected function add_section_header_controls( array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'eyebrow'    => null,
+				'title'      => null,
+				'title_type' => 'text',
+				'body'       => null,
+				'body_type'  => 'textarea',
+			)
+		);
+
+		if ( null !== $args['eyebrow'] ) {
+			$this->add_control(
+				'eyebrow',
+				array(
+					'label'   => esc_html__( 'Selo', 'proenem-wordpress-theme' ),
+					'type'    => \Elementor\Controls_Manager::TEXT,
+					'default' => $args['eyebrow'],
+				)
+			);
+		}
+
+		if ( null !== $args['title'] ) {
+			$this->add_control(
+				'title',
+				array(
+					'label'       => esc_html__( 'Título', 'proenem-wordpress-theme' ),
+					'type'        => 'textarea' === $args['title_type'] ? \Elementor\Controls_Manager::TEXTAREA : \Elementor\Controls_Manager::TEXT,
+					'default'     => $args['title'],
+					'label_block' => 'textarea' === $args['title_type'],
+				)
+			);
+		}
+
+		if ( null !== $args['body'] ) {
+			$this->add_control(
+				'body',
+				array(
+					'label'   => esc_html__( 'Texto', 'proenem-wordpress-theme' ),
+					'type'    => 'wysiwyg' === $args['body_type'] ? \Elementor\Controls_Manager::WYSIWYG : \Elementor\Controls_Manager::TEXTAREA,
+					'default' => $args['body'],
+				)
+			);
+		}
+	}
+
+	/**
+	 * Register the shared section layout controls in a dedicated panel section.
+	 *
+	 * @return void
+	 */
+	protected function add_section_layout_controls() {
+		$this->start_controls_section(
+			'section_layout',
+			array(
+				'label' => esc_html__( 'Seção', 'proenem-wordpress-theme' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_control(
+			'tone',
+			array(
+				'label'       => esc_html__( 'Fundo da seção', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => array(
+					'default' => esc_html__( 'Transparente', 'proenem-wordpress-theme' ),
+					'surface' => esc_html__( 'Superfície', 'proenem-wordpress-theme' ),
+					'brand'   => esc_html__( 'Marca', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'Usa as cores publicadas da Proenem em vez de cor livre.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_section_anchor_control();
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Register the shared section anchor control.
+	 *
+	 * @param string $default_value Default anchor, used by sections that already
+	 *                              have a published anchor.
+	 * @return void
+	 */
+	protected function add_section_anchor_control( $default_value = '' ) {
+		$this->add_control(
+			'anchor_id',
+			array(
+				'label'       => esc_html__( 'Âncora', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => $default_value,
+				'description' => esc_html__( 'Identificador para links internos, como oferta. Sem o caractere #.', 'proenem-wordpress-theme' ),
+			)
+		);
+	}
+
+	/**
+	 * Get the sanitized section anchor of this widget instance.
+	 *
+	 * @param array  $settings Widget settings.
+	 * @param string $fallback Anchor used when the control is empty.
+	 * @return string
+	 */
+	protected function section_anchor( $settings, $fallback = '' ) {
+		$anchor = isset( $settings['anchor_id'] ) ? (string) $settings['anchor_id'] : '';
+
+		if ( '' === trim( $anchor ) ) {
+			$anchor = $fallback;
+		}
+
+		return sanitize_title( $anchor );
+	}
+
+	/**
+	 * Register the shared attributes of a widget section wrapper.
+	 *
+	 * @param array  $settings Widget settings.
+	 * @param string $class_name Widget specific section class.
+	 * @param bool   $has_title Whether the section renders its own heading.
+	 * @param string $key Render attribute key.
+	 * @return string
+	 */
+	protected function add_section_render_attributes( $settings, $class_name, $has_title = true, $key = 'section' ) {
+		$this->add_render_attribute( $key, 'class', array( 'pro-sales-widget', 'pro-sales-section', $class_name ) );
+
+		$tone = isset( $settings['tone'] ) ? (string) $settings['tone'] : '';
+
+		if ( '' !== $tone && 'default' !== $tone ) {
+			$this->add_render_attribute( $key, 'class', 'pro-sales-section--tone-' . sanitize_html_class( $tone ) );
+		}
+
+		$anchor = $this->section_anchor( $settings );
+
+		if ( '' !== $anchor ) {
+			$this->add_render_attribute( $key, 'id', $anchor );
+		}
+
+		if ( $has_title ) {
+			$this->add_render_attribute( $key, 'aria-labelledby', $this->section_heading_id() );
+		}
+
+		return $key;
+	}
+
+	/**
+	 * Render the shared section header.
+	 *
+	 * @param array $settings Widget settings.
+	 * @param array $args {
+	 *     Optional. Markup configuration kept per widget so the current layout
+	 *     does not change.
+	 *
+	 *     @type string $eyebrow_class Eyebrow class.
+	 *     @type string $title_tag     Title tag.
+	 *     @type string $title_class   Title class. Empty renders no class.
+	 *     @type string $body_tag      Body tag.
+	 *     @type string $body_class    Body class. Empty renders no class.
+	 *     @type bool   $body_html     Whether the body accepts inline HTML.
+	 * }
+	 * @return void
+	 */
+	protected function render_section_header( $settings, array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'eyebrow_class' => 'pro-sales-eyebrow',
+				'title_tag'     => 'h2',
+				'title_class'   => 'pro-sales-section-title',
+				'body_tag'      => 'p',
+				'body_class'    => '',
+				'body_html'     => false,
+			)
+		);
+
+		$title_tag = tag_escape( $args['title_tag'] );
+		$body_tag  = tag_escape( $args['body_tag'] );
+
+		if ( ! empty( $settings['eyebrow'] ) ) {
+			printf(
+				'<p class="%1$s">%2$s</p>',
+				esc_attr( $args['eyebrow_class'] ),
+				esc_html( $settings['eyebrow'] )
+			);
+		}
+
+		if ( ! empty( $settings['title'] ) ) {
+			printf(
+				'<%1$s id="%2$s"%3$s>%4$s</%1$s>',
+				esc_html( $title_tag ),
+				esc_attr( $this->section_heading_id() ),
+				'' !== $args['title_class'] ? ' class="' . esc_attr( $args['title_class'] ) . '"' : '',
+				esc_html( $settings['title'] )
+			);
+		}
+
+		if ( ! empty( $settings['body'] ) ) {
+			printf(
+				'<%1$s%2$s>%3$s</%1$s>',
+				esc_html( $body_tag ),
+				'' !== $args['body_class'] ? ' class="' . esc_attr( $args['body_class'] ) . '"' : '',
+				$args['body_html'] ? wp_kses_post( $settings['body'] ) : esc_html( $settings['body'] )
+			);
+		}
+	}
 }
 
 /**
@@ -357,29 +612,13 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 			)
 		);
 
-		$this->add_control(
-			'eyebrow',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Selo', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Oferta especial', 'proenem-wordpress-theme' ),
-			)
-		);
-		$this->add_control(
-			'title',
-			array(
-				'label'       => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::TEXTAREA,
-				'default'     => esc_html__( 'Estude para o Enem com uma rotina completa', 'proenem-wordpress-theme' ),
-				'label_block' => true,
-			)
-		);
-		$this->add_control(
-			'body',
-			array(
-				'label'   => esc_html__( 'Texto', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::WYSIWYG,
-				'default' => esc_html__( 'Cursos, questões, simulados e acompanhamento para acelerar sua preparação.', 'proenem-wordpress-theme' ),
+				'eyebrow'    => esc_html__( 'Oferta especial', 'proenem-wordpress-theme' ),
+				'title'      => esc_html__( 'Estude para o Enem com uma rotina completa', 'proenem-wordpress-theme' ),
+				'title_type' => 'textarea',
+				'body'       => esc_html__( 'Cursos, questões, simulados e acompanhamento para acelerar sua preparação.', 'proenem-wordpress-theme' ),
+				'body_type'  => 'wysiwyg',
 			)
 		);
 		$this->add_control(
@@ -420,6 +659,8 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		);
 
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -430,18 +671,21 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 	protected function render(): void {
 		$settings  = $this->get_settings_for_display();
 		$image_url = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : '';
+		$this->add_section_render_attributes( $settings, 'pro-sales-hero', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-hero">
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div class="pro-sales-hero__content">
-				<?php if ( ! empty( $settings['eyebrow'] ) ) : ?>
-						<p class="pro-sales-eyebrow"><?php echo esc_html( $settings['eyebrow'] ); ?></p>
-					<?php endif; ?>
-				<?php if ( ! empty( $settings['title'] ) ) : ?>
-						<h2 class="pro-sales-hero__title"><?php echo esc_html( $settings['title'] ); ?></h2>
-					<?php endif; ?>
-				<?php if ( ! empty( $settings['body'] ) ) : ?>
-						<div class="pro-sales-hero__body"><?php echo wp_kses_post( $settings['body'] ); ?></div>
-					<?php endif; ?>
+				<?php
+				$this->render_section_header(
+					$settings,
+					array(
+						'title_class' => 'pro-sales-hero__title',
+						'body_tag'    => 'div',
+						'body_class'  => 'pro-sales-hero__body',
+						'body_html'   => true,
+					)
+				);
+				?>
 					<div class="pro-sales-actions">
 					<?php
 					$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pro-sales-button pro-sales-button--primary' );
@@ -503,20 +747,10 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Oferta por tempo limitado', 'proenem-wordpress-theme' ),
-			)
-		);
-		$this->add_control(
-			'body',
-			array(
-				'label'   => esc_html__( 'Texto', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Garanta as condições especiais antes do encerramento da campanha.', 'proenem-wordpress-theme' ),
+				'title' => esc_html__( 'Oferta por tempo limitado', 'proenem-wordpress-theme' ),
+				'body'  => esc_html__( 'Garanta as condições especiais antes do encerramento da campanha.', 'proenem-wordpress-theme' ),
 			)
 		);
 		$this->add_control(
@@ -528,6 +762,8 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -537,15 +773,11 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
+		$this->add_section_render_attributes( $settings, 'pro-sales-countdown', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-countdown">
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div>
-				<?php if ( ! empty( $settings['title'] ) ) : ?>
-						<h2 class="pro-sales-section-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-					<?php endif; ?>
-				<?php if ( ! empty( $settings['body'] ) ) : ?>
-						<p><?php echo esc_html( $settings['body'] ); ?></p>
-					<?php endif; ?>
+				<?php $this->render_section_header( $settings ); ?>
 				</div>
 			<?php if ( ! empty( $settings['deadline'] ) ) : ?>
 					<time class="pro-sales-countdown__date" datetime="<?php echo esc_attr( $settings['deadline'] ); ?>">
@@ -602,12 +834,9 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			)
 		);
 
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Escolha seu plano', 'proenem-wordpress-theme' ),
+				'title' => esc_html__( 'Escolha seu plano', 'proenem-wordpress-theme' ),
 			)
 		);
 
@@ -677,6 +906,8 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -687,11 +918,10 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$plans    = ! empty( $settings['plans'] ) && is_array( $settings['plans'] ) ? $settings['plans'] : array();
+		$this->add_section_render_attributes( $settings, 'pro-sales-pricing', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-pricing">
-			<?php if ( ! empty( $settings['title'] ) ) : ?>
-					<h2 class="pro-sales-section-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-				<?php endif; ?>
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
+			<?php $this->render_section_header( $settings ); ?>
 				<div class="pro-sales-pricing__grid">
 				<?php foreach ( $plans as $index => $plan ) : ?>
 						<article class="pro-sales-card pro-sales-plan">
@@ -917,12 +1147,9 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'O que está incluído', 'proenem-wordpress-theme' ),
+				'title' => esc_html__( 'O que está incluído', 'proenem-wordpress-theme' ),
 			)
 		);
 		$repeater = new \Elementor\Repeater();
@@ -951,6 +1178,8 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -961,11 +1190,10 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$items    = ! empty( $settings['items'] ) && is_array( $settings['items'] ) ? $settings['items'] : array();
+		$this->add_section_render_attributes( $settings, 'pro-sales-benefits', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-benefits">
-			<?php if ( ! empty( $settings['title'] ) ) : ?>
-					<h2 class="pro-sales-section-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-				<?php endif; ?>
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
+			<?php $this->render_section_header( $settings ); ?>
 				<div class="pro-sales-benefits__grid">
 				<?php foreach ( $items as $item ) : ?>
 						<article class="pro-sales-card pro-sales-benefit">
@@ -1026,12 +1254,9 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Compare os planos', 'proenem-wordpress-theme' ),
+				'title' => esc_html__( 'Compare os planos', 'proenem-wordpress-theme' ),
 			)
 		);
 		$this->add_control(
@@ -1068,6 +1293,8 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -1079,11 +1306,10 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 		$settings = $this->get_settings_for_display();
 		$columns  = $this->split_lines( $settings['columns'] ?? '' );
 		$rows     = ! empty( $settings['rows'] ) && is_array( $settings['rows'] ) ? $settings['rows'] : array();
+		$this->add_section_render_attributes( $settings, 'pro-sales-comparison', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-comparison">
-			<?php if ( ! empty( $settings['title'] ) ) : ?>
-					<h2 class="pro-sales-section-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-				<?php endif; ?>
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
+			<?php $this->render_section_header( $settings ); ?>
 				<div class="pro-sales-comparison__scroll">
 					<table>
 						<thead>
@@ -1156,19 +1382,11 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Comece sua preparação hoje', 'proenem-wordpress-theme' ),
-			)
-		);
-		$this->add_control(
-			'body',
-			array(
-				'label' => esc_html__( 'Texto', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXTAREA,
+				'title'      => esc_html__( 'Comece sua preparação hoje', 'proenem-wordpress-theme' ),
+				'title_type' => 'textarea',
+				'body'       => '',
 			)
 		);
 		$this->add_control(
@@ -1187,6 +1405,8 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -1196,15 +1416,11 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
+		$this->add_section_render_attributes( $settings, 'pro-sales-cta', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-cta">
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div>
-				<?php if ( ! empty( $settings['title'] ) ) : ?>
-						<h2><?php echo esc_html( $settings['title'] ); ?></h2>
-					<?php endif; ?>
-				<?php if ( ! empty( $settings['body'] ) ) : ?>
-						<p><?php echo esc_html( $settings['body'] ); ?></p>
-					<?php endif; ?>
+				<?php $this->render_section_header( $settings, array( 'title_class' => '' ) ); ?>
 				</div>
 			<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
 			</section>
@@ -1256,12 +1472,9 @@ class Proenem_Elementor_Faq_Widget extends Proenem_Elementor_Sales_Widget_Base {
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
-		$this->add_control(
-			'title',
+		$this->add_section_header_controls(
 			array(
-				'label'   => esc_html__( 'Título', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Perguntas frequentes', 'proenem-wordpress-theme' ),
+				'title' => esc_html__( 'Perguntas frequentes', 'proenem-wordpress-theme' ),
 			)
 		);
 		$repeater = new \Elementor\Repeater();
@@ -1289,6 +1502,8 @@ class Proenem_Elementor_Faq_Widget extends Proenem_Elementor_Sales_Widget_Base {
 			)
 		);
 		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
 	}
 
 	/**
@@ -1299,11 +1514,10 @@ class Proenem_Elementor_Faq_Widget extends Proenem_Elementor_Sales_Widget_Base {
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$items    = ! empty( $settings['items'] ) && is_array( $settings['items'] ) ? $settings['items'] : array();
+		$this->add_section_render_attributes( $settings, 'pro-sales-faq', ! empty( $settings['title'] ) );
 		?>
-			<section class="pro-sales-widget pro-sales-faq">
-			<?php if ( ! empty( $settings['title'] ) ) : ?>
-					<h2 class="pro-sales-section-title"><?php echo esc_html( $settings['title'] ); ?></h2>
-				<?php endif; ?>
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
+			<?php $this->render_section_header( $settings ); ?>
 				<div class="pro-sales-faq__items">
 				<?php foreach ( $items as $item ) : ?>
 						<details class="pro-sales-faq__item">

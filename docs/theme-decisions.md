@@ -241,3 +241,26 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Complemento: os IDs de heading passam a ser derivados do ID do widget Elementor, e o cabecalho de secao (`eyebrow`, `title`, `body`, `tone`, `anchor_id`) vira contrato compartilhado no base class de vendas.
 - Fronteira: nenhuma LP existente deve quebrar; os widgets `pro_home_*` continuam registrados e funcionais onde ja estao em uso.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Contrato compartilhado de secao nos widgets de venda
+
+- Contexto: cada widget de venda resolvia selo, titulo, texto e fundo do seu jeito, e os widgets da home emitiam ids de heading fixos, o que produzia id duplicado quando dois widgets iam para a mesma pagina.
+- Decisao: centralizar em `Proenem_Elementor_Sales_Widget_Base` o contrato de secao com `eyebrow`, `title`, `body`, `tone` e `anchor_id`, alem dos helpers de id de heading e de ancora derivados do id do widget Elementor.
+- Aplicacao: os widgets existentes passam a consumir o contrato mantendo as proprias classes de layout, para nao mudar o resultado visual atual.
+- Tone: `default` nao emite classe, `surface` usa `--pen-color-surface` e `brand` usa `--pen-color-proenem-red` com `--pen-color-on-red`. Apenas tokens publicados.
+- Fronteira: `tone` pinta faixa contida na largura maxima do widget. Faixa de sangria total continua decisao da camada de pagina.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Ancora dos widgets da home vira controle editavel
+
+- Contexto: `pro_home_pillars`, `pro_home_questions`, `pro_home_pricing`, `pro_home_faq` e `pro_home_testimonials` emitiam ancora fixa (`metodo`, `questoes`, `planos`, `faq`, `depoimentos`). Essas ancoras sao destinos de CTA, mas duas instancias na mesma pagina produziam id duplicado.
+- Decisao: expor a ancora no controle `anchor_id`, com o valor publicado atual como default.
+- Consequencia: uma instancia por pagina mantem exatamente o comportamento anterior; duas instancias podem receber ancoras diferentes pelo editor.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Categoria e base propria para widgets de LP
+
+- Contexto: os widgets `pro_home_*` carregam a copy da home na estrutura dos controles e nao servem como base generica de pagina de venda, mas apareciam na mesma categoria dos widgets genericos e com o keyword `lp`.
+- Decisao: registrar a categoria `proenem-lp` e criar `Proenem_Elementor_Lp_Widget_Base` como base dos widgets `pro_lp_*`; remover o keyword `lp` dos widgets da home.
+- Fronteira: `proenem-sales` continua registrando os widgets ja publicados, incluindo as secoes da home, para nao quebrar paginas existentes.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.

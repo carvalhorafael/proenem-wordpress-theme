@@ -30,7 +30,7 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	 * @return string[]
 	 */
 	public function get_keywords(): array {
-		return array( 'proenem', 'home', 'lp', 'enem' );
+		return array( 'proenem', 'home', 'enem' );
 	}
 
 	/**
@@ -319,14 +319,14 @@ class Proenem_Elementor_Home_Hero_Widget extends Proenem_Elementor_Home_Widget_B
 		$settings = $this->get_settings_for_display();
 		$this->open_home_wrapper();
 		?>
-		<section class="pen-hero-section" aria-labelledby="pro-home-title">
+		<section class="pen-hero-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<div class="pen-hero-section__stage">
 				<img class="pen-hero-section__image" src="<?php echo esc_url( $this->media_url( $settings['image'] ?? array(), 'hero-student.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com cadernos nas mãos.', 'proenem-wordpress-theme' ); ?>">
 				<span class="pen-hero-sticker pen-hero-sticker--pink"><?php echo esc_html( $settings['sticker_1'] ?? '' ); ?></span>
 				<span class="pen-hero-sticker pen-hero-sticker--yellow"><?php echo esc_html( $settings['sticker_2'] ?? '' ); ?></span>
 				<span class="pen-hero-sticker pen-hero-sticker--green"><?php echo esc_html( $settings['sticker_3'] ?? '' ); ?></span>
 				<span class="pen-hero-sticker pen-hero-sticker--orange"><?php echo esc_html( $settings['sticker_4'] ?? '' ); ?></span>
-				<h1 id="pro-home-title" class="pen-hero-section__title">
+				<h1 id="<?php echo esc_attr( $this->section_heading_id() ); ?>" class="pen-hero-section__title">
 					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_1'] ?? '' ); ?></span>
 					<span class="pen-hero-section__title-line pen-hero-section__title-line--center"><?php echo esc_html( $settings['line_2'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--blue"><?php echo esc_html( $settings['line_3_emphasis'] ?? '' ); ?></strong> <?php echo esc_html( $settings['line_4_prefix'] ?? '' ); ?> <strong class="pen-hero-section__emphasis pen-hero-section__emphasis--stroke pen-hero-section__emphasis--yellow"><?php echo esc_html( $settings['line_4_emphasis'] ?? '' ); ?></strong></span>
 				</h1>
@@ -528,24 +528,27 @@ class Proenem_Elementor_Home_Pillars_Widget extends Proenem_Elementor_Home_Widge
 				'title_field' => '{{{ number }}} - {{{ title }}}',
 			)
 		);
+		$this->add_section_anchor_control( 'metodo' );
+
 		$this->end_controls_section();
 	}
 
 	protected function render(): void {
-		$settings = $this->get_settings_for_display();
-		$cards    = is_array( $settings['cards'] ?? null ) ? $settings['cards'] : array();
-		$images   = array(
+		$settings       = $this->get_settings_for_display();
+		$cards          = is_array( $settings['cards'] ?? null ) ? $settings['cards'] : array();
+		$images         = array(
 			'pillar-meta.webp',
 			'pillar-diagnostico.webp',
 			'pillar-execucao.webp',
 			'student_school_2.webp',
 		);
+		$section_anchor = $this->section_anchor( $settings, 'metodo' );
 		$this->open_home_wrapper();
 		?>
-		<section id="metodo" class="pen-pillars-section" aria-labelledby="pro-pillars-title">
+		<section<?php echo '' !== $section_anchor ? ' id="' . esc_attr( $section_anchor ) . '"' : ''; ?> class="pen-pillars-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<div class="pen-pillars-section__copy">
 				<p class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></p>
-				<h2 id="pro-pillars-title"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2>
+				<h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2>
 				<p><?php echo esc_html( $settings['body_1'] ?? '' ); ?></p>
 				<p><?php echo esc_html( $settings['body_2'] ?? '' ); ?></p>
 				<?php $this->render_home_button( 'button_url', $this->home_cta_link( $settings['button_url'] ?? array(), 'plans' ), $this->home_primary_cta_label( $settings['button_label'] ?? '' ), 'pen-button pen-button--primary pen-button--md' ); ?>
@@ -619,7 +622,7 @@ class Proenem_Elementor_Home_Proof_Widget extends Proenem_Elementor_Home_Widget_
 			array(
 				'badge_line_1' => $settings['badge_line_1'] ?? '',
 				'badge_line_2' => $settings['badge_line_2'] ?? '',
-				'heading_id'   => 'pro-proof-title-' . $this->get_id(),
+				'heading_id'   => $this->section_heading_id(),
 				'support'      => proenem_normalize_home_proof_copy( $settings['support'] ?? '', 'support' ),
 				'title'        => proenem_normalize_home_proof_copy( $settings['title'] ?? '', 'title' ),
 			)
@@ -748,9 +751,9 @@ class Proenem_Elementor_Home_Pain_Widget extends Proenem_Elementor_Home_Widget_B
 		);
 		$this->open_home_wrapper();
 		?>
-		<section class="pen-feature-grid-section" aria-labelledby="pro-pain-title">
+		<section class="pen-feature-grid-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<p class="pen-section-pill"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></p>
-			<h2 id="pro-pain-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong> <?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2>
+			<h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong> <?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2>
 			<div class="pen-feature-grid pro-home-pain-grid--four">
 				<?php foreach ( (array) ( $settings['cards'] ?? array() ) as $card ) : ?>
 					<article class="pro-home-pain-card pro-home-pain-card--<?php echo esc_attr( $card['tone'] ?? 'blue' ); ?>">
@@ -1068,10 +1071,10 @@ class Proenem_Elementor_Home_Platform_Widget extends Proenem_Elementor_Home_Widg
 		$active_image = (array) ( $active_item['_image'] ?? array() );
 		$this->open_home_wrapper();
 		?>
-		<section class="pen-platform-showcase" aria-labelledby="pro-platform-title" data-pro-home-platform-tabs>
+		<section class="pen-platform-showcase" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>" data-pro-home-platform-tabs>
 			<div class="pen-platform-showcase__panel">
 				<header class="pro-home-platform-header">
-					<h2 id="pro-platform-title"><strong><?php echo esc_html( $settings['title_strong'] ?? '' ); ?></strong> <span><?php echo esc_html( $settings['title_span'] ?? '' ); ?></span><br><?php echo esc_html( $settings['title_tail'] ?? '' ); ?></h2>
+					<h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><strong><?php echo esc_html( $settings['title_strong'] ?? '' ); ?></strong> <span><?php echo esc_html( $settings['title_span'] ?? '' ); ?></span><br><?php echo esc_html( $settings['title_tail'] ?? '' ); ?></h2>
 					<p class="pro-home-platform-note"><img src="<?php echo esc_url( $this->home_asset_uri( 'sticker_explore_por_dentro.svg' ) ); ?>" alt="" aria-hidden="true"><span class="pro-home-platform-note__text"><?php echo esc_html( $settings['note'] ?? '' ); ?></span></p>
 				</header>
 				<p class="pro-home-platform-guard"><span><?php echo esc_html( $settings['guard_text'] ?? '' ); ?></span> <strong><?php echo esc_html( $settings['guard_emphasis'] ?? '' ); ?></strong></p>
@@ -1225,16 +1228,19 @@ class Proenem_Elementor_Home_Questions_Widget extends Proenem_Elementor_Home_Wid
 				'title_field' => '{{{ name }}}',
 			)
 		);
+		$this->add_section_anchor_control( 'questoes' );
+
 		$this->end_controls_section();
 	}
 
 	protected function render(): void {
-		$settings = $this->get_settings_for_display();
+		$settings       = $this->get_settings_for_display();
+		$section_anchor = $this->section_anchor( $settings, 'questoes' );
 		$this->open_home_wrapper();
 		?>
-		<section id="questoes" class="pen-question-bank-section" aria-labelledby="pro-questions-title">
+		<section<?php echo '' !== $section_anchor ? ' id="' . esc_attr( $section_anchor ) . '"' : ''; ?> class="pen-question-bank-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<img class="pro-home-question-bank__background" src="<?php echo esc_url( $this->home_asset_uri( 'sticker_explore_questions.svg' ) ); ?>" alt="" aria-hidden="true">
-			<h2 id="pro-questions-title"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_suffix'] ?? '' ); ?></h2>
+			<h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_suffix'] ?? '' ); ?></h2>
 			<p><?php echo esc_html( $settings['body'] ?? '' ); ?></p>
 			<div class="pen-subject-grid">
 				<?php foreach ( (array) ( $settings['subjects'] ?? array() ) as $subject ) : ?>
@@ -1378,6 +1384,8 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 				'title_field' => '{{{ name }}}',
 			)
 		);
+		$this->add_section_anchor_control( 'planos' );
+
 		$this->end_controls_section();
 	}
 
@@ -1408,11 +1416,12 @@ class Proenem_Elementor_Home_Pricing_Widget extends Proenem_Elementor_Home_Widge
 			esc_html__( 'Método PRO Avançado', 'proenem-wordpress-theme' ),
 			esc_html__( 'Pro Medicina', 'proenem-wordpress-theme' ),
 		);
+		$section_anchor         = $this->section_anchor( $settings, 'planos' );
 		$this->open_home_wrapper();
 		?>
-		<section id="planos" class="pen-pricing-section" aria-labelledby="pro-pricing-title">
+		<section<?php echo '' !== $section_anchor ? ' id="' . esc_attr( $section_anchor ) . '"' : ''; ?> class="pen-pricing-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<img class="pro-home-pricing__strokes" src="<?php echo esc_url( $this->home_asset_uri( 'price_vector_strokes.svg' ) ); ?>" alt="" aria-hidden="true">
-			<div class="pro-home-pricing__header"><div class="pro-home-pricing__intro"><h2 id="pro-pricing-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><span class="pro-home-pricing__title-line"><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></span></h2>
+			<div class="pro-home-pricing__header"><div class="pro-home-pricing__intro"><h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><span class="pro-home-pricing__title-line"><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis'] ?? '' ); ?></strong></span></h2>
 			<?php
 			foreach ( $this->split_lines( $body ) as $line ) :
 				?>
@@ -1542,6 +1551,8 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 				'type'        => \Elementor\Controls_Manager::SELECT2,
 			)
 		);
+		$this->add_section_anchor_control( 'depoimentos' );
+
 		$this->end_controls_section();
 	}
 
@@ -1559,10 +1570,10 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 			array(
 				'body'           => $settings['body'] ?? '',
 				'eyebrow'        => $settings['eyebrow'] ?? '',
-				'heading_id'     => 'pro-testimonials-title-' . $this->get_id(),
+				'heading_id'     => $this->section_heading_id(),
 				'more_label'     => $settings['more_label'] ?? '',
 				'more_url'       => $settings['more_url']['url'] ?? 'https://aprovados.proenem.com.br/',
-				'section_id'     => 'depoimentos',
+				'section_id'     => $this->section_anchor( $settings, 'depoimentos' ),
 				'title_emphasis' => $settings['title_emphasis'] ?? '',
 				'title_line'     => $settings['title_line'] ?? '',
 			)
@@ -1666,7 +1677,7 @@ class Proenem_Elementor_Home_Schools_Widget extends Proenem_Elementor_Home_Widge
 		$settings = $this->get_settings_for_display();
 		$this->open_home_wrapper();
 		?>
-		<section class="pen-audience-section pro-home-school-section" aria-labelledby="pro-school-title">
+		<section class="pen-audience-section pro-home-school-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>">
 			<div class="pro-home-school-section__marquee" aria-hidden="true"><div class="pro-home-school-section__marquee-track">
 			<?php
 			for ( $i = 0; $i < 2; $i++ ) :
@@ -1679,7 +1690,7 @@ endfor;
 			?>
 			</div></div>
 			<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary"><img src="<?php echo esc_url( $this->media_url( $settings['primary_image'] ?? array(), 'student_school_1.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo em ambiente escolar.', 'proenem-wordpress-theme' ); ?>"></figure>
-			<div class="pen-audience-section__intro pro-home-school-section__intro"><div><h2 id="pro-school-title"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_middle'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p><?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--lg pro-home-school-section__cta' ); ?></div><img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $this->media_url( $settings['secondary_image'] ?? array(), 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"><span class="pro-home-school-section__burst" aria-hidden="true"></span></div>
+			<div class="pen-audience-section__intro pro-home-school-section__intro"><div><h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title_prefix'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_1'] ?? '' ); ?></strong><br><?php echo esc_html( $settings['title_middle'] ?? '' ); ?> <strong><?php echo esc_html( $settings['title_emphasis_2'] ?? '' ); ?></strong></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p><?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--lg pro-home-school-section__cta' ); ?></div><img class="pro-home-school-section__photo-secondary" src="<?php echo esc_url( $this->media_url( $settings['secondary_image'] ?? array(), 'student_school_2.webp' ) ); ?>" alt="<?php esc_attr_e( 'Estudante sorrindo com livros ao fundo.', 'proenem-wordpress-theme' ); ?>"><span class="pro-home-school-section__burst" aria-hidden="true"></span></div>
 			<div class="pen-feature-grid pen-feature-grid--school">
 			<?php
 			foreach ( (array) ( $settings['cards'] ?? array() ) as $card ) :
@@ -1720,7 +1731,7 @@ class Proenem_Elementor_Home_Final_Cta_Widget extends Proenem_Elementor_Home_Wid
 		$settings = $this->get_settings_for_display();
 		$this->open_home_wrapper();
 		?>
-		<section class="pen-marketing-cta pro-home__final-cta" aria-labelledby="pro-final-title"><div class="pen-marketing-cta__content"><h2 id="pro-final-title"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p></div><div class="pen-marketing-cta__actions"><?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--lg' ); ?></div></section>
+		<section class="pen-marketing-cta pro-home__final-cta" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>"><div class="pen-marketing-cta__content"><h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title'] ?? '' ); ?></h2><p><?php echo esc_html( $settings['body'] ?? '' ); ?></p></div><div class="pen-marketing-cta__actions"><?php $this->render_home_button( 'button_url', $settings['button_url'] ?? array(), $settings['button_label'] ?? '', 'pen-button pen-button--primary pen-button--lg' ); ?></div></section>
 		<?php
 		$this->close_home_wrapper();
 	}
@@ -1789,6 +1800,8 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 				'title_field' => '{{{ question }}}',
 			)
 		);
+		$this->add_section_anchor_control( 'faq' );
+
 		$this->end_controls_section();
 	}
 
@@ -1802,9 +1815,10 @@ class Proenem_Elementor_Home_Faq_Widget extends Proenem_Elementor_Home_Widget_Ba
 			'318df6b370eb72cd06b15467e92de841',
 		);
 		$updated_plans_answer       = esc_html__( 'Diagnóstico inicial, nota prevista, banco de mais de 60 mil questões, cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' );
+		$section_anchor             = $this->section_anchor( $settings, 'faq' );
 		$this->open_home_wrapper();
 		?>
-		<section id="faq" class="pen-faq-section" aria-labelledby="pro-faq-title"><div class="pen-faq-section__header"><span class="pen-pill-eyebrow"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="pro-faq-title"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?></h2></div><div class="pen-faq-section__items">
+		<section<?php echo '' !== $section_anchor ? ' id="' . esc_attr( $section_anchor ) . '"' : ''; ?> class="pen-faq-section" aria-labelledby="<?php echo esc_attr( $this->section_heading_id() ); ?>"><div class="pen-faq-section__header"><span class="pen-pill-eyebrow"><?php echo esc_html( $settings['eyebrow'] ?? '' ); ?></span><h2 id="<?php echo esc_attr( $this->section_heading_id() ); ?>"><?php echo esc_html( $settings['title_line_1'] ?? '' ); ?><br><?php echo esc_html( $settings['title_line_2'] ?? '' ); ?></h2></div><div class="pen-faq-section__items">
 		<?php
 		foreach ( (array) ( $settings['items'] ?? array() ) as $index => $item ) :
 			$question = $item['question'] ?? '';
