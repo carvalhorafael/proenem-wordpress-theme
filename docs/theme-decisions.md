@@ -275,3 +275,27 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Gap do design system: os pacotes publicados nao trazem contrato de banda de sangria total, classe de container nem token de largura de conteudo; o pacote resolve casos parecidos com margem negativa local dentro de componentes. A cola fica local no tema.
 - Fronteira: `pro_pricing_card` declara `is_section_host()` como falso e continua se comportando como card.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#200`; gap do design system registrado em `carvalhorafael/proenem-wordpress-theme#198`.
+
+## 2026-08-26: Widgets genericos de LP na categoria Proenem LP
+
+- Contexto: quatro secoes das LPs de campanha nao tinham widget equivalente: faixa de metricas, card de destaque de oferta, spotlight de midia mais copy e depoimento em video.
+- Decisao: criar `pro_lp_metrics`, `pro_lp_offer_highlight`, `pro_lp_spotlight` e `pro_lp_video_story` sobre `Proenem_Elementor_Lp_Widget_Base`, consumindo o contrato de secao compartilhado.
+- `pro_lp_offer_highlight` nao registra cabecalho de secao: o nome da oferta e o proprio heading, como na LP de campanha.
+- `pro_lp_spotlight` expoe `media_position` para inverter o lado da imagem, cobrindo as duas secoes de spotlight da mesma LP com um widget so.
+- Fronteira: os widgets ficam na categoria `proenem-lp` e nao substituem os widgets `pro_home_*`.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Video de LP carregado por fachada
+
+- Contexto: o depoimento em video das LPs de campanha usa provedor externo. Carregar o player no load da pagina significa contatar terceiro antes de qualquer interacao, com custo de performance e de privacidade.
+- Decisao: `pro_lp_video_story` renderiza capa e botao de reproduzir, e o `iframe` do provedor entra apenas no clique, reaproveitando `proenem_get_testimonial_video_embed_url()` no servidor e o mesmo padrao de fachada ja usado nos depoimentos.
+- Consequencia: sem capa local, nenhuma imagem e carregada. Miniatura hospedada pelo provedor foi descartada de proposito, porque seria requisicao de terceiro antes da interacao.
+- Verificado em `/lp/homologacao-widgets-lp/`: zero requisicoes ao provedor antes do clique; apos o clique, apenas a URL de embed.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Tone e contrato de par de cores, nao so de fundo
+
+- Contexto: ao compor um card branco dentro da faixa de marca, o texto do card herdava o branco da faixa e ficava branco sobre branco. O botao primario, por sua vez, renderizava vermelho sobre vermelho na faixa de marca.
+- Decisao: todo componente que pinta a propria superficie declara o proprio `color`. `.pro-sales-card` passa a declarar `color`, o botao primario inverte na faixa de marca e volta ao par padrao quando esta dentro de um card.
+- Consequencia: widget novo que pinte superficie propria precisa declarar o par de cores; herdar da faixa nao e suficiente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.

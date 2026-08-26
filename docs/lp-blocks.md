@@ -94,10 +94,10 @@ Uma unica faixa concentra tres blocos distintos.
 
 | Necessidade | Encaminhamento | Fase |
 | --- | --- | --- |
-| Faixa de metricas | widget novo `pro_lp_metrics` | 2 |
-| Card de destaque de oferta | widget novo `pro_lp_offer_highlight` | 2 |
-| Spotlight de midia mais copy | widget novo `pro_lp_spotlight` | 2 |
-| Depoimento em video | widget novo `pro_lp_video_story` | 2 |
+| Faixa de metricas | `pro_lp_metrics` (feito) | 2 |
+| Card de destaque de oferta | `pro_lp_offer_highlight` (feito) | 2 |
+| Spotlight de midia mais copy | `pro_lp_spotlight` (feito) | 2 |
+| Depoimento em video | `pro_lp_video_story` (feito) | 2 |
 | Modo LP da navbar | melhoria em `pro_navbar` | 3 |
 | Microcopy, fundo e cards flutuantes no hero | melhoria em `pro_offer_hero` | 3 |
 | Icones, colunas e item em destaque | melhoria em `pro_benefits_list` | 3 |
@@ -171,6 +171,30 @@ Medido em `/lp/homologacao-widgets-lp/`: em 1280 px, as oito faixas medem 1280 p
 ### Ancoras dos widgets da home
 
 Os widgets `pro_home_pillars`, `pro_home_questions`, `pro_home_pricing`, `pro_home_faq` e `pro_home_testimonials` emitiam ancora fixa (`metodo`, `questoes`, `planos`, `faq`, `depoimentos`), que sao destinos dos CTAs. Agora a ancora vem do controle `anchor_id`, com esses mesmos valores como default. O comportamento de uma instancia por pagina nao muda, e duas instancias podem receber ancoras diferentes.
+
+### Widgets de LP
+
+Implementados na Fase 2 (`#195`), todos na categoria `Proenem LP` e consumindo o contrato de secao.
+
+| Widget | Secao coberta | Controles proprios |
+| --- | --- | --- |
+| `pro_lp_metrics` | trio de metricas da faixa de prova social | repeater de `value` e `label`; cabecalho de secao opcional |
+| `pro_lp_offer_highlight` | card `INICIO HOJE!` | `badge`, `name`, `summary`, `features`, botao. O nome da oferta e o heading da secao |
+| `pro_lp_spotlight` | `PLANO DE ESTUDOS` e `REDACAO` | `bullets`, `image`, `image_alt`, botao, `media_position` para inverter o lado |
+| `pro_lp_video_story` | `HISTORIA REAL` | `video_url`, `poster`, `poster_alt`, `play_label`, botao |
+
+`pro_lp_spotlight` colapsa para uma coluna quando nao ha imagem, via `pro-lp-spotlight--no-media`, para nao deixar coluna vazia.
+
+`pro_lp_video_story` usa fachada: renderiza capa e botao, e o `iframe` do provedor so entra depois do clique. A URL de embed e resolvida no servidor por `proenem_get_testimonial_video_embed_url()`. Sem capa local nenhuma imagem externa e carregada, porque miniatura hospedada pelo provedor tambem seria requisicao de terceiro antes da interacao.
+
+### Tone como contrato de par de cores
+
+`tone` nao e apenas fundo. Todo componente que pinta a propria superficie precisa manter o proprio par de cores dentro da faixa:
+
+- `.pro-sales-card` declara `color` proprio, porque pinta fundo branco e herdaria o branco da faixa de marca;
+- o botao primario inverte na faixa de marca, onde o vermelho do componente nao teria contraste, e volta ao par padrao quando esta dentro de um card.
+
+Contraste medido em `/lp/homologacao-widgets-lp/`: titulo e corpo do hero 6.61, selo 10.56, botao na faixa 6.61, card de oferta 17.40, botao dentro do card 6.61, faixa surface 17.40.
 
 ### Pagina de homologacao
 

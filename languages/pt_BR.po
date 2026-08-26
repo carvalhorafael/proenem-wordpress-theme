@@ -31,7 +31,7 @@ msgstr ""
 
 #. Theme Name of the theme
 #: style.css
-#: inc/elementor-sales-widgets.php:58
+#: inc/elementor-sales-widgets.php:62
 #: inc/template-tags.php:2268
 msgid "Proenem"
 msgstr "Proenem"
@@ -321,6 +321,9 @@ msgstr "O ENEM não é prova de quem estuda mais. É de quem estuda com estraté
 #: inc/class-proenem-elementor-home-widget-base.php:1125
 #: inc/class-proenem-elementor-home-widget-base.php:1611
 #: inc/class-proenem-elementor-home-widget-base.php:1725
+#: inc/class-proenem-elementor-lp-widget-base.php:257
+#: inc/class-proenem-elementor-lp-widget-base.php:379
+#: inc/class-proenem-elementor-lp-widget-base.php:558
 #: inc/class-proenem-elementor-sales-widget-base.php:923
 #: inc/class-proenem-elementor-sales-widget-base.php:1103
 #: inc/class-proenem-elementor-sales-widget-base.php:1447
@@ -343,6 +346,7 @@ msgid "Link do botão"
 msgstr "Link do botão"
 
 #: inc/class-proenem-elementor-home-widget-base.php:451
+#: inc/class-proenem-elementor-lp-widget-base.php:99
 msgid "Número"
 msgstr "Número"
 
@@ -372,6 +376,7 @@ msgid "Tom visual"
 msgstr "Tom visual"
 
 #: inc/class-proenem-elementor-home-widget-base.php:488
+#: inc/class-proenem-elementor-lp-widget-base.php:393
 #: inc/class-proenem-elementor-sales-widget-base.php:689
 msgid "Imagem"
 msgstr "Imagem"
@@ -934,6 +939,9 @@ msgid "Categoria"
 msgstr "Categoria"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1174
+#: inc/class-proenem-elementor-lp-widget-base.php:265
+#: inc/class-proenem-elementor-lp-widget-base.php:386
+#: inc/class-proenem-elementor-lp-widget-base.php:566
 #: inc/class-proenem-elementor-sales-widget-base.php:931
 #: inc/class-proenem-elementor-sales-widget-base.php:1111
 #: inc/class-proenem-elementor-sales-widget-base.php:1455
@@ -1061,6 +1069,7 @@ msgid "Garantia"
 msgstr "Garantia"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1322
+#: inc/class-proenem-elementor-lp-widget-base.php:238
 msgid "Resumo"
 msgstr "Resumo"
 
@@ -1428,6 +1437,205 @@ msgstr "Qual a diferença entre os planos?"
 msgid "O que é o Método PRO?"
 msgstr "O que é o Método PRO?"
 
+#: inc/class-proenem-elementor-lp-widget-base.php:61
+msgid "Pro LP Métricas"
+msgstr "Pro LP Métricas"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:82
+msgid "Métricas"
+msgstr "Métricas"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:101
+#: inc/class-proenem-elementor-lp-widget-base.php:123
+msgid "+44.000"
+msgstr "+44.000"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:107
+#: inc/class-proenem-elementor-sales-widget-base.php:1072
+#: inc/class-proenem-elementor-sales-widget-base.php:1215
+msgid "Descrição"
+msgstr "Descrição"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:109
+#: inc/class-proenem-elementor-lp-widget-base.php:124
+msgid "alunos aprovados nas melhores universidades"
+msgstr "alunos aprovados nas melhores universidades"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:117
+#: inc/class-proenem-elementor-sales-widget-base.php:1222
+#: inc/class-proenem-elementor-sales-widget-base.php:1552
+msgid "Itens"
+msgstr "Itens"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:127
+msgid "4,9/5"
+msgstr "4,9/5"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:128
+msgid "avaliação média dos alunos"
+msgstr "avaliação média dos alunos"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:131
+msgid "12 anos"
+msgstr "12 anos"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:132
+msgid "de experiência aprovando alunos no ENEM"
+msgstr "de experiência aprovando alunos no ENEM"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:192
+msgid "Pro LP Destaque de Oferta"
+msgstr "Pro LP Destaque de Oferta"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:213
+msgid "Destaque de oferta"
+msgstr "Destaque de oferta"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:221
+msgid "Selo de urgência"
+msgstr "Selo de urgência"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:223
+msgid "Início hoje!"
+msgstr "Início hoje!"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:229
+msgid "Nome da oferta"
+msgstr "Nome da oferta"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:231
+msgid "Turma Intensiva ENEM 2026"
+msgstr "Turma Intensiva ENEM 2026"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:240
+msgid "Tudo o que você precisa para a reta final, em um único plano."
+msgstr "Tudo o que você precisa para a reta final, em um único plano."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:247
+msgid "Itens incluídos"
+msgstr "Itens incluídos"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:249
+msgid ""
+"Cronograma completo até o dia da prova\n"
+"4 correções de redação\n"
+"Aulas com os melhores professores\n"
+"Simulados com nota TRI"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:250
+#: inc/class-proenem-elementor-lp-widget-base.php:372
+msgid "Um item por linha."
+msgstr "Um item por linha."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:259
+msgid "Entrar na Turma Intensiva"
+msgstr "Entrar na Turma Intensiva"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:331
+msgid "Pro LP Spotlight"
+msgstr "Pro LP Spotlight"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:352
+msgid "Spotlight"
+msgstr "Spotlight"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:359
+msgid "Plano de estudos"
+msgstr "Plano de estudos"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:360
+msgid "Você não precisa mais decidir o que estudar hoje."
+msgstr "Você não precisa mais decidir o que estudar hoje."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:362
+msgid "Cada dia da sua semana já vem preparado: as matérias certas, na ordem certa, na intensidade certa."
+msgstr "Cada dia da sua semana já vem preparado: as matérias certas, na ordem certa, na intensidade certa."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:369
+msgid "Destaques"
+msgstr "Destaques"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:371
+msgid ""
+"Cronograma semanal até a prova\n"
+"Barras de progresso por matéria e por competência\n"
+"Saiba o que estudar em cada dia para não perder o foco"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:400
+msgid "Texto alternativo da imagem"
+msgstr "Texto alternativo da imagem"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:402
+msgid "Deixe vazio quando a imagem for apenas decorativa."
+msgstr "Deixe vazio quando a imagem for apenas decorativa."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:409
+msgid "Posição da imagem"
+msgstr "Posição da imagem"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:413
+msgid "Depois do texto"
+msgstr "Depois do texto"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:414
+msgid "Antes do texto"
+msgstr "Antes do texto"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:488
+msgid "Pro LP Depoimento em Vídeo"
+msgstr "Pro LP Depoimento em Vídeo"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:509
+msgid "Depoimento em vídeo"
+msgstr "Depoimento em vídeo"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:516
+msgid "História real"
+msgstr "História real"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:517
+msgid "Ela passou em Medicina conciliando com o trabalho."
+msgstr "Ela passou em Medicina conciliando com o trabalho."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:519
+msgid "Veja como a rotina certa e a correção de redação fizeram a diferença na reta final."
+msgstr "Veja como a rotina certa e a correção de redação fizeram a diferença na reta final."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:526
+msgid "Link do vídeo"
+msgstr "Link do vídeo"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:528
+msgid "O vídeo só é carregado depois que a pessoa clica em reproduzir."
+msgstr "O vídeo só é carregado depois que a pessoa clica em reproduzir."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:534
+msgid "Imagem de capa"
+msgstr "Imagem de capa"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:536
+msgid "Use uma imagem da própria biblioteca. Sem capa local, nenhuma imagem externa é carregada antes do clique."
+msgstr "Use uma imagem da própria biblioteca. Sem capa local, nenhuma imagem externa é carregada antes do clique."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:542
+msgid "Texto alternativo da capa"
+msgstr "Texto alternativo da capa"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:550
+msgid "Rótulo do botão de reproduzir"
+msgstr "Rótulo do botão de reproduzir"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:552
+#: inc/class-proenem-elementor-lp-widget-base.php:589
+msgid "Reproduzir o depoimento"
+msgstr "Reproduzir o depoimento"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:560
+msgid "Quero minha vaga na Turma Intensiva"
+msgstr "Quero minha vaga na Turma Intensiva"
+
 #: inc/class-proenem-elementor-sales-widget-base.php:215
 msgid "Seção"
 msgstr "Seção"
@@ -1614,11 +1822,6 @@ msgstr "Assinar agora"
 msgid "Pro Card de Plano"
 msgstr "Pro Card de Plano"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1072
-#: inc/class-proenem-elementor-sales-widget-base.php:1215
-msgid "Descrição"
-msgstr "Descrição"
-
 #: inc/class-proenem-elementor-sales-widget-base.php:1173
 msgid "Pro Lista de Benefícios"
 msgstr "Pro Lista de Benefícios"
@@ -1634,11 +1837,6 @@ msgstr "Benefício"
 #: inc/class-proenem-elementor-sales-widget-base.php:1209
 msgid "Benefício da oferta"
 msgstr "Benefício da oferta"
-
-#: inc/class-proenem-elementor-sales-widget-base.php:1222
-#: inc/class-proenem-elementor-sales-widget-base.php:1552
-msgid "Itens"
-msgstr "Itens"
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1282
 msgid "Pro Comparativo de Planos"
@@ -1718,7 +1916,7 @@ msgstr "Código do rodapé"
 msgid "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 msgstr "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 
-#: inc/elementor-sales-widgets.php:66
+#: inc/elementor-sales-widgets.php:70
 msgid "Proenem LP"
 msgstr "Proenem LP"
 

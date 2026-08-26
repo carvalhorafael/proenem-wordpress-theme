@@ -137,6 +137,52 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpmetrics01',
+		'pro_lp_metrics',
+		array(
+			'tone' => 'surface',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpoffer01',
+		'pro_lp_offer_highlight',
+		array(
+			'button_url' => array( 'url' => '#oferta' ),
+			'tone'       => 'brand',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpspot01',
+		'pro_lp_spotlight',
+		array(
+			'image'     => array( 'url' => get_template_directory_uri() . '/assets/images/platform/study-plan-960.webp' ),
+			'image_alt' => 'Tela do plano de estudos semanal.',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpspot02',
+		'pro_lp_spotlight',
+		array(
+			'eyebrow'        => 'Redacao',
+			'title'          => 'Segundo spotlight com a imagem antes do texto.',
+			'body'           => 'Valida o controle de posicao da imagem e o id de heading por instancia.',
+			'media_position' => 'start',
+			'image'          => array( 'url' => get_template_directory_uri() . '/assets/images/platform/essay-feedback-960.webp' ),
+			'image_alt'      => 'Tela da correcao de redacao por competencia.',
+			'tone'           => 'surface',
+			'button_label'   => 'Quero treinar minha redacao',
+			'button_url'     => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpvideo01',
+		'pro_lp_video_story',
+		array(
+			'video_url'  => array( 'url' => 'https://www.youtube.com/watch?v=aqz-KE-bpKQ' ),
+			'button_url' => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpcard01',
 		'pro_pricing_card',
 		array(

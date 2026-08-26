@@ -91,6 +91,199 @@
   color: var(--pen-color-proenem-red, #bb0922);
 }
 
+/* Inside a card the surface is the card's, not the band's, so the button keeps
+   the default pairing. */
+.pro-sales-section--tone-brand .pro-sales-card .pro-sales-button--primary {
+  background: var(--pen-color-red, #e3062c);
+  color: var(--pen-color-white, #ffffff);
+}
+
+/* ---------------------------------------------------------------------------
+   Proenem LP widgets
+   --------------------------------------------------------------------------- */
+
+.pro-lp-metrics__grid {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-lp-metric {
+  align-content: start;
+  display: grid;
+  gap: var(--pen-space-2, 0.5rem);
+  text-align: center;
+}
+
+.pro-lp-metric__value {
+  font-family: var(--pen-font-display, inherit);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pro-lp-metric__label {
+  font-size: 1rem;
+  text-wrap: pretty;
+}
+
+.pro-lp-offer-highlight__card {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  justify-items: start;
+  margin-inline: auto;
+  max-width: 34rem;
+}
+
+.pro-lp-offer-highlight__name {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-lp-offer-highlight__summary {
+  margin: 0;
+}
+
+.pro-lp-offer-highlight__card .pro-sales-button {
+  justify-self: stretch;
+}
+
+.pro-lp-spotlight {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.pro-lp-spotlight--media-start .pro-lp-spotlight__content {
+  order: 2;
+}
+
+.pro-lp-spotlight--no-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-lp-spotlight__content {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  justify-items: start;
+}
+
+.pro-lp-spotlight__title {
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-lp-spotlight__bullets {
+  margin: 0;
+}
+
+.pro-lp-spotlight__media {
+  margin: 0;
+}
+
+.pro-lp-spotlight__media img {
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-xl, 1rem);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.pro-lp-video-story {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+}
+
+.pro-lp-video-story__content {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  justify-items: start;
+}
+
+.pro-lp-video-story__title {
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-lp-video-story__stage {
+  aspect-ratio: 16 / 9;
+  background: var(--pen-color-ink, #111827);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-xl, 1rem);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+  overflow: hidden;
+  position: relative;
+}
+
+.pro-lp-video-story__stage img,
+.pro-lp-video-story__stage iframe {
+  border: 0;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.pro-lp-video-story__play {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.pro-lp-video-story__play-icon {
+  align-items: center;
+  background: var(--pen-color-canvas-white, #ffffff);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: 50%;
+  display: flex;
+  height: 4.5rem;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  justify-content: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 4.5rem;
+}
+
+.pro-lp-video-story__play-icon::before {
+  border-block: 0.85rem solid transparent;
+  border-inline-start: 1.35rem solid var(--pen-color-proenem-red, #bb0922);
+  content: "";
+  display: block;
+  margin-inline-start: 0.35rem;
+}
+
+.pro-lp-video-story__play:focus-visible .pro-lp-video-story__play-icon,
+.pro-lp-video-story__play:hover .pro-lp-video-story__play-icon {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+}
+
+@media (max-width: 860px) {
+  .pro-lp-spotlight,
+  .pro-lp-video-story {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pro-lp-spotlight--media-start .pro-lp-spotlight__content {
+    order: 0;
+  }
+}
+
 /* Sales pages compose full width bands. Elementor containers default to a
    boxed content width, which would keep every band inset, so the gutter is
    released for the containers that host a Proenem section widget.
@@ -172,6 +365,7 @@
 
 .pro-sales-card {
   background: var(--pen-color-white, #ffffff);
+  color: var(--pen-color-ink, #111827);
   border: var(--pen-border-brand-sm, 2px solid #111827);
   border-radius: var(--pen-radius-lg, 0.75rem);
   box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);

@@ -39,6 +39,10 @@ function proenem_get_elementor_sales_widget_classes() {
 		'Proenem_Elementor_Home_Schools_Widget',
 		'Proenem_Elementor_Home_Final_Cta_Widget',
 		'Proenem_Elementor_Home_Faq_Widget',
+		'Proenem_Elementor_Lp_Metrics_Widget',
+		'Proenem_Elementor_Lp_Offer_Highlight_Widget',
+		'Proenem_Elementor_Lp_Spotlight_Widget',
+		'Proenem_Elementor_Lp_Video_Story_Widget',
 	);
 }
 

@@ -593,6 +593,21 @@ document.querySelectorAll("[data-pro-testimonial-play]").forEach((button) => {
   });
 });
 
+// Landing page video story: the embed is only requested after the click, so no
+// third party is contacted while the page loads.
+document.querySelectorAll("[data-pro-lp-video-play]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const embedUrl = button.dataset.embedUrl;
+    const stage = button.closest("[data-pro-lp-video]");
+
+    if (!embedUrl || !stage) {
+      return;
+    }
+
+    stage.replaceChildren(createTestimonialVideoIframe(embedUrl, button.getAttribute("aria-label") || ""));
+  });
+});
+
 document.querySelectorAll(".testimonials-card__video").forEach((link) => {
   const videoUrl = link.href;
   const youtubeId = getYouTubeVideoId(videoUrl);
