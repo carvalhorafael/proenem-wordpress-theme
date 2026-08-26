@@ -30,15 +30,36 @@
   margin: 0 0 var(--pen-space-8, 2rem);
 }
 
-/* Shared tone contract for the controlled sales sections.
-   The default tone renders no extra class, so existing sections keep the
-   current appearance. Full bleed bands stay a page level decision. */
+/* Shared section contract for the controlled sales sections.
+   The outer element is the band: it spans the full width of its container and
+   owns the background. The inner element keeps the content width. */
+.pro-sales-section {
+  margin-inline: 0;
+  max-width: none;
+  width: 100%;
+}
+
+/* The band owns the page gutter, because releasing the Elementor container
+   gutter would otherwise push the content against the viewport edge. */
+.pro-sales-section {
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.pro-sales-section__inner {
+  margin-inline: auto;
+}
+
+/* Tone paints the band and adds its vertical rhythm. The default tone renders
+   no class at all. */
 .pro-sales-section--tone-surface,
 .pro-sales-section--tone-brand {
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-lg, 0.75rem);
   padding-block: clamp(2.5rem, 6vw, 4.5rem);
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+/* The band already provides the vertical rhythm of a toned section. */
+.pro-sales-section--tone-surface > .pro-sales-hero,
+.pro-sales-section--tone-brand > .pro-sales-hero {
+  padding-block: 0;
 }
 
 .pro-sales-section--tone-surface {
@@ -54,6 +75,28 @@
 .pro-sales-section--tone-brand .pro-sales-badge {
   background: var(--pen-color-yellow-brand, #ffe45c);
   color: var(--pen-color-ink, #111827);
+}
+
+/* Sales pages compose full width bands. Elementor containers default to a
+   boxed content width, which would keep every band inset, so the gutter is
+   released for the containers that host a Proenem section widget.
+   Scoped to the sales_page CPT and to those containers only. */
+.single-sales_page .e-con:has(> .e-con-inner > .pro-section-host) {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.single-sales_page .e-con-inner:has(> .pro-section-host) {
+  margin-inline: 0;
+  max-width: none;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+/* The first band of a sales page sits flush against the top of the document. */
+.single-sales_page .elementor > .e-con:first-child,
+.single-sales_page .elementor > .e-con:first-child > .e-con-inner {
+  padding-block-start: 0;
 }
 
 .pro-sales-eyebrow,

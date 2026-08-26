@@ -264,3 +264,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: registrar a categoria `proenem-lp` e criar `Proenem_Elementor_Lp_Widget_Base` como base dos widgets `pro_lp_*`; remover o keyword `lp` dos widgets da home.
 - Fronteira: `proenem-sales` continua registrando os widgets ja publicados, incluindo as secoes da home, para nao quebrar paginas existentes.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Secoes de LP com sangria total
+
+- Contexto: na homologacao da Fase 1, hero, CTA final e FAQ renderizaram com 1140 px em viewport de 1280 px, comecando em `left=70`. O recuo vinha do `.e-con-inner` do Elementor (`max-width: min(100%, 1140px)` e `margin-inline: 60px`) somado ao `padding: 10px` do container, e o modificador `tone` aplicava borda e canto arredondado, o que fazia a faixa ler como card emoldurado.
+- Decisao: separar faixa de conteudo. `.pro-sales-section` ocupa 100% da largura e e dona do fundo e do gutter; `.pro-sales-section__inner` mantem a largura de conteudo. `tone` perde borda e raio.
+- Decisao: em `sales_page`, liberar o gutter do container do Elementor a partir do marcador `pro-section-host`, aplicado pelos widgets que representam secao de pagina. Tambem zerar a contribuicao vertical do container entre faixas e o offset superior da primeira faixa.
+- Alternativa descartada: resolver apenas no template kit da Fase 4, com containers full width por configuracao. Nao atende pagina montada a mao pelo time, que e o fluxo esperado.
+- Risco aceito: o tema sobrepoe a largura do container do page builder em `sales_page`. Quem escolher container boxed de proposito para uma secao da Proenem nao sera atendido. Mitigacao: o override alcanca apenas containers que hospedam diretamente um widget marcado como secao.
+- Gap do design system: os pacotes publicados nao trazem contrato de banda de sangria total, classe de container nem token de largura de conteudo; o pacote resolve casos parecidos com margem negativa local dentro de componentes. A cola fica local no tema.
+- Fronteira: `pro_pricing_card` declara `is_section_host()` como falso e continua se comportando como card.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#200`; gap do design system registrado em `carvalhorafael/proenem-wordpress-theme#198`.

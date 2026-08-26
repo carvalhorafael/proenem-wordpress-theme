@@ -136,7 +136,8 @@ Disponivel em `Proenem_Elementor_Sales_Widget_Base` e usado pelos widgets de ven
 | `add_section_header_controls()` | registra `eyebrow`, `title` e `body`; cada chave e opcional, entao o widget mantem a ordem de painel que ja tinha |
 | `add_section_layout_controls()` | abre um painel `Seção` com `tone` e `anchor_id` |
 | `add_section_anchor_control()` | registra apenas `anchor_id`, com default para secoes que ja tem ancora publicada |
-| `add_section_render_attributes()` | monta classe, ancora e `aria-labelledby` do wrapper da secao |
+| `add_section_render_attributes()` | monta a faixa (`<key>`) e o wrapper de conteudo (`<key>_inner`) com classe, ancora e `aria-labelledby` |
+| `is_section_host()` | declara se o widget representa uma secao de pagina; controla o marcador `pro-section-host` |
 | `render_section_header()` | imprime selo, titulo e texto com o id de heading unico |
 | `section_heading_id()` | id de heading derivado do id do widget Elementor |
 | `section_anchor()` | ancora saneada da instancia, com fallback |
@@ -144,11 +145,28 @@ Disponivel em `Proenem_Elementor_Sales_Widget_Base` e usado pelos widgets de ven
 
 Valores de `tone`:
 
-- `default`: nenhuma classe extra, a secao mantem a aparencia atual;
+- `default`: nenhuma classe extra, a faixa nao recebe fundo nem ritmo vertical proprio;
 - `surface`: fundo `--pen-color-surface`, que alterna contra o canvas `--pen-color-background` da pagina;
 - `brand`: fundo `--pen-color-proenem-red` com texto `--pen-color-on-red`.
 
-Fronteira: `tone` pinta uma faixa contida na largura maxima do widget. Faixa de sangria total e decisao da camada de pagina, na Fase 4.
+Faixa nao tem borda nem canto arredondado. Borda e raio faziam a secao ler como card emoldurado.
+
+### Sangria total
+
+Implementada na Fase 1.1 (`#200`).
+
+A secao e composta em duas camadas:
+
+- `.pro-sales-section` e a faixa. Ocupa 100% da largura do container, e dona do fundo e do gutter da pagina;
+- `.pro-sales-section__inner` e o conteudo. Mantem `max-width` e fica centralizado.
+
+Os widgets que representam secao de pagina recebem o marcador `pro-section-host` no wrapper Elementor, via `get_html_wrapper_class()`. Em `sales_page`, o tema usa esse marcador com `:has()` para liberar o gutter do container do Elementor, que por padrao e boxed em 1140 px. Tambem zera a contribuicao vertical do container, para que faixas vizinhas nao fiquem separadas por costura de canvas, e zera o offset superior da primeira faixa, para o hero encostar no topo.
+
+`pro_pricing_card` declara `is_section_host()` como falso: e card para compor dentro de coluna, nao secao de pagina.
+
+Risco aceito: em `sales_page`, o tema sobrepoe a largura do container do Elementor. Quem escolher container boxed de proposito para uma secao da Proenem nao sera atendido. O override alcanca apenas containers que hospedam diretamente um widget marcado como secao.
+
+Medido em `/lp/homologacao-widgets-lp/`: em 1280 px, as oito faixas medem 1280 px a partir de `left=0`, com conteudo em `left=48` e 1184 px; em 390 px, as faixas medem 390 px com conteudo em `left=20` e 350 px, sem overflow horizontal. `pro_pricing_card` permanece em `left=70` com 1140 px.
 
 ### Ancoras dos widgets da home
 

@@ -137,6 +137,20 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpcard01',
+		'pro_pricing_card',
+		array(
+			'badge'        => 'Card, nao secao',
+			'name'         => 'Turma Intensiva ENEM 2026',
+			'description'  => 'Deve continuar delimitado como card, sem sangria total.',
+			'price'        => 'R$ 29,90',
+			'recurrence'   => 'por mes',
+			'features'     => "Cronograma semanal\nCorrecao de redacao",
+			'button_label' => 'Garantir minha vaga',
+			'button_url'   => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lphmfaq01',
 		'pro_home_faq',
 		array(

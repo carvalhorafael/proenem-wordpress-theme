@@ -83,6 +83,34 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	}
 
 	/**
+	 * Whether this widget renders a full width page section.
+	 *
+	 * Section hosts get the `pro-section-host` marker so the theme can release
+	 * the Elementor container gutter on sales pages. Widgets meant to be
+	 * composed inside a column, like the pricing card, return false.
+	 *
+	 * @return bool
+	 */
+	protected function is_section_host(): bool {
+		return true;
+	}
+
+	/**
+	 * Add the section host marker to the Elementor widget wrapper.
+	 *
+	 * @return string
+	 */
+	public function get_html_wrapper_class(): string {
+		$class_name = parent::get_html_wrapper_class();
+
+		if ( $this->is_section_host() ) {
+			$class_name .= ' pro-section-host';
+		}
+
+		return $class_name;
+	}
+
+	/**
 	 * Build a DOM id scoped to this widget instance.
 	 *
 	 * Elementor renders the same widget more than once per page, so ids that
@@ -248,6 +276,10 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	/**
 	 * Register the shared attributes of a widget section wrapper.
 	 *
+	 * The outer element is the band: it spans the full width and owns the
+	 * background. The `<key>_inner` element carries the layout classes the
+	 * widget already used and keeps the content width.
+	 *
 	 * @param array  $settings Widget settings.
 	 * @param string $class_name Widget specific section class.
 	 * @param bool   $has_title Whether the section renders its own heading.
@@ -255,7 +287,8 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	 * @return string
 	 */
 	protected function add_section_render_attributes( $settings, $class_name, $has_title = true, $key = 'section' ) {
-		$this->add_render_attribute( $key, 'class', array( 'pro-sales-widget', 'pro-sales-section', $class_name ) );
+		$this->add_render_attribute( $key, 'class', 'pro-sales-section' );
+		$this->add_render_attribute( $key . '_inner', 'class', array( 'pro-sales-widget', 'pro-sales-section__inner', $class_name ) );
 
 		$tone = isset( $settings['tone'] ) ? (string) $settings['tone'] : '';
 
@@ -674,30 +707,32 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		$this->add_section_render_attributes( $settings, 'pro-sales-hero', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-				<div class="pro-sales-hero__content">
-				<?php
-				$this->render_section_header(
-					$settings,
-					array(
-						'title_class' => 'pro-sales-hero__title',
-						'body_tag'    => 'div',
-						'body_class'  => 'pro-sales-hero__body',
-						'body_html'   => true,
-					)
-				);
-				?>
-					<div class="pro-sales-actions">
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+					<div class="pro-sales-hero__content">
 					<?php
-					$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pro-sales-button pro-sales-button--primary' );
-					$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pro-sales-button pro-sales-button--secondary' );
+					$this->render_section_header(
+						$settings,
+						array(
+							'title_class' => 'pro-sales-hero__title',
+							'body_tag'    => 'div',
+							'body_class'  => 'pro-sales-hero__body',
+							'body_html'   => true,
+						)
+					);
 					?>
+						<div class="pro-sales-actions">
+						<?php
+						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pro-sales-button pro-sales-button--primary' );
+						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pro-sales-button pro-sales-button--secondary' );
+						?>
+						</div>
 					</div>
+					<?php if ( $image_url ) : ?>
+						<figure class="pro-sales-hero__media">
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="">
+						</figure>
+					<?php endif; ?>
 				</div>
-				<?php if ( $image_url ) : ?>
-					<figure class="pro-sales-hero__media">
-						<img src="<?php echo esc_url( $image_url ); ?>" alt="">
-					</figure>
-				<?php endif; ?>
 			</section>
 			<?php
 	}
@@ -776,14 +811,16 @@ class Proenem_Elementor_Offer_Countdown_Widget extends Proenem_Elementor_Sales_W
 		$this->add_section_render_attributes( $settings, 'pro-sales-countdown', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-				<div>
-				<?php $this->render_section_header( $settings ); ?>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+					<div>
+					<?php $this->render_section_header( $settings ); ?>
+					</div>
+				<?php if ( ! empty( $settings['deadline'] ) ) : ?>
+						<time class="pro-sales-countdown__date" datetime="<?php echo esc_attr( $settings['deadline'] ); ?>">
+							<?php echo esc_html( $settings['deadline'] ); ?>
+						</time>
+					<?php endif; ?>
 				</div>
-			<?php if ( ! empty( $settings['deadline'] ) ) : ?>
-					<time class="pro-sales-countdown__date" datetime="<?php echo esc_attr( $settings['deadline'] ); ?>">
-						<?php echo esc_html( $settings['deadline'] ); ?>
-					</time>
-				<?php endif; ?>
 			</section>
 			<?php
 	}
@@ -921,38 +958,40 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 		$this->add_section_render_attributes( $settings, 'pro-sales-pricing', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-			<?php $this->render_section_header( $settings ); ?>
-				<div class="pro-sales-pricing__grid">
-				<?php foreach ( $plans as $index => $plan ) : ?>
-						<article class="pro-sales-card pro-sales-plan">
-							<?php if ( ! empty( $plan['badge'] ) ) : ?>
-								<p class="pro-sales-badge"><?php echo esc_html( $plan['badge'] ); ?></p>
-							<?php endif; ?>
-							<h3><?php echo esc_html( $plan['name'] ?? '' ); ?></h3>
-							<p class="pro-sales-plan__price">
-								<span><?php echo esc_html( $plan['price'] ?? '' ); ?></span>
-								<?php if ( ! empty( $plan['recurrence'] ) ) : ?>
-									<small><?php echo esc_html( $plan['recurrence'] ); ?></small>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+				<?php $this->render_section_header( $settings ); ?>
+					<div class="pro-sales-pricing__grid">
+					<?php foreach ( $plans as $index => $plan ) : ?>
+							<article class="pro-sales-card pro-sales-plan">
+								<?php if ( ! empty( $plan['badge'] ) ) : ?>
+									<p class="pro-sales-badge"><?php echo esc_html( $plan['badge'] ); ?></p>
 								<?php endif; ?>
-							</p>
-							<?php $features = $this->split_lines( $plan['features'] ?? '' ); ?>
-							<?php if ( $features ) : ?>
-								<ul class="pro-sales-list">
-									<?php foreach ( $features as $feature ) : ?>
-										<li><?php echo esc_html( $feature ); ?></li>
-									<?php endforeach; ?>
-								</ul>
-							<?php endif; ?>
-							<?php
-							$this->render_link(
-								'plan_button_' . $index,
-								$plan['button_url'] ?? array(),
-								$plan['button_label'] ?? '',
-								'pro-sales-button pro-sales-button--primary'
-							);
-							?>
-						</article>
-					<?php endforeach; ?>
+								<h3><?php echo esc_html( $plan['name'] ?? '' ); ?></h3>
+								<p class="pro-sales-plan__price">
+									<span><?php echo esc_html( $plan['price'] ?? '' ); ?></span>
+									<?php if ( ! empty( $plan['recurrence'] ) ) : ?>
+										<small><?php echo esc_html( $plan['recurrence'] ); ?></small>
+									<?php endif; ?>
+								</p>
+								<?php $features = $this->split_lines( $plan['features'] ?? '' ); ?>
+								<?php if ( $features ) : ?>
+									<ul class="pro-sales-list">
+										<?php foreach ( $features as $feature ) : ?>
+											<li><?php echo esc_html( $feature ); ?></li>
+										<?php endforeach; ?>
+									</ul>
+								<?php endif; ?>
+								<?php
+								$this->render_link(
+									'plan_button_' . $index,
+									$plan['button_url'] ?? array(),
+									$plan['button_label'] ?? '',
+									'pro-sales-button pro-sales-button--primary'
+								);
+								?>
+							</article>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</section>
 			<?php
@@ -963,6 +1002,15 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 	 * Pro pricing card widget.
 	 */
 class Proenem_Elementor_Pricing_Card_Widget extends Proenem_Elementor_Sales_Widget_Base {
+	/**
+	 * This widget is a card meant to be composed inside a column.
+	 *
+	 * @return bool
+	 */
+	protected function is_section_host(): bool {
+		return false;
+	}
+
 	/**
 	 * Get widget name.
 	 *
@@ -1193,17 +1241,19 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 		$this->add_section_render_attributes( $settings, 'pro-sales-benefits', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-			<?php $this->render_section_header( $settings ); ?>
-				<div class="pro-sales-benefits__grid">
-				<?php foreach ( $items as $item ) : ?>
-						<article class="pro-sales-card pro-sales-benefit">
-							<span aria-hidden="true">✓</span>
-							<h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
-							<?php if ( ! empty( $item['body'] ) ) : ?>
-								<p><?php echo esc_html( $item['body'] ); ?></p>
-							<?php endif; ?>
-						</article>
-					<?php endforeach; ?>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+				<?php $this->render_section_header( $settings ); ?>
+					<div class="pro-sales-benefits__grid">
+					<?php foreach ( $items as $item ) : ?>
+							<article class="pro-sales-card pro-sales-benefit">
+								<span aria-hidden="true">✓</span>
+								<h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
+								<?php if ( ! empty( $item['body'] ) ) : ?>
+									<p><?php echo esc_html( $item['body'] ); ?></p>
+								<?php endif; ?>
+							</article>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</section>
 			<?php
@@ -1309,29 +1359,31 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 		$this->add_section_render_attributes( $settings, 'pro-sales-comparison', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-			<?php $this->render_section_header( $settings ); ?>
-				<div class="pro-sales-comparison__scroll">
-					<table>
-						<thead>
-							<tr>
-								<th><?php esc_html_e( 'Recurso', 'proenem-wordpress-theme' ); ?></th>
-							<?php foreach ( $columns as $column ) : ?>
-									<th><?php echo esc_html( $column ); ?></th>
-								<?php endforeach; ?>
-							</tr>
-						</thead>
-						<tbody>
-						<?php foreach ( $rows as $row ) : ?>
-								<?php $values = $this->split_lines( $row['values'] ?? '' ); ?>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+				<?php $this->render_section_header( $settings ); ?>
+					<div class="pro-sales-comparison__scroll">
+						<table>
+							<thead>
 								<tr>
-									<th scope="row"><?php echo esc_html( $row['feature'] ?? '' ); ?></th>
-									<?php foreach ( $columns as $index => $column ) : ?>
-										<td><?php echo esc_html( $values[ $index ] ?? '' ); ?></td>
+									<th><?php esc_html_e( 'Recurso', 'proenem-wordpress-theme' ); ?></th>
+								<?php foreach ( $columns as $column ) : ?>
+										<th><?php echo esc_html( $column ); ?></th>
 									<?php endforeach; ?>
 								</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+							<?php foreach ( $rows as $row ) : ?>
+									<?php $values = $this->split_lines( $row['values'] ?? '' ); ?>
+									<tr>
+										<th scope="row"><?php echo esc_html( $row['feature'] ?? '' ); ?></th>
+										<?php foreach ( $columns as $index => $column ) : ?>
+											<td><?php echo esc_html( $values[ $index ] ?? '' ); ?></td>
+										<?php endforeach; ?>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 			<?php
@@ -1419,10 +1471,12 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 		$this->add_section_render_attributes( $settings, 'pro-sales-cta', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-				<div>
-				<?php $this->render_section_header( $settings, array( 'title_class' => '' ) ); ?>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+					<div>
+					<?php $this->render_section_header( $settings, array( 'title_class' => '' ) ); ?>
+					</div>
+				<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
 				</div>
-			<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
 			</section>
 			<?php
 	}
@@ -1517,14 +1571,16 @@ class Proenem_Elementor_Faq_Widget extends Proenem_Elementor_Sales_Widget_Base {
 		$this->add_section_render_attributes( $settings, 'pro-sales-faq', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
-			<?php $this->render_section_header( $settings ); ?>
-				<div class="pro-sales-faq__items">
-				<?php foreach ( $items as $item ) : ?>
-						<details class="pro-sales-faq__item">
-							<summary><?php echo esc_html( $item['question'] ?? '' ); ?></summary>
-							<div><?php echo wp_kses_post( $item['answer'] ?? '' ); ?></div>
-						</details>
-					<?php endforeach; ?>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+				<?php $this->render_section_header( $settings ); ?>
+					<div class="pro-sales-faq__items">
+					<?php foreach ( $items as $item ) : ?>
+							<details class="pro-sales-faq__item">
+								<summary><?php echo esc_html( $item['question'] ?? '' ); ?></summary>
+								<div><?php echo wp_kses_post( $item['answer'] ?? '' ); ?></div>
+							</details>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</section>
 			<?php
