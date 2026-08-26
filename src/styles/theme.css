@@ -612,19 +612,21 @@
   display: grid;
   gap: var(--pen-space-4, 1rem);
   justify-items: center;
-  max-width: 46rem;
 }
 
+/* O titulo usa a largura toda e nao recebe quebra do layout. A quebra e
+   decisao editorial: uma nova linha digitada no campo e respeitada. */
 .pro-sales-cta__title {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   line-height: 1.02;
   margin: 0;
-  text-wrap: balance;
+  white-space: pre-line;
 }
 
 .pro-sales-cta__body {
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   margin: 0;
+  max-width: 46rem;
 }
 
 .pro-sales-button--lg {

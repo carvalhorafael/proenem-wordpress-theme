@@ -213,7 +213,7 @@ $elementor_data = array(
 		'pro_cta',
 		array(
 			'eyebrow'      => 'A reta final comecou',
-			'title'        => 'CTA final com ancora oferta',
+			'title'        => "Voce nao vai chegar no ENEM 2026\nsem plano de novo.",
 			'body'         => 'Destino da ancora usada pelo hero.',
 			'button_label' => 'Garantir minha vaga',
 			'button_url'   => array( 'url' => '#oferta' ),
