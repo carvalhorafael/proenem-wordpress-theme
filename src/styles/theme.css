@@ -71,10 +71,24 @@
   color: var(--pen-color-on-red, #ffffff);
 }
 
+/* The content wrapper carries its own color guarantee for untoned sections.
+   Inside a toned band the pairing comes from the band. */
+.pro-sales-section--tone-surface > .pro-sales-widget,
+.pro-sales-section--tone-brand > .pro-sales-widget {
+  color: inherit;
+}
+
 .pro-sales-section--tone-brand .pro-sales-eyebrow,
 .pro-sales-section--tone-brand .pro-sales-badge {
   background: var(--pen-color-yellow-brand, #ffe45c);
   color: var(--pen-color-ink, #111827);
+}
+
+/* A red primary button on the brand band has no contrast against it, so the
+   call to action inverts. */
+.pro-sales-section--tone-brand .pro-sales-button--primary {
+  background: var(--pen-color-canvas-white, #ffffff);
+  color: var(--pen-color-proenem-red, #bb0922);
 }
 
 /* Sales pages compose full width bands. Elementor containers default to a
