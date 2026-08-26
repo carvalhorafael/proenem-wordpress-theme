@@ -262,6 +262,35 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpmetrics03',
+		'pro_lp_metrics',
+		array(
+			'title' => 'Metricas com selo em faixa de marca',
+			'body'  => 'Valida o par de cores do selo do icone sobre o vermelho.',
+			'tone'  => 'brand',
+			'items' => array(
+				array(
+					'_id'   => 'b1',
+					'icon'  => array(
+						'value'   => 'fas fa-trophy',
+						'library' => 'fa-solid',
+					),
+					'value' => '+44.000',
+					'label' => 'alunos aprovados',
+				),
+				array(
+					'_id'   => 'b2',
+					'icon'  => array(
+						'value'   => 'fas fa-star',
+						'library' => 'fa-solid',
+					),
+					'value' => '4,9/5',
+					'label' => 'avaliacao media',
+				),
+			),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpmetrics02',
 		'pro_lp_metrics',
 		array(

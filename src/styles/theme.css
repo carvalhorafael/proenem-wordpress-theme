@@ -292,22 +292,34 @@
 .pro-lp-metric {
   align-content: start;
   display: grid;
-  gap: var(--pen-space-2, 0.5rem);
+  gap: var(--pen-space-3, 0.75rem);
+  justify-items: center;
   text-align: center;
 }
 
+/* O icone vira selo com a superficie amarela da marca. A cor do glifo e
+   declarada aqui porque, sem isso, dentro da faixa de marca ele herdaria o
+   texto claro e desapareceria sobre o amarelo. */
 .pro-lp-metric__icon {
   align-items: center;
+  background: var(--pen-color-yellow-brand, #ffe45c);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--pen-color-ink, #111827);
+  color: var(--pen-color-ink, #111827);
   display: inline-flex;
-  font-size: 3rem;
+  font-size: 2.25rem;
+  height: 4.5rem;
   justify-content: center;
   line-height: 1;
   margin-inline: auto;
+  width: 4.5rem;
 }
 
 .pro-lp-metric__icon svg {
-  height: 3rem;
-  width: 3rem;
+  fill: currentcolor;
+  height: 2.25rem;
+  width: 2.25rem;
 }
 
 .pro-lp-metric__value {
