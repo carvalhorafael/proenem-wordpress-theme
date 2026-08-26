@@ -227,8 +227,38 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 					'default' => esc_html__( 'Transparente', 'proenem-wordpress-theme' ),
 					'surface' => esc_html__( 'Superfície', 'proenem-wordpress-theme' ),
 					'brand'   => esc_html__( 'Marca', 'proenem-wordpress-theme' ),
+					'image'   => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
 				),
-				'description' => esc_html__( 'Usa as cores publicadas da Proenem em vez de cor livre.', 'proenem-wordpress-theme' ),
+				'description' => esc_html__( 'As três primeiras opções usam as cores publicadas da Proenem em vez de cor livre.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
+			'tone_image',
+			array(
+				'label'     => esc_html__( 'Imagem de fundo', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::MEDIA,
+				'condition' => array(
+					'tone' => 'image',
+				),
+			)
+		);
+
+		$this->add_control(
+			'tone_scrim',
+			array(
+				'label'       => esc_html__( 'Camada de leitura', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'dark',
+				'options'     => array(
+					'dark'  => esc_html__( 'Escurecer a imagem, texto claro', 'proenem-wordpress-theme' ),
+					'light' => esc_html__( 'Clarear a imagem, texto escuro', 'proenem-wordpress-theme' ),
+					'none'  => esc_html__( 'Sem camada', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'A imagem não garante contraste sozinha. Sem camada, confira a legibilidade do texto.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'tone' => 'image',
+				),
 			)
 		);
 
@@ -364,6 +394,115 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	}
 
 	/**
+	 * Register the controls of a video facade.
+	 *
+	 * @param array $args {
+	 *     Optional.
+	 *
+	 *     @type string $prefix    Control name prefix.
+	 *     @type array  $condition Elementor condition applied to every control.
+	 * }
+	 * @return void
+	 */
+	protected function add_video_facade_controls( array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'prefix'    => '',
+				'condition' => array(),
+			)
+		);
+
+		$prefix    = $args['prefix'];
+		$condition = $args['condition'];
+
+		$this->add_control(
+			$prefix . 'video_url',
+			array(
+				'label'       => esc_html__( 'Link do vídeo', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::URL,
+				'description' => esc_html__( 'O vídeo só é carregado depois que a pessoa clica em reproduzir.', 'proenem-wordpress-theme' ),
+				'condition'   => $condition,
+			)
+		);
+		$this->add_control(
+			$prefix . 'poster',
+			array(
+				'label'       => esc_html__( 'Imagem de capa', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::MEDIA,
+				'description' => esc_html__( 'Use uma imagem da própria biblioteca. Sem capa local, nenhuma imagem externa é carregada antes do clique.', 'proenem-wordpress-theme' ),
+				'condition'   => $condition,
+			)
+		);
+		$this->add_control(
+			$prefix . 'poster_alt',
+			array(
+				'label'       => esc_html__( 'Texto alternativo da capa', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'condition'   => $condition,
+			)
+		);
+		$this->add_control(
+			$prefix . 'play_label',
+			array(
+				'label'     => esc_html__( 'Rótulo do botão de reproduzir', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Reproduzir o vídeo', 'proenem-wordpress-theme' ),
+				'condition' => $condition,
+			)
+		);
+	}
+
+	/**
+	 * Render a video facade.
+	 *
+	 * The provider embed is only requested after the click, so no third party is
+	 * contacted while the page loads.
+	 *
+	 * @param array  $settings Widget settings.
+	 * @param string $prefix Control name prefix.
+	 * @param string $class_name Stage class.
+	 * @return void
+	 */
+	protected function render_video_facade( $settings, $prefix = '', $class_name = 'pro-sales-video-stage' ) {
+		$video_url  = $settings[ $prefix . 'video_url' ]['url'] ?? '';
+		$embed_url  = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
+		$poster_url = ! empty( $settings[ $prefix . 'poster' ]['url'] ) && ! $this->is_elementor_placeholder( $settings[ $prefix . 'poster' ]['url'] )
+			? $settings[ $prefix . 'poster' ]['url']
+			: '';
+		$play_label = trim( (string) ( $settings[ $prefix . 'play_label' ] ?? '' ) );
+
+		if ( '' === $play_label ) {
+			$play_label = esc_html__( 'Reproduzir o vídeo', 'proenem-wordpress-theme' );
+		}
+
+		if ( '' === $embed_url && '' === $poster_url ) {
+			return;
+		}
+		?>
+		<div class="<?php echo esc_attr( $class_name ); ?>" data-pro-lp-video>
+			<?php if ( $embed_url ) : ?>
+				<button
+					class="pro-sales-video-stage__play"
+					type="button"
+					data-pro-lp-video-play
+					data-embed-url="<?php echo esc_url( $embed_url ); ?>"
+					aria-label="<?php echo esc_attr( $play_label ); ?>"
+				>
+					<?php if ( $poster_url ) : ?>
+						<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $settings[ $prefix . 'poster_alt' ] ?? '' ); ?>" loading="lazy" decoding="async">
+					<?php endif; ?>
+					<span class="pro-sales-video-stage__icon" aria-hidden="true"></span>
+				</button>
+			<?php else : ?>
+				<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $settings[ $prefix . 'poster_alt' ] ?? '' ); ?>" loading="lazy" decoding="async">
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Register a heading level control for the section title.
 	 *
 	 * A landing page needs exactly one `h1`, and which section owns it is an
@@ -454,10 +593,25 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		$this->add_render_attribute( $key, 'class', 'pro-sales-section' );
 		$this->add_render_attribute( $key . '_inner', 'class', array( 'pro-sales-widget', 'pro-sales-section__inner', $class_name ) );
 
-		$tone = isset( $settings['tone'] ) ? (string) $settings['tone'] : '';
+		$tone       = isset( $settings['tone'] ) ? (string) $settings['tone'] : '';
+		$tone_image = ! empty( $settings['tone_image']['url'] ) && ! $this->is_elementor_placeholder( $settings['tone_image']['url'] )
+			? $settings['tone_image']['url']
+			: '';
+
+		if ( 'image' === $tone && '' === $tone_image ) {
+			$tone = 'default';
+		}
 
 		if ( '' !== $tone && 'default' !== $tone ) {
 			$this->add_render_attribute( $key, 'class', 'pro-sales-section--tone-' . sanitize_html_class( $tone ) );
+		}
+
+		if ( 'image' === $tone ) {
+			$scrim = isset( $settings['tone_scrim'] ) ? (string) $settings['tone_scrim'] : 'dark';
+			$scrim = in_array( $scrim, array( 'dark', 'light', 'none' ), true ) ? $scrim : 'dark';
+
+			$this->add_render_attribute( $key, 'class', 'pro-sales-section--scrim-' . $scrim );
+			$this->add_render_attribute( $key, 'style', '--pro-sales-section-image: url(' . esc_url( $tone_image ) . ');' );
 		}
 
 		$anchor = $this->section_anchor( $settings );
@@ -932,21 +1086,47 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 			)
 		);
 		$this->add_control(
+			'side_content',
+			array(
+				'label'       => esc_html__( 'Conteúdo ao lado do texto', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'cards',
+				'options'     => array(
+					'cards' => esc_html__( 'Cards de prova', 'proenem-wordpress-theme' ),
+					'image' => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
+					'video' => esc_html__( 'Vídeo', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'Para imagem de fundo da seção, use Fundo da seção no painel Seção.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
 			'image',
 			array(
-				'label' => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::MEDIA,
+				'label'     => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::MEDIA,
+				'condition' => array(
+					'side_content' => 'image',
+				),
 			)
 		);
 		$this->add_control(
-			'media_mode',
+			'image_alt',
 			array(
-				'label'   => esc_html__( 'Uso da imagem', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::SELECT,
-				'default' => 'side',
-				'options' => array(
-					'side'       => esc_html__( 'Ao lado do texto', 'proenem-wordpress-theme' ),
-					'background' => esc_html__( 'Fundo da seção', 'proenem-wordpress-theme' ),
+				'label'       => esc_html__( 'Texto alternativo da imagem', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'description' => esc_html__( 'Deixe vazio quando a imagem for apenas decorativa.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+				'condition'   => array(
+					'side_content' => 'image',
+				),
+			)
+		);
+
+		$this->add_video_facade_controls(
+			array(
+				'condition' => array(
+					'side_content' => 'video',
 				),
 			)
 		);
@@ -978,6 +1158,9 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 				'title_field' => '{{{ label }}}',
 				'default'     => array(),
 				'description' => esc_html__( 'Cartões curtos que mostram o produto em uso.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'side_content' => 'cards',
+				),
 			)
 		);
 
@@ -992,25 +1175,22 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 	 * @return void
 	 */
 	protected function render(): void {
-		$settings    = $this->get_settings_for_display();
-		$image_url   = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : '';
-		$is_backdrop = 'background' === ( $settings['media_mode'] ?? 'side' ) && '' !== $image_url;
-		$proof_cards = ! empty( $settings['proof_cards'] ) && is_array( $settings['proof_cards'] ) ? $settings['proof_cards'] : array();
-		$class_name  = 'pro-sales-hero';
+		$settings     = $this->get_settings_for_display();
+		$side_content = $settings['side_content'] ?? 'cards';
+		$image_url    = ! empty( $settings['image']['url'] ) && ! $this->is_elementor_placeholder( $settings['image']['url'] )
+			? $settings['image']['url']
+			: '';
+		$proof_cards  = ! empty( $settings['proof_cards'] ) && is_array( $settings['proof_cards'] ) ? $settings['proof_cards'] : array();
+		$has_side     = ( 'cards' === $side_content && $proof_cards )
+			|| ( 'image' === $side_content && '' !== $image_url )
+			|| ( 'video' === $side_content && ( ! empty( $settings['video_url']['url'] ) || ! empty( $settings['poster']['url'] ) ) );
+		$class_name   = 'pro-sales-hero';
 
-		if ( $is_backdrop ) {
-			$class_name .= ' pro-sales-hero--backdrop';
-		}
-
-		if ( ! $is_backdrop && '' === $image_url && ! $proof_cards ) {
+		if ( ! $has_side ) {
 			$class_name .= ' pro-sales-hero--no-media';
 		}
 
 		$this->add_section_render_attributes( $settings, $class_name, ! empty( $settings['title'] ) );
-
-		if ( $is_backdrop ) {
-			$this->add_render_attribute( 'section', 'style', '--pro-sales-hero-backdrop: url(' . esc_url( $image_url ) . ');' );
-		}
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
@@ -1037,7 +1217,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 							<p class="pro-sales-hero__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>
 					</div>
-					<?php if ( $proof_cards ) : ?>
+					<?php if ( 'cards' === $side_content && $proof_cards ) : ?>
 						<ul class="pro-sales-hero__proof">
 						<?php foreach ( $proof_cards as $proof_card ) : ?>
 							<?php if ( empty( $proof_card['label'] ) && empty( $proof_card['value'] ) ) : ?>
@@ -1049,10 +1229,12 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 								</li>
 							<?php endforeach; ?>
 						</ul>
-					<?php elseif ( $image_url && ! $is_backdrop ) : ?>
+					<?php elseif ( 'image' === $side_content && $image_url ) : ?>
 						<figure class="pro-sales-hero__media">
-							<img src="<?php echo esc_url( $image_url ); ?>" alt="">
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $settings['image_alt'] ?? '' ); ?>">
 						</figure>
+					<?php elseif ( 'video' === $side_content ) : ?>
+						<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-sales-hero__video' ); ?>
 					<?php endif; ?>
 				</div>
 			</section>

@@ -533,38 +533,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 			)
 		);
 
-		$this->add_control(
-			'video_url',
-			array(
-				'label'       => esc_html__( 'Link do vídeo', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::URL,
-				'description' => esc_html__( 'O vídeo só é carregado depois que a pessoa clica em reproduzir.', 'proenem-wordpress-theme' ),
-			)
-		);
-		$this->add_control(
-			'poster',
-			array(
-				'label'       => esc_html__( 'Imagem de capa', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::MEDIA,
-				'description' => esc_html__( 'Use uma imagem da própria biblioteca. Sem capa local, nenhuma imagem externa é carregada antes do clique.', 'proenem-wordpress-theme' ),
-			)
-		);
-		$this->add_control(
-			'poster_alt',
-			array(
-				'label'       => esc_html__( 'Texto alternativo da capa', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::TEXT,
-				'label_block' => true,
-			)
-		);
-		$this->add_control(
-			'play_label',
-			array(
-				'label'   => esc_html__( 'Rótulo do botão de reproduzir', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Reproduzir o depoimento', 'proenem-wordpress-theme' ),
-			)
-		);
+		$this->add_video_facade_controls();
 		$this->add_control(
 			'button_label',
 			array(
@@ -592,16 +561,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 	 * @return void
 	 */
 	protected function render(): void {
-		$settings   = $this->get_settings_for_display();
-		$video_url  = $settings['video_url']['url'] ?? '';
-		$embed_url  = $video_url ? proenem_get_testimonial_video_embed_url( $video_url ) : '';
-		$poster_url = ! empty( $settings['poster']['url'] ) ? $settings['poster']['url'] : '';
-		$play_label = $settings['play_label'] ?? '';
-
-		if ( '' === trim( (string) $play_label ) ) {
-			$play_label = esc_html__( 'Reproduzir o depoimento', 'proenem-wordpress-theme' );
-		}
-
+		$settings = $this->get_settings_for_display();
 		$this->add_section_render_attributes( $settings, 'pro-lp-video-story', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
@@ -610,24 +570,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 					<?php $this->render_section_header( $settings, array( 'title_class' => 'pro-lp-video-story__title' ) ); ?>
 					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--primary' ); ?>
 					</div>
-					<div class="pro-lp-video-story__stage" data-pro-lp-video>
-					<?php if ( $embed_url ) : ?>
-							<button
-								class="pro-lp-video-story__play"
-								type="button"
-								data-pro-lp-video-play
-								data-embed-url="<?php echo esc_url( $embed_url ); ?>"
-								aria-label="<?php echo esc_attr( $play_label ); ?>"
-							>
-							<?php if ( $poster_url ) : ?>
-									<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $settings['poster_alt'] ?? '' ); ?>" loading="lazy" decoding="async">
-								<?php endif; ?>
-								<span class="pro-lp-video-story__play-icon" aria-hidden="true"></span>
-							</button>
-						<?php elseif ( $poster_url ) : ?>
-							<img src="<?php echo esc_url( $poster_url ); ?>" alt="<?php echo esc_attr( $settings['poster_alt'] ?? '' ); ?>" loading="lazy" decoding="async">
-						<?php endif; ?>
-					</div>
+				<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-lp-video-story__stage' ); ?>
 				</div>
 			</section>
 			<?php

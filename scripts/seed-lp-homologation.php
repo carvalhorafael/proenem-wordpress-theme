@@ -77,12 +77,13 @@ $elementor_data = array(
 		'pro_offer_hero',
 		array(
 			'eyebrow'       => 'Turma Intensiva ENEM 2026',
-			'title'         => 'Hero de oferta com fundo de marca e ancora',
-			'body'          => 'Secao com tone marca e ancora oferta para validar o contrato compartilhado.',
+			'title'         => 'Hero com cards de prova ao lado',
+			'body'          => 'Slot da direita configurado como cards de prova, sobre faixa de marca.',
 			'primary_label' => 'Quero minha vaga',
 			'primary_url'   => array( 'url' => '#oferta' ),
 			'microcopy'     => 'Vagas limitadas - Inicio hoje - Acesso imediato',
 			'heading_level' => 'h1',
+			'side_content'  => 'cards',
 			'proof_cards'   => array(
 				array(
 					'_id'   => 'p1',
@@ -102,6 +103,41 @@ $elementor_data = array(
 			),
 			'tone'          => 'brand',
 			'anchor_id'     => 'inicio',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lphero02',
+		'pro_offer_hero',
+		array(
+			'eyebrow'       => 'Slot com imagem',
+			'title'         => 'Hero com imagem ao lado e fundo de imagem',
+			'body'          => 'Fundo da secao configurado como imagem, com camada de leitura escura, e slot da direita configurado como imagem.',
+			'primary_label' => 'Quero minha vaga',
+			'primary_url'   => array( 'url' => '#oferta' ),
+			'microcopy'     => 'Fundo por imagem, texto sobre camada escura',
+			'heading_level' => 'h2',
+			'side_content'  => 'image',
+			'image'         => array( 'url' => get_template_directory_uri() . '/assets/images/platform/study-plan-960.webp' ),
+			'image_alt'     => 'Tela do plano de estudos semanal.',
+			'tone'          => 'image',
+			'tone_image'    => array( 'url' => get_template_directory_uri() . '/assets/images/home/student_school_2.png' ),
+			'tone_scrim'    => 'dark',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lphero03',
+		'pro_offer_hero',
+		array(
+			'eyebrow'       => 'Slot com video',
+			'title'         => 'Hero com video ao lado',
+			'body'          => 'Slot da direita configurado como video, com a mesma fachada do depoimento: o provedor so e chamado no clique.',
+			'primary_label' => 'Quero minha vaga',
+			'primary_url'   => array( 'url' => '#oferta' ),
+			'heading_level' => 'h2',
+			'side_content'  => 'video',
+			'video_url'     => array( 'url' => 'https://www.youtube.com/watch?v=aqz-KE-bpKQ' ),
+			'play_label'    => 'Reproduzir a apresentacao',
+			'tone'          => 'surface',
 		)
 	),
 	proenem_lp_homologation_container(

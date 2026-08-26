@@ -71,6 +71,52 @@
   color: var(--pen-color-on-red, #ffffff);
 }
 
+/* An image background does not guarantee contrast on its own, so the reading
+   layer carries the color pair. */
+.pro-sales-section--tone-image {
+  background-image: var(--pro-sales-section-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  isolation: isolate;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  position: relative;
+}
+
+.pro-sales-section--tone-image > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pro-sales-section--scrim-dark::before,
+.pro-sales-section--scrim-light::before {
+  content: "";
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}
+
+.pro-sales-section--scrim-dark {
+  color: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-section--scrim-dark::before {
+  background: rgb(0 0 0 / 55%);
+}
+
+.pro-sales-section--scrim-light {
+  color: var(--pen-color-ink, #111827);
+}
+
+.pro-sales-section--scrim-light::before {
+  background: rgb(255 255 255 / 70%);
+}
+
+.pro-sales-section--scrim-dark > .pro-sales-widget,
+.pro-sales-section--scrim-light > .pro-sales-widget {
+  color: inherit;
+}
+
 /* The content wrapper carries its own color guarantee for untoned sections.
    Inside a toned band the pairing comes from the band. */
 .pro-sales-section--tone-surface > .pro-sales-widget,
@@ -109,13 +155,6 @@
 
 .pro-sales-hero--no-media {
   grid-template-columns: minmax(0, 1fr);
-}
-
-.pro-sales-hero--backdrop {
-  background-image: var(--pro-sales-hero-backdrop);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 .pro-sales-hero__proof {
@@ -357,7 +396,7 @@
   margin: 0;
 }
 
-.pro-lp-video-story__stage {
+.pro-sales-video-stage {
   aspect-ratio: 16 / 9;
   background: var(--pen-color-ink, #111827);
   border: var(--pen-border-brand-sm, 2px solid #111827);
@@ -367,8 +406,8 @@
   position: relative;
 }
 
-.pro-lp-video-story__stage img,
-.pro-lp-video-story__stage iframe {
+.pro-sales-video-stage img,
+.pro-sales-video-stage iframe {
   border: 0;
   display: block;
   height: 100%;
@@ -376,7 +415,7 @@
   width: 100%;
 }
 
-.pro-lp-video-story__play {
+.pro-sales-video-stage__play {
   background: none;
   border: 0;
   cursor: pointer;
@@ -387,7 +426,7 @@
   width: 100%;
 }
 
-.pro-lp-video-story__play-icon {
+.pro-sales-video-stage__icon {
   align-items: center;
   background: var(--pen-color-canvas-white, #ffffff);
   border: var(--pen-border-brand-sm, 2px solid #111827);
@@ -402,7 +441,7 @@
   width: 4.5rem;
 }
 
-.pro-lp-video-story__play-icon::before {
+.pro-sales-video-stage__icon::before {
   border-block: 0.85rem solid transparent;
   border-inline-start: 1.35rem solid var(--pen-color-proenem-red, #bb0922);
   content: "";
@@ -410,8 +449,8 @@
   margin-inline-start: 0.35rem;
 }
 
-.pro-lp-video-story__play:focus-visible .pro-lp-video-story__play-icon,
-.pro-lp-video-story__play:hover .pro-lp-video-story__play-icon {
+.pro-sales-video-stage__play:focus-visible .pro-sales-video-stage__icon,
+.pro-sales-video-stage__play:hover .pro-sales-video-stage__icon {
   background: var(--pen-color-yellow-brand, #ffe45c);
 }
 
