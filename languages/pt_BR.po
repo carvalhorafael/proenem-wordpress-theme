@@ -1373,7 +1373,7 @@ msgstr "FAQ"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1780
 #: inc/class-proenem-elementor-home-widget-base.php:1800
-#: inc/class-proenem-elementor-sales-widget-base.php:2139
+#: inc/class-proenem-elementor-sales-widget-base.php:2147
 #: page-templates/home.php:776
 msgid "Perguntas"
 msgstr "Perguntas"
@@ -1384,12 +1384,12 @@ msgid "frequentes"
 msgstr "frequentes"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1786
-#: inc/class-proenem-elementor-sales-widget-base.php:2152
+#: inc/class-proenem-elementor-sales-widget-base.php:2160
 msgid "Pergunta"
 msgstr "Pergunta"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1793
-#: inc/class-proenem-elementor-sales-widget-base.php:2159
+#: inc/class-proenem-elementor-sales-widget-base.php:2167
 msgid "Resposta"
 msgstr "Resposta"
 
@@ -1477,7 +1477,7 @@ msgstr "alunos aprovados nas melhores universidades"
 
 #: inc/class-proenem-elementor-lp-widget-base.php:117
 #: inc/class-proenem-elementor-sales-widget-base.php:1802
-#: inc/class-proenem-elementor-sales-widget-base.php:2166
+#: inc/class-proenem-elementor-sales-widget-base.php:2174
 msgid "Itens"
 msgstr "Itens"
 
@@ -2102,11 +2102,11 @@ msgstr "Escolher plano"
 msgid "Aparece abaixo do botão."
 msgstr "Aparece abaixo do botão."
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2118
+#: inc/class-proenem-elementor-sales-widget-base.php:2126
 msgid "Pro FAQ"
 msgstr "Pro FAQ"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2145
+#: inc/class-proenem-elementor-sales-widget-base.php:2153
 #: inc/template-tags.php:358
 msgid "Perguntas frequentes"
 msgstr "Perguntas frequentes"

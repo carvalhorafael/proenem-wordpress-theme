@@ -2081,11 +2081,19 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
-					<div>
-					<?php $this->render_section_header( $settings, array( 'title_class' => '' ) ); ?>
+					<div class="pro-sales-cta__content">
+					<?php
+					$this->render_section_header(
+						$settings,
+						array(
+							'title_class' => 'pro-sales-cta__title',
+							'body_class'  => 'pro-sales-cta__body',
+						)
+					);
+					?>
 					</div>
 					<div class="pro-sales-cta__action">
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse pro-sales-button--lg' ); ?>
 					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
 							<p class="pro-sales-cta__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>

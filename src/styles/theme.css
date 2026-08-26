@@ -56,9 +56,14 @@
   padding-block: clamp(2.5rem, 6vw, 4.5rem);
 }
 
-/* The band already provides the vertical rhythm of a toned section. */
+/* The band already provides the vertical rhythm of a toned section, so the
+   widgets that carry their own rhythm drop it inside one. */
 .pro-sales-section--tone-surface > .pro-sales-hero,
-.pro-sales-section--tone-brand > .pro-sales-hero {
+.pro-sales-section--tone-brand > .pro-sales-hero,
+.pro-sales-section--tone-image > .pro-sales-hero,
+.pro-sales-section--tone-surface > .pro-sales-cta,
+.pro-sales-section--tone-brand > .pro-sales-cta,
+.pro-sales-section--tone-image > .pro-sales-cta {
   padding-block: 0;
 }
 
@@ -225,6 +230,10 @@
   justify-items: center;
 }
 
+.pro-sales-cta .pro-sales-eyebrow {
+  margin: 0;
+}
+
 .pro-site-navbar--with-cta {
   justify-content: space-between;
 }
@@ -244,12 +253,6 @@
 
 /* Par de cores dos componentes dentro da faixa de marca. Todo componente que
    pinta a propria superficie mantem o proprio par; os que nao pintam herdam. */
-.pro-sales-section--tone-brand > .pro-sales-cta {
-  background: none;
-  border: 0;
-  box-shadow: none;
-}
-
 .pro-sales-section--tone-brand .pro-sales-list li::before,
 .pro-sales-section--tone-brand .pro-sales-plan__price-details,
 .pro-sales-section--tone-brand .pro-sales-plan__trust li {
@@ -576,8 +579,7 @@
   width: 100%;
 }
 
-.pro-sales-countdown,
-.pro-sales-cta {
+.pro-sales-countdown {
   align-items: center;
   background: var(--pen-color-red, #e3062c);
   border: var(--pen-border-brand-sm, 2px solid #111827);
@@ -591,10 +593,44 @@
 }
 
 .pro-sales-countdown .pro-sales-section-title,
-.pro-sales-cta h2,
-.pro-sales-countdown p,
-.pro-sales-cta p {
+.pro-sales-countdown p {
   margin: 0;
+}
+
+/* Faixa final de chamada: composicao empilhada e centralizada, com o botao
+   junto do texto que ele conclui. A cor vem do tone da faixa, como nos outros
+   widgets de secao, em vez de o widget pintar superficie propria. */
+.pro-sales-cta {
+  display: grid;
+  gap: var(--pen-space-6, 1.5rem);
+  justify-items: center;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.pro-sales-cta__content {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  justify-items: center;
+  max-width: 46rem;
+}
+
+.pro-sales-cta__title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pro-sales-cta__body {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  margin: 0;
+}
+
+.pro-sales-button--lg {
+  font-size: 1.1rem;
+  min-height: 3.5rem;
+  padding: 1rem 2rem;
 }
 
 .pro-sales-countdown__date {
