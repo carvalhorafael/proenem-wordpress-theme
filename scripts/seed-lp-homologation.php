@@ -246,6 +246,35 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpcount01',
+		'pro_offer_countdown',
+		array(
+			'title'    => 'Contador de oferta',
+			'body'     => 'O campo de data renderiza como texto estatico, sem contagem dinamica.',
+			'deadline' => '2026-12-31 23:59',
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpcompare01',
+		'pro_plans_comparison',
+		array(
+			'title'   => 'Comparativo de planos',
+			'columns' => "Gratis\nIntensiva",
+			'rows'    => array(
+				array(
+					'_id'     => 'r1',
+					'feature' => 'Cronograma semanal',
+					'values'  => "-\nSim",
+				),
+				array(
+					'_id'     => 'r2',
+					'feature' => 'Correcao de redacao',
+					'values'  => "-\n4 por mes",
+				),
+			),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpgrid01',
 		'pro_pricing_grid',
 		array(

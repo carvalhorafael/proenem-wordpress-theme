@@ -219,6 +219,49 @@ O icone dos beneficios usa controle de midia, e nao biblioteca de icones do Elem
 
 Varredura completa dentro de `--tone-brand` em `/lp/homologacao-widgets-lp/`, cobrindo hero, CTA, destaque de oferta, grade de planos e FAQ: menor contraste encontrado 4.85, todos acima de AA para texto normal. Componentes com superficie propria, como `.pro-sales-card`, `.pro-sales-comparison table` e `.pro-sales-faq__item`, mantem fundo claro e texto ink; os que nao pintam superficie herdam o par da faixa.
 
+## Revisao da biblioteca de widgets
+
+Feita na Fase 3.5 (`#201`), sobre saida renderizada em `/lp/homologacao-widgets-lp/`, nao sobre leitura de codigo.
+
+### Categorias do editor
+
+| Categoria | Titulo no painel | Widgets |
+| --- | --- | --- |
+| `proenem-sales` | Proenem | 10 widgets genericos de venda |
+| `proenem-lp` | Proenem LP | 4 widgets genericos de landing page |
+| `proenem-home` | Proenem Home (somente na home) | 13 widgets exclusivos da home |
+
+Os widgets da home ja tinham `pro_home_` no nome tecnico e `Pro Home` no titulo visivel, mas dividiam a categoria com os genericos, entao `Pro Home Hero` aparecia ao lado de `Pro Hero de Oferta`. Com categoria propria, o uso indevido deixa de depender apenas de o editor ler o nome.
+
+Os 13 widgets da home permanecem isolados por decisao explicita e nao entram na consolidacao.
+
+### Matriz de consolidacao dos 14 widgets nao-home
+
+| Widget | Veredito | Evidencia |
+| --- | --- | --- |
+| `pro_navbar` | manter | chrome de pagina, sem sobreposicao |
+| `pro_footer` | manter | chrome de pagina, sem sobreposicao |
+| `pro_faq` | manter | unico widget de perguntas fora da home |
+| `pro_lp_video_story` | manter | unico com fachada de video |
+| `pro_pricing_grid` | manter, absorve os outros dois do grupo | com um plano ja renderiza card centralizado de 544 px com preco, preco a vista e selos, e traz cabecalho de secao |
+| `pro_pricing_card` | aposentar | renderiza a 544 px com a mesma sequencia de filhos da grade com um plano; e um plano da grade sem cabecalho de secao |
+| `pro_lp_offer_highlight` | aposentar | renderiza a 544 px com a mesma sequencia de filhos, sem os campos de preco; `__summary` e `__name` sao os mesmos papeis de `__description` e do heading do plano |
+| `pro_offer_hero` | manter, escopo congelado | primeira faixa da pagina, dona do `h1`, com imagem de fundo e cards de prova |
+| `pro_lp_spotlight` | manter, escopo congelado | faixa de meio de pagina, com bullets e lado invertivel |
+| `pro_cta` | manter, escopo congelado | subconjunto estrito do hero, mas a intencao de faixa minima e legitima e esta em uso |
+| `pro_benefits_list` | manter | grade de cards com icone, titulo e corpo |
+| `pro_lp_metrics` | manter | grade de numeros com tipografia de display; estrutura parecida, peso semantico diferente |
+| `pro_offer_countdown` | terminar ou aposentar | o campo de data renderiza como texto de maquina visivel, `2026-12-31 23:59`, sem formatacao e sem contagem. Promete contador e entrega string |
+| `pro_plans_comparison` | manter dormente | tabela funcional, com wrapper de rolagem; nenhuma secao mapeada usa, mas comparativo e pedido recorrente |
+
+Saldo: 14 widgets, 11 mantidos, 2 aposentados no grupo de oferta e 1 pendente de decisao.
+
+Escopo congelado significa que o grupo de faixa de texto nao recebe controle novo sem revisao do papel dos tres. `pro_cta` e subconjunto do hero: crescer os dois em paralelo recria a convergencia que aconteceu no grupo de oferta.
+
+### Por que o grupo de oferta convergiu
+
+`pro_lp_offer_highlight` nasceu na Fase 2, antes de `pro_pricing_card` receber parcelamento, preco a vista e selos na Fase 3. Quando o card de plano ganhou esses campos, passou a cobrir o caso do destaque de oferta. A ordem inversa das fases teria evitado o widget novo. Registro aqui para que a proxima adicao de widget verifique primeiro se um widget existente esta a um controle de distancia do caso.
+
 ### Pagina de homologacao
 
 `scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.

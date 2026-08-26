@@ -18,10 +18,14 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	/**
 	 * Get widget categories.
 	 *
+	 * These widgets carry the home copy inside the control structure and are not
+	 * meant for other pages, so they get a category of their own instead of
+	 * sharing the panel group with the generic sales widgets.
+	 *
 	 * @return string[]
 	 */
 	public function get_categories(): array {
-		return array( 'proenem-sales' );
+		return array( 'proenem-home' );
 	}
 
 	/**
@@ -30,7 +34,7 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	 * @return string[]
 	 */
 	public function get_keywords(): array {
-		return array( 'proenem', 'home', 'enem' );
+		return array( 'proenem', 'home', 'enem', 'somente home' );
 	}
 
 	/**

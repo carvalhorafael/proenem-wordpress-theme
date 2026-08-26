@@ -320,3 +320,27 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: extrair `render_plan_card()` e `add_plan_price_controls()` para o base class de vendas e consumir dos dois widgets.
 - Consequencia: a grade com um plano so passa a ser o layout de card unico centralizado que a secao de oferta das LPs usa, sem widget novo.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Categoria propria para os widgets da home
+
+- Contexto: os 13 widgets `pro_home_*` ja tinham `pro_home_` no nome tecnico e `Pro Home` no titulo visivel, mas estavam registrados em `proenem-sales`, a mesma categoria dos genericos. No painel do editor, `Pro Home Hero` aparecia ao lado de `Pro Hero de Oferta`.
+- Decisao: registrar a categoria `proenem-home`, com titulo `Proenem Home (somente na home)`, e mover os 13 widgets para ela.
+- Consequencia: evitar o uso indevido deixa de depender de o editor ler o nome do widget. Conteudo salvo nao e afetado, porque a categoria so organiza o painel.
+- Fronteira: os widgets da home permanecem isolados e nao entram em consolidacao com os genericos.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Grupo de oferta consolidado em pro_pricing_grid
+
+- Contexto: `pro_pricing_grid` com um plano, `pro_pricing_card` e `pro_lp_offer_highlight` renderizam a mesma forma. Medido em `/lp/homologacao-widgets-lp/`: os tres a 544 px, com a mesma sequencia de filhos. `pro_pricing_card` e um plano da grade sem cabecalho de secao; `pro_lp_offer_highlight` e o mesmo card sem os campos de preco.
+- Causa: `pro_lp_offer_highlight` foi criado na Fase 2, antes de o card de plano receber parcelamento, preco a vista e selos na Fase 3. A ordem inversa teria evitado o widget novo.
+- Decisao: `pro_pricing_grid` e o widget da secao de oferta, com preco opcional. `pro_pricing_card` e `pro_lp_offer_highlight` ficam marcados para aposentadoria.
+- Pendencia: a forma da aposentadoria depende de decisao humana, porque `/lp/intenisva/` em producao usa `pro_pricing_card` e o Elementor guarda `widgetType` em post meta.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Escopo congelado no grupo de faixa de texto
+
+- Contexto: `pro_offer_hero`, `pro_lp_spotlight` e `pro_cta` compartilham a forma selo, titulo, corpo e CTA. `pro_cta` e subconjunto estrito do hero.
+- Decisao: manter os tres, com papeis documentados, e nao adicionar controle novo a nenhum deles sem revisar o papel dos tres em conjunto.
+- Alternativa descartada: fundir em um widget com variante. Trocaria clareza de intencao editorial por economia de widget, com risco em pagina publicada.
+- Papeis: `pro_offer_hero` e a primeira faixa e dona do `h1`; `pro_lp_spotlight` e faixa de meio de pagina com bullets e lado invertivel; `pro_cta` e faixa minima de chamada.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.

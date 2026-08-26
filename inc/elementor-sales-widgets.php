@@ -49,8 +49,9 @@ function proenem_get_elementor_sales_widget_classes() {
 /**
  * Register the Proenem Elementor categories.
  *
- * `proenem-sales` keeps the widgets already published, including the home
- * sections. `proenem-lp` groups the generic landing page widgets.
+ * `proenem-sales` keeps the generic sales widgets, `proenem-lp` the generic
+ * landing page widgets, and `proenem-home` isolates the home only sections so
+ * they are not dropped into another page by mistake.
  *
  * @param \Elementor\Elements_Manager $elements_manager Elementor elements manager.
  * @return void
@@ -68,6 +69,14 @@ function proenem_register_elementor_sales_category( $elements_manager ) {
 		'proenem-lp',
 		array(
 			'title' => esc_html__( 'Proenem LP', 'proenem-wordpress-theme' ),
+			'icon'  => 'fa fa-plug',
+		)
+	);
+
+	$elements_manager->add_category(
+		'proenem-home',
+		array(
+			'title' => esc_html__( 'Proenem Home (somente na home)', 'proenem-wordpress-theme' ),
 			'icon'  => 'fa fa-plug',
 		)
 	);
