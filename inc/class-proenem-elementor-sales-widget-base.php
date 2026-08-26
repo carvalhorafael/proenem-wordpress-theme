@@ -238,6 +238,170 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	}
 
 	/**
+	 * Check whether a media control URL is Elementor's placeholder image.
+	 *
+	 * @param string $url Media URL.
+	 * @return bool
+	 */
+	protected function is_elementor_placeholder( $url ) {
+		return false !== strpos( (string) $url, '/elementor/assets/images/placeholder' );
+	}
+
+	/**
+	 * Register the price and reassurance controls of a plan.
+	 *
+	 * @param \Elementor\Controls_Stack|\Elementor\Repeater $target Control host.
+	 * @return void
+	 */
+	protected function add_plan_price_controls( $target ) {
+		$target->add_control(
+			'price_prefix',
+			array(
+				'label'       => esc_html__( 'Prefixo do preço', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => '',
+				'description' => esc_html__( 'Exemplo: 12x de.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$target->add_control(
+			'price_details',
+			array(
+				'label'       => esc_html__( 'Preço à vista', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => '',
+				'description' => esc_html__( 'Exemplo: ou R$ 306,90 à vista.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+			)
+		);
+		$target->add_control(
+			'trust_items',
+			array(
+				'label'       => esc_html__( 'Selos de confiança', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXTAREA,
+				'default'     => '',
+				'description' => esc_html__( 'Um por linha. Exemplo: Pagamento 100% seguro.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+			)
+		);
+	}
+
+	/**
+	 * Render one plan card.
+	 *
+	 * Shared by the pricing grid and the standalone pricing card so the plan
+	 * contract lives in one place.
+	 *
+	 * @param array  $plan Plan data.
+	 * @param string $link_key Render attribute key of the plan link.
+	 * @param array  $args {
+	 *     Optional.
+	 *
+	 *     @type string $classes     Extra classes for the article.
+	 *     @type string $heading_tag Heading tag of the plan name.
+	 *     @type string $heading_id  Heading id.
+	 * }
+	 * @return void
+	 */
+	protected function render_plan_card( array $plan, $link_key, array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'classes'     => '',
+				'heading_tag' => 'h3',
+				'heading_id'  => '',
+			)
+		);
+
+		$heading_tag = tag_escape( $args['heading_tag'] );
+		$features    = $this->split_lines( $plan['features'] ?? '' );
+		$trust_items = $this->split_lines( $plan['trust_items'] ?? '' );
+		$class_name  = trim( 'pro-sales-card pro-sales-plan ' . $args['classes'] );
+		?>
+		<article class="<?php echo esc_attr( $class_name ); ?>">
+			<?php if ( ! empty( $plan['badge'] ) ) : ?>
+				<p class="pro-sales-badge"><?php echo esc_html( $plan['badge'] ); ?></p>
+			<?php endif; ?>
+			<?php
+			printf(
+				'<%1$s%2$s>%3$s</%1$s>',
+				esc_html( $heading_tag ),
+				'' !== $args['heading_id'] ? ' id="' . esc_attr( $args['heading_id'] ) . '"' : '',
+				esc_html( $plan['name'] ?? '' )
+			);
+			?>
+			<?php if ( ! empty( $plan['description'] ) ) : ?>
+				<p class="pro-sales-plan__description"><?php echo esc_html( $plan['description'] ); ?></p>
+			<?php endif; ?>
+			<p class="pro-sales-plan__price">
+				<?php if ( ! empty( $plan['price_prefix'] ) ) : ?>
+					<small class="pro-sales-plan__price-prefix"><?php echo esc_html( $plan['price_prefix'] ); ?></small>
+				<?php endif; ?>
+				<span><?php echo esc_html( $plan['price'] ?? '' ); ?></span>
+				<?php if ( ! empty( $plan['recurrence'] ) ) : ?>
+					<small><?php echo esc_html( $plan['recurrence'] ); ?></small>
+				<?php endif; ?>
+			</p>
+			<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+				<p class="pro-sales-plan__price-details"><?php echo esc_html( $plan['price_details'] ); ?></p>
+			<?php endif; ?>
+			<?php if ( $features ) : ?>
+				<ul class="pro-sales-list">
+					<?php foreach ( $features as $feature ) : ?>
+						<li><?php echo esc_html( $feature ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			<?php $this->render_link( $link_key, $plan['button_url'] ?? array(), $plan['button_label'] ?? '', 'pro-sales-button pro-sales-button--primary' ); ?>
+			<?php if ( $trust_items ) : ?>
+				<ul class="pro-sales-plan__trust">
+					<?php foreach ( $trust_items as $trust_item ) : ?>
+						<li><?php echo esc_html( $trust_item ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</article>
+		<?php
+	}
+
+	/**
+	 * Register a heading level control for the section title.
+	 *
+	 * A landing page needs exactly one `h1`, and which section owns it is an
+	 * editorial decision.
+	 *
+	 * @param string $default_value Default tag.
+	 * @return void
+	 */
+	protected function add_section_heading_level_control( $default_value = 'h2' ) {
+		$this->add_control(
+			'heading_level',
+			array(
+				'label'       => esc_html__( 'Nível do título', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => $default_value,
+				'options'     => array(
+					'h1' => esc_html__( 'h1, título principal da página', 'proenem-wordpress-theme' ),
+					'h2' => esc_html__( 'h2, título de seção', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'Use h1 apenas uma vez por página.', 'proenem-wordpress-theme' ),
+			)
+		);
+	}
+
+	/**
+	 * Get the heading tag chosen for this section.
+	 *
+	 * @param array  $settings Widget settings.
+	 * @param string $fallback Tag used when the control is absent.
+	 * @return string
+	 */
+	protected function section_heading_tag( $settings, $fallback = 'h2' ) {
+		$level = isset( $settings['heading_level'] ) ? (string) $settings['heading_level'] : '';
+
+		return in_array( $level, array( 'h1', 'h2' ), true ) ? $level : $fallback;
+	}
+
+	/**
 	 * Register the shared section anchor control.
 	 *
 	 * @param string $default_value Default anchor, used by sections that already
@@ -451,7 +615,37 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 				'default' => 'logo_only',
 				'options' => array(
 					'logo_only' => esc_html__( 'Somente logo', 'proenem-wordpress-theme' ),
+					'lp'        => esc_html__( 'Landing page: logo e um CTA', 'proenem-wordpress-theme' ),
 					'menu'      => esc_html__( 'Menu WordPress', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'cta_label',
+			array(
+				'label'       => esc_html__( 'Texto do CTA', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => esc_html__( 'Garantir minha vaga', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+				'condition'   => array(
+					'mode' => 'lp',
+				),
+			)
+		);
+
+		$this->add_control(
+			'cta_url',
+			array(
+				'label'       => esc_html__( 'Destino do CTA', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::URL,
+				'default'     => array(
+					'url' => '#oferta',
+				),
+				'description' => esc_html__( 'Aceita âncora interna, como #oferta.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+				'condition'   => array(
+					'mode' => 'lp',
 				),
 			)
 		);
@@ -527,12 +721,21 @@ class Proenem_Elementor_Navbar_Widget extends Proenem_Elementor_Sales_Widget_Bas
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$mode     = $settings['mode'] ?? 'logo_only';
+		$cta      = array();
+
+		if ( 'lp' === $mode ) {
+			$cta = array(
+				'label' => $settings['cta_label'] ?? '',
+				'url'   => $settings['cta_url']['url'] ?? '',
+			);
+		}
 
 		proenem_render_site_navbar(
 			array(
 				'aria_label' => $settings['aria_label'] ?? __( 'Navegação da página de vendas', 'proenem-wordpress-theme' ),
 				'context'    => 'elementor-sales',
-				'logo_only'  => 'logo_only' === $mode,
+				'cta'        => $cta,
+				'logo_only'  => 'menu' !== $mode,
 				'menu_id'    => absint( $settings['menu_id'] ?? 0 ),
 			)
 		);
@@ -591,12 +794,46 @@ class Proenem_Elementor_Footer_Widget extends Proenem_Elementor_Sales_Widget_Bas
 	}
 
 	/**
+	 * Register widget controls.
+	 *
+	 * @return void
+	 */
+	protected function register_controls(): void {
+		$this->start_controls_section(
+			'content_section',
+			array(
+				'label' => esc_html__( 'Rodapé', 'proenem-wordpress-theme' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_control(
+			'mode',
+			array(
+				'label'   => esc_html__( 'Modo', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'full',
+				'options' => array(
+					'full'    => esc_html__( 'Rodapé completo do site', 'proenem-wordpress-theme' ),
+					'minimal' => esc_html__( 'Mínimo: logo e copyright', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
 	 * Render widget output.
 	 *
 	 * @return void
 	 */
 	protected function render(): void {
-		proenem_render_site_footer();
+		proenem_render_site_footer(
+			array(
+				'minimal' => 'minimal' === ( $this->get_settings_for_display()['mode'] ?? 'full' ),
+			)
+		);
 	}
 }
 
@@ -654,6 +891,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 				'body_type'  => 'wysiwyg',
 			)
 		);
+		$this->add_section_heading_level_control( 'h1' );
 		$this->add_control(
 			'primary_label',
 			array(
@@ -684,10 +922,62 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 			)
 		);
 		$this->add_control(
+			'microcopy',
+			array(
+				'label'       => esc_html__( 'Linha de confiança', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => esc_html__( 'Vagas limitadas • Início hoje • Acesso imediato', 'proenem-wordpress-theme' ),
+				'description' => esc_html__( 'Aparece abaixo dos botões.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+			)
+		);
+		$this->add_control(
 			'image',
 			array(
 				'label' => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
 				'type'  => \Elementor\Controls_Manager::MEDIA,
+			)
+		);
+		$this->add_control(
+			'media_mode',
+			array(
+				'label'   => esc_html__( 'Uso da imagem', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'side',
+				'options' => array(
+					'side'       => esc_html__( 'Ao lado do texto', 'proenem-wordpress-theme' ),
+					'background' => esc_html__( 'Fundo da seção', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
+
+		$proof_repeater = new \Elementor\Repeater();
+		$proof_repeater->add_control(
+			'label',
+			array(
+				'label'   => esc_html__( 'Título do card', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Cronograma pronto', 'proenem-wordpress-theme' ),
+			)
+		);
+		$proof_repeater->add_control(
+			'value',
+			array(
+				'label'   => esc_html__( 'Dado do card', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Semana 1 de 12', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
+			'proof_cards',
+			array(
+				'label'       => esc_html__( 'Cards de prova', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::REPEATER,
+				'fields'      => $proof_repeater->get_controls(),
+				'title_field' => '{{{ label }}}',
+				'default'     => array(),
+				'description' => esc_html__( 'Cartões curtos que mostram o produto em uso.', 'proenem-wordpress-theme' ),
 			)
 		);
 
@@ -702,9 +992,25 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 	 * @return void
 	 */
 	protected function render(): void {
-		$settings  = $this->get_settings_for_display();
-		$image_url = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : '';
-		$this->add_section_render_attributes( $settings, 'pro-sales-hero', ! empty( $settings['title'] ) );
+		$settings    = $this->get_settings_for_display();
+		$image_url   = ! empty( $settings['image']['url'] ) ? $settings['image']['url'] : '';
+		$is_backdrop = 'background' === ( $settings['media_mode'] ?? 'side' ) && '' !== $image_url;
+		$proof_cards = ! empty( $settings['proof_cards'] ) && is_array( $settings['proof_cards'] ) ? $settings['proof_cards'] : array();
+		$class_name  = 'pro-sales-hero';
+
+		if ( $is_backdrop ) {
+			$class_name .= ' pro-sales-hero--backdrop';
+		}
+
+		if ( ! $is_backdrop && '' === $image_url && ! $proof_cards ) {
+			$class_name .= ' pro-sales-hero--no-media';
+		}
+
+		$this->add_section_render_attributes( $settings, $class_name, ! empty( $settings['title'] ) );
+
+		if ( $is_backdrop ) {
+			$this->add_render_attribute( 'section', 'style', '--pro-sales-hero-backdrop: url(' . esc_url( $image_url ) . ');' );
+		}
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
@@ -713,6 +1019,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 					$this->render_section_header(
 						$settings,
 						array(
+							'title_tag'   => $this->section_heading_tag( $settings, 'h1' ),
 							'title_class' => 'pro-sales-hero__title',
 							'body_tag'    => 'div',
 							'body_class'  => 'pro-sales-hero__body',
@@ -726,8 +1033,23 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pro-sales-button pro-sales-button--secondary' );
 						?>
 						</div>
+					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
+							<p class="pro-sales-hero__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
+						<?php endif; ?>
 					</div>
-					<?php if ( $image_url ) : ?>
+					<?php if ( $proof_cards ) : ?>
+						<ul class="pro-sales-hero__proof">
+						<?php foreach ( $proof_cards as $proof_card ) : ?>
+							<?php if ( empty( $proof_card['label'] ) && empty( $proof_card['value'] ) ) : ?>
+								<?php continue; ?>
+							<?php endif; ?>
+								<li class="pro-sales-hero__proof-card">
+									<span class="pro-sales-hero__proof-label"><?php echo esc_html( $proof_card['label'] ?? '' ); ?></span>
+									<strong class="pro-sales-hero__proof-value"><?php echo esc_html( $proof_card['value'] ?? '' ); ?></strong>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php elseif ( $image_url && ! $is_backdrop ) : ?>
 						<figure class="pro-sales-hero__media">
 							<img src="<?php echo esc_url( $image_url ); ?>" alt="">
 						</figure>
@@ -873,7 +1195,9 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 
 		$this->add_section_header_controls(
 			array(
-				'title' => esc_html__( 'Escolha seu plano', 'proenem-wordpress-theme' ),
+				'eyebrow' => '',
+				'title'   => esc_html__( 'Escolha seu plano', 'proenem-wordpress-theme' ),
+				'body'    => '',
 			)
 		);
 
@@ -909,6 +1233,7 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 				'default' => esc_html__( '/mês', 'proenem-wordpress-theme' ),
 			)
 		);
+		$this->add_plan_price_controls( $repeater );
 		$repeater->add_control(
 			'features',
 			array(
@@ -960,36 +1285,9 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 				<?php $this->render_section_header( $settings ); ?>
-					<div class="pro-sales-pricing__grid">
+					<div class="pro-sales-pricing__grid<?php echo 1 === count( $plans ) ? ' pro-sales-pricing__grid--single' : ''; ?>">
 					<?php foreach ( $plans as $index => $plan ) : ?>
-							<article class="pro-sales-card pro-sales-plan">
-								<?php if ( ! empty( $plan['badge'] ) ) : ?>
-									<p class="pro-sales-badge"><?php echo esc_html( $plan['badge'] ); ?></p>
-								<?php endif; ?>
-								<h3><?php echo esc_html( $plan['name'] ?? '' ); ?></h3>
-								<p class="pro-sales-plan__price">
-									<span><?php echo esc_html( $plan['price'] ?? '' ); ?></span>
-									<?php if ( ! empty( $plan['recurrence'] ) ) : ?>
-										<small><?php echo esc_html( $plan['recurrence'] ); ?></small>
-									<?php endif; ?>
-								</p>
-								<?php $features = $this->split_lines( $plan['features'] ?? '' ); ?>
-								<?php if ( $features ) : ?>
-									<ul class="pro-sales-list">
-										<?php foreach ( $features as $feature ) : ?>
-											<li><?php echo esc_html( $feature ); ?></li>
-										<?php endforeach; ?>
-									</ul>
-								<?php endif; ?>
-								<?php
-								$this->render_link(
-									'plan_button_' . $index,
-									$plan['button_url'] ?? array(),
-									$plan['button_label'] ?? '',
-									'pro-sales-button pro-sales-button--primary'
-								);
-								?>
-							</article>
+						<?php $this->render_plan_card( $plan, 'plan_button_' . $index ); ?>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -1089,6 +1387,7 @@ class Proenem_Elementor_Pricing_Card_Widget extends Proenem_Elementor_Sales_Widg
 				'default' => esc_html__( '/mês', 'proenem-wordpress-theme' ),
 			)
 		);
+		$this->add_plan_price_controls( $this );
 		$this->add_control(
 			'features',
 			array(
@@ -1122,32 +1421,16 @@ class Proenem_Elementor_Pricing_Card_Widget extends Proenem_Elementor_Sales_Widg
 	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
-		$features = $this->split_lines( $settings['features'] ?? '' );
-		?>
-			<article class="pro-sales-widget pro-sales-card pro-sales-plan">
-			<?php if ( ! empty( $settings['badge'] ) ) : ?>
-					<p class="pro-sales-badge"><?php echo esc_html( $settings['badge'] ); ?></p>
-				<?php endif; ?>
-				<h2><?php echo esc_html( $settings['name'] ?? '' ); ?></h2>
-			<?php if ( ! empty( $settings['description'] ) ) : ?>
-					<p><?php echo esc_html( $settings['description'] ); ?></p>
-				<?php endif; ?>
-				<p class="pro-sales-plan__price">
-					<span><?php echo esc_html( $settings['price'] ?? '' ); ?></span>
-				<?php if ( ! empty( $settings['recurrence'] ) ) : ?>
-						<small><?php echo esc_html( $settings['recurrence'] ); ?></small>
-					<?php endif; ?>
-				</p>
-			<?php if ( $features ) : ?>
-					<ul class="pro-sales-list">
-						<?php foreach ( $features as $feature ) : ?>
-							<li><?php echo esc_html( $feature ); ?></li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>
-			<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--primary' ); ?>
-			</article>
-			<?php
+
+		$this->render_plan_card(
+			$settings,
+			'button_url',
+			array(
+				'classes'     => 'pro-sales-widget pro-sales-plan--standalone',
+				'heading_tag' => 'h2',
+				'heading_id'  => $this->section_heading_id(),
+			)
+		);
 	}
 }
 
@@ -1197,7 +1480,22 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 		);
 		$this->add_section_header_controls(
 			array(
-				'title' => esc_html__( 'O que está incluído', 'proenem-wordpress-theme' ),
+				'eyebrow' => '',
+				'title'   => esc_html__( 'O que está incluído', 'proenem-wordpress-theme' ),
+				'body'    => '',
+			)
+		);
+		$this->add_control(
+			'columns',
+			array(
+				'label'   => esc_html__( 'Colunas', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '3',
+				'options' => array(
+					'2' => esc_html__( '2 colunas', 'proenem-wordpress-theme' ),
+					'3' => esc_html__( '3 colunas', 'proenem-wordpress-theme' ),
+					'4' => esc_html__( '4 colunas', 'proenem-wordpress-theme' ),
+				),
 			)
 		);
 		$repeater = new \Elementor\Repeater();
@@ -1214,6 +1512,34 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 			array(
 				'label' => esc_html__( 'Descrição', 'proenem-wordpress-theme' ),
 				'type'  => \Elementor\Controls_Manager::TEXTAREA,
+			)
+		);
+		$repeater->add_control(
+			'icon',
+			array(
+				'label'       => esc_html__( 'Ícone', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::MEDIA,
+				'description' => esc_html__( 'Use um ícone da biblioteca da marca. Sem imagem, o item mantém o marcador padrão.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$repeater->add_control(
+			'highlight',
+			array(
+				'label'        => esc_html__( 'Item em destaque', 'proenem-wordpress-theme' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+			)
+		);
+		$repeater->add_control(
+			'badge',
+			array(
+				'label'     => esc_html__( 'Selo do destaque', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::TEXT,
+				'default'   => esc_html__( 'Destaque', 'proenem-wordpress-theme' ),
+				'condition' => array(
+					'highlight' => 'yes',
+				),
 			)
 		);
 		$this->add_control(
@@ -1238,15 +1564,29 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$items    = ! empty( $settings['items'] ) && is_array( $settings['items'] ) ? $settings['items'] : array();
+		$columns  = in_array( (string) ( $settings['columns'] ?? '3' ), array( '2', '3', '4' ), true ) ? (string) $settings['columns'] : '3';
 		$this->add_section_render_attributes( $settings, 'pro-sales-benefits', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 				<?php $this->render_section_header( $settings ); ?>
-					<div class="pro-sales-benefits__grid">
+					<div class="pro-sales-benefits__grid pro-sales-benefits__grid--cols-<?php echo esc_attr( $columns ); ?>">
 					<?php foreach ( $items as $item ) : ?>
-							<article class="pro-sales-card pro-sales-benefit">
-								<span aria-hidden="true">✓</span>
+						<?php
+						$is_highlight   = 'yes' === ( $item['highlight'] ?? '' );
+						$benefit_class  = 'pro-sales-card pro-sales-benefit';
+						$benefit_class .= $is_highlight ? ' pro-sales-benefit--highlight' : '';
+						$icon_url       = ! empty( $item['icon']['url'] ) && ! $this->is_elementor_placeholder( $item['icon']['url'] ) ? $item['icon']['url'] : '';
+						?>
+							<article class="<?php echo esc_attr( $benefit_class ); ?>">
+								<?php if ( $is_highlight && ! empty( $item['badge'] ) ) : ?>
+									<p class="pro-sales-badge"><?php echo esc_html( $item['badge'] ); ?></p>
+								<?php endif; ?>
+								<?php if ( $icon_url ) : ?>
+									<span class="pro-sales-benefit__icon"><img src="<?php echo esc_url( $icon_url ); ?>" alt="" width="32" height="32" loading="lazy" decoding="async"></span>
+								<?php else : ?>
+									<span aria-hidden="true">✓</span>
+								<?php endif; ?>
 								<h3><?php echo esc_html( $item['title'] ?? '' ); ?></h3>
 								<?php if ( ! empty( $item['body'] ) ) : ?>
 									<p><?php echo esc_html( $item['body'] ); ?></p>
@@ -1436,6 +1776,7 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 		);
 		$this->add_section_header_controls(
 			array(
+				'eyebrow'    => '',
 				'title'      => esc_html__( 'Comece sua preparação hoje', 'proenem-wordpress-theme' ),
 				'title_type' => 'textarea',
 				'body'       => '',
@@ -1454,6 +1795,16 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 			array(
 				'label' => esc_html__( 'Link', 'proenem-wordpress-theme' ),
 				'type'  => \Elementor\Controls_Manager::URL,
+			)
+		);
+		$this->add_control(
+			'microcopy',
+			array(
+				'label'       => esc_html__( 'Linha de confiança', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'default'     => '',
+				'description' => esc_html__( 'Aparece abaixo do botão.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
 			)
 		);
 		$this->end_controls_section();
@@ -1475,7 +1826,12 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 					<div>
 					<?php $this->render_section_header( $settings, array( 'title_class' => '' ) ); ?>
 					</div>
-				<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
+					<div class="pro-sales-cta__action">
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse' ); ?>
+					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
+							<p class="pro-sales-cta__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
+						<?php endif; ?>
+					</div>
 				</div>
 			</section>
 			<?php

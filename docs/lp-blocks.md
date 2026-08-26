@@ -98,14 +98,14 @@ Uma unica faixa concentra tres blocos distintos.
 | Card de destaque de oferta | `pro_lp_offer_highlight` (feito) | 2 |
 | Spotlight de midia mais copy | `pro_lp_spotlight` (feito) | 2 |
 | Depoimento em video | `pro_lp_video_story` (feito) | 2 |
-| Modo LP da navbar | melhoria em `pro_navbar` | 3 |
-| Microcopy, fundo e cards flutuantes no hero | melhoria em `pro_offer_hero` | 3 |
-| Icones, colunas e item em destaque | melhoria em `pro_benefits_list` | 3 |
-| Parcelamento, preco a vista e selos | melhoria em `pro_pricing_card` | 3 |
-| Eyebrow e corpo na grade de planos | melhoria em `pro_pricing_grid` | 3 |
-| Eyebrow, microcopy e faixa de marca | melhoria em `pro_cta` | 3 |
-| Modo minimo do footer | melhoria em `pro_footer` | 3 |
-| Limite e layout de LP nos depoimentos | melhoria em `pro_home_testimonials` | 3 |
+| Modo LP da navbar | `pro_navbar` (feito) | 3 |
+| Microcopy, fundo e cards flutuantes no hero | `pro_offer_hero` (feito) | 3 |
+| Icones, colunas e item em destaque | `pro_benefits_list` (feito) | 3 |
+| Parcelamento, preco a vista e selos | `pro_pricing_card` (feito) | 3 |
+| Eyebrow e corpo na grade de planos | `pro_pricing_grid` (feito) | 3 |
+| Eyebrow, microcopy e faixa de marca | `pro_cta` (feito) | 3 |
+| Modo minimo do footer | `pro_footer` (feito) | 3 |
+| Limite e layout de LP nos depoimentos | `pro_home_testimonials` (feito) | 3 |
 | Cabecalho de secao compartilhado | fundacao comum no base class | 1 |
 | IDs de heading unicos por instancia | fundacao comum no base class | 1 |
 | Template kits, assets condicionais, ancora e CTA fixo mobile | camada de pagina | 4 |
@@ -187,6 +187,29 @@ Implementados na Fase 2 (`#195`), todos na categoria `Proenem LP` e consumindo o
 
 `pro_lp_video_story` usa fachada: renderiza capa e botao, e o `iframe` do provedor so entra depois do clique. A URL de embed e resolvida no servidor por `proenem_get_testimonial_video_embed_url()`. Sem capa local nenhuma imagem externa e carregada, porque miniatura hospedada pelo provedor tambem seria requisicao de terceiro antes da interacao.
 
+### Controles adicionados aos widgets existentes
+
+Implementados na Fase 3 (`#196`).
+
+| Widget | Controles novos |
+| --- | --- |
+| `pro_navbar` | modo `lp`, com logo e um unico CTA sempre visivel, sem menu e sem toggle; `cta_label` e `cta_url`, que aceita ancora |
+| `pro_offer_hero` | `heading_level` com default `h1`, `microcopy`, `media_mode` para usar a imagem como fundo, repeater `proof_cards` |
+| `pro_benefits_list` | `eyebrow`, `body`, `columns` de 2 a 4, e por item `icon`, `highlight` e `badge` |
+| `pro_pricing_card` | `price_prefix`, `price_details`, `trust_items`; card centralizado |
+| `pro_pricing_grid` | `eyebrow`, `body`, os mesmos campos de preco por plano, e centralizacao quando ha um plano so |
+| `pro_cta` | `eyebrow`, `microcopy`; na faixa de marca o card proprio some e a faixa vira o CTA |
+| `pro_footer` | modo `minimal`, com logo e copyright |
+| `pro_home_testimonials` | `limit` de itens |
+
+O nivel do heading e controle, e nao valor fixo, porque qual secao carrega o `h1` e decisao editorial. O default do hero e `h1`, entao uma LP montada com os widgets atuais nasce com exatamente um `h1`.
+
+O controle de colunas dos beneficios e limite real de colunas, nao largura minima: `repeat(N, minmax(0, 1fr))` com colapso em 980 px e 620 px. Com `auto-fit` o numero de colunas seria decidido pela largura disponivel, e o rotulo do controle mentiria.
+
+`render_plan_card()` no base class e o unico lugar que renderiza card de plano, consumido pela grade e pelo card avulso. Antes o markup era duplicado nos dois widgets.
+
+O icone dos beneficios usa controle de midia, e nao biblioteca de icones do Elementor, para nao introduzir fonte de terceiro no tema. Sem imagem, o item mantem o marcador padrao.
+
 ### Tone como contrato de par de cores
 
 `tone` nao e apenas fundo. Todo componente que pinta a propria superficie precisa manter o proprio par de cores dentro da faixa:
@@ -194,7 +217,7 @@ Implementados na Fase 2 (`#195`), todos na categoria `Proenem LP` e consumindo o
 - `.pro-sales-card` declara `color` proprio, porque pinta fundo branco e herdaria o branco da faixa de marca;
 - o botao primario inverte na faixa de marca, onde o vermelho do componente nao teria contraste, e volta ao par padrao quando esta dentro de um card.
 
-Contraste medido em `/lp/homologacao-widgets-lp/`: titulo e corpo do hero 6.61, selo 10.56, botao na faixa 6.61, card de oferta 17.40, botao dentro do card 6.61, faixa surface 17.40.
+Varredura completa dentro de `--tone-brand` em `/lp/homologacao-widgets-lp/`, cobrindo hero, CTA, destaque de oferta, grade de planos e FAQ: menor contraste encontrado 4.85, todos acima de AA para texto normal. Componentes com superficie propria, como `.pro-sales-card`, `.pro-sales-comparison table` e `.pro-sales-faq__item`, mantem fundo claro e texto ink; os que nao pintam superficie herdam o par da faixa.
 
 ### Pagina de homologacao
 

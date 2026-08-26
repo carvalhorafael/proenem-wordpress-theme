@@ -98,6 +98,148 @@
   color: var(--pen-color-white, #ffffff);
 }
 
+/* Fase 3: controles novos dos widgets de venda ------------------------------ */
+
+.pro-sales-hero__microcopy,
+.pro-sales-cta__microcopy {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.pro-sales-hero--no-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-sales-hero--backdrop {
+  background-image: var(--pro-sales-hero-backdrop);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.pro-sales-hero__proof {
+  align-content: center;
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-sales-hero__proof-card {
+  background: var(--pen-color-canvas-white, #ffffff);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-lg, 0.75rem);
+  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
+  color: var(--pen-color-ink, #111827);
+  display: grid;
+  gap: 0.25rem;
+  padding: var(--pen-space-4, 1rem);
+}
+
+.pro-sales-hero__proof-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.pro-sales-hero__proof-value {
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.pro-sales-benefit__icon {
+  display: inline-flex;
+}
+
+.pro-sales-benefit__icon img {
+  display: block;
+  height: 2rem;
+  object-fit: contain;
+  width: 2rem;
+}
+
+.pro-sales-benefit--highlight {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+}
+
+.pro-sales-plan--standalone {
+  margin-inline: auto;
+  max-width: 34rem;
+}
+
+.pro-sales-plan__price-prefix {
+  align-self: center;
+}
+
+.pro-sales-plan__price-details {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.pro-sales-plan__trust {
+  display: grid;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-sales-plan__trust li {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.pro-sales-cta__action {
+  display: grid;
+  gap: var(--pen-space-3, 0.75rem);
+  justify-items: center;
+}
+
+.pro-site-navbar--with-cta {
+  justify-content: space-between;
+}
+
+.pen-site-footer--minimal {
+  display: block;
+  padding-block: var(--pen-space-8, 2rem);
+}
+
+.pen-site-footer--minimal .pen-site-footer__bottom {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4, 1rem);
+  justify-content: space-between;
+}
+
+/* Par de cores dos componentes dentro da faixa de marca. Todo componente que
+   pinta a propria superficie mantem o proprio par; os que nao pintam herdam. */
+.pro-sales-section--tone-brand > .pro-sales-cta {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.pro-sales-section--tone-brand .pro-sales-list li::before,
+.pro-sales-section--tone-brand .pro-sales-plan__price-details,
+.pro-sales-section--tone-brand .pro-sales-plan__trust li {
+  color: inherit;
+}
+
+.pro-sales-section--tone-brand .pro-sales-card .pro-sales-list li::before,
+.pro-sales-section--tone-brand .pro-sales-card .pro-sales-plan__price-details,
+.pro-sales-section--tone-brand .pro-sales-card .pro-sales-plan__trust li {
+  color: var(--pen-color-ink, #111827);
+}
+
+.pro-sales-section--tone-brand .pro-sales-comparison table,
+.pro-sales-section--tone-brand .pro-sales-faq__item {
+  background: var(--pen-color-canvas-white, #ffffff);
+  color: var(--pen-color-ink, #111827);
+}
+
 /* ---------------------------------------------------------------------------
    Proenem LP widgets
    --------------------------------------------------------------------------- */
@@ -441,7 +583,42 @@
 .pro-sales-benefits__grid {
   display: grid;
   gap: var(--pen-space-5, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+/* The column control is a real cap, not a minimum width, so the editor gets the
+   number of columns it asked for. */
+.pro-sales-benefits__grid--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pro-sales-benefits__grid--cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pro-sales-benefits__grid--cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* A single plan is the offer card of a landing page: centered, not stretched. */
+.pro-sales-pricing__grid--single {
+  grid-template-columns: minmax(0, 34rem);
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .pro-sales-benefits__grid--cols-3,
+  .pro-sales-benefits__grid--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pro-sales-benefits__grid--cols-2,
+  .pro-sales-benefits__grid--cols-3,
+  .pro-sales-benefits__grid--cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .pro-sales-plan {

@@ -1917,11 +1917,51 @@ function proenem_render_footer_widget_area( $sidebar_id, $class_name = '' ) {
 }
 
 /**
- * Render the shared Proenem footer.
+ * Render the minimal Proenem footer used by landing pages.
  *
  * @return void
  */
-function proenem_render_site_footer() {
+function proenem_render_site_footer_minimal() {
+	?>
+	<footer class="pen-site-footer pen-site-footer--minimal">
+		<div class="pen-site-footer__bottom">
+			<a class="pen-brand-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
+			</a>
+			<a class="pen-site-footer__copyright" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<?php
+				printf(
+					/* translators: %s: Current year. */
+					esc_html__( '@%s Proenem - Grupo Q Educação', 'proenem-wordpress-theme' ),
+					esc_html( gmdate( 'Y' ) )
+				);
+				?>
+			</a>
+		</div>
+	</footer>
+	<?php
+}
+
+/**
+ * Render the shared Proenem footer.
+ *
+ * @param array{minimal?:bool} $args Footer args.
+ * @return void
+ */
+function proenem_render_site_footer( $args = array() ) {
+	$args = wp_parse_args(
+		$args,
+		array(
+			'minimal' => false,
+		)
+	);
+
+	if ( $args['minimal'] ) {
+		proenem_render_site_footer_minimal();
+
+		return;
+	}
+
 	$footer_columns = proenem_get_footer_menu_columns();
 	?>
 	<footer class="pen-site-footer">
@@ -2244,7 +2284,7 @@ function proenem_render_site_navbar_submenu_toggle( $navigation_item, $submenu_i
 /**
  * Render the shared Proenem navbar markup.
  *
- * @param array{aria_label?:string,context?:string,logo_only?:bool,menu_id?:int} $args Navbar args.
+ * @param array{aria_label?:string,context?:string,logo_only?:bool,menu_id?:int,cta?:array{label?:string,url?:string}} $args Navbar args.
  * @return void
  */
 function proenem_render_site_navbar( $args = array() ) {
@@ -2253,14 +2293,23 @@ function proenem_render_site_navbar( $args = array() ) {
 		'context'    => 'site',
 		'logo_only'  => false,
 		'menu_id'    => 0,
+		'cta'        => array(),
 	);
 	$args       = wp_parse_args( $args, $defaults );
 	$navigation = proenem_get_primary_navigation_items( $args['context'], absint( $args['menu_id'] ) );
 	$menu_id    = wp_unique_id( 'proenem-navbar-menu-' . sanitize_html_class( $args['context'] ) . '-' );
 	$classes    = 'pen-navbar pro-site-navbar';
 
+	$cta_label = isset( $args['cta']['label'] ) ? trim( (string) $args['cta']['label'] ) : '';
+	$cta_url   = isset( $args['cta']['url'] ) ? trim( (string) $args['cta']['url'] ) : '';
+	$has_cta   = '' !== $cta_label && '' !== $cta_url;
+
 	if ( $args['logo_only'] ) {
 		$classes .= ' pro-site-navbar--logo-only';
+	}
+
+	if ( $has_cta ) {
+		$classes .= ' pro-site-navbar--with-cta';
 	}
 	?>
 	<nav class="<?php echo esc_attr( $classes ); ?>" aria-label="<?php echo esc_attr( $args['aria_label'] ); ?>" data-pro-home-navbar>
@@ -2268,6 +2317,13 @@ function proenem_render_site_navbar( $args = array() ) {
 			<img src="<?php echo esc_url( PROENEM_THEME_URI . '/assets/images/brand/logo_proenem.svg' ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="152" height="43">
 		</a>
 		<?php if ( $args['logo_only'] ) : ?>
+			<?php if ( $has_cta ) : ?>
+				<div class="pen-navbar__actions pro-site-navbar__cta">
+					<a class="pen-navbar__action pen-navbar__action--primary" href="<?php echo esc_url( $cta_url ); ?>">
+						<?php echo esc_html( $cta_label ); ?>
+					</a>
+				</div>
+			<?php endif; ?>
 			</nav>
 			<?php
 			return;

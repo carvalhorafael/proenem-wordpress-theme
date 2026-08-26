@@ -299,3 +299,24 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: todo componente que pinta a propria superficie declara o proprio `color`. `.pro-sales-card` passa a declarar `color`, o botao primario inverte na faixa de marca e volta ao par padrao quando esta dentro de um card.
 - Consequencia: widget novo que pinte superficie propria precisa declarar o par de cores; herdar da faixa nao e suficiente.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Nivel do heading das secoes de LP como controle
+
+- Contexto: nenhum widget de LP emitia `h1`. `pro_offer_hero` renderizava `h2`, entao uma LP montada com os widgets do tema ficava sem titulo principal.
+- Decisao: expor `heading_level` no hero, com `h1` como default, em vez de fixar o nivel no markup. Qual secao carrega o `h1` e decisao editorial, e ha LP em que o titulo principal nao esta no hero.
+- Consequencia: uma LP montada com os widgets atuais nasce com exatamente um `h1`. O helper `render_section_header()` ja aceitava `title_tag`, entao a mudanca ficou no controle.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Icone dos beneficios por biblioteca de midia
+
+- Contexto: o bloco de metodo das LPs usa um icone por card. O controle `ICONS` do Elementor resolveria, mas carrega a biblioteca de icones do proprio Elementor, ou seja fonte de terceiro no front-end.
+- Decisao: usar controle de midia, para o time escolher o icone da biblioteca da marca. Sem imagem, o item mantem o marcador padrao.
+- Consequencia: o tema nao passa a depender de biblioteca de icones externa, e o icone fica sob curadoria da marca.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Card de plano renderizado em um unico lugar
+
+- Contexto: `pro_pricing_grid` e `pro_pricing_card` duplicavam o markup do card de plano. Adicionar parcelamento, preco a vista e selos de confianca duplicaria a mudanca.
+- Decisao: extrair `render_plan_card()` e `add_plan_price_controls()` para o base class de vendas e consumir dos dois widgets.
+- Consequencia: a grade com um plano so passa a ser o layout de card unico centralizado que a secao de oferta das LPs usa, sem widget novo.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.

@@ -79,7 +79,7 @@ abstract class Proenem_Elementor_Home_Widget_Base extends Proenem_Elementor_Sale
 	 * @return bool
 	 */
 	protected function is_elementor_placeholder_url( $url ) {
-		return false !== strpos( $url, '/elementor/assets/images/placeholder' );
+		return $this->is_elementor_placeholder( $url );
 	}
 
 	/**
@@ -1551,6 +1551,18 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 				'type'        => \Elementor\Controls_Manager::SELECT2,
 			)
 		);
+		$this->add_control(
+			'limit',
+			array(
+				'label'       => esc_html__( 'Quantidade máxima', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::NUMBER,
+				'min'         => 0,
+				'max'         => 12,
+				'step'        => 1,
+				'default'     => 0,
+				'description' => esc_html__( 'Zero usa todos os depoimentos disponíveis. Em landing page, três costuma ser suficiente.', 'proenem-wordpress-theme' ),
+			)
+		);
 		$this->add_section_anchor_control( 'depoimentos' );
 
 		$this->end_controls_section();
@@ -1559,6 +1571,11 @@ class Proenem_Elementor_Home_Testimonials_Widget extends Proenem_Elementor_Home_
 	protected function render(): void {
 		$settings     = $this->get_settings_for_display();
 		$testimonials = proenem_get_home_testimonials( $settings['testimonial_ids'] ?? array() );
+		$limit        = absint( $settings['limit'] ?? 0 );
+
+		if ( $limit > 0 ) {
+			$testimonials = array_slice( $testimonials, 0, $limit );
+		}
 
 		if ( empty( $testimonials ) ) {
 			return;

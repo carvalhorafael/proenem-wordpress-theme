@@ -64,6 +64,15 @@ $existing = get_page_by_path( $slug, OBJECT, 'sales_page' );
 
 $elementor_data = array(
 	proenem_lp_homologation_container(
+		'lpnav01',
+		'pro_navbar',
+		array(
+			'mode'      => 'lp',
+			'cta_label' => 'Garantir minha vaga',
+			'cta_url'   => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lphero01',
 		'pro_offer_hero',
 		array(
@@ -72,6 +81,25 @@ $elementor_data = array(
 			'body'          => 'Secao com tone marca e ancora oferta para validar o contrato compartilhado.',
 			'primary_label' => 'Quero minha vaga',
 			'primary_url'   => array( 'url' => '#oferta' ),
+			'microcopy'     => 'Vagas limitadas - Inicio hoje - Acesso imediato',
+			'heading_level' => 'h1',
+			'proof_cards'   => array(
+				array(
+					'_id'   => 'p1',
+					'label' => 'Cronograma pronto',
+					'value' => 'Semana 1 de 12',
+				),
+				array(
+					'_id'   => 'p2',
+					'label' => 'Redacao 940',
+					'value' => 'Corrigida em 10 dias',
+				),
+				array(
+					'_id'   => 'p3',
+					'label' => 'Organizacao diaria',
+					'value' => '4 de 5 tarefas hoje',
+				),
+			),
 			'tone'          => 'brand',
 			'anchor_id'     => 'inicio',
 		)
@@ -80,18 +108,34 @@ $elementor_data = array(
 		'lpbenef01',
 		'pro_benefits_list',
 		array(
-			'title' => 'Lista de beneficios com tone superficie',
-			'tone'  => 'surface',
-			'items' => array(
+			'eyebrow' => 'O metodo',
+			'title'   => 'Lista de beneficios com quatro colunas e destaque',
+			'body'    => 'Valida eyebrow, corpo, colunas, icone e item em destaque.',
+			'columns' => '4',
+			'tone'    => 'surface',
+			'items'   => array(
 				array(
 					'_id'   => 'b1',
 					'title' => 'Diagnostico da sua nota',
-					'body'  => 'Primeiro item de teste.',
+					'body'  => 'Item com icone da biblioteca.',
+					'icon'  => array( 'url' => get_template_directory_uri() . '/assets/images/brand/logo_proenem.svg' ),
 				),
 				array(
 					'_id'   => 'b2',
 					'title' => 'Cronograma pronto',
-					'body'  => 'Segundo item de teste.',
+					'body'  => 'Item com marcador padrao.',
+				),
+				array(
+					'_id'   => 'b3',
+					'title' => 'Evolucao acompanhada',
+					'body'  => 'Terceiro item de teste.',
+				),
+				array(
+					'_id'       => 'b4',
+					'title'     => 'Correcao de redacao',
+					'body'      => 'Item em destaque com selo.',
+					'highlight' => 'yes',
+					'badge'     => 'Destaque',
 				),
 			),
 		)
@@ -129,10 +173,13 @@ $elementor_data = array(
 		'lpcta01',
 		'pro_cta',
 		array(
+			'eyebrow'      => 'A reta final comecou',
 			'title'        => 'CTA final com ancora oferta',
 			'body'         => 'Destino da ancora usada pelo hero.',
 			'button_label' => 'Garantir minha vaga',
 			'button_url'   => array( 'url' => '#oferta' ),
+			'microcopy'    => 'Acesso imediato - Garantia de 7 dias - Vagas limitadas',
+			'tone'         => 'brand',
 			'anchor_id'    => 'oferta',
 		)
 	),
@@ -186,14 +233,56 @@ $elementor_data = array(
 		'lpcard01',
 		'pro_pricing_card',
 		array(
-			'badge'        => 'Card, nao secao',
-			'name'         => 'Turma Intensiva ENEM 2026',
-			'description'  => 'Deve continuar delimitado como card, sem sangria total.',
-			'price'        => 'R$ 29,90',
-			'recurrence'   => 'por mes',
-			'features'     => "Cronograma semanal\nCorrecao de redacao",
-			'button_label' => 'Garantir minha vaga',
-			'button_url'   => array( 'url' => '#oferta' ),
+			'badge'         => 'Card, nao secao',
+			'name'          => 'Turma Intensiva ENEM 2026',
+			'description'   => 'Acesso completo ate o dia da prova.',
+			'price_prefix'  => '12x de',
+			'price'         => 'R$ 29,90',
+			'price_details' => 'ou R$ 306,90 a vista',
+			'features'      => "Cronograma semanal\nCorrecao de redacao\nSimulados corrigidos no padrao ENEM",
+			'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
+			'button_label'  => 'Garantir minha vaga',
+			'button_url'    => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpgrid01',
+		'pro_pricing_grid',
+		array(
+			'eyebrow' => 'Vagas por tempo limitado',
+			'title'   => 'Grade de planos em faixa de marca',
+			'body'    => 'Valida o par de cores dos componentes dentro da faixa.',
+			'tone'    => 'brand',
+			'plans'   => array(
+				array(
+					'_id'           => 'g1',
+					'name'          => 'Turma Intensiva',
+					'badge'         => 'Mais escolhido',
+					'price_prefix'  => '12x de',
+					'price'         => 'R$ 29,90',
+					'recurrence'    => '',
+					'price_details' => 'ou R$ 306,90 a vista',
+					'features'      => "Cronograma semanal\nCorrecao de redacao",
+					'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias",
+					'button_label'  => 'Garantir minha vaga',
+					'button_url'    => array( 'url' => '#oferta' ),
+				),
+			),
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpfaqbrand01',
+		'pro_faq',
+		array(
+			'title' => 'FAQ em faixa de marca',
+			'tone'  => 'brand',
+			'items' => array(
+				array(
+					'_id'      => 'qb1',
+					'question' => 'O item do FAQ mantem contraste na faixa de marca?',
+					'answer'   => 'Deve manter, com superficie branca e texto ink.',
+				),
+			),
 		)
 	),
 	proenem_lp_homologation_container(
@@ -237,6 +326,20 @@ $elementor_data = array(
 			'body'         => 'Valida que o id do heading vem do id do widget.',
 			'button_label' => 'Ver planos',
 			'button_url'   => array( 'url' => '#oferta' ),
+		)
+	),
+	proenem_lp_homologation_container(
+		'lptesti01',
+		'pro_home_testimonials',
+		array(
+			'limit' => 2,
+		)
+	),
+	proenem_lp_homologation_container(
+		'lpfooter01',
+		'pro_footer',
+		array(
+			'mode' => 'minimal',
 		)
 	),
 );
