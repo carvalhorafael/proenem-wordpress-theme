@@ -360,3 +360,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Degradacao: sem JavaScript, a data formatada permanece visivel. Depois do prazo, o texto de encerramento substitui a contagem.
 - Internacionalizacao: os rotulos das unidades vem do PHP por marcacao propria, e nao de string no JavaScript, o que mantem tudo no catalogo e dispensa plural no cliente.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Cor de destaque por lista fechada, com par de cores
+
+- Contexto: a revisao pediu que o time pudesse escolher cor nos widgets sem seletor livre, para nao entrar cor fora do design system. A sugestao inicial era limitar as opcoes as cores globais do Elementor.
+- Achado 1: o kit ativo nao tinha paleta gravada, entao as cores globais eram as padrao do Elementor, e nao as da Proenem. Um seletor limitado a elas ofereceria, naquele momento, cores fora da marca.
+- Achado 2: uma cor global do Elementor e apenas um hex e nao carrega cor de conteudo. Foi exatamente essa ausencia de par que produziu tres defeitos nesta revisao: card branco sobre branco, botao vermelho sobre vermelho e icone claro sobre amarelo.
+- Decisao: os widgets consomem uma lista fechada definida no tema, em `proenem_get_brand_accents()`, onde cada opcao declara superficie e conteudo juntos. Nenhuma escolha possivel perde contraste.
+- Decisao complementar: gravar a paleta da marca nas cores globais do kit por script explicito, para o time usar a paleta certa nos widgets nativos do Elementor. As cores globais sao conteudo e nao viram contrato do tema.
+- Exclusao: `--pen-color-purple` (#8952fd) fica fora da lista dos widgets, porque nem ink nem branco alcancam AA para texto normal sobre ele. Continua na paleta global, com aviso de uso decorativo.
+- Gap do design system: apenas `proenem-red` publica par explicito (`--pen-color-on-red`). Os pares das outras cores foram calculados por luminancia e deveriam vir publicados.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`; gap registrado para a Fase 5 em `#198`.

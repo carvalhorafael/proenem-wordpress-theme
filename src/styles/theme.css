@@ -271,6 +271,55 @@
   color: var(--pen-color-ink, #111827);
 }
 
+/* Cores de destaque da marca. Cada classe declara superficie e par de texto
+   juntos, entao nao existe combinacao escolhivel que perca contraste.
+   purple (#8952fd) esta ausente de proposito: nem ink nem branco alcancam AA
+   sobre ele para texto normal. */
+.pro-sales-accent--yellow {
+  background: var(--pen-color-yellow-brand, #f9c200);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--brand {
+  background: var(--pen-color-proenem-red, #bb0922);
+  color: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-accent--ink {
+  background: var(--pen-color-ink, #1a1a1a);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-accent--purple {
+  background: var(--pen-color-purple-lp, #4d17f5);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-accent--pink {
+  background: var(--pen-color-pink-hot, #ff2d87);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--mint {
+  background: var(--pen-color-mint, #06d6a0);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--teal {
+  background: var(--pen-color-teal, #00b4a6);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--cyan {
+  background: var(--pen-color-cyan, #00bfff);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--orange {
+  background: var(--pen-color-orange, #ff7051);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
 /* ---------------------------------------------------------------------------
    Proenem LP widgets
    --------------------------------------------------------------------------- */
@@ -302,11 +351,9 @@
    texto claro e desapareceria sobre o amarelo. */
 .pro-lp-metric__icon {
   align-items: center;
-  background: var(--pen-color-yellow-brand, #ffe45c);
   border: var(--pen-border-brand-sm, 2px solid #111827);
   border-radius: 50%;
   box-shadow: 3px 3px 0 var(--pen-color-ink, #111827);
-  color: var(--pen-color-ink, #111827);
   display: inline-flex;
   font-size: 2.25rem;
   height: 4.5rem;

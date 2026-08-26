@@ -282,6 +282,52 @@ Escopo congelado significa que o grupo de faixa de texto nao recebe controle nov
 
 `pro_lp_offer_highlight` nasceu na Fase 2, antes de `pro_pricing_card` receber parcelamento, preco a vista e selos na Fase 3. Quando o card de plano ganhou esses campos, passou a cobrir o caso do destaque de oferta. A ordem inversa das fases teria evitado o widget novo. Registro aqui para que a proxima adicao de widget verifique primeiro se um widget existente esta a um controle de distancia do caso.
 
+### Cor de destaque: lista fechada com par de cores
+
+Nao existe seletor livre de cor nos widgets. O editor escolhe em uma lista
+fechada de tons publicados da Proenem, e cada opcao ja traz a cor de conteudo
+que garante contraste. O contrato esta em `proenem_get_brand_accents()` e nas
+classes `.pro-sales-accent--*`.
+
+| Opcao | Superficie | Conteudo | Contraste |
+| --- | --- | --- | --- |
+| Amarelo da marca | `--pen-color-yellow-brand` | ink | 10.56 |
+| Vermelho da marca | `--pen-color-proenem-red` | branco | 6.61 |
+| Tinta | `--pen-color-ink` | branco | 17.40 |
+| Roxo | `--pen-color-purple-lp` | branco | 7.62 |
+| Rosa | `--pen-color-pink-hot` | ink | 4.95 |
+| Verde | `--pen-color-mint` | ink | 9.23 |
+| Azul esverdeado | `--pen-color-teal` | ink | 6.70 |
+| Azul | `--pen-color-cyan` | ink | 8.20 |
+| Laranja | `--pen-color-orange` | ink | 6.37 |
+
+`--pen-color-purple` (#8952fd) esta fora da lista de proposito: nem ink nem
+branco alcancam AA para texto normal sobre ele. Enquanto o design system nao
+publicar um par, ele nao pode ser oferecido como superficie.
+
+Para acrescentar cor de destaque a um widget novo, use
+`add_accent_control( $nome )` e `accent_class( $settings, $nome )` do base
+class. A cor do conteudo vem junto, entao nao ha combinacao escolhivel que
+perca legibilidade.
+
+### Paleta da marca no Elementor
+
+`scripts/sync-elementor-brand-palette.php` grava as cores publicadas da Proenem
+nas cores globais do kit ativo, para o time usar a paleta certa tambem nos
+widgets nativos do Elementor.
+
+```bash
+npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/sync-elementor-brand-palette.php
+```
+
+O script e idempotente e limpa o cache de CSS do Elementor no final, porque as
+cores globais entram no CSS compilado do kit.
+
+Fronteira importante: as cores globais do Elementor sao conteudo, nao contrato
+do tema. Uma cor global e apenas um hex e nao carrega par de texto, entao os
+widgets da Proenem nao as consomem: eles usam a lista fechada acima. O kit
+existe para o que o time montar com widgets nativos.
+
 ### Pagina de homologacao
 
 `scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.

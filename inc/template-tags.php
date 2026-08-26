@@ -1857,6 +1857,78 @@ function proenem_render_testimonials_empty_state( $title, $body ) {
 }
 
 /**
+ * Get the Proenem accent colors available to the Elementor widgets.
+ *
+ * Each entry carries the paired foreground, because an Elementor global color
+ * is only a hex value and says nothing about which text goes on top of it. The
+ * pairing is what keeps a chosen color from producing unreadable content.
+ *
+ * `purple` is deliberately absent: at #8952fd neither ink nor white reaches AA
+ * for normal text, so it cannot be offered as a surface until the design system
+ * publishes a foreground for it.
+ *
+ * @return array<string,array{label:string,surface:string,on:string,contrast:string}>
+ */
+function proenem_get_brand_accents() {
+	return array(
+		'yellow' => array(
+			'label'    => __( 'Amarelo da marca', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-yellow-brand, #f9c200)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '10.56',
+		),
+		'brand'  => array(
+			'label'    => __( 'Vermelho da marca', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-proenem-red, #bb0922)',
+			'on'       => 'var(--pen-color-on-red, #ffffff)',
+			'contrast' => '6.61',
+		),
+		'ink'    => array(
+			'label'    => __( 'Tinta', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-ink, #1a1a1a)',
+			'on'       => 'var(--pen-color-canvas-white, #ffffff)',
+			'contrast' => '17.40',
+		),
+		'purple' => array(
+			'label'    => __( 'Roxo', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-purple-lp, #4d17f5)',
+			'on'       => 'var(--pen-color-canvas-white, #ffffff)',
+			'contrast' => '7.62',
+		),
+		'pink'   => array(
+			'label'    => __( 'Rosa', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-pink-hot, #ff2d87)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '4.95',
+		),
+		'mint'   => array(
+			'label'    => __( 'Verde', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-mint, #06d6a0)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '9.23',
+		),
+		'teal'   => array(
+			'label'    => __( 'Azul esverdeado', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-teal, #00b4a6)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '6.70',
+		),
+		'cyan'   => array(
+			'label'    => __( 'Azul', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-cyan, #00bfff)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '8.20',
+		),
+		'orange' => array(
+			'label'    => __( 'Laranja', 'proenem-wordpress-theme' ),
+			'surface'  => 'var(--pen-color-orange, #ff7051)',
+			'on'       => 'var(--pen-color-ink, #1a1a1a)',
+			'contrast' => '6.37',
+		),
+	);
+}
+
+/**
  * Get configurable footer menu columns.
  *
  * @return array<string,string>

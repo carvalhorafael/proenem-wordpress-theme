@@ -394,6 +394,70 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	}
 
 	/**
+	 * Register a closed list of brand accent colors.
+	 *
+	 * There is no free color picker on purpose: every option carries its paired
+	 * foreground, so no choice can produce unreadable content.
+	 *
+	 * @param string $name Control name.
+	 * @param array  $args {
+	 *     Optional.
+	 *
+	 *     @type string $label     Control label.
+	 *     @type string $default   Default accent key.
+	 *     @type array  $condition Elementor condition.
+	 * }
+	 * @return void
+	 */
+	protected function add_accent_control( $name, array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'label'     => esc_html__( 'Cor de destaque', 'proenem-wordpress-theme' ),
+				'default'   => 'yellow',
+				'condition' => array(),
+			)
+		);
+
+		$options = array();
+
+		foreach ( proenem_get_brand_accents() as $key => $accent ) {
+			$options[ $key ] = $accent['label'];
+		}
+
+		$this->add_control(
+			$name,
+			array(
+				'label'       => $args['label'],
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => $args['default'],
+				'options'     => $options,
+				'description' => esc_html__( 'Somente cores publicadas da Proenem. Cada opção já traz a cor de texto que garante contraste.', 'proenem-wordpress-theme' ),
+				'condition'   => $args['condition'],
+			)
+		);
+	}
+
+	/**
+	 * Get the accent class of a chosen color.
+	 *
+	 * @param array  $settings Settings holding the control value.
+	 * @param string $name Control name.
+	 * @param string $fallback Accent key used when the value is unknown.
+	 * @return string
+	 */
+	protected function accent_class( $settings, $name, $fallback = 'yellow' ) {
+		$accents = proenem_get_brand_accents();
+		$key     = isset( $settings[ $name ] ) ? (string) $settings[ $name ] : '';
+
+		if ( ! isset( $accents[ $key ] ) ) {
+			$key = $fallback;
+		}
+
+		return 'pro-sales-accent pro-sales-accent--' . sanitize_html_class( $key );
+	}
+
+	/**
 	 * Register the controls of a video facade.
 	 *
 	 * @param array $args {

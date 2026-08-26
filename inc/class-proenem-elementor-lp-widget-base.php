@@ -101,6 +101,25 @@ class Proenem_Elementor_Lp_Metrics_Widget extends Proenem_Elementor_Lp_Widget_Ba
 				'description' => esc_html__( 'Opcional. Sem ícone escolhido, nada é exibido acima do número.', 'proenem-wordpress-theme' ),
 			)
 		);
+		$accent_options = array();
+
+		foreach ( proenem_get_brand_accents() as $accent_key => $accent ) {
+			$accent_options[ $accent_key ] = $accent['label'];
+		}
+
+		$repeater->add_control(
+			'icon_accent',
+			array(
+				'label'       => esc_html__( 'Cor do selo', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'yellow',
+				'options'     => $accent_options,
+				'description' => esc_html__( 'Somente cores publicadas da Proenem. Cada opção já traz a cor de ícone que garante contraste.', 'proenem-wordpress-theme' ),
+				'condition'   => array(
+					'icon[value]!' => '',
+				),
+			)
+		);
 		$repeater->add_control(
 			'value',
 			array(
@@ -168,7 +187,7 @@ class Proenem_Elementor_Lp_Metrics_Widget extends Proenem_Elementor_Lp_Widget_Ba
 						<?php endif; ?>
 							<li class="pro-lp-metric">
 							<?php if ( ! empty( $item['icon']['value'] ) && class_exists( '\Elementor\Icons_Manager' ) ) : ?>
-									<span class="pro-lp-metric__icon" aria-hidden="true">
+									<span class="pro-lp-metric__icon <?php echo esc_attr( $this->accent_class( $item, 'icon_accent' ) ); ?>" aria-hidden="true">
 										<?php \Elementor\Icons_Manager::render_icon( $item['icon'], array( 'aria-hidden' => 'true' ) ); ?>
 									</span>
 								<?php endif; ?>
