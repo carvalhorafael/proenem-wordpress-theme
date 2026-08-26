@@ -125,3 +125,48 @@ Uma unica faixa concentra tres blocos distintos.
 - Fase 4 (`#197`) resolve o achado estrutural 3.
 - Fase 5 (`#198`) resolve o achado estrutural 4 abrindo o par de issues de design system e de debito no tema.
 - Fase 6 (`#199`) fecha o ciclo com testes, i18n, performance e homologacao.
+
+## Apendice: catalogo completo dos widgets avaliados
+
+A analise cobriu os 23 widgets registrados em `inc/elementor-sales-widgets.php`, nao apenas os seis usados na LP `/lp/intenisva/`. Este apendice registra o veredito de cada um para que nenhuma ausencia no plano seja confundida com esquecimento.
+
+### Mapeados no plano
+
+| Widget | Papel na LP | Encaminhamento |
+| --- | --- | --- |
+| `pro_navbar` | header sticky de conversao | melhoria, modo `lp` (Fase 3) |
+| `pro_footer` | footer minimo | melhoria, modo `minimal` (Fase 3) |
+| `pro_offer_hero` | hero de campanha | melhoria, microcopy, fundo e cards flutuantes (Fase 3) |
+| `pro_benefits_list` | bloco `O METODO` | melhoria, icones, colunas e item em destaque (Fase 3) |
+| `pro_pricing_card` | card da secao de oferta | melhoria, parcelamento, preco a vista e selos (Fase 3) |
+| `pro_pricing_grid` | cabecalho da secao de oferta | melhoria, eyebrow e corpo (Fase 3) |
+| `pro_cta` | CTA final em faixa | melhoria, eyebrow, microcopy e faixa de marca (Fase 3) |
+| `pro_home_testimonials` | secao `Aprovados` | melhoria, limite e layout de LP (Fase 3) |
+
+### Avaliados como paralelos e descartados como base
+
+Resolvem o padrao visual certo, mas com a copy da home embutida na estrutura dos controles, o que os torna inadequados como base generica de LP.
+
+| Widget | Padrao paralelo | Motivo do descarte |
+| --- | --- | --- |
+| `pro_home_proof` | faixa de prova social | preso a IDs do CPT de depoimento, sem espaco para numeros editoriais livres |
+| `pro_home_pillars` | grade de cards de metodo | titulo e corpo fatiados em `body_1`, `body_2` e defaults da home |
+| `pro_home_platform` | spotlight de midia mais copy | titulo fatiado em `title_span`, `title_strong` e `title_tail` |
+
+### Avaliados e sem secao correspondente nas LPs de campanha
+
+Permanecem registrados e validos; apenas nao entram na paridade das duas LPs analisadas.
+
+| Widget | Motivo |
+| --- | --- |
+| `pro_offer_countdown` | as LPs de campanha usam urgencia textual (`Vagas limitadas • Inicio hoje`), nao cronometro; a LP `/lp/intenisva/` usa o countdown |
+| `pro_plans_comparison` | as LPs de campanha vendem plano unico, sem tabela comparativa |
+| `pro_faq` | nenhuma das duas LPs de campanha tem FAQ |
+| `pro_home_faq` | idem; achado lateral, a LP `/lp/intenisva/` usa `pro_home_faq` quando o generico `pro_faq` ja existe |
+| `pro_home_marquee` | usado em `/lp/intenisva/`, ausente nas LPs de campanha |
+
+### Exclusivos da home
+
+Nao recebem generalizacao retroativa e nao devem ser usados em LP.
+
+`pro_home_hero`, `pro_home_action_bar`, `pro_home_pain`, `pro_home_questions`, `pro_home_pricing`, `pro_home_schools`, `pro_home_final_cta`.
