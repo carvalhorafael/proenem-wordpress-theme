@@ -390,3 +390,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Extensao: ancora interna tambem desconta o offset, senao o destino da ancora para embaixo da barra fixa.
 - Fronteira: com duas barras fixas na mesma pagina, a ultima a pinar define o offset. Nao ha acumulo, porque nao ha caso de uso conhecido para duas.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Tokens inexistentes do design system no CSS do tema
+
+- Contexto: uma auditoria dos 71 tokens `--pen-*` usados no tema encontrou 11 que nao existem em nenhum dos pacotes publicados. Quatro deles eram usados sem fallback, entao a declaracao inteira era descartada pelo navegador e o estilo simplesmente nao existia.
+- Declaracoes descartadas corrigidas: contorno de `:focus-visible` no card de materia, que deixava o indicador de foco de teclado sem o contorno pretendido; `border-radius` do marcador do card de plano; `border` do botao do carrossel de depoimentos; e `padding` de um bloco da home, que ficava zerado.
+- Aliases corrigidos para o token publicado equivalente: `--pen-color-white` para `--pen-color-canvas-white`, mesmo valor e nenhuma mudanca visual; `--pen-color-yellow` para `--pen-color-yellow-brand`, que corrige o amarelo do selo e do icone de beneficio de `#ffe45c` inventado para `#f9c200` da marca; e `--pen-font-family-sans` para `--pen-font-body`.
+- Escolha registrada: o contorno de foco passou a usar `--pen-color-cyan`, o azul publicado da paleta, porque o token original nao existe e inventar cor de foco seria decisao de design sem especificacao.
+- Pendentes, com fallback funcionando: `--pen-color-red` em 4 usos, cuja troca por `--pen-color-proenem-red` muda a cor de botoes ja homologados; `--pen-space-7`, `--pen-space-9` e `--pen-space-14`, degraus que a escala publicada nao tem; e `--pen-page-gutter`, sem equivalente publicado.
+- Gap do design system: a escala de espacamento publicada tem 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20 e 24, e o tema precisou de 7, 9 e 14. Faltam tambem token de gutter de pagina e cor de foco.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`; gaps a registrar na Fase 5 em `#198`.

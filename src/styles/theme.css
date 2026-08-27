@@ -16,7 +16,7 @@
 
 .pro-sales-widget {
   color: var(--pen-color-ink, #111827);
-  font-family: var(--pen-font-family-sans, inherit);
+  font-family: var(--pen-font-body, inherit);
   margin-inline: auto;
   max-width: min(100%, 74rem);
 }
@@ -149,7 +149,7 @@
    the default pairing. */
 .pro-sales-section--tone-brand .pro-sales-card .pro-sales-button--primary {
   background: var(--pen-color-red, #e3062c);
-  color: var(--pen-color-white, #ffffff);
+  color: var(--pen-color-canvas-white, #ffffff);
 }
 
 /* Fase 3: controles novos dos widgets de venda ------------------------------ */
@@ -674,7 +674,7 @@
 
 .pro-sales-eyebrow,
 .pro-sales-badge {
-  background: var(--pen-color-yellow, #ffe45c);
+  background: var(--pen-color-yellow-brand, #f9c200);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: var(--pen-radius-pill, 999px);
   box-shadow: 2px 2px 0 var(--pen-color-ink, #111827);
@@ -709,16 +709,16 @@
 
 .pro-sales-button--primary {
   background: var(--pen-color-red, #e3062c);
-  color: var(--pen-color-white, #ffffff);
+  color: var(--pen-color-canvas-white, #ffffff);
 }
 
 .pro-sales-button--secondary {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   color: var(--pen-color-ink, #111827);
 }
 
 .pro-sales-button--inverse {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   color: var(--pen-color-red, #e3062c);
 }
 
@@ -730,7 +730,7 @@
 }
 
 .pro-sales-card {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   color: var(--pen-color-ink, #111827);
   border: var(--pen-border-brand-sm, 2px solid #111827);
   border-radius: var(--pen-radius-lg, 0.75rem);
@@ -778,7 +778,7 @@
   border: var(--pen-border-brand-sm, 2px solid #111827);
   border-radius: var(--pen-radius-lg, 0.75rem);
   box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
-  color: var(--pen-color-white, #ffffff);
+  color: var(--pen-color-canvas-white, #ffffff);
   display: flex;
   gap: var(--pen-space-6, 1.5rem);
   justify-content: space-between;
@@ -829,7 +829,7 @@
 }
 
 .pro-sales-countdown__date {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: var(--pen-radius-md, 0.5rem);
   color: var(--pen-color-ink, #111827);
@@ -1024,7 +1024,7 @@
 
 .pro-sales-benefit__icon {
   align-items: center;
-  background: var(--pen-color-yellow, #ffe45c);
+  background: var(--pen-color-yellow-brand, #f9c200);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: 50%;
   display: inline-flex;
@@ -1238,7 +1238,7 @@
 }
 
 .pro-sales-faq__item {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   border: var(--pen-border-brand-sm, 2px solid #111827);
   border-radius: var(--pen-radius-md, 0.5rem);
   padding: 1rem 1.25rem;
@@ -4850,7 +4850,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   align-self: center;
   display: grid;
   gap: var(--pen-space-3);
-  padding: var(--pen-space-7) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  padding: var(--pen-space-7, 1.75rem) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
   position: relative;
   z-index: 1;
 }
@@ -5565,7 +5565,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pen-subject-grid .pro-home-subject-card:focus-visible {
-  outline: 0.18rem solid var(--pen-color-blue);
+  outline: 0.18rem solid var(--pen-color-cyan, #00bfff);
   outline-offset: 0.18rem;
 }
 
@@ -5812,7 +5812,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   align-items: center;
   background: var(--pen-color-yellow-bright);
   border: 1px solid var(--pen-color-ink);
-  border-radius: var(--pen-radius-xs);
+  border-radius: var(--pen-radius-sm, 0.25rem);
   color: var(--pen-color-ink);
   content: "✓";
   display: inline-flex;
@@ -6140,7 +6140,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pro-home-testimonials__controls button {
   align-items: center;
   background: var(--pen-color-surface);
-  border: var(--pen-border-brand-md);
+  border: var(--pen-border-brand, 2px solid #1a1a1a);
   border-radius: 0.55rem;
   box-shadow: var(--pen-shadow-hard-sm);
   color: var(--pen-color-ink);
