@@ -417,3 +417,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Conteudo em branco de proposito: link e capa do video, e selecao de depoimentos. Nao ha URL de video versionada no tema, capa deve vir da biblioteca para nao carregar terceiro antes do clique, e a selecao vazia usa os registros elegiveis mais recentes.
 - Portabilidade: as imagens dos spotlights usam caminho relativo a raiz para assets do tema, entao funcionam em qualquer dominio onde o tema esteja instalado, ao contrario de ID de anexo, que nao existe apos a importacao.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.
+
+## 2026-08-26: Gaps do design system registrados e duplicacao local identificada
+
+- Contexto: fechamento da Fase 5, que exige issue no design system e issue de debito no tema para cada adaptacao local criada por gap.
+- Levantamento: dos 71 tokens `--pen-*` usados pelo tema, 11 nao existiam nos pacotes publicados; apenas o vermelho publica par de cor de conteudo; e nao ha contrato de faixa de secao, container, largura de conteudo, gutter de pagina, offset de barra fixa nem cor de foco.
+- Achado que mudou o diagnostico: o pacote CSS publica 67 componentes, entre eles `pen-button`, `pen-card`, `pen-pricing-card`, `pen-faq-section`, `pen-faq-item`, `pen-marketing-cta`, `pen-hero-section` e `pen-pill-eyebrow`. Parte da camada local `pro-sales-*` nao e gap: e duplicacao de contrato existente.
+- Decisao: separar os dois tipos de debito. O que depende de contrato novo fica condicionado a issue do design system; a migracao de `pro-sales-*` para os `pen-*` publicados e trabalho do tema e pode ser feita antes.
+- Achado de acessibilidade levado ao design system: `--pen-color-purple` (#8952fd) da 3.89 contra ink e 4.48 contra branco, entao nao alcanca AA para texto normal com nenhuma cor de conteudo e nao pode ser oferecida como superficie de texto.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#44`; debito no tema `carvalhorafael/proenem-wordpress-theme#203`; fase `#198`.
