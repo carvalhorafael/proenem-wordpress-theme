@@ -2364,6 +2364,8 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 											<div class="pro-sales-comparison__plan-inner">
 											<?php if ( ! empty( $plan['badge'] ) ) : ?>
 													<span class="pro-sales-badge <?php echo esc_attr( $this->accent_class( $plan, 'accent' ) ); ?>"><?php echo esc_html( $plan['badge'] ); ?></span>
+												<?php else : ?>
+													<span class="pro-sales-badge pro-sales-badge--placeholder" aria-hidden="true">&nbsp;</span>
 												<?php endif; ?>
 												<span class="pro-sales-comparison__plan-name"><?php echo esc_html( $plan['name'] ?? '' ); ?></span>
 											<?php if ( ! empty( $plan['price'] ) ) : ?>

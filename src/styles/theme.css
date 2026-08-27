@@ -988,7 +988,7 @@
 }
 
 /* Cabecalho do plano: card com preco e chamada, nao apenas o nome. */
-.pro-sales-comparison__plan {
+.pro-sales-comparison__table .pro-sales-comparison__plan {
   background: var(--pen-color-canvas-white, #ffffff);
   border-block-end: var(--pen-border-brand-sm, 2px solid #1a1a1a);
   min-width: 12rem;
@@ -1012,6 +1012,9 @@
   flex-wrap: wrap;
   gap: 0.3rem;
   justify-content: center;
+  /* O prefixo alinhado por baseline estende a caixa de linha, entao a coluna sem
+     prefixo ficava 2 px mais baixa que as outras. */
+  line-height: 1;
 }
 
 .pro-sales-comparison__plan-price strong {
@@ -1032,6 +1035,12 @@
 
 .pro-sales-comparison__plan-inner .pro-sales-badge {
   margin: 0;
+}
+
+/* O slot do selo e sempre reservado: sem isso a coluna sem selo tem uma linha
+   menos e nome, preco e botao param em alturas diferentes das outras. */
+.pro-sales-badge--placeholder {
+  visibility: hidden;
 }
 
 /* A coluna destacada e uma faixa continua, do cabecalho a ultima linha. */

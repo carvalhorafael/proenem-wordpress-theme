@@ -330,7 +330,7 @@ msgstr "O ENEM não é prova de quem estuda mais. É de quem estuda com estraté
 #: inc/class-proenem-elementor-sales-widget-base.php:1671
 #: inc/class-proenem-elementor-sales-widget-base.php:1838
 #: inc/class-proenem-elementor-sales-widget-base.php:2168
-#: inc/class-proenem-elementor-sales-widget-base.php:2483
+#: inc/class-proenem-elementor-sales-widget-base.php:2485
 msgid "Botão"
 msgstr "Botão"
 
@@ -954,7 +954,7 @@ msgstr "Categoria"
 #: inc/class-proenem-elementor-sales-widget-base.php:1679
 #: inc/class-proenem-elementor-sales-widget-base.php:1846
 #: inc/class-proenem-elementor-sales-widget-base.php:2175
-#: inc/class-proenem-elementor-sales-widget-base.php:2491
+#: inc/class-proenem-elementor-sales-widget-base.php:2493
 msgid "Link"
 msgstr "Link"
 
@@ -1381,7 +1381,7 @@ msgstr "FAQ"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1780
 #: inc/class-proenem-elementor-home-widget-base.php:1800
-#: inc/class-proenem-elementor-sales-widget-base.php:2584
+#: inc/class-proenem-elementor-sales-widget-base.php:2586
 #: page-templates/home.php:776
 msgid "Perguntas"
 msgstr "Perguntas"
@@ -1392,12 +1392,12 @@ msgid "frequentes"
 msgstr "frequentes"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1786
-#: inc/class-proenem-elementor-sales-widget-base.php:2597
+#: inc/class-proenem-elementor-sales-widget-base.php:2599
 msgid "Pergunta"
 msgstr "Pergunta"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1793
-#: inc/class-proenem-elementor-sales-widget-base.php:2604
+#: inc/class-proenem-elementor-sales-widget-base.php:2606
 msgid "Resposta"
 msgstr "Resposta"
 
@@ -1498,7 +1498,7 @@ msgstr "alunos aprovados nas melhores universidades"
 
 #: inc/class-proenem-elementor-lp-widget-base.php:144
 #: inc/class-proenem-elementor-sales-widget-base.php:1988
-#: inc/class-proenem-elementor-sales-widget-base.php:2611
+#: inc/class-proenem-elementor-sales-widget-base.php:2613
 msgid "Itens"
 msgstr "Itens"
 
@@ -1894,7 +1894,7 @@ msgid "Link secundário"
 msgstr "Link secundário"
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1145
-#: inc/class-proenem-elementor-sales-widget-base.php:2498
+#: inc/class-proenem-elementor-sales-widget-base.php:2500
 msgid "Linha de confiança"
 msgstr "Linha de confiança"
 
@@ -2212,31 +2212,31 @@ msgstr "Comparativo de planos, rolável na horizontal"
 msgid "Comparativo de recursos por plano"
 msgstr "Comparativo de recursos por plano"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2447
+#: inc/class-proenem-elementor-sales-widget-base.php:2449
 msgid "Pro CTA"
 msgstr "Pro CTA"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2468
+#: inc/class-proenem-elementor-sales-widget-base.php:2470
 msgid "Chamada"
 msgstr "Chamada"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2475
+#: inc/class-proenem-elementor-sales-widget-base.php:2477
 msgid "Comece sua preparação hoje"
 msgstr "Comece sua preparação hoje"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2485
+#: inc/class-proenem-elementor-sales-widget-base.php:2487
 msgid "Escolher plano"
 msgstr "Escolher plano"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2501
+#: inc/class-proenem-elementor-sales-widget-base.php:2503
 msgid "Aparece abaixo do botão."
 msgstr "Aparece abaixo do botão."
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2563
+#: inc/class-proenem-elementor-sales-widget-base.php:2565
 msgid "Pro FAQ"
 msgstr "Pro FAQ"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2590
+#: inc/class-proenem-elementor-sales-widget-base.php:2592
 #: inc/template-tags.php:358
 msgid "Perguntas frequentes"
 msgstr "Perguntas frequentes"
