@@ -328,6 +328,26 @@ do tema. Uma cor global e apenas um hex e nao carrega par de texto, entao os
 widgets da Proenem nao as consomem: eles usam a lista fechada acima. O kit
 existe para o que o time montar com widgets nativos.
 
+### Comparativo de planos
+
+Reconstruido na revisao, no formato de comparativo de produto SaaS e no vocabulario visual da marca.
+
+- **cabecalho de plano como card**: nome, selo com cor de destaque, prefixo de preco, preco, detalhe e botao proprio por coluna, em vez de apenas o nome;
+- **coluna destacada**: o plano com `featured` recebe faixa continua do cabecalho a ultima linha;
+- **grupos de recursos**: cada linha do repeater escolhe entre `Recurso` e `Titulo de grupo`, o que da secoes dentro da tabela sem exigir repeater aninhado, que o Elementor nao suporta;
+- **explicacao curta por recurso**: campo opcional exibido abaixo do nome do recurso;
+- **marcas com icone**: valores `sim`, `yes`, `true`, `x` e `incluido` viram check; `nao`, `no`, `false` e `-` viram X; celula vazia vira travessao. Qualquer outro texto aparece como esta, entao `4 por mes` e `50 mil` continuam funcionando;
+- **hover de linha** para acompanhar a leitura na horizontal.
+
+Comportamento responsivo, que e o ponto fraco tipico de comparativo:
+
+- abaixo de 64 rem, o container rola na horizontal e a **coluna de recursos fica fixa** na borda, entao a pessoa nunca perde a referencia do que esta comparando;
+- a partir de 64 rem a tabela cabe, o container deixa de ser area de rolagem e o **cabecalho de planos gruda no topo da janela** enquanto a pessoa percorre a lista. Sao comportamentos exclusivos porque um container de rolagem captura o `position: sticky`, e o cabecalho grudaria no container em vez da janela.
+
+Acessibilidade: `caption` para a tabela, `scope` em coluna, linha e grupo, marcas com texto para leitor de tela (um icone sozinho nao diz o que a coluna significa) e a area de rolagem como `role="region"` com `tabindex="0"`, para quem navega por teclado poder rolar.
+
+Compatibilidade: paginas que ainda usam a lista de colunas em texto continuam renderizando, porque o widget cai para ela quando o repeater de planos esta vazio.
+
 ### Pagina de homologacao
 
 `scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.

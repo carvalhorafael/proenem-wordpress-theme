@@ -371,3 +371,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Exclusao: `--pen-color-purple` (#8952fd) fica fora da lista dos widgets, porque nem ink nem branco alcancam AA para texto normal sobre ele. Continua na paleta global, com aviso de uso decorativo.
 - Gap do design system: apenas `proenem-red` publica par explicito (`--pen-color-on-red`). Os pares das outras cores foram calculados por luminancia e deveriam vir publicados.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`; gap registrado para a Fase 5 em `#198`.
+
+## 2026-08-26: Comparativo de planos no formato de produto SaaS
+
+- Contexto: o widget renderizava uma tabela simples, com o nome do plano no cabecalho e valores em texto. Comparativo e a peca que sustenta a decisao entre planos e precisava de mais.
+- Decisao: cabecalho de plano como card com preco e chamada propria, coluna destacada continua, grupos de recursos, explicacao curta por recurso e marcas booleanas com icone.
+- Grupos sem repeater aninhado: o Elementor nao suporta repeater dentro de repeater, entao cada linha declara se e recurso ou titulo de grupo. Mantem uma lista unica no editor e evita estrutura que o painel nao sabe editar.
+- Sticky e rolagem sao exclusivos por breakpoint: um container de rolagem captura `position: sticky`, entao o cabecalho grudaria no container em vez da janela. Abaixo de 64 rem o container rola e a coluna de recursos fica fixa; acima, o container deixa de rolar e o cabecalho gruda na janela.
+- Marcas booleanas carregam texto para leitor de tela, porque um icone sozinho nao informa o que a coluna significa.
+- Compatibilidade: o widget aceita a lista de colunas em texto do formato anterior quando o repeater de planos esta vazio, para nao esvaziar pagina existente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

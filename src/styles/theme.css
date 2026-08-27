@@ -949,29 +949,168 @@
   }
 }
 
+/* Comparativo de planos ----------------------------------------------------- */
+
 .pro-sales-comparison__scroll {
   overflow-x: auto;
 }
 
-.pro-sales-comparison table {
-  border-collapse: collapse;
+.pro-sales-comparison__scroll:focus-visible {
+  outline: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+  outline-offset: 2px;
+}
+
+.pro-sales-comparison__table {
+  border-collapse: separate;
+  border-spacing: 0;
   min-width: 44rem;
   width: 100%;
 }
 
-.pro-sales-comparison th,
-.pro-sales-comparison td {
-  border: var(--pen-border-brand-xs, 1px solid #111827);
-  padding: 0.9rem;
-  text-align: left;
+.pro-sales-comparison__table th,
+.pro-sales-comparison__table td {
+  border-block-end: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  padding: 0.85rem 1rem;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.pro-sales-comparison thead th {
-  background: var(--pen-color-yellow, #ffe45c);
+.pro-sales-comparison__corner {
+  border-block-end: 0;
 }
 
-.pro-sales-comparison tbody th {
-  background: var(--pen-color-surface, #f7f7f7);
+/* Cabecalho do plano: card com preco e chamada, nao apenas o nome. */
+.pro-sales-comparison__plan {
+  background: var(--pen-color-canvas-white, #ffffff);
+  border-block-end: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+  min-width: 12rem;
+  vertical-align: bottom;
+}
+
+.pro-sales-comparison__plan-inner {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+}
+
+.pro-sales-comparison__plan-name {
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.pro-sales-comparison__plan-price {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.pro-sales-comparison__plan-price strong {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1;
+}
+
+.pro-sales-comparison__plan-details {
+  opacity: 0.8;
+}
+
+.pro-sales-comparison__plan-inner .pro-sales-button {
+  margin-block-start: 0.35rem;
+  min-height: 2.6rem;
+  padding: 0.6rem 1.1rem;
+  width: 100%;
+}
+
+.pro-sales-comparison__plan-inner .pro-sales-badge {
+  margin: 0;
+}
+
+/* A coluna destacada e uma faixa continua, do cabecalho a ultima linha. */
+.pro-sales-comparison__plan--featured,
+.pro-sales-comparison__cell--featured {
+  background: var(--pen-color-canvas, #fef2f2);
+  box-shadow: inset 2px 0 0 var(--pen-color-ink, #1a1a1a), inset -2px 0 0 var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-comparison__plan--featured {
+  box-shadow: inset 2px 2px 0 var(--pen-color-ink, #1a1a1a), inset -2px 0 0 var(--pen-color-ink, #1a1a1a);
+}
+
+/* Titulo de grupo separa blocos de recursos. */
+.pro-sales-comparison__group th {
+  background: var(--pen-color-ink, #1a1a1a);
+  color: var(--pen-color-canvas-white, #ffffff);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: start;
+  text-transform: uppercase;
+}
+
+/* A primeira coluna fica visivel enquanto a tabela rola na horizontal. */
+.pro-sales-comparison__feature {
+  background: var(--pen-color-surface, #ffffff);
+  inset-inline-start: 0;
+  min-width: 14rem;
+  position: sticky;
+  text-align: start;
+  z-index: 1;
+}
+
+.pro-sales-comparison__feature small {
+  display: block;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.pro-sales-comparison__table tbody tr:hover .pro-sales-comparison__feature,
+.pro-sales-comparison__table tbody tr:hover td {
+  background: var(--pen-color-yellow-brand, #f9c200);
+}
+
+/* Marcas booleanas: icone com texto para tecnologia assistiva. */
+.pro-sales-comparison__mark {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.pro-sales-comparison__mark svg {
+  height: 1.4rem;
+  width: 1.4rem;
+}
+
+.pro-sales-comparison__mark--yes svg {
+  fill: var(--pen-color-proenem-red, #bb0922);
+}
+
+.pro-sales-comparison__mark--no svg {
+  fill: var(--pen-color-ink, #1a1a1a);
+  opacity: 0.35;
+}
+
+.pro-sales-comparison__mark--empty {
+  opacity: 0.45;
+}
+
+/* Acima da largura em que a tabela cabe, o container deixa de ser area de
+   rolagem e o cabecalho pode grudar no topo da janela enquanto a pessoa
+   percorre a lista de recursos. */
+@media (min-width: 64rem) {
+  .pro-sales-comparison__scroll {
+    overflow: visible;
+  }
+
+  .pro-sales-comparison__plan {
+    inset-block-start: 0;
+    position: sticky;
+    z-index: 2;
+  }
+
+  .pro-sales-comparison__group th {
+    inset-block-start: 0;
+    position: sticky;
+  }
 }
 
 .pro-sales-faq__items {

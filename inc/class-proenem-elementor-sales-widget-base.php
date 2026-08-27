@@ -2084,29 +2084,149 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 		$this->start_controls_section(
 			'content_section',
 			array(
-				'label' => esc_html__( 'Comparativo', 'proenem-wordpress-theme' ),
+				'label' => esc_html__( 'Planos comparados', 'proenem-wordpress-theme' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
 		$this->add_section_header_controls(
 			array(
-				'title' => esc_html__( 'Compare os planos', 'proenem-wordpress-theme' ),
+				'eyebrow' => '',
+				'title'   => esc_html__( 'Compare os planos', 'proenem-wordpress-theme' ),
+				'body'    => '',
 			)
 		);
-		$this->add_control(
-			'columns',
+
+		$accent_options = array();
+
+		foreach ( proenem_get_brand_accents() as $accent_key => $accent ) {
+			$accent_options[ $accent_key ] = $accent['label'];
+		}
+
+		$plan_repeater = new \Elementor\Repeater();
+		$plan_repeater->add_control(
+			'name',
 			array(
-				'label'       => esc_html__( 'Colunas de planos', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::TEXTAREA,
-				'description' => esc_html__( 'Um nome de plano por linha.', 'proenem-wordpress-theme' ),
+				'label'   => esc_html__( 'Nome do plano', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Plano', 'proenem-wordpress-theme' ),
 			)
 		);
+		$plan_repeater->add_control(
+			'featured',
+			array(
+				'label'        => esc_html__( 'Coluna destacada', 'proenem-wordpress-theme' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => '',
+			)
+		);
+		$plan_repeater->add_control(
+			'badge',
+			array(
+				'label' => esc_html__( 'Selo', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plan_repeater->add_control(
+			'accent',
+			array(
+				'label'     => esc_html__( 'Cor do selo', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'yellow',
+				'options'   => $accent_options,
+				'condition' => array(
+					'badge!' => '',
+				),
+			)
+		);
+		$plan_repeater->add_control(
+			'price_prefix',
+			array(
+				'label'       => esc_html__( 'Prefixo do preço', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'description' => esc_html__( 'Exemplo: 12x de.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$plan_repeater->add_control(
+			'price',
+			array(
+				'label' => esc_html__( 'Preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plan_repeater->add_control(
+			'price_details',
+			array(
+				'label'       => esc_html__( 'Detalhe do preço', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+			)
+		);
+		$plan_repeater->add_control(
+			'button_label',
+			array(
+				'label' => esc_html__( 'Botão', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$plan_repeater->add_control(
+			'button_url',
+			array(
+				'label' => esc_html__( 'Link', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::URL,
+			)
+		);
+
+		$this->add_control(
+			'plans',
+			array(
+				'label'       => esc_html__( 'Planos', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::REPEATER,
+				'fields'      => $plan_repeater->get_controls(),
+				'title_field' => '{{{ name }}}',
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'rows_section',
+			array(
+				'label' => esc_html__( 'Recursos comparados', 'proenem-wordpress-theme' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
 		$repeater = new \Elementor\Repeater();
+		$repeater->add_control(
+			'row_type',
+			array(
+				'label'   => esc_html__( 'Tipo de linha', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'feature',
+				'options' => array(
+					'feature' => esc_html__( 'Recurso', 'proenem-wordpress-theme' ),
+					'group'   => esc_html__( 'Título de grupo', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
 		$repeater->add_control(
 			'feature',
 			array(
-				'label' => esc_html__( 'Recurso', 'proenem-wordpress-theme' ),
-				'type'  => \Elementor\Controls_Manager::TEXT,
+				'label'       => esc_html__( 'Recurso ou grupo', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+			)
+		);
+		$repeater->add_control(
+			'hint',
+			array(
+				'label'       => esc_html__( 'Explicação curta', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'label_block' => true,
+				'condition'   => array(
+					'row_type' => 'feature',
+				),
 			)
 		);
 		$repeater->add_control(
@@ -2114,7 +2234,11 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 			array(
 				'label'       => esc_html__( 'Valores', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::TEXTAREA,
-				'description' => esc_html__( 'Um valor por linha, na mesma ordem das colunas.', 'proenem-wordpress-theme' ),
+				'description' => esc_html__( 'Um valor por linha, na mesma ordem dos planos. Use sim ou nao para marcar com ícone; qualquer outro texto aparece como está.', 'proenem-wordpress-theme' ),
+				'label_block' => true,
+				'condition'   => array(
+					'row_type' => 'feature',
+				),
 			)
 		);
 		$this->add_control(
@@ -2126,9 +2250,78 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 				'title_field' => '{{{ feature }}}',
 			)
 		);
+
 		$this->end_controls_section();
 
 		$this->add_section_layout_controls();
+	}
+
+	/**
+	 * Get the plans of the comparison, accepting the legacy column list.
+	 *
+	 * @param array $settings Widget settings.
+	 * @return array<int,array<string,mixed>>
+	 */
+	protected function get_comparison_plans( $settings ) {
+		if ( ! empty( $settings['plans'] ) && is_array( $settings['plans'] ) ) {
+			return $settings['plans'];
+		}
+
+		$plans = array();
+
+		foreach ( $this->split_lines( $settings['columns'] ?? '' ) as $name ) {
+			$plans[] = array( 'name' => $name );
+		}
+
+		return $plans;
+	}
+
+	/**
+	 * Render one comparison cell.
+	 *
+	 * A cell is either a mark, when the value reads as yes or no, or plain text.
+	 * Marks carry text for assistive technology, because an icon alone would not
+	 * say what the column means.
+	 *
+	 * @param string $value Raw cell value.
+	 * @return void
+	 */
+	protected function render_comparison_cell( $value ) {
+		$normalized = strtolower( trim( (string) $value ) );
+		$yes        = array( 'sim', 'yes', 'true', 'x', 'incluido', 'incluído', '✓' );
+		$no         = array( 'nao', 'não', 'no', 'false', '-', '--', '—', '–' );
+
+		if ( in_array( $normalized, $yes, true ) ) {
+			?>
+			<span class="pro-sales-comparison__mark pro-sales-comparison__mark--yes">
+				<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M7.6 14.4 3.9 10.7l1.4-1.4 2.3 2.3 6.1-6.1 1.4 1.4z"/></svg>
+				<span class="screen-reader-text"><?php esc_html_e( 'Incluído', 'proenem-wordpress-theme' ); ?></span>
+			</span>
+			<?php
+			return;
+		}
+
+		if ( '' === $normalized ) {
+			?>
+			<span class="pro-sales-comparison__mark pro-sales-comparison__mark--empty">
+				<span aria-hidden="true">&ndash;</span>
+				<span class="screen-reader-text"><?php esc_html_e( 'Não informado', 'proenem-wordpress-theme' ); ?></span>
+			</span>
+			<?php
+			return;
+		}
+
+		if ( in_array( $normalized, $no, true ) ) {
+			?>
+			<span class="pro-sales-comparison__mark pro-sales-comparison__mark--no">
+				<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5.6 4.2 10 8.6l4.4-4.4 1.4 1.4L11.4 10l4.4 4.4-1.4 1.4L10 11.4l-4.4 4.4-1.4-1.4L8.6 10 4.2 5.6z"/></svg>
+				<span class="screen-reader-text"><?php esc_html_e( 'Não incluído', 'proenem-wordpress-theme' ); ?></span>
+			</span>
+			<?php
+			return;
+		}
+
+		echo esc_html( trim( (string) $value ) );
 	}
 
 	/**
@@ -2138,30 +2331,88 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 	 */
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
-		$columns  = $this->split_lines( $settings['columns'] ?? '' );
+		$plans    = $this->get_comparison_plans( $settings );
 		$rows     = ! empty( $settings['rows'] ) && is_array( $settings['rows'] ) ? $settings['rows'] : array();
+
+		if ( ! $plans ) {
+			return;
+		}
+
 		$this->add_section_render_attributes( $settings, 'pro-sales-comparison', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 				<?php $this->render_section_header( $settings ); ?>
-					<div class="pro-sales-comparison__scroll">
-						<table>
+					<div
+						class="pro-sales-comparison__scroll"
+						role="region"
+						tabindex="0"
+						aria-label="<?php esc_attr_e( 'Comparativo de planos, rolável na horizontal', 'proenem-wordpress-theme' ); ?>"
+					>
+						<table class="pro-sales-comparison__table">
+							<caption class="screen-reader-text"><?php esc_html_e( 'Comparativo de recursos por plano', 'proenem-wordpress-theme' ); ?></caption>
 							<thead>
 								<tr>
-									<th><?php esc_html_e( 'Recurso', 'proenem-wordpress-theme' ); ?></th>
-								<?php foreach ( $columns as $column ) : ?>
-										<th><?php echo esc_html( $column ); ?></th>
+									<td class="pro-sales-comparison__corner"></td>
+								<?php foreach ( $plans as $plan_index => $plan ) : ?>
+									<?php
+									$is_featured = 'yes' === ( $plan['featured'] ?? '' );
+									$plan_class  = 'pro-sales-comparison__plan';
+									$plan_class .= $is_featured ? ' pro-sales-comparison__plan--featured' : '';
+									?>
+										<th scope="col" class="<?php echo esc_attr( $plan_class ); ?>">
+											<div class="pro-sales-comparison__plan-inner">
+											<?php if ( ! empty( $plan['badge'] ) ) : ?>
+													<span class="pro-sales-badge <?php echo esc_attr( $this->accent_class( $plan, 'accent' ) ); ?>"><?php echo esc_html( $plan['badge'] ); ?></span>
+												<?php endif; ?>
+												<span class="pro-sales-comparison__plan-name"><?php echo esc_html( $plan['name'] ?? '' ); ?></span>
+											<?php if ( ! empty( $plan['price'] ) ) : ?>
+													<span class="pro-sales-comparison__plan-price">
+													<?php if ( ! empty( $plan['price_prefix'] ) ) : ?>
+															<small><?php echo esc_html( $plan['price_prefix'] ); ?></small>
+														<?php endif; ?>
+														<strong><?php echo esc_html( $plan['price'] ); ?></strong>
+													</span>
+												<?php endif; ?>
+											<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+													<small class="pro-sales-comparison__plan-details"><?php echo esc_html( $plan['price_details'] ); ?></small>
+												<?php endif; ?>
+											<?php
+											$this->render_link(
+												'comparison_button_' . $plan_index,
+												$plan['button_url'] ?? array(),
+												$plan['button_label'] ?? '',
+												'pro-sales-button pro-sales-button--primary'
+											);
+											?>
+											</div>
+										</th>
 									<?php endforeach; ?>
 								</tr>
 							</thead>
 							<tbody>
 							<?php foreach ( $rows as $row ) : ?>
-									<?php $values = $this->split_lines( $row['values'] ?? '' ); ?>
+								<?php if ( 'group' === ( $row['row_type'] ?? 'feature' ) ) : ?>
+										<tr class="pro-sales-comparison__group">
+											<th scope="colgroup" colspan="<?php echo esc_attr( (string) ( count( $plans ) + 1 ) ); ?>">
+												<?php echo esc_html( $row['feature'] ?? '' ); ?>
+											</th>
+										</tr>
+										<?php continue; ?>
+									<?php endif; ?>
+								<?php $values = $this->split_lines( $row['values'] ?? '' ); ?>
 									<tr>
-										<th scope="row"><?php echo esc_html( $row['feature'] ?? '' ); ?></th>
-										<?php foreach ( $columns as $index => $column ) : ?>
-											<td><?php echo esc_html( $values[ $index ] ?? '' ); ?></td>
+										<th scope="row" class="pro-sales-comparison__feature">
+											<span><?php echo esc_html( $row['feature'] ?? '' ); ?></span>
+											<?php if ( ! empty( $row['hint'] ) ) : ?>
+												<small><?php echo esc_html( $row['hint'] ); ?></small>
+											<?php endif; ?>
+										</th>
+										<?php foreach ( $plans as $plan_index => $plan ) : ?>
+											<?php $cell_class = 'yes' === ( $plan['featured'] ?? '' ) ? ' class="pro-sales-comparison__cell--featured"' : ''; ?>
+											<td<?php echo $cell_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Literal class string chosen above. ?>>
+												<?php $this->render_comparison_cell( $values[ $plan_index ] ?? '' ); ?>
+											</td>
 										<?php endforeach; ?>
 									</tr>
 								<?php endforeach; ?>
