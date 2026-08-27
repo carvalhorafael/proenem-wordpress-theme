@@ -132,24 +132,18 @@
   color: inherit;
 }
 
-.pro-sales-section--tone-brand .pro-sales-eyebrow,
-.pro-sales-section--tone-brand .pro-sales-badge {
-  background: var(--pen-color-yellow-brand, #ffe45c);
-  color: var(--pen-color-ink, #111827);
-}
-
 /* A red primary button on the brand band has no contrast against it, so the
    call to action inverts. */
-.pro-sales-section--tone-brand .pro-sales-button--primary {
+.pro-sales-section--tone-brand .pen-button--primary {
   background: var(--pen-color-canvas-white, #ffffff);
   color: var(--pen-color-proenem-red, #bb0922);
 }
 
 /* Inside a card the surface is the card's, not the band's, so the button keeps
    the default pairing. */
-.pro-sales-section--tone-brand .pro-sales-card .pro-sales-button--primary {
-  background: var(--pen-color-red, #e3062c);
-  color: var(--pen-color-canvas-white, #ffffff);
+.pro-sales-section--tone-brand .pro-sales-card .pen-button--primary {
+  background: var(--pen-color-primary, #dc341e);
+  color: var(--pen-color-accent-contrast, #ffffff);
 }
 
 /* Fase 3: controles novos dos widgets de venda ------------------------------ */
@@ -319,7 +313,7 @@
   font-weight: 700;
 }
 
-.pro-sales-plan__panel--offer .pro-sales-button {
+.pro-sales-plan__panel--offer .pen-button {
   justify-self: stretch;
 }
 
@@ -406,7 +400,7 @@
   min-width: 0;
 }
 
-.pro-lp-testimonials .pro-sales-button {
+.pro-lp-testimonials .pen-button {
   justify-self: center;
   margin-block-start: var(--pen-space-6, 1.5rem);
 }
@@ -554,7 +548,7 @@
   margin: 0;
 }
 
-.pro-lp-offer-highlight__card .pro-sales-button {
+.pro-lp-offer-highlight__card .pen-button {
   justify-self: stretch;
 }
 
@@ -726,54 +720,33 @@
   padding-block-start: 0;
 }
 
-.pro-sales-eyebrow,
-.pro-sales-badge {
-  background: var(--pen-color-yellow-brand, #f9c200);
-  border: var(--pen-border-brand-xs, 1px solid #111827);
-  border-radius: var(--pen-radius-pill, 999px);
-  box-shadow: 2px 2px 0 var(--pen-color-ink, #111827);
-  display: inline-flex;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0;
+/* O selo de secao consome pen-section-pill; aqui ficam so as diferencas de uso
+   na pagina de venda. O selo de card mantem a superficie amarela, que e o
+   destaque comercial e nao um selo de secao. */
+.pro-sales-eyebrow {
   margin: 0 0 var(--pen-space-4, 1rem);
-  padding: 0.4rem 0.75rem;
   text-transform: uppercase;
 }
 
-.pro-sales-button {
-  align-items: center;
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-pill, 999px);
-  box-shadow: 3px 3px 0 var(--pen-color-ink, #111827);
+/* pen-section-pill pinta a superficie clara mas nao declara cor de conteudo,
+   entao dentro da faixa de marca o selo herdava o texto claro e ficava branco
+   sobre branco. O par e declarado aqui. */
+.pro-sales-section .pen-section-pill {
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-badge {
+  background: var(--pen-color-yellow-brand, #f9c200);
+  border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  border-radius: var(--pen-radius-pill, 9999px);
+  box-shadow: var(--pen-shadow-hard-sm, 2px 2px 0 #1a1a1a);
+  color: var(--pen-color-ink, #1a1a1a);
   display: inline-flex;
+  font-size: 0.85rem;
   font-weight: 800;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.8rem 1.25rem;
-  text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.pro-sales-button:hover,
-.pro-sales-button:focus-visible {
-  box-shadow: 1px 1px 0 var(--pen-color-ink, #111827);
-  transform: translate(2px, 2px);
-}
-
-.pro-sales-button--primary {
-  background: var(--pen-color-red, #e3062c);
-  color: var(--pen-color-canvas-white, #ffffff);
-}
-
-.pro-sales-button--secondary {
-  background: var(--pen-color-canvas-white, #ffffff);
-  color: var(--pen-color-ink, #111827);
-}
-
-.pro-sales-button--inverse {
-  background: var(--pen-color-canvas-white, #ffffff);
-  color: var(--pen-color-red, #e3062c);
+  margin: 0 0 var(--pen-space-4, 1rem);
+  padding: 0.4rem 0.75rem;
+  text-transform: uppercase;
 }
 
 .pro-sales-actions {
@@ -876,11 +849,7 @@
   max-width: 46rem;
 }
 
-.pro-sales-button--lg {
-  font-size: 1.1rem;
-  min-height: 3.5rem;
-  padding: 1rem 2rem;
-}
+
 
 .pro-sales-countdown__date {
   background: var(--pen-color-canvas-white, #ffffff);
@@ -1187,7 +1156,7 @@
   opacity: 0.8;
 }
 
-.pro-sales-comparison__plan-inner .pro-sales-button {
+.pro-sales-comparison__plan-inner .pen-button {
   margin-block-start: 0.35rem;
   min-height: 2.6rem;
   padding: 0.6rem 1.1rem;

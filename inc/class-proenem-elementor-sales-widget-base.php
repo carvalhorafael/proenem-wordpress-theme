@@ -398,7 +398,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
-			<?php $this->render_link( $link_key, $plan['button_url'] ?? array(), $plan['button_label'] ?? '', 'pro-sales-button pro-sales-button--primary' ); ?>
+			<?php $this->render_link( $link_key, $plan['button_url'] ?? array(), $plan['button_label'] ?? '', 'pen-button pen-button--primary' ); ?>
 			<?php if ( $trust_items ) : ?>
 				<ul class="pro-sales-plan__trust">
 					<?php foreach ( $trust_items as $trust_item ) : ?>
@@ -735,7 +735,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		$args = wp_parse_args(
 			$args,
 			array(
-				'eyebrow_class' => 'pro-sales-eyebrow',
+				'eyebrow_class' => 'pen-section-pill pro-sales-eyebrow',
 				'title_tag'     => 'h2',
 				'title_class'   => 'pro-sales-section-title',
 				'body_tag'      => 'p',
@@ -1296,8 +1296,8 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 					?>
 						<div class="pro-sales-actions">
 						<?php
-						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pro-sales-button pro-sales-button--primary' );
-						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pro-sales-button pro-sales-button--secondary' );
+						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pen-button pen-button--primary' );
+						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
 						?>
 						</div>
 					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
@@ -2453,7 +2453,7 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 												'comparison_button_' . $plan_index,
 												$plan['button_url'] ?? array(),
 												$plan['button_label'] ?? '',
-												'pro-sales-button pro-sales-button--primary'
+												'pen-button pen-button--primary'
 											);
 											?>
 											</div>
@@ -2601,7 +2601,7 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 					?>
 					</div>
 					<div class="pro-sales-cta__action">
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--inverse pro-sales-button--lg' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--secondary pen-button--lg' ); ?>
 					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
 							<p class="pro-sales-cta__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>

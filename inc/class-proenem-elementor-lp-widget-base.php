@@ -346,7 +346,7 @@ class Proenem_Elementor_Lp_Offer_Highlight_Widget extends Proenem_Elementor_Lp_W
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
 					</article>
 				</div>
 			</section>
@@ -498,7 +498,7 @@ class Proenem_Elementor_Lp_Spotlight_Widget extends Proenem_Elementor_Lp_Widget_
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
 					</div>
 				<?php if ( $image_url ) : ?>
 						<figure class="pro-lp-spotlight__media">
@@ -600,7 +600,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 					<div class="pro-lp-video-story__content">
 					<?php $this->render_section_header( $settings, array( 'title_class' => 'pro-lp-video-story__title' ) ); ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pro-sales-button pro-sales-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
 					</div>
 				<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-lp-video-story__stage' ); ?>
 				</div>
@@ -751,7 +751,7 @@ class Proenem_Elementor_Lp_Testimonials_Widget extends Proenem_Elementor_Lp_Widg
 							</li>
 						<?php endforeach; ?>
 					</ul>
-				<?php $this->render_link( 'more_url', $settings['more_url'] ?? array(), $settings['more_label'] ?? '', 'pro-sales-button pro-sales-button--primary' ); ?>
+				<?php $this->render_link( 'more_url', $settings['more_url'] ?? array(), $settings['more_label'] ?? '', 'pen-button pen-button--primary' ); ?>
 				</div>
 			</section>
 			<?php
