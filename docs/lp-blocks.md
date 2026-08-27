@@ -379,6 +379,41 @@ Compatibilidade: paginas que ainda usam a lista de colunas em texto continuam re
 - **rolagem suave de ancora**: aplicada so nas paginas de venda, via `html:has(body.proenem-sales-page-template)`, e so para quem nao pediu menos movimento. O destino desconta a barra fixa pelo `--pro-sticky-offset`, entao a ancora nao para escondida atras do contador;
 - **CTA fixo no mobile**: ja existia em `proenem_render_mobile_persistent_action()` e no controle `mobile_cta_enabled` do `pro_navbar`, e funciona em LP sem alteracao. Ele aparece abaixo de 760 px, depois de 600 px de rolagem, e se esconde quando um link para o mesmo destino ja esta na tela. Numa LP saturada de CTAs para `#oferta` isso significa que ele aparece pouco, o que e o comportamento pretendido.
 
+## Template kits
+
+Dois kits importaveis em `docs/elementor/`, nomeados pelo objetivo da pagina e nao pela campanha, para nao envelhecerem junto com ela.
+
+| Kit | Quando usar | Secoes |
+| --- | --- | --- |
+| `proenem-lp-oferta-completa.json` | oferta geral: apresentar o metodo inteiro, a prova social, o plano e fechar | navbar, hero, metodo em quatro cards, prova social com destaque de oferta, metricas, plano de estudos, redacao, oferta, historia em video, aprovados, CTA final, rodape minimo |
+| `proenem-lp-diferencial-em-foco.json` | aprofundar **um** diferencial do produto, com o resto do metodo como apoio | a mesma espinha, com o diferencial destacado no bloco de metodo e aprofundado em spotlight com CTA proprio, e sem faixa de CTA final |
+
+A diferenca entre os dois nao e cosmetica: o primeiro fecha com faixa de CTA e o segundo termina em aprovados, porque a LP de referencia de cada formato faz isso.
+
+### Como importar
+
+```bash
+npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/import-elementor-kit.php proenem-lp-oferta-completa.json slug-da-pagina
+```
+
+O script cria ou atualiza a `sales_page` com o slug informado, aplica o template Elementor Canvas e limpa os caches de markup, CSS e assets do Elementor. E idempotente.
+
+No editor, a alternativa manual e importar o JSON pela biblioteca de templates do Elementor.
+
+### O que preencher depois de importar
+
+Os kits trazem a estrutura e a copy de referencia, mas tres coisas ficam em branco de proposito:
+
+- **link do video** em `pro_lp_video_story`, porque nao ha URL de video versionada no tema;
+- **capa do video**, que deve vir da biblioteca de midia, para nao carregar imagem de terceiro antes do clique;
+- **selecao de depoimentos** em `pro_lp_testimonials`, que sem selecao usa os registros elegiveis mais recentes.
+
+As imagens dos spotlights apontam para assets do proprio tema por caminho relativo a raiz, entao funcionam em qualquer dominio onde o tema esteja instalado.
+
+### Protecao automatizada
+
+`tests/php/ThemeSetupTest.php` verifica que os kits referenciam apenas widgets declarados pelo tema, que nao usam widget obsoleto e que nao usam widget exclusivo da home. Um kit que nomeia widget inexistente importaria como secao vazia, e esse e o defeito que o teste evita.
+
 ### Pagina de homologacao
 
 `scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.

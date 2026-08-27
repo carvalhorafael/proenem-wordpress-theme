@@ -233,6 +233,130 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Get the widget technical names declared by the theme.
+	 *
+	 * Elementor is not loaded in the PHPUnit environment, so the widget classes
+	 * cannot be instantiated. The names are read from the sources instead, which
+	 * keeps a single source of truth.
+	 *
+	 * @return string[]
+	 */
+	private function get_declared_widget_names() {
+		$names = array();
+
+		$files = array(
+			'/inc/class-proenem-elementor-sales-widget-base.php',
+			'/inc/class-proenem-elementor-lp-widget-base.php',
+			'/inc/class-proenem-elementor-home-widget-base.php',
+		);
+
+		foreach ( $files as $file ) {
+			$source = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			preg_match_all( "/return '(pro_[a-z0-9_]+)';/", $source, $matches );
+
+			$names = array_merge( $names, $matches[1] );
+		}
+
+		return array_values( array_unique( $names ) );
+	}
+
+	/**
+	 * Get the widget technical names of every widget in a landing page kit.
+	 *
+	 * @param string $kit_file Kit file name inside docs/elementor.
+	 * @return string[]
+	 */
+	private function get_kit_widget_names( $kit_file ) {
+		$kit = json_decode(
+			(string) file_get_contents( PROENEM_THEME_DIR . '/docs/elementor/' . $kit_file ), // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			true
+		);
+
+		$this->assertIsArray( $kit, $kit_file . ' deve ser um JSON valido.' );
+		$this->assertSame( 'elementor_canvas', $kit['page_settings']['template'] ?? '', $kit_file );
+
+		$stack   = $kit['content'] ?? array();
+		$widgets = array();
+
+		$this->assertNotEmpty( $stack, $kit_file . ' deve ter conteudo.' );
+
+		while ( $stack ) {
+			$element = array_pop( $stack );
+
+			if ( 'widget' === ( $element['elType'] ?? '' ) ) {
+				$widgets[] = $element['widgetType'] ?? '';
+			}
+
+			$stack = array_merge( $stack, $element['elements'] ?? array() );
+		}
+
+		return $widgets;
+	}
+
+	/**
+	 * Landing page kits should only reference widgets the theme declares.
+	 *
+	 * A kit that names a widget the theme does not declare imports as an empty
+	 * section, which is the failure this guards against.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_lp_kits_only_use_declared_widgets() {
+		$declared = $this->get_declared_widget_names();
+
+		$this->assertNotEmpty( $declared );
+
+		foreach ( array( 'proenem-lp-oferta-completa.json', 'proenem-lp-diferencial-em-foco.json' ) as $kit_file ) {
+			$this->assertFileExists( PROENEM_THEME_DIR . '/docs/elementor/' . $kit_file );
+
+			$widgets = $this->get_kit_widget_names( $kit_file );
+
+			$this->assertNotEmpty( $widgets, $kit_file . ' deve conter widgets.' );
+
+			foreach ( $widgets as $widget_name ) {
+				$this->assertContains(
+					$widget_name,
+					$declared,
+					$kit_file . ' referencia o widget nao declarado ' . $widget_name
+				);
+			}
+		}
+	}
+
+	/**
+	 * Landing page kits should not ship deprecated or home only widgets.
+	 *
+	 * The deprecated list mirrors the widgets that return false in
+	 * show_in_panel(). Deprecating another widget means adding it here.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_lp_kits_avoid_deprecated_and_home_widgets() {
+		$deprecated = array( 'pro_pricing_card', 'pro_lp_offer_highlight' );
+
+		foreach ( array( 'proenem-lp-oferta-completa.json', 'proenem-lp-diferencial-em-foco.json' ) as $kit_file ) {
+			$widgets = $this->get_kit_widget_names( $kit_file );
+
+			foreach ( $deprecated as $widget_name ) {
+				$this->assertNotContains(
+					$widget_name,
+					$widgets,
+					$kit_file . ' nao deve usar o widget obsoleto ' . $widget_name
+				);
+			}
+
+			foreach ( $widgets as $widget_name ) {
+				$this->assertStringStartsNotWith(
+					'pro_home_',
+					$widget_name,
+					$kit_file . ' nao deve usar widget exclusivo da home: ' . $widget_name
+				);
+			}
+		}
+	}
+
+	/**
 	 * Elementor import data should not ship anonymous proof media or claims.
 	 *
 	 * @return void

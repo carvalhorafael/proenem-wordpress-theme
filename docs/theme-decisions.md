@@ -408,3 +408,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Composicao: grade simples com colunas configuraveis, e nao o carrossel da home. LP nao precisa de controle de navegacao para tres cards, e a grade evita os clones que o carrossel cria no DOM.
 - Fronteira: o filtro de elegibilidade vem de `proenem_get_home_testimonials()`, entao so entram depoimentos verificados, autorizados e com relato. O widget nao afrouxa esse critério.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.
+
+## 2026-08-26: Template kits nomeados pelo objetivo da pagina
+
+- Contexto: os nomes iniciais dos kits eram `proenem-lp-intensiva` e `proenem-lp-redacao`, nomes de campanhas especificas. O kit envelheceria junto com a campanha e o time deixaria de reconhecer para que serve.
+- Decisao: nomear o kit pelo objetivo da pagina, sem nome de campanha, de produto ou ano. Os dois primeiros sao `proenem-lp-oferta-completa` e `proenem-lp-diferencial-em-foco`.
+- Estrutura: um unico container `main` com largura total e padding zero, igual ao kit da home, com os widgets como filhos diretos. Isso combina com a sangria total das faixas.
+- Conteudo em branco de proposito: link e capa do video, e selecao de depoimentos. Nao ha URL de video versionada no tema, capa deve vir da biblioteca para nao carregar terceiro antes do clique, e a selecao vazia usa os registros elegiveis mais recentes.
+- Portabilidade: as imagens dos spotlights usam caminho relativo a raiz para assets do tema, entao funcionam em qualquer dominio onde o tema esteja instalado, ao contrario de ID de anexo, que nao existe apos a importacao.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.
