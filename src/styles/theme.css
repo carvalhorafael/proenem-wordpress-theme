@@ -223,8 +223,115 @@
 }
 
 .pro-sales-plan__trust li {
+  align-items: center;
+  display: flex;
   font-size: 0.9rem;
+  gap: 0.5rem;
   opacity: 0.85;
+}
+
+.pro-sales-plan__trust svg {
+  fill: currentcolor;
+  flex: none;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+/* Layout de duas colunas: itens de um lado, oferta do outro. */
+.pro-sales-pricing__grid--split {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-sales-plan--split {
+  align-items: stretch;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  margin-inline: auto;
+  max-width: 64rem;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.pro-sales-plan__panel {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.pro-sales-plan__panel--content {
+  align-content: start;
+  background: var(--pen-color-proenem-red, #bb0922);
+  color: var(--pen-color-on-red, #ffffff);
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--content .pro-sales-plan__description {
+  opacity: 0.9;
+}
+
+/* O marcador da lista vira caixa amarela, como no comparativo de referencia. */
+.pro-sales-plan__panel--content .pro-sales-list {
+  gap: 0.7rem;
+  width: 100%;
+}
+
+.pro-sales-plan__panel--content .pro-sales-list li {
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pro-sales-plan__panel--content .pro-sales-list li::before {
+  align-items: center;
+  background: var(--pen-color-yellow-brand, #f9c200);
+  border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  border-radius: var(--pen-radius-sm, 0.25rem);
+  color: var(--pen-color-ink, #1a1a1a);
+  display: inline-flex;
+  font-size: 0.85rem;
+  height: 1.4rem;
+  justify-content: center;
+  width: 1.4rem;
+}
+
+.pro-sales-plan__panel--offer {
+  align-content: center;
+  background: var(--pen-color-canvas-white, #ffffff);
+  border-inline-start: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+  color: var(--pen-color-ink, #1a1a1a);
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price {
+  display: grid;
+  gap: 0;
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price span {
+  color: var(--pen-color-proenem-red, #bb0922);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price-prefix {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pro-sales-plan__panel--offer .pro-sales-button {
+  justify-self: stretch;
+}
+
+@media (max-width: 860px) {
+  .pro-sales-plan--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pro-sales-plan__panel--offer {
+    border-block-start: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+    border-inline-start: 0;
+  }
 }
 
 .pro-sales-cta__action {

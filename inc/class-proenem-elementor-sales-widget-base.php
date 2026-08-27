@@ -339,17 +339,23 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'classes'     => '',
 				'heading_tag' => 'h3',
 				'heading_id'  => '',
+				'layout'      => 'stacked',
 			)
 		);
 
 		$heading_tag = tag_escape( $args['heading_tag'] );
 		$features    = $this->split_lines( $plan['features'] ?? '' );
 		$trust_items = $this->split_lines( $plan['trust_items'] ?? '' );
+		$is_split    = 'split' === $args['layout'];
 		$class_name  = trim( 'pro-sales-card pro-sales-plan ' . $args['classes'] );
+		$class_name .= $is_split ? ' pro-sales-plan--split' : '';
 		?>
 		<article class="<?php echo esc_attr( $class_name ); ?>">
+			<?php if ( $is_split ) : ?>
+				<div class="pro-sales-plan__panel pro-sales-plan__panel--content">
+			<?php endif; ?>
 			<?php if ( ! empty( $plan['badge'] ) ) : ?>
-				<p class="pro-sales-badge"><?php echo esc_html( $plan['badge'] ); ?></p>
+				<p class="pro-sales-badge <?php echo esc_attr( $this->accent_class( $plan, 'accent' ) ); ?>"><?php echo esc_html( $plan['badge'] ); ?></p>
 			<?php endif; ?>
 			<?php
 			printf(
@@ -361,6 +367,17 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			?>
 			<?php if ( ! empty( $plan['description'] ) ) : ?>
 				<p class="pro-sales-plan__description"><?php echo esc_html( $plan['description'] ); ?></p>
+			<?php endif; ?>
+			<?php if ( $is_split && $features ) : ?>
+				<ul class="pro-sales-list">
+					<?php foreach ( $features as $feature ) : ?>
+						<li><?php echo esc_html( $feature ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+			<?php if ( $is_split ) : ?>
+				</div>
+				<div class="pro-sales-plan__panel pro-sales-plan__panel--offer">
 			<?php endif; ?>
 			<p class="pro-sales-plan__price">
 				<?php if ( ! empty( $plan['price_prefix'] ) ) : ?>
@@ -374,7 +391,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			<?php if ( ! empty( $plan['price_details'] ) ) : ?>
 				<p class="pro-sales-plan__price-details"><?php echo esc_html( $plan['price_details'] ); ?></p>
 			<?php endif; ?>
-			<?php if ( $features ) : ?>
+			<?php if ( ! $is_split && $features ) : ?>
 				<ul class="pro-sales-list">
 					<?php foreach ( $features as $feature ) : ?>
 						<li><?php echo esc_html( $feature ); ?></li>
@@ -385,9 +402,15 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			<?php if ( $trust_items ) : ?>
 				<ul class="pro-sales-plan__trust">
 					<?php foreach ( $trust_items as $trust_item ) : ?>
-						<li><?php echo esc_html( $trust_item ); ?></li>
+						<li>
+							<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M7.6 14.4 3.9 10.7l1.4-1.4 2.3 2.3 6.1-6.1 1.4 1.4z"/></svg>
+							<span><?php echo esc_html( $trust_item ); ?></span>
+						</li>
 					<?php endforeach; ?>
 				</ul>
+			<?php endif; ?>
+			<?php if ( $is_split ) : ?>
+				</div>
 			<?php endif; ?>
 		</article>
 		<?php
@@ -1624,6 +1647,26 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			)
 		);
 
+		$this->add_control(
+			'card_layout',
+			array(
+				'label'       => esc_html__( 'Layout do card', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'stacked',
+				'options'     => array(
+					'stacked' => esc_html__( 'Uma coluna', 'proenem-wordpress-theme' ),
+					'split'   => esc_html__( 'Duas colunas: itens de um lado, oferta do outro', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'Duas colunas funciona melhor com um plano por seção.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$grid_accents = array();
+
+		foreach ( proenem_get_brand_accents() as $accent_key => $accent ) {
+			$grid_accents[ $accent_key ] = $accent['label'];
+		}
+
 		$repeater = new \Elementor\Repeater();
 		$repeater->add_control(
 			'name',
@@ -1634,10 +1677,30 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			)
 		);
 		$repeater->add_control(
+			'description',
+			array(
+				'label'       => esc_html__( 'Descrição', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXTAREA,
+				'label_block' => true,
+			)
+		);
+		$repeater->add_control(
 			'badge',
 			array(
 				'label' => esc_html__( 'Selo', 'proenem-wordpress-theme' ),
 				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$repeater->add_control(
+			'accent',
+			array(
+				'label'     => esc_html__( 'Cor do selo', 'proenem-wordpress-theme' ),
+				'type'      => \Elementor\Controls_Manager::SELECT,
+				'default'   => 'yellow',
+				'options'   => $grid_accents,
+				'condition' => array(
+					'badge!' => '',
+				),
 			)
 		);
 		$repeater->add_control(
@@ -1708,9 +1771,15 @@ class Proenem_Elementor_Pricing_Grid_Widget extends Proenem_Elementor_Sales_Widg
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 				<?php $this->render_section_header( $settings ); ?>
-					<div class="pro-sales-pricing__grid<?php echo 1 === count( $plans ) ? ' pro-sales-pricing__grid--single' : ''; ?>">
+					<?php
+					$card_layout = 'split' === ( $settings['card_layout'] ?? 'stacked' ) ? 'split' : 'stacked';
+					$grid_class  = 'pro-sales-pricing__grid';
+					$grid_class .= 'split' === $card_layout ? ' pro-sales-pricing__grid--split' : '';
+					$grid_class .= 1 === count( $plans ) && 'split' !== $card_layout ? ' pro-sales-pricing__grid--single' : '';
+					?>
+					<div class="<?php echo esc_attr( $grid_class ); ?>">
 					<?php foreach ( $plans as $index => $plan ) : ?>
-						<?php $this->render_plan_card( $plan, 'plan_button_' . $index ); ?>
+						<?php $this->render_plan_card( $plan, 'plan_button_' . $index, array( 'layout' => $card_layout ) ); ?>
 						<?php endforeach; ?>
 					</div>
 				</div>

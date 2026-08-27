@@ -418,6 +418,33 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lpgrid02',
+		'pro_pricing_grid',
+		array(
+			'eyebrow'     => 'Vagas por tempo limitado',
+			'title'       => 'Grade em duas colunas',
+			'body'        => 'Itens do plano de um lado, preco e chamada do outro.',
+			'card_layout' => 'split',
+			'tone'        => 'surface',
+			'plans'       => array(
+				array(
+					'_id'           => 's1',
+					'name'          => 'Turma Intensiva 2026',
+					'description'   => 'Preparacao completa ate o dia da prova.',
+					'badge'         => 'Oferta 2026',
+					'accent'        => 'yellow',
+					'price_prefix'  => '12x de R$',
+					'price'         => '29,90',
+					'price_details' => 'ou R$ 306,90 a vista',
+					'features'      => "Cronograma semanal\nCorrecao de redacao\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrao ENEM\nRevisoes inteligentes por materia\nMais de 50 mil questoes para praticar\n6 meses de acesso",
+					'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
+					'button_label'  => 'Quero a Turma Intensiva',
+					'button_url'    => array( 'url' => '#oferta' ),
+				),
+			),
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpcompare01',
 		'pro_plans_comparison',
 		array(

@@ -328,6 +328,17 @@ do tema. Uma cor global e apenas um hex e nao carrega par de texto, entao os
 widgets da Proenem nao as consomem: eles usam a lista fechada acima. O kit
 existe para o que o time montar com widgets nativos.
 
+### Grade de planos: dois layouts de card
+
+`pro_pricing_grid` expoe `Layout do card`:
+
+- **Uma coluna**, o formato original: selo, nome, preco, itens, botao e selos de confianca empilhados. Com um plano so, o card centraliza em 34 rem;
+- **Duas colunas**: o card divide em dois paineis. A esquerda, sobre a superficie vermelha da marca, ficam selo, nome, descricao e itens do plano, com o marcador da lista em caixa amarela. A direita, sobre superficie clara, ficam preco em destaque, preco a vista, botao e selos de confianca com icone. Abaixo de 860 px os dois paineis empilham e a divisoria vira borda superior.
+
+O layout de duas colunas funciona melhor com um plano por secao, porque cada card ja ocupa a largura toda. O controle avisa isso na descricao.
+
+Os campos sao os mesmos nos dois layouts: so a composicao muda. O repeater tambem ganhou `descricao` e cor de selo por plano.
+
 ### Comparativo de planos
 
 Reconstruido na revisao, no formato de comparativo de produto SaaS e no vocabulario visual da marca.

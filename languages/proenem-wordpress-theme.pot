@@ -105,8 +105,8 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1623
 #: inc/class-proenem-elementor-home-widget-base.php:1743
 #: inc/class-proenem-elementor-home-widget-base.php:1778
-#: inc/class-proenem-elementor-sales-widget-base.php:1098
-#: inc/class-proenem-elementor-sales-widget-base.php:1349
+#: inc/class-proenem-elementor-sales-widget-base.php:1121
+#: inc/class-proenem-elementor-sales-widget-base.php:1372
 msgid "Conteúdo"
 msgstr ""
 
@@ -130,8 +130,8 @@ msgid "Diagnóstico"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:310
-#: inc/class-proenem-elementor-sales-widget-base.php:1784
-#: inc/class-proenem-elementor-sales-widget-base.php:2111
+#: inc/class-proenem-elementor-sales-widget-base.php:1853
+#: inc/class-proenem-elementor-sales-widget-base.php:2180
 #: page-templates/home.php:273
 msgid "Plano"
 msgstr ""
@@ -257,9 +257,9 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1542
 #: inc/class-proenem-elementor-home-widget-base.php:1779
 #: inc/class-proenem-elementor-sales-widget-base.php:175
-#: inc/class-proenem-elementor-sales-widget-base.php:1639
-#: inc/class-proenem-elementor-sales-widget-base.php:1791
-#: inc/class-proenem-elementor-sales-widget-base.php:2126
+#: inc/class-proenem-elementor-sales-widget-base.php:1690
+#: inc/class-proenem-elementor-sales-widget-base.php:1860
+#: inc/class-proenem-elementor-sales-widget-base.php:2195
 msgid "Selo"
 msgstr ""
 
@@ -312,10 +312,10 @@ msgstr ""
 #: inc/class-proenem-elementor-lp-widget-base.php:302
 #: inc/class-proenem-elementor-lp-widget-base.php:424
 #: inc/class-proenem-elementor-lp-widget-base.php:572
-#: inc/class-proenem-elementor-sales-widget-base.php:1671
-#: inc/class-proenem-elementor-sales-widget-base.php:1838
-#: inc/class-proenem-elementor-sales-widget-base.php:2168
-#: inc/class-proenem-elementor-sales-widget-base.php:2485
+#: inc/class-proenem-elementor-sales-widget-base.php:1734
+#: inc/class-proenem-elementor-sales-widget-base.php:1907
+#: inc/class-proenem-elementor-sales-widget-base.php:2237
+#: inc/class-proenem-elementor-sales-widget-base.php:2554
 msgid "Botão"
 msgstr ""
 
@@ -367,8 +367,8 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:492
 #: inc/class-proenem-elementor-lp-widget-base.php:438
 #: inc/class-proenem-elementor-sales-widget-base.php:230
-#: inc/class-proenem-elementor-sales-widget-base.php:1160
-#: inc/class-proenem-elementor-sales-widget-base.php:1170
+#: inc/class-proenem-elementor-sales-widget-base.php:1183
+#: inc/class-proenem-elementor-sales-widget-base.php:1193
 msgid "Imagem"
 msgstr ""
 
@@ -550,7 +550,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:679
 #: inc/class-proenem-elementor-home-widget-base.php:1282
-#: inc/class-proenem-elementor-sales-widget-base.php:1979
+#: inc/class-proenem-elementor-sales-widget-base.php:2048
 msgid "Destaque"
 msgstr ""
 
@@ -720,7 +720,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1150
 #: inc/class-proenem-elementor-home-widget-base.php:1638
 #: inc/class-proenem-elementor-lp-widget-base.php:99
-#: inc/class-proenem-elementor-sales-widget-base.php:1956
+#: inc/class-proenem-elementor-sales-widget-base.php:2025
 msgid "Ícone"
 msgstr ""
 
@@ -917,8 +917,8 @@ msgid "Questões do ENEM e dos principais vestibulares, com resolução em víde
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1130
-#: inc/class-proenem-elementor-sales-widget-base.php:908
-#: inc/class-proenem-elementor-sales-widget-base.php:966
+#: inc/class-proenem-elementor-sales-widget-base.php:931
+#: inc/class-proenem-elementor-sales-widget-base.php:989
 #: inc/template-tags.php:2266
 #: page-templates/home.php:655
 msgid "Ver plano e preço"
@@ -936,10 +936,10 @@ msgstr ""
 #: inc/class-proenem-elementor-lp-widget-base.php:310
 #: inc/class-proenem-elementor-lp-widget-base.php:431
 #: inc/class-proenem-elementor-lp-widget-base.php:580
-#: inc/class-proenem-elementor-sales-widget-base.php:1679
-#: inc/class-proenem-elementor-sales-widget-base.php:1846
-#: inc/class-proenem-elementor-sales-widget-base.php:2175
-#: inc/class-proenem-elementor-sales-widget-base.php:2493
+#: inc/class-proenem-elementor-sales-widget-base.php:1742
+#: inc/class-proenem-elementor-sales-widget-base.php:1915
+#: inc/class-proenem-elementor-sales-widget-base.php:2244
+#: inc/class-proenem-elementor-sales-widget-base.php:2562
 msgid "Link"
 msgstr ""
 
@@ -1039,22 +1039,22 @@ msgid "Link dos planos"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1291
-#: inc/class-proenem-elementor-sales-widget-base.php:1631
-#: inc/class-proenem-elementor-sales-widget-base.php:1798
+#: inc/class-proenem-elementor-sales-widget-base.php:1674
+#: inc/class-proenem-elementor-sales-widget-base.php:1867
 #: single-material_gratuito.php:46
 msgid "Nome"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1298
-#: inc/class-proenem-elementor-sales-widget-base.php:1646
-#: inc/class-proenem-elementor-sales-widget-base.php:1813
-#: inc/class-proenem-elementor-sales-widget-base.php:2153
+#: inc/class-proenem-elementor-sales-widget-base.php:1709
+#: inc/class-proenem-elementor-sales-widget-base.php:1882
+#: inc/class-proenem-elementor-sales-widget-base.php:2222
 msgid "Preço"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1305
 #: inc/class-proenem-elementor-sales-widget-base.php:290
-#: inc/class-proenem-elementor-sales-widget-base.php:2145
+#: inc/class-proenem-elementor-sales-widget-base.php:2214
 msgid "Prefixo do preço"
 msgstr ""
 
@@ -1089,9 +1089,9 @@ msgid "Destacado"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1371
-#: inc/class-proenem-elementor-sales-widget-base.php:1614
-#: inc/class-proenem-elementor-sales-widget-base.php:1687
-#: inc/class-proenem-elementor-sales-widget-base.php:2183
+#: inc/class-proenem-elementor-sales-widget-base.php:1637
+#: inc/class-proenem-elementor-sales-widget-base.php:1750
+#: inc/class-proenem-elementor-sales-widget-base.php:2252
 msgid "Planos"
 msgstr ""
 
@@ -1366,7 +1366,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1780
 #: inc/class-proenem-elementor-home-widget-base.php:1800
-#: inc/class-proenem-elementor-sales-widget-base.php:2586
+#: inc/class-proenem-elementor-sales-widget-base.php:2655
 #: page-templates/home.php:776
 msgid "Perguntas"
 msgstr ""
@@ -1377,12 +1377,12 @@ msgid "frequentes"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1786
-#: inc/class-proenem-elementor-sales-widget-base.php:2599
+#: inc/class-proenem-elementor-sales-widget-base.php:2668
 msgid "Pergunta"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1793
-#: inc/class-proenem-elementor-sales-widget-base.php:2606
+#: inc/class-proenem-elementor-sales-widget-base.php:2675
 msgid "Resposta"
 msgstr ""
 
@@ -1457,7 +1457,8 @@ msgid "Opcional. Sem ícone escolhido, nada é exibido acima do número."
 msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:113
-#: inc/class-proenem-elementor-sales-widget-base.php:2133
+#: inc/class-proenem-elementor-sales-widget-base.php:1697
+#: inc/class-proenem-elementor-sales-widget-base.php:2202
 msgid "Cor do selo"
 msgstr ""
 
@@ -1471,8 +1472,9 @@ msgid "+44.000"
 msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:134
-#: inc/class-proenem-elementor-sales-widget-base.php:1806
-#: inc/class-proenem-elementor-sales-widget-base.php:1949
+#: inc/class-proenem-elementor-sales-widget-base.php:1682
+#: inc/class-proenem-elementor-sales-widget-base.php:1875
+#: inc/class-proenem-elementor-sales-widget-base.php:2018
 msgid "Descrição"
 msgstr ""
 
@@ -1482,8 +1484,8 @@ msgid "alunos aprovados nas melhores universidades"
 msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:144
-#: inc/class-proenem-elementor-sales-widget-base.php:1988
-#: inc/class-proenem-elementor-sales-widget-base.php:2613
+#: inc/class-proenem-elementor-sales-widget-base.php:2057
+#: inc/class-proenem-elementor-sales-widget-base.php:2682
 msgid "Itens"
 msgstr ""
 
@@ -1584,12 +1586,12 @@ msgid ""
 msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:445
-#: inc/class-proenem-elementor-sales-widget-base.php:1180
+#: inc/class-proenem-elementor-sales-widget-base.php:1203
 msgid "Texto alternativo da imagem"
 msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:447
-#: inc/class-proenem-elementor-sales-widget-base.php:1182
+#: inc/class-proenem-elementor-sales-widget-base.php:1205
 msgid "Deixe vazio quando a imagem for apenas decorativa."
 msgstr ""
 
@@ -1678,7 +1680,7 @@ msgid "A imagem não garante contraste sozinha. Sem camada, confira a legibilida
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:293
-#: inc/class-proenem-elementor-sales-widget-base.php:2147
+#: inc/class-proenem-elementor-sales-widget-base.php:2216
 msgid "Exemplo: 12x de."
 msgstr ""
 
@@ -1698,530 +1700,546 @@ msgstr ""
 msgid "Um por linha. Exemplo: Pagamento 100% seguro."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:416
+#: inc/class-proenem-elementor-sales-widget-base.php:439
 msgid "Cor de destaque"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:435
+#: inc/class-proenem-elementor-sales-widget-base.php:458
 msgid "Somente cores publicadas da Proenem. Cada opção já traz a cor de texto que garante contraste."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:486
+#: inc/class-proenem-elementor-sales-widget-base.php:509
 msgid "Link do vídeo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:488
+#: inc/class-proenem-elementor-sales-widget-base.php:511
 msgid "O vídeo só é carregado depois que a pessoa clica em reproduzir."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:495
+#: inc/class-proenem-elementor-sales-widget-base.php:518
 msgid "Imagem de capa"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:497
+#: inc/class-proenem-elementor-sales-widget-base.php:520
 msgid "Use uma imagem da própria biblioteca. Sem capa local, nenhuma imagem externa é carregada antes do clique."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:504
+#: inc/class-proenem-elementor-sales-widget-base.php:527
 msgid "Texto alternativo da capa"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:513
+#: inc/class-proenem-elementor-sales-widget-base.php:536
 msgid "Rótulo do botão de reproduzir"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:515
-#: inc/class-proenem-elementor-sales-widget-base.php:541
+#: inc/class-proenem-elementor-sales-widget-base.php:538
+#: inc/class-proenem-elementor-sales-widget-base.php:564
 msgid "Reproduzir o vídeo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:582
+#: inc/class-proenem-elementor-sales-widget-base.php:605
 msgid "Nível do título"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:586
+#: inc/class-proenem-elementor-sales-widget-base.php:609
 msgid "h1, título principal da página"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:587
+#: inc/class-proenem-elementor-sales-widget-base.php:610
 msgid "h2, título de seção"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:589
+#: inc/class-proenem-elementor-sales-widget-base.php:612
 msgid "Use h1 apenas uma vez por página."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:618
+#: inc/class-proenem-elementor-sales-widget-base.php:641
 msgid "Âncora"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:621
+#: inc/class-proenem-elementor-sales-widget-base.php:644
 msgid "Identificador para links internos, como oferta. Sem o caractere #."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:775
+#: inc/class-proenem-elementor-sales-widget-base.php:798
 msgid "Pro Navbar"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:803
+#: inc/class-proenem-elementor-sales-widget-base.php:826
 msgid "Menu principal do tema"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:823
+#: inc/class-proenem-elementor-sales-widget-base.php:846
 msgid "Menu"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:831
-#: inc/class-proenem-elementor-sales-widget-base.php:1031
+#: inc/class-proenem-elementor-sales-widget-base.php:854
+#: inc/class-proenem-elementor-sales-widget-base.php:1054
 msgid "Modo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:835
+#: inc/class-proenem-elementor-sales-widget-base.php:858
 msgid "Somente logo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:836
+#: inc/class-proenem-elementor-sales-widget-base.php:859
 msgid "Landing page: logo e um CTA"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:837
-#: inc/class-proenem-elementor-sales-widget-base.php:874
+#: inc/class-proenem-elementor-sales-widget-base.php:860
+#: inc/class-proenem-elementor-sales-widget-base.php:897
 msgid "Menu WordPress"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:845
+#: inc/class-proenem-elementor-sales-widget-base.php:868
 msgid "Texto do CTA"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:847
+#: inc/class-proenem-elementor-sales-widget-base.php:870
 msgid "Garantir minha vaga"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:858
+#: inc/class-proenem-elementor-sales-widget-base.php:881
 msgid "Destino do CTA"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:863
+#: inc/class-proenem-elementor-sales-widget-base.php:886
 msgid "Aceita âncora interna, como #oferta."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:887
+#: inc/class-proenem-elementor-sales-widget-base.php:910
 msgid "Rótulo de acessibilidade"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:889
-#: inc/class-proenem-elementor-sales-widget-base.php:953
+#: inc/class-proenem-elementor-sales-widget-base.php:912
+#: inc/class-proenem-elementor-sales-widget-base.php:976
 msgid "Navegação da página de vendas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:896
+#: inc/class-proenem-elementor-sales-widget-base.php:919
 msgid "CTA persistente no mobile"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:906
+#: inc/class-proenem-elementor-sales-widget-base.php:929
 msgid "Texto do CTA mobile"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:919
+#: inc/class-proenem-elementor-sales-widget-base.php:942
 msgid "Destino do CTA mobile"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:993
+#: inc/class-proenem-elementor-sales-widget-base.php:1016
 msgid "Pro Footer"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1023
+#: inc/class-proenem-elementor-sales-widget-base.php:1046
 msgid "Rodapé"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1035
+#: inc/class-proenem-elementor-sales-widget-base.php:1058
 msgid "Rodapé completo do site"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1036
+#: inc/class-proenem-elementor-sales-widget-base.php:1059
 msgid "Mínimo: logo e copyright"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1077
+#: inc/class-proenem-elementor-sales-widget-base.php:1100
 msgid "Pro Hero de Oferta"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1105
+#: inc/class-proenem-elementor-sales-widget-base.php:1128
 msgid "Oferta especial"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1106
+#: inc/class-proenem-elementor-sales-widget-base.php:1129
 msgid "Estude para o Enem com uma rotina completa"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1108
+#: inc/class-proenem-elementor-sales-widget-base.php:1131
 msgid "Cursos, questões, simulados e acompanhamento para acelerar sua preparação."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1116
+#: inc/class-proenem-elementor-sales-widget-base.php:1139
 msgid "Botão principal"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1118
+#: inc/class-proenem-elementor-sales-widget-base.php:1141
 msgid "Ver planos"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1124
+#: inc/class-proenem-elementor-sales-widget-base.php:1147
 msgid "Link principal"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1131
+#: inc/class-proenem-elementor-sales-widget-base.php:1154
 msgid "Botão secundário"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1138
+#: inc/class-proenem-elementor-sales-widget-base.php:1161
 msgid "Link secundário"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1145
-#: inc/class-proenem-elementor-sales-widget-base.php:2500
+#: inc/class-proenem-elementor-sales-widget-base.php:1168
+#: inc/class-proenem-elementor-sales-widget-base.php:2569
 msgid "Linha de confiança"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1147
+#: inc/class-proenem-elementor-sales-widget-base.php:1170
 msgid "Vagas limitadas • Início hoje • Acesso imediato"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1148
+#: inc/class-proenem-elementor-sales-widget-base.php:1171
 msgid "Aparece abaixo dos botões."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1155
+#: inc/class-proenem-elementor-sales-widget-base.php:1178
 msgid "Conteúdo ao lado do texto"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1159
-#: inc/class-proenem-elementor-sales-widget-base.php:1219
+#: inc/class-proenem-elementor-sales-widget-base.php:1182
+#: inc/class-proenem-elementor-sales-widget-base.php:1242
 msgid "Cards de prova"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1161
+#: inc/class-proenem-elementor-sales-widget-base.php:1184
 msgid "Vídeo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1163
+#: inc/class-proenem-elementor-sales-widget-base.php:1186
 msgid "Para imagem de fundo da seção, use Fundo da seção no painel Seção."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1202
+#: inc/class-proenem-elementor-sales-widget-base.php:1225
 msgid "Título do card"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1204
+#: inc/class-proenem-elementor-sales-widget-base.php:1227
 msgid "Cronograma pronto"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1210
+#: inc/class-proenem-elementor-sales-widget-base.php:1233
 msgid "Dado do card"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1212
+#: inc/class-proenem-elementor-sales-widget-base.php:1235
 msgid "Semana 1 de 12"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1224
+#: inc/class-proenem-elementor-sales-widget-base.php:1247
 msgid "Cartões curtos que mostram o produto em uso."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1328
+#: inc/class-proenem-elementor-sales-widget-base.php:1351
 msgid "Pro Contador de Oferta"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1355
+#: inc/class-proenem-elementor-sales-widget-base.php:1378
 msgid "Oferta por tempo limitado"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1356
+#: inc/class-proenem-elementor-sales-widget-base.php:1379
 msgid "Garanta as condições especiais antes do encerramento da campanha."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1362
+#: inc/class-proenem-elementor-sales-widget-base.php:1385
 msgid "Tipo de contagem"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1366
+#: inc/class-proenem-elementor-sales-widget-base.php:1389
 msgid "Até uma data e hora"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1367
+#: inc/class-proenem-elementor-sales-widget-base.php:1390
 msgid "Minutos a partir da visita"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1374
+#: inc/class-proenem-elementor-sales-widget-base.php:1397
 msgid "Data final"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1376
+#: inc/class-proenem-elementor-sales-widget-base.php:1399
 msgid "A contagem usa o fuso configurado no WordPress. Sem JavaScript, a data formatada é exibida."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1385
+#: inc/class-proenem-elementor-sales-widget-base.php:1408
 msgid "Minutos disponíveis"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1391
+#: inc/class-proenem-elementor-sales-widget-base.php:1414
 msgid "A contagem começa quando a pessoa abre a página e continua de onde parou se ela recarregar."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1400
+#: inc/class-proenem-elementor-sales-widget-base.php:1423
 msgid "Quando a contagem reinicia"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1404
+#: inc/class-proenem-elementor-sales-widget-base.php:1427
 msgid "A cada nova sessão do navegador"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1405
+#: inc/class-proenem-elementor-sales-widget-base.php:1428
 msgid "Nunca, uma vez por navegador"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1407
+#: inc/class-proenem-elementor-sales-widget-base.php:1430
 msgid "Uma vez por navegador é mais honesto com quem volta depois, mas mantém a oferta encerrada para essa pessoa."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1416
+#: inc/class-proenem-elementor-sales-widget-base.php:1439
 msgid "Texto após o encerramento"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1418
+#: inc/class-proenem-elementor-sales-widget-base.php:1441
 msgid "Oferta encerrada"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1427
+#: inc/class-proenem-elementor-sales-widget-base.php:1450
 msgid "Fixar no topo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1435
+#: inc/class-proenem-elementor-sales-widget-base.php:1458
 msgid "Fixar no topo ao rolar"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1439
+#: inc/class-proenem-elementor-sales-widget-base.php:1462
 msgid "A faixa segue no lugar até o percentual de rolagem escolhido e depois fica fixa no topo."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1446
+#: inc/class-proenem-elementor-sales-widget-base.php:1469
 msgid "Aparecer após rolar (%)"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1545
+#: inc/class-proenem-elementor-sales-widget-base.php:1568
 msgid "dias"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1549
+#: inc/class-proenem-elementor-sales-widget-base.php:1572
 msgid "horas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1553
-#: inc/class-proenem-elementor-sales-widget-base.php:1558
+#: inc/class-proenem-elementor-sales-widget-base.php:1576
+#: inc/class-proenem-elementor-sales-widget-base.php:1581
 msgid "min"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1562
+#: inc/class-proenem-elementor-sales-widget-base.php:1585
 msgid "seg"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1593
+#: inc/class-proenem-elementor-sales-widget-base.php:1616
 msgid "Pro Grade de Planos"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1622
+#: inc/class-proenem-elementor-sales-widget-base.php:1645
 msgid "Escolha seu plano"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1633
-#: inc/class-proenem-elementor-sales-widget-base.php:1800
+#: inc/class-proenem-elementor-sales-widget-base.php:1653
+msgid "Layout do card"
+msgstr ""
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1657
+msgid "Uma coluna"
+msgstr ""
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1658
+msgid "Duas colunas: itens de um lado, oferta do outro"
+msgstr ""
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1660
+msgid "Duas colunas funciona melhor com um plano por seção."
+msgstr ""
+
+#: inc/class-proenem-elementor-sales-widget-base.php:1676
+#: inc/class-proenem-elementor-sales-widget-base.php:1869
 msgid "Plano Pro"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1648
-#: inc/class-proenem-elementor-sales-widget-base.php:1815
+#: inc/class-proenem-elementor-sales-widget-base.php:1711
+#: inc/class-proenem-elementor-sales-widget-base.php:1884
 msgid "R$ 99"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1654
-#: inc/class-proenem-elementor-sales-widget-base.php:1821
+#: inc/class-proenem-elementor-sales-widget-base.php:1717
+#: inc/class-proenem-elementor-sales-widget-base.php:1890
 msgid "Recorrência"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1656
-#: inc/class-proenem-elementor-sales-widget-base.php:1823
+#: inc/class-proenem-elementor-sales-widget-base.php:1719
+#: inc/class-proenem-elementor-sales-widget-base.php:1892
 msgid "/mês"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1663
-#: inc/class-proenem-elementor-sales-widget-base.php:1830
-#: inc/class-proenem-elementor-sales-widget-base.php:1913
+#: inc/class-proenem-elementor-sales-widget-base.php:1726
+#: inc/class-proenem-elementor-sales-widget-base.php:1899
+#: inc/class-proenem-elementor-sales-widget-base.php:1982
 msgid "Benefícios"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1665
-#: inc/class-proenem-elementor-sales-widget-base.php:1832
+#: inc/class-proenem-elementor-sales-widget-base.php:1728
+#: inc/class-proenem-elementor-sales-widget-base.php:1901
 msgid "Um benefício por linha."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1673
-#: inc/class-proenem-elementor-sales-widget-base.php:1840
+#: inc/class-proenem-elementor-sales-widget-base.php:1736
+#: inc/class-proenem-elementor-sales-widget-base.php:1909
 msgid "Assinar agora"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1763
+#: inc/class-proenem-elementor-sales-widget-base.php:1832
 msgid "Pro Card de Plano (obsoleto)"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1892
+#: inc/class-proenem-elementor-sales-widget-base.php:1961
 msgid "Pro Lista de Benefícios"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1920
+#: inc/class-proenem-elementor-sales-widget-base.php:1989
 msgid "O que está incluído"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1927
+#: inc/class-proenem-elementor-sales-widget-base.php:1996
 msgid "Colunas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1931
+#: inc/class-proenem-elementor-sales-widget-base.php:2000
 msgid "2 colunas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1932
+#: inc/class-proenem-elementor-sales-widget-base.php:2001
 msgid "3 colunas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1933
+#: inc/class-proenem-elementor-sales-widget-base.php:2002
 msgid "4 colunas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1941
+#: inc/class-proenem-elementor-sales-widget-base.php:2010
 msgid "Benefício"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1943
+#: inc/class-proenem-elementor-sales-widget-base.php:2012
 msgid "Benefício da oferta"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1962
+#: inc/class-proenem-elementor-sales-widget-base.php:2031
 msgid "Escolha na biblioteca de ícones ou envie um SVG próprio. Sem ícone, o item mantém o marcador padrão."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1968
+#: inc/class-proenem-elementor-sales-widget-base.php:2037
 msgid "Item em destaque"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1977
+#: inc/class-proenem-elementor-sales-widget-base.php:2046
 msgid "Selo do destaque"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2066
+#: inc/class-proenem-elementor-sales-widget-base.php:2135
 msgid "Pro Comparativo de Planos"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2087
+#: inc/class-proenem-elementor-sales-widget-base.php:2156
 msgid "Planos comparados"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2094
+#: inc/class-proenem-elementor-sales-widget-base.php:2163
 msgid "Compare os planos"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2109
+#: inc/class-proenem-elementor-sales-widget-base.php:2178
 msgid "Nome do plano"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2117
+#: inc/class-proenem-elementor-sales-widget-base.php:2186
 msgid "Coluna destacada"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2160
+#: inc/class-proenem-elementor-sales-widget-base.php:2229
 msgid "Detalhe do preço"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2195
+#: inc/class-proenem-elementor-sales-widget-base.php:2264
 msgid "Recursos comparados"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2204
+#: inc/class-proenem-elementor-sales-widget-base.php:2273
 msgid "Tipo de linha"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2208
+#: inc/class-proenem-elementor-sales-widget-base.php:2277
 msgid "Recurso"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2209
+#: inc/class-proenem-elementor-sales-widget-base.php:2278
 msgid "Título de grupo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2216
+#: inc/class-proenem-elementor-sales-widget-base.php:2285
 msgid "Recurso ou grupo"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2224
+#: inc/class-proenem-elementor-sales-widget-base.php:2293
 msgid "Explicação curta"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2235
+#: inc/class-proenem-elementor-sales-widget-base.php:2304
 msgid "Valores"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2237
+#: inc/class-proenem-elementor-sales-widget-base.php:2306
 msgid "Um valor por linha, na mesma ordem dos planos. Use sim ou nao para marcar com ícone; qualquer outro texto aparece como está."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2247
+#: inc/class-proenem-elementor-sales-widget-base.php:2316
 msgid "Linhas"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2298
+#: inc/class-proenem-elementor-sales-widget-base.php:2367
 msgid "Incluído"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2308
+#: inc/class-proenem-elementor-sales-widget-base.php:2377
 msgid "Não informado"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2318
+#: inc/class-proenem-elementor-sales-widget-base.php:2387
 msgid "Não incluído"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2350
+#: inc/class-proenem-elementor-sales-widget-base.php:2419
 msgid "Comparativo de planos, rolável na horizontal"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2353
+#: inc/class-proenem-elementor-sales-widget-base.php:2422
 msgid "Comparativo de recursos por plano"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2449
+#: inc/class-proenem-elementor-sales-widget-base.php:2518
 msgid "Pro CTA"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2470
+#: inc/class-proenem-elementor-sales-widget-base.php:2539
 msgid "Chamada"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2477
+#: inc/class-proenem-elementor-sales-widget-base.php:2546
 msgid "Comece sua preparação hoje"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2487
+#: inc/class-proenem-elementor-sales-widget-base.php:2556
 msgid "Escolher plano"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2503
+#: inc/class-proenem-elementor-sales-widget-base.php:2572
 msgid "Aparece abaixo do botão."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2565
+#: inc/class-proenem-elementor-sales-widget-base.php:2634
 msgid "Pro FAQ"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:2592
+#: inc/class-proenem-elementor-sales-widget-base.php:2661
 #: inc/template-tags.php:358
 msgid "Perguntas frequentes"
 msgstr ""
