@@ -690,6 +690,15 @@
   }
 }
 
+/* Rolagem suave para ancora interna, apenas nas paginas de venda e apenas para
+   quem nao pediu menos movimento. O destino desconta a barra fixa pelo offset
+   compartilhado, na regra abaixo. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(body.proenem-sales-page-template) {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Ancora interna para embaixo de barra fixa se nao descontar o offset. */
 .pro-sales-section[id] {
   scroll-margin-top: calc(var(--pro-sticky-offset, 0px) + var(--pen-space-4, 1rem));

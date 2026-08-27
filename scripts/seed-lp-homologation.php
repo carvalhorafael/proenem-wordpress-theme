@@ -67,9 +67,12 @@ $elementor_data = array(
 		'lpnav01',
 		'pro_navbar',
 		array(
-			'mode'      => 'lp',
-			'cta_label' => 'Garantir minha vaga',
-			'cta_url'   => array( 'url' => '#oferta' ),
+			'mode'               => 'lp',
+			'cta_label'          => 'Garantir minha vaga',
+			'cta_url'            => array( 'url' => '#oferta' ),
+			'mobile_cta_enabled' => 'yes',
+			'mobile_cta_label'   => 'Garantir minha vaga',
+			'mobile_cta_url'     => array( 'url' => '#oferta' ),
 		)
 	),
 	proenem_lp_homologation_container(

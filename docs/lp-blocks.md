@@ -373,6 +373,12 @@ Acessibilidade: `caption` para a tabela, `scope` em coluna, linha e grupo, marca
 
 Compatibilidade: paginas que ainda usam a lista de colunas em texto continuam renderizando, porque o widget cai para ela quando o repeater de planos esta vazio.
 
+### Camada de pagina de LP
+
+- **body class**: `is_singular( 'sales_page' )` acrescenta `proenem-sales-page-template`, que e o gancho de escopo de estilo da LP;
+- **rolagem suave de ancora**: aplicada so nas paginas de venda, via `html:has(body.proenem-sales-page-template)`, e so para quem nao pediu menos movimento. O destino desconta a barra fixa pelo `--pro-sticky-offset`, entao a ancora nao para escondida atras do contador;
+- **CTA fixo no mobile**: ja existia em `proenem_render_mobile_persistent_action()` e no controle `mobile_cta_enabled` do `pro_navbar`, e funciona em LP sem alteracao. Ele aparece abaixo de 760 px, depois de 600 px de rolagem, e se esconde quando um link para o mesmo destino ja esta na tela. Numa LP saturada de CTAs para `#oferta` isso significa que ele aparece pouco, o que e o comportamento pretendido.
+
 ### Pagina de homologacao
 
 `scripts/seed-lp-homologation.php` cria ou atualiza a `sales_page` `homologacao-widgets-lp` com widgets repetidos de proposito, para que id duplicado apareca na revisao.
