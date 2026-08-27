@@ -141,7 +141,8 @@
 
 /* Inside a card the surface is the card's, not the band's, so the button keeps
    the default pairing. */
-.pro-sales-section--tone-brand .pro-sales-card .pen-button--primary {
+.pro-sales-section--tone-brand .pen-pricing-card .pen-button--primary,
+.pro-sales-section--tone-brand .pen-card .pen-button--primary {
   background: var(--pen-color-primary, #dc341e);
   color: var(--pen-color-accent-contrast, #ffffff);
 }
@@ -266,17 +267,17 @@
 }
 
 /* O marcador da lista vira caixa amarela, como no comparativo de referencia. */
-.pro-sales-plan__panel--content .pro-sales-list {
+.pro-sales-plan__panel--content ul {
   gap: 0.7rem;
   width: 100%;
 }
 
-.pro-sales-plan__panel--content .pro-sales-list li {
+.pro-sales-plan__panel--content li {
   align-items: center;
   gap: 0.75rem;
 }
 
-.pro-sales-plan__panel--content .pro-sales-list li::before {
+.pro-sales-plan__panel--content li::before {
   align-items: center;
   background: var(--pen-color-yellow-brand, #f9c200);
   border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
@@ -357,15 +358,16 @@
 
 /* Par de cores dos componentes dentro da faixa de marca. Todo componente que
    pinta a propria superficie mantem o proprio par; os que nao pintam herdam. */
-.pro-sales-section--tone-brand .pro-sales-list li::before,
+.pro-sales-section--tone-brand li::before,
 .pro-sales-section--tone-brand .pro-sales-plan__price-details,
 .pro-sales-section--tone-brand .pro-sales-plan__trust li {
   color: inherit;
 }
 
-.pro-sales-section--tone-brand .pro-sales-card .pro-sales-list li::before,
-.pro-sales-section--tone-brand .pro-sales-card .pro-sales-plan__price-details,
-.pro-sales-section--tone-brand .pro-sales-card .pro-sales-plan__trust li {
+.pro-sales-section--tone-brand .pen-pricing-card li::before,
+.pro-sales-section--tone-brand .pen-card li::before,
+.pro-sales-section--tone-brand .pen-pricing-card .pro-sales-plan__price-details,
+.pro-sales-section--tone-brand .pen-pricing-card .pro-sales-plan__trust li {
   color: var(--pen-color-ink, #111827);
 }
 
@@ -754,15 +756,6 @@
   flex-wrap: wrap;
   gap: var(--pen-space-3, 0.75rem);
   margin-top: var(--pen-space-6, 1.5rem);
-}
-
-.pro-sales-card {
-  background: var(--pen-color-canvas-white, #ffffff);
-  color: var(--pen-color-ink, #111827);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-lg, 0.75rem);
-  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
-  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
 .pro-sales-hero {
@@ -1255,25 +1248,11 @@
   }
 }
 
-.pro-sales-faq__items {
-  display: grid;
-  gap: var(--pen-space-3, 0.75rem);
-}
-
-.pro-sales-faq__item {
-  background: var(--pen-color-canvas-white, #ffffff);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-md, 0.5rem);
-  padding: 1rem 1.25rem;
-}
-
-.pro-sales-faq__item summary {
-  cursor: pointer;
-  font-weight: 900;
-}
-
-.pro-sales-faq__item > div {
-  margin-top: 0.85rem;
+/* A resposta e um div, porque aceita HTML, e o contrato publicado da padding
+   apenas em p. Este e o unico complemento que o FAQ ainda precisa. */
+.pen-faq-item > div {
+  line-height: 1.65;
+  padding: var(--pen-space-5, 1.25rem) var(--pen-space-6, 1.5rem) var(--pen-space-6, 1.5rem);
 }
 
 @media (max-width: 900px) {

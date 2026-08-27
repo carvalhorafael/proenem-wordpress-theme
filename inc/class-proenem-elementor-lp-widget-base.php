@@ -329,7 +329,7 @@ class Proenem_Elementor_Lp_Offer_Highlight_Widget extends Proenem_Elementor_Lp_W
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
-					<article class="pro-sales-card pro-lp-offer-highlight__card">
+					<article class="pen-card pro-lp-offer-highlight__card">
 					<?php if ( ! empty( $settings['badge'] ) ) : ?>
 							<p class="pro-sales-badge"><?php echo esc_html( $settings['badge'] ); ?></p>
 						<?php endif; ?>

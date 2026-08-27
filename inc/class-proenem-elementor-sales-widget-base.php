@@ -347,7 +347,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		$features    = $this->split_lines( $plan['features'] ?? '' );
 		$trust_items = $this->split_lines( $plan['trust_items'] ?? '' );
 		$is_split    = 'split' === $args['layout'];
-		$class_name  = trim( 'pro-sales-card pro-sales-plan ' . $args['classes'] );
+		$class_name  = trim( 'pen-pricing-card pro-sales-plan ' . $args['classes'] );
 		$class_name .= $is_split ? ' pro-sales-plan--split' : '';
 		?>
 		<article class="<?php echo esc_attr( $class_name ); ?>">
@@ -355,7 +355,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				<div class="pro-sales-plan__panel pro-sales-plan__panel--content">
 			<?php endif; ?>
 			<?php if ( ! empty( $plan['badge'] ) ) : ?>
-				<p class="pro-sales-badge <?php echo esc_attr( $this->accent_class( $plan, 'accent' ) ); ?>"><?php echo esc_html( $plan['badge'] ); ?></p>
+				<p class="pen-pricing-card__badge pro-sales-badge <?php echo esc_attr( $this->accent_class( $plan, 'accent' ) ); ?>"><?php echo esc_html( $plan['badge'] ); ?></p>
 			<?php endif; ?>
 			<?php
 			printf(
@@ -366,10 +366,10 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			);
 			?>
 			<?php if ( ! empty( $plan['description'] ) ) : ?>
-				<p class="pro-sales-plan__description"><?php echo esc_html( $plan['description'] ); ?></p>
+				<p class="pen-pricing-card__description pro-sales-plan__description"><?php echo esc_html( $plan['description'] ); ?></p>
 			<?php endif; ?>
 			<?php if ( $is_split && $features ) : ?>
-				<ul class="pro-sales-list">
+				<ul>
 					<?php foreach ( $features as $feature ) : ?>
 						<li><?php echo esc_html( $feature ); ?></li>
 					<?php endforeach; ?>
@@ -379,7 +379,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				</div>
 				<div class="pro-sales-plan__panel pro-sales-plan__panel--offer">
 			<?php endif; ?>
-			<p class="pro-sales-plan__price">
+			<p class="pen-pricing-card__price pro-sales-plan__price">
 				<?php if ( ! empty( $plan['price_prefix'] ) ) : ?>
 					<small class="pro-sales-plan__price-prefix"><?php echo esc_html( $plan['price_prefix'] ); ?></small>
 				<?php endif; ?>
@@ -392,7 +392,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				<p class="pro-sales-plan__price-details"><?php echo esc_html( $plan['price_details'] ); ?></p>
 			<?php endif; ?>
 			<?php if ( ! $is_split && $features ) : ?>
-				<ul class="pro-sales-list">
+				<ul>
 					<?php foreach ( $features as $feature ) : ?>
 						<li><?php echo esc_html( $feature ); ?></li>
 					<?php endforeach; ?>
@@ -2083,7 +2083,7 @@ class Proenem_Elementor_Benefits_List_Widget extends Proenem_Elementor_Sales_Wid
 					<?php foreach ( $items as $item ) : ?>
 						<?php
 						$is_highlight   = 'yes' === ( $item['highlight'] ?? '' );
-						$benefit_class  = 'pro-sales-card pro-sales-benefit';
+						$benefit_class  = 'pen-card pro-sales-benefit';
 						$benefit_class .= $is_highlight ? ' pro-sales-benefit--highlight' : '';
 						$has_icon       = ! empty( $item['icon']['value'] ) && class_exists( '\Elementor\Icons_Manager' );
 						?>
@@ -2698,14 +2698,14 @@ class Proenem_Elementor_Faq_Widget extends Proenem_Elementor_Sales_Widget_Base {
 	protected function render(): void {
 		$settings = $this->get_settings_for_display();
 		$items    = ! empty( $settings['items'] ) && is_array( $settings['items'] ) ? $settings['items'] : array();
-		$this->add_section_render_attributes( $settings, 'pro-sales-faq', ! empty( $settings['title'] ) );
+		$this->add_section_render_attributes( $settings, 'pen-faq-section pro-sales-faq', ! empty( $settings['title'] ) );
 		?>
 			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 				<?php $this->render_section_header( $settings ); ?>
-					<div class="pro-sales-faq__items">
+					<div class="pen-faq-section__items pro-sales-faq__items">
 					<?php foreach ( $items as $item ) : ?>
-							<details class="pro-sales-faq__item">
+							<details class="pen-faq-item pro-sales-faq__item">
 								<summary><?php echo esc_html( $item['question'] ?? '' ); ?></summary>
 								<div><?php echo wp_kses_post( $item['answer'] ?? '' ); ?></div>
 							</details>

@@ -426,3 +426,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: separar os dois tipos de debito. O que depende de contrato novo fica condicionado a issue do design system; a migracao de `pro-sales-*` para os `pen-*` publicados e trabalho do tema e pode ser feita antes.
 - Achado de acessibilidade levado ao design system: `--pen-color-purple` (#8952fd) da 3.89 contra ink e 4.48 contra branco, entao nao alcanca AA para texto normal com nenhuma cor de conteudo e nao pode ser oferecida como superficie de texto.
 - Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#44`; debito no tema `carvalhorafael/proenem-wordpress-theme#203`; fase `#198`.
+
+## 2026-08-26: Widgets de venda migrados para os contratos publicados
+
+- Contexto: a camada local `pro-sales-*` reimplementava componentes que o design system ja publica. A decisao de 2026-07-07 previa essa migracao quando houvesse equivalente publicado, e havia.
+- Migrado: `.pro-sales-button` para `pen-button` com as variantes publicadas; selo de secao para `pen-section-pill`; card de plano para `pen-pricing-card`, incluindo `__badge`, `__description`, `__price` e a lista de itens; card generico para `pen-card`; FAQ para `pen-faq-section`, `pen-faq-section__items` e `pen-faq-item`.
+- Divergencias eliminadas, todas nao intencionais: borda de 1,5 px contra 2 px, sombra `3px` literal contra `--pen-shadow-hard-md`, peso 800 contra 700, padding literal contra `--pen-space-6`, raio `lg` contra `2xl` no card.
+- Nao migrado, com motivo: `pro_cta` nao adota `pen-marketing-cta` porque o componente publicado e uma faixa vermelha fixa, com bloco decorativo proprio, conteudo alinhado a esquerda em 42 rem e paragrafo em ink sobre fundo vermelho; adotar removeria o contrato de `tone` e desfaria a composicao centralizada homologada. `pro_offer_hero` nao adota `pen-hero-section` porque o publicado e o hero da home, com stickers e palco proprio, e nao um hero de oferta com slot lateral configuravel. Contador, comparativo e os widgets `pro-lp-*` seguem sem equivalente publicado.
+- Conflito encontrado e resolvido: com as duas listas ativas ao mesmo tempo, o marcador ficava com o glifo local dentro do ponto publicado. A lista do card de plano passou a ser governada apenas pelo contrato publicado; `pro-sales-list` sobrou so nos bullets de spotlight, que nao tem contrato.
+- Achado levado ao design system: `.pen-section-pill` pinta superficie clara e nao declara cor de conteudo, entao dentro de faixa escura renderiza branco sobre branco. Tambem registrado que `pen-button--primary` da 4.61 de contraste.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#203`; design system `carvalhorafael/proenem-design-system-brand-guide#44`.
