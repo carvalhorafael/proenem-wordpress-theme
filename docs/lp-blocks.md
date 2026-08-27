@@ -152,6 +152,14 @@ Valores de `tone`:
 
 Faixa nao tem borda nem canto arredondado. Borda e raio faziam a secao ler como card emoldurado.
 
+### Ritmo vertical
+
+A faixa e dona do ritmo vertical, sempre, e nao apenas quando tem tom. Sao `clamp(2.5rem, 6vw, 4.5rem)` acima e abaixo, o que da 144 px de respiro entre secoes em 1280 px e 80 px em 390 px.
+
+Isso e contrato do widget, e nao ajuste manual por pagina: se o espacamento dependesse de margem adicionada no Elementor secao por secao, cada pagina teria um ritmo diferente e o kit deixaria de entregar pagina pronta.
+
+Os widgets que carregavam ritmo proprio, hero e CTA, deixam de duplicar: o interno fica com padding vertical zero e a faixa fornece o ritmo. As faixas continuam contiguas, sem costura de canvas entre elas, que era o motivo de a contribuicao vertical do container do Elementor ter sido zerada.
+
 ### Sangria total
 
 Implementada na Fase 1.1 (`#200`).

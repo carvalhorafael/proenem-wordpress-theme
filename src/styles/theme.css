@@ -42,9 +42,13 @@
   width: 100%;
 }
 
-/* The band owns the page gutter, because releasing the Elementor container
-   gutter would otherwise push the content against the viewport edge. */
+/* A faixa e dona do gutter da pagina, porque liberar o gutter do container do
+   Elementor empurraria o conteudo contra a borda da janela.
+   E e dona do ritmo vertical, sempre, nao apenas quando tem tom: sem isso duas
+   secoes sem tom ficam coladas, e o espacamento passaria a ser trabalho manual
+   por pagina em vez de contrato do widget. */
 .pro-sales-section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
   padding-inline: clamp(1.25rem, 4vw, 3rem);
 }
 
@@ -52,21 +56,10 @@
   margin-inline: auto;
 }
 
-/* Tone paints the band and adds its vertical rhythm. The default tone renders
-   no class at all. */
-.pro-sales-section--tone-surface,
-.pro-sales-section--tone-brand {
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
-}
-
-/* The band already provides the vertical rhythm of a toned section, so the
-   widgets that carry their own rhythm drop it inside one. */
-.pro-sales-section--tone-surface > .pro-sales-hero,
-.pro-sales-section--tone-brand > .pro-sales-hero,
-.pro-sales-section--tone-image > .pro-sales-hero,
-.pro-sales-section--tone-surface > .pro-sales-cta,
-.pro-sales-section--tone-brand > .pro-sales-cta,
-.pro-sales-section--tone-image > .pro-sales-cta {
+/* A faixa ja fornece o ritmo vertical, entao os widgets que carregavam ritmo
+   proprio deixam de duplicar. */
+.pro-sales-section > .pro-sales-hero,
+.pro-sales-section > .pro-sales-cta {
   padding-block: 0;
 }
 
@@ -87,7 +80,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   isolation: isolate;
-  padding-block: clamp(2.5rem, 6vw, 4.5rem);
   position: relative;
 }
 

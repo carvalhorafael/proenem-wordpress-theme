@@ -436,3 +436,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Conflito encontrado e resolvido: com as duas listas ativas ao mesmo tempo, o marcador ficava com o glifo local dentro do ponto publicado. A lista do card de plano passou a ser governada apenas pelo contrato publicado; `pro-sales-list` sobrou so nos bullets de spotlight, que nao tem contrato.
 - Achado levado ao design system: `.pen-section-pill` pinta superficie clara e nao declara cor de conteudo, entao dentro de faixa escura renderiza branco sobre branco. Tambem registrado que `pen-button--primary` da 4.61 de contraste.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#203`; design system `carvalhorafael/proenem-design-system-brand-guide#44`.
+
+## 2026-08-26: Ritmo vertical como contrato da faixa
+
+- Contexto: apenas faixas com tom tinham padding vertical, porque o ritmo havia sido introduzido junto com o modificador de tom. Como a contribuicao vertical do container do Elementor foi zerada na Fase 1.1 para nao haver costura de canvas entre faixas coloridas, duas secoes sem tom ficavam coladas uma na outra.
+- Decisao: a faixa passa a ser dona do ritmo vertical em todos os casos, com `clamp(2.5rem, 6vw, 4.5rem)`, o que da 144 px de respiro entre secoes em 1280 px e 80 px em 390 px.
+- Alternativa descartada: pedir que o editor adicione margem por secao no Elementor. Cada pagina teria um ritmo diferente e o template kit deixaria de entregar pagina pronta, que e o objetivo dele.
+- Consequencia: hero e CTA deixam de carregar ritmo proprio, para nao duplicar. O hero perde um pouco de folga vertical em relacao ao que tinha, de 96 px para 72 px no desktop, em troca de ritmo consistente entre todas as secoes.
+- Verificado: faixas seguem contiguas, sem costura de canvas, e sem overflow horizontal em 1280 nem em 390 px.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
