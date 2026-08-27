@@ -75,8 +75,8 @@ Uma unica faixa concentra tres blocos distintos.
 ### 9. Aprovados
 
 - Composicao: titulo, corpo e tres cards com foto, nome, curso e universidade e badge de aprovacao.
-- Cobertura: `pro_home_testimonials`, alimentado por IDs do CPT de depoimento.
-- Gap: limite de itens e layout adequado quando o widget e usado fora da home.
+- Cobertura: `pro_lp_testimonials`, alimentado por IDs do CPT de depoimento.
+- Gap: resolvido. `pro_home_testimonials` cobria o caso, mas e exclusivo da home; o widget de LP consome o mesmo CPT em grade.
 
 ### 10. CTA final
 
@@ -106,6 +106,7 @@ Uma unica faixa concentra tres blocos distintos.
 | Eyebrow, microcopy e faixa de marca | `pro_cta` (feito) | 3 |
 | Modo minimo do footer | `pro_footer` (feito) | 3 |
 | Limite e layout de LP nos depoimentos | `pro_home_testimonials` (feito) | 3 |
+| Secao de aprovados em LP | `pro_lp_testimonials` (feito) | 4 |
 | Cabecalho de secao compartilhado | fundacao comum no base class | 1 |
 | IDs de heading unicos por instancia | fundacao comum no base class | 1 |
 | Template kits, assets condicionais, ancora e CTA fixo mobile | camada de pagina | 4 |
@@ -182,6 +183,7 @@ Implementados na Fase 2 (`#195`), todos na categoria `Proenem LP` e consumindo o
 | `pro_lp_offer_highlight` | card `INICIO HOJE!` | `badge`, `name`, `summary`, `features`, botao. O nome da oferta e o heading da secao |
 | `pro_lp_spotlight` | `PLANO DE ESTUDOS` e `REDACAO` | `bullets`, `image`, `image_alt`, botao, `media_position` para inverter o lado |
 | `pro_lp_video_story` | `HISTORIA REAL` | `video_url`, `poster`, `poster_alt`, `play_label`, botao |
+| `pro_lp_testimonials` | `Aprovados` | selecao de depoimentos do CPT, limite, colunas de 2 a 4 e botao opcional |
 
 `pro_lp_spotlight` colapsa para uma coluna quando nao ha imagem, via `pro-lp-spotlight--no-media`, para nao deixar coluna vazia.
 
@@ -209,6 +211,14 @@ O controle de colunas dos beneficios e limite real de colunas, nao largura minim
 `render_plan_card()` no base class e o unico lugar que renderiza card de plano, consumido pela grade e pelo card avulso. Antes o markup era duplicado nos dois widgets.
 
 O icone dos beneficios usa controle de midia, e nao biblioteca de icones do Elementor, para nao introduzir fonte de terceiro no tema. Sem imagem, o item mantem o marcador padrao.
+
+### Aprovados em LP
+
+`pro_lp_testimonials` cobre a secao de aprovados fora da home. Ele consome o mesmo CPT de depoimentos e o mesmo renderizador de card usados na home e na pagina de aprovados, entao a fonte de verdade continua unica: nenhum dado editorial e digitado no widget.
+
+Diferenca em relacao ao `pro_home_testimonials`: aqui a composicao e grade simples, com colunas configuraveis e colapso em 980 e 620 px, em vez do carrossel da home. LP nao precisa de controle de navegacao para tres cards, e grade evita os clones que o carrossel cria no DOM.
+
+Sem selecao explicita, entram os registros elegiveis mais recentes. O filtro de elegibilidade vem de `proenem_get_home_testimonials()`, entao so entram depoimentos verificados, autorizados e com relato.
 
 ### Tone como contrato de par de cores
 
