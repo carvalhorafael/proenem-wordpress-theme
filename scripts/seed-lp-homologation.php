@@ -639,6 +639,20 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
+		'lplptesti01',
+		'pro_lp_testimonials',
+		array(
+			'eyebrow'    => 'Historia real',
+			'title'      => 'Aprovados que ja passaram por aqui.',
+			'body'       => 'Historias reais de quem transformou o cansaco em aprovacao.',
+			'limit'      => 3,
+			'columns'    => '3',
+			'more_label' => 'Ver mais aprovados',
+			'more_url'   => array( 'url' => 'https://aprovados.proenem.com.br/' ),
+			'tone'       => 'surface',
+		)
+	),
+	proenem_lp_homologation_container(
 		'lpfooter01',
 		'pro_footer',
 		array(

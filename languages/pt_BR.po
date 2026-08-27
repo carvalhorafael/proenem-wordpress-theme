@@ -31,7 +31,7 @@ msgstr ""
 
 #. Theme Name of the theme
 #: style.css
-#: inc/elementor-sales-widgets.php:63
+#: inc/elementor-sales-widgets.php:64
 #: inc/template-tags.php:2001
 #: inc/template-tags.php:2389
 msgid "Proenem"
@@ -327,6 +327,7 @@ msgstr "O ENEM não é prova de quem estuda mais. É de quem estuda com estraté
 #: inc/class-proenem-elementor-lp-widget-base.php:302
 #: inc/class-proenem-elementor-lp-widget-base.php:424
 #: inc/class-proenem-elementor-lp-widget-base.php:572
+#: inc/class-proenem-elementor-lp-widget-base.php:706
 #: inc/class-proenem-elementor-sales-widget-base.php:1734
 #: inc/class-proenem-elementor-sales-widget-base.php:1907
 #: inc/class-proenem-elementor-sales-widget-base.php:2237
@@ -346,6 +347,7 @@ msgstr "Ver a Turma Intensiva"
 #: inc/class-proenem-elementor-home-widget-base.php:1547
 #: inc/class-proenem-elementor-home-widget-base.php:1633
 #: inc/class-proenem-elementor-home-widget-base.php:1747
+#: inc/class-proenem-elementor-lp-widget-base.php:714
 msgid "Link do botão"
 msgstr "Link do botão"
 
@@ -1229,6 +1231,7 @@ msgid "Pro Home Depoimentos"
 msgstr "Pro Home Depoimentos"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1542
+#: inc/class-proenem-elementor-lp-widget-base.php:652
 #: inc/template-tags.php:1443
 msgid "Aprovados"
 msgstr "Aprovados"
@@ -1253,10 +1256,12 @@ msgid "Selecione somente depoimentos verificados, autorizados e com relato. Sem 
 msgstr "Selecione somente depoimentos verificados, autorizados e com relato. Sem seleção, os registros elegíveis mais recentes são usados."
 
 #: inc/class-proenem-elementor-home-widget-base.php:1552
+#: inc/class-proenem-elementor-lp-widget-base.php:669
 msgid "Depoimentos verificados"
 msgstr "Depoimentos verificados"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1561
+#: inc/class-proenem-elementor-lp-widget-base.php:680
 msgid "Quantidade máxima"
 msgstr "Quantidade máxima"
 
@@ -1645,6 +1650,42 @@ msgstr "Veja como a rotina certa e a correção de redação fizeram a diferenç
 #: inc/class-proenem-elementor-lp-widget-base.php:574
 msgid "Quero minha vaga na Turma Intensiva"
 msgstr "Quero minha vaga na Turma Intensiva"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:631
+msgid "Pro LP Aprovados"
+msgstr "Pro LP Aprovados"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:660
+msgid "Aprovados que já passaram por aqui."
+msgstr "Aprovados que já passaram por aqui."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:662
+msgid "Histórias reais de quem transformou o cansaço em aprovação."
+msgstr "Histórias reais de quem transformou o cansaço em aprovação."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:673
+msgid "Sem seleção, os registros elegíveis mais recentes são usados. Só entram depoimentos verificados, autorizados e com relato."
+msgstr "Sem seleção, os registros elegíveis mais recentes são usados. Só entram depoimentos verificados, autorizados e com relato."
+
+#: inc/class-proenem-elementor-lp-widget-base.php:692
+#: inc/class-proenem-elementor-sales-widget-base.php:1996
+msgid "Colunas"
+msgstr "Colunas"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:696
+#: inc/class-proenem-elementor-sales-widget-base.php:2000
+msgid "2 colunas"
+msgstr "2 colunas"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:697
+#: inc/class-proenem-elementor-sales-widget-base.php:2001
+msgid "3 colunas"
+msgstr "3 colunas"
+
+#: inc/class-proenem-elementor-lp-widget-base.php:698
+#: inc/class-proenem-elementor-sales-widget-base.php:2002
+msgid "4 colunas"
+msgstr "4 colunas"
 
 #: inc/class-proenem-elementor-sales-widget-base.php:215
 msgid "Seção"
@@ -2114,22 +2155,6 @@ msgstr "Pro Lista de Benefícios"
 msgid "O que está incluído"
 msgstr "O que está incluído"
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1996
-msgid "Colunas"
-msgstr "Colunas"
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2000
-msgid "2 colunas"
-msgstr "2 colunas"
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2001
-msgid "3 colunas"
-msgstr "3 colunas"
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2002
-msgid "4 colunas"
-msgstr "4 colunas"
-
 #: inc/class-proenem-elementor-sales-widget-base.php:2010
 msgid "Benefício"
 msgstr "Benefício"
@@ -2275,11 +2300,11 @@ msgstr "Código do rodapé"
 msgid "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 msgstr "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 
-#: inc/elementor-sales-widgets.php:71
+#: inc/elementor-sales-widgets.php:72
 msgid "Proenem LP"
 msgstr "Proenem LP"
 
-#: inc/elementor-sales-widgets.php:79
+#: inc/elementor-sales-widgets.php:80
 msgid "Proenem Home (somente na home)"
 msgstr "Proenem Home (somente na home)"
 

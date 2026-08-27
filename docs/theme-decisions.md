@@ -400,3 +400,11 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Pendentes, com fallback funcionando: `--pen-color-red` em 4 usos, cuja troca por `--pen-color-proenem-red` muda a cor de botoes ja homologados; `--pen-space-7`, `--pen-space-9` e `--pen-space-14`, degraus que a escala publicada nao tem; e `--pen-page-gutter`, sem equivalente publicado.
 - Gap do design system: a escala de espacamento publicada tem 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20 e 24, e o tema precisou de 7, 9 e 14. Faltam tambem token de gutter de pagina e cor de foco.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`; gaps a registrar na Fase 5 em `#198`.
+
+## 2026-08-26: Aprovados em LP com widget generico sobre o CPT
+
+- Contexto: a secao de aprovados existe nas duas LPs de campanha, mas o unico widget que renderizava cards de aprovados era `pro_home_testimonials`, isolado como exclusivo da home na Fase 3.5. O template kit sairia sem a secao.
+- Decisao: criar `pro_lp_testimonials` na categoria de LP, consumindo o mesmo CPT de depoimentos e o mesmo renderizador de card ja usados na home e na pagina de aprovados. Nenhum dado editorial e digitado no widget, entao a fonte de verdade continua unica.
+- Composicao: grade simples com colunas configuraveis, e nao o carrossel da home. LP nao precisa de controle de navegacao para tres cards, e a grade evita os clones que o carrossel cria no DOM.
+- Fronteira: o filtro de elegibilidade vem de `proenem_get_home_testimonials()`, entao so entram depoimentos verificados, autorizados e com relato. O widget nao afrouxa esse critério.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.

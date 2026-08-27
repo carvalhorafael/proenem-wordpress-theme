@@ -16,7 +16,7 @@ msgstr ""
 
 #. Theme Name of the theme
 #: style.css
-#: inc/elementor-sales-widgets.php:63
+#: inc/elementor-sales-widgets.php:64
 #: inc/template-tags.php:2001
 #: inc/template-tags.php:2389
 msgid "Proenem"
@@ -312,6 +312,7 @@ msgstr ""
 #: inc/class-proenem-elementor-lp-widget-base.php:302
 #: inc/class-proenem-elementor-lp-widget-base.php:424
 #: inc/class-proenem-elementor-lp-widget-base.php:572
+#: inc/class-proenem-elementor-lp-widget-base.php:706
 #: inc/class-proenem-elementor-sales-widget-base.php:1734
 #: inc/class-proenem-elementor-sales-widget-base.php:1907
 #: inc/class-proenem-elementor-sales-widget-base.php:2237
@@ -331,6 +332,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1547
 #: inc/class-proenem-elementor-home-widget-base.php:1633
 #: inc/class-proenem-elementor-home-widget-base.php:1747
+#: inc/class-proenem-elementor-lp-widget-base.php:714
 msgid "Link do botão"
 msgstr ""
 
@@ -1214,6 +1216,7 @@ msgid "Pro Home Depoimentos"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1542
+#: inc/class-proenem-elementor-lp-widget-base.php:652
 #: inc/template-tags.php:1443
 msgid "Aprovados"
 msgstr ""
@@ -1238,10 +1241,12 @@ msgid "Selecione somente depoimentos verificados, autorizados e com relato. Sem 
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1552
+#: inc/class-proenem-elementor-lp-widget-base.php:669
 msgid "Depoimentos verificados"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1561
+#: inc/class-proenem-elementor-lp-widget-base.php:680
 msgid "Quantidade máxima"
 msgstr ""
 
@@ -1629,6 +1634,42 @@ msgstr ""
 
 #: inc/class-proenem-elementor-lp-widget-base.php:574
 msgid "Quero minha vaga na Turma Intensiva"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:631
+msgid "Pro LP Aprovados"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:660
+msgid "Aprovados que já passaram por aqui."
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:662
+msgid "Histórias reais de quem transformou o cansaço em aprovação."
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:673
+msgid "Sem seleção, os registros elegíveis mais recentes são usados. Só entram depoimentos verificados, autorizados e com relato."
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:692
+#: inc/class-proenem-elementor-sales-widget-base.php:1996
+msgid "Colunas"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:696
+#: inc/class-proenem-elementor-sales-widget-base.php:2000
+msgid "2 colunas"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:697
+#: inc/class-proenem-elementor-sales-widget-base.php:2001
+msgid "3 colunas"
+msgstr ""
+
+#: inc/class-proenem-elementor-lp-widget-base.php:698
+#: inc/class-proenem-elementor-sales-widget-base.php:2002
+msgid "4 colunas"
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:215
@@ -2099,22 +2140,6 @@ msgstr ""
 msgid "O que está incluído"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:1996
-msgid "Colunas"
-msgstr ""
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2000
-msgid "2 colunas"
-msgstr ""
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2001
-msgid "3 colunas"
-msgstr ""
-
-#: inc/class-proenem-elementor-sales-widget-base.php:2002
-msgid "4 colunas"
-msgstr ""
-
 #: inc/class-proenem-elementor-sales-widget-base.php:2010
 msgid "Benefício"
 msgstr ""
@@ -2260,11 +2285,11 @@ msgstr ""
 msgid "Cole aqui apenas scripts fornecidos por serviços confiáveis. O código será impresso antes do fechamento do body."
 msgstr ""
 
-#: inc/elementor-sales-widgets.php:71
+#: inc/elementor-sales-widgets.php:72
 msgid "Proenem LP"
 msgstr ""
 
-#: inc/elementor-sales-widgets.php:79
+#: inc/elementor-sales-widgets.php:80
 msgid "Proenem Home (somente na home)"
 msgstr ""
 

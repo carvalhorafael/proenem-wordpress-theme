@@ -608,3 +608,152 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 			<?php
 	}
 }
+
+/**
+ * Pro LP testimonials widget.
+ */
+class Proenem_Elementor_Lp_Testimonials_Widget extends Proenem_Elementor_Lp_Widget_Base {
+	/**
+	 * Get widget name.
+	 *
+	 * @return string
+	 */
+	public function get_name(): string {
+		return 'pro_lp_testimonials';
+	}
+
+	/**
+	 * Get widget title.
+	 *
+	 * @return string
+	 */
+	public function get_title(): string {
+		return esc_html__( 'Pro LP Aprovados', 'proenem-wordpress-theme' );
+	}
+
+	/**
+	 * Get widget icon.
+	 *
+	 * @return string
+	 */
+	public function get_icon(): string {
+		return 'eicon-testimonial';
+	}
+
+	/**
+	 * Register widget controls.
+	 *
+	 * @return void
+	 */
+	protected function register_controls(): void {
+		$this->start_controls_section(
+			'content_section',
+			array(
+				'label' => esc_html__( 'Aprovados', 'proenem-wordpress-theme' ),
+				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
+			)
+		);
+
+		$this->add_section_header_controls(
+			array(
+				'eyebrow'    => '',
+				'title'      => esc_html__( 'Aprovados que já passaram por aqui.', 'proenem-wordpress-theme' ),
+				'title_type' => 'textarea',
+				'body'       => esc_html__( 'Histórias reais de quem transformou o cansaço em aprovação.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
+			'testimonial_ids',
+			array(
+				'label'       => esc_html__( 'Depoimentos verificados', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT2,
+				'multiple'    => true,
+				'options'     => proenem_get_home_testimonial_options(),
+				'description' => esc_html__( 'Sem seleção, os registros elegíveis mais recentes são usados. Só entram depoimentos verificados, autorizados e com relato.', 'proenem-wordpress-theme' ),
+			)
+		);
+
+		$this->add_control(
+			'limit',
+			array(
+				'label'   => esc_html__( 'Quantidade máxima', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::NUMBER,
+				'min'     => 1,
+				'max'     => 12,
+				'step'    => 1,
+				'default' => 3,
+			)
+		);
+
+		$this->add_control(
+			'columns',
+			array(
+				'label'   => esc_html__( 'Colunas', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => '3',
+				'options' => array(
+					'2' => esc_html__( '2 colunas', 'proenem-wordpress-theme' ),
+					'3' => esc_html__( '3 colunas', 'proenem-wordpress-theme' ),
+					'4' => esc_html__( '4 colunas', 'proenem-wordpress-theme' ),
+				),
+			)
+		);
+
+		$this->add_control(
+			'more_label',
+			array(
+				'label' => esc_html__( 'Botão', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+
+		$this->add_control(
+			'more_url',
+			array(
+				'label' => esc_html__( 'Link do botão', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::URL,
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->add_section_layout_controls();
+	}
+
+	/**
+	 * Render widget output.
+	 *
+	 * @return void
+	 */
+	protected function render(): void {
+		$settings     = $this->get_settings_for_display();
+		$limit        = max( 1, absint( $settings['limit'] ?? 3 ) );
+		$testimonials = proenem_get_home_testimonials( $settings['testimonial_ids'] ?? array(), $limit );
+
+		if ( empty( $testimonials ) ) {
+			return;
+		}
+
+		$columns = in_array( (string) ( $settings['columns'] ?? '3' ), array( '2', '3', '4' ), true )
+			? (string) $settings['columns']
+			: '3';
+
+		$this->add_section_render_attributes( $settings, 'pro-lp-testimonials', ! empty( $settings['title'] ) );
+		?>
+			<section <?php $this->print_render_attribute_string( 'section' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
+				<?php $this->render_section_header( $settings ); ?>
+					<ul class="pro-lp-testimonials__grid pro-lp-testimonials__grid--cols-<?php echo esc_attr( $columns ); ?>">
+					<?php foreach ( $testimonials as $testimonial ) : ?>
+							<li>
+								<?php proenem_render_testimonial_card( $testimonial->ID, array(), 3 ); ?>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				<?php $this->render_link( 'more_url', $settings['more_url'] ?? array(), $settings['more_label'] ?? '', 'pro-sales-button pro-sales-button--primary' ); ?>
+				</div>
+			</section>
+			<?php
+	}
+}

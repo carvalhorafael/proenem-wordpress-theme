@@ -43,6 +43,7 @@ function proenem_get_elementor_sales_widget_classes() {
 		'Proenem_Elementor_Lp_Offer_Highlight_Widget',
 		'Proenem_Elementor_Lp_Spotlight_Widget',
 		'Proenem_Elementor_Lp_Video_Story_Widget',
+		'Proenem_Elementor_Lp_Testimonials_Widget',
 	);
 }
 
