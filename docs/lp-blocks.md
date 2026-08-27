@@ -344,6 +344,10 @@ Comportamento responsivo, que e o ponto fraco tipico de comparativo:
 - abaixo de 64 rem, o container rola na horizontal e a **coluna de recursos fica fixa** na borda, entao a pessoa nunca perde a referencia do que esta comparando;
 - a partir de 64 rem a tabela cabe, o container deixa de ser area de rolagem e o **cabecalho de planos gruda no topo da janela** enquanto a pessoa percorre a lista. Sao comportamentos exclusivos porque um container de rolagem captura o `position: sticky`, e o cabecalho grudaria no container em vez da janela.
 
+Convivencia com barra fixa: a variavel `--pro-sticky-offset` guarda a altura ocupada por barra fixa no topo. Quem pina publica nela, quem gruda ou recebe ancora desconta dela. Sem isso o cabecalho de planos ficava escondido embaixo do contador fixo. A variavel e publicada a partir do estado que a barra realmente alcancou, e nao da intencao de pinar: contador encerrado volta ao fluxo e nao deve reservar espaco nenhum.
+
+As faixas de grupo deixaram de grudar no topo, porque grudavam na mesma altura do cabecalho de planos e as duas colidiam.
+
 Acessibilidade: `caption` para a tabela, `scope` em coluna, linha e grupo, marcas com texto para leitor de tela (um icone sozinho nao diz o que a coluna significa) e a area de rolagem como `role="region"` com `tabindex="0"`, para quem navega por teclado poder rolar.
 
 Compatibilidade: paginas que ainda usam a lista de colunas em texto continuam renderizando, porque o widget cai para ela quando o repeater de planos esta vazio.

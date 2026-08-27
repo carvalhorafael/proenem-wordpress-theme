@@ -669,7 +669,20 @@ document.querySelectorAll("[data-pro-countdown], [data-pro-countdown-duration]")
     units.hidden = true;
     fallback.hidden = false;
     fallback.textContent = expiredLabel;
-    element.closest("[data-pro-sticky]")?.classList.add("is-pro-countdown-expired");
+
+    const band = element.closest("[data-pro-sticky]");
+
+    if (!band) {
+      return;
+    }
+
+    band.classList.add("is-pro-countdown-expired");
+
+    // An expired bar stops being pinned, so it also stops reserving space for
+    // the sticky content below it.
+    if (band.classList.contains("is-pro-sticky-pinned")) {
+      document.documentElement.style.removeProperty("--pro-sticky-offset");
+    }
   };
 
   const tick = () => {
@@ -724,6 +737,7 @@ document.querySelectorAll("[data-pro-sticky]").forEach((band) => {
   const after = Number.parseInt(band.dataset.proStickyAfter || "", 10);
   const threshold = Number.isFinite(after) ? Math.min(Math.max(after, 0), 90) : 20;
   const holder = band.parentElement;
+  const root = document.documentElement;
   let pinned = false;
 
   const scrolled = () => {
@@ -741,13 +755,25 @@ document.querySelectorAll("[data-pro-sticky]").forEach((band) => {
 
     pinned = shouldPin;
 
+    // The space to reserve is the height the band had in flow, measured before
+    // pinning changes it.
     if (pinned && holder) {
       holder.style.minHeight = `${band.offsetHeight}px`;
     }
 
     band.classList.toggle("is-pro-sticky-pinned", pinned);
 
-    if (!pinned && holder) {
+    // The offset is published from the state the band actually reached, not from
+    // the intent to pin: an expired bar keeps the class but goes back to the
+    // flow, and publishing an offset for it would leave a gap under nothing.
+    if (pinned && window.getComputedStyle(band).position === "fixed") {
+      root.style.setProperty("--pro-sticky-offset", `${band.offsetHeight}px`);
+      return;
+    }
+
+    root.style.removeProperty("--pro-sticky-offset");
+
+    if (holder) {
       holder.style.minHeight = "";
     }
   };

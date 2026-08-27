@@ -381,3 +381,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Marcas booleanas carregam texto para leitor de tela, porque um icone sozinho nao informa o que a coluna significa.
 - Compatibilidade: o widget aceita a lista de colunas em texto do formato anterior quando o repeater de planos esta vazio, para nao esvaziar pagina existente.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Offset compartilhado das barras fixas
+
+- Contexto: com o contador fixo no topo, o cabecalho de planos do comparativo grudava em `top: 0` e ficava escondido atras da barra. As faixas de grupo tambem grudavam na mesma altura e colidiam com o cabecalho.
+- Decisao: criar a variavel `--pro-sticky-offset`, publicada por quem pina no topo e descontada por quem gruda ou recebe ancora interna. As faixas de grupo deixam de grudar.
+- Detalhe que se mostrou necessario: a variavel e publicada a partir do estado que a barra realmente alcancou, verificando `position: fixed` depois de aplicar a classe, e nao da intencao de pinar. Um contador encerrado mantem a classe mas volta ao fluxo, e publicar offset para ele deixaria um vao vazio sob nada.
+- Extensao: ancora interna tambem desconta o offset, senao o destino da ancora para embaixo da barra fixa.
+- Fronteira: com duas barras fixas na mesma pagina, a ultima a pinar define o offset. Nao ha acumulo, porque nao ha caso de uso conhecido para duas.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

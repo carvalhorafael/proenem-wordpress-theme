@@ -1,4 +1,7 @@
 :root {
+  /* Altura ocupada por barras fixas no topo. Quem pina soma aqui, quem gruda
+     ou recebe ancora desconta daqui. Sem barra fixa o valor e zero. */
+  --pro-sticky-offset: 0px;
   --proenem-color-text: var(--pen-color-foreground);
   --proenem-color-muted: var(--pen-color-muted);
   --proenem-color-border: var(--pen-color-border);
@@ -533,6 +536,11 @@
   .pro-lp-spotlight--media-start .pro-lp-spotlight__content {
     order: 0;
   }
+}
+
+/* Ancora interna para embaixo de barra fixa se nao descontar o offset. */
+.pro-sales-section[id] {
+  scroll-margin-top: calc(var(--pro-sticky-offset, 0px) + var(--pen-space-4, 1rem));
 }
 
 /* Sales pages compose full width bands. Elementor containers default to a
@@ -1102,14 +1110,9 @@
   }
 
   .pro-sales-comparison__plan {
-    inset-block-start: 0;
+    inset-block-start: var(--pro-sticky-offset, 0px);
     position: sticky;
     z-index: 2;
-  }
-
-  .pro-sales-comparison__group th {
-    inset-block-start: 0;
-    position: sticky;
   }
 }
 
