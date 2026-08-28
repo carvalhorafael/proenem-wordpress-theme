@@ -526,6 +526,13 @@ com `.pro-section-host`, e nao apenas para os widgets de venda. Cobertura:
 
 - `section hosts span the full width on the page of widgets de venda`
 - `section hosts span the full width on the page of widgets de home`
+- `section hosts span the full width on the page of kit de oferta completa`
+- `section hosts span the full width on the page of kit de diferencial em foco`
 
-Os dois medem `left` e largura de cada `.pro-section-host` e recusam overflow
-horizontal. O `test:e2e` semeia as duas paginas de fixture antes de rodar.
+Os quatro medem `left`, largura e distancia vertical de cada
+`.pro-section-host`, e recusam overflow horizontal. A distancia compara so
+vizinhas de DOM: duas faixas seguidas na lista podem estar em containers
+diferentes, e ai o que separa uma da outra e o conteudo do meio, nao uma
+costura. O `test:e2e` semeia as duas paginas de bancada e importa os dois kits
+antes de rodar, entao os templates publicados entram na cobertura de navegador
+e nao so na checagem estrutural do PHPUnit.

@@ -47,6 +47,8 @@ const HOME_WIDGETS_PAGE = "/lp/checagem-widgets-home/";
 for (const [nome, url] of [
   ["widgets de venda", SALES_PAGE],
   ["widgets de home", HOME_WIDGETS_PAGE],
+  ["kit de oferta completa", "/lp/kit-oferta-completa/"],
+  ["kit de diferencial em foco", "/lp/kit-diferencial-em-foco/"],
 ]) {
   test(`section hosts span the full width on the page of ${nome}`, async ({ page }) => {
     const response = await page.goto(url);
@@ -78,6 +80,34 @@ for (const [nome, url] of [
     );
 
     expect(overflows).toBe(false);
+
+    /* O container do Elementor e flex e traz `gap: 20px`, que abre uma costura
+       entre cada par de faixas vizinhas. Faixa colada em faixa e contrato.
+       Compara so vizinhas de DOM: duas faixas seguidas na lista podem estar em
+       containers diferentes, e ai a distancia vertical entre elas e o conteudo
+       que existe no meio, nao uma costura. */
+    const costuras = await page.evaluate(() => {
+      const hosts = [...document.querySelectorAll(".pro-section-host")];
+
+      return hosts
+        .map((host, index) => {
+          const anterior = hosts[index - 1];
+
+          if (!anterior || anterior.nextElementSibling !== host) {
+            return null;
+          }
+
+          const vao = Math.round(
+            host.getBoundingClientRect().top -
+              anterior.getBoundingClientRect().bottom,
+          );
+
+          return Math.abs(vao) > 1 ? { indice: index, vao } : null;
+        })
+        .filter(Boolean);
+    });
+
+    expect(costuras).toEqual([]);
   });
 }
 

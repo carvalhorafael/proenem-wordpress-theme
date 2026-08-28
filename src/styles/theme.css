@@ -720,6 +720,12 @@
    ter zerado o padding na mao. */
 .single-sales_page .e-con:has(> .e-con-inner > .pro-section-host),
 .single-sales_page .e-con:has(> .pro-section-host) {
+  /* O container do Elementor e flex e traz `gap: 20px`, que abriria uma
+     costura entre cada par de faixas vizinhas. Cada faixa ja carrega o
+     proprio ritmo vertical no `padding-block`, entao o vao do container e
+     so uma folga a mais, e nao pode depender de quem monta a pagina ter
+     desligado o gap no painel. */
+  gap: 0;
   padding-block: 0;
   padding-inline: 0;
 }
@@ -4128,10 +4134,6 @@ body.proenem-home-template {
   margin: 0;
   max-width: none;
   width: 100%;
-}
-
-body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
-  margin-top: calc(var(--container-default-padding-top, 10px) * -1) !important;
 }
 
 .pro-site-navbar .pro-home-navbar-menu,

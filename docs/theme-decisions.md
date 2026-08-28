@@ -480,3 +480,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Fronteira: segue restrita ao CPT `sales_page` e aos containers que hospedam widget de secao. Container sem widget de secao mantem a goteira do Elementor.
 - Verificado: as quatro paginas de homologacao com todas as faixas em `left=0` e largura igual a janela, sem overflow horizontal. O teste novo, com a regra removida, falha com `left=10`, entao cobre a regressao de verdade.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Costura entre faixas sai do container, e o hack do navbar cai
+
+- Contexto: apos soltar a goteira lateral, a homologacao apontou vao entre a faixa vermelha do hero e a barra de acao. Medido: 20 px entre cada um dos 12 pares de faixas vizinhas, com margem e padding zero em todos os widgets.
+- Achado 1: o container do Elementor e flex e traz `gap: 20px`. Cada faixa ja carrega o proprio ritmo vertical no `padding-block`, entao esse vao e folga a mais. Os kits de LP desligam o gap no JSON, o que de novo escondia o defeito.
+- Decisao 1: a regra de faixa cheia passa a zerar `gap` tambem, junto do padding. Faixa colada em faixa deixa de depender de configuracao de quem monta a pagina.
+- Achado 2: existia `margin-top: calc(var(--container-default-padding-top, 10px) * -1) !important` no primeiro `pro_navbar` em canvas. Era compensacao para o padding do container: padding 10 mais margem -10 dava zero. Com o padding zerado na origem, a conta virou -10 e o navbar passou a cobrir 10 px do hero nos dois kits.
+- Decisao 2: o hack sai. Tratar a causa no container tornou a compensacao redundante, e mante-la seria corrigir duas vezes o mesmo desalinhamento em sentidos opostos.
+- Licao: compensacao com valor negativo amarrada a um padding alheio vira defeito silencioso no dia em que o padding muda. O lugar de resolver goteira de container e o container.
+- Verificado: as quatro paginas de homologacao com a primeira faixa em `top=0` e zero costuras. Com o gap de volta os testes falham com vao 20; com o hack de volta, com vao -10.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
