@@ -1877,7 +1877,7 @@ msgid "Compacta: uma coluna centralizada"
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1261
-msgid "A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado."
+msgid "A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado. O titulo cabe cerca de 20 caracteres por linha no desktop: ate 60 caracteres fecha em 3 linhas, e com preco vale ficar em 40, para fechar em 2."
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1267

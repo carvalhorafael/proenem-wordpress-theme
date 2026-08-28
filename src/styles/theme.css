@@ -880,11 +880,18 @@
   align-items: center;
   display: grid;
   justify-items: center;
-  max-width: 46rem;
+  max-width: 55rem;
 }
 
+/* A compacta precisa caber em poucas linhas: sem conteudo ao lado, um titulo
+   alto empurra a chamada para longe do topo e desfaz o motivo da disposicao.
+   Medido em 736 px e 76.8 px de fonte, o titulo cabia 15 caracteres por linha,
+   o que dava 4 linhas para a copy de referencia. As duas alavancas entram
+   juntas, largura e escala, porque so alargar deixaria a linha longa demais e
+   so reduzir a fonte tiraria a presenca do titulo. */
 .pro-sales-hero--compact .pro-sales-hero__title {
-  max-width: 20ch;
+  font-size: clamp(2rem, 4.4vw, 4.1rem);
+  max-width: 24ch;
 }
 
 /* O preco fica entre o texto e a chamada: e o dado que trava a decisao, e

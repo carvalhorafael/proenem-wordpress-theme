@@ -569,3 +569,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Nao feito, e registrado: hero com captura de lead. Formulario traz validacao, integracao e LGPD, que sao fronteira de plugin e nao de tema.
 - Ressalva: nada disso e "o que mais converte". Sao heuristicas mais um defeito medido. Ordem de impacto real so sai de teste com trafego.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Orcamento de linhas do titulo na disposicao compacta
+
+- Contexto: pedido de limitar o titulo a 3 linhas na compacta e a 2 na compacta com preco.
+- Achado: os dois pedidos sao a mesma regra. Sao 59 caracteres em 3 linhas e 38 em 2, e os dois dao cerca de 20 caracteres por linha. Um ajuste so atende os dois, em vez de dois casos especiais.
+- Medido antes: 736 px de largura com fonte de 76.8 px cabiam 15 caracteres por linha, o que dava 4 linhas e 3 linhas.
+- Decisao: as duas alavancas entram juntas. So alargar deixaria a linha longa demais para um titulo centralizado; so reduzir a fonte tiraria a presenca. Largura de 46 para 55 rem e escala com teto de 4.1rem, chegando a 20 e 19 caracteres por linha.
+- Verificado: alvo cumprido em 1920, 1440, 1366x625 e 768. Em 390 px a copy de 59 caracteres fecha em 4 linhas, e nao em 3.
+- Nao corrigido em 390 px, com motivo: chegar a 20 caracteres por linha em 350 px exigiria fonte de cerca de 24 px, que tira do titulo o peso de hero. Numa tela estreita o numero de linhas e funcao do tamanho da copy, nao do CSS.
+- Consequencia: o orcamento entrou na descricao do controle, para quem escreve saber antes. Cerca de 20 caracteres por linha no desktop: ate 60 fecha em 3 linhas, com preco vale ficar em 40.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

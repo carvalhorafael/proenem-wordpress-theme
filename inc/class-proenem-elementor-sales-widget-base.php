@@ -1258,7 +1258,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 					'split'   => esc_html__( 'Dividida: texto e conteúdo ao lado', 'proenem-wordpress-theme' ),
 					'compact' => esc_html__( 'Compacta: uma coluna centralizada', 'proenem-wordpress-theme' ),
 				),
-				'description' => esc_html__( 'A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado.', 'proenem-wordpress-theme' ),
+				'description' => esc_html__( 'A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado. O titulo cabe cerca de 20 caracteres por linha no desktop: ate 60 caracteres fecha em 3 linhas, e com preco vale ficar em 40, para fechar em 2.', 'proenem-wordpress-theme' ),
 			)
 		);
 		$this->add_control(
