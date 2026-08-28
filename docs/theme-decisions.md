@@ -445,3 +445,29 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Consequencia: hero e CTA deixam de carregar ritmo proprio, para nao duplicar. O hero perde um pouco de folga vertical em relacao ao que tinha, de 96 px para 72 px no desktop, em troca de ritmo consistente entre todas as secoes.
 - Verificado: faixas seguem contiguas, sem costura de canvas, e sem overflow horizontal em 1280 nem em 390 px.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Cor do botao de chamada na mesma lista fechada
+
+- Contexto: a revisao pediu poder trocar a cor do botao de chamada, com o texto acompanhando a escolha automaticamente.
+- Decisao: reusar a lista fechada de cores da marca, com a opcao `Padrao da marca` mantendo o par publicado do `pen-button--primary`. Nenhuma escolha possivel perde legibilidade, porque cada opcao declara superficie e conteudo juntos.
+- Fronteira: nao ha seletor livre de cor, pelo mesmo motivo dos selos.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Espiral do rodape removida
+
+- Contexto: o rodape tinha uma ilustracao de espiral de caderno, desenhada por gradiente radial em `::before`, sobreposta a borda superior. A revisao pediu a remocao por causar problemas de sobreposicao.
+- Achado: o rodape ja declarava borda completa na propria regra de composicao. A espiral era decoracao sobre uma borda que ja existia, entao remover o `::before` bastou para a linha reta aparecer.
+- Complemento: a espessura foi de `--pen-border-brand-sm` para `--pen-border-brand`, alinhando com as demais secoes, como o pedido descrevia.
+- Consequencia: a mudanca vale para o rodape do site inteiro, incluindo a home, porque o rodape e um componente unico.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Rodape passa ao par publicado, revelado pela remocao da espiral
+
+- Contexto: com o `::before` da espiral removido, o axe passou a avaliar o rodape e acusou 151 violacoes de contraste na home e 1 na LP. Nenhuma delas era nova: o gradiente radial sobreposto impedia o axe de determinar o fundo, entao o rodape ficou fora da checagem automatica desde que a ilustracao existe.
+- Achado 1: o fundo era o literal `#e23a3a`, que nao pertence a paleta da marca. Com texto branco solido da 4.29, abaixo dos 4.5 de AA.
+- Achado 2: os textos secundarios usavam branco com opacidade, `0.58` no `span` do titulo e `0.72` no corpo e na assinatura. Composto sobre o fundo, isso dava 2.91 e 3.90.
+- Decisao: fundo passa a `--pen-color-proenem-red` com conteudo em `--pen-color-on-red`, que da 6.61, e as opacidades sobem para `0.86`, que da 5.12.
+- Por que `0.86` e nao o minimo: o minimo para AA sobre esse fundo e `0.80`, que da 4.57 e nao deixa margem para ajuste de fundo. Em `0.86` o texto secundario continua visivelmente mais apagado que o `strong` em branco puro, entao a hierarquia do rodape se mantem.
+- Consequencia: o rodape do site inteiro fica com o vermelho da marca, mais escuro que o anterior. E uma mudanca visivel na home, que ja esta homologada, aceita em troca de sair de uma violacao de AA e de um literal fora do design system.
+- Licao: decoracao que cobre uma faixa inteira pode esconder a faixa da auditoria automatica. Vale desconfiar de secao sem nenhuma violacao acusada quando ela tem sobreposicao desenhada por pseudo-elemento.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

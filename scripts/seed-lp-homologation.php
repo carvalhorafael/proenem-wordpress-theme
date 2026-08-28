@@ -85,6 +85,7 @@ $elementor_data = array(
 			'primary_label' => 'Quero minha vaga',
 			'primary_url'   => array( 'url' => '#oferta' ),
 			'microcopy'     => 'Vagas limitadas - Inicio hoje - Acesso imediato',
+			'button_accent' => 'yellow',
 			'heading_level' => 'h1',
 			'side_content'  => 'cards',
 			'proof_cards'   => array(
@@ -221,6 +222,7 @@ $elementor_data = array(
 			'button_label' => 'Garantir minha vaga',
 			'button_url'   => array( 'url' => '#oferta' ),
 			'microcopy'    => 'Acesso imediato - Garantia de 7 dias - Vagas limitadas',
+			'button_accent' => 'ink',
 			'tone'         => 'brand',
 			'anchor_id'    => 'oferta',
 		)
@@ -441,6 +443,7 @@ $elementor_data = array(
 					'price_details' => 'ou R$ 306,90 a vista',
 					'features'      => "Cronograma semanal\nCorrecao de redacao\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrao ENEM\nRevisoes inteligentes por materia\nMais de 50 mil questoes para praticar\n6 meses de acesso",
 					'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
+					'button_accent' => 'mint',
 					'button_label'  => 'Quero a Turma Intensiva',
 					'button_url'    => array( 'url' => '#oferta' ),
 				),

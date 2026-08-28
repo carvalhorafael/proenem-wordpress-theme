@@ -56,6 +56,15 @@
   margin-inline: auto;
 }
 
+/* O subtitulo de secao saia no tamanho de corpo padrao, praticamente igual ao
+   texto dentro dos cards. Passa a ter escala de subtitulo, alinhada a do hero. */
+.pro-sales-section-body {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0 0 var(--pen-space-6, 1.5rem);
+  max-width: 52rem;
+}
+
 /* A faixa ja fornece o ritmo vertical, entao os widgets que carregavam ritmo
    proprio deixam de duplicar. */
 .pro-sales-section > .pro-sales-hero,
@@ -229,7 +238,7 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-.pro-sales-plan--split {
+.pro-sales-plan.pro-sales-plan--split {
   align-items: stretch;
   display: grid;
   gap: 0;
@@ -250,6 +259,7 @@
 .pro-sales-plan__panel--content {
   align-content: start;
   background: var(--pen-color-proenem-red, #bb0922);
+  border-inline-end: var(--pen-border-brand, 2px solid #1a1a1a);
   color: var(--pen-color-on-red, #ffffff);
   justify-items: start;
 }
@@ -269,23 +279,28 @@
   gap: 0.75rem;
 }
 
+/* O quadrado sem glifo lia como caixa vazia, ou seja o oposto de item
+   incluido. O check e o que comunica a inclusao. */
 .pro-sales-plan__panel--content li::before {
   align-items: center;
   background: var(--pen-color-yellow-brand, #f9c200);
   border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
   border-radius: var(--pen-radius-sm, 0.25rem);
   color: var(--pen-color-ink, #1a1a1a);
+  content: "\2713";
   display: inline-flex;
   font-size: 0.85rem;
+  font-weight: 900;
   height: 1.4rem;
   justify-content: center;
+  line-height: 1;
+  margin-top: 0;
   width: 1.4rem;
 }
 
 .pro-sales-plan__panel--offer {
   align-content: center;
   background: var(--pen-color-canvas-white, #ffffff);
-  border-inline-start: var(--pen-border-brand-sm, 2px solid #1a1a1a);
   color: var(--pen-color-ink, #1a1a1a);
   justify-items: start;
 }
@@ -311,13 +326,15 @@
 }
 
 @media (max-width: 860px) {
-  .pro-sales-plan--split {
+  /* Precisa casar a especificidade da regra base, que se qualifica com
+     .pro-sales-plan para vencer o gap herdado do card de plano. */
+  .pro-sales-plan.pro-sales-plan--split {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .pro-sales-plan__panel--offer {
-    border-block-start: var(--pen-border-brand-sm, 2px solid #1a1a1a);
-    border-inline-start: 0;
+  .pro-sales-plan__panel--content {
+    border-block-end: var(--pen-border-brand, 2px solid #1a1a1a);
+    border-inline-end: 0;
   }
 }
 
@@ -4486,12 +4503,16 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   text-align: center;
 }
 
+/* O fundo era o literal #e23a3a, que nao e token da marca e da 4.29 de
+   contraste com texto branco, abaixo de AA. A ilustracao de espiral em ::before
+   impedia o axe de avaliar o rodape, entao 151 violacoes ficaram invisiveis por
+   meses. Passa a usar o par publicado, que da 6.61. */
 .pro-home .pen-site-footer,
 .pen-site-footer {
-  background: #e23a3a;
-  border: var(--pen-border-brand-sm);
+  background: var(--pen-color-proenem-red, #bb0922);
+  border: var(--pen-border-brand);
   border-bottom: 0;
-  color: var(--pen-color-surface);
+  color: var(--pen-color-on-red, #ffffff);
   display: grid;
   gap: clamp(2.8rem, 5vw, 4.5rem);
   grid-template-columns: minmax(13rem, 0.35fr) minmax(0, 1fr);
@@ -4500,15 +4521,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   position: relative;
 }
 
-.pen-site-footer::before {
-  background:
-    radial-gradient(circle at 1.45rem 0, #fff1f1 0 1rem, var(--pen-color-ink) 1.03rem 1.12rem, transparent 1.15rem) 0 0 / 3rem 2rem repeat-x;
-  content: "";
-  height: 2rem;
-  inset: -0.08rem 0 auto;
-  pointer-events: none;
-  position: absolute;
-}
+/* A ilustracao de espiral de caderno saiu daqui. A borda reta do rodape ja
+   existia na regra de composicao dele, mais abaixo, e agora fica visivel. */
 
 .pro-home .pen-site-footer__content,
 .pen-site-footer__content {
@@ -4550,7 +4564,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-site-footer__title span,
 .pen-site-footer__title span {
-  color: rgb(255 255 255 / 0.58);
+  color: rgb(255 255 255 / 0.86);
 }
 
 .pro-home .pen-site-footer__title strong,
@@ -4561,7 +4575,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-site-footer__body,
 .pen-site-footer__body {
-  color: rgb(255 255 255 / 0.72);
+  color: rgb(255 255 255 / 0.86);
   font-size: clamp(0.94rem, 1.12vw, 1.05rem);
   line-height: 1.45;
   margin: clamp(1.25rem, 2vw, 1.7rem) 0 0;
@@ -4804,7 +4818,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pen-site-footer__company-info {
-  color: rgb(255 255 255 / 0.72);
+  color: rgb(255 255 255 / 0.86);
   font-size: 0.8rem;
   font-weight: 500;
 }

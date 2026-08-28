@@ -346,7 +346,7 @@ class Proenem_Elementor_Lp_Offer_Highlight_Widget extends Proenem_Elementor_Lp_W
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], $this->button_classes( $settings, 'button_accent' ) ); ?>
 					</article>
 				</div>
 			</section>
@@ -432,6 +432,7 @@ class Proenem_Elementor_Lp_Spotlight_Widget extends Proenem_Elementor_Lp_Widget_
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$this->add_button_accent_control( 'button_accent' );
 		$this->add_control(
 			'image',
 			array(
@@ -498,7 +499,7 @@ class Proenem_Elementor_Lp_Spotlight_Widget extends Proenem_Elementor_Lp_Widget_
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], $this->button_classes( $settings, 'button_accent' ) ); ?>
 					</div>
 				<?php if ( $image_url ) : ?>
 						<figure class="pro-lp-spotlight__media">
@@ -581,6 +582,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$this->add_button_accent_control( 'button_accent' );
 
 		$this->end_controls_section();
 
@@ -600,7 +602,7 @@ class Proenem_Elementor_Lp_Video_Story_Widget extends Proenem_Elementor_Lp_Widge
 				<div <?php $this->print_render_attribute_string( 'section_inner' ); ?>>
 					<div class="pro-lp-video-story__content">
 					<?php $this->render_section_header( $settings, array( 'title_class' => 'pro-lp-video-story__title' ) ); ?>
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--primary' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], $this->button_classes( $settings, 'button_accent' ) ); ?>
 					</div>
 				<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-lp-video-story__stage' ); ?>
 				</div>
@@ -715,6 +717,7 @@ class Proenem_Elementor_Lp_Testimonials_Widget extends Proenem_Elementor_Lp_Widg
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$this->add_button_accent_control( 'button_accent' );
 
 		$this->end_controls_section();
 
@@ -751,7 +754,7 @@ class Proenem_Elementor_Lp_Testimonials_Widget extends Proenem_Elementor_Lp_Widg
 							</li>
 						<?php endforeach; ?>
 					</ul>
-				<?php $this->render_link( 'more_url', $settings['more_url'] ?? array(), $settings['more_label'] ?? '', 'pen-button pen-button--primary' ); ?>
+				<?php $this->render_link( 'more_url', $settings['more_url'] ?? array(), $settings['more_label'] ?? '', $this->button_classes( $settings, 'button_accent' ) ); ?>
 				</div>
 			</section>
 			<?php

@@ -304,6 +304,19 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			)
 		);
 		$target->add_control(
+			'button_accent',
+			array(
+				'label'       => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => array_merge(
+					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
+					wp_list_pluck( proenem_get_brand_accents(), 'label' )
+				),
+				'description' => esc_html__( 'A cor do texto acompanha a escolha automaticamente.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$target->add_control(
 			'trust_items',
 			array(
 				'label'       => esc_html__( 'Selos de confiança', 'proenem-wordpress-theme' ),
@@ -398,7 +411,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 					<?php endforeach; ?>
 				</ul>
 			<?php endif; ?>
-			<?php $this->render_link( $link_key, $plan['button_url'] ?? array(), $plan['button_label'] ?? '', 'pen-button pen-button--primary' ); ?>
+			<?php $this->render_link( $link_key, $plan['button_url'] ?? array(), $plan['button_label'] ?? '', $this->button_classes( $plan, 'button_accent' ) ); ?>
 			<?php if ( $trust_items ) : ?>
 				<ul class="pro-sales-plan__trust">
 					<?php foreach ( $trust_items as $trust_item ) : ?>
@@ -459,6 +472,72 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'condition'   => $args['condition'],
 			)
 		);
+	}
+
+	/**
+	 * Register a closed list of colors for a call to action.
+	 *
+	 * `default` keeps the published primary pairing. Any other option applies
+	 * surface and content together, so the button text follows the chosen color
+	 * instead of being picked by hand.
+	 *
+	 * @param string $name Control name.
+	 * @param array  $args {
+	 *     Optional.
+	 *
+	 *     @type string $label     Control label.
+	 *     @type array  $condition Elementor condition.
+	 * }
+	 * @return void
+	 */
+	protected function add_button_accent_control( $name, array $args = array() ) {
+		$args = wp_parse_args(
+			$args,
+			array(
+				'label'     => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
+				'condition' => array(),
+			)
+		);
+
+		$options = array(
+			'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ),
+		);
+
+		foreach ( proenem_get_brand_accents() as $key => $accent ) {
+			$options[ $key ] = $accent['label'];
+		}
+
+		$this->add_control(
+			$name,
+			array(
+				'label'       => $args['label'],
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => $options,
+				'description' => esc_html__( 'A cor do texto acompanha a escolha automaticamente, então nenhuma combinação perde legibilidade.', 'proenem-wordpress-theme' ),
+				'condition'   => $args['condition'],
+			)
+		);
+	}
+
+	/**
+	 * Get the class string of a call to action button.
+	 *
+	 * @param array  $settings Settings holding the control value.
+	 * @param string $name Control name.
+	 * @param string $extra Extra classes.
+	 * @return string
+	 */
+	protected function button_classes( $settings, $name, $extra = '' ) {
+		$accents = proenem_get_brand_accents();
+		$key     = isset( $settings[ $name ] ) ? (string) $settings[ $name ] : 'default';
+		$classes = 'pen-button';
+
+		$classes .= isset( $accents[ $key ] )
+			? ' ' . $this->accent_class( $settings, $name )
+			: ' pen-button--primary';
+
+		return trim( $classes . ' ' . $extra );
 	}
 
 	/**
@@ -739,7 +818,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'title_tag'     => 'h2',
 				'title_class'   => 'pro-sales-section-title',
 				'body_tag'      => 'p',
-				'body_class'    => '',
+				'body_class'    => 'pro-sales-section-body',
 				'body_html'     => false,
 			)
 		);
@@ -1162,6 +1241,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$this->add_button_accent_control( 'button_accent' );
 		$this->add_control(
 			'microcopy',
 			array(
@@ -1296,7 +1376,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 					?>
 						<div class="pro-sales-actions">
 						<?php
-						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], 'pen-button pen-button--primary' );
+						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], $this->button_classes( $settings, 'button_accent' ) );
 						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
 						?>
 						</div>
@@ -2245,6 +2325,18 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$plan_repeater->add_control(
+			'button_accent',
+			array(
+				'label'   => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => 'default',
+				'options' => array_merge(
+					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
+					wp_list_pluck( proenem_get_brand_accents(), 'label' )
+				),
+			)
+		);
 
 		$this->add_control(
 			'plans',
@@ -2453,7 +2545,7 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 												'comparison_button_' . $plan_index,
 												$plan['button_url'] ?? array(),
 												$plan['button_label'] ?? '',
-												'pen-button pen-button--primary'
+												$this->button_classes( $plan, 'button_accent' )
 											);
 											?>
 											</div>
@@ -2563,6 +2655,7 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
+		$this->add_button_accent_control( 'button_accent' );
 		$this->add_control(
 			'microcopy',
 			array(
@@ -2601,7 +2694,7 @@ class Proenem_Elementor_Cta_Widget extends Proenem_Elementor_Sales_Widget_Base {
 					?>
 					</div>
 					<div class="pro-sales-cta__action">
-					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], 'pen-button pen-button--secondary pen-button--lg' ); ?>
+					<?php $this->render_link( 'button_url', $settings['button_url'], $settings['button_label'], $this->button_classes( $settings, 'button_accent', 'pen-button--lg' ) ); ?>
 					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
 							<p class="pro-sales-cta__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>

@@ -152,6 +152,10 @@ Valores de `tone`:
 
 Faixa nao tem borda nem canto arredondado. Borda e raio faziam a secao ler como card emoldurado.
 
+### Escala do subtitulo de secao
+
+O corpo do cabecalho de secao saia sem classe, no tamanho de corpo padrao de 16 px, praticamente igual ao texto dentro dos cards, de 15,2 px. Passa a usar `pro-sales-section-body`, com `clamp(1.05rem, 2vw, 1.25rem)`, a mesma escala do corpo do hero: 20 px no desktop e 16,8 px em 390 px.
+
 ### Ritmo vertical
 
 A faixa e dona do ritmo vertical, sempre, e nao apenas quando tem tom. Sao `clamp(2.5rem, 6vw, 4.5rem)` acima e abaixo, o que da 144 px de respiro entre secoes em 1280 px e 80 px em 390 px.
@@ -299,6 +303,14 @@ Escopo congelado significa que o grupo de faixa de texto nao recebe controle nov
 ### Por que o grupo de oferta convergiu
 
 `pro_lp_offer_highlight` nasceu na Fase 2, antes de `pro_pricing_card` receber parcelamento, preco a vista e selos na Fase 3. Quando o card de plano ganhou esses campos, passou a cobrir o caso do destaque de oferta. A ordem inversa das fases teria evitado o widget novo. Registro aqui para que a proxima adicao de widget verifique primeiro se um widget existente esta a um controle de distancia do caso.
+
+### Cor do botao de chamada
+
+`add_button_accent_control()` e `button_classes()` dao a mesma lista fechada de cores aos botoes, com a opcao `Padrao da marca` mantendo o par publicado do `pen-button--primary`. Qualquer outra opcao aplica superficie e conteudo juntos, entao a cor do texto acompanha a escolha e nenhuma combinacao perde legibilidade.
+
+Disponivel em `pro_offer_hero`, `pro_cta`, `pro_lp_spotlight`, `pro_lp_video_story`, `pro_lp_testimonials` e, por plano, em `pro_pricing_grid` e `pro_plans_comparison`.
+
+Contraste medido com quatro escolhas na mesma pagina: amarelo 10.56, tinta 17.40, verde 9.23 e o padrao da marca 4.61.
 
 ### Cor de destaque: lista fechada com par de cores
 
