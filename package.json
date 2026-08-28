@@ -22,7 +22,7 @@
     "perf:audit": "npm run perf:pagespeed",
     "test:static": "npm run build && npm run i18n:check && npm run lint:php:syntax && npm run lint:php && npm run theme:check",
     "test:php": "npx wp-env run tests-cli bash -lc 'wp --path=/var/www/html theme activate proenem-wordpress-theme && cd /var/www/html/wp-content/themes/proenem-wordpress-theme && vendor/bin/phpunit --configuration phpunit.xml.dist'",
-    "test:e2e": "npx wp-env run cli wp theme activate proenem-wordpress-theme && npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/tests/e2e/setup-content-page.php && playwright test",
+    "test:e2e": "npx wp-env run cli wp theme activate proenem-wordpress-theme && npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/tests/e2e/setup-content-page.php && npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/seed-lp-homologation.php && playwright test",
     "test": "npm run test:static && npm run test:php && npm run test:e2e",
     "theme:check": "npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/run-theme-check.php",
     "theme:zip": "npm run build && node scripts/build-theme-zip.mjs",

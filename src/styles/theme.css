@@ -784,13 +784,17 @@
   width: 100%;
 }
 
-.pro-sales-countdown {
+/* O contador e o unico widget de secao que pinta a propria superficie, entao
+   precisa vencer a regra de color: inherit das faixas com tom: sem a
+   especificidade do seletor filho, o corpo herdava ink sobre o vermelho e caia
+   para 3.58 de contraste. O par vem publicado. */
+.pro-sales-section > .pro-sales-countdown {
   align-items: center;
-  background: var(--pen-color-red, #e3062c);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
+  background: var(--pen-color-proenem-red, #bb0922);
+  border: var(--pen-border-brand, 2px solid #1a1a1a);
   border-radius: var(--pen-radius-lg, 0.75rem);
-  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
-  color: var(--pen-color-canvas-white, #ffffff);
+  box-shadow: var(--pen-shadow-hard-md, 4px 4px 0 #1a1a1a);
+  color: var(--pen-color-on-red, #ffffff);
   display: flex;
   gap: var(--pen-space-6, 1.5rem);
   justify-content: space-between;

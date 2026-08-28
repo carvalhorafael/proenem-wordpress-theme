@@ -418,9 +418,30 @@ Os kits trazem a estrutura e a copy de referencia, mas tres coisas ficam em bran
 
 As imagens dos spotlights apontam para assets do proprio tema por caminho relativo a raiz, entao funcionam em qualquer dominio onde o tema esteja instalado.
 
+### Verificacao dos widgets da home
+
+`scripts/seed-home-widgets-check.php` cria uma pagina renderizando os 13 widgets `pro_home_*` de uma vez. Ela existe porque a home e renderizada por `page-templates/home.php`, e nao pelos widgets, entao o caminho dos widgets nao tem outra cobertura.
+
+```bash
+npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/seed-home-widgets-check.php
+```
+
+Foi usada para fechar a lacuna aberta na Fase 1: dos 13 widgets, apenas tres haviam sido renderizados desde a mudanca dos ids de heading. Os 13 renderizam com id unico derivado do id do widget, sem id duplicado, sem `aria-labelledby` orfao, com um unico `h1` e sem overflow horizontal.
+
 ### Protecao automatizada
 
 `tests/php/ThemeSetupTest.php` verifica que os kits referenciam apenas widgets declarados pelo tema, que nao usam widget obsoleto e que nao usam widget exclusivo da home. Um kit que nomeia widget inexistente importaria como secao vazia, e esse e o defeito que o teste evita.
+
+`tests/e2e/sales-page.spec.js` cobre, em navegador, os contratos que so aparecem no resultado renderizado:
+
+- as faixas ocupam a largura da janela e a pagina nao tem overflow horizontal;
+- toda faixa tem ritmo vertical proprio, e faixas vizinhas no documento ficam contiguas, sem costura de canvas;
+- um unico `h1`, nenhum id duplicado e nenhum `aria-labelledby` orfao;
+- todo componente dentro de faixa de marca mantem contraste acima de AA, medido contra a propria superficie;
+- a fachada de video nao contata o provedor antes do clique, e contata depois;
+- nenhuma violacao critica ou seria de acessibilidade pelo axe.
+
+O teste pula em vez de falhar quando o CPT `sales_page` nao esta disponivel, porque o `wp-env` base do CI nao monta os plugins de conteudo.
 
 ### Pagina de homologacao
 

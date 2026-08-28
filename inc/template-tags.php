@@ -1768,11 +1768,11 @@ function proenem_render_testimonial_card( $post_id, $selected_slugs = array(), $
 						data-embed-url="<?php echo esc_url( $embed_url ); ?>"
 						aria-label="<?php echo esc_attr( sprintf( /* translators: %s: Student name. */ __( 'Reproduzir vídeo de %s', 'proenem-wordpress-theme' ), $student_name ) ); ?>"
 					>
-						<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="">
+						<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="" loading="lazy" decoding="async">
 						<span aria-hidden="true"></span>
 					</button>
 				<?php else : ?>
-					<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $thumbnail_alt ); ?>">
+					<img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( $thumbnail_alt ); ?>" loading="lazy" decoding="async">
 				<?php endif; ?>
 				<?php if ( $course || $approval_label ) : ?>
 					<span class="pro-testimonial-card__result">
