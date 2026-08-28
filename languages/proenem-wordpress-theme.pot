@@ -368,7 +368,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:492
 #: inc/class-proenem-elementor-lp-widget-base.php:439
-#: inc/class-proenem-elementor-sales-widget-base.php:773
+#: inc/class-proenem-elementor-sales-widget-base.php:760
 #: inc/class-proenem-elementor-sales-widget-base.php:1299
 #: inc/class-proenem-elementor-sales-widget-base.php:1309
 msgid "Imagem"
@@ -1810,11 +1810,11 @@ msgstr ""
 msgid "Identificador para links internos, como oferta. Sem o caractere #."
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:765
+#: inc/class-proenem-elementor-sales-widget-base.php:752
 msgid "Transparente"
 msgstr ""
 
-#: inc/class-proenem-elementor-sales-widget-base.php:766
+#: inc/class-proenem-elementor-sales-widget-base.php:753
 msgid "Superfície"
 msgstr ""
 

@@ -738,19 +738,6 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	}
 
 	/**
-	 * Register the shared attributes of a widget section wrapper.
-	 *
-	 * The outer element is the band: it spans the full width and owns the
-	 * background. The `<key>_inner` element carries the layout classes the
-	 * widget already used and keeps the content width.
-	 *
-	 * @param array  $settings Widget settings.
-	 * @param string $class_name Widget specific section class.
-	 * @param bool   $has_title Whether the section renders its own heading.
-	 * @param string $key Render attribute key.
-	 * @return string
-	 */
-	/**
 	 * Get the closed list of section backgrounds.
 	 *
 	 * As cores saem de proenem_get_brand_accents(), a mesma lista fechada dos
@@ -784,6 +771,19 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		return function_exists( 'proenem_get_brand_accents' ) ? proenem_get_brand_accents() : array();
 	}
 
+	/**
+	 * Register the shared attributes of a widget section wrapper.
+	 *
+	 * The outer element is the band: it spans the full width and owns the
+	 * background. The `<key>_inner` element carries the layout classes the
+	 * widget already used and keeps the content width.
+	 *
+	 * @param array  $settings Widget settings.
+	 * @param string $class_name Widget specific section class.
+	 * @param bool   $has_title Whether the section renders its own heading.
+	 * @param string $key Render attribute key.
+	 * @return string
+	 */
 	protected function add_section_render_attributes( $settings, $class_name, $has_title = true, $key = 'section' ) {
 		$this->add_render_attribute( $key, 'class', 'pro-sales-section' );
 		$this->add_render_attribute( $key . '_inner', 'class', array( 'pro-sales-widget', 'pro-sales-section__inner', $class_name ) );
@@ -801,9 +801,9 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			$this->add_render_attribute( $key, 'class', 'pro-sales-section--tone-' . sanitize_html_class( $tone ) );
 		}
 
-		/* Faixa que pinta uma cor da marca. O marcador e o que as regras de
-		   dentro da faixa usam para achar o par de cores, em vez de cada uma
-		   listar os tons um por um. */
+		// Faixa que pinta uma cor da marca. O marcador e o que as regras de
+		// dentro da faixa usam para achar o par de cores, em vez de cada uma
+		// listar os tons um por um.
 		if ( isset( self::get_section_tone_accents()[ $tone ] ) ) {
 			$this->add_render_attribute( $key, 'class', 'pro-sales-section--colored' );
 		}
