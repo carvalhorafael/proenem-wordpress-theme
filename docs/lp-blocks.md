@@ -518,3 +518,14 @@ Permanecem registrados e validos; apenas nao entram na paridade das duas LPs ana
 Nao recebem generalizacao retroativa e nao devem ser usados em LP.
 
 `pro_home_hero`, `pro_home_action_bar`, `pro_home_pain`, `pro_home_questions`, `pro_home_pricing`, `pro_home_schools`, `pro_home_final_cta`.
+
+## Protecao automatizada da faixa cheia
+
+O contrato de faixa cheia vale para todo widget que se declara secao, marcado
+com `.pro-section-host`, e nao apenas para os widgets de venda. Cobertura:
+
+- `section hosts span the full width on the page of widgets de venda`
+- `section hosts span the full width on the page of widgets de home`
+
+Os dois medem `left` e largura de cada `.pro-section-host` e recusam overflow
+horizontal. O `test:e2e` semeia as duas paginas de fixture antes de rodar.

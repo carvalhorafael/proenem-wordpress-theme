@@ -712,8 +712,14 @@
 /* Sales pages compose full width bands. Elementor containers default to a
    boxed content width, which would keep every band inset, so the gutter is
    released for the containers that host a Proenem section widget.
-   Scoped to the sales_page CPT and to those containers only. */
-.single-sales_page .e-con:has(> .e-con-inner > .pro-section-host) {
+   Scoped to the sales_page CPT and to those containers only.
+   Sao duas formas de container: a caixa, que embrulha o conteudo em
+   `.e-con-inner`, e a de largura total, que assenta o widget direto no
+   `.e-con` e ainda assim mantem o padding padrao de 10 px do Elementor. A
+   segunda precisa estar aqui, senao a faixa depende de quem montou a pagina
+   ter zerado o padding na mao. */
+.single-sales_page .e-con:has(> .e-con-inner > .pro-section-host),
+.single-sales_page .e-con:has(> .pro-section-host) {
   padding-block: 0;
   padding-inline: 0;
 }

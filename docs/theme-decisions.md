@@ -471,3 +471,12 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Consequencia: o rodape do site inteiro fica com o vermelho da marca, mais escuro que o anterior. E uma mudanca visivel na home, que ja esta homologada, aceita em troca de sair de uma violacao de AA e de um literal fora do design system.
 - Licao: decoracao que cobre uma faixa inteira pode esconder a faixa da auditoria automatica. Vale desconfiar de secao sem nenhuma violacao acusada quando ela tem sobreposicao desenhada por pseudo-elemento.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Faixa cheia cobre as duas formas de container do Elementor
+
+- Contexto: na homologacao dos widgets da home apareceram duas listras brancas verticais nas laterais. Medido: os 13 widgets ficavam em `left=10` e `width=1260` numa janela de 1280.
+- Achado: o container do Elementor tem duas formas. A caixa embrulha o conteudo em `.e-con-inner`; a de largura total (`content_width: full`) assenta o widget direto no `.e-con` e ainda assim mantem o padding padrao de 10 px. A regra do tema so cobria a primeira, entao a segunda dependia de quem montou a pagina ter zerado o padding na mao. Os kits de LP zeram no JSON, por isso o defeito nao aparecia neles.
+- Decisao: a regra passa a cobrir tambem `\.e-con:has(> .pro-section-host)`. Widget que se declara faixa de secao ocupa a largura total em qualquer das duas formas, sem depender de configuracao de quem monta a pagina.
+- Fronteira: segue restrita ao CPT `sales_page` e aos containers que hospedam widget de secao. Container sem widget de secao mantem a goteira do Elementor.
+- Verificado: as quatro paginas de homologacao com todas as faixas em `left=0` e largura igual a janela, sem overflow horizontal. O teste novo, com a regra removida, falha com `left=10`, entao cobre a regressao de verdade.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

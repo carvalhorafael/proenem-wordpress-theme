@@ -35,6 +35,52 @@ const contrastRatio = (foreground, background) => {
   return (lighter + 0.05) / (darker + 0.05);
 };
 
+const HOME_WIDGETS_PAGE = "/lp/checagem-widgets-home/";
+
+/**
+ * Todo widget que se declara faixa de secao ganha `.pro-section-host`, e o tema
+ * solta a goteira do container do Elementor para ele. Sao duas formas de
+ * container, caixa e largura total, e por um tempo so a caixa estava coberta:
+ * a de largura total mantinha o padding de 10 px do Elementor e deixava duas
+ * listras brancas nas laterais. Este teste cobre as duas formas.
+ */
+for (const [nome, url] of [
+  ["widgets de venda", SALES_PAGE],
+  ["widgets de home", HOME_WIDGETS_PAGE],
+]) {
+  test(`section hosts span the full width on the page of ${nome}`, async ({ page }) => {
+    const response = await page.goto(url);
+
+    test.skip(
+      !response || response.status() !== 200,
+      "A pagina de fixture nao esta disponivel neste ambiente.",
+    );
+
+    const hosts = await page.evaluate(() =>
+      [...document.querySelectorAll(".pro-section-host")].map((host) => {
+        const rect = host.getBoundingClientRect();
+
+        return { left: Math.round(rect.left), width: Math.round(rect.width) };
+      }),
+    );
+
+    expect(hosts.length).toBeGreaterThan(0);
+
+    const viewport = page.viewportSize();
+
+    for (const host of hosts) {
+      expect(host.left).toBe(0);
+      expect(host.width).toBe(viewport.width);
+    }
+
+    const overflows = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth,
+    );
+
+    expect(overflows).toBe(false);
+  });
+}
+
 test("sales page bands span the full width of the viewport", async ({ page }) => {
   await gotoSalesPage(page);
 
