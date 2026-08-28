@@ -75,6 +75,27 @@ Para regenerar imagens otimizadas do tema:
 npm run images:optimize
 ```
 
+## Paleta da marca no Elementor
+
+As cores globais do kit do Elementor não vêm configuradas por padrão. Para gravar a paleta publicada da Proenem no kit ativo:
+
+```bash
+npx wp-env run cli wp eval-file /var/www/html/wp-content/themes/proenem-wordpress-theme/scripts/sync-elementor-brand-palette.php
+```
+
+O script é idempotente e limpa o cache de CSS do Elementor no final.
+
+## Armadilhas do ambiente local
+
+Os plugins vêm montados do host a partir de `.wp-env.override.json`, e não instalados no WordPress. Por isso:
+
+- **não instale, atualize nem remova plugins pelo wp-admin.** A operação falha com `The destination directory already exists and could not be removed`, porque o diretório é um ponto de montagem, e pode deixar o plugin sem arquivos;
+- para trocar a versão de um plugin, edite `.wp-env.override.json` e rode `npx wp-env start --update`;
+- se um diretório de plugin ficar vazio, pare o ambiente, remova o diretório de origem em `~/.wp-env/<hash>/` e suba com `npx wp-env start --update`;
+- depois de recriar os contêineres, rode `wp rewrite flush --hard` se as URLs de CPT retornarem 404.
+
+O Elementor guarda markup renderizado, CSS gerado e mapa de assets em post meta (`_elementor_element_cache`, `_elementor_css`, `_elementor_page_assets`). Ao alterar conteúdo de uma página por script, apague essas chaves ou a página continua servindo o resultado antigo.
+
 ## Internacionalização
 
 Use sempre o text domain `proenem-wordpress-theme`.

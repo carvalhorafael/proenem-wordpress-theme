@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.20.1
+Stable tag: 0.21.0
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,15 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.21.0 =
+* Cria a biblioteca de widgets de LP: metricas, spotlight, depoimento em video e depoimentos.
+* Faz as secoes de LP ocuparem a largura total e ficarem contiguas entre si.
+* Abre o fundo de secao para as nove cores da marca, cada uma com par de cor garantido.
+* Permite escolher a cor do botao de chamada na mesma lista fechada.
+* Publica dois template kits de LP e o importador.
+* Isola os widgets da home em categoria propria, com "Home" no nome.
+* Corrige o contraste do rodape, que estava abaixo de AA e fora da paleta.
 
 = 0.8.2 =
 * Adiciona variantes responsivas e WebP para imagens da home.

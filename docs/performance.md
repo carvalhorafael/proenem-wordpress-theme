@@ -177,3 +177,40 @@ env = { GOOGLE_API_KEY = "sua-chave-aqui", NODE_ENV = "production" }
 ```
 
 O MCP e opcional. O script `perf:pagespeed` existe para que a auditoria basica continue disponivel mesmo sem o MCP instalado.
+
+## Baseline das paginas de venda, 2026-08-26
+
+Coletado com `npm run perf:lighthouse` em `localhost:8898`, tres execucoes por URL, emulacao mobile de 390 px. Valores medianos.
+
+`npm run perf:pagespeed` **nao foi executado**: as LPs montadas pelos template kits nao tem URL publica ainda. Quando houver staging, a medicao em URL publica e obrigatoria antes de tratar qualquer numero como definitivo, porque Lighthouse local e PageSpeed publico divergem em valores absolutos.
+
+| URL | Performance | Acessibilidade | Boas praticas | SEO | LCP |
+| --- | --- | --- | --- | --- | --- |
+| `/` | 98 | 100 | 96 | 92 | 2,41 s |
+| `/lp/kit-oferta-completa/` | 91 | 100 | 100 | 92 | 3,15 s |
+
+A LP e mais pesada que a home porque tem mais secoes e mais imagens. CLS zero e TBT zero nas duas.
+
+### Correcao aplicada nesta auditoria
+
+As fotos dos cards de depoimento nao tinham carregamento tardio. Como esses cards ficam sempre abaixo da dobra, tanto em grade quanto em carrossel, receberam `loading="lazy"` e `decoding="async"`.
+
+Efeito medido na LP: performance de 87 para 91, LCP de 3,68 s para 3,15 s, boas praticas de 96 para 100 e a economia possivel com imagens fora da tela caindo de 111 KB para 31 KB. Home sem alteracao.
+
+### Achados classificados
+
+| Achado | Peso | Classificacao | Encaminhamento |
+| --- | --- | --- | --- |
+| Google Fonts bloqueando renderizacao, Roboto e Roboto Slab | 1.016 ms | `plugin` | carregamento padrao do Elementor, desativavel nas configuracoes dele; nao e do tema |
+| jQuery e jquery-migrate bloqueando renderizacao | 1.808 ms | `plugin` | enfileirados pelo Elementor; arquivos do core |
+| JavaScript nao minificado, jQuery, jQuery UI e Elementor | 70 KB | `hosting` | o ambiente local serve as versoes de desenvolvimento; em producao o WordPress serve os `.min.js` |
+| JavaScript nao usado, jQuery | 45 KB | `plugin` | idem |
+| Folha de estilo do tema bloqueando renderizacao | 1.204 ms, 37 KB | `theme` | bundle unico para o site inteiro, tratado em `#202` |
+| CSS nao usado do tema | 32 KB | `theme` | idem, `#202` |
+| Imagens fora da tela | 31 KB restantes | `content` | fotos vindas da biblioteca de midia; o que era do tema foi corrigido acima |
+
+Nada dos itens de `plugin` e `hosting` deve virar workaround no tema.
+
+### Nota sobre o ambiente local
+
+O banco local tem sete anexos `proof-students` e tres fotos de depoimento cujos arquivos nao existem em `wp-content/uploads`, o que produz 404 nas paginas que renderizam prova social e depoimentos. E lacuna de dados do ambiente, nao defeito de codigo: o markup e gerado corretamente e as mesmas paginas funcionam onde a biblioteca de midia esta completa.
