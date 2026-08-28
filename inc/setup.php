@@ -133,6 +133,10 @@ function proenem_body_classes( $classes ) {
 		$classes[] = 'proenem-testimonials-template';
 	}
 
+	if ( is_singular( 'sales_page' ) ) {
+		$classes[] = 'proenem-sales-page-template';
+	}
+
 	return $classes;
 }
 add_filter( 'body_class', 'proenem_body_classes' );

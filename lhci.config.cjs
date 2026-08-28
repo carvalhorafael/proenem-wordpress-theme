@@ -1,7 +1,10 @@
 module.exports = {
   ci: {
     collect: {
-      url: ["http://localhost:8898/"],
+      url: [
+        "http://localhost:8898/",
+        "http://localhost:8898/lp/kit-oferta-completa/",
+      ],
       numberOfRuns: 3,
       settings: {
         onlyCategories: ["performance", "accessibility", "best-practices", "seo"],

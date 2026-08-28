@@ -218,3 +218,297 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Decisao: ate 760 px, complementar esses elementos com area minima de 44x44 CSS px, preservando textos, cores, foco visivel e geometria desktop.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#185`; design system `carvalhorafael/proenem-design-system-brand-guide#40`.
 - Criterio de remocao: atualizar os pacotes para a versao que publicar o contrato compartilhado, remover os seletores locais e revalidar os alvos em 320 e 390 px.
+
+## 2026-08-26: Inventario das LPs de campanha como contrato de trabalho
+
+- Contexto: as LPs de campanha em producao (`intensiva.proenem.com.br` e `intensiva.proenem.com.br/redacao`) sao uma aplicacao React/Next fora do tema, com tokens Tailwind proprios, enquanto a LP equivalente no WordPress (`/lp/intenisva/`, CPT `sales_page`) usa apenas seis widgets e cobre uma fracao das secoes.
+- Decisao: versionar o inventario das secoes em `docs/lp-blocks.md` e tratar esse arquivo como contrato de trabalho das fases de evolucao dos widgets de LP, antes de criar ou alterar qualquer widget.
+- Fronteira: o inventario descreve secoes e gaps; ele nao define copy definitiva de campanha nem substitui especificacao de marketing.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191` como issue pai e `#193` para esta etapa.
+
+## 2026-08-26: LPs traduzidas para a linguagem visual publicada da Proenem
+
+- Contexto: reproduzir a aparencia da aplicacao de campanha exigiria importar tokens Tailwind que nao existem nos pacotes publicados do design system, criando adaptacao local ampla e permanente no tema.
+- Decisao: traduzir as secoes das LPs de campanha para a linguagem visual publicada da Proenem, consumindo os contratos `pen-*` e o que o site ja usa hoje, em vez de replicar os tokens da aplicacao de campanha.
+- Consequencia: a LP no WordPress pode divergir visualmente da LP de campanha atual. A paridade exigida e de secoes, hierarquia de conversao e conteudo, nao de pixel.
+- Fronteira: quando um contrato necessario nao existir nos pacotes publicados, o tema pode criar adaptacao local temporaria, sempre com o par de issues obrigatorio de design system e de debito no tema.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191` e `#198`.
+
+## 2026-08-26: Namespace `pro_lp_*` separado dos widgets da home
+
+- Contexto: os widgets `pro_home_*` carregam a copy da home fatiada nos controles (`title_line_1`, `title_emphasis_2`, `statement_1`) e emitem IDs de heading fixos como `pro-home-title` e `pro-final-title`. Duas instancias na mesma pagina produzem ID duplicado. A LP `/lp/intenisva/` ja reusa `pro_home_marquee` e `pro_home_faq` fora da home.
+- Decisao: os widgets genericos de pagina de venda usam o prefixo tecnico `pro_lp_` e categoria propria no editor; os widgets `pro_home_*` permanecem como widgets exclusivos da home e nao recebem generalizacao retroativa.
+- Complemento: os IDs de heading passam a ser derivados do ID do widget Elementor, e o cabecalho de secao (`eyebrow`, `title`, `body`, `tone`, `anchor_id`) vira contrato compartilhado no base class de vendas.
+- Fronteira: nenhuma LP existente deve quebrar; os widgets `pro_home_*` continuam registrados e funcionais onde ja estao em uso.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Contrato compartilhado de secao nos widgets de venda
+
+- Contexto: cada widget de venda resolvia selo, titulo, texto e fundo do seu jeito, e os widgets da home emitiam ids de heading fixos, o que produzia id duplicado quando dois widgets iam para a mesma pagina.
+- Decisao: centralizar em `Proenem_Elementor_Sales_Widget_Base` o contrato de secao com `eyebrow`, `title`, `body`, `tone` e `anchor_id`, alem dos helpers de id de heading e de ancora derivados do id do widget Elementor.
+- Aplicacao: os widgets existentes passam a consumir o contrato mantendo as proprias classes de layout, para nao mudar o resultado visual atual.
+- Tone: `default` nao emite classe, `surface` usa `--pen-color-surface` e `brand` usa `--pen-color-proenem-red` com `--pen-color-on-red`. Apenas tokens publicados.
+- Fronteira: `tone` pinta faixa contida na largura maxima do widget. Faixa de sangria total continua decisao da camada de pagina.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Ancora dos widgets da home vira controle editavel
+
+- Contexto: `pro_home_pillars`, `pro_home_questions`, `pro_home_pricing`, `pro_home_faq` e `pro_home_testimonials` emitiam ancora fixa (`metodo`, `questoes`, `planos`, `faq`, `depoimentos`). Essas ancoras sao destinos de CTA, mas duas instancias na mesma pagina produziam id duplicado.
+- Decisao: expor a ancora no controle `anchor_id`, com o valor publicado atual como default.
+- Consequencia: uma instancia por pagina mantem exatamente o comportamento anterior; duas instancias podem receber ancoras diferentes pelo editor.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Categoria e base propria para widgets de LP
+
+- Contexto: os widgets `pro_home_*` carregam a copy da home na estrutura dos controles e nao servem como base generica de pagina de venda, mas apareciam na mesma categoria dos widgets genericos e com o keyword `lp`.
+- Decisao: registrar a categoria `proenem-lp` e criar `Proenem_Elementor_Lp_Widget_Base` como base dos widgets `pro_lp_*`; remover o keyword `lp` dos widgets da home.
+- Fronteira: `proenem-sales` continua registrando os widgets ja publicados, incluindo as secoes da home, para nao quebrar paginas existentes.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#194`.
+
+## 2026-08-26: Secoes de LP com sangria total
+
+- Contexto: na homologacao da Fase 1, hero, CTA final e FAQ renderizaram com 1140 px em viewport de 1280 px, comecando em `left=70`. O recuo vinha do `.e-con-inner` do Elementor (`max-width: min(100%, 1140px)` e `margin-inline: 60px`) somado ao `padding: 10px` do container, e o modificador `tone` aplicava borda e canto arredondado, o que fazia a faixa ler como card emoldurado.
+- Decisao: separar faixa de conteudo. `.pro-sales-section` ocupa 100% da largura e e dona do fundo e do gutter; `.pro-sales-section__inner` mantem a largura de conteudo. `tone` perde borda e raio.
+- Decisao: em `sales_page`, liberar o gutter do container do Elementor a partir do marcador `pro-section-host`, aplicado pelos widgets que representam secao de pagina. Tambem zerar a contribuicao vertical do container entre faixas e o offset superior da primeira faixa.
+- Alternativa descartada: resolver apenas no template kit da Fase 4, com containers full width por configuracao. Nao atende pagina montada a mao pelo time, que e o fluxo esperado.
+- Risco aceito: o tema sobrepoe a largura do container do page builder em `sales_page`. Quem escolher container boxed de proposito para uma secao da Proenem nao sera atendido. Mitigacao: o override alcanca apenas containers que hospedam diretamente um widget marcado como secao.
+- Gap do design system: os pacotes publicados nao trazem contrato de banda de sangria total, classe de container nem token de largura de conteudo; o pacote resolve casos parecidos com margem negativa local dentro de componentes. A cola fica local no tema.
+- Fronteira: `pro_pricing_card` declara `is_section_host()` como falso e continua se comportando como card.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#200`; gap do design system registrado em `carvalhorafael/proenem-wordpress-theme#198`.
+
+## 2026-08-26: Widgets genericos de LP na categoria Proenem LP
+
+- Contexto: quatro secoes das LPs de campanha nao tinham widget equivalente: faixa de metricas, card de destaque de oferta, spotlight de midia mais copy e depoimento em video.
+- Decisao: criar `pro_lp_metrics`, `pro_lp_offer_highlight`, `pro_lp_spotlight` e `pro_lp_video_story` sobre `Proenem_Elementor_Lp_Widget_Base`, consumindo o contrato de secao compartilhado.
+- `pro_lp_offer_highlight` nao registra cabecalho de secao: o nome da oferta e o proprio heading, como na LP de campanha.
+- `pro_lp_spotlight` expoe `media_position` para inverter o lado da imagem, cobrindo as duas secoes de spotlight da mesma LP com um widget so.
+- Fronteira: os widgets ficam na categoria `proenem-lp` e nao substituem os widgets `pro_home_*`.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Video de LP carregado por fachada
+
+- Contexto: o depoimento em video das LPs de campanha usa provedor externo. Carregar o player no load da pagina significa contatar terceiro antes de qualquer interacao, com custo de performance e de privacidade.
+- Decisao: `pro_lp_video_story` renderiza capa e botao de reproduzir, e o `iframe` do provedor entra apenas no clique, reaproveitando `proenem_get_testimonial_video_embed_url()` no servidor e o mesmo padrao de fachada ja usado nos depoimentos.
+- Consequencia: sem capa local, nenhuma imagem e carregada. Miniatura hospedada pelo provedor foi descartada de proposito, porque seria requisicao de terceiro antes da interacao.
+- Verificado em `/lp/homologacao-widgets-lp/`: zero requisicoes ao provedor antes do clique; apos o clique, apenas a URL de embed.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Tone e contrato de par de cores, nao so de fundo
+
+- Contexto: ao compor um card branco dentro da faixa de marca, o texto do card herdava o branco da faixa e ficava branco sobre branco. O botao primario, por sua vez, renderizava vermelho sobre vermelho na faixa de marca.
+- Decisao: todo componente que pinta a propria superficie declara o proprio `color`. `.pro-sales-card` passa a declarar `color`, o botao primario inverte na faixa de marca e volta ao par padrao quando esta dentro de um card.
+- Consequencia: widget novo que pinte superficie propria precisa declarar o par de cores; herdar da faixa nao e suficiente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#195`.
+
+## 2026-08-26: Nivel do heading das secoes de LP como controle
+
+- Contexto: nenhum widget de LP emitia `h1`. `pro_offer_hero` renderizava `h2`, entao uma LP montada com os widgets do tema ficava sem titulo principal.
+- Decisao: expor `heading_level` no hero, com `h1` como default, em vez de fixar o nivel no markup. Qual secao carrega o `h1` e decisao editorial, e ha LP em que o titulo principal nao esta no hero.
+- Consequencia: uma LP montada com os widgets atuais nasce com exatamente um `h1`. O helper `render_section_header()` ja aceitava `title_tag`, entao a mudanca ficou no controle.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Icone dos beneficios por biblioteca de midia
+
+- Contexto: o bloco de metodo das LPs usa um icone por card. O controle `ICONS` do Elementor resolveria, mas carrega a biblioteca de icones do proprio Elementor, ou seja fonte de terceiro no front-end.
+- Decisao: usar controle de midia, para o time escolher o icone da biblioteca da marca. Sem imagem, o item mantem o marcador padrao.
+- Consequencia: o tema nao passa a depender de biblioteca de icones externa, e o icone fica sob curadoria da marca.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Card de plano renderizado em um unico lugar
+
+- Contexto: `pro_pricing_grid` e `pro_pricing_card` duplicavam o markup do card de plano. Adicionar parcelamento, preco a vista e selos de confianca duplicaria a mudanca.
+- Decisao: extrair `render_plan_card()` e `add_plan_price_controls()` para o base class de vendas e consumir dos dois widgets.
+- Consequencia: a grade com um plano so passa a ser o layout de card unico centralizado que a secao de oferta das LPs usa, sem widget novo.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#196`.
+
+## 2026-08-26: Categoria propria para os widgets da home
+
+- Contexto: os 13 widgets `pro_home_*` ja tinham `pro_home_` no nome tecnico e `Pro Home` no titulo visivel, mas estavam registrados em `proenem-sales`, a mesma categoria dos genericos. No painel do editor, `Pro Home Hero` aparecia ao lado de `Pro Hero de Oferta`.
+- Decisao: registrar a categoria `proenem-home`, com titulo `Proenem Home (somente na home)`, e mover os 13 widgets para ela.
+- Consequencia: evitar o uso indevido deixa de depender de o editor ler o nome do widget. Conteudo salvo nao e afetado, porque a categoria so organiza o painel.
+- Fronteira: os widgets da home permanecem isolados e nao entram em consolidacao com os genericos.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Grupo de oferta consolidado em pro_pricing_grid
+
+- Contexto: `pro_pricing_grid` com um plano, `pro_pricing_card` e `pro_lp_offer_highlight` renderizam a mesma forma. Medido em `/lp/homologacao-widgets-lp/`: os tres a 544 px, com a mesma sequencia de filhos. `pro_pricing_card` e um plano da grade sem cabecalho de secao; `pro_lp_offer_highlight` e o mesmo card sem os campos de preco.
+- Causa: `pro_lp_offer_highlight` foi criado na Fase 2, antes de o card de plano receber parcelamento, preco a vista e selos na Fase 3. A ordem inversa teria evitado o widget novo.
+- Decisao: `pro_pricing_grid` e o widget da secao de oferta, com preco opcional. `pro_pricing_card` e `pro_lp_offer_highlight` ficam marcados para aposentadoria.
+- Pendencia: a forma da aposentadoria depende de decisao humana, porque `/lp/intenisva/` em producao usa `pro_pricing_card` e o Elementor guarda `widgetType` em post meta.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Escopo congelado no grupo de faixa de texto
+
+- Contexto: `pro_offer_hero`, `pro_lp_spotlight` e `pro_cta` compartilham a forma selo, titulo, corpo e CTA. `pro_cta` e subconjunto estrito do hero.
+- Decisao: manter os tres, com papeis documentados, e nao adicionar controle novo a nenhum deles sem revisar o papel dos tres em conjunto.
+- Alternativa descartada: fundir em um widget com variante. Trocaria clareza de intencao editorial por economia de widget, com risco em pagina publicada.
+- Papeis: `pro_offer_hero` e a primeira faixa e dona do `h1`; `pro_lp_spotlight` e faixa de meio de pagina com bullets e lado invertivel; `pro_cta` e faixa minima de chamada.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Aposentadoria de widget preserva pagina publicada
+
+- Contexto: `pro_pricing_card` e `pro_lp_offer_highlight` foram consolidados em `pro_pricing_grid`, mas `/lp/intenisva/` em producao usa o primeiro, e o Elementor guarda `widgetType` em post meta. Remover a classe faria a secao deixar de renderizar na pagina publicada.
+- Decisao: manter as classes registradas com `show_in_panel()` retornando falso e `(obsoleto)` no titulo visivel. Pagina existente continua identica; ninguem adiciona um novo pelo painel.
+- Alternativas descartadas: alias de `widgetType`, que exigiria mapear controles antigos para o formato de plano da grade; e migrar a pagina publicada antes de remover, que mexeria em conteudo no ar para uma pagina que sera remontada de novo no template kit.
+- Criterio de remocao definitiva: quando `/lp/intenisva/` for remontada com `pro_pricing_grid`, remover as duas classes e a nota de obsolescencia.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Contador de oferta com contagem real
+
+- Contexto: `pro_offer_countdown` renderizava o valor do controle de data como texto visivel, `2026-12-31 23:59`, sem formatacao e sem contagem. A descricao do proprio controle admitia que a contagem ficou para depois.
+- Decisao: formatar a data no servidor com `wp_date()` no fuso do WordPress, emitir `datetime` em ISO 8601 e adicionar contagem por JavaScript progressivo em dias, horas e minutos.
+- Degradacao: sem JavaScript, a data formatada permanece visivel. Depois do prazo, o texto de encerramento substitui a contagem.
+- Internacionalizacao: os rotulos das unidades vem do PHP por marcacao propria, e nao de string no JavaScript, o que mantem tudo no catalogo e dispensa plural no cliente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`.
+
+## 2026-08-26: Cor de destaque por lista fechada, com par de cores
+
+- Contexto: a revisao pediu que o time pudesse escolher cor nos widgets sem seletor livre, para nao entrar cor fora do design system. A sugestao inicial era limitar as opcoes as cores globais do Elementor.
+- Achado 1: o kit ativo nao tinha paleta gravada, entao as cores globais eram as padrao do Elementor, e nao as da Proenem. Um seletor limitado a elas ofereceria, naquele momento, cores fora da marca.
+- Achado 2: uma cor global do Elementor e apenas um hex e nao carrega cor de conteudo. Foi exatamente essa ausencia de par que produziu tres defeitos nesta revisao: card branco sobre branco, botao vermelho sobre vermelho e icone claro sobre amarelo.
+- Decisao: os widgets consomem uma lista fechada definida no tema, em `proenem_get_brand_accents()`, onde cada opcao declara superficie e conteudo juntos. Nenhuma escolha possivel perde contraste.
+- Decisao complementar: gravar a paleta da marca nas cores globais do kit por script explicito, para o time usar a paleta certa nos widgets nativos do Elementor. As cores globais sao conteudo e nao viram contrato do tema.
+- Exclusao: `--pen-color-purple` (#8952fd) fica fora da lista dos widgets, porque nem ink nem branco alcancam AA para texto normal sobre ele. Continua na paleta global, com aviso de uso decorativo.
+- Gap do design system: apenas `proenem-red` publica par explicito (`--pen-color-on-red`). Os pares das outras cores foram calculados por luminancia e deveriam vir publicados.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#201`; gap registrado para a Fase 5 em `#198`.
+
+## 2026-08-26: Comparativo de planos no formato de produto SaaS
+
+- Contexto: o widget renderizava uma tabela simples, com o nome do plano no cabecalho e valores em texto. Comparativo e a peca que sustenta a decisao entre planos e precisava de mais.
+- Decisao: cabecalho de plano como card com preco e chamada propria, coluna destacada continua, grupos de recursos, explicacao curta por recurso e marcas booleanas com icone.
+- Grupos sem repeater aninhado: o Elementor nao suporta repeater dentro de repeater, entao cada linha declara se e recurso ou titulo de grupo. Mantem uma lista unica no editor e evita estrutura que o painel nao sabe editar.
+- Sticky e rolagem sao exclusivos por breakpoint: um container de rolagem captura `position: sticky`, entao o cabecalho grudaria no container em vez da janela. Abaixo de 64 rem o container rola e a coluna de recursos fica fixa; acima, o container deixa de rolar e o cabecalho gruda na janela.
+- Marcas booleanas carregam texto para leitor de tela, porque um icone sozinho nao informa o que a coluna significa.
+- Compatibilidade: o widget aceita a lista de colunas em texto do formato anterior quando o repeater de planos esta vazio, para nao esvaziar pagina existente.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Offset compartilhado das barras fixas
+
+- Contexto: com o contador fixo no topo, o cabecalho de planos do comparativo grudava em `top: 0` e ficava escondido atras da barra. As faixas de grupo tambem grudavam na mesma altura e colidiam com o cabecalho.
+- Decisao: criar a variavel `--pro-sticky-offset`, publicada por quem pina no topo e descontada por quem gruda ou recebe ancora interna. As faixas de grupo deixam de grudar.
+- Detalhe que se mostrou necessario: a variavel e publicada a partir do estado que a barra realmente alcancou, verificando `position: fixed` depois de aplicar a classe, e nao da intencao de pinar. Um contador encerrado mantem a classe mas volta ao fluxo, e publicar offset para ele deixaria um vao vazio sob nada.
+- Extensao: ancora interna tambem desconta o offset, senao o destino da ancora para embaixo da barra fixa.
+- Fronteira: com duas barras fixas na mesma pagina, a ultima a pinar define o offset. Nao ha acumulo, porque nao ha caso de uso conhecido para duas.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Tokens inexistentes do design system no CSS do tema
+
+- Contexto: uma auditoria dos 71 tokens `--pen-*` usados no tema encontrou 11 que nao existem em nenhum dos pacotes publicados. Quatro deles eram usados sem fallback, entao a declaracao inteira era descartada pelo navegador e o estilo simplesmente nao existia.
+- Declaracoes descartadas corrigidas: contorno de `:focus-visible` no card de materia, que deixava o indicador de foco de teclado sem o contorno pretendido; `border-radius` do marcador do card de plano; `border` do botao do carrossel de depoimentos; e `padding` de um bloco da home, que ficava zerado.
+- Aliases corrigidos para o token publicado equivalente: `--pen-color-white` para `--pen-color-canvas-white`, mesmo valor e nenhuma mudanca visual; `--pen-color-yellow` para `--pen-color-yellow-brand`, que corrige o amarelo do selo e do icone de beneficio de `#ffe45c` inventado para `#f9c200` da marca; e `--pen-font-family-sans` para `--pen-font-body`.
+- Escolha registrada: o contorno de foco passou a usar `--pen-color-cyan`, o azul publicado da paleta, porque o token original nao existe e inventar cor de foco seria decisao de design sem especificacao.
+- Pendentes, com fallback funcionando: `--pen-color-red` em 4 usos, cuja troca por `--pen-color-proenem-red` muda a cor de botoes ja homologados; `--pen-space-7`, `--pen-space-9` e `--pen-space-14`, degraus que a escala publicada nao tem; e `--pen-page-gutter`, sem equivalente publicado.
+- Gap do design system: a escala de espacamento publicada tem 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20 e 24, e o tema precisou de 7, 9 e 14. Faltam tambem token de gutter de pagina e cor de foco.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`; gaps a registrar na Fase 5 em `#198`.
+
+## 2026-08-26: Aprovados em LP com widget generico sobre o CPT
+
+- Contexto: a secao de aprovados existe nas duas LPs de campanha, mas o unico widget que renderizava cards de aprovados era `pro_home_testimonials`, isolado como exclusivo da home na Fase 3.5. O template kit sairia sem a secao.
+- Decisao: criar `pro_lp_testimonials` na categoria de LP, consumindo o mesmo CPT de depoimentos e o mesmo renderizador de card ja usados na home e na pagina de aprovados. Nenhum dado editorial e digitado no widget, entao a fonte de verdade continua unica.
+- Composicao: grade simples com colunas configuraveis, e nao o carrossel da home. LP nao precisa de controle de navegacao para tres cards, e a grade evita os clones que o carrossel cria no DOM.
+- Fronteira: o filtro de elegibilidade vem de `proenem_get_home_testimonials()`, entao so entram depoimentos verificados, autorizados e com relato. O widget nao afrouxa esse critério.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.
+
+## 2026-08-26: Template kits nomeados pelo objetivo da pagina
+
+- Contexto: os nomes iniciais dos kits eram `proenem-lp-intensiva` e `proenem-lp-redacao`, nomes de campanhas especificas. O kit envelheceria junto com a campanha e o time deixaria de reconhecer para que serve.
+- Decisao: nomear o kit pelo objetivo da pagina, sem nome de campanha, de produto ou ano. Os dois primeiros sao `proenem-lp-oferta-completa` e `proenem-lp-diferencial-em-foco`.
+- Estrutura: um unico container `main` com largura total e padding zero, igual ao kit da home, com os widgets como filhos diretos. Isso combina com a sangria total das faixas.
+- Conteudo em branco de proposito: link e capa do video, e selecao de depoimentos. Nao ha URL de video versionada no tema, capa deve vir da biblioteca para nao carregar terceiro antes do clique, e a selecao vazia usa os registros elegiveis mais recentes.
+- Portabilidade: as imagens dos spotlights usam caminho relativo a raiz para assets do tema, entao funcionam em qualquer dominio onde o tema esteja instalado, ao contrario de ID de anexo, que nao existe apos a importacao.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#197`.
+
+## 2026-08-26: Gaps do design system registrados e duplicacao local identificada
+
+- Contexto: fechamento da Fase 5, que exige issue no design system e issue de debito no tema para cada adaptacao local criada por gap.
+- Levantamento: dos 71 tokens `--pen-*` usados pelo tema, 11 nao existiam nos pacotes publicados; apenas o vermelho publica par de cor de conteudo; e nao ha contrato de faixa de secao, container, largura de conteudo, gutter de pagina, offset de barra fixa nem cor de foco.
+- Achado que mudou o diagnostico: o pacote CSS publica 67 componentes, entre eles `pen-button`, `pen-card`, `pen-pricing-card`, `pen-faq-section`, `pen-faq-item`, `pen-marketing-cta`, `pen-hero-section` e `pen-pill-eyebrow`. Parte da camada local `pro-sales-*` nao e gap: e duplicacao de contrato existente.
+- Decisao: separar os dois tipos de debito. O que depende de contrato novo fica condicionado a issue do design system; a migracao de `pro-sales-*` para os `pen-*` publicados e trabalho do tema e pode ser feita antes.
+- Achado de acessibilidade levado ao design system: `--pen-color-purple` (#8952fd) da 3.89 contra ink e 4.48 contra branco, entao nao alcanca AA para texto normal com nenhuma cor de conteudo e nao pode ser oferecida como superficie de texto.
+- Tracking: design system `carvalhorafael/proenem-design-system-brand-guide#44`; debito no tema `carvalhorafael/proenem-wordpress-theme#203`; fase `#198`.
+
+## 2026-08-26: Widgets de venda migrados para os contratos publicados
+
+- Contexto: a camada local `pro-sales-*` reimplementava componentes que o design system ja publica. A decisao de 2026-07-07 previa essa migracao quando houvesse equivalente publicado, e havia.
+- Migrado: `.pro-sales-button` para `pen-button` com as variantes publicadas; selo de secao para `pen-section-pill`; card de plano para `pen-pricing-card`, incluindo `__badge`, `__description`, `__price` e a lista de itens; card generico para `pen-card`; FAQ para `pen-faq-section`, `pen-faq-section__items` e `pen-faq-item`.
+- Divergencias eliminadas, todas nao intencionais: borda de 1,5 px contra 2 px, sombra `3px` literal contra `--pen-shadow-hard-md`, peso 800 contra 700, padding literal contra `--pen-space-6`, raio `lg` contra `2xl` no card.
+- Nao migrado, com motivo: `pro_cta` nao adota `pen-marketing-cta` porque o componente publicado e uma faixa vermelha fixa, com bloco decorativo proprio, conteudo alinhado a esquerda em 42 rem e paragrafo em ink sobre fundo vermelho; adotar removeria o contrato de `tone` e desfaria a composicao centralizada homologada. `pro_offer_hero` nao adota `pen-hero-section` porque o publicado e o hero da home, com stickers e palco proprio, e nao um hero de oferta com slot lateral configuravel. Contador, comparativo e os widgets `pro-lp-*` seguem sem equivalente publicado.
+- Conflito encontrado e resolvido: com as duas listas ativas ao mesmo tempo, o marcador ficava com o glifo local dentro do ponto publicado. A lista do card de plano passou a ser governada apenas pelo contrato publicado; `pro-sales-list` sobrou so nos bullets de spotlight, que nao tem contrato.
+- Achado levado ao design system: `.pen-section-pill` pinta superficie clara e nao declara cor de conteudo, entao dentro de faixa escura renderiza branco sobre branco. Tambem registrado que `pen-button--primary` da 4.61 de contraste.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#203`; design system `carvalhorafael/proenem-design-system-brand-guide#44`.
+
+## 2026-08-26: Ritmo vertical como contrato da faixa
+
+- Contexto: apenas faixas com tom tinham padding vertical, porque o ritmo havia sido introduzido junto com o modificador de tom. Como a contribuicao vertical do container do Elementor foi zerada na Fase 1.1 para nao haver costura de canvas entre faixas coloridas, duas secoes sem tom ficavam coladas uma na outra.
+- Decisao: a faixa passa a ser dona do ritmo vertical em todos os casos, com `clamp(2.5rem, 6vw, 4.5rem)`, o que da 144 px de respiro entre secoes em 1280 px e 80 px em 390 px.
+- Alternativa descartada: pedir que o editor adicione margem por secao no Elementor. Cada pagina teria um ritmo diferente e o template kit deixaria de entregar pagina pronta, que e o objetivo dele.
+- Consequencia: hero e CTA deixam de carregar ritmo proprio, para nao duplicar. O hero perde um pouco de folga vertical em relacao ao que tinha, de 96 px para 72 px no desktop, em troca de ritmo consistente entre todas as secoes.
+- Verificado: faixas seguem contiguas, sem costura de canvas, e sem overflow horizontal em 1280 nem em 390 px.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Cor do botao de chamada na mesma lista fechada
+
+- Contexto: a revisao pediu poder trocar a cor do botao de chamada, com o texto acompanhando a escolha automaticamente.
+- Decisao: reusar a lista fechada de cores da marca, com a opcao `Padrao da marca` mantendo o par publicado do `pen-button--primary`. Nenhuma escolha possivel perde legibilidade, porque cada opcao declara superficie e conteudo juntos.
+- Fronteira: nao ha seletor livre de cor, pelo mesmo motivo dos selos.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Espiral do rodape removida
+
+- Contexto: o rodape tinha uma ilustracao de espiral de caderno, desenhada por gradiente radial em `::before`, sobreposta a borda superior. A revisao pediu a remocao por causar problemas de sobreposicao.
+- Achado: o rodape ja declarava borda completa na propria regra de composicao. A espiral era decoracao sobre uma borda que ja existia, entao remover o `::before` bastou para a linha reta aparecer.
+- Complemento: a espessura foi de `--pen-border-brand-sm` para `--pen-border-brand`, alinhando com as demais secoes, como o pedido descrevia.
+- Consequencia: a mudanca vale para o rodape do site inteiro, incluindo a home, porque o rodape e um componente unico.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-26: Rodape passa ao par publicado, revelado pela remocao da espiral
+
+- Contexto: com o `::before` da espiral removido, o axe passou a avaliar o rodape e acusou 151 violacoes de contraste na home e 1 na LP. Nenhuma delas era nova: o gradiente radial sobreposto impedia o axe de determinar o fundo, entao o rodape ficou fora da checagem automatica desde que a ilustracao existe.
+- Achado 1: o fundo era o literal `#e23a3a`, que nao pertence a paleta da marca. Com texto branco solido da 4.29, abaixo dos 4.5 de AA.
+- Achado 2: os textos secundarios usavam branco com opacidade, `0.58` no `span` do titulo e `0.72` no corpo e na assinatura. Composto sobre o fundo, isso dava 2.91 e 3.90.
+- Decisao: fundo passa a `--pen-color-proenem-red` com conteudo em `--pen-color-on-red`, que da 6.61, e as opacidades sobem para `0.86`, que da 5.12.
+- Por que `0.86` e nao o minimo: o minimo para AA sobre esse fundo e `0.80`, que da 4.57 e nao deixa margem para ajuste de fundo. Em `0.86` o texto secundario continua visivelmente mais apagado que o `strong` em branco puro, entao a hierarquia do rodape se mantem.
+- Consequencia: o rodape do site inteiro fica com o vermelho da marca, mais escuro que o anterior. E uma mudanca visivel na home, que ja esta homologada, aceita em troca de sair de uma violacao de AA e de um literal fora do design system.
+- Licao: decoracao que cobre uma faixa inteira pode esconder a faixa da auditoria automatica. Vale desconfiar de secao sem nenhuma violacao acusada quando ela tem sobreposicao desenhada por pseudo-elemento.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Faixa cheia cobre as duas formas de container do Elementor
+
+- Contexto: na homologacao dos widgets da home apareceram duas listras brancas verticais nas laterais. Medido: os 13 widgets ficavam em `left=10` e `width=1260` numa janela de 1280.
+- Achado: o container do Elementor tem duas formas. A caixa embrulha o conteudo em `.e-con-inner`; a de largura total (`content_width: full`) assenta o widget direto no `.e-con` e ainda assim mantem o padding padrao de 10 px. A regra do tema so cobria a primeira, entao a segunda dependia de quem montou a pagina ter zerado o padding na mao. Os kits de LP zeram no JSON, por isso o defeito nao aparecia neles.
+- Decisao: a regra passa a cobrir tambem `\.e-con:has(> .pro-section-host)`. Widget que se declara faixa de secao ocupa a largura total em qualquer das duas formas, sem depender de configuracao de quem monta a pagina.
+- Fronteira: segue restrita ao CPT `sales_page` e aos containers que hospedam widget de secao. Container sem widget de secao mantem a goteira do Elementor.
+- Verificado: as quatro paginas de homologacao com todas as faixas em `left=0` e largura igual a janela, sem overflow horizontal. O teste novo, com a regra removida, falha com `left=10`, entao cobre a regressao de verdade.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Costura entre faixas sai do container, e o hack do navbar cai
+
+- Contexto: apos soltar a goteira lateral, a homologacao apontou vao entre a faixa vermelha do hero e a barra de acao. Medido: 20 px entre cada um dos 12 pares de faixas vizinhas, com margem e padding zero em todos os widgets.
+- Achado 1: o container do Elementor e flex e traz `gap: 20px`. Cada faixa ja carrega o proprio ritmo vertical no `padding-block`, entao esse vao e folga a mais. Os kits de LP desligam o gap no JSON, o que de novo escondia o defeito.
+- Decisao 1: a regra de faixa cheia passa a zerar `gap` tambem, junto do padding. Faixa colada em faixa deixa de depender de configuracao de quem monta a pagina.
+- Achado 2: existia `margin-top: calc(var(--container-default-padding-top, 10px) * -1) !important` no primeiro `pro_navbar` em canvas. Era compensacao para o padding do container: padding 10 mais margem -10 dava zero. Com o padding zerado na origem, a conta virou -10 e o navbar passou a cobrir 10 px do hero nos dois kits.
+- Decisao 2: o hack sai. Tratar a causa no container tornou a compensacao redundante, e mante-la seria corrigir duas vezes o mesmo desalinhamento em sentidos opostos.
+- Licao: compensacao com valor negativo amarrada a um padding alheio vira defeito silencioso no dia em que o padding muda. O lugar de resolver goteira de container e o container.
+- Verificado: as quatro paginas de homologacao com a primeira faixa em `top=0` e zero costuras. Com o gap de volta os testes falham com vao 20; com o hack de volta, com vao -10.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Fundo de secao passa a lista fechada de cores da marca
+
+- Contexto: a revisao visual mostrou que a alternancia de tons dos kits era invisivel. `Transparente` da o fundo do body, `#fef2f2`, e `Superficie` da `#ffffff`. O contraste entre as duas e 1.09, entao oito faixas seguidas liam como a mesma cor: vermelho no hero, quase-branco no meio, vermelho no fim.
+- Decisao: `Fundo da seção` deixa de ter uma cor de marca e passa a oferecer as nove da lista fechada de `proenem_get_brand_accents()`, a mesma fonte dos selos e dos botoes. Nao ha seletor livre, pelo mesmo motivo de sempre.
+- Arquitetura: cada tom declara apenas o par, em `--pro-tone-surface` e `--pro-tone-on`. Quem pinta e a classe `--colored`, e as regras de dentro da faixa passam a referir o par em vez de assumir vermelho com texto claro. Foi o que permitiu um tom claro como o amarelo funcionar pela mesma via que um escuro, sem regra por cor.
+- Consequencia no botao: sobre faixa colorida o botao primario usa o par invertido da faixa. O contraste do texto do botao passa a ser o mesmo par que a faixa ja garante, qualquer que seja o tom, em vez de um valor por cor que precisaria ser conferido um a um.
+- Fronteira preservada: dentro de um cartao o par e do cartao, nao da faixa, porque o cartao pinta a propria superficie. Essa excecao continua explicita.
+- Compatibilidade: `brand` segue sendo o vermelho, entao o valor gravado nas paginas publicadas nao muda de sentido.
+- Verificado: nove tons, com selo, titulo, corpo, lista e botao medidos em cada um. Pior contraste por faixa igual ao par declarado, de 4.95 no rosa a 17.40 na tinta, e nenhum elemento abaixo de 4.5. Com o par do amarelo quebrado de proposito, o teste falha com 1.65.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Revisao visual dos kits montados
+
+- Contexto: revisao de conjunto dos dois kits, depois da homologacao widget por widget.
+- Ritmo de tom: as faixas coloridas passam a entrar como pontuacao a cada duas ou tres faixas claras, e nunca duas coloridas seguidas. A sequencia fica vermelho, claro, branco, tinta, claro, amarelo ou verde, branco, claro, roxo, vermelho.
+- Fechamento: o kit de diferencial terminava em depoimentos e ia direto para o rodape, sem ultima chamada. Ganha faixa de CTA antes do rodape, como o kit de oferta ja tinha.
+- Faixa de metricas: era a unica sem titulo, e por consequencia sem nome acessivel. O widget sempre aceitou titulo; o kit e que deixava vazio. Preenchido nos dois.
+- Nao alterado, com motivo: os depoimentos ocupam 22% da altura no mobile, e o controle de limite ja existe com padrao 3. E altura natural de tres cartoes empilhados, nao defeito.
+- Em aberto para decisao do produto: cinco das onze secoes tem copy identica nos dois kits, entao hoje eles se diferenciam por duas secoes de texto e nao pela composicao. Como sao templates e a copy e trocada por campanha, fica registrado em vez de resolvido.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

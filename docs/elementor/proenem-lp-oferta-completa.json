@@ -1,0 +1,410 @@
+{
+	"title": "Proenem LP · Oferta completa",
+	"type": "page",
+	"version": "0.4",
+	"page_settings": {
+		"template": "elementor_canvas"
+	},
+	"content": [
+		{
+			"id": "lpoc0013",
+			"elType": "container",
+			"isInner": false,
+			"settings": {
+				"html_tag": "main",
+				"content_width": "full",
+				"flex_gap": {
+					"unit": "px",
+					"size": 0,
+					"sizes": []
+				},
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				},
+				"margin": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "lpoc0001",
+					"elType": "widget",
+					"widgetType": "pro_navbar",
+					"isInner": false,
+					"settings": {
+						"mode": "lp",
+						"cta_label": "Garantir minha vaga",
+						"cta_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"aria_label": "Navegação da página de vendas",
+						"mobile_cta_enabled": "yes",
+						"mobile_cta_label": "Garantir minha vaga",
+						"mobile_cta_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						}
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0002",
+					"elType": "widget",
+					"widgetType": "pro_offer_hero",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "Turma Intensiva ENEM 2026",
+						"title": "A reta final que vai transformar o seu estudo em aprovação.",
+						"body": "Você estuda muito, mas a nota não sobe? Na Turma Intensiva você recebe um plano pronto, correção de redação e a estratégia que já aprovou mais de 44 mil alunos.",
+						"heading_level": "h1",
+						"primary_label": "Quero minha vaga na Turma Intensiva",
+						"primary_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"secondary_label": "",
+						"microcopy": "Vagas limitadas • Início hoje • Acesso imediato",
+						"side_content": "cards",
+						"proof_cards": [
+							{
+								"_id": "c1",
+								"label": "Cronograma pronto",
+								"value": "Semana 1 de 12"
+							},
+							{
+								"_id": "c2",
+								"label": "Redação 940",
+								"value": "Corrigida em 10 dias"
+							},
+							{
+								"_id": "c3",
+								"label": "Organização diária",
+								"value": "4 de 5 tarefas hoje"
+							}
+						],
+						"tone": "brand",
+						"anchor_id": "inicio"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0003",
+					"elType": "widget",
+					"widgetType": "pro_benefits_list",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "O método",
+						"title": "Um caminho claro para quem já está cansado de estudar sem direção.",
+						"body": "Nada de listas infinitas de matéria. Você segue exatamente o que a nossa equipe pedagógica preparou para a sua reta final.",
+						"columns": "4",
+						"tone": "default",
+						"items": [
+							{
+								"_id": "b1",
+								"icon": {
+									"value": "fas fa-chart-line",
+									"library": "fa-solid"
+								},
+								"title": "Diagnóstico da sua nota",
+								"body": "Descobrimos exatamente onde você perde pontos e o que precisa priorizar.",
+								"highlight": "",
+								"badge": ""
+							},
+							{
+								"_id": "b2",
+								"icon": {
+									"value": "fas fa-calendar-check",
+									"library": "fa-solid"
+								},
+								"title": "Cronograma pronto",
+								"body": "Plano de estudos semanal já organizado, do primeiro dia até a prova.",
+								"highlight": "",
+								"badge": ""
+							},
+							{
+								"_id": "b3",
+								"icon": {
+									"value": "fas fa-pen-fancy",
+									"library": "fa-solid"
+								},
+								"title": "Correção de redação",
+								"body": "Envie suas redações e receba feedback nota por nota das 5 competências.",
+								"highlight": "",
+								"badge": ""
+							},
+							{
+								"_id": "b4",
+								"icon": {
+									"value": "fas fa-arrow-trend-up",
+									"library": "fa-solid"
+								},
+								"title": "Evolução acompanhada",
+								"body": "Simulados, questões e revisões inteligentes para você ver a nota subir.",
+								"highlight": "",
+								"badge": ""
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0004",
+					"elType": "widget",
+					"widgetType": "pro_pricing_grid",
+					"isInner": false,
+					"settings": {
+						"title": "Mais de 44 mil aprovados confiaram no PROENEM.",
+						"body": "A Turma Intensiva é o mesmo método que colocou milhares de alunos nas melhores universidades do país — agora concentrado na reta final.",
+						"card_layout": "stacked",
+						"tone": "surface",
+						"plans": [
+							{
+								"_id": "destaque",
+								"name": "Turma Intensiva ENEM 2026",
+								"description": "Tudo o que você precisa para a reta final, em um único plano.",
+								"badge": "Início hoje!",
+								"accent": "yellow",
+								"price_prefix": "",
+								"price": "",
+								"recurrence": "",
+								"price_details": "",
+								"trust_items": "",
+								"features": "Cronograma completo até o dia da prova\n4 correções de redação\nAulas com os melhores professores\nSimulados com nota TRI\nIntensivo até o ENEM",
+								"button_label": "Entrar na Turma Intensiva",
+								"button_url": {
+									"url": "#oferta",
+									"is_external": "",
+									"nofollow": "",
+									"custom_attributes": ""
+								}
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0005",
+					"elType": "widget",
+					"widgetType": "pro_lp_metrics",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "Resultado que se repete",
+						"title": "Números de quem já fez o caminho.",
+						"body": "Não é promessa de campanha: é o que a Proenem entrega turma após turma.",
+						"tone": "ink",
+						"items": [
+							{
+								"_id": "m1",
+								"icon": {
+									"value": "fas fa-trophy",
+									"library": "fa-solid"
+								},
+								"icon_accent": "yellow",
+								"value": "+44.000",
+								"label": "alunos aprovados nas melhores universidades"
+							},
+							{
+								"_id": "m2",
+								"icon": {
+									"value": "fas fa-star",
+									"library": "fa-solid"
+								},
+								"icon_accent": "brand",
+								"value": "4,9/5",
+								"label": "avaliação média dos alunos"
+							},
+							{
+								"_id": "m3",
+								"icon": {
+									"value": "fas fa-clock",
+									"library": "fa-solid"
+								},
+								"icon_accent": "cyan",
+								"value": "12 anos",
+								"label": "de experiência aprovando alunos no ENEM"
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0006",
+					"elType": "widget",
+					"widgetType": "pro_lp_spotlight",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "Plano de estudos",
+						"title": "Você não precisa mais decidir o que estudar hoje.",
+						"body": "Cada dia da sua semana já vem preparado: as matérias certas, na ordem certa, na intensidade certa. Basta abrir o app e seguir o plano.",
+						"bullets": "Cronograma semanal até a prova\nBarras de progresso por matéria e por competência\nSaiba o que você precisa estudar em cada dia para não perder o foco",
+						"media_position": "end",
+						"image": {
+							"url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/study-plan-960.webp",
+							"id": ""
+						},
+						"image_alt": "Tela do plano de estudos semanal na plataforma.",
+						"button_label": "",
+						"tone": "default"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0007",
+					"elType": "widget",
+					"widgetType": "pro_lp_spotlight",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "Redação",
+						"title": "A redação que muda a sua nota final.",
+						"body": "Nossa banca corrige a sua redação exatamente como o ENEM: por competência, com comentários detalhados e o caminho para tirar mil.",
+						"bullets": "Correção nas 5 competências\nCorreção humanizada\nMais de 400 temas com textos de apoio para você treinar",
+						"media_position": "start",
+						"image": {
+							"url": "/wp-content/themes/proenem-wordpress-theme/assets/images/platform/essay-feedback-960.webp",
+							"id": ""
+						},
+						"image_alt": "Tela da correção de redação por competência.",
+						"button_label": "",
+						"tone": "yellow"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0008",
+					"elType": "widget",
+					"widgetType": "pro_pricing_grid",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "Vagas por tempo limitado",
+						"title": "Sua vaga na Turma Intensiva ENEM 2026.",
+						"body": "O plano completo para você chegar na prova preparado — e aprovado.",
+						"card_layout": "split",
+						"tone": "surface",
+						"anchor_id": "oferta",
+						"plans": [
+							{
+								"_id": "oferta",
+								"name": "Turma Intensiva ENEM 2026",
+								"description": "Acesso completo até o dia da prova.",
+								"badge": "",
+								"accent": "yellow",
+								"price_prefix": "12x de R$",
+								"price": "29,90",
+								"recurrence": "",
+								"price_details": "ou R$ 306,90 à vista",
+								"features": "Cronograma semanal\nCorreção de redação\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrão ENEM\nRevisões inteligentes por matéria\nMais de 50 mil questões para praticar\n6 meses de acesso",
+								"trust_items": "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
+								"button_label": "Garantir minha vaga agora",
+								"button_url": {
+									"url": "#oferta",
+									"is_external": "",
+									"nofollow": "",
+									"custom_attributes": ""
+								}
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0009",
+					"elType": "widget",
+					"widgetType": "pro_lp_video_story",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "História real",
+						"title": "Ela passou em Medicina conciliando com o trabalho.",
+						"body": "Veja como a rotina certa e a correção de redação fizeram a diferença na reta final.",
+						"video_url": {
+							"url": "",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"poster": {
+							"url": "",
+							"id": ""
+						},
+						"poster_alt": "",
+						"play_label": "Reproduzir o depoimento",
+						"button_label": "Quero minha vaga na Turma Intensiva",
+						"button_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"tone": "default"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0010",
+					"elType": "widget",
+					"widgetType": "pro_lp_testimonials",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "",
+						"title": "Aprovados que já passaram por aqui.",
+						"body": "Histórias reais de quem transformou o cansaço em aprovação.",
+						"testimonial_ids": [],
+						"limit": 3,
+						"columns": "3",
+						"more_label": "",
+						"tone": "purple"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0011",
+					"elType": "widget",
+					"widgetType": "pro_cta",
+					"isInner": false,
+					"settings": {
+						"eyebrow": "A reta final começou",
+						"title": "Você não vai chegar no ENEM 2026 sem plano de novo.",
+						"body": "Entre para a Turma Intensiva e siga um caminho pronto até o dia da prova. O próximo aprovado pode ser você.",
+						"button_label": "Quero minha vaga agora",
+						"button_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"microcopy": "Acesso imediato • Garantia de 7 dias • Vagas limitadas",
+						"tone": "brand"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpoc0012",
+					"elType": "widget",
+					"widgetType": "pro_footer",
+					"isInner": false,
+					"settings": {
+						"mode": "minimal"
+					},
+					"elements": []
+				}
+			]
+		}
+	]
+}

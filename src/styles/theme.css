@@ -1,4 +1,7 @@
 :root {
+  /* Altura ocupada por barras fixas no topo. Quem pina soma aqui, quem gruda
+     ou recebe ancora desconta daqui. Sem barra fixa o valor e zero. */
+  --pro-sticky-offset: 0px;
   --proenem-color-text: var(--pen-color-foreground);
   --proenem-color-muted: var(--pen-color-muted);
   --proenem-color-border: var(--pen-color-border);
@@ -13,7 +16,7 @@
 
 .pro-sales-widget {
   color: var(--pen-color-ink, #111827);
-  font-family: var(--pen-font-family-sans, inherit);
+  font-family: var(--pen-font-body, inherit);
   margin-inline: auto;
   max-width: min(100%, 74rem);
 }
@@ -30,54 +33,795 @@
   margin: 0 0 var(--pen-space-8, 2rem);
 }
 
-.pro-sales-eyebrow,
-.pro-sales-badge {
-  background: var(--pen-color-yellow, #ffe45c);
-  border: var(--pen-border-brand-xs, 1px solid #111827);
-  border-radius: var(--pen-radius-pill, 999px);
-  box-shadow: 2px 2px 0 var(--pen-color-ink, #111827);
-  display: inline-flex;
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  margin: 0 0 var(--pen-space-4, 1rem);
-  padding: 0.4rem 0.75rem;
-  text-transform: uppercase;
+/* Shared section contract for the controlled sales sections.
+   The outer element is the band: it spans the full width of its container and
+   owns the background. The inner element keeps the content width. */
+.pro-sales-section {
+  margin-inline: 0;
+  max-width: none;
+  width: 100%;
 }
 
-.pro-sales-button {
-  align-items: center;
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-pill, 999px);
-  box-shadow: 3px 3px 0 var(--pen-color-ink, #111827);
-  display: inline-flex;
-  font-weight: 800;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.8rem 1.25rem;
-  text-decoration: none;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+/* A faixa e dona do gutter da pagina, porque liberar o gutter do container do
+   Elementor empurraria o conteudo contra a borda da janela.
+   E e dona do ritmo vertical, sempre, nao apenas quando tem tom: sem isso duas
+   secoes sem tom ficam coladas, e o espacamento passaria a ser trabalho manual
+   por pagina em vez de contrato do widget. */
+.pro-sales-section {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
 }
 
-.pro-sales-button:hover,
-.pro-sales-button:focus-visible {
-  box-shadow: 1px 1px 0 var(--pen-color-ink, #111827);
-  transform: translate(2px, 2px);
+.pro-sales-section__inner {
+  margin-inline: auto;
 }
 
-.pro-sales-button--primary {
-  background: var(--pen-color-red, #e3062c);
-  color: var(--pen-color-white, #ffffff);
+/* O subtitulo de secao saia no tamanho de corpo padrao, praticamente igual ao
+   texto dentro dos cards. Passa a ter escala de subtitulo, alinhada a do hero. */
+.pro-sales-section-body {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  margin: 0 0 var(--pen-space-6, 1.5rem);
+  max-width: 52rem;
 }
 
-.pro-sales-button--secondary {
-  background: var(--pen-color-white, #ffffff);
+/* A faixa ja fornece o ritmo vertical, entao os widgets que carregavam ritmo
+   proprio deixam de duplicar. */
+.pro-sales-section > .pro-sales-hero,
+.pro-sales-section > .pro-sales-cta {
+  padding-block: 0;
+}
+
+.pro-sales-section--tone-surface {
+  background: var(--pen-color-surface, #ffffff);
+}
+
+/* Faixa colorida. Cada tom declara so o par de cores, e quem pinta e a regra
+   `--colored`. Assim as regras de dentro da faixa referem o par em vez de
+   assumir vermelho com texto claro, e um tom claro como o amarelo funciona
+   pela mesma via que um escuro. Os pares vem de proenem_get_brand_accents(),
+   que e a mesma lista fechada dos selos e dos botoes. */
+.pro-sales-section--tone-yellow {
+  --pro-tone-surface: var(--pen-color-yellow-brand, #f9c200);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-brand {
+  --pro-tone-surface: var(--pen-color-proenem-red, #bb0922);
+  --pro-tone-on: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-section--tone-ink {
+  --pro-tone-surface: var(--pen-color-ink, #1a1a1a);
+  --pro-tone-on: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-section--tone-purple {
+  --pro-tone-surface: var(--pen-color-purple-lp, #4d17f5);
+  --pro-tone-on: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-section--tone-pink {
+  --pro-tone-surface: var(--pen-color-pink-hot, #ff2d87);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-mint {
+  --pro-tone-surface: var(--pen-color-mint, #06d6a0);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-teal {
+  --pro-tone-surface: var(--pen-color-teal, #00b4a6);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-cyan {
+  --pro-tone-surface: var(--pen-color-cyan, #00bfff);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-orange {
+  --pro-tone-surface: var(--pen-color-orange, #ff7051);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--colored {
+  background: var(--pro-tone-surface);
+  color: var(--pro-tone-on);
+}
+
+/* An image background does not guarantee contrast on its own, so the reading
+   layer carries the color pair. */
+.pro-sales-section--tone-image {
+  background-image: var(--pro-sales-section-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  isolation: isolate;
+  position: relative;
+}
+
+.pro-sales-section--tone-image > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pro-sales-section--scrim-dark::before,
+.pro-sales-section--scrim-light::before {
+  content: "";
+  inset: 0;
+  position: absolute;
+  z-index: 0;
+}
+
+.pro-sales-section--scrim-dark {
+  color: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-section--scrim-dark::before {
+  background: rgb(0 0 0 / 55%);
+}
+
+.pro-sales-section--scrim-light {
   color: var(--pen-color-ink, #111827);
 }
 
-.pro-sales-button--inverse {
-  background: var(--pen-color-white, #ffffff);
-  color: var(--pen-color-red, #e3062c);
+.pro-sales-section--scrim-light::before {
+  background: rgb(255 255 255 / 70%);
+}
+
+.pro-sales-section--scrim-dark > .pro-sales-widget,
+.pro-sales-section--scrim-light > .pro-sales-widget {
+  color: inherit;
+}
+
+/* The content wrapper carries its own color guarantee for untoned sections.
+   Inside a toned band the pairing comes from the band. */
+.pro-sales-section--tone-surface > .pro-sales-widget,
+.pro-sales-section--colored > .pro-sales-widget {
+  color: inherit;
+}
+
+/* O botao primario tem a cor da marca, que nao contrasta com uma faixa da
+   propria marca. Sobre faixa colorida ele usa o par invertido da faixa, entao
+   o contraste do texto e o mesmo par que a faixa ja garante, qualquer que seja
+   o tom. */
+.pro-sales-section--colored .pen-button--primary {
+  background: var(--pro-tone-on);
+  color: var(--pro-tone-surface);
+}
+
+/* Inside a card the surface is the card's, not the band's, so the button keeps
+   the default pairing. */
+.pro-sales-section--colored .pen-pricing-card .pen-button--primary,
+.pro-sales-section--colored .pen-card .pen-button--primary {
+  background: var(--pen-color-primary, #dc341e);
+  color: var(--pen-color-accent-contrast, #ffffff);
+}
+
+/* Fase 3: controles novos dos widgets de venda ------------------------------ */
+
+.pro-sales-hero__microcopy,
+.pro-sales-cta__microcopy {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.pro-sales-hero--no-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-sales-hero__proof {
+  align-content: center;
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-sales-hero__proof-card {
+  background: var(--pen-color-canvas-white, #ffffff);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-lg, 0.75rem);
+  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
+  color: var(--pen-color-ink, #111827);
+  display: grid;
+  gap: 0.25rem;
+  padding: var(--pen-space-4, 1rem);
+}
+
+.pro-sales-hero__proof-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.pro-sales-hero__proof-value {
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.pro-sales-benefit--highlight {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+}
+
+.pro-sales-plan--standalone {
+  margin-inline: auto;
+  max-width: 34rem;
+}
+
+.pro-sales-plan__price-prefix {
+  align-self: center;
+}
+
+.pro-sales-plan__price-details {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.pro-sales-plan__trust {
+  display: grid;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-sales-plan__trust li {
+  align-items: center;
+  display: flex;
+  font-size: 0.9rem;
+  gap: 0.5rem;
+  opacity: 0.85;
+}
+
+.pro-sales-plan__trust svg {
+  fill: currentcolor;
+  flex: none;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+/* Layout de duas colunas: itens de um lado, oferta do outro. */
+.pro-sales-pricing__grid--split {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-sales-plan.pro-sales-plan--split {
+  align-items: stretch;
+  display: grid;
+  gap: 0;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  margin-inline: auto;
+  max-width: 64rem;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+.pro-sales-plan__panel {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.pro-sales-plan__panel--content {
+  align-content: start;
+  background: var(--pen-color-proenem-red, #bb0922);
+  border-inline-end: var(--pen-border-brand, 2px solid #1a1a1a);
+  color: var(--pen-color-on-red, #ffffff);
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--content .pro-sales-plan__description {
+  opacity: 0.9;
+}
+
+/* O marcador da lista vira caixa amarela, como no comparativo de referencia. */
+.pro-sales-plan__panel--content ul {
+  gap: 0.7rem;
+  width: 100%;
+}
+
+.pro-sales-plan__panel--content li {
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* O quadrado sem glifo lia como caixa vazia, ou seja o oposto de item
+   incluido. O check e o que comunica a inclusao. */
+.pro-sales-plan__panel--content li::before {
+  align-items: center;
+  background: var(--pen-color-yellow-brand, #f9c200);
+  border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  border-radius: var(--pen-radius-sm, 0.25rem);
+  color: var(--pen-color-ink, #1a1a1a);
+  content: "\2713";
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 900;
+  height: 1.4rem;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 0;
+  width: 1.4rem;
+}
+
+.pro-sales-plan__panel--offer {
+  align-content: center;
+  background: var(--pen-color-canvas-white, #ffffff);
+  color: var(--pen-color-ink, #1a1a1a);
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price {
+  display: grid;
+  gap: 0;
+  justify-items: start;
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price span {
+  color: var(--pen-color-proenem-red, #bb0922);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.pro-sales-plan__panel--offer .pro-sales-plan__price-prefix {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.pro-sales-plan__panel--offer .pen-button {
+  justify-self: stretch;
+}
+
+@media (max-width: 860px) {
+  /* Precisa casar a especificidade da regra base, que se qualifica com
+     .pro-sales-plan para vencer o gap herdado do card de plano. */
+  .pro-sales-plan.pro-sales-plan--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pro-sales-plan__panel--content {
+    border-block-end: var(--pen-border-brand, 2px solid #1a1a1a);
+    border-inline-end: 0;
+  }
+}
+
+.pro-sales-cta__action {
+  display: grid;
+  gap: var(--pen-space-3, 0.75rem);
+  justify-items: center;
+}
+
+.pro-sales-cta .pro-sales-eyebrow {
+  margin: 0;
+}
+
+.pro-site-navbar--with-cta {
+  justify-content: space-between;
+}
+
+.pen-site-footer--minimal {
+  display: block;
+  padding-block: var(--pen-space-8, 2rem);
+}
+
+.pen-site-footer--minimal .pen-site-footer__bottom {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4, 1rem);
+  justify-content: space-between;
+}
+
+/* Par de cores dos componentes dentro da faixa de marca. Todo componente que
+   pinta a propria superficie mantem o proprio par; os que nao pintam herdam. */
+.pro-sales-section--colored li::before,
+.pro-sales-section--colored .pro-sales-plan__price-details,
+.pro-sales-section--colored .pro-sales-plan__trust li {
+  color: inherit;
+}
+
+.pro-sales-section--colored .pen-pricing-card li::before,
+.pro-sales-section--colored .pen-card li::before,
+.pro-sales-section--colored .pen-pricing-card .pro-sales-plan__price-details,
+.pro-sales-section--colored .pen-pricing-card .pro-sales-plan__trust li {
+  color: var(--pen-color-ink, #111827);
+}
+
+.pro-sales-section--colored .pro-sales-comparison table,
+.pro-sales-section--colored .pro-sales-faq__item {
+  background: var(--pen-color-canvas-white, #ffffff);
+  color: var(--pen-color-ink, #111827);
+}
+
+.pro-lp-testimonials__grid {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-lp-testimonials__grid--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pro-lp-testimonials__grid--cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pro-lp-testimonials__grid--cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pro-lp-testimonials__grid > li {
+  display: grid;
+  min-width: 0;
+}
+
+.pro-lp-testimonials .pen-button {
+  justify-self: center;
+  margin-block-start: var(--pen-space-6, 1.5rem);
+}
+
+@media (max-width: 980px) {
+  .pro-lp-testimonials__grid--cols-3,
+  .pro-lp-testimonials__grid--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pro-lp-testimonials__grid--cols-2,
+  .pro-lp-testimonials__grid--cols-3,
+  .pro-lp-testimonials__grid--cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Cores de destaque da marca. Cada classe declara superficie e par de texto
+   juntos, entao nao existe combinacao escolhivel que perca contraste.
+   purple (#8952fd) esta ausente de proposito: nem ink nem branco alcancam AA
+   sobre ele para texto normal. */
+.pro-sales-accent--yellow {
+  background: var(--pen-color-yellow-brand, #f9c200);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--brand {
+  background: var(--pen-color-proenem-red, #bb0922);
+  color: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-accent--ink {
+  background: var(--pen-color-ink, #1a1a1a);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-accent--purple {
+  background: var(--pen-color-purple-lp, #4d17f5);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-accent--pink {
+  background: var(--pen-color-pink-hot, #ff2d87);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--mint {
+  background: var(--pen-color-mint, #06d6a0);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--teal {
+  background: var(--pen-color-teal, #00b4a6);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--cyan {
+  background: var(--pen-color-cyan, #00bfff);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-accent--orange {
+  background: var(--pen-color-orange, #ff7051);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+/* ---------------------------------------------------------------------------
+   Proenem LP widgets
+   --------------------------------------------------------------------------- */
+
+/* Cabecalho e metricas centralizados. */
+.pro-lp-metrics {
+  text-align: center;
+}
+
+.pro-lp-metrics__grid {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-lp-metric {
+  align-content: start;
+  display: grid;
+  gap: var(--pen-space-3, 0.75rem);
+  justify-items: center;
+  text-align: center;
+}
+
+/* O icone vira selo com a superficie amarela da marca. A cor do glifo e
+   declarada aqui porque, sem isso, dentro da faixa de marca ele herdaria o
+   texto claro e desapareceria sobre o amarelo. */
+.pro-lp-metric__icon {
+  align-items: center;
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: 50%;
+  box-shadow: 3px 3px 0 var(--pen-color-ink, #111827);
+  display: inline-flex;
+  font-size: 2.25rem;
+  height: 4.5rem;
+  justify-content: center;
+  line-height: 1;
+  margin-inline: auto;
+  width: 4.5rem;
+}
+
+.pro-lp-metric__icon svg {
+  fill: currentcolor;
+  height: 2.25rem;
+  width: 2.25rem;
+}
+
+.pro-lp-metric__value {
+  font-family: var(--pen-font-display, inherit);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pro-lp-metric__label {
+  font-size: 1rem;
+  text-wrap: pretty;
+}
+
+.pro-lp-offer-highlight__card {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  justify-items: start;
+  margin-inline: auto;
+  max-width: 34rem;
+}
+
+.pro-lp-offer-highlight__name {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-lp-offer-highlight__summary {
+  margin: 0;
+}
+
+.pro-lp-offer-highlight__card .pen-button {
+  justify-self: stretch;
+}
+
+.pro-lp-spotlight {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.pro-lp-spotlight--media-start .pro-lp-spotlight__content {
+  order: 2;
+}
+
+.pro-lp-spotlight--no-media {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pro-lp-spotlight__content {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  justify-items: start;
+}
+
+.pro-lp-spotlight__title {
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-lp-spotlight__bullets {
+  margin: 0;
+}
+
+.pro-lp-spotlight__media {
+  margin: 0;
+}
+
+.pro-lp-spotlight__media img {
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-xl, 1rem);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.pro-lp-video-story {
+  align-items: center;
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+}
+
+.pro-lp-video-story__content {
+  display: grid;
+  gap: var(--pen-space-5, 1.25rem);
+  justify-items: start;
+}
+
+.pro-lp-video-story__title {
+  font-size: clamp(1.85rem, 4vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-sales-video-stage {
+  aspect-ratio: 16 / 9;
+  background: var(--pen-color-ink, #111827);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: var(--pen-radius-xl, 1rem);
+  box-shadow: 6px 6px 0 var(--pen-color-ink, #111827);
+  overflow: hidden;
+  position: relative;
+}
+
+.pro-sales-video-stage img,
+.pro-sales-video-stage iframe {
+  border: 0;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.pro-sales-video-stage__play {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+.pro-sales-video-stage__icon {
+  align-items: center;
+  background: var(--pen-color-canvas-white, #ffffff);
+  border: var(--pen-border-brand-sm, 2px solid #111827);
+  border-radius: 50%;
+  display: flex;
+  height: 4.5rem;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  justify-content: center;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 4.5rem;
+}
+
+.pro-sales-video-stage__icon::before {
+  border-block: 0.85rem solid transparent;
+  border-inline-start: 1.35rem solid var(--pen-color-proenem-red, #bb0922);
+  content: "";
+  display: block;
+  margin-inline-start: 0.35rem;
+}
+
+.pro-sales-video-stage__play:focus-visible .pro-sales-video-stage__icon,
+.pro-sales-video-stage__play:hover .pro-sales-video-stage__icon {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+}
+
+@media (max-width: 860px) {
+  .pro-lp-spotlight,
+  .pro-lp-video-story {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pro-lp-spotlight--media-start .pro-lp-spotlight__content {
+    order: 0;
+  }
+}
+
+/* Rolagem suave para ancora interna, apenas nas paginas de venda e apenas para
+   quem nao pediu menos movimento. O destino desconta a barra fixa pelo offset
+   compartilhado, na regra abaixo. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(body.proenem-sales-page-template) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Ancora interna para embaixo de barra fixa se nao descontar o offset. */
+.pro-sales-section[id] {
+  scroll-margin-top: calc(var(--pro-sticky-offset, 0px) + var(--pen-space-4, 1rem));
+}
+
+/* Sales pages compose full width bands. Elementor containers default to a
+   boxed content width, which would keep every band inset, so the gutter is
+   released for the containers that host a Proenem section widget.
+   Scoped to the sales_page CPT and to those containers only.
+   Sao duas formas de container: a caixa, que embrulha o conteudo em
+   `.e-con-inner`, e a de largura total, que assenta o widget direto no
+   `.e-con` e ainda assim mantem o padding padrao de 10 px do Elementor. A
+   segunda precisa estar aqui, senao a faixa depende de quem montou a pagina
+   ter zerado o padding na mao. */
+.single-sales_page .e-con:has(> .e-con-inner > .pro-section-host),
+.single-sales_page .e-con:has(> .pro-section-host) {
+  /* O container do Elementor e flex e traz `gap: 20px`, que abriria uma
+     costura entre cada par de faixas vizinhas. Cada faixa ja carrega o
+     proprio ritmo vertical no `padding-block`, entao o vao do container e
+     so uma folga a mais, e nao pode depender de quem monta a pagina ter
+     desligado o gap no painel. */
+  gap: 0;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+.single-sales_page .e-con-inner:has(> .pro-section-host) {
+  margin-inline: 0;
+  max-width: none;
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+/* The first band of a sales page sits flush against the top of the document. */
+.single-sales_page .elementor > .e-con:first-child,
+.single-sales_page .elementor > .e-con:first-child > .e-con-inner {
+  padding-block-start: 0;
+}
+
+/* O selo de secao consome pen-section-pill; aqui ficam so as diferencas de uso
+   na pagina de venda. O selo de card mantem a superficie amarela, que e o
+   destaque comercial e nao um selo de secao. */
+.pro-sales-eyebrow {
+  margin: 0 0 var(--pen-space-4, 1rem);
+  text-transform: uppercase;
+}
+
+/* pen-section-pill pinta a superficie clara mas nao declara cor de conteudo,
+   entao dentro da faixa de marca o selo herdava o texto claro e ficava branco
+   sobre branco. O par e declarado aqui. */
+.pro-sales-section .pen-section-pill {
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-badge {
+  background: var(--pen-color-yellow-brand, #f9c200);
+  border: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  border-radius: var(--pen-radius-pill, 9999px);
+  box-shadow: var(--pen-shadow-hard-sm, 2px 2px 0 #1a1a1a);
+  color: var(--pen-color-ink, #1a1a1a);
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin: 0 0 var(--pen-space-4, 1rem);
+  padding: 0.4rem 0.75rem;
+  text-transform: uppercase;
 }
 
 .pro-sales-actions {
@@ -85,14 +829,6 @@
   flex-wrap: wrap;
   gap: var(--pen-space-3, 0.75rem);
   margin-top: var(--pen-space-6, 1.5rem);
-}
-
-.pro-sales-card {
-  background: var(--pen-color-white, #ffffff);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-lg, 0.75rem);
-  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
-  padding: clamp(1.25rem, 3vw, 2rem);
 }
 
 .pro-sales-hero {
@@ -129,14 +865,17 @@
   width: 100%;
 }
 
-.pro-sales-countdown,
-.pro-sales-cta {
+/* O contador e o unico widget de secao que pinta a propria superficie, entao
+   precisa vencer a regra de color: inherit das faixas com tom: sem a
+   especificidade do seletor filho, o corpo herdava ink sobre o vermelho e caia
+   para 3.58 de contraste. O par vem publicado. */
+.pro-sales-section > .pro-sales-countdown {
   align-items: center;
-  background: var(--pen-color-red, #e3062c);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
+  background: var(--pen-color-proenem-red, #bb0922);
+  border: var(--pen-border-brand, 2px solid #1a1a1a);
   border-radius: var(--pen-radius-lg, 0.75rem);
-  box-shadow: 4px 4px 0 var(--pen-color-ink, #111827);
-  color: var(--pen-color-white, #ffffff);
+  box-shadow: var(--pen-shadow-hard-md, 4px 4px 0 #1a1a1a);
+  color: var(--pen-color-on-red, #ffffff);
   display: flex;
   gap: var(--pen-space-6, 1.5rem);
   justify-content: space-between;
@@ -144,14 +883,46 @@
 }
 
 .pro-sales-countdown .pro-sales-section-title,
-.pro-sales-cta h2,
-.pro-sales-countdown p,
-.pro-sales-cta p {
+.pro-sales-countdown p {
   margin: 0;
 }
 
+/* Faixa final de chamada: composicao empilhada e centralizada, com o botao
+   junto do texto que ele conclui. A cor vem do tone da faixa, como nos outros
+   widgets de secao, em vez de o widget pintar superficie propria. */
+.pro-sales-cta {
+  display: grid;
+  gap: var(--pen-space-6, 1.5rem);
+  justify-items: center;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.pro-sales-cta__content {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  justify-items: center;
+}
+
+/* O titulo usa a largura toda e nao recebe quebra do layout. A quebra e
+   decisao editorial: uma nova linha digitada no campo e respeitada. */
+.pro-sales-cta__title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.02;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.pro-sales-cta__body {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  margin: 0;
+  max-width: 46rem;
+}
+
+
+
 .pro-sales-countdown__date {
-  background: var(--pen-color-white, #ffffff);
+  background: var(--pen-color-canvas-white, #ffffff);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: var(--pen-radius-md, 0.5rem);
   color: var(--pen-color-ink, #111827);
@@ -160,11 +931,121 @@
   white-space: nowrap;
 }
 
+/* Faixa fixa: a barra so e pinada depois do percentual de rolagem escolhido, e
+   o espaco que ela deixa fica reservado pelo wrapper, para nao haver salto.
+   Pinada, ela precisa virar barra: no formato de secao ocuparia quase metade da
+   viewport, entao o texto de apoio sai e a escala cai. */
+.pro-sales-countdown-sticky.is-pro-sticky-pinned {
+  box-shadow: 0 2px 0 var(--pen-color-ink, #1a1a1a);
+  inset-block-start: 0;
+  inset-inline: 0;
+  padding-block: 0;
+  position: fixed;
+  z-index: 90;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  gap: var(--pen-space-4, 1rem);
+  padding-block: var(--pen-space-3, 0.75rem);
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown > div > p:not(.pro-sales-eyebrow),
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-eyebrow {
+  display: none;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-section-title {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  margin: 0;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__date {
+  padding: 0.35rem 0.75rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit {
+  min-width: 2.25rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit strong {
+  font-size: 1.15rem;
+}
+
+.pro-sales-countdown-sticky.is-pro-sticky-pinned .pro-sales-countdown__unit small {
+  font-size: 0.65rem;
+}
+
+/* Contagem encerrada nao precisa mais ocupar o topo. */
+.pro-sales-countdown-sticky.is-pro-countdown-expired.is-pro-sticky-pinned {
+  position: static;
+}
+
+.pro-sales-countdown__units {
+  display: flex;
+  gap: var(--pen-space-4, 1rem);
+}
+
+.pro-sales-countdown__unit {
+  display: grid;
+  gap: 0.1rem;
+  justify-items: center;
+  min-width: 3rem;
+}
+
+.pro-sales-countdown__unit strong {
+  font-size: 1.85rem;
+  line-height: 1;
+}
+
+.pro-sales-countdown__unit small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .pro-sales-pricing__grid,
 .pro-sales-benefits__grid {
   display: grid;
   gap: var(--pen-space-5, 1.25rem);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+/* The column control is a real cap, not a minimum width, so the editor gets the
+   number of columns it asked for. */
+.pro-sales-benefits__grid--cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pro-sales-benefits__grid--cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pro-sales-benefits__grid--cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* A single plan is the offer card of a landing page: centered, not stretched. */
+.pro-sales-pricing__grid--single {
+  grid-template-columns: minmax(0, 34rem);
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .pro-sales-benefits__grid--cols-3,
+  .pro-sales-benefits__grid--cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pro-sales-benefits__grid--cols-2,
+  .pro-sales-benefits__grid--cols-3,
+  .pro-sales-benefits__grid--cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .pro-sales-plan {
@@ -212,65 +1093,243 @@
 
 .pro-sales-benefit {
   display: grid;
-  gap: var(--pen-space-3, 0.75rem);
+  gap: var(--pen-space-2, 0.5rem);
+  padding: clamp(1.15rem, 2.4vw, 1.65rem);
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
-.pro-sales-benefit > span {
+/* Cards reset the browser paragraph margin, which was adding dead vertical
+   space on top of the grid gap. */
+.pro-sales-benefit > p,
+.pro-sales-benefit > .pro-sales-badge {
+  margin: 0;
+}
+
+.pro-sales-benefit > h3 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.pro-sales-benefit > p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.pro-sales-benefit__icon {
   align-items: center;
-  background: var(--pen-color-yellow, #ffe45c);
+  background: var(--pen-color-yellow-brand, #f9c200);
   border: var(--pen-border-brand-xs, 1px solid #111827);
   border-radius: 50%;
   display: inline-flex;
+  font-size: 0.9rem;
   font-weight: 900;
-  height: 2rem;
+  height: 1.75rem;
   justify-content: center;
-  width: 2rem;
+  width: 1.75rem;
 }
+
+.pro-sales-benefit__icon svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+/* Same feedback as the buttons: the card fills and shifts under the pointer. */
+.pro-sales-benefit:hover,
+.pro-sales-benefit:focus-within {
+  background: var(--pen-color-yellow-brand, #ffe45c);
+  box-shadow: 2px 2px 0 var(--pen-color-ink, #111827);
+  transform: translate(2px, 2px);
+}
+
+.pro-sales-benefit--highlight:hover,
+.pro-sales-benefit--highlight:focus-within {
+  background: var(--pen-color-canvas-white, #ffffff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-sales-benefit {
+    transition: box-shadow 160ms ease, background-color 160ms ease;
+  }
+
+  .pro-sales-benefit:hover,
+  .pro-sales-benefit:focus-within {
+    transform: none;
+  }
+}
+
+/* Comparativo de planos ----------------------------------------------------- */
 
 .pro-sales-comparison__scroll {
   overflow-x: auto;
 }
 
-.pro-sales-comparison table {
-  border-collapse: collapse;
+.pro-sales-comparison__scroll:focus-visible {
+  outline: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+  outline-offset: 2px;
+}
+
+.pro-sales-comparison__table {
+  border-collapse: separate;
+  border-spacing: 0;
   min-width: 44rem;
   width: 100%;
 }
 
-.pro-sales-comparison th,
-.pro-sales-comparison td {
-  border: var(--pen-border-brand-xs, 1px solid #111827);
-  padding: 0.9rem;
-  text-align: left;
+.pro-sales-comparison__table th,
+.pro-sales-comparison__table td {
+  border-block-end: var(--pen-border-brand-xs, 1px solid #1a1a1a);
+  padding: 0.85rem 1rem;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.pro-sales-comparison thead th {
-  background: var(--pen-color-yellow, #ffe45c);
+.pro-sales-comparison__corner {
+  border-block-end: 0;
 }
 
-.pro-sales-comparison tbody th {
-  background: var(--pen-color-surface, #f7f7f7);
+/* Cabecalho do plano: card com preco e chamada, nao apenas o nome. */
+.pro-sales-comparison__table .pro-sales-comparison__plan {
+  background: var(--pen-color-canvas-white, #ffffff);
+  border-block-end: var(--pen-border-brand-sm, 2px solid #1a1a1a);
+  min-width: 12rem;
+  vertical-align: bottom;
 }
 
-.pro-sales-faq__items {
+.pro-sales-comparison__plan-inner {
   display: grid;
-  gap: var(--pen-space-3, 0.75rem);
+  gap: 0.4rem;
+  justify-items: center;
 }
 
-.pro-sales-faq__item {
-  background: var(--pen-color-white, #ffffff);
-  border: var(--pen-border-brand-sm, 2px solid #111827);
-  border-radius: var(--pen-radius-md, 0.5rem);
-  padding: 1rem 1.25rem;
-}
-
-.pro-sales-faq__item summary {
-  cursor: pointer;
+.pro-sales-comparison__plan-name {
+  font-size: 1.15rem;
   font-weight: 900;
 }
 
-.pro-sales-faq__item > div {
-  margin-top: 0.85rem;
+.pro-sales-comparison__plan-price {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+  /* O prefixo alinhado por baseline estende a caixa de linha, entao a coluna sem
+     prefixo ficava 2 px mais baixa que as outras. */
+  line-height: 1;
+}
+
+.pro-sales-comparison__plan-price strong {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  line-height: 1;
+}
+
+.pro-sales-comparison__plan-details {
+  opacity: 0.8;
+}
+
+.pro-sales-comparison__plan-inner .pen-button {
+  margin-block-start: 0.35rem;
+  min-height: 2.6rem;
+  padding: 0.6rem 1.1rem;
+  width: 100%;
+}
+
+.pro-sales-comparison__plan-inner .pro-sales-badge {
+  margin: 0;
+}
+
+/* O slot do selo e sempre reservado: sem isso a coluna sem selo tem uma linha
+   menos e nome, preco e botao param em alturas diferentes das outras. */
+.pro-sales-badge--placeholder {
+  visibility: hidden;
+}
+
+/* A coluna destacada e uma faixa continua, do cabecalho a ultima linha. */
+.pro-sales-comparison__plan--featured,
+.pro-sales-comparison__cell--featured {
+  background: var(--pen-color-canvas, #fef2f2);
+  box-shadow: inset 2px 0 0 var(--pen-color-ink, #1a1a1a), inset -2px 0 0 var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-comparison__plan--featured {
+  box-shadow: inset 2px 2px 0 var(--pen-color-ink, #1a1a1a), inset -2px 0 0 var(--pen-color-ink, #1a1a1a);
+}
+
+/* Titulo de grupo separa blocos de recursos. */
+.pro-sales-comparison__group th {
+  background: var(--pen-color-ink, #1a1a1a);
+  color: var(--pen-color-canvas-white, #ffffff);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: start;
+  text-transform: uppercase;
+}
+
+/* A primeira coluna fica visivel enquanto a tabela rola na horizontal. */
+.pro-sales-comparison__feature {
+  background: var(--pen-color-surface, #ffffff);
+  inset-inline-start: 0;
+  min-width: 14rem;
+  position: sticky;
+  text-align: start;
+  z-index: 1;
+}
+
+.pro-sales-comparison__feature small {
+  display: block;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.pro-sales-comparison__table tbody tr:hover .pro-sales-comparison__feature,
+.pro-sales-comparison__table tbody tr:hover td {
+  background: var(--pen-color-yellow-brand, #f9c200);
+}
+
+/* Marcas booleanas: icone com texto para tecnologia assistiva. */
+.pro-sales-comparison__mark {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.pro-sales-comparison__mark svg {
+  height: 1.4rem;
+  width: 1.4rem;
+}
+
+.pro-sales-comparison__mark--yes svg {
+  fill: var(--pen-color-proenem-red, #bb0922);
+}
+
+.pro-sales-comparison__mark--no svg {
+  fill: var(--pen-color-ink, #1a1a1a);
+  opacity: 0.35;
+}
+
+.pro-sales-comparison__mark--empty {
+  opacity: 0.45;
+}
+
+/* Acima da largura em que a tabela cabe, o container deixa de ser area de
+   rolagem e o cabecalho pode grudar no topo da janela enquanto a pessoa
+   percorre a lista de recursos. */
+@media (min-width: 64rem) {
+  .pro-sales-comparison__scroll {
+    overflow: visible;
+  }
+
+  .pro-sales-comparison__plan {
+    inset-block-start: var(--pro-sticky-offset, 0px);
+    position: sticky;
+    z-index: 2;
+  }
+}
+
+/* A resposta e um div, porque aceita HTML, e o contrato publicado da padding
+   apenas em p. Este e o unico complemento que o FAQ ainda precisa. */
+.pen-faq-item > div {
+  line-height: 1.65;
+  padding: var(--pen-space-5, 1.25rem) var(--pen-space-6, 1.5rem) var(--pen-space-6, 1.5rem);
 }
 
 @media (max-width: 900px) {
@@ -3129,10 +4188,6 @@ body.proenem-home-template {
   width: 100%;
 }
 
-body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
-  margin-top: calc(var(--container-default-padding-top, 10px) * -1) !important;
-}
-
 .pro-site-navbar .pro-home-navbar-menu,
 .pro-home .pro-home-navbar-menu {
   align-items: center;
@@ -3508,12 +4563,16 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   text-align: center;
 }
 
+/* O fundo era o literal #e23a3a, que nao e token da marca e da 4.29 de
+   contraste com texto branco, abaixo de AA. A ilustracao de espiral em ::before
+   impedia o axe de avaliar o rodape, entao 151 violacoes ficaram invisiveis por
+   meses. Passa a usar o par publicado, que da 6.61. */
 .pro-home .pen-site-footer,
 .pen-site-footer {
-  background: #e23a3a;
-  border: var(--pen-border-brand-sm);
+  background: var(--pen-color-proenem-red, #bb0922);
+  border: var(--pen-border-brand);
   border-bottom: 0;
-  color: var(--pen-color-surface);
+  color: var(--pen-color-on-red, #ffffff);
   display: grid;
   gap: clamp(2.8rem, 5vw, 4.5rem);
   grid-template-columns: minmax(13rem, 0.35fr) minmax(0, 1fr);
@@ -3522,15 +4581,8 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   position: relative;
 }
 
-.pen-site-footer::before {
-  background:
-    radial-gradient(circle at 1.45rem 0, #fff1f1 0 1rem, var(--pen-color-ink) 1.03rem 1.12rem, transparent 1.15rem) 0 0 / 3rem 2rem repeat-x;
-  content: "";
-  height: 2rem;
-  inset: -0.08rem 0 auto;
-  pointer-events: none;
-  position: absolute;
-}
+/* A ilustracao de espiral de caderno saiu daqui. A borda reta do rodape ja
+   existia na regra de composicao dele, mais abaixo, e agora fica visivel. */
 
 .pro-home .pen-site-footer__content,
 .pen-site-footer__content {
@@ -3572,7 +4624,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-site-footer__title span,
 .pen-site-footer__title span {
-  color: rgb(255 255 255 / 0.58);
+  color: rgb(255 255 255 / 0.86);
 }
 
 .pro-home .pen-site-footer__title strong,
@@ -3583,7 +4635,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 
 .pro-home .pen-site-footer__body,
 .pen-site-footer__body {
-  color: rgb(255 255 255 / 0.72);
+  color: rgb(255 255 255 / 0.86);
   font-size: clamp(0.94rem, 1.12vw, 1.05rem);
   line-height: 1.45;
   margin: clamp(1.25rem, 2vw, 1.7rem) 0 0;
@@ -3826,7 +4878,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pen-site-footer__company-info {
-  color: rgb(255 255 255 / 0.72);
+  color: rgb(255 255 255 / 0.86);
   font-size: 0.8rem;
   font-weight: 500;
 }
@@ -3870,7 +4922,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   align-self: center;
   display: grid;
   gap: var(--pen-space-3);
-  padding: var(--pen-space-7) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  padding: var(--pen-space-7, 1.75rem) clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
   position: relative;
   z-index: 1;
 }
@@ -4585,7 +5637,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 }
 
 .pro-home .pen-subject-grid .pro-home-subject-card:focus-visible {
-  outline: 0.18rem solid var(--pen-color-blue);
+  outline: 0.18rem solid var(--pen-color-cyan, #00bfff);
   outline-offset: 0.18rem;
 }
 
@@ -4832,7 +5884,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
   align-items: center;
   background: var(--pen-color-yellow-bright);
   border: 1px solid var(--pen-color-ink);
-  border-radius: var(--pen-radius-xs);
+  border-radius: var(--pen-radius-sm, 0.25rem);
   color: var(--pen-color-ink);
   content: "✓";
   display: inline-flex;
@@ -5160,7 +6212,7 @@ body.elementor-template-canvas .elementor-widget-pro_navbar:first-child {
 .pro-home .pro-home-testimonials__controls button {
   align-items: center;
   background: var(--pen-color-surface);
-  border: var(--pen-border-brand-md);
+  border: var(--pen-border-brand, 2px solid #1a1a1a);
   border-radius: 0.55rem;
   box-shadow: var(--pen-shadow-hard-sm);
   color: var(--pen-color-ink);

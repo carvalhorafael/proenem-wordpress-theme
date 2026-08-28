@@ -593,6 +593,211 @@ document.querySelectorAll("[data-pro-testimonial-play]").forEach((button) => {
   });
 });
 
+// Offer countdown: the server renders a static fallback, and the live countdown
+// only replaces it when JavaScript runs. Unit labels come from PHP so they stay
+// translatable.
+//
+// Two modes. A deadline counts down to a date and ticks every minute. A duration
+// counts down minutes from the first visit and ticks every second; the start is
+// persisted so a reload continues instead of handing out a fresh window.
+const readCountdownStart = (element, storage, key) => {
+  if (!storage) {
+    return Date.now();
+  }
+
+  try {
+    const stored = Number.parseInt(storage.getItem(key) || "", 10);
+
+    if (Number.isFinite(stored) && stored > 0) {
+      return stored;
+    }
+
+    const now = Date.now();
+    storage.setItem(key, String(now));
+
+    return now;
+  } catch {
+    return Date.now();
+  }
+};
+
+document.querySelectorAll("[data-pro-countdown], [data-pro-countdown-duration]").forEach((element) => {
+  const durationMinutes = Number.parseInt(element.dataset.proCountdownDuration || "", 10);
+  const isDuration = Number.isFinite(durationMinutes) && durationMinutes > 0;
+  let target = 0;
+
+  if (isDuration) {
+    let storage = null;
+
+    try {
+      storage = element.dataset.proCountdownScope === "visitor" ? window.localStorage : window.sessionStorage;
+    } catch {
+      storage = null;
+    }
+
+    const key = `pro-countdown-${element.dataset.proCountdownKey || "default"}`;
+
+    target = readCountdownStart(element, storage, key) + durationMinutes * 60000;
+  } else {
+    target = Date.parse(element.dataset.proCountdown);
+  }
+
+  if (!Number.isFinite(target)) {
+    return;
+  }
+
+  const fallback = element.querySelector("[data-pro-countdown-fallback]");
+  const units = element.querySelector("[data-pro-countdown-units]");
+  const days = element.querySelector("[data-pro-countdown-days]");
+  const hours = element.querySelector("[data-pro-countdown-hours]");
+  const minutes = element.querySelector("[data-pro-countdown-minutes]");
+  const seconds = element.querySelector("[data-pro-countdown-seconds]");
+
+  if (!fallback || !units || !minutes) {
+    return;
+  }
+
+  const pad = (value) => String(value).padStart(2, "0");
+
+  const expire = () => {
+    const expiredLabel = element.dataset.proCountdownExpired || "";
+
+    if (!expiredLabel) {
+      return;
+    }
+
+    units.hidden = true;
+    fallback.hidden = false;
+    fallback.textContent = expiredLabel;
+
+    const band = element.closest("[data-pro-sticky]");
+
+    if (!band) {
+      return;
+    }
+
+    band.classList.add("is-pro-countdown-expired");
+
+    // An expired bar stops being pinned, so it also stops reserving space for
+    // the sticky content below it.
+    if (band.classList.contains("is-pro-sticky-pinned")) {
+      document.documentElement.style.removeProperty("--pro-sticky-offset");
+    }
+  };
+
+  const tick = () => {
+    const remaining = target - Date.now();
+
+    if (remaining <= 0) {
+      expire();
+      return false;
+    }
+
+    if (isDuration) {
+      const totalSeconds = Math.floor(remaining / 1000);
+
+      minutes.textContent = pad(Math.floor(totalSeconds / 60));
+
+      if (seconds) {
+        seconds.textContent = pad(totalSeconds % 60);
+      }
+    } else {
+      const totalMinutes = Math.floor(remaining / 60000);
+
+      if (days) {
+        days.textContent = pad(Math.floor(totalMinutes / 1440));
+      }
+
+      if (hours) {
+        hours.textContent = pad(Math.floor((totalMinutes % 1440) / 60));
+      }
+
+      minutes.textContent = pad(totalMinutes % 60);
+    }
+
+    fallback.hidden = true;
+    units.hidden = false;
+
+    return true;
+  };
+
+  if (tick()) {
+    const timer = setInterval(() => {
+      if (!tick()) {
+        clearInterval(timer);
+      }
+    }, isDuration ? 1000 : 60000);
+  }
+});
+
+// Sticky offer band: stays in place until the reader passes a share of the page,
+// then pins to the top. The space it leaves is held by its own Elementor wrapper
+// so pinning does not shift the page.
+document.querySelectorAll("[data-pro-sticky]").forEach((band) => {
+  const after = Number.parseInt(band.dataset.proStickyAfter || "", 10);
+  const threshold = Number.isFinite(after) ? Math.min(Math.max(after, 0), 90) : 20;
+  const holder = band.parentElement;
+  const root = document.documentElement;
+  let pinned = false;
+
+  const scrolled = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+
+    return scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+  };
+
+  const update = () => {
+    const shouldPin = scrolled() >= threshold;
+
+    if (shouldPin === pinned) {
+      return;
+    }
+
+    pinned = shouldPin;
+
+    // The space to reserve is the height the band had in flow, measured before
+    // pinning changes it.
+    if (pinned && holder) {
+      holder.style.minHeight = `${band.offsetHeight}px`;
+    }
+
+    band.classList.toggle("is-pro-sticky-pinned", pinned);
+
+    // The offset is published from the state the band actually reached, not from
+    // the intent to pin: an expired bar keeps the class but goes back to the
+    // flow, and publishing an offset for it would leave a gap under nothing.
+    if (pinned && window.getComputedStyle(band).position === "fixed") {
+      root.style.setProperty("--pro-sticky-offset", `${band.offsetHeight}px`);
+      return;
+    }
+
+    root.style.removeProperty("--pro-sticky-offset");
+
+    if (holder) {
+      holder.style.minHeight = "";
+    }
+  };
+
+  update();
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update, { passive: true });
+});
+
+// Landing page video story: the embed is only requested after the click, so no
+// third party is contacted while the page loads.
+document.querySelectorAll("[data-pro-lp-video-play]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const embedUrl = button.dataset.embedUrl;
+    const stage = button.closest("[data-pro-lp-video]");
+
+    if (!embedUrl || !stage) {
+      return;
+    }
+
+    stage.replaceChildren(createTestimonialVideoIframe(embedUrl, button.getAttribute("aria-label") || ""));
+  });
+});
+
 document.querySelectorAll(".testimonials-card__video").forEach((link) => {
   const videoUrl = link.href;
   const youtubeId = getYouTubeVideoId(videoUrl);
