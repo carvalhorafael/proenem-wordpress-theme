@@ -207,6 +207,7 @@
   font-size: 0.95rem;
   margin: 0;
   opacity: 0.85;
+  text-align: center;
 }
 
 .pro-sales-hero--no-media {
@@ -807,11 +808,23 @@
   text-transform: uppercase;
 }
 
+/* O grupo de acoes abraca a largura dos botoes, e nao a do conteudo, para o
+   microcopy poder centralizar em relacao ao botao. Antes ele era irmao do
+   grupo, ocupava os 588 px do conteudo e ficava alinhado a esquerda, com o
+   centro do texto 100 px fora do centro do botao. */
 .pro-sales-actions {
+  display: grid;
+  gap: var(--pen-space-4, 1rem);
+  justify-items: center;
+  margin-top: var(--pen-space-6, 1.5rem);
+  width: fit-content;
+}
+
+.pro-sales-actions__buttons {
   display: flex;
   flex-wrap: wrap;
   gap: var(--pen-space-3, 0.75rem);
-  margin-top: var(--pen-space-6, 1.5rem);
+  justify-content: center;
 }
 
 .pro-sales-hero {

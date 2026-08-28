@@ -545,3 +545,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Resultado: 329x64 com fonte de 16 px de 360 a 768 px, e 389x64 com fonte de 18 px a partir de 1600 px. Sem overflow horizontal em 360, 390, 430, 768, 1280, 1600 e 2000.
 - Sombra: sobe de `--pen-shadow-hard-md` para `--pen-shadow-hard-lg`, que e o vocabulario de sombra dura da marca, em vez de inventar destaque com cor.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Microcopy do hero centralizado no grupo do botao
+
+- Contexto: pedido de centralizar o texto abaixo do botao do hero e afastar um pouco os dois.
+- Medido antes: o microcopy tinha 588 px, a largura toda do conteudo, contra 389 px do botao, com `text-align: start` e vao de **0 px** ate o botao. O centro do texto ficava 100 px fora do centro do botao.
+- Achado: nao dava para resolver so em CSS. O microcopy era irmao de `.pro-sales-actions`, e CSS nao referencia largura de irmao. Centralizar dentro do conteudo deixaria o texto no centro dos 588 px, nao no centro do botao.
+- Decisao: o microcopy entra em `.pro-sales-actions`, que passa a ser uma coluna com `width: fit-content`, abracando a largura dos botoes. Os botoes ganham `.pro-sales-actions__buttons` porque podem ser dois lado a lado. O afastamento vem do `gap` do grupo, e nao de margem no paragrafo, para nao haver dois lugares definindo a mesma distancia.
+- Fronteira: `.pro-sales-actions` era usado so pelo hero, com uma unica regra de CSS, entao a reestruturacao nao alcanca outro widget. Verificado antes de mexer.
+- Medido depois: vao de 16 px e centro do botao igual ao centro do texto, com diferenca de 0 px em 390, 768 e 1600 px. Sem overflow horizontal.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

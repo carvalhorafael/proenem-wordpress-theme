@@ -1411,14 +1411,16 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 					);
 					?>
 						<div class="pro-sales-actions">
-						<?php
-						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], $this->button_classes( $settings, 'button_accent' ) );
-						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
-						?>
-						</div>
-					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
+							<div class="pro-sales-actions__buttons">
+							<?php
+							$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], $this->button_classes( $settings, 'button_accent' ) );
+							$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
+							?>
+							</div>
+						<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
 							<p class="pro-sales-hero__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>
+						</div>
 					</div>
 					<?php if ( 'cards' === $side_content && $proof_cards ) : ?>
 						<ul class="pro-sales-hero__proof">
