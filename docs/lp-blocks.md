@@ -175,8 +175,6 @@ A secao e composta em duas camadas:
 
 Os widgets que representam secao de pagina recebem o marcador `pro-section-host` no wrapper Elementor, via `get_html_wrapper_class()`. Em `sales_page`, o tema usa esse marcador com `:has()` para liberar o gutter do container do Elementor, que por padrao e boxed em 1140 px. Tambem zera a contribuicao vertical do container, para que faixas vizinhas nao fiquem separadas por costura de canvas, e zera o offset superior da primeira faixa, para o hero encostar no topo.
 
-`pro_pricing_card` declara `is_section_host()` como falso: e card para compor dentro de coluna, nao secao de pagina.
-
 Risco aceito: em `sales_page`, o tema sobrepoe a largura do container do Elementor. Quem escolher container boxed de proposito para uma secao da Proenem nao sera atendido. O override alcanca apenas containers que hospedam diretamente um widget marcado como secao.
 
 Medido em `/lp/homologacao-widgets-lp/`: em 1280 px, as oito faixas medem 1280 px a partir de `left=0`, com conteudo em `left=48` e 1184 px; em 390 px, as faixas medem 390 px com conteudo em `left=20` e 350 px, sem overflow horizontal. `pro_pricing_card` permanece em `left=70` com 1140 px.
@@ -192,7 +190,6 @@ Implementados na Fase 2 (`#195`), todos na categoria `Proenem LP` e consumindo o
 | Widget | Secao coberta | Controles proprios |
 | --- | --- | --- |
 | `pro_lp_metrics` | trio de metricas da faixa de prova social | repeater de `value` e `label`; cabecalho de secao opcional |
-| `pro_lp_offer_highlight` | card `INICIO HOJE!` | `badge`, `name`, `summary`, `features`, botao. O nome da oferta e o heading da secao |
 | `pro_lp_spotlight` | `PLANO DE ESTUDOS` e `REDACAO` | `bullets`, `image`, `image_alt`, botao, `media_position` para inverter o lado |
 | `pro_lp_video_story` | `HISTORIA REAL` | `video_url`, `poster`, `poster_alt`, `play_label`, botao |
 | `pro_lp_testimonials` | `Aprovados` | selecao de depoimentos do CPT, limite, colunas de 2 a 4 e botao opcional |
@@ -210,7 +207,6 @@ Implementados na Fase 3 (`#196`).
 | `pro_navbar` | modo `lp`, com logo e um unico CTA sempre visivel, sem menu e sem toggle; `cta_label` e `cta_url`, que aceita ancora |
 | `pro_offer_hero` | `heading_level` com default `h1`, `microcopy`, `media_mode` para usar a imagem como fundo, repeater `proof_cards` |
 | `pro_benefits_list` | `eyebrow`, `body`, `columns` de 2 a 4, e por item `icon`, `highlight` e `badge` |
-| `pro_pricing_card` | `price_prefix`, `price_details`, `trust_items`; card centralizado |
 | `pro_pricing_grid` | `eyebrow`, `body`, os mesmos campos de preco por plano, e centralizacao quando ha um plano so |
 | `pro_cta` | `eyebrow`, `microcopy`; na faixa de marca o card proprio some e a faixa vira o CTA |
 | `pro_footer` | modo `minimal`, com logo e copyright |
@@ -266,8 +262,8 @@ Os 13 widgets da home permanecem isolados por decisao explicita e nao entram na 
 | `pro_faq` | manter | unico widget de perguntas fora da home |
 | `pro_lp_video_story` | manter | unico com fachada de video |
 | `pro_pricing_grid` | manter, absorve os outros dois do grupo | com um plano ja renderiza card centralizado de 544 px com preco, preco a vista e selos, e traz cabecalho de secao |
-| `pro_pricing_card` | aposentado, oculto do painel | renderiza a 544 px com a mesma sequencia de filhos da grade com um plano; e um plano da grade sem cabecalho de secao |
-| `pro_lp_offer_highlight` | aposentado, oculto do painel | renderiza a 544 px com a mesma sequencia de filhos, sem os campos de preco; `__summary` e `__name` sao os mesmos papeis de `__description` e do heading do plano |
+| `pro_pricing_card` | removido | era um plano da grade sem cabecalho de secao |
+| `pro_lp_offer_highlight` | removido | era o mesmo card sem os campos de preco |
 | `pro_offer_hero` | manter, escopo congelado | primeira faixa da pagina, dona do `h1`, com imagem de fundo e cards de prova |
 | `pro_lp_spotlight` | manter, escopo congelado | faixa de meio de pagina, com bullets e lado invertivel |
 | `pro_cta` | manter, escopo congelado | subconjunto estrito do hero, mas a intencao de faixa minima e legitima e esta em uso |
@@ -562,3 +558,19 @@ cartao o par e do cartao, porque o cartao pinta a propria superficie.
 Cobertura: `every closed-list section tone keeps every text readable` mede selo,
 titulo, corpo, lista e botao em cada um dos nove tons, na pagina de fixture
 `/lp/checagem-tons-de-secao/`, semeada pelo `test:e2e`.
+
+## Aposentadoria do grupo de oferta
+
+`pro_pricing_card` e `pro_lp_offer_highlight` foram **removidos** do tema, e nao
+apenas ocultados. O que substitui os dois e `pro_pricing_grid`, que com um plano
+renderiza o mesmo card centralizado, com preco, preco a vista e selos.
+
+Antes disso os dois passaram por um estado intermediario que se mostrou pior que
+o pretendido: `show_in_panel()` falso mais `(obsoleto)` no titulo. O widget saia
+do painel mas continuava no codigo, nos testes, na pagina de homologacao e nesta
+documentacao, sem ninguem exercitar de verdade. Um widget invisivel nao e um
+widget aposentado, e um custo de manutencao sem leitor.
+
+O teste `test_no_widget_is_hidden_from_the_panel` passa a recusar tanto
+`show_in_panel` quanto a palavra `obsoleto` nas fontes de widget, para que a
+proxima aposentadoria seja uma remocao.

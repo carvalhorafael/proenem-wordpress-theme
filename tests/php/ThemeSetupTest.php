@@ -233,6 +233,19 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Get the files that declare Elementor widgets.
+	 *
+	 * @return string[]
+	 */
+	private function get_widget_source_files() {
+		return array(
+			PROENEM_THEME_DIR . '/inc/class-proenem-elementor-sales-widget-base.php',
+			PROENEM_THEME_DIR . '/inc/class-proenem-elementor-lp-widget-base.php',
+			PROENEM_THEME_DIR . '/inc/class-proenem-elementor-home-widget-base.php',
+		);
+	}
+
+	/**
 	 * Get the widget technical names declared by the theme.
 	 *
 	 * Elementor is not loaded in the PHPUnit environment, so the widget classes
@@ -244,14 +257,8 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	private function get_declared_widget_names() {
 		$names = array();
 
-		$files = array(
-			'/inc/class-proenem-elementor-sales-widget-base.php',
-			'/inc/class-proenem-elementor-lp-widget-base.php',
-			'/inc/class-proenem-elementor-home-widget-base.php',
-		);
-
-		foreach ( $files as $file ) {
-			$source = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		foreach ( $this->get_widget_source_files() as $file ) {
+			$source = (string) file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
 			preg_match_all( "/return '(pro_[a-z0-9_]+)';/", $source, $matches );
 
@@ -325,26 +332,41 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Landing page kits should not ship deprecated or home only widgets.
+	 * No widget should be retired in place, hidden from the panel.
 	 *
-	 * The deprecated list mirrors the widgets that return false in
-	 * show_in_panel(). Deprecating another widget means adding it here.
+	 * Dois widgets ficaram assim por um tempo: com "(obsoleto)" no titulo e
+	 * `show_in_panel()` falso. O efeito foi pior que o pretendido, porque um
+	 * widget invisivel no painel continua no codigo, nos testes e na
+	 * documentacao sem ninguem exercitar. Aposentar agora significa remover.
 	 *
 	 * @return void
 	 */
-	public function test_elementor_lp_kits_avoid_deprecated_and_home_widgets() {
-		$deprecated = array( 'pro_pricing_card', 'pro_lp_offer_highlight' );
+	public function test_no_widget_is_hidden_from_the_panel() {
+		foreach ( $this->get_widget_source_files() as $source_file ) {
+			$source = (string) file_get_contents( $source_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
+			$this->assertStringNotContainsString(
+				'show_in_panel',
+				$source,
+				basename( $source_file ) . ' nao deve esconder widget do painel: aposentar e remover'
+			);
+
+			$this->assertStringNotContainsString(
+				'obsoleto',
+				$source,
+				basename( $source_file ) . ' nao deve marcar widget como obsoleto: aposentar e remover'
+			);
+		}
+	}
+
+	/**
+	 * Landing page kits should not ship home only widgets.
+	 *
+	 * @return void
+	 */
+	public function test_elementor_lp_kits_avoid_home_widgets() {
 		foreach ( array( 'proenem-lp-oferta-completa.json', 'proenem-lp-diferencial-em-foco.json' ) as $kit_file ) {
 			$widgets = $this->get_kit_widget_names( $kit_file );
-
-			foreach ( $deprecated as $widget_name ) {
-				$this->assertNotContains(
-					$widget_name,
-					$widgets,
-					$kit_file . ' nao deve usar o widget obsoleto ' . $widget_name
-				);
-			}
 
 			foreach ( $widgets as $widget_name ) {
 				$this->assertStringStartsNotWith(
@@ -822,7 +844,6 @@ class ThemeSetupTest extends WP_UnitTestCase {
 				'Proenem_Elementor_Offer_Hero_Widget',
 				'Proenem_Elementor_Offer_Countdown_Widget',
 				'Proenem_Elementor_Pricing_Grid_Widget',
-				'Proenem_Elementor_Pricing_Card_Widget',
 				'Proenem_Elementor_Benefits_List_Widget',
 				'Proenem_Elementor_Plans_Comparison_Widget',
 				'Proenem_Elementor_Cta_Widget',
@@ -841,7 +862,6 @@ class ThemeSetupTest extends WP_UnitTestCase {
 				'Proenem_Elementor_Home_Final_Cta_Widget',
 				'Proenem_Elementor_Home_Faq_Widget',
 				'Proenem_Elementor_Lp_Metrics_Widget',
-				'Proenem_Elementor_Lp_Offer_Highlight_Widget',
 				'Proenem_Elementor_Lp_Spotlight_Widget',
 				'Proenem_Elementor_Lp_Video_Story_Widget',
 				'Proenem_Elementor_Lp_Testimonials_Widget',
