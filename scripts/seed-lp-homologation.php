@@ -321,14 +321,6 @@ $elementor_data = array(
 		)
 	),
 	proenem_lp_homologation_container(
-		'lpoffer01',
-		'pro_lp_offer_highlight',
-		array(
-			'button_url' => array( 'url' => '#oferta' ),
-			'tone'       => 'brand',
-		)
-	),
-	proenem_lp_homologation_container(
 		'lpspot01',
 		'pro_lp_spotlight',
 		array(
@@ -357,22 +349,6 @@ $elementor_data = array(
 		array(
 			'video_url'  => array( 'url' => 'https://www.youtube.com/watch?v=aqz-KE-bpKQ' ),
 			'button_url' => array( 'url' => '#oferta' ),
-		)
-	),
-	proenem_lp_homologation_container(
-		'lpcard01',
-		'pro_pricing_card',
-		array(
-			'badge'         => 'Card, nao secao',
-			'name'          => 'Turma Intensiva ENEM 2026',
-			'description'   => 'Acesso completo ate o dia da prova.',
-			'price_prefix'  => '12x de',
-			'price'         => 'R$ 29,90',
-			'price_details' => 'ou R$ 306,90 a vista',
-			'features'      => "Cronograma semanal\nCorrecao de redacao\nSimulados corrigidos no padrao ENEM",
-			'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
-			'button_label'  => 'Garantir minha vaga',
-			'button_url'    => array( 'url' => '#oferta' ),
 		)
 	),
 	proenem_lp_homologation_container(
