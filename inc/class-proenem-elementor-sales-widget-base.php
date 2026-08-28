@@ -1249,6 +1249,19 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		);
 		$this->add_section_heading_level_control( 'h1' );
 		$this->add_control(
+			'layout',
+			array(
+				'label'       => esc_html__( 'Disposição', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'split',
+				'options'     => array(
+					'split'   => esc_html__( 'Dividida: texto e conteúdo ao lado', 'proenem-wordpress-theme' ),
+					'compact' => esc_html__( 'Compacta: uma coluna centralizada', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$this->add_control(
 			'primary_label',
 			array(
 				'label'   => esc_html__( 'Botão principal', 'proenem-wordpress-theme' ),
@@ -1279,6 +1292,28 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		);
 		$this->add_button_accent_control( 'button_accent' );
 		$this->add_control(
+			'price_prefix',
+			array(
+				'label'       => esc_html__( 'Prefixo do preço', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'description' => esc_html__( 'Ex.: 12x de. Deixe os tres campos de preco vazios para o hero nao mostrar preco.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$this->add_control(
+			'price',
+			array(
+				'label' => esc_html__( 'Preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$this->add_control(
+			'price_details',
+			array(
+				'label' => esc_html__( 'Detalhe do preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$this->add_control(
 			'microcopy',
 			array(
 				'label'       => esc_html__( 'Linha de confiança', 'proenem-wordpress-theme' ),
@@ -1291,6 +1326,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		$this->add_control(
 			'side_content',
 			array(
+				'condition'   => array( 'layout' => 'split' ),
 				'label'       => esc_html__( 'Conteúdo ao lado do texto', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'default'     => 'cards',
@@ -1384,13 +1420,21 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 			? $settings['image']['url']
 			: '';
 		$proof_cards  = ! empty( $settings['proof_cards'] ) && is_array( $settings['proof_cards'] ) ? $settings['proof_cards'] : array();
-		$has_side     = ( 'cards' === $side_content && $proof_cards )
-			|| ( 'image' === $side_content && '' !== $image_url )
-			|| ( 'video' === $side_content && ( ! empty( $settings['video_url']['url'] ) || ! empty( $settings['poster']['url'] ) ) );
+		$layout       = ( $settings['layout'] ?? 'split' ) === 'compact' ? 'compact' : 'split';
+		$has_side     = 'split' === $layout
+			&& (
+				( 'cards' === $side_content && $proof_cards )
+				|| ( 'image' === $side_content && '' !== $image_url )
+				|| ( 'video' === $side_content && ( ! empty( $settings['video_url']['url'] ) || ! empty( $settings['poster']['url'] ) ) )
+			);
 		$class_name   = 'pro-sales-hero';
 
 		if ( ! $has_side ) {
 			$class_name .= ' pro-sales-hero--no-media';
+		}
+
+		if ( 'compact' === $layout ) {
+			$class_name .= ' pro-sales-hero--compact';
 		}
 
 		$this->add_section_render_attributes( $settings, $class_name, ! empty( $settings['title'] ) );
@@ -1410,6 +1454,22 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 						)
 					);
 					?>
+					<?php
+					$price = trim( (string) ( $settings['price'] ?? '' ) );
+					if ( '' !== $price || '' !== trim( (string) ( $settings['price_prefix'] ?? '' ) ) ) :
+						?>
+						<p class="pro-sales-hero__price">
+							<?php if ( ! empty( $settings['price_prefix'] ) ) : ?>
+								<span class="pro-sales-hero__price-prefix"><?php echo esc_html( $settings['price_prefix'] ); ?></span>
+							<?php endif; ?>
+							<?php if ( '' !== $price ) : ?>
+								<span class="pro-sales-hero__price-value"><?php echo esc_html( $price ); ?></span>
+							<?php endif; ?>
+							<?php if ( ! empty( $settings['price_details'] ) ) : ?>
+								<span class="pro-sales-hero__price-details"><?php echo esc_html( $settings['price_details'] ); ?></span>
+							<?php endif; ?>
+						</p>
+					<?php endif; ?>
 						<div class="pro-sales-actions">
 							<div class="pro-sales-actions__buttons">
 							<?php
@@ -1422,7 +1482,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 						<?php endif; ?>
 						</div>
 					</div>
-					<?php if ( 'cards' === $side_content && $proof_cards ) : ?>
+					<?php if ( $has_side && 'cards' === $side_content && $proof_cards ) : ?>
 						<ul class="pro-sales-hero__proof">
 						<?php foreach ( $proof_cards as $proof_card ) : ?>
 							<?php if ( empty( $proof_card['label'] ) && empty( $proof_card['value'] ) ) : ?>
@@ -1434,11 +1494,11 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 								</li>
 							<?php endforeach; ?>
 						</ul>
-					<?php elseif ( 'image' === $side_content && $image_url ) : ?>
+					<?php elseif ( $has_side && 'image' === $side_content && $image_url ) : ?>
 						<figure class="pro-sales-hero__media">
 							<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $settings['image_alt'] ?? '' ); ?>">
 						</figure>
-					<?php elseif ( 'video' === $side_content ) : ?>
+					<?php elseif ( $has_side && 'video' === $side_content ) : ?>
 						<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-sales-hero__video' ); ?>
 					<?php endif; ?>
 				</div>

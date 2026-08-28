@@ -860,6 +860,90 @@
   padding-inline: clamp(var(--pen-space-5, 1.25rem), 2.4vw, var(--pen-space-8, 2rem));
 }
 
+/* Disposicao compacta: uma coluna centralizada, sem conteudo ao lado. Encurta
+   o caminho ate a chamada, para campanha em que a pessoa ja chega decidida. */
+.pro-sales-hero--compact {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+/* Sem essa regra a compacta so encurtava no mobile e em tela baixa, onde os
+   cards empilhavam ou o espaco faltava. Em tela alta ela media exatamente a
+   mesma altura da dividida, porque o titulo mantinha as 4 linhas e os cards
+   nao eram o que definia a altura. O respiro da faixa acompanha o nome. */
+.pro-sales-section:has(> .pro-sales-hero--compact) {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.pro-sales-hero--compact .pro-sales-hero__content {
+  align-items: center;
+  display: grid;
+  justify-items: center;
+  max-width: 46rem;
+}
+
+.pro-sales-hero--compact .pro-sales-hero__title {
+  max-width: 20ch;
+}
+
+/* O preco fica entre o texto e a chamada: e o dado que trava a decisao, e
+   coloca-lo depois do botao obrigaria a decidir antes de saber o valor. */
+.pro-sales-hero__price {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--pen-space-2, 0.5rem);
+  margin: var(--pen-space-5, 1.25rem) 0 0;
+}
+
+.pro-sales-hero--compact .pro-sales-hero__price {
+  justify-content: center;
+}
+
+.pro-sales-hero__price-prefix,
+.pro-sales-hero__price-details {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.pro-sales-hero__price-value {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pro-sales-hero__price-details {
+  flex-basis: 100%;
+}
+
+/* Em tela baixa o hero nao cabe. Medido em 1366x625, que e o que sobra de um
+   notebook 1366x768 depois da barra do navegador, dos favoritos e da barra do
+   sistema: o botao terminava em 671 px, 46 px abaixo da dobra, e a pessoa
+   chegava na pagina sem ver a chamada.
+   A compressao reage a altura, e nao a largura, porque o que falta e espaco
+   vertical: em tela alta o hero continua com o respiro que tem hoje. */
+@media (max-height: 44rem) {
+  .pro-sales-section:has(> .pro-sales-hero) {
+    padding-block: var(--pen-space-8, 2rem);
+  }
+
+  /* Alargar o `max-width` nao adianta aqui: no layout dividido quem limita a
+     largura da linha e a coluna, nao o `max-width`, entao o titulo continuava
+     com as mesmas 4 linhas. O que reduz altura e a escala. */
+  .pro-sales-hero__title {
+    font-size: clamp(2rem, 3.6vw, 3.2rem);
+  }
+
+  .pro-sales-hero__body {
+    margin-top: var(--pen-space-3, 0.75rem);
+  }
+
+  .pro-sales-hero .pro-sales-actions {
+    margin-top: var(--pen-space-4, 1rem);
+  }
+}
+
 .pro-sales-hero__body {
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   margin-top: var(--pen-space-5, 1.25rem);

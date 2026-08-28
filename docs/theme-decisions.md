@@ -555,3 +555,17 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Fronteira: `.pro-sales-actions` era usado so pelo hero, com uma unica regra de CSS, entao a reestruturacao nao alcanca outro widget. Verificado antes de mexer.
 - Medido depois: vao de 16 px e centro do botao igual ao centro do texto, com diferenca de 0 px em 390, 768 e 1600 px. Sem overflow horizontal.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Dobra do hero, disposicao compacta e preco opcional
+
+- Contexto: analise de conversao do hero. A pergunta era se a disposicao atual e a melhor e se valiam widgets novos de hero.
+- Achado que virou correcao: em 1366x625, que e o que sobra de um notebook 1366x768 depois da barra do navegador e do sistema, o botao terminava em 671 px, **46 px abaixo da dobra**. A pessoa chegava na pagina sem ver a chamada. Em 1440x700 ficava em 98%, encostado.
+- Decisao 1: a compressao reage a `max-height`, e nao a largura, porque o que falta e espaco vertical. Em tela alta o hero mantem o respiro.
+- Tentativa que nao funcionou: alargar o `max-width` do titulo para reduzir linhas. No layout dividido quem limita a linha e a coluna, nao o `max-width`, entao o titulo continuou com 4 linhas. O que reduz altura ali e a escala.
+- Decisao 2: em vez de widgets novos de hero, um controle de disposicao no widget existente. O proprio repositorio ja tinha registrado essa licao na Fase 3.5, quando dois widgets sairam por duplicacao. O hero tambem ja oferecia imagem e video ao lado, e ninguem usava.
+- Achado sobre a compacta: na primeira versao ela media exatamente a mesma altura da dividida em 1920x1080, porque o titulo mantinha as 4 linhas e os cards nao eram o que definia a altura. O ganho existia so no mobile e em tela baixa. O respiro da faixa passou a acompanhar o nome.
+- Decisao 3: preco opcional entre o texto e a chamada. Fica antes do botao porque e o dado que trava a decisao, e depois obrigaria a decidir antes de saber o valor.
+- Medido, distancia do topo da faixa ate o fim do botao: em 390 px, 462 na dividida e 454 na compacta, com a faixa caindo de 857 para 527 px. Em 1920, 623 e 607. Em 1366x625 o botao passou de 107% para 88% da dobra, com o microcopy tambem visivel.
+- Nao feito, e registrado: hero com captura de lead. Formulario traz validacao, integracao e LGPD, que sao fronteira de plugin e nao de tema.
+- Ressalva: nada disso e "o que mais converte". Sao heuristicas mais um defeito medido. Ordem de impacto real so sai de teste com trafego.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
