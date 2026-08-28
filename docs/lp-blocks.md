@@ -536,3 +536,29 @@ diferentes, e ai o que separa uma da outra e o conteudo do meio, nao uma
 costura. O `test:e2e` semeia as duas paginas de bancada e importa os dois kits
 antes de rodar, entao os templates publicados entram na cobertura de navegador
 e nao so na checagem estrutural do PHPUnit.
+
+## Fundo de secao
+
+O controle `Fundo da seção` oferece `Transparente`, `Superfície`, `Imagem` e as
+nove cores da lista fechada de `proenem_get_brand_accents()`. Cada cor declara
+superficie e conteudo juntos, entao nenhuma escolha perde legibilidade.
+
+| tom | superficie | conteudo | contraste |
+| --- | --- | --- | --- |
+| Amarelo da marca | `--pen-color-yellow-brand` | tinta | 10.56 |
+| Vermelho da marca | `--pen-color-proenem-red` | `--pen-color-on-red` | 6.61 |
+| Tinta | `--pen-color-ink` | branco | 17.40 |
+| Roxo | `--pen-color-purple-lp` | branco | 7.62 |
+| Rosa | `--pen-color-pink-hot` | tinta | 4.95 |
+| Verde | `--pen-color-mint` | tinta | 9.23 |
+| Azul esverdeado | `--pen-color-teal` | tinta | 6.70 |
+| Azul | `--pen-color-cyan` | tinta | 8.20 |
+| Laranja | `--pen-color-orange` | tinta | 6.37 |
+
+Sobre faixa colorida o botao primario usa o par invertido da faixa, entao o
+contraste do texto do botao e o mesmo que a faixa ja garante. Dentro de um
+cartao o par e do cartao, porque o cartao pinta a propria superficie.
+
+Cobertura: `every closed-list section tone keeps every text readable` mede selo,
+titulo, corpo, lista e botao em cada um dos nove tons, na pagina de fixture
+`/lp/checagem-tons-de-secao/`, semeada pelo `test:e2e`.

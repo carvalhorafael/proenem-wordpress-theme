@@ -491,3 +491,24 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Licao: compensacao com valor negativo amarrada a um padding alheio vira defeito silencioso no dia em que o padding muda. O lugar de resolver goteira de container e o container.
 - Verificado: as quatro paginas de homologacao com a primeira faixa em `top=0` e zero costuras. Com o gap de volta os testes falham com vao 20; com o hack de volta, com vao -10.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Fundo de secao passa a lista fechada de cores da marca
+
+- Contexto: a revisao visual mostrou que a alternancia de tons dos kits era invisivel. `Transparente` da o fundo do body, `#fef2f2`, e `Superficie` da `#ffffff`. O contraste entre as duas e 1.09, entao oito faixas seguidas liam como a mesma cor: vermelho no hero, quase-branco no meio, vermelho no fim.
+- Decisao: `Fundo da seção` deixa de ter uma cor de marca e passa a oferecer as nove da lista fechada de `proenem_get_brand_accents()`, a mesma fonte dos selos e dos botoes. Nao ha seletor livre, pelo mesmo motivo de sempre.
+- Arquitetura: cada tom declara apenas o par, em `--pro-tone-surface` e `--pro-tone-on`. Quem pinta e a classe `--colored`, e as regras de dentro da faixa passam a referir o par em vez de assumir vermelho com texto claro. Foi o que permitiu um tom claro como o amarelo funcionar pela mesma via que um escuro, sem regra por cor.
+- Consequencia no botao: sobre faixa colorida o botao primario usa o par invertido da faixa. O contraste do texto do botao passa a ser o mesmo par que a faixa ja garante, qualquer que seja o tom, em vez de um valor por cor que precisaria ser conferido um a um.
+- Fronteira preservada: dentro de um cartao o par e do cartao, nao da faixa, porque o cartao pinta a propria superficie. Essa excecao continua explicita.
+- Compatibilidade: `brand` segue sendo o vermelho, entao o valor gravado nas paginas publicadas nao muda de sentido.
+- Verificado: nove tons, com selo, titulo, corpo, lista e botao medidos em cada um. Pior contraste por faixa igual ao par declarado, de 4.95 no rosa a 17.40 na tinta, e nenhum elemento abaixo de 4.5. Com o par do amarelo quebrado de proposito, o teste falha com 1.65.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Revisao visual dos kits montados
+
+- Contexto: revisao de conjunto dos dois kits, depois da homologacao widget por widget.
+- Ritmo de tom: as faixas coloridas passam a entrar como pontuacao a cada duas ou tres faixas claras, e nunca duas coloridas seguidas. A sequencia fica vermelho, claro, branco, tinta, claro, amarelo ou verde, branco, claro, roxo, vermelho.
+- Fechamento: o kit de diferencial terminava em depoimentos e ia direto para o rodape, sem ultima chamada. Ganha faixa de CTA antes do rodape, como o kit de oferta ja tinha.
+- Faixa de metricas: era a unica sem titulo, e por consequencia sem nome acessivel. O widget sempre aceitou titulo; o kit e que deixava vazio. Preenchido nos dois.
+- Nao alterado, com motivo: os depoimentos ocupam 22% da altura no mobile, e o controle de limite ja existe com padrao 3. E altura natural de tres cartoes empilhados, nao defeito.
+- Em aberto para decisao do produto: cinco das onze secoes tem copy identica nos dois kits, entao hoje eles se diferenciam por duas secoes de texto e nao pela composicao. Como sao templates e a copy e trocada por campanha, fica registrado em vez de resolvido.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

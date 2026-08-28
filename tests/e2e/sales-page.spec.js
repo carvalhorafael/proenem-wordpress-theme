@@ -111,6 +111,91 @@ for (const [nome, url] of [
   });
 }
 
+/**
+ * Cada tom de faixa declara superficie e cor de conteudo juntas, entao a
+ * promessa e que qualquer texto dentro de qualquer tom da lista fechada
+ * permaneca legivel. O que quebra esse contrato nao e o titulo, e o que herda:
+ * selo, lista, microcopy e botao. Este teste mede todos.
+ */
+test("every closed-list section tone keeps every text readable", async ({ page }) => {
+  const response = await page.goto("/lp/checagem-tons-de-secao/");
+
+  test.skip(
+    !response || response.status() !== 200,
+    "A pagina de tons de secao nao esta disponivel neste ambiente.",
+  );
+
+  const faixas = await page.evaluate(() => {
+    const canal = (valor) => {
+      const escala = valor / 255;
+
+      return escala <= 0.03928 ? escala / 12.92 : ((escala + 0.055) / 1.055) ** 2.4;
+    };
+    const luminancia = ([r, g, b]) => 0.2126 * canal(r) + 0.7152 * canal(g) + 0.0722 * canal(b);
+    const numeros = (cor) => cor.match(/[\d.]+/g).map(Number);
+    const fundoSolido = (elemento) => {
+      let atual = elemento;
+
+      while (atual) {
+        const partes = numeros(getComputedStyle(atual).backgroundColor);
+
+        if (partes && (partes.length < 4 || partes[3] > 0)) {
+          return partes;
+        }
+
+        atual = atual.parentElement;
+      }
+
+      return [255, 255, 255];
+    };
+    const composto = (frente, fundo) => {
+      const partes = numeros(frente);
+      const alfa = partes.length > 3 ? partes[3] : 1;
+
+      return [0, 1, 2].map((i) => alfa * partes[i] + (1 - alfa) * fundo[i]);
+    };
+    const razao = (frente, elemento) => {
+      const fundo = fundoSolido(elemento);
+      const primeira = luminancia(composto(frente, fundo));
+      const segunda = luminancia(fundo);
+      const claro = Math.max(primeira, segunda);
+      const escuro = Math.min(primeira, segunda);
+
+      return +((claro + 0.05) / (escuro + 0.05)).toFixed(2);
+    };
+
+    return [...document.querySelectorAll(".pro-sales-section--colored")].map((secao) => {
+      const tom = [...secao.classList]
+        .find((classe) => classe.startsWith("pro-sales-section--tone-"))
+        .replace("pro-sales-section--tone-", "");
+      const reprovados = [];
+
+      secao.querySelectorAll("h1,h2,h3,p,li,span,.pen-button").forEach((elemento) => {
+        const texto = (elemento.textContent || "").trim();
+
+        if (!texto) {
+          return;
+        }
+
+        if (elemento.children.length > 0 && !elemento.classList.contains("pen-button")) {
+          return;
+        }
+
+        const contraste = razao(getComputedStyle(elemento).color, elemento);
+
+        if (contraste < 4.5) {
+          reprovados.push({ tom, contraste, texto: texto.slice(0, 40) });
+        }
+      });
+
+      return { tom, reprovados };
+    });
+  });
+
+  expect(faixas.length).toBeGreaterThan(0);
+  expect(faixas.flatMap((faixa) => faixa.reprovados)).toEqual([]);
+});
+
 test("sales page bands span the full width of the viewport", async ({ page }) => {
   await gotoSalesPage(page);
 

@@ -223,13 +223,8 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'label'       => esc_html__( 'Fundo da seção', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'default'     => 'default',
-				'options'     => array(
-					'default' => esc_html__( 'Transparente', 'proenem-wordpress-theme' ),
-					'surface' => esc_html__( 'Superfície', 'proenem-wordpress-theme' ),
-					'brand'   => esc_html__( 'Marca', 'proenem-wordpress-theme' ),
-					'image'   => esc_html__( 'Imagem', 'proenem-wordpress-theme' ),
-				),
-				'description' => esc_html__( 'As três primeiras opções usam as cores publicadas da Proenem em vez de cor livre.', 'proenem-wordpress-theme' ),
+				'options'     => self::get_section_tone_options(),
+				'description' => esc_html__( 'Cada cor da marca ja vem com a cor de texto que a acompanha, entao nenhuma escolha perde legibilidade. So a opção Imagem depende da camada de leitura abaixo.', 'proenem-wordpress-theme' ),
 			)
 		);
 
@@ -755,6 +750,40 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 	 * @param string $key Render attribute key.
 	 * @return string
 	 */
+	/**
+	 * Get the closed list of section backgrounds.
+	 *
+	 * As cores saem de proenem_get_brand_accents(), a mesma lista fechada dos
+	 * selos e dos botoes, entao a paleta de faixa nao divergir da paleta do
+	 * resto. `brand` continua sendo o vermelho, para nao mudar o sentido do
+	 * valor ja gravado nas paginas publicadas.
+	 *
+	 * @return array<string,string>
+	 */
+	protected static function get_section_tone_options(): array {
+		$options = array(
+			'default' => esc_html__( 'Transparente', 'proenem-wordpress-theme' ),
+			'surface' => esc_html__( 'Superfície', 'proenem-wordpress-theme' ),
+		);
+
+		foreach ( self::get_section_tone_accents() as $key => $accent ) {
+			$options[ $key ] = $accent['label'];
+		}
+
+		$options['image'] = esc_html__( 'Imagem', 'proenem-wordpress-theme' );
+
+		return $options;
+	}
+
+	/**
+	 * Get the brand accents usable as a section background.
+	 *
+	 * @return array<string,array<string,string>>
+	 */
+	protected static function get_section_tone_accents(): array {
+		return function_exists( 'proenem_get_brand_accents' ) ? proenem_get_brand_accents() : array();
+	}
+
 	protected function add_section_render_attributes( $settings, $class_name, $has_title = true, $key = 'section' ) {
 		$this->add_render_attribute( $key, 'class', 'pro-sales-section' );
 		$this->add_render_attribute( $key . '_inner', 'class', array( 'pro-sales-widget', 'pro-sales-section__inner', $class_name ) );
@@ -770,6 +799,13 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 
 		if ( '' !== $tone && 'default' !== $tone ) {
 			$this->add_render_attribute( $key, 'class', 'pro-sales-section--tone-' . sanitize_html_class( $tone ) );
+		}
+
+		/* Faixa que pinta uma cor da marca. O marcador e o que as regras de
+		   dentro da faixa usam para achar o par de cores, em vez de cada uma
+		   listar os tons um por um. */
+		if ( isset( self::get_section_tone_accents()[ $tone ] ) ) {
+			$this->add_render_attribute( $key, 'class', 'pro-sales-section--colored' );
 		}
 
 		if ( 'image' === $tone ) {

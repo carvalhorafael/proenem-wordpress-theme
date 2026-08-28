@@ -76,9 +76,59 @@
   background: var(--pen-color-surface, #ffffff);
 }
 
+/* Faixa colorida. Cada tom declara so o par de cores, e quem pinta e a regra
+   `--colored`. Assim as regras de dentro da faixa referem o par em vez de
+   assumir vermelho com texto claro, e um tom claro como o amarelo funciona
+   pela mesma via que um escuro. Os pares vem de proenem_get_brand_accents(),
+   que e a mesma lista fechada dos selos e dos botoes. */
+.pro-sales-section--tone-yellow {
+  --pro-tone-surface: var(--pen-color-yellow-brand, #f9c200);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
 .pro-sales-section--tone-brand {
-  background: var(--pen-color-proenem-red, #bb0922);
-  color: var(--pen-color-on-red, #ffffff);
+  --pro-tone-surface: var(--pen-color-proenem-red, #bb0922);
+  --pro-tone-on: var(--pen-color-on-red, #ffffff);
+}
+
+.pro-sales-section--tone-ink {
+  --pro-tone-surface: var(--pen-color-ink, #1a1a1a);
+  --pro-tone-on: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-section--tone-purple {
+  --pro-tone-surface: var(--pen-color-purple-lp, #4d17f5);
+  --pro-tone-on: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pro-sales-section--tone-pink {
+  --pro-tone-surface: var(--pen-color-pink-hot, #ff2d87);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-mint {
+  --pro-tone-surface: var(--pen-color-mint, #06d6a0);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-teal {
+  --pro-tone-surface: var(--pen-color-teal, #00b4a6);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-cyan {
+  --pro-tone-surface: var(--pen-color-cyan, #00bfff);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--tone-orange {
+  --pro-tone-surface: var(--pen-color-orange, #ff7051);
+  --pro-tone-on: var(--pen-color-ink, #1a1a1a);
+}
+
+.pro-sales-section--colored {
+  background: var(--pro-tone-surface);
+  color: var(--pro-tone-on);
 }
 
 /* An image background does not guarantee contrast on its own, so the reading
@@ -129,21 +179,23 @@
 /* The content wrapper carries its own color guarantee for untoned sections.
    Inside a toned band the pairing comes from the band. */
 .pro-sales-section--tone-surface > .pro-sales-widget,
-.pro-sales-section--tone-brand > .pro-sales-widget {
+.pro-sales-section--colored > .pro-sales-widget {
   color: inherit;
 }
 
-/* A red primary button on the brand band has no contrast against it, so the
-   call to action inverts. */
-.pro-sales-section--tone-brand .pen-button--primary {
-  background: var(--pen-color-canvas-white, #ffffff);
-  color: var(--pen-color-proenem-red, #bb0922);
+/* O botao primario tem a cor da marca, que nao contrasta com uma faixa da
+   propria marca. Sobre faixa colorida ele usa o par invertido da faixa, entao
+   o contraste do texto e o mesmo par que a faixa ja garante, qualquer que seja
+   o tom. */
+.pro-sales-section--colored .pen-button--primary {
+  background: var(--pro-tone-on);
+  color: var(--pro-tone-surface);
 }
 
 /* Inside a card the surface is the card's, not the band's, so the button keeps
    the default pairing. */
-.pro-sales-section--tone-brand .pen-pricing-card .pen-button--primary,
-.pro-sales-section--tone-brand .pen-card .pen-button--primary {
+.pro-sales-section--colored .pen-pricing-card .pen-button--primary,
+.pro-sales-section--colored .pen-card .pen-button--primary {
   background: var(--pen-color-primary, #dc341e);
   color: var(--pen-color-accent-contrast, #ffffff);
 }
@@ -367,21 +419,21 @@
 
 /* Par de cores dos componentes dentro da faixa de marca. Todo componente que
    pinta a propria superficie mantem o proprio par; os que nao pintam herdam. */
-.pro-sales-section--tone-brand li::before,
-.pro-sales-section--tone-brand .pro-sales-plan__price-details,
-.pro-sales-section--tone-brand .pro-sales-plan__trust li {
+.pro-sales-section--colored li::before,
+.pro-sales-section--colored .pro-sales-plan__price-details,
+.pro-sales-section--colored .pro-sales-plan__trust li {
   color: inherit;
 }
 
-.pro-sales-section--tone-brand .pen-pricing-card li::before,
-.pro-sales-section--tone-brand .pen-card li::before,
-.pro-sales-section--tone-brand .pen-pricing-card .pro-sales-plan__price-details,
-.pro-sales-section--tone-brand .pen-pricing-card .pro-sales-plan__trust li {
+.pro-sales-section--colored .pen-pricing-card li::before,
+.pro-sales-section--colored .pen-card li::before,
+.pro-sales-section--colored .pen-pricing-card .pro-sales-plan__price-details,
+.pro-sales-section--colored .pen-pricing-card .pro-sales-plan__trust li {
   color: var(--pen-color-ink, #111827);
 }
 
-.pro-sales-section--tone-brand .pro-sales-comparison table,
-.pro-sales-section--tone-brand .pro-sales-faq__item {
+.pro-sales-section--colored .pro-sales-comparison table,
+.pro-sales-section--colored .pro-sales-faq__item {
   background: var(--pen-color-canvas-white, #ffffff);
   color: var(--pen-color-ink, #111827);
 }
