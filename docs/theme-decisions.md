@@ -523,3 +523,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Protecao: `test_no_widget_is_hidden_from_the_panel` recusa `show_in_panel` e a palavra `obsoleto` nas fontes de widget. Verificado que falha ao reintroduzir `show_in_panel`.
 - Resultado: 28 widgets registrados passam a 26.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Escala do hero e escala de rotulo na pagina de venda
+
+- Contexto: revisao apontou o titulo do hero grande demais e o selo competindo com o conteudo.
+- Achado no titulo: o pedido falava em trocar `6vw` por `5vw`, mas medido em 1600 e 2000 px o titulo dava 92.8 px, que e o teto `5.8rem`, e nao o termo vw. Acima de ~1547 px o vw nem entra na conta. Mexer so no vw nao teria efeito nenhum na tela de quem pediu.
+- Decisao no titulo: o termo vw e o teto caem juntos, na proporcao 5/6, para a reducao valer em qualquer largura. `clamp(2.5rem, 5vw, 4.8rem)`. O minimo fica onde estava, porque o pedido era sobre desktop e o mobile ja estava homologado.
+- Achado no selo: `pen-section-pill` nao declara `font-size`. O rotulo herdava os 16 px do corpo do texto, entao um rotulo em caixa alta tinha o mesmo tamanho do texto de leitura.
+- Decisao no selo: escala de rotulo em `.pro-sales-eyebrow`, com `0.8125rem` e `letter-spacing` de `0.06em`. Fica na camada de uso da pagina de venda, e nao no componente publicado, porque a home usa o mesmo selo e ja tem escala propria.
+- Fronteira verificada: a home tem 4 selos, em 14 px e 11.2 px, e nenhum elemento com `.pro-sales-eyebrow`. A mudanca nao a alcanca.
+- Medido: titulo de 76.8 para 64 px em 1280, e de 92.8 para 76.8 px em 1600 e 2000. Selo de 16 para 13 px, caixa de 253x44 para 230x39. Mobile inalterado em 40 px. Sem overflow horizontal em 390, 768, 1280, 1600 e 2000.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
