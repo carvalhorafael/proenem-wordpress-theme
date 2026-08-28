@@ -534,3 +534,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Fronteira verificada: a home tem 4 selos, em 14 px e 11.2 px, e nenhum elemento com `.pro-sales-eyebrow`. A mudanca nao a alcanca.
 - Medido: titulo de 76.8 para 64 px em 1280, e de 92.8 para 76.8 px em 1600 e 2000. Selo de 16 para 13 px, caixa de 253x44 para 230x39. Mobile inalterado em 40 px. Sem overflow horizontal em 390, 768, 1280, 1600 e 2000.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Presenca do botao de chamada do hero
+
+- Contexto: pedido de botao maior e com mais destaque no hero, com a pagina `plataforma.proenem.com.br/enem2027` como referencia.
+- Medido na referencia, em 1600 px: caixa de 420x66, fonte de 18 px, peso 700, padding de 16 px por 32 px.
+- Medido no nosso hero, antes: caixa de 319x48, fonte de 15 px. A altura vinha do `min-height: 3rem` do `pen-button` publicado, e a fonte de `--pen-button-size`, que e `0.9375rem`. E escala de botao de formulario, que se perde numa faixa do tamanho do hero.
+- Decisao: a presenca vem no uso, em `.pro-sales-hero .pen-button`, e nao no componente publicado. O mesmo botao serve caixas de plano e faixas menores, onde 48 px esta correto, e um modificador global mudaria todas.
+- Regressao introduzida e corrigida no caminho: com fonte fixa de 18 px e 32 px de padding de cada lado, em 390 px o botao dava 389 px de largura numa janela de 390 e estourava a pagina. Fonte e padding passaram a fluidos; a altura nao acompanha, porque 64 px e alvo de toque bom no celular.
+- Resultado: 329x64 com fonte de 16 px de 360 a 768 px, e 389x64 com fonte de 18 px a partir de 1600 px. Sem overflow horizontal em 360, 390, 430, 768, 1280, 1600 e 2000.
+- Sombra: sobe de `--pen-shadow-hard-md` para `--pen-shadow-hard-lg`, que e o vocabulario de sombra dura da marca, em vez de inventar destaque com cor.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

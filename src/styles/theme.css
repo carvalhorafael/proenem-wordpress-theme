@@ -832,6 +832,21 @@
   max-width: 11ch;
 }
 
+/* O botao do hero e a chamada principal da pagina. O componente publicado
+   entrega 48 px de altura com 15 px de fonte, escala de botao de formulario,
+   que se perde numa faixa do tamanho do hero. Ganha presenca aqui, no uso, e
+   nao no componente, porque o mesmo botao serve caixas menores em outras
+   secoes, onde 48 px esta correto. */
+.pro-sales-hero .pen-button {
+  box-shadow: var(--pen-shadow-hard-lg);
+  /* Fonte e padding sao fluidos porque em 390 px o rotulo da campanha com
+     18 px e 32 px de cada lado dava 389 px de largura e estourava a janela.
+     A altura nao acompanha: 64 px e alvo de toque bom no celular. */
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  min-height: 4rem;
+  padding-inline: clamp(var(--pen-space-5, 1.25rem), 2.4vw, var(--pen-space-8, 2rem));
+}
+
 .pro-sales-hero__body {
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   margin-top: var(--pen-space-5, 1.25rem);
