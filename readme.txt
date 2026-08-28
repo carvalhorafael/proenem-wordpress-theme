@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.21.0
+Stable tag: 0.21.1
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,9 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.21.1 =
+* Remove os widgets Pro Card de Plano e Pro LP Destaque de Oferta, absorvidos por Pro Grade de Planos.
 
 = 0.21.0 =
 * Cria a biblioteca de widgets de LP: metricas, spotlight, depoimento em video e depoimentos.
