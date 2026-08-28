@@ -512,3 +512,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Nao alterado, com motivo: os depoimentos ocupam 22% da altura no mobile, e o controle de limite ja existe com padrao 3. E altura natural de tres cartoes empilhados, nao defeito.
 - Em aberto para decisao do produto: cinco das onze secoes tem copy identica nos dois kits, entao hoje eles se diferenciam por duas secoes de texto e nao pela composicao. Como sao templates e a copy e trocada por campanha, fica registrado em vez de resolvido.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Widgets do grupo de oferta removidos, nao ocultados
+
+- Contexto: `pro_pricing_card` e `pro_lp_offer_highlight` foram consolidados em `pro_pricing_grid` na Fase 3.5 e ficaram com `show_in_panel()` falso mais `(obsoleto)` no titulo, porque a nota da Fase 0 registrava `/lp/intenisva/` em producao usando o primeiro.
+- Achado ao remover: o estado intermediario era pior que o pretendido. O widget saia do painel mas continuava no codigo, nos testes, no seeder de homologacao e na documentacao, sem ninguem exercitar. Um widget invisivel nao e um widget aposentado, e um custo de manutencao sem leitor.
+- Achado sobre a documentacao do time: a pagina de widgets escrita para marketing dizia que os dois apareciam na lista com `(obsoleto)` no nome. Estava errado, porque `show_in_panel()` era falso e o time nunca os viu. O inventario que gerou aquela pagina leu titulos das fontes e assumiu visibilidade. Ao listar widgets para pessoa nao tecnica, o que vale e o que o painel mostra, nao o que a fonte declara.
+- Decisao: remover as duas classes, o registro, o CSS exclusivo de `pro-lp-offer-highlight`, as duas chamadas no seeder e as linhas de catalogo. O CSS de `pen-pricing-card` fica, porque e compartilhado com `pro_pricing_grid`.
+- Base da decisao: o Rafael confirmou que nenhuma pagina usa os dois. Nao foi possivel verificar producao a partir do ambiente local, e a nota da Fase 0 sobre `/lp/intenisva/` ficou registrada aqui por ser a informacao contraria. Se aquela secao existir em producao, ela deixa de renderizar e o resto da pagina continua.
+- Protecao: `test_no_widget_is_hidden_from_the_panel` recusa `show_in_panel` e a palavra `obsoleto` nas fontes de widget. Verificado que falha ao reintroduzir `show_in_panel`.
+- Resultado: 28 widgets registrados passam a 26.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
