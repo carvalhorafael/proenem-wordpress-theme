@@ -613,3 +613,17 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Resolve pendencia anterior: os dois primeiros kits ficaram com estrutura identica depois que o de diferencial ganhou o CTA de fechamento. Este terceiro diverge de verdade, na abertura e no ritmo.
 - Verificado: 10 faixas, todas na largura total, um unico h1, sem overflow, axe sem violacao grave.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Variantes de hero da home para teste de conversao
+
+- Contexto: a primeira dobra da home promete resultado mas nao mostra oferta, preco nem garantia antes do scroll, e a acao primaria apenas rola ate a ancora de planos. O pedido foi criar variantes de home focadas em conversao, sem alterar o template atual.
+- Decisao: criar dois templates de pagina (`page-templates/home-variant-oferta.php` e `page-templates/home-variant-prova.php`) que trocam apenas o hero e reaproveitam o resto da pagina. `page-templates/home.php` continua intocado como controle.
+- Estrutura: o corpo abaixo da dobra virou `template-parts/home/sections.php`, e os helpers compartilhados viraram `inc/home-shared.php`. As variantes consomem os dois; o controle mantem o corpo embutido enquanto o teste roda, para nao ser alterado.
+- Custo aceito: existe uma copia do corpo da home enquanto o teste durar. A alternativa, duplicar o corpo duas vezes, deixaria tres copias divergindo. A duplicacao unica acaba quando o vencedor for promovido.
+- Deteccao de superficie: `header.php`, `footer.php`, a classe de body e o descarte de assets passaram a usar `proenem_is_home_surface()` em vez de comparar com `page-templates/home.php`. Sem isso as variantes receberiam o header e o footer genericos do tema.
+- Contrato de CTA divergente de proposito: a acao primaria das variantes vai direto ao checkout aprovado, e nao para `/#planos`. Essa diferenca e parte do que esta sendo medido, e esta registrada em `docs/home-hero-variants.md`.
+- Medicao: cada link do hero carrega `data-pro-hero-variant` e `data-pro-hero-action`, para a ferramenta de teste distinguir cliques sem depender do texto do botao.
+- Urgencia sem invencao: a contagem regressiva da variante B so aparece quando `proenem_home_exam_date` for definido. Uma data inventada ou vencida na primeira dobra custa mais confianca do que a ausencia da linha.
+- Gap do design system: `pen-hero-section` assume promessa centralizada com foto como palco. Layout em duas colunas com bloco de oferta e pilha liderada por prova nao cabem no contrato publicado. Fundo, enfase, stickers e botao continuam vindo do pacote; so o layout e local.
+- Tracking: as issues obrigatorias do design system e do tema ficam pendentes ate a decisao de promover ou descartar o hero vencedor. Se o vencedor for promovido, o gap deixa de ser temporario e as duas issues passam a ser obrigatorias.
+- Verificado no navegador local, 1440x1000 e 390x844: as duas variantes com acao primaria acima da dobra, arrow do botao colada na ultima palavra, cartao de prova social em fluxo abaixo da foto no mobile e nenhuma quebra horizontal.

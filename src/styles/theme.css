@@ -8553,3 +8553,697 @@ body.proenem-home-template {
     padding-inline: 1.4rem;
   }
 }
+
+/* ==========================================================================
+   Home hero variants (conversion A/B test)
+
+   Local adaptation. `@carvalhorafael/proenem-css` publishes a single hero
+   pattern (`pen-hero-section`), built around a centered promise with the
+   student photo as the stage. Neither conversion variant fits that contract:
+   variant A needs a two-column offer layout with a price block, and variant B
+   needs a stacked proof-first layout. Both keep the published background,
+   emphasis and sticker classes and only add the layout on top.
+
+   Remove these blocks once a variant is promoted into the control hero, or
+   once the design system publishes an offer hero pattern.
+   ========================================================================== */
+
+.pro-home--variant .pen-hero-section {
+  --pen-hero-emphasis-stroke-width: 0.14em;
+  --pro-hero-cta-background: var(--pen-color-yellow-bright);
+  --pro-hero-cta-background-hover: var(--pen-color-yellow-brand);
+  display: block;
+  padding-block: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
+  padding-inline: clamp(var(--pen-space-5), 4vw, var(--pen-space-12));
+}
+
+.pro-home--variant .pen-hero-section__emphasis {
+  color: var(--pen-color-ink);
+  display: inline-block;
+  filter: drop-shadow(4px 4px 0 var(--pen-color-ink));
+  font-weight: var(--pen-font-weight-display);
+  paint-order: stroke fill;
+  text-shadow: none;
+  -webkit-text-stroke-width: var(--pen-hero-emphasis-stroke-width);
+}
+
+.pro-home--variant .pen-hero-section__emphasis--blue {
+  -webkit-text-stroke-color: var(--pen-color-cyan);
+}
+
+.pro-home--variant .pen-hero-section__emphasis--yellow {
+  -webkit-text-stroke-color: var(--pen-color-yellow-bright);
+}
+
+/* The shared conversion action. Yellow on red is the highest contrast pair in
+   the brand palette, so the single primary action never competes with the red
+   background or with the navbar. */
+.pro-hero-offer__cta,
+.pro-hero-proof__cta {
+  background: var(--pro-hero-cta-background);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-lg);
+  color: var(--pen-color-ink);
+  font-size: clamp(1rem, 1.35vw, 1.185rem);
+  font-weight: 800;
+  min-height: 3.75rem;
+  text-align: center;
+  white-space: normal;
+}
+
+.pro-hero-offer__cta:hover,
+.pro-hero-proof__cta:hover {
+  background: var(--pro-hero-cta-background-hover);
+  box-shadow: var(--pen-shadow-hard-xl);
+}
+
+.pro-hero-offer__cta:active,
+.pro-hero-proof__cta:active {
+  box-shadow: var(--pen-shadow-hard-sm);
+  transform: var(--pen-pressed-transform);
+}
+
+/* Keeps the arrow glued to the last word: as a sibling flex item it would drop
+   to its own line whenever the label wraps on a phone. */
+.pro-hero-cta__label {
+  display: inline;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.pro-hero-cta__label .pen-button__arrow {
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Variant A: offer-led first fold
+   -------------------------------------------------------------------------- */
+
+.pro-hero-offer__stage {
+  align-items: center;
+  display: grid;
+  gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-16));
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  margin-inline: auto;
+  max-width: 78rem;
+  position: relative;
+}
+
+.pro-hero-offer__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pen-space-5);
+  position: relative;
+  z-index: 2;
+}
+
+.pro-hero-offer__eyebrow {
+  align-items: center;
+  align-self: start;
+  background: rgb(0 0 0 / 0.28);
+  border: var(--pen-border-brand-sm);
+  border-radius: var(--pen-radius-pill);
+  color: var(--pen-color-on-red);
+  display: inline-flex;
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  gap: var(--pen-space-2);
+  letter-spacing: 0.04em;
+  margin: 0;
+  padding: var(--pen-space-2) var(--pen-space-4);
+  text-transform: uppercase;
+}
+
+.pro-hero-offer__eyebrow-dot {
+  background: var(--pen-color-mint);
+  border-radius: var(--pen-radius-pill);
+  display: block;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+
+.pro-hero-offer__title {
+  color: var(--pen-color-on-red);
+  font-family: var(--pen-font-display);
+  font-size: clamp(2.6rem, 4.6vw, 4.25rem);
+  font-weight: var(--pen-font-weight-display);
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  margin: 0;
+  text-shadow:
+    4px 4px 0 var(--pen-color-ink),
+    -2px -2px 0 var(--pen-color-ink),
+    2px -2px 0 var(--pen-color-ink),
+    -2px 2px 0 var(--pen-color-ink);
+}
+
+.pro-hero-offer__subtitle {
+  color: var(--pen-color-on-red);
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 34rem;
+}
+
+.pro-hero-offer__benefits {
+  display: grid;
+  gap: var(--pen-space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-offer__benefits li {
+  align-items: center;
+  color: var(--pen-color-on-red);
+  display: grid;
+  font-size: var(--pen-text-base);
+  font-weight: 600;
+  gap: var(--pen-space-3);
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  line-height: 1.35;
+}
+
+.pro-hero-offer__check {
+  align-items: center;
+  background: var(--pen-color-mint);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  display: inline-flex;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}
+
+.pro-hero-offer__check svg {
+  fill: none;
+  height: 0.95rem;
+  stroke: var(--pen-color-ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+  width: 0.95rem;
+}
+
+/* The offer card is the only white surface in the fold, so the eye lands on
+   the price and the button before anything else. */
+.pro-hero-offer__action {
+  align-self: start;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-2xl);
+  box-shadow: var(--pen-shadow-hard-md);
+  display: grid;
+  gap: var(--pen-space-4);
+  justify-items: stretch;
+  max-width: 30rem;
+  padding: var(--pen-space-5);
+  width: 100%;
+}
+
+.pro-hero-offer__price {
+  align-items: baseline;
+  color: var(--pen-color-ink);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-2);
+  margin: 0;
+}
+
+.pro-hero-offer__price-prefix {
+  font-size: var(--pen-text-base);
+  font-weight: 600;
+}
+
+.pro-hero-offer__price-value {
+  font-family: var(--pen-font-display);
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
+  font-weight: var(--pen-font-weight-display);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.pro-hero-offer__price-details {
+  color: var(--pen-color-ink-muted);
+  flex-basis: 100%;
+  font-size: var(--pen-text-sm);
+  font-weight: 500;
+}
+
+.pro-hero-offer__secondary {
+  color: var(--pen-color-ink-muted);
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.pro-hero-offer__secondary:hover {
+  color: var(--pen-color-primary);
+}
+
+.pro-hero-offer__reassurance {
+  color: var(--pen-color-on-red);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--pen-text-sm);
+  font-weight: 600;
+  gap: var(--pen-space-2) var(--pen-space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-offer__reassurance li {
+  align-items: center;
+  display: flex;
+  gap: var(--pen-space-2);
+}
+
+.pro-hero-offer__reassurance li + li::before {
+  background: var(--pen-color-on-red-accent);
+  border-radius: var(--pen-radius-pill);
+  content: "";
+  height: 0.35rem;
+  width: 0.35rem;
+}
+
+.pro-hero-offer__figure {
+  align-self: end;
+  justify-self: center;
+  position: relative;
+  width: 100%;
+}
+
+.pro-hero-offer__image {
+  display: block;
+  height: auto;
+  margin-inline: auto;
+  max-width: min(100%, 30rem);
+  width: 100%;
+}
+
+.pro-hero-offer__sticker {
+  position: absolute;
+  z-index: 3;
+}
+
+.pro-hero-offer__sticker--tri {
+  background: var(--pen-color-cyan);
+  right: 0;
+  top: 12%;
+  transform: rotate(6deg);
+}
+
+.pro-hero-offer__sticker--plan {
+  background: var(--pen-color-yellow-bright);
+  left: 0;
+  top: 34%;
+  transform: rotate(-7deg);
+}
+
+.pro-hero-offer__social {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-xl);
+  bottom: var(--pen-space-4);
+  box-shadow: var(--pen-shadow-hard-sm);
+  display: flex;
+  gap: var(--pen-space-3);
+  left: 50%;
+  padding: var(--pen-space-3) var(--pen-space-4);
+  position: absolute;
+  transform: translateX(-50%);
+  width: max-content;
+  z-index: 4;
+}
+
+.pro-hero-offer__avatars {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-offer__avatars li + li {
+  margin-left: -0.75rem;
+}
+
+.pro-hero-offer__avatars img {
+  border: var(--pen-border-brand-sm);
+  border-radius: var(--pen-radius-pill);
+  display: block;
+  height: 2.25rem;
+  object-fit: cover;
+  object-position: top center;
+  width: 2.25rem;
+}
+
+.pro-hero-offer__social-copy {
+  color: var(--pen-color-ink);
+  display: grid;
+  font-size: var(--pen-text-xs);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.pro-hero-offer__social-copy strong {
+  font-size: var(--pen-text-sm);
+}
+
+.pro-hero-offer__universities {
+  align-items: center;
+  border-top: 2px solid rgb(255 255 255 / 0.28);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4) var(--pen-space-8);
+  justify-content: center;
+  margin-inline: auto;
+  margin-top: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  max-width: 78rem;
+  padding-top: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+}
+
+.pro-hero-offer__universities-label {
+  color: var(--pen-color-on-red-muted);
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pro-hero-offer__universities-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-5) clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-offer__universities-list img {
+  display: block;
+  height: auto;
+  max-height: 2.4rem;
+  opacity: 0.9;
+  width: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Variant B: proof-led first fold
+   -------------------------------------------------------------------------- */
+
+.pro-hero-proof__stage {
+  display: grid;
+  gap: var(--pen-space-5);
+  justify-items: center;
+  margin-inline: auto;
+  max-width: 60rem;
+  text-align: center;
+}
+
+.pro-hero-proof__badge {
+  align-items: center;
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  gap: var(--pen-space-2);
+  justify-content: center;
+  margin: 0;
+  padding: var(--pen-space-2) var(--pen-space-5);
+}
+
+.pro-hero-proof__badge-number {
+  font-family: var(--pen-font-display);
+  font-size: var(--pen-text-lg);
+  font-weight: var(--pen-font-weight-display);
+  letter-spacing: -0.02em;
+}
+
+.pro-hero-proof__title {
+  color: var(--pen-color-on-red);
+  font-family: var(--pen-font-display);
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  font-weight: var(--pen-font-weight-display);
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  margin: 0;
+  text-shadow:
+    5px 5px 0 var(--pen-color-ink),
+    -2px -2px 0 var(--pen-color-ink),
+    2px -2px 0 var(--pen-color-ink),
+    -2px 2px 0 var(--pen-color-ink);
+}
+
+.pro-hero-proof__title-line {
+  display: block;
+}
+
+.pro-hero-proof__subtitle {
+  color: var(--pen-color-on-red);
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 46rem;
+}
+
+.pro-hero-proof__action {
+  display: grid;
+  gap: var(--pen-space-3);
+  justify-items: center;
+  margin-top: var(--pen-space-3);
+  width: 100%;
+}
+
+.pro-hero-proof__cta {
+  max-width: 32rem;
+  width: 100%;
+}
+
+.pro-hero-proof__price {
+  color: var(--pen-color-on-red);
+  font-size: var(--pen-text-sm);
+  font-weight: 600;
+  margin: 0;
+}
+
+.pro-hero-proof__secondary {
+  color: var(--pen-color-on-red-accent);
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.pro-hero-proof__secondary:hover {
+  color: var(--pen-color-on-red);
+}
+
+.pro-hero-proof__countdown {
+  background: rgb(0 0 0 / 0.28);
+  border: var(--pen-border-brand-sm);
+  border-radius: var(--pen-radius-pill);
+  color: var(--pen-color-on-red);
+  font-size: var(--pen-text-sm);
+  font-weight: 700;
+  margin: 0;
+  padding: var(--pen-space-2) var(--pen-space-4);
+}
+
+.pro-hero-proof__evidence {
+  display: grid;
+  gap: var(--pen-space-4);
+  justify-items: center;
+  margin-inline: auto;
+  margin-top: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  max-width: 60rem;
+  text-align: center;
+}
+
+.pro-hero-proof__gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-3);
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-proof__gallery img {
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-xl);
+  box-shadow: var(--pen-shadow-hard-sm);
+  display: block;
+  height: clamp(5.5rem, 10vw, 8rem);
+  object-fit: cover;
+  object-position: top center;
+  width: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.pro-hero-proof__gallery li:nth-child(odd) img {
+  transform: rotate(-2.5deg);
+}
+
+.pro-hero-proof__gallery li:nth-child(even) img {
+  transform: rotate(2.5deg);
+}
+
+.pro-hero-proof__evidence-copy {
+  color: var(--pen-color-on-red);
+  font-size: var(--pen-text-base);
+  font-weight: 600;
+  margin: 0;
+  max-width: 44rem;
+}
+
+.pro-hero-proof__universities {
+  border-top: 2px solid rgb(255 255 255 / 0.28);
+  margin-inline: auto;
+  margin-top: clamp(var(--pen-space-6), 3vw, var(--pen-space-10));
+  max-width: 68rem;
+  padding-top: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+}
+
+.pro-hero-proof__universities-list {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-5) clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-hero-proof__universities-list img {
+  display: block;
+  height: auto;
+  max-height: 2.4rem;
+  opacity: 0.9;
+  width: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Hero variants, narrow viewports
+
+   On phones the action block moves right under the subtitle so the price and
+   the button stay in the first screen; benefits and the photo follow.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .pro-hero-offer__stage {
+    gap: var(--pen-space-8);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pro-hero-offer__copy {
+    order: 1;
+  }
+
+  .pro-hero-offer__figure {
+    order: 2;
+  }
+
+  .pro-hero-offer__eyebrow {
+    order: 1;
+  }
+
+  .pro-hero-offer__title {
+    order: 2;
+  }
+
+  .pro-hero-offer__subtitle {
+    order: 3;
+  }
+
+  .pro-hero-offer__action {
+    max-width: none;
+    order: 4;
+  }
+
+  .pro-hero-offer__reassurance {
+    justify-content: flex-start;
+    order: 5;
+  }
+
+  .pro-hero-offer__benefits {
+    order: 6;
+  }
+
+  .pro-hero-offer__image {
+    max-width: min(100%, 22rem);
+  }
+
+  .pro-hero-offer__sticker--tri {
+    right: var(--pen-space-2);
+  }
+
+  .pro-hero-offer__sticker--plan {
+    left: var(--pen-space-2);
+  }
+
+  .pro-hero-offer__social {
+    max-width: calc(100% - var(--pen-space-4));
+    width: auto;
+  }
+
+  .pro-hero-offer__universities {
+    flex-direction: column;
+    gap: var(--pen-space-4);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Below the sticker breakpoint the floating proof card has no room over the
+     photo, so it becomes a full-width row under it. */
+  .pro-hero-offer__figure {
+    display: grid;
+    gap: var(--pen-space-4);
+    justify-items: center;
+  }
+
+  .pro-hero-offer__social {
+    bottom: auto;
+    left: auto;
+    max-width: none;
+    position: static;
+    transform: none;
+    width: 100%;
+  }
+
+  .pro-hero-offer__social-copy {
+    font-size: var(--pen-text-sm);
+  }
+
+  .pro-hero-proof__cta,
+  .pro-hero-offer__cta {
+    font-size: var(--pen-text-base);
+    padding-inline: var(--pen-space-4);
+  }
+
+  .pro-hero-proof__gallery li:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-hero-offer__cta,
+  .pro-hero-proof__cta {
+    transition: none;
+  }
+}

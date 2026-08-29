@@ -47,6 +47,12 @@ O plano Grátis e o Método PRO Avançado estão fora da oferta atual da home. O
 
 O checkout da Turma Intensiva mantém somente o código da oferta e o modo de checkout. Parâmetros de campanha, UTMs, `src` e identificadores de sessão não fazem parte do destino persistido no tema. Uma futura atribuição dinâmica deve seguir o contrato de mensuração da issue #35.
 
+## Variantes de hero em teste
+
+As páginas de teste de conversão da home têm contrato próprio para a ação da primeira dobra: ela vai direto ao checkout, em vez de rolar até `/#planos`. Essa divergência é deliberada e faz parte do que está sendo medido.
+
+Os destinos, os rótulos e o ciclo de vida dessas páginas estão em [`home-hero-variants.md`](home-hero-variants.md). Nada aqui muda para o controle `page-templates/home.php`.
+
 ## Jornada B2B
 
 | Posição | Label | Intenção | Destino |
