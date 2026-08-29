@@ -580,3 +580,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Nao corrigido em 390 px, com motivo: chegar a 20 caracteres por linha em 350 px exigiria fonte de cerca de 24 px, que tira do titulo o peso de hero. Numa tela estreita o numero de linhas e funcao do tamanho da copy, nao do CSS.
 - Consequencia: o orcamento entrou na descricao do controle, para quem escreve saber antes. Cerca de 20 caracteres por linha no desktop: ate 60 fecha em 3 linhas, com preco vale ficar em 40.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Cor do botao ao passar o mouse
+
+- Contexto: a cor do botao ja era escolhivel, mas o hover voltava sempre ao vermelho.
+- Causa: o componente publicado fixa `background: var(--pen-color-primary-hover)` em `.pen-button:hover`, com especificidade (0,2,0), acima da classe de acento, que e (0,1,0). Qualquer botao virava vermelho ao passar o mouse, inclusive o botao branco sobre faixa vermelha, que sumia no fundo.
+- Decisao: controle `<nome>_hover` logo abaixo do de cor, com a mesma lista fechada. O padrao e `Automatico`, que mantem a cor do botao e deixa o retorno visual por conta do deslocamento e da sombra que o componente ja aplica.
+- Implementacao: as classes de acento passaram a declarar o par em `--pro-accent-surface` e `--pro-accent-on`, alem de pintar. Mudanca aditiva, sem efeito visual, que permitiu a regra de hover automatico referir a cor do proprio botao em vez de repetir as nove cores.
+- Compatibilidade: o botao de cor padrao mantem o hover publicado, medido em `rgb(192, 43, 23)`. Paginas existentes nao mudam de comportamento, porque o valor ausente cai em `Automatico` e o botao padrao segue a regra publicada.
+- Medido: amarelo com hover tinta da 17.40 de contraste de texto, tinta com hover amarelo da 10.56, menta com hover azul esverdeado da 6.70, padrao com hover tinta da 17.40. Nenhuma combinacao abaixo de 4.5.
+- Achado fora do escopo, registrado e nao corrigido: escolher o acento `brand` numa faixa de tom `brand` deixa o botao vermelho sobre vermelho, com 1 de contraste entre botao e faixa. E anterior ao hover e vale para o estado normal. A borda preta de 2 px do componente ainda delimita o botao, entao ele nao desaparece, mas perde destaque. A regra de inversao existente so alcanca `pen-button--primary`, nao os botoes com classe de acento.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

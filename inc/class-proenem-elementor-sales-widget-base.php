@@ -513,6 +513,26 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'condition'   => $args['condition'],
 			)
 		);
+
+		$hover_options = array(
+			'default' => esc_html__( 'Automático: mantém a cor do botão', 'proenem-wordpress-theme' ),
+		);
+
+		foreach ( proenem_get_brand_accents() as $key => $accent ) {
+			$hover_options[ $key ] = $accent['label'];
+		}
+
+		$this->add_control(
+			$name . '_hover',
+			array(
+				'label'       => esc_html__( 'Cor do botão ao passar o mouse', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => $hover_options,
+				'description' => esc_html__( 'No automático o botão mantém a própria cor e o retorno vem do deslocamento. Escolha uma cor quando o padrão se confundir com o fundo da faixa.', 'proenem-wordpress-theme' ),
+				'condition'   => $args['condition'],
+			)
+		);
 	}
 
 	/**
@@ -531,6 +551,12 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		$classes .= isset( $accents[ $key ] )
 			? ' ' . $this->accent_class( $settings, $name )
 			: ' pen-button--primary';
+
+		$hover = isset( $settings[ $name . '_hover' ] ) ? (string) $settings[ $name . '_hover' ] : 'default';
+
+		if ( isset( $accents[ $hover ] ) ) {
+			$classes .= ' pro-sales-hover--' . sanitize_html_class( $hover );
+		}
 
 		return trim( $classes . ' ' . $extra );
 	}

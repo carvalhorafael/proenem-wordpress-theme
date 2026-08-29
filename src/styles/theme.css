@@ -484,53 +484,132 @@
   }
 }
 
+/* Cor do botao ao passar o mouse.
+
+   O componente publicado fixa `background: var(--pen-color-primary-hover)` no
+   hover, entao qualquer botao virava vermelho ao passar o mouse, inclusive o
+   botao branco sobre faixa vermelha, que sumia no fundo.
+
+   Automatico: o botao mantem a propria cor, e o retorno visual continua vindo
+   do deslocamento e da sombra que o componente ja aplica. */
+.pen-button.pro-sales-accent:hover {
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
+}
+
+/* Escolha explicita. A especificidade precisa passar de `.pen-button:hover`,
+   que e (0,2,0), por isso as duas classes no seletor. Vale tambem para o botao
+   de cor padrao, que nao carrega classe de acento. */
+.pen-button.pro-sales-hover--yellow:hover {
+  background: var(--pen-color-yellow-brand, #f9c200);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pen-button.pro-sales-hover--brand:hover {
+  background: var(--pen-color-proenem-red, #bb0922);
+  color: var(--pen-color-on-red, #ffffff);
+}
+
+.pen-button.pro-sales-hover--ink:hover {
+  background: var(--pen-color-ink, #1a1a1a);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pen-button.pro-sales-hover--purple:hover {
+  background: var(--pen-color-purple-lp, #4d17f5);
+  color: var(--pen-color-canvas-white, #ffffff);
+}
+
+.pen-button.pro-sales-hover--pink:hover {
+  background: var(--pen-color-pink-hot, #ff2d87);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pen-button.pro-sales-hover--mint:hover {
+  background: var(--pen-color-mint, #06d6a0);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pen-button.pro-sales-hover--teal:hover {
+  background: var(--pen-color-teal, #00b4a6);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pen-button.pro-sales-hover--cyan:hover {
+  background: var(--pen-color-cyan, #00bfff);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
+.pen-button.pro-sales-hover--orange:hover {
+  background: var(--pen-color-orange, #ff7051);
+  color: var(--pen-color-ink, #1a1a1a);
+}
+
 /* Cores de destaque da marca. Cada classe declara superficie e par de texto
    juntos, entao nao existe combinacao escolhivel que perca contraste.
    purple (#8952fd) esta ausente de proposito: nem ink nem branco alcancam AA
    sobre ele para texto normal. */
 .pro-sales-accent--yellow {
-  background: var(--pen-color-yellow-brand, #f9c200);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-yellow-brand, #f9c200);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--brand {
-  background: var(--pen-color-proenem-red, #bb0922);
-  color: var(--pen-color-on-red, #ffffff);
+  --pro-accent-surface: var(--pen-color-proenem-red, #bb0922);
+  --pro-accent-on: var(--pen-color-on-red, #ffffff);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--ink {
-  background: var(--pen-color-ink, #1a1a1a);
-  color: var(--pen-color-canvas-white, #ffffff);
+  --pro-accent-surface: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-on: var(--pen-color-canvas-white, #ffffff);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--purple {
-  background: var(--pen-color-purple-lp, #4d17f5);
-  color: var(--pen-color-canvas-white, #ffffff);
+  --pro-accent-surface: var(--pen-color-purple-lp, #4d17f5);
+  --pro-accent-on: var(--pen-color-canvas-white, #ffffff);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--pink {
-  background: var(--pen-color-pink-hot, #ff2d87);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-pink-hot, #ff2d87);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--mint {
-  background: var(--pen-color-mint, #06d6a0);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-mint, #06d6a0);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--teal {
-  background: var(--pen-color-teal, #00b4a6);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-teal, #00b4a6);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--cyan {
-  background: var(--pen-color-cyan, #00bfff);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-cyan, #00bfff);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 .pro-sales-accent--orange {
-  background: var(--pen-color-orange, #ff7051);
-  color: var(--pen-color-ink, #1a1a1a);
+  --pro-accent-surface: var(--pen-color-orange, #ff7051);
+  --pro-accent-on: var(--pen-color-ink, #1a1a1a);
+  background: var(--pro-accent-surface);
+  color: var(--pro-accent-on);
 }
 
 /* ---------------------------------------------------------------------------
