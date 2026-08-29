@@ -137,3 +137,35 @@ update_post_meta( $elementor_post_id, '_elementor_template_type', 'wp-page' );
 update_post_meta( $elementor_post_id, '_wp_page_template', 'elementor_canvas' );
 update_post_meta( $elementor_post_id, '_elementor_data', wp_slash( wp_json_encode( $elementor_model['content'] ) ) );
 delete_post_meta( $elementor_post_id, '_elementor_css' );
+
+$home_variant_fixtures = array(
+	'e2e-home-variant-oferta' => array(
+		'title'    => 'E2E Home Variante A',
+		'template' => 'page-templates/home-variant-oferta.php',
+	),
+	'e2e-home-variant-prova'  => array(
+		'title'    => 'E2E Home Variante B',
+		'template' => 'page-templates/home-variant-prova.php',
+	),
+);
+
+foreach ( $home_variant_fixtures as $variant_slug => $variant ) {
+	$variant_fixture = get_page_by_path( $variant_slug, OBJECT, 'page' );
+	$variant_post_id = wp_insert_post(
+		array(
+			'ID'           => $variant_fixture ? $variant_fixture->ID : 0,
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_name'    => $variant_slug,
+			'post_title'   => $variant['title'],
+			'post_content' => '',
+		),
+		true
+	);
+
+	if ( is_wp_error( $variant_post_id ) ) {
+		throw new RuntimeException( esc_html( $variant_post_id->get_error_message() ) );
+	}
+
+	update_post_meta( $variant_post_id, '_wp_page_template', $variant['template'] );
+}
