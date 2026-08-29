@@ -200,6 +200,14 @@
   color: var(--pen-color-accent-contrast, #ffffff);
 }
 
+/* A regra acima tem especificidade (0,3,0) e vencia `.pen-button:hover`, que e
+   (0,2,0), entao o botao de cor padrao dentro de cartao em faixa colorida
+   ficava sem nenhum retorno ao passar o mouse. Devolve o hover publicado. */
+.pro-sales-section--colored .pen-pricing-card .pen-button--primary:hover,
+.pro-sales-section--colored .pen-card .pen-button--primary:hover {
+  background: var(--pen-color-primary-hover, #c02b17);
+}
+
 /* Fase 3: controles novos dos widgets de venda ------------------------------ */
 
 .pro-sales-hero__microcopy,

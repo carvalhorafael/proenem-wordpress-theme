@@ -591,3 +591,13 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Medido: amarelo com hover tinta da 17.40 de contraste de texto, tinta com hover amarelo da 10.56, menta com hover azul esverdeado da 6.70, padrao com hover tinta da 17.40. Nenhuma combinacao abaixo de 4.5.
 - Achado fora do escopo, registrado e nao corrigido: escolher o acento `brand` numa faixa de tom `brand` deixa o botao vermelho sobre vermelho, com 1 de contraste entre botao e faixa. E anterior ao hover e vale para o estado normal. A borda preta de 2 px do componente ainda delimita o botao, entao ele nao desaparece, mas perde destaque. A regra de inversao existente so alcanca `pen-button--primary`, nao os botoes com classe de acento.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Cor de hover em todos os widgets com botao
+
+- Contexto: expandir a escolha de cor de hover para todos os widgets que tem botao.
+- Levantamento: sete widgets renderizam botao. Cinco ja tinham o controle, porque ele nasceu dentro de `add_button_accent_control`. As duas lacunas eram `pro_pricing_grid` e `pro_plans_comparison`, que declaravam `button_accent` direto no repetidor, sem passar pelo helper.
+- Decisao: o helper passa a aceitar um alvo, para registrar o par de controles tambem dentro de um repetidor. Fecha as duas lacunas e remove a duplicacao: a mesma lista de cores estava declarada em tres lugares.
+- Achado ao verificar no navegador, anterior a esta sessao: o botao de cor padrao dentro de cartao de plano, em faixa colorida, nao tinha hover nenhum. A regra de excecao do cartao, criada na Fase 6, tem especificidade (0,3,0) e vencia `.pen-button:hover`, que e (0,2,0). Corrigido devolvendo o hover publicado para esse caso.
+- Licao: uma regra de excecao escrita para o estado normal apaga o estado de hover sem avisar, porque hover nao acrescenta especificidade suficiente. Ao criar excecao por contexto, verificar os dois estados.
+- Medido no cartao de plano: menta com hover tinta muda de `rgb(6, 214, 160)` para `rgb(26, 26, 26)`, com 17.40 de contraste de texto; cor padrao muda de `rgb(220, 52, 30)` para `rgb(192, 43, 23)`, com 5.83.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

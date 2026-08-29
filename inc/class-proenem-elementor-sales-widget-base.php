@@ -298,19 +298,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'label_block' => true,
 			)
 		);
-		$target->add_control(
-			'button_accent',
-			array(
-				'label'       => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::SELECT,
-				'default'     => 'default',
-				'options'     => array_merge(
-					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
-					wp_list_pluck( proenem_get_brand_accents(), 'label' )
-				),
-				'description' => esc_html__( 'A cor do texto acompanha a escolha automaticamente.', 'proenem-wordpress-theme' ),
-			)
-		);
+		$this->add_button_accent_control( 'button_accent', array( 'target' => $target ) );
 		$target->add_control(
 			'trust_items',
 			array(
@@ -491,8 +479,15 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			array(
 				'label'     => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
 				'condition' => array(),
+				// O alvo permite registrar o par de controles tambem dentro de um
+				// repetidor, onde cada plano escolhe a propria cor. Sem isso, os
+				// cartoes de plano ficavam com cor mas sem hover, e a mesma lista
+				// de cores era declarada em tres lugares.
+				'target'    => null,
 			)
 		);
+
+		$target = $args['target'] ? $args['target'] : $this;
 
 		$options = array(
 			'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ),
@@ -502,7 +497,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			$options[ $key ] = $accent['label'];
 		}
 
-		$this->add_control(
+		$target->add_control(
 			$name,
 			array(
 				'label'       => $args['label'],
@@ -522,7 +517,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			$hover_options[ $key ] = $accent['label'];
 		}
 
-		$this->add_control(
+		$target->add_control(
 			$name . '_hover',
 			array(
 				'label'       => esc_html__( 'Cor do botão ao passar o mouse', 'proenem-wordpress-theme' ),
@@ -2299,18 +2294,7 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
-		$plan_repeater->add_control(
-			'button_accent',
-			array(
-				'label'   => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => array_merge(
-					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
-					wp_list_pluck( proenem_get_brand_accents(), 'label' )
-				),
-			)
-		);
+		$this->add_button_accent_control( 'button_accent', array( 'target' => $plan_repeater ) );
 
 		$this->add_control(
 			'plans',
