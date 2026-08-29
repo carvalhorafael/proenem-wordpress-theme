@@ -420,6 +420,7 @@ $elementor_data = array(
 					'features'      => "Cronograma semanal\nCorrecao de redacao\nAulas e pdfs com os melhores professores\nSimulados corrigidos no padrao ENEM\nRevisoes inteligentes por materia\nMais de 50 mil questoes para praticar\n6 meses de acesso",
 					'trust_items'   => "Pagamento 100% seguro\nGarantia de 7 dias\nAcesso liberado na hora",
 					'button_accent' => 'mint',
+					'button_accent_hover' => 'ink',
 					'button_label'  => 'Quero a Turma Intensiva',
 					'button_url'    => array( 'url' => '#oferta' ),
 				),

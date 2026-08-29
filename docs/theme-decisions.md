@@ -523,3 +523,93 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Protecao: `test_no_widget_is_hidden_from_the_panel` recusa `show_in_panel` e a palavra `obsoleto` nas fontes de widget. Verificado que falha ao reintroduzir `show_in_panel`.
 - Resultado: 28 widgets registrados passam a 26.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Escala do hero e escala de rotulo na pagina de venda
+
+- Contexto: revisao apontou o titulo do hero grande demais e o selo competindo com o conteudo.
+- Achado no titulo: o pedido falava em trocar `6vw` por `5vw`, mas medido em 1600 e 2000 px o titulo dava 92.8 px, que e o teto `5.8rem`, e nao o termo vw. Acima de ~1547 px o vw nem entra na conta. Mexer so no vw nao teria efeito nenhum na tela de quem pediu.
+- Decisao no titulo: o termo vw e o teto caem juntos, na proporcao 5/6, para a reducao valer em qualquer largura. `clamp(2.5rem, 5vw, 4.8rem)`. O minimo fica onde estava, porque o pedido era sobre desktop e o mobile ja estava homologado.
+- Achado no selo: `pen-section-pill` nao declara `font-size`. O rotulo herdava os 16 px do corpo do texto, entao um rotulo em caixa alta tinha o mesmo tamanho do texto de leitura.
+- Decisao no selo: escala de rotulo em `.pro-sales-eyebrow`, com `0.8125rem` e `letter-spacing` de `0.06em`. Fica na camada de uso da pagina de venda, e nao no componente publicado, porque a home usa o mesmo selo e ja tem escala propria.
+- Fronteira verificada: a home tem 4 selos, em 14 px e 11.2 px, e nenhum elemento com `.pro-sales-eyebrow`. A mudanca nao a alcanca.
+- Medido: titulo de 76.8 para 64 px em 1280, e de 92.8 para 76.8 px em 1600 e 2000. Selo de 16 para 13 px, caixa de 253x44 para 230x39. Mobile inalterado em 40 px. Sem overflow horizontal em 390, 768, 1280, 1600 e 2000.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Presenca do botao de chamada do hero
+
+- Contexto: pedido de botao maior e com mais destaque no hero, com a pagina `plataforma.proenem.com.br/enem2027` como referencia.
+- Medido na referencia, em 1600 px: caixa de 420x66, fonte de 18 px, peso 700, padding de 16 px por 32 px.
+- Medido no nosso hero, antes: caixa de 319x48, fonte de 15 px. A altura vinha do `min-height: 3rem` do `pen-button` publicado, e a fonte de `--pen-button-size`, que e `0.9375rem`. E escala de botao de formulario, que se perde numa faixa do tamanho do hero.
+- Decisao: a presenca vem no uso, em `.pro-sales-hero .pen-button`, e nao no componente publicado. O mesmo botao serve caixas de plano e faixas menores, onde 48 px esta correto, e um modificador global mudaria todas.
+- Regressao introduzida e corrigida no caminho: com fonte fixa de 18 px e 32 px de padding de cada lado, em 390 px o botao dava 389 px de largura numa janela de 390 e estourava a pagina. Fonte e padding passaram a fluidos; a altura nao acompanha, porque 64 px e alvo de toque bom no celular.
+- Resultado: 329x64 com fonte de 16 px de 360 a 768 px, e 389x64 com fonte de 18 px a partir de 1600 px. Sem overflow horizontal em 360, 390, 430, 768, 1280, 1600 e 2000.
+- Sombra: sobe de `--pen-shadow-hard-md` para `--pen-shadow-hard-lg`, que e o vocabulario de sombra dura da marca, em vez de inventar destaque com cor.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Microcopy do hero centralizado no grupo do botao
+
+- Contexto: pedido de centralizar o texto abaixo do botao do hero e afastar um pouco os dois.
+- Medido antes: o microcopy tinha 588 px, a largura toda do conteudo, contra 389 px do botao, com `text-align: start` e vao de **0 px** ate o botao. O centro do texto ficava 100 px fora do centro do botao.
+- Achado: nao dava para resolver so em CSS. O microcopy era irmao de `.pro-sales-actions`, e CSS nao referencia largura de irmao. Centralizar dentro do conteudo deixaria o texto no centro dos 588 px, nao no centro do botao.
+- Decisao: o microcopy entra em `.pro-sales-actions`, que passa a ser uma coluna com `width: fit-content`, abracando a largura dos botoes. Os botoes ganham `.pro-sales-actions__buttons` porque podem ser dois lado a lado. O afastamento vem do `gap` do grupo, e nao de margem no paragrafo, para nao haver dois lugares definindo a mesma distancia.
+- Fronteira: `.pro-sales-actions` era usado so pelo hero, com uma unica regra de CSS, entao a reestruturacao nao alcanca outro widget. Verificado antes de mexer.
+- Medido depois: vao de 16 px e centro do botao igual ao centro do texto, com diferenca de 0 px em 390, 768 e 1600 px. Sem overflow horizontal.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Dobra do hero, disposicao compacta e preco opcional
+
+- Contexto: analise de conversao do hero. A pergunta era se a disposicao atual e a melhor e se valiam widgets novos de hero.
+- Achado que virou correcao: em 1366x625, que e o que sobra de um notebook 1366x768 depois da barra do navegador e do sistema, o botao terminava em 671 px, **46 px abaixo da dobra**. A pessoa chegava na pagina sem ver a chamada. Em 1440x700 ficava em 98%, encostado.
+- Decisao 1: a compressao reage a `max-height`, e nao a largura, porque o que falta e espaco vertical. Em tela alta o hero mantem o respiro.
+- Tentativa que nao funcionou: alargar o `max-width` do titulo para reduzir linhas. No layout dividido quem limita a linha e a coluna, nao o `max-width`, entao o titulo continuou com 4 linhas. O que reduz altura ali e a escala.
+- Decisao 2: em vez de widgets novos de hero, um controle de disposicao no widget existente. O proprio repositorio ja tinha registrado essa licao na Fase 3.5, quando dois widgets sairam por duplicacao. O hero tambem ja oferecia imagem e video ao lado, e ninguem usava.
+- Achado sobre a compacta: na primeira versao ela media exatamente a mesma altura da dividida em 1920x1080, porque o titulo mantinha as 4 linhas e os cards nao eram o que definia a altura. O ganho existia so no mobile e em tela baixa. O respiro da faixa passou a acompanhar o nome.
+- Decisao 3: preco opcional entre o texto e a chamada. Fica antes do botao porque e o dado que trava a decisao, e depois obrigaria a decidir antes de saber o valor.
+- Medido, distancia do topo da faixa ate o fim do botao: em 390 px, 462 na dividida e 454 na compacta, com a faixa caindo de 857 para 527 px. Em 1920, 623 e 607. Em 1366x625 o botao passou de 107% para 88% da dobra, com o microcopy tambem visivel.
+- Nao feito, e registrado: hero com captura de lead. Formulario traz validacao, integracao e LGPD, que sao fronteira de plugin e nao de tema.
+- Ressalva: nada disso e "o que mais converte". Sao heuristicas mais um defeito medido. Ordem de impacto real so sai de teste com trafego.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-28: Orcamento de linhas do titulo na disposicao compacta
+
+- Contexto: pedido de limitar o titulo a 3 linhas na compacta e a 2 na compacta com preco.
+- Achado: os dois pedidos sao a mesma regra. Sao 59 caracteres em 3 linhas e 38 em 2, e os dois dao cerca de 20 caracteres por linha. Um ajuste so atende os dois, em vez de dois casos especiais.
+- Medido antes: 736 px de largura com fonte de 76.8 px cabiam 15 caracteres por linha, o que dava 4 linhas e 3 linhas.
+- Decisao: as duas alavancas entram juntas. So alargar deixaria a linha longa demais para um titulo centralizado; so reduzir a fonte tiraria a presenca. Largura de 46 para 55 rem e escala com teto de 4.1rem, chegando a 20 e 19 caracteres por linha.
+- Verificado: alvo cumprido em 1920, 1440, 1366x625 e 768. Em 390 px a copy de 59 caracteres fecha em 4 linhas, e nao em 3.
+- Nao corrigido em 390 px, com motivo: chegar a 20 caracteres por linha em 350 px exigiria fonte de cerca de 24 px, que tira do titulo o peso de hero. Numa tela estreita o numero de linhas e funcao do tamanho da copy, nao do CSS.
+- Consequencia: o orcamento entrou na descricao do controle, para quem escreve saber antes. Cerca de 20 caracteres por linha no desktop: ate 60 fecha em 3 linhas, com preco vale ficar em 40.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Cor do botao ao passar o mouse
+
+- Contexto: a cor do botao ja era escolhivel, mas o hover voltava sempre ao vermelho.
+- Causa: o componente publicado fixa `background: var(--pen-color-primary-hover)` em `.pen-button:hover`, com especificidade (0,2,0), acima da classe de acento, que e (0,1,0). Qualquer botao virava vermelho ao passar o mouse, inclusive o botao branco sobre faixa vermelha, que sumia no fundo.
+- Decisao: controle `<nome>_hover` logo abaixo do de cor, com a mesma lista fechada. O padrao e `Automatico`, que mantem a cor do botao e deixa o retorno visual por conta do deslocamento e da sombra que o componente ja aplica.
+- Implementacao: as classes de acento passaram a declarar o par em `--pro-accent-surface` e `--pro-accent-on`, alem de pintar. Mudanca aditiva, sem efeito visual, que permitiu a regra de hover automatico referir a cor do proprio botao em vez de repetir as nove cores.
+- Compatibilidade: o botao de cor padrao mantem o hover publicado, medido em `rgb(192, 43, 23)`. Paginas existentes nao mudam de comportamento, porque o valor ausente cai em `Automatico` e o botao padrao segue a regra publicada.
+- Medido: amarelo com hover tinta da 17.40 de contraste de texto, tinta com hover amarelo da 10.56, menta com hover azul esverdeado da 6.70, padrao com hover tinta da 17.40. Nenhuma combinacao abaixo de 4.5.
+- Achado fora do escopo, registrado e nao corrigido: escolher o acento `brand` numa faixa de tom `brand` deixa o botao vermelho sobre vermelho, com 1 de contraste entre botao e faixa. E anterior ao hover e vale para o estado normal. A borda preta de 2 px do componente ainda delimita o botao, entao ele nao desaparece, mas perde destaque. A regra de inversao existente so alcanca `pen-button--primary`, nao os botoes com classe de acento.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Cor de hover em todos os widgets com botao
+
+- Contexto: expandir a escolha de cor de hover para todos os widgets que tem botao.
+- Levantamento: sete widgets renderizam botao. Cinco ja tinham o controle, porque ele nasceu dentro de `add_button_accent_control`. As duas lacunas eram `pro_pricing_grid` e `pro_plans_comparison`, que declaravam `button_accent` direto no repetidor, sem passar pelo helper.
+- Decisao: o helper passa a aceitar um alvo, para registrar o par de controles tambem dentro de um repetidor. Fecha as duas lacunas e remove a duplicacao: a mesma lista de cores estava declarada em tres lugares.
+- Achado ao verificar no navegador, anterior a esta sessao: o botao de cor padrao dentro de cartao de plano, em faixa colorida, nao tinha hover nenhum. A regra de excecao do cartao, criada na Fase 6, tem especificidade (0,3,0) e vencia `.pen-button:hover`, que e (0,2,0). Corrigido devolvendo o hover publicado para esse caso.
+- Licao: uma regra de excecao escrita para o estado normal apaga o estado de hover sem avisar, porque hover nao acrescenta especificidade suficiente. Ao criar excecao por contexto, verificar os dois estados.
+- Medido no cartao de plano: menta com hover tinta muda de `rgb(6, 214, 160)` para `rgb(26, 26, 26)`, com 17.40 de contraste de texto; cor padrao muda de `rgb(220, 52, 30)` para `rgb(192, 43, 23)`, com 5.83.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Terceiro kit, a partir da pagina enem2027
+
+- Contexto: avaliar a pagina `plataforma.proenem.com.br/enem2027`, usada pelo time de marketing em teste de conversao, e transforma-la em kit.
+- Cobertura: as 9 secoes da referencia mapeiam para widgets que ja existem. Nenhum widget novo e necessario. A duvida era a secao de 5 cartoes com titulo e paragrafo, e `pro_benefits_list` ja tem titulo, descricao, icone, destaque e selo por item.
+- Achado sobre linguagem visual: a referencia e da mesma familia do nosso design system, e nao de outra. As sombras duras batem exatamente: `6px 6px 0` e `10px 10px 0` em preto, que sao `--pen-shadow-hard-lg` e `--pen-shadow-hard-2xl`.
+- Diferencas medidas: borda de 3 e 4 px contra os nossos 2 px de `--pen-border-brand`; raio de 24 e 28 px contra o nosso teto de 16 px em `--pen-radius-xl`; corpo em Space Grotesk e titulo em Archivo Black contra Plus Jakarta Sans e Bricolage Grotesque; fundo `#f5f3eb` contra `#fef2f2`.
+- Nao alterado, com motivo: tipografia e paleta pertencem ao design system, nao ao tema. Mudar aqui criaria divergencia entre o site e os pacotes publicados. Borda e raio maiores sao candidatos a proposta no design system, e nao a adaptacao local.
+- Kit: hero em fundo claro, e nao em faixa vermelha, que e o que da identidade propria a este kit diante dos outros dois. Ritmo de tom espelha a referencia: claro, branco, claro, amarelo no preco, branco, claro, branco, vermelho no fechamento.
+- Resolve pendencia anterior: os dois primeiros kits ficaram com estrutura identica depois que o de diferencial ganhou o CTA de fechamento. Este terceiro diverge de verdade, na abertura e no ritmo.
+- Verificado: 10 faixas, todas na largura total, um unico h1, sem overflow, axe sem violacao grave.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.

@@ -49,6 +49,7 @@ for (const [nome, url] of [
   ["widgets de home", HOME_WIDGETS_PAGE],
   ["kit de oferta completa", "/lp/kit-oferta-completa/"],
   ["kit de diferencial em foco", "/lp/kit-diferencial-em-foco/"],
+  ["kit de metodo completo", "/lp/kit-metodo-completo/"],
 ]) {
   test(`section hosts span the full width on the page of ${nome}`, async ({ page }) => {
     const response = await page.goto(url);

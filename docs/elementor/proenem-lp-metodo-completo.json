@@ -1,0 +1,307 @@
+{
+	"title": "Proenem LP · Método completo",
+	"type": "page",
+	"version": "0.4",
+	"page_settings": {
+		"template": "elementor_canvas"
+	},
+	"content": [
+		{
+			"id": "lpmpcont",
+			"elType": "container",
+			"settings": {
+				"html_tag": "main",
+				"content_width": "full",
+				"flex_gap": {
+					"unit": "px",
+					"size": 0,
+					"sizes": []
+				},
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				},
+				"margin": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "lpmp0001",
+					"elType": "widget",
+					"widgetType": "pro_navbar",
+					"isInner": false,
+					"settings": {
+						"mode": "lp",
+						"cta_label": "Quero o Método PRO",
+						"cta_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"aria_label": "Navegação da campanha",
+						"mobile_cta_enabled": "yes",
+						"mobile_cta_label": "Quero o Método PRO",
+						"mobile_cta_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						}
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0002",
+					"elType": "widget",
+					"widgetType": "pro_offer_hero",
+					"isInner": false,
+					"settings": {
+						"tone": "default",
+						"layout": "compact",
+						"anchor_id": "topo",
+						"eyebrow": "Método PRO · ENEM 2027",
+						"heading_level": "h1",
+						"title": "Pare de estudar no improviso.",
+						"body": "Cronograma, aulas, redação corrigida, simulados e questões, com acesso de 12 meses.",
+						"price_prefix": "12x de",
+						"price": "R$ 29,90",
+						"price_details": "7 dias de garantia",
+						"primary_label": "Quero meu acesso ao Método PRO",
+						"primary_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"microcopy": "Acesso imediato • Cancele quando quiser"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0003",
+					"elType": "widget",
+					"widgetType": "pro_benefits_list",
+					"isInner": false,
+					"settings": {
+						"tone": "surface",
+						"anchor_id": "sistema",
+						"columns": "3",
+						"eyebrow": "O que está incluído",
+						"title": "Um sistema completo, não um acumulado de vídeo solto.",
+						"body": "Plano, aula e prática trabalham juntos. Não é acervo de aulas: é um sistema que diz o próximo passo.",
+						"items": [
+							{
+								"_id": "b1",
+								"title": "Cronograma personalizado",
+								"body": "Seu plano se ajusta conforme você avança. Você sempre sabe o que estudar hoje."
+							},
+							{
+								"_id": "b2",
+								"title": "Aulas gravadas",
+								"body": "Com os melhores professores de todas as matérias. Assista quando puder, revise quantas vezes precisar."
+							},
+							{
+								"_id": "b3",
+								"title": "Apostilas e PDFs",
+								"body": "De todas as aulas, para revisar e absorver o conteúdo."
+							},
+							{
+								"_id": "b4",
+								"title": "Banco de mais de 60 mil questões",
+								"body": "Organizadas por matéria, com resolução em vídeo para destravar quando você erra."
+							},
+							{
+								"_id": "b5",
+								"title": "Simulados com nota TRI",
+								"body": "A mesma régua da prova, para você saber onde está antes do dia que conta."
+							},
+							{
+								"_id": "b6",
+								"title": "Redação corrigida por professor",
+								"body": "Correção de verdade, com ajuste de rota, e não um modelo pronto para comparar."
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0004",
+					"elType": "widget",
+					"widgetType": "pro_lp_spotlight",
+					"isInner": false,
+					"settings": {
+						"tone": "default",
+						"anchor_id": "ritmo",
+						"media_position": "end",
+						"eyebrow": "No seu tempo",
+						"title": "Estude no seu ritmo, sem depender de horário de aula ao vivo.",
+						"body": "Aulas quando puder. Questões quando precisar treinar.",
+						"bullets": "Aulas gravadas, disponíveis a qualquer hora\nMais de 60 mil questões organizadas por matéria\nResolução em vídeo para destravar quando você erra",
+						"image_alt": ""
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0005",
+					"elType": "widget",
+					"widgetType": "pro_pricing_grid",
+					"isInner": false,
+					"settings": {
+						"tone": "yellow",
+						"anchor_id": "oferta",
+						"card_layout": "split",
+						"eyebrow": "Vagas abertas",
+						"title": "Método PRO",
+						"body": "Preparação ENEM completa até o dia da prova.",
+						"plans": [
+							{
+								"_id": "p1",
+								"name": "Método PRO",
+								"description": "Acesso de 12 meses, incluindo 2027.",
+								"badge": "12 meses de acesso",
+								"accent": "yellow",
+								"price_prefix": "12x de",
+								"price": "R$ 29,90",
+								"price_details": "ou R$ 306,90 à vista",
+								"features": "Cronograma personalizado\nAulas gravadas com os melhores professores\nApostilas e PDFs de todas as aulas\nMais de 60 mil questões com resolução em vídeo\nSimulados com nota TRI\nRedação corrigida por professor",
+								"trust_items": "Pagamento 100% seguro\n7 dias de garantia\nAcesso liberado na hora",
+								"button_label": "Quero o Método PRO",
+								"button_url": {
+									"url": "#oferta",
+									"is_external": "",
+									"nofollow": "",
+									"custom_attributes": ""
+								},
+								"button_accent": "brand",
+								"button_accent_hover": "ink"
+							}
+						]
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0006",
+					"elType": "widget",
+					"widgetType": "pro_lp_spotlight",
+					"isInner": false,
+					"settings": {
+						"tone": "surface",
+						"anchor_id": "redacao",
+						"media_position": "start",
+						"eyebrow": "Redação",
+						"title": "Redação não melhora sozinha. Melhora com correção.",
+						"body": "Você escreve, compara com um modelo pronto, acha que ficou boa e tira quase a mesma nota. Não é falta de talento nem de repertório: é falta de retorno real e ajuste de rota.",
+						"bullets": "Correção feita por professor, e não por comparação com modelo\nApontamento do que travou a nota, competência por competência\nUm caminho de ajuste até a próxima redação",
+						"button_label": "Quero corrigir minha redação",
+						"button_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"button_accent": "default",
+						"button_accent_hover": "ink",
+						"image_alt": ""
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0007",
+					"elType": "widget",
+					"widgetType": "pro_lp_testimonials",
+					"isInner": false,
+					"settings": {
+						"tone": "default",
+						"anchor_id": "aprovados",
+						"columns": "3",
+						"limit": 3,
+						"eyebrow": "Prova social",
+						"title": "Método não é promessa. É o que já aprovou mais de 44 mil alunos.",
+						"body": "Alunos que também estudavam sem direção e destravaram com plano e correção de verdade.",
+						"more_label": "Ver mais aprovados",
+						"more_url": {
+							"url": "/aprovados/",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"button_accent": "default",
+						"button_accent_hover": "ink"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0008",
+					"elType": "widget",
+					"widgetType": "pro_lp_video_story",
+					"isInner": false,
+					"settings": {
+						"tone": "surface",
+						"anchor_id": "historia",
+						"eyebrow": "História real",
+						"title": "Ela passou em Medicina conciliando com o trabalho.",
+						"body": "Veja como a rotina certa e a correção de redação fizeram a diferença na reta final.",
+						"play_label": "Reproduzir o depoimento",
+						"poster_alt": "",
+						"button_label": "Quero começar minha história",
+						"button_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"button_accent": "default",
+						"button_accent_hover": "ink"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0009",
+					"elType": "widget",
+					"widgetType": "pro_cta",
+					"isInner": false,
+					"settings": {
+						"tone": "brand",
+						"anchor_id": "fechamento",
+						"eyebrow": "12 meses de acesso",
+						"title": "Você não está apostando numa prova só.",
+						"body": "Seu acesso dura 12 meses, inclusive 2027, se precisar. Cronograma, aulas e banco de questões continuam com você até lá.",
+						"button_label": "Quero garantir meus 12 meses",
+						"button_url": {
+							"url": "#oferta",
+							"is_external": "",
+							"nofollow": "",
+							"custom_attributes": ""
+						},
+						"button_accent": "default",
+						"button_accent_hover": "yellow",
+						"microcopy": "Acesso imediato • 7 dias de garantia"
+					},
+					"elements": []
+				},
+				{
+					"id": "lpmp0010",
+					"elType": "widget",
+					"widgetType": "pro_footer",
+					"isInner": false,
+					"settings": {
+						"mode": "minimal"
+					},
+					"elements": []
+				}
+			]
+		}
+	]
+}
