@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.21.1
+Stable tag: 0.21.2
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,13 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.21.2 =
+* Corrige o botao do hero, que ficava abaixo da dobra em notebooks de tela baixa.
+* Permite escolher a cor do botao ao passar o mouse, em todos os widgets com botao.
+* Adiciona disposicao compacta e preco opcional no hero.
+* Reduz a escala do titulo do hero e cria escala de rotulo para os selos de secao.
+* Adiciona o kit de LP Metodo completo.
 
 = 0.21.1 =
 * Remove os widgets Pro Card de Plano e Pro LP Destaque de Oferta, absorvidos por Pro Grade de Planos.

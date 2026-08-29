@@ -298,19 +298,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'label_block' => true,
 			)
 		);
-		$target->add_control(
-			'button_accent',
-			array(
-				'label'       => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
-				'type'        => \Elementor\Controls_Manager::SELECT,
-				'default'     => 'default',
-				'options'     => array_merge(
-					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
-					wp_list_pluck( proenem_get_brand_accents(), 'label' )
-				),
-				'description' => esc_html__( 'A cor do texto acompanha a escolha automaticamente.', 'proenem-wordpress-theme' ),
-			)
-		);
+		$this->add_button_accent_control( 'button_accent', array( 'target' => $target ) );
 		$target->add_control(
 			'trust_items',
 			array(
@@ -491,8 +479,15 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			array(
 				'label'     => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
 				'condition' => array(),
+				// O alvo permite registrar o par de controles tambem dentro de um
+				// repetidor, onde cada plano escolhe a propria cor. Sem isso, os
+				// cartoes de plano ficavam com cor mas sem hover, e a mesma lista
+				// de cores era declarada em tres lugares.
+				'target'    => null,
 			)
 		);
+
+		$target = $args['target'] ? $args['target'] : $this;
 
 		$options = array(
 			'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ),
@@ -502,7 +497,7 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 			$options[ $key ] = $accent['label'];
 		}
 
-		$this->add_control(
+		$target->add_control(
 			$name,
 			array(
 				'label'       => $args['label'],
@@ -510,6 +505,26 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 				'default'     => 'default',
 				'options'     => $options,
 				'description' => esc_html__( 'A cor do texto acompanha a escolha automaticamente, então nenhuma combinação perde legibilidade.', 'proenem-wordpress-theme' ),
+				'condition'   => $args['condition'],
+			)
+		);
+
+		$hover_options = array(
+			'default' => esc_html__( 'Automático: mantém a cor do botão', 'proenem-wordpress-theme' ),
+		);
+
+		foreach ( proenem_get_brand_accents() as $key => $accent ) {
+			$hover_options[ $key ] = $accent['label'];
+		}
+
+		$target->add_control(
+			$name . '_hover',
+			array(
+				'label'       => esc_html__( 'Cor do botão ao passar o mouse', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'default',
+				'options'     => $hover_options,
+				'description' => esc_html__( 'No automático o botão mantém a própria cor e o retorno vem do deslocamento. Escolha uma cor quando o padrão se confundir com o fundo da faixa.', 'proenem-wordpress-theme' ),
 				'condition'   => $args['condition'],
 			)
 		);
@@ -531,6 +546,12 @@ abstract class Proenem_Elementor_Sales_Widget_Base extends \Elementor\Widget_Bas
 		$classes .= isset( $accents[ $key ] )
 			? ' ' . $this->accent_class( $settings, $name )
 			: ' pen-button--primary';
+
+		$hover = isset( $settings[ $name . '_hover' ] ) ? (string) $settings[ $name . '_hover' ] : 'default';
+
+		if ( isset( $accents[ $hover ] ) ) {
+			$classes .= ' pro-sales-hover--' . sanitize_html_class( $hover );
+		}
 
 		return trim( $classes . ' ' . $extra );
 	}
@@ -1249,6 +1270,19 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		);
 		$this->add_section_heading_level_control( 'h1' );
 		$this->add_control(
+			'layout',
+			array(
+				'label'       => esc_html__( 'Disposição', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::SELECT,
+				'default'     => 'split',
+				'options'     => array(
+					'split'   => esc_html__( 'Dividida: texto e conteúdo ao lado', 'proenem-wordpress-theme' ),
+					'compact' => esc_html__( 'Compacta: uma coluna centralizada', 'proenem-wordpress-theme' ),
+				),
+				'description' => esc_html__( 'A compacta encurta o caminho ate a chamada, para campanhas em que a pessoa ja chega decidida. Ela nao mostra conteudo ao lado. O titulo cabe cerca de 20 caracteres por linha no desktop: ate 60 caracteres fecha em 3 linhas, e com preco vale ficar em 40, para fechar em 2.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$this->add_control(
 			'primary_label',
 			array(
 				'label'   => esc_html__( 'Botão principal', 'proenem-wordpress-theme' ),
@@ -1279,6 +1313,28 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		);
 		$this->add_button_accent_control( 'button_accent' );
 		$this->add_control(
+			'price_prefix',
+			array(
+				'label'       => esc_html__( 'Prefixo do preço', 'proenem-wordpress-theme' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'description' => esc_html__( 'Ex.: 12x de. Deixe os tres campos de preco vazios para o hero nao mostrar preco.', 'proenem-wordpress-theme' ),
+			)
+		);
+		$this->add_control(
+			'price',
+			array(
+				'label' => esc_html__( 'Preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$this->add_control(
+			'price_details',
+			array(
+				'label' => esc_html__( 'Detalhe do preço', 'proenem-wordpress-theme' ),
+				'type'  => \Elementor\Controls_Manager::TEXT,
+			)
+		);
+		$this->add_control(
 			'microcopy',
 			array(
 				'label'       => esc_html__( 'Linha de confiança', 'proenem-wordpress-theme' ),
@@ -1291,6 +1347,7 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 		$this->add_control(
 			'side_content',
 			array(
+				'condition'   => array( 'layout' => 'split' ),
 				'label'       => esc_html__( 'Conteúdo ao lado do texto', 'proenem-wordpress-theme' ),
 				'type'        => \Elementor\Controls_Manager::SELECT,
 				'default'     => 'cards',
@@ -1384,13 +1441,21 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 			? $settings['image']['url']
 			: '';
 		$proof_cards  = ! empty( $settings['proof_cards'] ) && is_array( $settings['proof_cards'] ) ? $settings['proof_cards'] : array();
-		$has_side     = ( 'cards' === $side_content && $proof_cards )
-			|| ( 'image' === $side_content && '' !== $image_url )
-			|| ( 'video' === $side_content && ( ! empty( $settings['video_url']['url'] ) || ! empty( $settings['poster']['url'] ) ) );
+		$layout       = ( $settings['layout'] ?? 'split' ) === 'compact' ? 'compact' : 'split';
+		$has_side     = 'split' === $layout
+			&& (
+				( 'cards' === $side_content && $proof_cards )
+				|| ( 'image' === $side_content && '' !== $image_url )
+				|| ( 'video' === $side_content && ( ! empty( $settings['video_url']['url'] ) || ! empty( $settings['poster']['url'] ) ) )
+			);
 		$class_name   = 'pro-sales-hero';
 
 		if ( ! $has_side ) {
 			$class_name .= ' pro-sales-hero--no-media';
+		}
+
+		if ( 'compact' === $layout ) {
+			$class_name .= ' pro-sales-hero--compact';
 		}
 
 		$this->add_section_render_attributes( $settings, $class_name, ! empty( $settings['title'] ) );
@@ -1410,17 +1475,35 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 						)
 					);
 					?>
-						<div class="pro-sales-actions">
-						<?php
-						$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], $this->button_classes( $settings, 'button_accent' ) );
-						$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
+					<?php
+					$price = trim( (string) ( $settings['price'] ?? '' ) );
+					if ( '' !== $price || '' !== trim( (string) ( $settings['price_prefix'] ?? '' ) ) ) :
 						?>
-						</div>
-					<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
+						<p class="pro-sales-hero__price">
+							<?php if ( ! empty( $settings['price_prefix'] ) ) : ?>
+								<span class="pro-sales-hero__price-prefix"><?php echo esc_html( $settings['price_prefix'] ); ?></span>
+							<?php endif; ?>
+							<?php if ( '' !== $price ) : ?>
+								<span class="pro-sales-hero__price-value"><?php echo esc_html( $price ); ?></span>
+							<?php endif; ?>
+							<?php if ( ! empty( $settings['price_details'] ) ) : ?>
+								<span class="pro-sales-hero__price-details"><?php echo esc_html( $settings['price_details'] ); ?></span>
+							<?php endif; ?>
+						</p>
+					<?php endif; ?>
+						<div class="pro-sales-actions">
+							<div class="pro-sales-actions__buttons">
+							<?php
+							$this->render_link( 'primary_url', $settings['primary_url'], $settings['primary_label'], $this->button_classes( $settings, 'button_accent' ) );
+							$this->render_link( 'secondary_url', $settings['secondary_url'], $settings['secondary_label'], 'pen-button pen-button--secondary' );
+							?>
+							</div>
+						<?php if ( ! empty( $settings['microcopy'] ) ) : ?>
 							<p class="pro-sales-hero__microcopy"><?php echo esc_html( $settings['microcopy'] ); ?></p>
 						<?php endif; ?>
+						</div>
 					</div>
-					<?php if ( 'cards' === $side_content && $proof_cards ) : ?>
+					<?php if ( $has_side && 'cards' === $side_content && $proof_cards ) : ?>
 						<ul class="pro-sales-hero__proof">
 						<?php foreach ( $proof_cards as $proof_card ) : ?>
 							<?php if ( empty( $proof_card['label'] ) && empty( $proof_card['value'] ) ) : ?>
@@ -1432,11 +1515,11 @@ class Proenem_Elementor_Offer_Hero_Widget extends Proenem_Elementor_Sales_Widget
 								</li>
 							<?php endforeach; ?>
 						</ul>
-					<?php elseif ( 'image' === $side_content && $image_url ) : ?>
+					<?php elseif ( $has_side && 'image' === $side_content && $image_url ) : ?>
 						<figure class="pro-sales-hero__media">
 							<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $settings['image_alt'] ?? '' ); ?>">
 						</figure>
-					<?php elseif ( 'video' === $side_content ) : ?>
+					<?php elseif ( $has_side && 'video' === $side_content ) : ?>
 						<?php $this->render_video_facade( $settings, '', 'pro-sales-video-stage pro-sales-hero__video' ); ?>
 					<?php endif; ?>
 				</div>
@@ -2211,18 +2294,7 @@ class Proenem_Elementor_Plans_Comparison_Widget extends Proenem_Elementor_Sales_
 				'type'  => \Elementor\Controls_Manager::URL,
 			)
 		);
-		$plan_repeater->add_control(
-			'button_accent',
-			array(
-				'label'   => esc_html__( 'Cor do botão', 'proenem-wordpress-theme' ),
-				'type'    => \Elementor\Controls_Manager::SELECT,
-				'default' => 'default',
-				'options' => array_merge(
-					array( 'default' => esc_html__( 'Padrão da marca', 'proenem-wordpress-theme' ) ),
-					wp_list_pluck( proenem_get_brand_accents(), 'label' )
-				),
-			)
-		);
+		$this->add_button_accent_control( 'button_accent', array( 'target' => $plan_repeater ) );
 
 		$this->add_control(
 			'plans',
