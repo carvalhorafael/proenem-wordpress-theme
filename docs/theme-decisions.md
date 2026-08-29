@@ -601,3 +601,15 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Licao: uma regra de excecao escrita para o estado normal apaga o estado de hover sem avisar, porque hover nao acrescenta especificidade suficiente. Ao criar excecao por contexto, verificar os dois estados.
 - Medido no cartao de plano: menta com hover tinta muda de `rgb(6, 214, 160)` para `rgb(26, 26, 26)`, com 17.40 de contraste de texto; cor padrao muda de `rgb(220, 52, 30)` para `rgb(192, 43, 23)`, com 5.83.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-08-29: Terceiro kit, a partir da pagina enem2027
+
+- Contexto: avaliar a pagina `plataforma.proenem.com.br/enem2027`, usada pelo time de marketing em teste de conversao, e transforma-la em kit.
+- Cobertura: as 9 secoes da referencia mapeiam para widgets que ja existem. Nenhum widget novo e necessario. A duvida era a secao de 5 cartoes com titulo e paragrafo, e `pro_benefits_list` ja tem titulo, descricao, icone, destaque e selo por item.
+- Achado sobre linguagem visual: a referencia e da mesma familia do nosso design system, e nao de outra. As sombras duras batem exatamente: `6px 6px 0` e `10px 10px 0` em preto, que sao `--pen-shadow-hard-lg` e `--pen-shadow-hard-2xl`.
+- Diferencas medidas: borda de 3 e 4 px contra os nossos 2 px de `--pen-border-brand`; raio de 24 e 28 px contra o nosso teto de 16 px em `--pen-radius-xl`; corpo em Space Grotesk e titulo em Archivo Black contra Plus Jakarta Sans e Bricolage Grotesque; fundo `#f5f3eb` contra `#fef2f2`.
+- Nao alterado, com motivo: tipografia e paleta pertencem ao design system, nao ao tema. Mudar aqui criaria divergencia entre o site e os pacotes publicados. Borda e raio maiores sao candidatos a proposta no design system, e nao a adaptacao local.
+- Kit: hero em fundo claro, e nao em faixa vermelha, que e o que da identidade propria a este kit diante dos outros dois. Ritmo de tom espelha a referencia: claro, branco, claro, amarelo no preco, branco, claro, branco, vermelho no fechamento.
+- Resolve pendencia anterior: os dois primeiros kits ficaram com estrutura identica depois que o de diferencial ganhou o CTA de fechamento. Este terceiro diverge de verdade, na abertura e no ritmo.
+- Verificado: 10 faixas, todas na largura total, um unico h1, sem overflow, axe sem violacao grave.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
