@@ -159,10 +159,14 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pro-home-hero-action-bar__support")).toHaveText(
     "Diagnóstico, plano personalizado, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida para você evoluir até a prova.",
   );
-  await expect(page.getByRole("link", { name: /conheça a turma intensiva/i }).first()).toHaveAttribute(
-    "href",
-    "http://localhost:8898/#planos",
-  );
+  // This label survives only in the navbar, which the WordPress menu owns.
+  // Every CTA the theme renders names the section instead of a single offer.
+  await expect(
+    page.locator(".pro-home > .pro-site-navbar").getByRole("link", { name: /conheça a turma intensiva/i }),
+  ).toHaveAttribute("href", "http://localhost:8898/#planos");
+  await expect(page.locator(".pro-home-hero-action-bar").getByRole("link")).toHaveText(/ver planos e preços/i);
+  await expect(page.locator(".pen-pillars-section__copy > a")).toHaveText(/ver planos e preços/i);
+  await expect(page.locator(".pro-home-question-bank__cta")).toContainText("Ver planos e preços");
   await expectHomeProofContract(page);
   await expectHomeTestimonialsContract(page);
   await expect(page.getByText("Pedro Martins", { exact: true })).toHaveCount(0);
@@ -304,7 +308,7 @@ test("front page keeps the navbar sticky and reveals the mobile primary action",
   const navbar = page.locator(".pro-home > .pro-site-navbar");
   const hero = page.locator(".pen-hero-section");
   const persistentAction = page.locator("[data-pro-mobile-persistent-action]");
-  const persistentLink = persistentAction.getByRole("link", { name: /ver plano e preço/i });
+  const persistentLink = persistentAction.getByRole("link", { name: /ver planos e preços/i });
   const supportButton = page.locator("#wpp-icon-btn");
   const toggle = navbar.locator(".pro-home-navbar-toggle");
 

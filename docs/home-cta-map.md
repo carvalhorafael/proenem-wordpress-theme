@@ -34,14 +34,22 @@ Os itens e seus destinos são definidos pelo menu WordPress `primary`. O rendere
 
 | Posição | Label | Intenção | Destino | Fontes |
 | --- | --- | --- | --- | --- |
-| Barra de ação do hero | Conheça a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
-| Método PRO, pilares | Ver a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
+| Barra de ação do hero | Ver planos e preços | Primário | `/#planos` | PHP |
+| Método PRO, pilares | Ver planos e preços | Primário | `/#planos` | PHP |
 | Dores, após método e acompanhamento | Comece agora | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
-| Barra mobile após 600 px | Ver plano e preço | Primário persistente | `/#planos` | Renderer compartilhado do navbar e widget Elementor |
+| Barra mobile após 600 px | Ver planos e preços | Primário persistente | `/#planos` | Renderer compartilhado do navbar |
 | Cards de disciplinas | Nome da disciplina | Exploração | Página funcional da disciplina | PHP, repeater Elementor e JSON |
-| Banco de questões | Conheça a Turma Intensiva | Primário | `/#planos` | PHP, widget, JSON e dados persistidos |
-| Turma Intensiva 2026 | Quero a Turma Intensiva | Contratação | `https://pay.hotmart.com/W106752534O?off=jg51ayrs&checkoutMode=10` | PHP, defaults do widget e dados persistidos |
+| Banco de questões | Ver planos e preços | Primário | `/#planos` | PHP |
+| Turma Intensiva ENEM 2026 | Quero a Turma Intensiva | Contratação | `https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10` | PHP |
+| Método PRO | Quero o Método PRO | Contratação | `https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10` | PHP |
 | Depoimentos | Ver mais | Prova social | `https://aprovados.proenem.com.br/` | PHP, widget e JSON |
+
+Nenhum CTA renderizado pelo tema nomeia uma oferta única para levar a `/#planos`, porque a seção passou a ter dois planos pagos. O rótulo nomeia o destino: `Ver planos e preços`. Duas exceções continuam nomeando a oferta, e devem: os botões dentro de cada cartão de plano, que vão direto ao checkout daquele plano.
+
+Pendências fora do tema, na mesma linha:
+
+- o item `Conheça a Turma Intensiva` da navbar vem do menu WordPress `primary` e precisa ser renomeado no admin;
+- os widgets Elementor e os dados persistidos da home Elementor ainda usam os rótulos antigos. Alinhar exige decidir sobre `scripts/sync-home-conversion.php`, que reescreve conteúdo publicado.
 
 O plano Grátis e o Método PRO Avançado estão fora da oferta atual da home. O destino `advanced` permanece no contrato interno somente para compatibilidade e uma possível reativação futura; o renderer e a sincronização operacional não exibem dados persistidos dessas ofertas.
 

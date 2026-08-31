@@ -183,7 +183,7 @@ $subjects = array(
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
 			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
-		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>"><?php esc_html_e( 'Ver a Turma Intensiva', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
+		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>"><?php esc_html_e( 'Ver planos e preços', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
 		<div class="pen-pillars-section__cards" data-pro-home-pillars-slider>
 			<div class="pro-home-pillars-badge" aria-hidden="true"></div>
@@ -523,8 +523,8 @@ $subjects = array(
 			<?php endforeach; ?>
 		</div>
 		<a class="pen-button pen-button--secondary pen-button--sm pro-home-question-bank__cta" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>">
-			<?php esc_html_e( 'Conheça a Turma Intensiva', 'proenem-wordpress-theme' ); ?>
-			<span class="pen-button__badge"><?php esc_html_e( 'Ver plano e preço', 'proenem-wordpress-theme' ); ?></span>
+			<?php esc_html_e( 'Ver planos e preços', 'proenem-wordpress-theme' ); ?>
+			<span class="pen-button__badge"><?php esc_html_e( '7 dias de garantia', 'proenem-wordpress-theme' ); ?></span>
 		</a>
 		<img class="pro-home-question-bank__shape" src="<?php echo esc_url( $home_asset_uri( 'blue_3_semi-spheres.svg' ) ); ?>" alt="" aria-hidden="true"<?php echo $home_image_attributes( 'blue_3_semi-spheres.svg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	</section>

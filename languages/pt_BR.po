@@ -99,9 +99,6 @@ msgstr "Criar conta grátis"
 #: inc/class-proenem-elementor-home-widget-base.php:247
 #: inc/class-proenem-elementor-home-widget-base.php:364
 #: inc/class-proenem-elementor-home-widget-base.php:1129
-#: page-templates/home.php:316
-#: page-templates/home.php:678
-#: template-parts/home/sections.php:526
 msgid "Conheça a Turma Intensiva"
 msgstr "Conheça a Turma Intensiva"
 
@@ -347,8 +344,6 @@ msgid "Botão"
 msgstr "Botão"
 
 #: inc/class-proenem-elementor-home-widget-base.php:448
-#: page-templates/home.php:338
-#: template-parts/home/sections.php:186
 msgid "Ver a Turma Intensiva"
 msgstr "Ver a Turma Intensiva"
 
@@ -590,7 +585,9 @@ msgstr "Badge do botão"
 #: inc/class-proenem-elementor-home-widget-base.php:665
 #: inc/home-shared.php:263
 #: page-templates/home.php:460
+#: page-templates/home.php:679
 #: template-parts/home/sections.php:308
+#: template-parts/home/sections.php:527
 msgid "7 dias de garantia"
 msgstr "7 dias de garantia"
 
@@ -1016,9 +1013,6 @@ msgstr "Questões do ENEM e dos principais vestibulares, com resolução em víd
 #: inc/class-proenem-elementor-home-widget-base.php:1130
 #: inc/class-proenem-elementor-sales-widget-base.php:1067
 #: inc/class-proenem-elementor-sales-widget-base.php:1125
-#: inc/template-tags.php:2266
-#: page-templates/home.php:679
-#: template-parts/home/sections.php:527
 msgid "Ver plano e preço"
 msgstr "Ver plano e preço"
 
@@ -2883,6 +2877,15 @@ msgstr "Links legais"
 #: inc/template-tags.php:2099
 msgid "Feito com ♥ para você"
 msgstr "Feito com ♥ para você"
+
+#: inc/template-tags.php:2266
+#: page-templates/home.php:316
+#: page-templates/home.php:338
+#: page-templates/home.php:678
+#: template-parts/home/sections.php:186
+#: template-parts/home/sections.php:526
+msgid "Ver planos e preços"
+msgstr "Ver planos e preços"
 
 #: inc/template-tags.php:2281
 msgid "Próximo passo"
