@@ -8641,7 +8641,7 @@ body.proenem-home-template {
    -------------------------------------------------------------------------- */
 
 .pro-hero-offer__stage {
-  align-items: center;
+  align-items: stretch;
   display: grid;
   gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-16));
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
@@ -8831,19 +8831,24 @@ body.proenem-home-template {
   width: 0.35rem;
 }
 
+/* The photo is sized by the height of the copy column, not by its own width.
+   Capping it by width left a gap over her head whenever the copy grew. */
 .pro-hero-offer__figure {
-  align-self: end;
-  justify-self: center;
+  align-items: stretch;
+  display: flex;
+  justify-content: center;
   position: relative;
-  width: 100%;
 }
 
 .pro-hero-offer__image {
   display: block;
-  height: auto;
-  margin-inline: auto;
-  max-width: min(100%, 30rem);
-  width: 100%;
+  height: 100%;
+  /* Guard for unusual layouts where the copy column runs very long. */
+  max-height: 52rem;
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom center;
+  width: auto;
 }
 
 .pro-hero-offer__sticker {
@@ -8861,7 +8866,9 @@ body.proenem-home-template {
 .pro-hero-offer__sticker--plan {
   background: var(--pen-color-yellow-bright);
   left: 0;
-  top: 34%;
+  /* Sits over the shoulder, not over her hair, now that the photo fills the
+     column height. */
+  top: 50%;
   transform: rotate(-7deg);
 }
 
@@ -9165,6 +9172,7 @@ body.proenem-home-template {
   }
 
   .pro-hero-offer__figure {
+    display: block;
     order: 2;
   }
 
@@ -9195,7 +9203,11 @@ body.proenem-home-template {
   }
 
   .pro-hero-offer__image {
+    height: auto;
+    margin-inline: auto;
+    max-height: none;
     max-width: min(100%, 22rem);
+    width: 100%;
   }
 
   .pro-hero-offer__sticker--tri {
