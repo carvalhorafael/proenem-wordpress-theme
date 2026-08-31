@@ -33,7 +33,10 @@ for (const variant of VARIANTS) {
     // are the contract the navbar and every secondary CTA depend on.
     await expect(page.locator("#planos")).toHaveCount(1);
     await expect(page.locator("#faq")).toHaveCount(1);
-    await expect(page.locator("#aprovados")).toHaveCount(1);
+
+    // #aprovados is deliberately not asserted: the proof section renders only
+    // when the testimonials plugin has eligible records, so it is absent in a
+    // clean install. The suite treats it as optional everywhere else too.
 
     // The variant renders its own navbar, so the generic theme header and
     // footer must stay out. This is what proenem_is_home_surface() protects.
