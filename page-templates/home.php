@@ -169,10 +169,26 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
+		'name'          => __( 'Grátis', 'proenem-wordpress-theme' ),
+		'price_prefix'  => __( 'R$', 'proenem-wordpress-theme' ),
+		'price'         => __( '0', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
+		'free'          => true,
+		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
+		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
+		'features'      => array(
+			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
+			__( 'Banco de +60 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Sem cartão', 'proenem-wordpress-theme' ),
+		),
+	),
+	array(
 		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
 		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
 		'price'         => __( '29,90', 'proenem-wordpress-theme' ),
 		'price_details' => __( 'ou R$ 306,90 à vista', 'proenem-wordpress-theme' ),
+		'guarantee'     => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
 		'summary'       => __( 'Preparação completa até o dia da prova.', 'proenem-wordpress-theme' ),
 		'featured'      => true,
 		'button_label'  => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
@@ -668,37 +684,31 @@ $subjects = array(
 				<p><?php esc_html_e( 'Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões. Comece agora com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
-		<div class="pen-plan-grid">
+		<div class="pen-plan-grid pro-home-plan-grid--duo">
 			<?php foreach ( $plans as $plan ) : ?>
-				<article class="pen-plan-card pro-home-plan-card--split<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
-				<?php if ( ! empty( $plan['featured'] ) ) : ?>
-					<span class="pro-home-plan-card__label"><?php esc_html_e( 'Oferta 2026', 'proenem-wordpress-theme' ); ?></span>
+				<article class="pen-plan-card pro-home-plan-card--stack<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
+					<?php if ( ! empty( $plan['featured'] ) ) : ?>
+						<span class="pro-home-plan-card__label"><?php esc_html_e( 'Oferta 2026', 'proenem-wordpress-theme' ); ?></span>
 					<?php endif; ?>
-					<div class="pro-home-plan-card__benefits">
-						<header>
-							<h3><?php echo esc_html( $plan['name'] ); ?></h3>
-							<p><?php echo esc_html( $plan['summary'] ); ?></p>
-						</header>
-						<ul>
-							<?php foreach ( $plan['features'] as $feature ) : ?>
-								<li><?php echo esc_html( $feature ); ?></li>
-							<?php endforeach; ?>
-						</ul>
+					<header>
+						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
+						<p><?php echo esc_html( $plan['summary'] ); ?></p>
+					</header>
+					<ul>
+						<?php foreach ( $plan['features'] as $feature ) : ?>
+							<li><?php echo esc_html( $feature ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+					<div class="pro-home-plan-card__price">
+						<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
+						<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+							<p><?php echo esc_html( $plan['price_details'] ); ?></p>
+						<?php endif; ?>
 					</div>
-					<div class="pro-home-plan-card__checkout">
-						<div class="pro-home-plan-card__price">
-							<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
-							<?php if ( ! empty( $plan['price_details'] ) ) : ?>
-								<p><?php echo esc_html( $plan['price_details'] ); ?></p>
-							<?php endif; ?>
-						</div>
-						<a class="pen-action-link pen-button pen-button--primary pen-button--lg" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
-						<ul class="pro-home-plan-card__trust">
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></span><?php esc_html_e( 'Pagamento 100% seguro', 'proenem-wordpress-theme' ); ?></li>
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3 5 6v5c0 4.6 2.8 8.1 7 10 4.2-1.9 7-5.4 7-10V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span><?php esc_html_e( 'Garantia de 7 dias', 'proenem-wordpress-theme' ); ?></li>
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.2 2.2 4.8-4.8"></path></svg></span><?php esc_html_e( 'Acesso liberado na hora', 'proenem-wordpress-theme' ); ?></li>
-						</ul>
-					</div>
+					<a class="pen-action-link pen-action-link--primary" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
+					<?php if ( ! empty( $plan['guarantee'] ) ) : ?>
+						<p class="pro-home-plan-card__guarantee"><span aria-hidden="true">✓</span><?php echo esc_html( $plan['guarantee'] ); ?></p>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>

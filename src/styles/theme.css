@@ -9287,3 +9287,232 @@ body.proenem-home-template {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   Pricing: two stacked plan cards
+
+   Restores the layout that existed before the single split card of 0.17.0:
+   two columns, the paid plan highlighted. The split rules above stay in place
+   while the hero variants still render that card; delete them once every
+   surface uses the stacked layout.
+   ========================================================================== */
+
+.pro-home .pen-plan-grid.pro-home-plan-grid--duo {
+  align-items: end;
+  gap: clamp(1.7rem, 2.5vw, 2.2rem);
+  grid-template-columns: repeat(2, minmax(0, 22.7rem));
+  justify-content: center;
+  max-width: 47.6rem;
+}
+
+.pro-home .pen-plan-card.pro-home-plan-card--stack {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 1.2rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-ink);
+  display: grid;
+  grid-template-rows: auto 1fr auto auto auto;
+  min-height: 31rem;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  text-align: left;
+}
+
+.pro-home .pen-plan-card.pro-home-plan-card--stack.is-featured {
+  background: var(--pen-color-proof-red);
+  color: var(--pen-color-surface);
+  min-height: 37rem;
+}
+
+.pro-home .pro-home-plan-card--stack header {
+  min-height: 8.5rem;
+  padding: 2rem 1.55rem 1.45rem;
+}
+
+.pro-home .pro-home-plan-card--stack.is-free header {
+  background: var(--pen-color-yellow-bright);
+  border-radius: 1rem 1rem 0 0;
+}
+
+.pro-home .pro-home-plan-card--stack.is-featured header {
+  background:
+    linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+  background-size: 1.55rem 1.55rem;
+  min-height: 9.5rem;
+}
+
+.pro-home .pro-home-plan-card--stack h3 {
+  font-size: clamp(1.45rem, 1.8vw, 1.8rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+}
+
+.pro-home .pro-home-plan-card--stack header p {
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.35;
+  margin: 0.9rem 0 0;
+}
+
+.pro-home .pro-home-plan-card--stack ul {
+  border-block: var(--pen-border-brand-xs);
+  list-style: none;
+  margin: 0;
+  padding: 1.45rem 1.55rem;
+}
+
+.pro-home .pro-home-plan-card--stack li {
+  align-items: flex-start;
+  display: flex;
+  font-size: 0.96rem;
+  gap: 0.75rem;
+  line-height: 1.35;
+}
+
+.pro-home .pro-home-plan-card--stack li + li {
+  margin-top: 0.82rem;
+}
+
+.pro-home .pro-home-plan-card--stack li::before {
+  align-items: center;
+  background: var(--pen-color-yellow-platform);
+  border: var(--pen-border-brand-xs);
+  border-radius: 0.16rem;
+  color: var(--pen-color-ink);
+  content: "✓";
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.62rem;
+  font-weight: 900;
+  height: 0.95rem;
+  justify-content: center;
+  line-height: 1;
+  margin-top: 0.15rem;
+  width: 0.95rem;
+}
+
+.pro-home .pro-home-plan-card--stack .pro-home-plan-card__price {
+  border-bottom: var(--pen-border-brand-xs);
+  display: grid;
+  gap: 0.45rem;
+  justify-items: center;
+  padding: 1.2rem 1.55rem 1.35rem;
+  text-align: center;
+}
+
+/* The split card prints the price in red on white. Here the featured card is
+   red, so price, prefix and detail all follow the card's own text colour. */
+.pro-home .pro-home-plan-card--stack strong.pro-home-plan-card__price-amount {
+  align-items: baseline;
+  color: currentColor;
+  display: flex;
+  font-size: clamp(2.55rem, 3.4vw, 3.35rem);
+  gap: 0.35rem;
+  justify-content: center;
+  line-height: 0.95;
+  width: 100%;
+}
+
+.pro-home .pro-home-plan-card--stack strong.pro-home-plan-card__price-amount span {
+  color: currentColor;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.pro-home .pro-home-plan-card--stack .pro-home-plan-card__price > p {
+  color: inherit;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Sits on the top border of the card, not inside the header, so it never
+   lands over the plan name. */
+.pro-home .pro-home-plan-card--stack .pro-home-plan-card__label {
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-sm);
+  left: 1.55rem;
+  top: -1.05rem;
+}
+
+.pro-home .pro-home-plan-card__guarantee {
+  align-items: center;
+  display: flex;
+  font-weight: 800;
+  gap: 0.45rem;
+  justify-content: center;
+  margin: -0.45rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.pro-home .pro-home-plan-card__guarantee span {
+  align-items: center;
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  color: var(--pen-color-ink);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  height: 1.15rem;
+  justify-content: center;
+  line-height: 1;
+  width: 1.15rem;
+}
+
+.pro-home .pro-home-plan-card--stack .pen-action-link {
+  align-items: center;
+  align-self: end;
+  background: var(--pen-color-proof-red);
+  border: var(--pen-border-brand-sm);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-sm);
+  color: var(--pen-color-surface);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.8rem;
+  justify-content: center;
+  margin: 1.15rem auto 1.25rem;
+  min-height: 3.1rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  transition:
+    box-shadow 160ms ease,
+    transform 160ms ease;
+  width: calc(100% - 2.5rem);
+}
+
+.pro-home .pro-home-plan-card--stack.is-featured .pen-action-link,
+.pro-home .pro-home-plan-card--stack.is-free .pen-action-link {
+  background: var(--pen-color-yellow-bright);
+  color: var(--pen-color-ink);
+}
+
+.pro-home .pro-home-plan-card--stack .pen-action-link:hover,
+.pro-home .pro-home-plan-card--stack .pen-action-link:focus-visible {
+  box-shadow: var(--pen-shadow-hard-xs);
+  transform: translate(2px, 2px);
+}
+
+@media (max-width: 760px) {
+  .pro-home .pen-plan-grid.pro-home-plan-grid--duo {
+    align-items: stretch;
+    grid-template-columns: minmax(0, min(100%, 22.7rem));
+    max-width: 22.7rem;
+  }
+
+  .pro-home .pen-plan-card.pro-home-plan-card--stack,
+  .pro-home .pen-plan-card.pro-home-plan-card--stack.is-featured {
+    height: auto;
+    min-height: 0;
+  }
+
+  .pro-home .pro-home-plan-card--stack strong.pro-home-plan-card__price-amount {
+    font-size: clamp(2.8rem, 14vw, 3.45rem);
+  }
+}
