@@ -3012,8 +3012,8 @@ msgid "Matrículas abertas para a %s"
 msgstr "Matrículas abertas para a %s"
 
 #: page-templates/home-variant-oferta.php:70
-msgid "Diagnóstico, plano semanal, aulas, simulados com TRI e redação corrigida. Um método que te diz o que estudar agora e acompanha sua evolução até a prova."
-msgstr "Diagnóstico, plano semanal, aulas, simulados com TRI e redação corrigida. Um método que te diz o que estudar agora e acompanha sua evolução até a prova."
+msgid "Um método que te diz o que estudar agora e acompanha sua evolução até a prova."
+msgstr "Um método que te diz o que estudar agora e acompanha sua evolução até a prova."
 
 #: page-templates/home-variant-oferta.php:97
 msgid "Ver tudo o que está incluído"

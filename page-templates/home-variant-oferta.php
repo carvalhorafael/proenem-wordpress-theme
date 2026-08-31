@@ -67,7 +67,7 @@ $hero_benefits = array(
 				</h1>
 
 				<p class="pro-hero-offer__subtitle">
-					<?php esc_html_e( 'Diagnóstico, plano semanal, aulas, simulados com TRI e redação corrigida. Um método que te diz o que estudar agora e acompanha sua evolução até a prova.', 'proenem-wordpress-theme' ); ?>
+					<?php esc_html_e( 'Um método que te diz o que estudar agora e acompanha sua evolução até a prova.', 'proenem-wordpress-theme' ); ?>
 				</p>
 
 				<ul class="pro-hero-offer__benefits">

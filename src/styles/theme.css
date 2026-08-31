@@ -8573,7 +8573,11 @@ body.proenem-home-template {
   --pro-hero-cta-background: var(--pen-color-yellow-bright);
   --pro-hero-cta-background-hover: var(--pen-color-yellow-brand);
   display: block;
-  padding-block: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
+  /* Tighter above than below: the fold is the scarce resource, and the hero
+     reads as attached to the navbar instead of floating under it. */
+  padding-block:
+    clamp(var(--pen-space-5), 2.5vw, var(--pen-space-8))
+    clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
   padding-inline: clamp(var(--pen-space-5), 4vw, var(--pen-space-12));
 }
 
