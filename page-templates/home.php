@@ -689,7 +689,7 @@ $subjects = array(
 					<?php esc_html_e( 'Sua preparação completa.', 'proenem-wordpress-theme' ); ?><br>
 					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Do diagnóstico', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'até a prova.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Escolha entre a turma com cronograma semanal até o dia da prova ou a plataforma completa por 12 meses, no seu ritmo. Os dois com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Escolha pelo seu prazo: a turma até o dia da prova ou a plataforma completa por 12 meses. Os dois com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid pro-home-plan-grid--duo">

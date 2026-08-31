@@ -3,16 +3,18 @@ import { expect, test } from "@playwright/test";
 
 const CHECKOUT_HOST = "pay.hotmart.com";
 
+// Addressed by query string, not by pretty permalink: CI runs WordPress with
+// the default structure, so /e2e-home-variant-oferta/ resolves to a 404 there.
 const VARIANTS = [
   {
     name: "oferta",
-    path: "/e2e-home-variant-oferta/",
+    path: "/?pagename=e2e-home-variant-oferta",
     heroSelector: ".pro-hero-offer",
     ctaSelector: ".pro-hero-offer__cta",
   },
   {
     name: "prova",
-    path: "/e2e-home-variant-prova/",
+    path: "/?pagename=e2e-home-variant-prova",
     heroSelector: ".pro-hero-proof",
     ctaSelector: ".pro-hero-proof__cta",
   },
@@ -110,7 +112,7 @@ for (const variant of VARIANTS) {
 
     await expect(page.locator(".pro-home-plan-card__guarantee")).toHaveCount(2);
     await expect(page.locator(".pro-home-pricing__intro p")).toHaveText(
-      /escolha entre a turma.*plataforma completa por 12 meses.*7 dias de garantia/i,
+      /escolha pelo seu prazo.*plataforma completa por 12 meses.*7 dias de garantia/i,
     );
   });
 

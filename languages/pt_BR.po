@@ -3347,8 +3347,8 @@ msgstr "Diagnóstico por área e tópico"
 
 #: page-templates/home.php:692
 #: template-parts/home/sections.php:540
-msgid "Escolha entre a turma com cronograma semanal até o dia da prova ou a plataforma completa por 12 meses, no seu ritmo. Os dois com 7 dias de garantia."
-msgstr "Escolha entre a turma com cronograma semanal até o dia da prova ou a plataforma completa por 12 meses, no seu ritmo. Os dois com 7 dias de garantia."
+msgid "Escolha pelo seu prazo: a turma até o dia da prova ou a plataforma completa por 12 meses. Os dois com 7 dias de garantia."
+msgstr "Escolha pelo seu prazo: a turma até o dia da prova ou a plataforma completa por 12 meses. Os dois com 7 dias de garantia."
 
 #: page-templates/home.php:783
 #: template-parts/home/sections.php:631
