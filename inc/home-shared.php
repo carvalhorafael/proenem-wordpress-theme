@@ -247,41 +247,30 @@ function proenem_home_image_source_set( $filename, $sizes ) {
  * page. Keeping them here avoids a variant advertising a price the pricing
  * section no longer shows.
  *
- * A variant may sell a different offer than the control. When it does, it
- * overrides only the keys that change, so price, guarantee and the plans link
- * keep coming from a single place.
+ * Both variants sell the same offer, with a checkout code of its own. It is
+ * deliberately not part of `proenem_get_home_cta_destination()`: that map is
+ * the durable home contract, and this destination only lives while the test
+ * runs.
  *
- * @param string $variant Hero variant key, or an empty string for the default offer.
  * @return array<string,string>
  */
-function proenem_get_home_offer( $variant = '' ) {
+function proenem_get_home_offer() {
 	$offer = array(
 		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
 		'price_prefix'  => __( '12x de', 'proenem-wordpress-theme' ),
 		'price'         => __( 'R$ 29,90', 'proenem-wordpress-theme' ),
 		'price_details' => __( 'ou R$ 306,90 à vista, com 6 meses de acesso', 'proenem-wordpress-theme' ),
 		'guarantee'     => __( '7 dias de garantia', 'proenem-wordpress-theme' ),
-		'checkout_url'  => proenem_get_home_cta_destination( 'method_pro' ),
+		'checkout_url'  => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
 		'plans_url'     => proenem_get_home_cta_destination( 'plans' ),
 	);
-
-	$variant_offers = array(
-		'prova' => array(
-			'checkout_url' => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
-		),
-	);
-
-	if ( isset( $variant_offers[ $variant ] ) ) {
-		$offer = array_merge( $offer, $variant_offers[ $variant ] );
-	}
 
 	/**
 	 * Filter the offer summary shown in the conversion hero variants.
 	 *
-	 * @param array<string,string> $offer   Offer summary.
-	 * @param string               $variant Hero variant key.
+	 * @param array<string,string> $offer Offer summary.
 	 */
-	return (array) apply_filters( 'proenem_home_offer', $offer, $variant );
+	return (array) apply_filters( 'proenem_home_offer', $offer );
 }
 
 /**

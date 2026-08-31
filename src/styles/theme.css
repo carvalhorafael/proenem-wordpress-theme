@@ -8611,8 +8611,12 @@ body.proenem-home-template {
   color: var(--pen-color-ink);
   font-size: clamp(1rem, 1.35vw, 1.185rem);
   font-weight: 800;
+  letter-spacing: 0.02em;
   min-height: 3.75rem;
   text-align: center;
+  /* Caps come from the stylesheet, not the string: the catalog keeps natural
+     case and screen readers do not spell the label out letter by letter. */
+  text-transform: uppercase;
   white-space: normal;
 }
 
@@ -9051,12 +9055,8 @@ body.proenem-home-template {
   width: 100%;
 }
 
-/* Caps come from the stylesheet, not the string: the catalog keeps natural
-   case and screen readers do not spell the label out letter by letter. */
 .pro-hero-proof__cta {
-  letter-spacing: 0.02em;
   max-width: 32rem;
-  text-transform: uppercase;
   width: 100%;
 }
 

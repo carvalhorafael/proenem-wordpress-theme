@@ -42,16 +42,17 @@ O controle continua com o próprio corpo embutido. Isso é intencional: o objeti
 
 ## Destinos de CTA das variantes
 
+As duas variantes vendem a mesma oferta e usam o mesmo rótulo e o mesmo destino na ação primária. O teste isola o desenho da dobra, não a oferta.
+
 | Posição | Label | Intenção | Destino |
 | --- | --- | --- | --- |
-| Hero da variante A | Quero a Turma Intensiva | Contratação | Checkout aprovado (`method_pro`) |
+| Hero das duas variantes | QUERO MÉTODO PRO | Contratação | `https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10` |
 | Hero da variante A, secundário | Ver tudo o que está incluído | Secundário | `/#planos` |
-| Barra móvel da variante A | Quero a Turma Intensiva | Contratação | Checkout aprovado (`method_pro`) |
-| Hero da variante B | QUERO MÉTODO PRO | Contratação | `https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10` |
 | Hero da variante B, secundário | Ver o que está incluído | Secundário | `/#planos` |
-| Barra móvel da variante B | Começar agora | Contratação | Mesmo checkout do hero da variante B |
+| Barra móvel da variante A | Quero Método PRO | Contratação | Mesmo checkout do hero |
+| Barra móvel da variante B | Começar agora | Contratação | Mesmo checkout do hero |
 
-A variante B vende uma oferta diferente do controle, com código de oferta próprio na Hotmart. O override vive em `proenem_get_home_offer( 'prova' )` e cobre só a URL de checkout; preço, garantia e link de planos continuam saindo da oferta base. Confirme o preço da oferta `T102416176R` antes de ligar o teste: a microcópia sob o botão ainda anuncia o preço da Turma Intensiva.
+A oferta vive em `proenem_get_home_offer()`. O código de checkout dela é diferente do da Turma Intensiva e não entra em `proenem_get_home_cta_destination()` de propósito: aquele mapa é o contrato durável da home, e este destino só existe enquanto o teste roda.
 
 O rótulo é escrito em caixa natural no catálogo e sobe para maiúsculas por `text-transform`, para o leitor de tela não soletrar a sigla.
 
@@ -72,12 +73,13 @@ O tema não faz o split de tráfego. A divisão fica com a ferramenta de teste o
 ## Antes de ligar o teste
 
 - Abra o checkout e confirme nome da oferta, preço, garantia e ausência de mensagem de oferta expirada.
-- Confirme que o preço do hero bate com o cartão de plano da seção de preços. Os dois saem de fontes diferentes: o hero usa `proenem_get_home_offer()`, o cartão usa a lista de planos do corpo compartilhado.
+- Confirme que o preço do hero bate com o cartão de plano da seção de preços. Os dois saem de fontes diferentes: o hero usa `proenem_get_home_offer()`, o cartão usa a lista de planos do corpo compartilhado, que ainda aponta para o checkout da Turma Intensiva.
+- O link secundário `/#planos` leva ao cartão da Turma Intensiva, que é outra oferta. A seção de planos ainda vai ser trabalhada.
 - Confirme o número de aprovados divulgado. As variantes exibem `+ de 40.000`, mesmo número já usado na seção de prova da home.
 
 ## Ajustes por filtro, sem release
 
-- `proenem_home_offer` altera nome, preço, detalhe, garantia e destinos da oferta exibida no hero.
+- `proenem_home_offer` altera nome, preço, detalhe, garantia e destinos da oferta exibida nos dois heros.
 - `proenem_home_exam_date` define a data da prova como `AAAA-MM-DD` e liga a linha de contagem regressiva da variante B. Sem o filtro, a linha não aparece: uma contagem inventada ou vencida é pior do que nenhuma.
 - `proenem_home_templates` inclui outros templates na detecção de superfície de home, usada por `header.php`, `footer.php`, classes de body e descarte de assets.
 

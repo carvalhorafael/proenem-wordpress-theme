@@ -1140,8 +1140,6 @@ msgstr "Botão dos planos"
 #: inc/class-proenem-elementor-home-widget-base.php:1284
 #: inc/class-proenem-elementor-home-widget-base.php:1384
 #: inc/class-proenem-elementor-home-widget-base.php:1487
-#: page-templates/home-variant-oferta.php:42
-#: page-templates/home-variant-oferta.php:92
 #: page-templates/home.php:178
 #: template-parts/home/sections.php:66
 msgid "Quero a Turma Intensiva"
@@ -2436,38 +2434,38 @@ msgstr "R$ 29,90"
 msgid "ou R$ 306,90 à vista, com 6 meses de acesso"
 msgstr "ou R$ 306,90 à vista, com 6 meses de acesso"
 
-#: inc/home-shared.php:295
+#: inc/home-shared.php:284
 #: inc/template-tags.php:1288
 msgid "USP"
 msgstr "USP"
 
-#: inc/home-shared.php:299
+#: inc/home-shared.php:288
 #: inc/template-tags.php:1276
 msgid "Unicamp"
 msgstr "Unicamp"
 
-#: inc/home-shared.php:303
+#: inc/home-shared.php:292
 #: inc/template-tags.php:1264
 msgid "UFRJ"
 msgstr "UFRJ"
 
-#: inc/home-shared.php:307
+#: inc/home-shared.php:296
 #: inc/template-tags.php:1282
 msgid "UFMG"
 msgstr "UFMG"
 
-#: inc/home-shared.php:311
+#: inc/home-shared.php:300
 #: inc/template-tags.php:1270
 msgid "UFRGS"
 msgstr "UFRGS"
 
-#: inc/home-shared.php:315
+#: inc/home-shared.php:304
 #: inc/template-tags.php:1294
 msgid "Unifesp"
 msgstr "Unifesp"
 
 #. translators: %s: Number of days left until the exam.
-#: inc/home-shared.php:371
+#: inc/home-shared.php:360
 #, php-format
 msgid "Falta %s dia para a prova"
 msgid_plural "Faltam %s dias para a prova"
@@ -3005,6 +3003,12 @@ msgstr "Mais de 60 mil questões com resolução comentada"
 msgid "Navegação da home"
 msgstr "Navegação da home"
 
+#: page-templates/home-variant-oferta.php:42
+#: page-templates/home-variant-oferta.php:92
+#: page-templates/home-variant-prova.php:71
+msgid "Quero Método PRO"
+msgstr "Quero Método PRO"
+
 #. translators: %s: Offer name, e.g. Turma Intensiva 2026.
 #: page-templates/home-variant-oferta.php:56
 #, php-format
@@ -3074,10 +3078,6 @@ msgstr "Agora é a sua vez."
 #: page-templates/home-variant-prova.php:65
 msgid "Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida."
 msgstr "Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida."
-
-#: page-templates/home-variant-prova.php:71
-msgid "Quero Método PRO"
-msgstr "Quero Método PRO"
 
 #. translators: 1: Instalment prefix, e.g. 12x de. 2: Instalment price. 3: Guarantee, e.g. 7 dias de garantia.
 #: page-templates/home-variant-prova.php:79

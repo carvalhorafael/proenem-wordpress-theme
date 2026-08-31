@@ -17,7 +17,7 @@
 
 get_header();
 
-$offer        = proenem_get_home_offer( 'prova' );
+$offer        = proenem_get_home_offer();
 $universities = proenem_get_home_hero_universities();
 $avatars      = proenem_get_home_hero_avatars();
 $countdown    = proenem_get_home_exam_countdown();

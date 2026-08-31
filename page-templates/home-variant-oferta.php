@@ -39,7 +39,7 @@ $hero_benefits = array(
 	);
 	proenem_render_mobile_persistent_action(
 		array(
-			'label' => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
+			'label' => __( 'Quero Método PRO', 'proenem-wordpress-theme' ),
 			'url'   => $offer['checkout_url'],
 		)
 	);
@@ -89,7 +89,7 @@ $hero_benefits = array(
 					</p>
 					<a class="pen-button pen-button--lg pro-hero-offer__cta" href="<?php echo esc_url( $offer['checkout_url'] ); ?>" data-pro-hero-variant="oferta" data-pro-hero-action="checkout">
 						<span class="pro-hero-cta__label">
-							<?php esc_html_e( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ); ?>
+							<?php esc_html_e( 'Quero Método PRO', 'proenem-wordpress-theme' ); ?>
 							<span class="pen-button__arrow" aria-hidden="true">-&gt;</span>
 						</span>
 					</a>
