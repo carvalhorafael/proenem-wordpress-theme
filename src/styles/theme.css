@@ -9020,7 +9020,10 @@ body.proenem-home-template {
   font-weight: 500;
   line-height: 1.5;
   margin: 0;
-  max-width: 46rem;
+  /* Wide enough for two lines on a desktop fold; `balance` keeps the two
+     halves even instead of leaving a short tail. */
+  max-width: 52rem;
+  text-wrap: balance;
 }
 
 .pro-hero-proof__action {
