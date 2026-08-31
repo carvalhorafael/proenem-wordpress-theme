@@ -3072,8 +3072,8 @@ msgid "Agora é a sua vez."
 msgstr "Agora é a sua vez."
 
 #: page-templates/home-variant-prova.php:65
-msgid "O Método PRO transforma esforço em nota: diagnóstico, plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida até o dia da prova."
-msgstr "O Método PRO transforma esforço em nota: diagnóstico, plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida até o dia da prova."
+msgid "Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida."
+msgstr "Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida."
 
 #: page-templates/home-variant-prova.php:71
 msgid "Garantir minha vaga na Turma Intensiva"

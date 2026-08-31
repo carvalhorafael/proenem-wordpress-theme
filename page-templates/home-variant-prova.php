@@ -62,7 +62,7 @@ $university_names = implode(
 			</h1>
 
 			<p class="pro-hero-proof__subtitle">
-				<?php esc_html_e( 'O Método PRO transforma esforço em nota: diagnóstico, plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida até o dia da prova.', 'proenem-wordpress-theme' ); ?>
+				<?php esc_html_e( 'Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida.', 'proenem-wordpress-theme' ); ?>
 			</p>
 
 			<div class="pro-hero-proof__action">
