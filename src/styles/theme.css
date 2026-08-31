@@ -8969,26 +8969,28 @@ body.proenem-home-template {
   text-align: center;
 }
 
+/* White, not yellow: yellow is reserved for the single primary action in this
+   fold, and a yellow pill above the title read as a second button. */
 .pro-hero-proof__badge {
   align-items: center;
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand);
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
   border-radius: var(--pen-radius-pill);
-  box-shadow: var(--pen-shadow-hard-sm);
+  box-shadow: var(--pen-shadow-hard-xs);
   color: var(--pen-color-ink);
   display: inline-flex;
   flex-wrap: wrap;
-  font-size: var(--pen-text-sm);
-  font-weight: 700;
+  font-size: var(--pen-text-xs);
+  font-weight: 600;
   gap: var(--pen-space-2);
   justify-content: center;
   margin: 0;
-  padding: var(--pen-space-2) var(--pen-space-5);
+  padding: var(--pen-space-1) var(--pen-space-4);
 }
 
 .pro-hero-proof__badge-number {
   font-family: var(--pen-font-display);
-  font-size: var(--pen-text-lg);
+  font-size: var(--pen-text-sm);
   font-weight: var(--pen-font-weight-display);
   letter-spacing: -0.02em;
 }
@@ -9238,6 +9240,14 @@ body.proenem-home-template {
 
   .pro-hero-proof__gallery li:nth-child(n + 5) {
     display: none;
+  }
+
+  /* The label wraps to two lines here; without tighter padding the pill grows
+     into a card and starts competing with the button again. */
+  .pro-hero-proof__badge {
+    gap: 0 var(--pen-space-2);
+    line-height: 1.3;
+    padding: var(--pen-space-2) var(--pen-space-4);
   }
 }
 
