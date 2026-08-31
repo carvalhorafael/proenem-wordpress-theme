@@ -197,7 +197,8 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(intensivePlan).toContainText("6 meses de acesso");
   await expect(intensivePlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*19,90/);
   await expect(intensivePlan.locator(".pro-home-plan-card__discount")).toHaveText("33% OFF");
-  await expect(intensivePlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 199,90 à vista");
+  await expect(intensivePlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 204,30 à vista");
+  await expect(intensivePlan.locator(".pro-home-plan-card__guarantee")).toContainText("7 dias de garantia.");
   await expect(intensivePlan.getByRole("link", { name: /quero a turma intensiva/i })).toHaveAttribute(
     "href",
     "https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10",
