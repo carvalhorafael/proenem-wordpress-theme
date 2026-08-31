@@ -217,6 +217,7 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(methodPlan).toContainText("Simulados com nota TRI");
   await expect(methodPlan).toContainText("Acesso 12 meses");
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
+  await expect(methodPlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 306,85 à vista");
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
   // The stacked card has no trust list; the guarantee carries that reassurance.
   await expect(methodPlan.locator(".pro-home-plan-card__trust")).toHaveCount(0);
