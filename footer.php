@@ -6,7 +6,7 @@
  */
 
 ?>
-	<?php if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) ) : ?>
+	<?php if ( ! proenem_is_home_surface() ) : ?>
 		<?php proenem_render_site_footer(); ?>
 	<?php endif; ?>
 </div>

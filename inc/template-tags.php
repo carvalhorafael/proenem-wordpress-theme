@@ -2263,7 +2263,7 @@ function proenem_render_mobile_persistent_action( $action = array() ) {
 	$action = wp_parse_args(
 		$action,
 		array(
-			'label'     => __( 'Ver plano e preço', 'proenem-wordpress-theme' ),
+			'label'     => __( 'Ver planos e preços', 'proenem-wordpress-theme' ),
 			'threshold' => 600,
 			'url'       => proenem_get_home_cta_destination( 'plans' ),
 		)

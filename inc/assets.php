@@ -105,7 +105,7 @@ function proenem_testimonial_uses_blocks( $post_id ) {
 function proenem_dequeue_custom_template_block_assets() {
 	$plain_testimonial = is_singular( proenem_get_testimonials_post_type() ) && ! proenem_testimonial_uses_blocks( get_queried_object_id() );
 
-	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! is_page_template( 'page-templates/testimonials.php' ) && ! $plain_testimonial ) {
+	if ( ! proenem_is_home_surface() && ! is_page_template( 'page-templates/testimonials.php' ) && ! $plain_testimonial ) {
 		return;
 	}
 
@@ -122,7 +122,7 @@ add_action( 'wp_enqueue_scripts', 'proenem_dequeue_custom_template_block_assets'
  * @return void
  */
 function proenem_dequeue_unused_capture_assets() {
-	if ( ! is_front_page() && ! is_page_template( 'page-templates/home.php' ) && ! proenem_is_approved_students_surface() ) {
+	if ( ! proenem_is_home_surface() && ! proenem_is_approved_students_surface() ) {
 		return;
 	}
 

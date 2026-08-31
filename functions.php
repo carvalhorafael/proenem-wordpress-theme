@@ -18,6 +18,7 @@ require_once PROENEM_THEME_DIR . '/inc/customizer.php';
 require_once PROENEM_THEME_DIR . '/inc/vite.php';
 require_once PROENEM_THEME_DIR . '/inc/assets.php';
 require_once PROENEM_THEME_DIR . '/inc/template-tags.php';
+require_once PROENEM_THEME_DIR . '/inc/home-shared.php';
 require_once PROENEM_THEME_DIR . '/inc/plugin-dependencies.php';
 require_once PROENEM_THEME_DIR . '/inc/elementor-sales-widgets.php';
 require_once PROENEM_THEME_DIR . '/inc/updater.php';

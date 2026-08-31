@@ -613,7 +613,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'data-pro-mobile-persistent-action', $markup );
 		$this->assertStringContainsString( 'data-scroll-threshold="600"', $markup );
 		$this->assertStringContainsString( home_url( '/#planos' ), $markup );
-		$this->assertStringContainsString( 'Ver plano e preço', $markup );
+		$this->assertStringContainsString( 'Ver planos e preços', $markup );
 	}
 
 	/**
