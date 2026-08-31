@@ -9320,8 +9320,10 @@ body.proenem-home-template {
   text-align: left;
 }
 
+/* Brand primary, not proof red: white on #e23a3a lands at 4.29:1 and misses
+   AA, and this card prints its whole benefit list in white. */
 .pro-home .pen-plan-card.pro-home-plan-card--stack.is-featured {
-  background: var(--pen-color-proof-red);
+  background: var(--pen-color-primary);
   color: var(--pen-color-surface);
   min-height: 37rem;
 }
@@ -9472,7 +9474,7 @@ body.proenem-home-template {
 .pro-home .pro-home-plan-card--stack .pen-action-link {
   align-items: center;
   align-self: end;
-  background: var(--pen-color-proof-red);
+  background: var(--pen-color-primary);
   border: var(--pen-border-brand-sm);
   border-radius: var(--pen-radius-pill);
   box-shadow: var(--pen-shadow-hard-sm);

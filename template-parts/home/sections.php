@@ -57,15 +57,17 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
-		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
-		'price'         => __( '29,90', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'ou R$ 306,90 à vista', 'proenem-wordpress-theme' ),
-		'summary'       => __( 'Preparação completa até o dia da prova.', 'proenem-wordpress-theme' ),
-		'featured'      => true,
-		'button_label'  => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
-		'button_url'    => proenem_get_home_cta_destination( 'method_pro' ),
-		'features'      => array(
+		'name'           => __( 'Turma Intensiva ENEM 2026', 'proenem-wordpress-theme' ),
+		'price_prefix'   => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'          => __( '19,90', 'proenem-wordpress-theme' ),
+		'price_discount' => __( '33% OFF', 'proenem-wordpress-theme' ),
+		'price_details'  => __( 'ou R$ 204,30 à vista', 'proenem-wordpress-theme' ),
+		'guarantee'      => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+		'summary'        => __( 'Acesso completo até o dia da prova.', 'proenem-wordpress-theme' ),
+		'accent'         => true,
+		'button_label'   => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
+		'button_url'     => 'https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10',
+		'features'       => array(
 			__( 'Cronograma semanal', 'proenem-wordpress-theme' ),
 			__( 'Correção de redação', 'proenem-wordpress-theme' ),
 			__( 'Aulas e pdfs com os melhores professores', 'proenem-wordpress-theme' ),
@@ -73,6 +75,28 @@ $plans = array(
 			__( 'Revisões inteligentes por matéria', 'proenem-wordpress-theme' ),
 			__( 'Mais de 50 mil questões para praticar', 'proenem-wordpress-theme' ),
 			__( '6 meses de acesso', 'proenem-wordpress-theme' ),
+		),
+	),
+	array(
+		'name'          => __( 'Método PRO', 'proenem-wordpress-theme' ),
+		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'         => __( '29,90', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'ou R$ 306,85 à vista', 'proenem-wordpress-theme' ),
+		'guarantee'     => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Plataforma com preparação ENEM completa.', 'proenem-wordpress-theme' ),
+		'featured'      => true,
+		'label'         => __( 'Estude no seu ritmo', 'proenem-wordpress-theme' ),
+		'button_label'  => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'button_url'    => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
+		'features'      => array(
+			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
+			__( 'Banco com mais de 55 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Cronograma personalizado completo até o dia da prova', 'proenem-wordpress-theme' ),
+			__( '2 correções de redação mensais', 'proenem-wordpress-theme' ),
+			__( 'Aulas gravadas com os melhores professores', 'proenem-wordpress-theme' ),
+			__( 'PDFs completos', 'proenem-wordpress-theme' ),
+			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
+			__( 'Acesso 12 meses', 'proenem-wordpress-theme' ),
 		),
 	),
 );
@@ -513,40 +537,37 @@ $subjects = array(
 					<?php esc_html_e( 'Sua preparação completa.', 'proenem-wordpress-theme' ); ?><br>
 					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Do diagnóstico', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'até a prova.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões. Comece agora com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Escolha entre a turma com cronograma semanal até o dia da prova ou a plataforma completa por 12 meses, no seu ritmo. Os dois com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
-		<div class="pen-plan-grid">
+		<div class="pen-plan-grid pro-home-plan-grid--duo">
 			<?php foreach ( $plans as $plan ) : ?>
-				<article class="pen-plan-card pro-home-plan-card--split<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
-				<?php if ( ! empty( $plan['featured'] ) ) : ?>
-					<span class="pro-home-plan-card__label"><?php esc_html_e( 'Oferta 2026', 'proenem-wordpress-theme' ); ?></span>
+				<article class="pen-plan-card pro-home-plan-card--stack<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['accent'] ) ? ' pro-home-plan-card--accent' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
+					<?php if ( ! empty( $plan['label'] ) ) : ?>
+						<span class="pro-home-plan-card__label"><?php echo esc_html( $plan['label'] ); ?></span>
 					<?php endif; ?>
-					<div class="pro-home-plan-card__benefits">
-						<header>
-							<h3><?php echo esc_html( $plan['name'] ); ?></h3>
-							<p><?php echo esc_html( $plan['summary'] ); ?></p>
-						</header>
-						<ul>
-							<?php foreach ( $plan['features'] as $feature ) : ?>
-								<li><?php echo esc_html( $feature ); ?></li>
-							<?php endforeach; ?>
-						</ul>
+					<header>
+						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
+						<p><?php echo esc_html( $plan['summary'] ); ?></p>
+					</header>
+					<ul>
+						<?php foreach ( $plan['features'] as $feature ) : ?>
+							<li><?php echo esc_html( $feature ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+					<div class="pro-home-plan-card__price">
+						<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
+						<?php if ( ! empty( $plan['price_discount'] ) ) : ?>
+							<span class="pro-home-plan-card__discount"><?php echo esc_html( $plan['price_discount'] ); ?></span>
+						<?php endif; ?>
+						<?php if ( ! empty( $plan['price_details'] ) ) : ?>
+							<p><?php echo esc_html( $plan['price_details'] ); ?></p>
+						<?php endif; ?>
 					</div>
-					<div class="pro-home-plan-card__checkout">
-						<div class="pro-home-plan-card__price">
-							<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
-							<?php if ( ! empty( $plan['price_details'] ) ) : ?>
-								<p><?php echo esc_html( $plan['price_details'] ); ?></p>
-							<?php endif; ?>
-						</div>
-						<a class="pen-action-link pen-button pen-button--primary pen-button--lg" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
-						<ul class="pro-home-plan-card__trust">
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="5" y="10" width="14" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg></span><?php esc_html_e( 'Pagamento 100% seguro', 'proenem-wordpress-theme' ); ?></li>
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3 5 6v5c0 4.6 2.8 8.1 7 10 4.2-1.9 7-5.4 7-10V6z"></path><path d="m9 12 2 2 4-4"></path></svg></span><?php esc_html_e( 'Garantia de 7 dias', 'proenem-wordpress-theme' ); ?></li>
-							<li><span class="pro-home-plan-card__trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.2 2.2 4.8-4.8"></path></svg></span><?php esc_html_e( 'Acesso liberado na hora', 'proenem-wordpress-theme' ); ?></li>
-						</ul>
-					</div>
+					<a class="pen-action-link pen-action-link--primary" href="<?php echo esc_url( $plan['button_url'] ); ?>"><?php echo esc_html( $plan['button_label'] ); ?> <span aria-hidden="true">-></span></a>
+					<?php if ( ! empty( $plan['guarantee'] ) ) : ?>
+						<p class="pro-home-plan-card__guarantee"><span aria-hidden="true">✓</span><?php echo esc_html( $plan['guarantee'] ); ?></p>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>

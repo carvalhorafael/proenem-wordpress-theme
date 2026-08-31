@@ -249,6 +249,22 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.locator(".pen-site-footer")).toBeVisible();
 });
 
+test("front page has no critical accessibility violations", async ({ page }) => {
+  await page.goto("/");
+
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+    .analyze();
+
+  const blocking = results.violations.filter((violation) =>
+    ["critical", "serious"].includes(violation.impact),
+  );
+
+  expect(
+    blocking.map((violation) => `${violation.id}: ${violation.nodes.length} no(s)`),
+  ).toEqual([]);
+});
+
 test("front page keeps conversion actions compatible with their labels", async ({ page }) => {
   await page.goto("/");
 

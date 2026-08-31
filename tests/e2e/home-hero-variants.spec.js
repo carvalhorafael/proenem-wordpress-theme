@@ -75,6 +75,45 @@ for (const variant of VARIANTS) {
     );
   });
 
+  test(`home variant ${variant.name} shows the same pricing section as the control`, async ({
+    page,
+  }) => {
+    await page.goto(variant.path);
+
+    const cards = page.locator(".pen-pricing-section .pen-plan-card");
+
+    await expect(cards).toHaveCount(2);
+    await expect(page.locator(".pen-plan-card.pro-home-plan-card--stack")).toHaveCount(2);
+    await expect(page.locator(".pen-plan-card.pro-home-plan-card--accent")).toHaveCount(1);
+    await expect(page.locator(".pen-plan-card.is-featured")).toHaveCount(1);
+    await expect(page.locator(".pen-plan-card.pro-home-plan-card--split")).toHaveCount(0);
+
+    const intensive = page.locator(".pen-plan-card.pro-home-plan-card--accent");
+    await expect(intensive.getByRole("heading", { level: 3 })).toHaveText("Turma Intensiva ENEM 2026");
+    await expect(intensive.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*19,90/);
+    await expect(intensive.locator(".pro-home-plan-card__discount")).toHaveText("33% OFF");
+    await expect(intensive.locator(".pro-home-plan-card__price")).toContainText("ou R$ 204,30 à vista");
+    await expect(intensive.getByRole("link", { name: /quero a turma intensiva/i })).toHaveAttribute(
+      "href",
+      "https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10",
+    );
+
+    const methodPro = page.locator(".pen-plan-card.is-featured");
+    await expect(methodPro.getByRole("heading", { level: 3 })).toHaveText("Método PRO");
+    await expect(methodPro.locator(".pro-home-plan-card__label")).toHaveText("Estude no seu ritmo");
+    await expect(methodPro.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
+    await expect(methodPro.locator(".pro-home-plan-card__price")).toContainText("ou R$ 306,85 à vista");
+    await expect(methodPro.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute(
+      "href",
+      "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10",
+    );
+
+    await expect(page.locator(".pro-home-plan-card__guarantee")).toHaveCount(2);
+    await expect(page.locator(".pro-home-pricing__intro p")).toHaveText(
+      /escolha entre a turma.*plataforma completa por 12 meses.*7 dias de garantia/i,
+    );
+  });
+
   test(`home variant ${variant.name} has no critical accessibility violations`, async ({
     page,
   }) => {

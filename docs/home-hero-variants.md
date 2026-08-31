@@ -10,7 +10,7 @@ Este documento cobre os templates de home criados para testar conversão na prim
 | `page-templates/home-variant-oferta.php` | Proenem Home - Variante A (Oferta direta) | Variante de teste |
 | `page-templates/home-variant-prova.php` | Proenem Home - Variante B (Prova social) | Variante de teste |
 
-As três páginas renderizam exatamente o mesmo conteúdo abaixo da primeira dobra. Só o hero muda.
+As três páginas renderizam exatamente o mesmo conteúdo abaixo da primeira dobra. Só o hero muda. A seção de planos, com os dois cartões empilhados, é a mesma nas três, e o e2e verifica essa paridade em cada variante.
 
 - O corpo compartilhado vive em `template-parts/home/sections.php`, que hoje é uma cópia fiel do corpo do controle.
 - Os helpers compartilhados vivem em `inc/home-shared.php`: metadados de imagem, detecção de superfície de home, resumo da oferta e listas de prova social.
@@ -73,8 +73,8 @@ O tema não faz o split de tráfego. A divisão fica com a ferramenta de teste o
 ## Antes de ligar o teste
 
 - Abra o checkout e confirme nome da oferta, preço, garantia e ausência de mensagem de oferta expirada.
-- Confirme que o preço do hero bate com o cartão de plano da seção de preços. Os dois saem de fontes diferentes: o hero usa `proenem_get_home_offer()`, o cartão usa a lista de planos do corpo compartilhado, que ainda aponta para o checkout da Turma Intensiva.
-- O link secundário `/#planos` leva ao cartão da Turma Intensiva, que é outra oferta. A seção de planos ainda vai ser trabalhada.
+- Confirme que o preço do hero bate com o cartão do Método PRO na seção de planos. Os dois saem de fontes diferentes: o hero usa `proenem_get_home_offer()`, o cartão usa a lista de planos do corpo compartilhado.
+- O link secundário `/#planos` leva à seção com os dois planos. O hero vende o Método PRO; a seção também oferece a Turma Intensiva ENEM 2026, com outro checkout.
 - Confirme o número de aprovados divulgado. As variantes exibem `+ de 40.000`, mesmo número já usado na seção de prova da home.
 
 ## Ajustes por filtro, sem release

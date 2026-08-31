@@ -627,3 +627,15 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Gap do design system: `pen-hero-section` assume promessa centralizada com foto como palco. Layout em duas colunas com bloco de oferta e pilha liderada por prova nao cabem no contrato publicado. Fundo, enfase, stickers e botao continuam vindo do pacote; so o layout e local.
 - Tracking: as issues obrigatorias do design system e do tema ficam pendentes ate a decisao de promover ou descartar o hero vencedor. Se o vencedor for promovido, o gap deixa de ser temporario e as duas issues passam a ser obrigatorias.
 - Verificado no navegador local, 1440x1000 e 390x844: as duas variantes com acao primaria acima da dobra, arrow do botao colada na ultima palavra, cartao de prova social em fluxo abaixo da foto no mobile e nenhuma quebra horizontal.
+
+## 2026-08-31: Secao de planos com duas ofertas pagas, replicada nas variantes
+
+- Contexto: a secao voltou ao desenho de dois cartoes empilhados anterior a 0.17.0, e as duas colunas passaram a vender ofertas pagas distintas: Turma Intensiva ENEM 2026 e Metodo PRO.
+- Decisao: manter o desenho restaurado atras de modificador, `pro-home-plan-grid--duo` e `pro-home-plan-card--stack`, em vez de trocar as regras base. O cartao split continua no CSS porque o widget Elementor `pro_pricing_grid` ainda o renderiza; ele nao ficou orfao.
+- Semantica de classe: nenhum dos dois planos e gratuito, entao o cabecalho amarelo saiu de `is-free` e passou a depender de `pro-home-plan-card--accent`. As regras de `is-free` seguem para o caminho Elementor.
+- Replicacao: `template-parts/home/sections.php` recebeu a secao identica a do controle, entao as tres superficies mostram os mesmos planos. Um teste por variante compara nome, preco, desconto, valor a vista, destino de checkout e subtitulo.
+- Defeito encontrado e corrigido no caminho: ao restaurar o cartao em destaque, o `#d72f2f` original virou `--pen-color-proof-red`, que e mais claro. Branco sobre `#e23a3a` da 4.29 de contraste e reprova em AA, com o cartao inteiro escrito em branco. O cartao passou a usar `--pen-color-primary`, que da 4.61.
+- Licao: trocar hex por token nao e refatoracao neutra quando o token nao e a mesma cor. O axe pegou isso so porque as variantes tinham checagem de acessibilidade; o controle nao tinha.
+- Consequencia: a home de controle ganhou checagem axe propria no e2e, para esse tipo de regressao nao depender de as variantes existirem.
+- Copy: o subtitulo da secao deixou de anunciar uma oferta unica e passou a nomear o eixo da escolha, prazo contra ritmo. Ele tambem prometia "mais de 60 mil questoes", numero que nao batia com os cartoes, que dizem 50 mil e 55 mil; as contagens ficam so nos cartoes.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
