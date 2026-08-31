@@ -174,7 +174,10 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByText("+60 mil questões", { exact: true })).toBeVisible();
   await expect(page.locator(".pen-pricing-section")).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /sua preparação completa.*do diagnóstico até a prova/i })).toBeVisible();
-  await expect(page.getByText(/turma intensiva 2026.*7 dias de garantia/i)).toBeVisible();
+  // The section introduces the choice between two paid plans, not one offer.
+  await expect(page.locator(".pro-home-pricing__intro p")).toHaveText(
+    /escolha entre a turma.*plataforma completa por 12 meses.*7 dias de garantia/i,
+  );
   await expect(page.locator(".pen-plan-card")).toHaveCount(2);
   await expect(page.locator(".pen-plan-card.pro-home-plan-card--stack")).toHaveCount(2);
   await expect(page.locator(".pen-plan-card.pro-home-plan-card--accent")).toHaveCount(1);

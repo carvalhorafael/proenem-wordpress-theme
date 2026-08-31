@@ -1114,7 +1114,6 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1283
 #: inc/class-proenem-elementor-home-widget-base.php:1402
-#: page-templates/home.php:692
 #: template-parts/home/sections.php:516
 msgid "Turma Intensiva 2026: cronograma personalizado, aulas, redação, simulados e mais de 60 mil questões. Comece agora com 7 dias de garantia."
 msgstr ""
@@ -3313,6 +3312,10 @@ msgstr ""
 #: page-templates/home.php:556
 #: template-parts/home/sections.php:380
 msgid "Diagnóstico por área e tópico"
+msgstr ""
+
+#: page-templates/home.php:692
+msgid "Escolha entre a turma com cronograma semanal até o dia da prova ou a plataforma completa por 12 meses, no seu ritmo. Os dois com 7 dias de garantia."
 msgstr ""
 
 #: page-templates/home.php:783
