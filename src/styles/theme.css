@@ -8645,6 +8645,10 @@ body.proenem-home-template {
    -------------------------------------------------------------------------- */
 
 .pro-hero-offer__stage {
+  /* Distance from the stage to the divider. The figure borrows it back with a
+     negative margin so the photo lands on the line instead of floating above
+     it, while the copy column keeps the breathing room. */
+  --pro-hero-offer-divider-gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
   align-items: stretch;
   display: grid;
   gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-16));
@@ -8841,6 +8845,7 @@ body.proenem-home-template {
   align-items: stretch;
   display: flex;
   justify-content: center;
+  margin-bottom: calc(var(--pro-hero-offer-divider-gap) * -1);
   position: relative;
 }
 
@@ -8937,6 +8942,7 @@ body.proenem-home-template {
   margin-top: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
   max-width: 78rem;
   padding-top: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+  position: relative;
 }
 
 .pro-hero-offer__universities-label {
@@ -9177,6 +9183,7 @@ body.proenem-home-template {
 
   .pro-hero-offer__figure {
     display: block;
+    margin-bottom: 0;
     order: 2;
   }
 
