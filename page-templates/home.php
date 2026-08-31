@@ -169,31 +169,16 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'          => __( 'Grátis', 'proenem-wordpress-theme' ),
-		'price_prefix'  => __( 'R$', 'proenem-wordpress-theme' ),
-		'price'         => __( '0', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'Grátis para começar. Sem cartão.', 'proenem-wordpress-theme' ),
-		'summary'       => __( 'Para começar hoje.', 'proenem-wordpress-theme' ),
-		'free'          => true,
-		'button_label'  => __( 'Criar conta grátis', 'proenem-wordpress-theme' ),
-		'button_url'    => proenem_get_home_cta_destination( 'signup' ),
-		'features'      => array(
-			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
-			__( 'Banco de +60 mil questões', 'proenem-wordpress-theme' ),
-			__( 'Sem cartão', 'proenem-wordpress-theme' ),
-		),
-	),
-	array(
-		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
-		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
-		'price'         => __( '29,90', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'ou R$ 306,90 à vista', 'proenem-wordpress-theme' ),
-		'guarantee'     => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-		'summary'       => __( 'Preparação completa até o dia da prova.', 'proenem-wordpress-theme' ),
-		'featured'      => true,
-		'button_label'  => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
-		'button_url'    => proenem_get_home_cta_destination( 'method_pro' ),
-		'features'      => array(
+		'name'           => __( 'Turma Intensiva ENEM 2026', 'proenem-wordpress-theme' ),
+		'price_prefix'   => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'          => __( '19,90', 'proenem-wordpress-theme' ),
+		'price_discount' => __( '33% OFF', 'proenem-wordpress-theme' ),
+		'price_details'  => __( 'ou R$ 199,90 à vista', 'proenem-wordpress-theme' ),
+		'summary'        => __( 'Acesso completo até o dia da prova.', 'proenem-wordpress-theme' ),
+		'accent'         => true,
+		'button_label'   => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
+		'button_url'     => 'https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10',
+		'features'       => array(
 			__( 'Cronograma semanal', 'proenem-wordpress-theme' ),
 			__( 'Correção de redação', 'proenem-wordpress-theme' ),
 			__( 'Aulas e pdfs com os melhores professores', 'proenem-wordpress-theme' ),
@@ -201,6 +186,27 @@ $plans = array(
 			__( 'Revisões inteligentes por matéria', 'proenem-wordpress-theme' ),
 			__( 'Mais de 50 mil questões para praticar', 'proenem-wordpress-theme' ),
 			__( '6 meses de acesso', 'proenem-wordpress-theme' ),
+		),
+	),
+	array(
+		'name'         => __( 'Método PRO', 'proenem-wordpress-theme' ),
+		'price_prefix' => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'        => __( '29,90', 'proenem-wordpress-theme' ),
+		'guarantee'    => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
+		'summary'      => __( 'Plataforma com preparação ENEM completa.', 'proenem-wordpress-theme' ),
+		'featured'     => true,
+		'label'        => __( 'Estude no seu ritmo', 'proenem-wordpress-theme' ),
+		'button_label' => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
+		'button_url'   => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
+		'features'     => array(
+			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
+			__( 'Banco com mais de 55 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Cronograma personalizado completo até o dia da prova', 'proenem-wordpress-theme' ),
+			__( '2 correções de redação mensais', 'proenem-wordpress-theme' ),
+			__( 'Aulas gravadas com os melhores professores', 'proenem-wordpress-theme' ),
+			__( 'PDFs completos', 'proenem-wordpress-theme' ),
+			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
+			__( 'Acesso 12 meses', 'proenem-wordpress-theme' ),
 		),
 	),
 );
@@ -686,9 +692,9 @@ $subjects = array(
 		</div>
 		<div class="pen-plan-grid pro-home-plan-grid--duo">
 			<?php foreach ( $plans as $plan ) : ?>
-				<article class="pen-plan-card pro-home-plan-card--stack<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
-					<?php if ( ! empty( $plan['featured'] ) ) : ?>
-						<span class="pro-home-plan-card__label"><?php esc_html_e( 'Oferta 2026', 'proenem-wordpress-theme' ); ?></span>
+				<article class="pen-plan-card pro-home-plan-card--stack<?php echo ! empty( $plan['featured'] ) ? ' is-featured' : ''; ?><?php echo ! empty( $plan['accent'] ) ? ' pro-home-plan-card--accent' : ''; ?><?php echo ! empty( $plan['free'] ) ? ' is-free' : ''; ?>">
+					<?php if ( ! empty( $plan['label'] ) ) : ?>
+						<span class="pro-home-plan-card__label"><?php echo esc_html( $plan['label'] ); ?></span>
 					<?php endif; ?>
 					<header>
 						<h3><?php echo esc_html( $plan['name'] ); ?></h3>
@@ -701,6 +707,9 @@ $subjects = array(
 					</ul>
 					<div class="pro-home-plan-card__price">
 						<strong class="pro-home-plan-card__price-amount"><span><?php echo esc_html( $plan['price_prefix'] ); ?></span><?php echo esc_html( $plan['price'] ); ?></strong>
+						<?php if ( ! empty( $plan['price_discount'] ) ) : ?>
+							<span class="pro-home-plan-card__discount"><?php echo esc_html( $plan['price_discount'] ); ?></span>
+						<?php endif; ?>
 						<?php if ( ! empty( $plan['price_details'] ) ) : ?>
 							<p><?php echo esc_html( $plan['price_details'] ); ?></p>
 						<?php endif; ?>

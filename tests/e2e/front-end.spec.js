@@ -177,41 +177,52 @@ test("front page renders the Proenem home", async ({ page }) => {
   await expect(page.getByText(/turma intensiva 2026.*7 dias de garantia/i)).toBeVisible();
   await expect(page.locator(".pen-plan-card")).toHaveCount(2);
   await expect(page.locator(".pen-plan-card.pro-home-plan-card--stack")).toHaveCount(2);
-  await expect(page.locator(".pen-plan-card.is-free")).toHaveCount(1);
+  await expect(page.locator(".pen-plan-card.pro-home-plan-card--accent")).toHaveCount(1);
   await expect(page.locator(".pen-plan-card.is-featured")).toHaveCount(1);
+  // Both plans are paid now; nothing on the home should advertise a free tier.
+  await expect(page.locator(".pen-plan-card.is-free")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Essencial" })).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 3, name: "Turma Intensiva 2026", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Método PRO Avançado" })).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 3, name: "Pro Medicina" })).toHaveCount(0);
 
-  const freePlan = page.locator(".pen-plan-card.is-free");
-  await expect(freePlan.getByRole("heading", { level: 3 })).toHaveText("Grátis");
-  await expect(freePlan).toContainText("Diagnóstico inicial + nota prevista");
-  await expect(freePlan).toContainText("Banco de +60 mil questões");
-  await expect(freePlan).toContainText("Sem cartão");
-  await expect(freePlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/R\$\s*0/);
-  await expect(freePlan.getByRole("link", { name: /criar conta grátis/i })).toHaveAttribute(
+  const intensivePlan = page.locator(".pen-plan-card.pro-home-plan-card--accent");
+  await expect(intensivePlan.getByRole("heading", { level: 3 })).toHaveText("Turma Intensiva ENEM 2026");
+  await expect(intensivePlan).toContainText("Acesso completo até o dia da prova.");
+  await expect(intensivePlan).toContainText("Cronograma semanal");
+  await expect(intensivePlan).toContainText("Correção de redação");
+  await expect(intensivePlan).toContainText("Aulas e pdfs com os melhores professores");
+  await expect(intensivePlan).toContainText("Simulados corrigidos no padrão ENEM");
+  await expect(intensivePlan).toContainText("Revisões inteligentes por matéria");
+  await expect(intensivePlan).toContainText("Mais de 50 mil questões para praticar");
+  await expect(intensivePlan).toContainText("6 meses de acesso");
+  await expect(intensivePlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*19,90/);
+  await expect(intensivePlan.locator(".pro-home-plan-card__discount")).toHaveText("33% OFF");
+  await expect(intensivePlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 199,90 à vista");
+  await expect(intensivePlan.getByRole("link", { name: /quero a turma intensiva/i })).toHaveAttribute(
     "href",
-    /estude\.proenem\.com\.br\/signup/,
+    "https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10",
   );
 
   const methodPlan = page.locator(".pen-plan-card.is-featured");
-  await expect(methodPlan).toContainText("Cronograma semanal");
-  await expect(methodPlan).toContainText("Correção de redação");
-  await expect(methodPlan).toContainText("Aulas e pdfs com os melhores professores");
-  await expect(methodPlan).toContainText("Simulados corrigidos no padrão ENEM");
-  await expect(methodPlan).toContainText("Revisões inteligentes por matéria");
-  await expect(methodPlan).toContainText("Mais de 50 mil questões para praticar");
-  await expect(methodPlan).toContainText("6 meses de acesso");
+  await expect(methodPlan.getByRole("heading", { level: 3 })).toHaveText("Método PRO");
+  await expect(methodPlan.locator(".pro-home-plan-card__label")).toHaveText("Estude no seu ritmo");
+  await expect(methodPlan).toContainText("Plataforma com preparação ENEM completa.");
+  await expect(methodPlan).toContainText("Diagnóstico inicial + nota prevista");
+  await expect(methodPlan).toContainText("Banco com mais de 55 mil questões");
+  await expect(methodPlan).toContainText("Cronograma personalizado completo até o dia da prova");
+  await expect(methodPlan).toContainText("2 correções de redação mensais");
+  await expect(methodPlan).toContainText("Aulas gravadas com os melhores professores");
+  await expect(methodPlan).toContainText("PDFs completos");
+  await expect(methodPlan).toContainText("Simulados com nota TRI");
+  await expect(methodPlan).toContainText("Acesso 12 meses");
   await expect(methodPlan.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
-  await expect(methodPlan.locator(".pro-home-plan-card__price")).toContainText("ou R$ 306,90 à vista");
   await expect(methodPlan).not.toContainText("Total parcelado: R$ 358,80.");
   // The stacked card has no trust list; the guarantee carries that reassurance.
   await expect(methodPlan.locator(".pro-home-plan-card__trust")).toHaveCount(0);
   await expect(methodPlan.locator(".pro-home-plan-card__guarantee")).toContainText("7 dias de garantia.");
-  await expect(page.getByRole("link", { name: /^quero a turma intensiva$/i })).toHaveAttribute(
+  await expect(methodPlan.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute(
     "href",
-    /pay\.hotmart\.com\/W106752534O/,
+    "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10",
   );
   await expect(page.getByRole("link", { name: /quero o método pro avançado/i })).toHaveCount(0);
   await expect(page.locator(".pen-faq-section")).not.toContainText("Método PRO Avançado");
@@ -258,9 +269,7 @@ test("front page keeps conversion actions compatible with their labels", async (
   expect(pricingBox).not.toBeNull();
   expect(pricingBox.y).toBeGreaterThanOrEqual(navbarBox.height - 2);
 
-  const freeSignupLinks = page.getByRole("link", { name: /criar conta grátis/i });
-  await expect(freeSignupLinks).toHaveCount(1);
-  await expect(page.locator(".pen-plan-card.is-free").getByRole("link", { name: /criar conta grátis/i })).toHaveCount(1);
+  await expect(page.getByRole("link", { name: /criar conta grátis/i })).toHaveCount(0);
   await expect(page.getByRole("link", { name: /explorar questões grátis/i })).toHaveCount(0);
   await expect(
     page.locator(".pro-home > .pro-site-navbar").getByRole("link", { name: "Entrar", exact: true }),

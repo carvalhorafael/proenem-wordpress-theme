@@ -9331,7 +9331,11 @@ body.proenem-home-template {
   padding: 2rem 1.55rem 1.45rem;
 }
 
-.pro-home .pro-home-plan-card--stack.is-free header {
+/* The left column is no longer the free plan, so the yellow header hangs off
+   an accent modifier instead of `is-free`. The `is-free` rules stay for the
+   Elementor pricing widget, which still emits that class. */
+.pro-home .pro-home-plan-card--stack.is-free header,
+.pro-home .pro-home-plan-card--stack.pro-home-plan-card--accent header {
   background: var(--pen-color-yellow-bright);
   border-radius: 1rem 1rem 0 0;
 }
@@ -9488,9 +9492,24 @@ body.proenem-home-template {
 }
 
 .pro-home .pro-home-plan-card--stack.is-featured .pen-action-link,
-.pro-home .pro-home-plan-card--stack.is-free .pen-action-link {
+.pro-home .pro-home-plan-card--stack.is-free .pen-action-link,
+.pro-home .pro-home-plan-card--stack.pro-home-plan-card--accent .pen-action-link {
   background: var(--pen-color-yellow-bright);
   color: var(--pen-color-ink);
+}
+
+/* Sits between the instalment and the cash price, so the saving is read as
+   part of the price and not as a separate claim. */
+.pro-home .pro-home-plan-card--stack .pro-home-plan-card__discount {
+  background: var(--pen-color-mint);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  color: var(--pen-color-ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  text-transform: uppercase;
 }
 
 .pro-home .pro-home-plan-card--stack .pen-action-link:hover,
