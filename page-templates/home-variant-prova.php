@@ -17,7 +17,7 @@
 
 get_header();
 
-$offer        = proenem_get_home_offer();
+$offer        = proenem_get_home_offer( 'prova' );
 $universities = proenem_get_home_hero_universities();
 $avatars      = proenem_get_home_hero_avatars();
 $countdown    = proenem_get_home_exam_countdown();
@@ -68,7 +68,7 @@ $university_names = implode(
 			<div class="pro-hero-proof__action">
 				<a class="pen-button pen-button--lg pro-hero-proof__cta" href="<?php echo esc_url( $offer['checkout_url'] ); ?>" data-pro-hero-variant="prova" data-pro-hero-action="checkout">
 					<span class="pro-hero-cta__label">
-						<?php esc_html_e( 'Garantir minha vaga na Turma Intensiva', 'proenem-wordpress-theme' ); ?>
+						<?php esc_html_e( 'Quero Método PRO', 'proenem-wordpress-theme' ); ?>
 						<span class="pen-button__arrow" aria-hidden="true">-&gt;</span>
 					</span>
 				</a>

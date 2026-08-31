@@ -247,9 +247,14 @@ function proenem_home_image_source_set( $filename, $sizes ) {
  * page. Keeping them here avoids a variant advertising a price the pricing
  * section no longer shows.
  *
+ * A variant may sell a different offer than the control. When it does, it
+ * overrides only the keys that change, so price, guarantee and the plans link
+ * keep coming from a single place.
+ *
+ * @param string $variant Hero variant key, or an empty string for the default offer.
  * @return array<string,string>
  */
-function proenem_get_home_offer() {
+function proenem_get_home_offer( $variant = '' ) {
 	$offer = array(
 		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
 		'price_prefix'  => __( '12x de', 'proenem-wordpress-theme' ),
@@ -260,12 +265,23 @@ function proenem_get_home_offer() {
 		'plans_url'     => proenem_get_home_cta_destination( 'plans' ),
 	);
 
+	$variant_offers = array(
+		'prova' => array(
+			'checkout_url' => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
+		),
+	);
+
+	if ( isset( $variant_offers[ $variant ] ) ) {
+		$offer = array_merge( $offer, $variant_offers[ $variant ] );
+	}
+
 	/**
 	 * Filter the offer summary shown in the conversion hero variants.
 	 *
-	 * @param array<string,string> $offer Offer summary.
+	 * @param array<string,string> $offer   Offer summary.
+	 * @param string               $variant Hero variant key.
 	 */
-	return (array) apply_filters( 'proenem_home_offer', $offer );
+	return (array) apply_filters( 'proenem_home_offer', $offer, $variant );
 }
 
 /**

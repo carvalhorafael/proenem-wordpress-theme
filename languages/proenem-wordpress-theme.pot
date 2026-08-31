@@ -571,7 +571,7 @@ msgid "Badge do botão"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:665
-#: inc/home-shared.php:258
+#: inc/home-shared.php:263
 #: page-templates/home.php:436
 #: template-parts/home/sections.php:284
 msgid "7 dias de garantia"
@@ -1197,7 +1197,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1409
 #: inc/class-proenem-elementor-home-widget-base.php:1444
 #: inc/class-proenem-elementor-home-widget-base.php:1465
-#: inc/home-shared.php:254
+#: inc/home-shared.php:259
 #: page-templates/home.php:172
 #: template-parts/home/sections.php:60
 msgid "Turma Intensiva 2026"
@@ -2409,50 +2409,50 @@ msgstr ""
 msgid "Proenem Home (somente na home)"
 msgstr ""
 
-#: inc/home-shared.php:255
+#: inc/home-shared.php:260
 msgid "12x de"
 msgstr ""
 
-#: inc/home-shared.php:256
+#: inc/home-shared.php:261
 msgid "R$ 29,90"
 msgstr ""
 
-#: inc/home-shared.php:257
+#: inc/home-shared.php:262
 msgid "ou R$ 306,90 à vista, com 6 meses de acesso"
 msgstr ""
 
-#: inc/home-shared.php:279
+#: inc/home-shared.php:295
 #: inc/template-tags.php:1288
 msgid "USP"
 msgstr ""
 
-#: inc/home-shared.php:283
+#: inc/home-shared.php:299
 #: inc/template-tags.php:1276
 msgid "Unicamp"
 msgstr ""
 
-#: inc/home-shared.php:287
+#: inc/home-shared.php:303
 #: inc/template-tags.php:1264
 msgid "UFRJ"
 msgstr ""
 
-#: inc/home-shared.php:291
+#: inc/home-shared.php:307
 #: inc/template-tags.php:1282
 msgid "UFMG"
 msgstr ""
 
-#: inc/home-shared.php:295
+#: inc/home-shared.php:311
 #: inc/template-tags.php:1270
 msgid "UFRGS"
 msgstr ""
 
-#: inc/home-shared.php:299
+#: inc/home-shared.php:315
 #: inc/template-tags.php:1294
 msgid "Unifesp"
 msgstr ""
 
 #. translators: %s: Number of days left until the exam.
-#: inc/home-shared.php:355
+#: inc/home-shared.php:371
 #, php-format
 msgid "Falta %s dia para a prova"
 msgid_plural "Faltam %s dias para a prova"
@@ -3061,7 +3061,7 @@ msgid "Do diagnóstico ao dia da prova, o Método PRO transforma esforço em not
 msgstr ""
 
 #: page-templates/home-variant-prova.php:71
-msgid "Garantir minha vaga na Turma Intensiva"
+msgid "Quero Método PRO"
 msgstr ""
 
 #. translators: 1: Instalment prefix, e.g. 12x de. 2: Instalment price. 3: Guarantee, e.g. 7 dias de garantia.

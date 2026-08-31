@@ -9034,8 +9034,12 @@ body.proenem-home-template {
   width: 100%;
 }
 
+/* Caps come from the stylesheet, not the string: the catalog keeps natural
+   case and screen readers do not spell the label out letter by letter. */
 .pro-hero-proof__cta {
+  letter-spacing: 0.02em;
   max-width: 32rem;
+  text-transform: uppercase;
   width: 100%;
 }
 

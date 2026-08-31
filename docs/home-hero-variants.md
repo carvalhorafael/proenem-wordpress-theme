@@ -47,9 +47,13 @@ O controle continua com o próprio corpo embutido. Isso é intencional: o objeti
 | Hero da variante A | Quero a Turma Intensiva | Contratação | Checkout aprovado (`method_pro`) |
 | Hero da variante A, secundário | Ver tudo o que está incluído | Secundário | `/#planos` |
 | Barra móvel da variante A | Quero a Turma Intensiva | Contratação | Checkout aprovado (`method_pro`) |
-| Hero da variante B | Garantir minha vaga na Turma Intensiva | Contratação | Checkout aprovado (`method_pro`) |
+| Hero da variante B | QUERO MÉTODO PRO | Contratação | `https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10` |
 | Hero da variante B, secundário | Ver o que está incluído | Secundário | `/#planos` |
-| Barra móvel da variante B | Começar agora | Contratação | Checkout aprovado (`method_pro`) |
+| Barra móvel da variante B | Começar agora | Contratação | Mesmo checkout do hero da variante B |
+
+A variante B vende uma oferta diferente do controle, com código de oferta próprio na Hotmart. O override vive em `proenem_get_home_offer( 'prova' )` e cobre só a URL de checkout; preço, garantia e link de planos continuam saindo da oferta base. Confirme o preço da oferta `T102416176R` antes de ligar o teste: a microcópia sob o botão ainda anuncia o preço da Turma Intensiva.
+
+O rótulo é escrito em caixa natural no catálogo e sobe para maiúsculas por `text-transform`, para o leitor de tela não soletrar a sigla.
 
 Ir direto ao checkout na primeira dobra é a diferença deliberada de contrato entre variante e controle. Ela é parte do que está sendo medido.
 
