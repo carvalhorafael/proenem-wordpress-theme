@@ -597,6 +597,163 @@ function proenem_get_material_cta_label( $post_id ) {
 }
 
 /**
+ * Get the material format label, or an empty string.
+ *
+ * The plugin validates the stored slug against its own list, so the theme only
+ * has to resolve the label and tolerate the field being empty.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_format_label( $post_id ) {
+	if ( ! function_exists( 'free_materials_format_meta_key' ) || ! function_exists( 'free_materials_format_label' ) ) {
+		return '';
+	}
+
+	$slug = get_post_meta( $post_id, free_materials_format_meta_key(), true );
+
+	return is_string( $slug ) && '' !== $slug ? free_materials_format_label( $slug ) : '';
+}
+
+/**
+ * Get the material page or item count.
+ *
+ * @param int $post_id Post ID.
+ * @return int
+ */
+function proenem_get_material_pages( $post_id ) {
+	if ( ! function_exists( 'free_materials_pages_meta_key' ) ) {
+		return 0;
+	}
+
+	return absint( get_post_meta( $post_id, free_materials_pages_meta_key(), true ) );
+}
+
+/**
+ * Get the material file size as stored by the editor.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_file_size( $post_id ) {
+	if ( ! function_exists( 'free_materials_file_size_meta_key' ) ) {
+		return '';
+	}
+
+	$size = get_post_meta( $post_id, free_materials_file_size_meta_key(), true );
+
+	return is_string( $size ) ? $size : '';
+}
+
+/**
+ * Get who the material is for.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_level( $post_id ) {
+	if ( ! function_exists( 'free_materials_level_meta_key' ) ) {
+		return '';
+	}
+
+	$level = get_post_meta( $post_id, free_materials_level_meta_key(), true );
+
+	return is_string( $level ) ? $level : '';
+}
+
+/**
+ * Get the "what is inside" topics.
+ *
+ * @param int $post_id Post ID.
+ * @return string[]
+ */
+function proenem_get_material_highlights( $post_id ) {
+	if ( ! function_exists( 'free_materials_highlights_meta_key' ) ) {
+		return array();
+	}
+
+	$highlights = get_post_meta( $post_id, free_materials_highlights_meta_key(), true );
+
+	if ( ! is_array( $highlights ) ) {
+		return array();
+	}
+
+	return array_values( array_filter( array_map( 'strval', $highlights ), 'strlen' ) );
+}
+
+/**
+ * Check whether the material is featured in the catalog.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function proenem_material_is_featured( $post_id ) {
+	if ( ! function_exists( 'free_materials_featured_meta_key' ) ) {
+		return false;
+	}
+
+	return (bool) get_post_meta( $post_id, free_materials_featured_meta_key(), true );
+}
+
+/**
+ * Build the short specs shown on a card: format, extent and audience.
+ *
+ * Returns only the parts the editor actually filled in, so a material without
+ * metadata renders nothing instead of empty labels.
+ *
+ * @param int $post_id Post ID.
+ * @return string[]
+ */
+function proenem_get_material_specs( $post_id ) {
+	$specs  = array();
+	$format = proenem_get_material_format_label( $post_id );
+	$pages  = proenem_get_material_pages( $post_id );
+	$size   = proenem_get_material_file_size( $post_id );
+
+	if ( '' !== $format ) {
+		$specs[] = $format;
+	}
+
+	if ( $pages > 0 ) {
+		$specs[] = sprintf(
+			/* translators: %s: Number of pages or items in the material. */
+			_n( '%s página', '%s páginas', $pages, 'proenem-wordpress-theme' ),
+			number_format_i18n( $pages )
+		);
+	}
+
+	if ( '' !== $size ) {
+		$specs[] = $size;
+	}
+
+	return $specs;
+}
+
+/**
+ * Get the material featured in the catalog, if the editors picked one.
+ *
+ * @return WP_Post|null
+ */
+function proenem_get_featured_material() {
+	if ( ! proenem_free_materials_is_available() || ! function_exists( 'free_materials_featured_meta_key' ) ) {
+		return null;
+	}
+
+	$featured = get_posts(
+		array(
+			'ignore_sticky_posts' => true,
+			'meta_key'            => free_materials_featured_meta_key(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Editorial selection of a single post.
+			'meta_value'          => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Editorial selection of a single post.
+			'post_status'         => 'publish',
+			'post_type'           => proenem_get_free_materials_post_type(),
+			'posts_per_page'      => 1,
+		)
+	);
+
+	return $featured ? $featured[0] : null;
+}
+
+/**
  * Render a Free Materials card.
  *
  * @param int $post_id Post ID.
