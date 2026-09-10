@@ -14,7 +14,6 @@ get_header();
 		the_post();
 
 		$material_id   = get_the_ID();
-		$cover_image   = proenem_get_material_image_slot( $material_id, 'full' );
 		$category_name = proenem_get_material_category_label( $material_id );
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-material-single' ); ?>>
@@ -26,7 +25,7 @@ get_header();
 					<p><?php echo esc_html( proenem_get_material_excerpt( $material_id, 28 ) ); ?></p>
 				</div>
 				<figure class="pro-material-single__cover">
-					<img src="<?php echo esc_url( $cover_image['src'] ); ?>" alt="<?php echo esc_attr( $cover_image['alt'] ); ?>">
+					<?php proenem_render_material_image( $material_id, 'large', '(max-width: 980px) 92vw, 800px', true ); ?>
 				</figure>
 				<aside id="material-download-form" class="pro-material-capture" aria-labelledby="pro-material-capture-title">
 					<span class="pro-material-capture__eyebrow"><?php esc_html_e( 'Acesso imediato', 'proenem-wordpress-theme' ); ?></span>
@@ -122,7 +121,7 @@ get_header();
 			<section class="pro-material-footer-cta" aria-labelledby="pro-material-footer-cta-title">
 				<div class="pro-material-footer-cta__inner">
 					<figure class="pro-material-footer-cta__media">
-						<img src="<?php echo esc_url( $cover_image['src'] ); ?>" alt="<?php echo esc_attr( $cover_image['alt'] ); ?>">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 780px) 92vw, 288px' ); ?>
 					</figure>
 					<div class="pro-material-footer-cta__copy">
 						<span><?php esc_html_e( 'Material gratuito', 'proenem-wordpress-theme' ); ?></span>

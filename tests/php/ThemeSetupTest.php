@@ -1127,6 +1127,91 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Material images must come from WordPress so they carry srcset, sizes,
+	 * intrinsic dimensions and lazy loading.
+	 *
+	 * @return void
+	 */
+	public function test_material_image_is_rendered_by_wordpress() {
+		$post_id       = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$attachment_id = self::factory()->attachment->create_upload_object(
+			DIR_TESTDATA . '/images/canola.jpg',
+			$post_id
+		);
+
+		set_post_thumbnail( $post_id, $attachment_id );
+
+		ob_start();
+		proenem_render_material_image( $post_id, 'medium_large', '420px' );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( '<img', $markup );
+		$this->assertStringContainsString( 'srcset=', $markup );
+		$this->assertStringContainsString( 'sizes=', $markup );
+		$this->assertStringContainsString( 'width=', $markup );
+		$this->assertStringContainsString( 'height=', $markup );
+		$this->assertStringNotContainsString( 'pro-material-placeholder', $markup );
+	}
+
+	/**
+	 * An above-the-fold material image should opt out of lazy loading.
+	 *
+	 * @return void
+	 */
+	public function test_material_cover_image_is_eager() {
+		$post_id       = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$attachment_id = self::factory()->attachment->create_upload_object(
+			DIR_TESTDATA . '/images/canola.jpg',
+			$post_id
+		);
+
+		set_post_thumbnail( $post_id, $attachment_id );
+
+		ob_start();
+		proenem_render_material_image( $post_id, 'large', '800px', true );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'loading="eager"', $markup );
+		$this->assertStringContainsString( 'fetchpriority="high"', $markup );
+		$this->assertStringNotContainsString( 'loading="lazy"', $markup );
+	}
+
+	/**
+	 * A material without a cover must not borrow a photo of a student.
+	 *
+	 * @return void
+	 */
+	public function test_material_without_cover_renders_a_typographic_placeholder() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		ob_start();
+		proenem_render_material_image( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-placeholder', $markup );
+		$this->assertStringNotContainsString( '<img', $markup );
+		$this->assertStringNotContainsString( 'student_school', $markup );
+		$this->assertStringNotContainsString( 'hero-student', $markup );
+	}
+
+	/**
+	 * The placeholder should name the format when the editor set one.
+	 *
+	 * @return void
+	 */
+	public function test_material_placeholder_prefers_the_format_label() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_format_meta_key(), 'pdf' );
+
+		ob_start();
+		proenem_render_material_image( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'PDF', $markup );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void
