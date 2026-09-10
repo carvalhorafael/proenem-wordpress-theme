@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.22.0
+Stable tag: 0.22.1
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,9 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.22.1 =
+* Corrige a home, que ignorava o modelo de pagina escolhido no editor.
 
 = 0.21.2 =
 * Corrige o botao do hero, que ficava abaixo da dobra em notebooks de tela baixa.
