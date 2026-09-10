@@ -1071,6 +1071,62 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The material metadata helpers must degrade cleanly when the plugin that
+	 * owns the metadata is not active.
+	 *
+	 * @return void
+	 */
+	public function test_material_metadata_helpers_tolerate_missing_metadata() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		// No metadata stored: every helper must return its empty value rather
+		// than a placeholder label.
+
+		$this->assertSame( '', proenem_get_material_format_label( $post_id ) );
+		$this->assertSame( 0, proenem_get_material_pages( $post_id ) );
+		$this->assertSame( '', proenem_get_material_file_size( $post_id ) );
+		$this->assertSame( '', proenem_get_material_level( $post_id ) );
+		$this->assertSame( array(), proenem_get_material_highlights( $post_id ) );
+		$this->assertFalse( proenem_material_is_featured( $post_id ) );
+		$this->assertSame( array(), proenem_get_material_specs( $post_id ) );
+	}
+
+	/**
+	 * Card specs should list only the fields an editor filled in.
+	 *
+	 * @return void
+	 */
+	public function test_material_specs_skip_empty_fields() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_pages_meta_key(), 1 );
+
+		$this->assertSame( array( '1 página' ), proenem_get_material_specs( $post_id ) );
+
+		update_post_meta( $post_id, free_materials_pages_meta_key(), 14 );
+		update_post_meta( $post_id, free_materials_file_size_meta_key(), '1,8 MB' );
+
+		$this->assertSame( array( '14 páginas', '1,8 MB' ), proenem_get_material_specs( $post_id ) );
+	}
+
+	/**
+	 * Highlights should come back as a clean list of strings.
+	 *
+	 * @return void
+	 */
+	public function test_material_highlights_are_returned_as_clean_strings() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), array( 'Um', '', 'Dois' ) );
+
+		$this->assertSame( array( 'Um', 'Dois' ), proenem_get_material_highlights( $post_id ) );
+
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), 'nao e lista' );
+
+		$this->assertSame( array(), proenem_get_material_highlights( $post_id ) );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void
