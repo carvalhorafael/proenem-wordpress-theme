@@ -1260,31 +1260,49 @@ document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => 
 });
 
 document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
-  const form = document.querySelector("#material-download-form");
+  const panels = Array.from(document.querySelectorAll("[data-pro-material-capture]"));
 
-  if (!form || !("IntersectionObserver" in window)) {
+  if (!panels.length || !("IntersectionObserver" in window)) {
     return;
   }
 
   bar.hidden = false;
 
-  // Show the bar only while the form is off screen, so it never competes with
-  // the form it points at.
+  const onScreen = new Set();
+
+  // The page carries a form in the hero and another at the end. The bar shows
+  // only while none of them is on screen, so it never competes with the form
+  // it points at.
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      bar.classList.toggle("is-visible", !entry.isIntersecting);
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          onScreen.add(entry.target);
+        } else {
+          onScreen.delete(entry.target);
+        }
+      });
+
+      bar.classList.toggle("is-visible", onScreen.size === 0);
     },
     { rootMargin: "-72px 0px 0px 0px" },
   );
 
-  observer.observe(form);
+  panels.forEach((panel) => observer.observe(panel));
 
   bar.querySelector("[data-pro-material-sticky-cta-action]")?.addEventListener("click", (event) => {
     event.preventDefault();
 
+    // Send the visitor to whichever form is closest to where they are.
+    const target = panels.reduce((closest, panel) => {
+      const distance = Math.abs(panel.getBoundingClientRect().top);
+
+      return distance < Math.abs(closest.getBoundingClientRect().top) ? panel : closest;
+    }, panels[0]);
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    form.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-    form.querySelector("input:not([type=hidden]):not([tabindex='-1'])")?.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    target.querySelector("input:not([type=hidden]):not([tabindex='-1'])")?.focus({ preventScroll: true });
   });
 });
