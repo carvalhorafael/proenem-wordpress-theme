@@ -948,4 +948,134 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		update_option( 'active_plugins', $previous_active_plugins );
 	}
+
+	/**
+	 * The free materials surfaces should be exposed as explicit templates.
+	 *
+	 * Without the taxonomy template the category URL registered by the
+	 * free-materials plugin falls through to archive.php, which renders the
+	 * blog index.
+	 *
+	 * @return void
+	 */
+	public function test_free_materials_templates_exist() {
+		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/free-materials.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/single-material_gratuito.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-material_categoria.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' );
+	}
+
+	/**
+	 * The theme must provide the template WordPress looks for on the material
+	 * category archive.
+	 *
+	 * The expected name is derived from the plugin contract, so renaming the
+	 * taxonomy fails here instead of silently falling through to archive.php,
+	 * which is the blog index. The end-to-end suite covers the rendered page.
+	 *
+	 * @return void
+	 */
+	public function test_theme_provides_the_material_category_template() {
+		$taxonomy = proenem_get_free_materials_taxonomy();
+
+		$this->assertSame( 'material_categoria', $taxonomy );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' );
+
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'template-parts/materials/catalog', $template );
+		$this->assertStringContainsString( 'proenem_build_free_materials_query_args', $template );
+		$this->assertStringNotContainsString( 'get_the_archive_title', $template );
+	}
+
+	/**
+	 * The catalog query should filter by the selected categories.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_query_args_apply_the_category_filter() {
+		$unfiltered = proenem_build_free_materials_query_args( array() );
+
+		$this->assertSame( proenem_get_free_materials_post_type(), $unfiltered['post_type'] );
+		$this->assertArrayNotHasKey( 'tax_query', $unfiltered );
+
+		$filtered = proenem_build_free_materials_query_args( array( 'redacao', 'simulados' ) );
+
+		$this->assertArrayHasKey( 'tax_query', $filtered );
+		$this->assertSame( proenem_get_free_materials_taxonomy(), $filtered['tax_query'][0]['taxonomy'] );
+		$this->assertSame( 'slug', $filtered['tax_query'][0]['field'] );
+		$this->assertSame( array( 'redacao', 'simulados' ), $filtered['tax_query'][0]['terms'] );
+	}
+
+	/**
+	 * The catalog filter must work as a plain GET form, without JavaScript.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_filter_form_is_a_real_get_submission() {
+		ob_start();
+		proenem_render_material_category_filters( array(), array() );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'method="get"', $markup );
+		$this->assertStringContainsString( esc_url( proenem_get_free_materials_url() ), $markup );
+		$this->assertStringContainsString( 'type="submit"', $markup );
+	}
+
+	/**
+	 * The results count must be pluralised and announced to assistive technology.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_count_is_pluralised_and_announced() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'aria-live="polite"', $template );
+		$this->assertStringContainsString( "_n( '%s material disponível', '%s materiais disponíveis'", $template );
+	}
+
+	/**
+	 * Material card headings must sit below the results heading.
+	 *
+	 * @return void
+	 */
+	public function test_material_card_heading_level_is_nested() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Checklist de revisão',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_card( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( '<h3>', $markup );
+		$this->assertStringNotContainsString( '<h2>', $markup );
+	}
+
+	/**
+	 * The capture form must block an empty submission on the client.
+	 *
+	 * @return void
+	 */
+	public function test_capture_form_marks_required_fields() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-material_gratuito.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'name="name"', $template );
+		$this->assertStringContainsString( 'name="email"', $template );
+		$this->assertSame( 2, substr_count( $template, 'required' ) );
+		$this->assertStringContainsString( 'inputmode="numeric"', $template );
+		$this->assertStringContainsString( 'aria-describedby="pro-material-capture-email-error"', $template );
+	}
+
+	/**
+	 * The unused delivery URL helper should be gone.
+	 *
+	 * @return void
+	 */
+	public function test_unused_material_delivery_helper_is_removed() {
+		$this->assertFalse( function_exists( 'proenem_get_material_delivery_url' ) );
+	}
 }

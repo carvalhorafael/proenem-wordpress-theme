@@ -961,100 +961,6 @@ document.querySelectorAll(".testimonials-block--slider, .testimonials-block--vid
   startAutoplay();
 });
 
-document.querySelectorAll("[data-pro-materials-filter]").forEach((form) => {
-  const grid = document.querySelector("[data-pro-materials-grid]");
-  const count = document.querySelector("[data-pro-materials-count]");
-  const emptyState = document.querySelector("[data-pro-materials-empty]");
-  const clearLink = form.querySelector("[data-pro-materials-clear]");
-  const cards = Array.from(document.querySelectorAll("[data-pro-material-card]"));
-  const checkboxes = Array.from(form.querySelectorAll('input[name="material_categoria[]"]'));
-
-  if (!grid || !cards.length || !checkboxes.length) {
-    return;
-  }
-
-  const getCardCategories = (card) => {
-    try {
-      return JSON.parse(card.dataset.materialCategories || "[]");
-    } catch {
-      return [];
-    }
-  };
-
-  const updateUrl = (selectedCategories) => {
-    const url = new URL(window.location.href);
-
-    url.searchParams.delete("material_categoria[]");
-    url.searchParams.delete("material_categoria");
-
-    selectedCategories.forEach((category) => {
-      url.searchParams.append("material_categoria[]", category);
-    });
-
-    window.history.replaceState({}, "", url);
-  };
-
-  const render = () => {
-    const selectedCategories = checkboxes
-      .filter((checkbox) => checkbox.checked)
-      .map((checkbox) => checkbox.value);
-    let visibleCount = 0;
-
-    cards.forEach((card) => {
-      const cardCategories = getCardCategories(card);
-      const isVisible =
-        selectedCategories.length === 0 ||
-        selectedCategories.some((category) => cardCategories.includes(category));
-
-      card.hidden = !isVisible;
-
-      if (isVisible) {
-        visibleCount += 1;
-      }
-    });
-
-    if (count) {
-      const countTemplate =
-        visibleCount === 1
-          ? count.dataset.countTemplateSingular || "%s"
-          : count.dataset.countTemplatePlural || "%s";
-
-      count.textContent = countTemplate.replace("%s", visibleCount.toLocaleString("pt-BR"));
-    }
-
-    if (emptyState) {
-      emptyState.hidden = visibleCount !== 0;
-    }
-
-    if (clearLink) {
-      clearLink.hidden = selectedCategories.length === 0;
-    }
-
-    updateUrl(selectedCategories);
-  };
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    render();
-  });
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", render);
-  });
-
-  clearLink?.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-    render();
-  });
-
-  render();
-});
-
 document.querySelectorAll("[data-pro-testimonials-filter]").forEach((form) => {
   const grid = document.querySelector("[data-pro-testimonials-grid]");
   const count = document.querySelector("[data-pro-testimonials-count]");
@@ -1222,5 +1128,112 @@ document.querySelectorAll("[data-pro-testimonial-share]").forEach((shareDetails)
     window.setTimeout(() => {
       copyButton.textContent = copyLabel;
     }, 2400);
+  });
+});
+
+document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => {
+  const fields = Array.from(form.querySelectorAll("input[required], input[pattern]"));
+
+  if (!fields.length) {
+    return;
+  }
+
+  // Take over validation messaging so the browser bubbles do not compete with
+  // the inline errors. Without JS the native `required` handling still applies.
+  form.noValidate = true;
+
+  const errorFor = (field) => {
+    const id = field.getAttribute("aria-describedby");
+
+    return id ? document.getElementById(id) : null;
+  };
+
+  const messageFor = (field) => {
+    if (field.validity.valueMissing) {
+      return field.dataset.proCaptureRequired || "Preencha este campo para continuar.";
+    }
+
+    if (field.validity.typeMismatch) {
+      return field.dataset.proCaptureType || "Informe um email válido, como voce@exemplo.com.";
+    }
+
+    if (field.validity.patternMismatch) {
+      return field.dataset.proCapturePattern || "Informe o número com DDD, como (11) 91234-5678.";
+    }
+
+    return field.validationMessage;
+  };
+
+  const clearField = (field) => {
+    const error = errorFor(field);
+
+    field.removeAttribute("aria-invalid");
+
+    if (error) {
+      error.textContent = "";
+      error.hidden = true;
+    }
+  };
+
+  const showField = (field) => {
+    const error = errorFor(field);
+
+    field.setAttribute("aria-invalid", "true");
+
+    if (error) {
+      error.textContent = messageFor(field);
+      error.hidden = false;
+    }
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field.checkValidity()) {
+        clearField(field);
+      }
+    });
+
+    field.addEventListener("blur", () => {
+      if (field.value !== "" && !field.checkValidity()) {
+        showField(field);
+      }
+    });
+  });
+
+  const phone = form.querySelector("[data-pro-capture-phone]");
+
+  phone?.addEventListener("input", () => {
+    const digits = phone.value.replace(/\D/g, "").slice(0, 11);
+
+    if (!digits) {
+      phone.value = "";
+      return;
+    }
+
+    const area = digits.slice(0, 2);
+    const rest = digits.slice(2);
+    const split = rest.length > 4 ? rest.length - 4 : 0;
+
+    phone.value = [
+      digits.length > 2 ? `(${area}) ` : `(${area}`,
+      split ? `${rest.slice(0, split)}-${rest.slice(split)}` : rest,
+    ].join("");
+  });
+
+  form.addEventListener("submit", (event) => {
+    const invalid = fields.filter((field) => !field.checkValidity());
+
+    fields.forEach(clearField);
+
+    if (!invalid.length) {
+      return;
+    }
+
+    // Stop the capture plugin's delegated document listener from taking over.
+    event.preventDefault();
+    event.stopPropagation();
+
+    invalid.forEach(showField);
+    invalid[0].focus();
   });
 });
