@@ -646,7 +646,7 @@ function proenem_get_material_cta_label( $post_id ) {
 		return $label;
 	}
 
-	return __( 'Acessar material', 'proenem-wordpress-theme' );
+	return __( 'Baixar grátis', 'proenem-wordpress-theme' );
 }
 
 /**
@@ -813,6 +813,8 @@ function proenem_get_featured_material() {
  * @return void
  */
 function proenem_render_material_card( $post_id ) {
+	$specs = proenem_get_material_specs( $post_id );
+	$level = proenem_get_material_level( $post_id );
 	?>
 	<article class="pro-material-card" data-pro-material-card>
 		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
@@ -820,8 +822,22 @@ function proenem_render_material_card( $post_id ) {
 			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
 		</a>
 		<div class="pro-material-card__body">
+			<?php if ( $specs ) : ?>
+				<p class="pro-material-card__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+			<?php endif; ?>
 			<h3><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h3>
-			<p><?php echo esc_html( proenem_get_material_excerpt( $post_id ) ); ?></p>
+			<p class="pro-material-card__excerpt"><?php echo esc_html( proenem_get_material_excerpt( $post_id, 16 ) ); ?></p>
+			<?php if ( '' !== $level ) : ?>
+				<p class="pro-material-card__level">
+					<?php
+					printf(
+						/* translators: %s: Who the material is for. */
+						esc_html__( 'Para %s', 'proenem-wordpress-theme' ),
+						esc_html( strtolower( wp_trim_words( $level, 10 ) ) )
+					);
+					?>
+				</p>
+			<?php endif; ?>
 			<a class="pro-material-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 				<?php echo esc_html( proenem_get_material_cta_label( $post_id ) ); ?>
 				<span aria-hidden="true">→</span>

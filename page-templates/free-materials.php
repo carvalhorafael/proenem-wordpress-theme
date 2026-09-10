@@ -31,11 +31,11 @@ $materials_query = proenem_free_materials_is_available()
 ?>
 
 <main id="primary" class="site-main pro-materials-page">
-	<section class="pro-materials-hero" aria-labelledby="pro-materials-title">
+	<section class="pro-materials-hero pro-materials-hero--catalog" aria-labelledby="pro-materials-title">
 		<div class="pro-materials-hero__copy">
 			<span class="pen-section-pill"><?php esc_html_e( 'Materiais gratuitos', 'proenem-wordpress-theme' ); ?></span>
 			<h1 id="pro-materials-title"><?php esc_html_e( 'Guias para estudar com método antes da próxima prova', 'proenem-wordpress-theme' ); ?></h1>
-			<p><?php esc_html_e( 'Escolha uma categoria e encontre materiais prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php esc_html_e( 'Materiais prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 	</section>
 

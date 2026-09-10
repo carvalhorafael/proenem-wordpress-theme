@@ -41,7 +41,7 @@ if ( '' === trim( $material_description ) ) {
 ?>
 
 <main id="primary" class="site-main pro-materials-page">
-	<section class="pro-materials-hero" aria-labelledby="pro-materials-title">
+	<section class="pro-materials-hero pro-materials-hero--catalog" aria-labelledby="pro-materials-title">
 		<div class="pro-materials-hero__copy">
 			<a class="pro-materials-hero__back" href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>">
 				<?php esc_html_e( '← Todos os materiais gratuitos', 'proenem-wordpress-theme' ); ?>

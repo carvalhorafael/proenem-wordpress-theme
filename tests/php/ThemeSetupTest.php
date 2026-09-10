@@ -1248,6 +1248,91 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The card must say what the visitor gets, and stay quiet about fields the
+	 * editor left empty.
+	 *
+	 * @return void
+	 */
+	public function test_material_card_shows_only_the_metadata_that_exists() {
+		$bare_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Sem metadados',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_card( $bare_id );
+		$bare = (string) ob_get_clean();
+
+		$this->assertStringNotContainsString( 'pro-material-card__specs', $bare );
+		$this->assertStringNotContainsString( 'pro-material-card__level', $bare );
+
+		$filled_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Com metadados',
+			)
+		);
+
+		update_post_meta( $filled_id, free_materials_format_meta_key(), 'pdf' );
+		update_post_meta( $filled_id, free_materials_pages_meta_key(), 14 );
+		update_post_meta( $filled_id, free_materials_file_size_meta_key(), '1,8 MB' );
+		update_post_meta( $filled_id, free_materials_level_meta_key(), 'Quem já fez simulado' );
+
+		ob_start();
+		proenem_render_material_card( $filled_id );
+		$filled = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'PDF · 14 páginas · 1,8 MB', $filled );
+		$this->assertStringContainsString( 'pro-material-card__level', $filled );
+	}
+
+	/**
+	 * The default call to action must promise the download.
+	 *
+	 * @return void
+	 */
+	public function test_material_cta_defaults_to_promising_the_download() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		$this->assertSame( 'Baixar grátis', proenem_get_material_cta_label( $post_id ) );
+
+		// A per-material label still wins.
+		update_post_meta( $post_id, proenem_get_free_materials_cta_label_meta_key(), 'Baixar checklist' );
+
+		$this->assertSame( 'Baixar checklist', proenem_get_material_cta_label( $post_id ) );
+	}
+
+	/**
+	 * The catalog hero must stay short enough to leave the first material
+	 * inside the first screen.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_hero_uses_the_compact_modifier() {
+		foreach ( array( '/page-templates/free-materials.php', '/taxonomy-material_categoria.php' ) as $file ) {
+			$template = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$this->assertStringContainsString( 'pro-materials-hero--catalog', $template, $file );
+		}
+
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// The modifier has to win over the shared .pro-materials-hero rules,
+		// which have the same specificity, so cascade order is the contract.
+		$this->assertLessThan(
+			strpos( $css, '.pro-materials-hero--catalog {' ),
+			strpos( $css, '.pro-materials-hero h1,' ),
+			'.pro-materials-hero--catalog must come after the shared hero rules.'
+		);
+
+		// The card title moved to h3 in #243; the styles must follow.
+		$this->assertStringContainsString( '.pro-material-card h3 {', $css );
+		$this->assertStringNotContainsString( '.pro-material-card h2 {', $css );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void

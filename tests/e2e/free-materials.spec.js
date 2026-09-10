@@ -104,6 +104,43 @@ test("category URL renders the catalog, not the blog index", async ({ page }) =>
   await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
 });
 
+test("catalog hero leaves the first material inside the first mobile screen", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, CATALOG);
+
+  const geometry = await page.evaluate(() => {
+    const box = (selector) => {
+      const el = document.querySelector(selector);
+      const rect = el.getBoundingClientRect();
+
+      return { height: Math.round(rect.height), top: Math.round(rect.top + window.scrollY) };
+    };
+
+    return { hero: box(".pro-materials-hero"), card: box(".pro-material-card") };
+  });
+
+  // The hero used to take 492px and pushed the first card to y=1030.
+  expect(geometry.hero.height).toBeLessThan(320);
+  expect(geometry.card.top).toBeLessThan(700);
+});
+
+test("material card states what the visitor gets", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const cards = page.locator("[data-pro-material-card]");
+
+  // Every card promises a download instead of "acessar material".
+  for (const text of await cards.locator(".pro-material-card__action").allInnerTexts()) {
+    expect(text.toLowerCase()).toContain("baixar");
+  }
+
+  // Cards keep an even height whether or not the metadata is filled in.
+  const heights = await cards.evaluateAll((els) =>
+    els.map((el) => Math.round(el.getBoundingClientRect().height)),
+  );
+  expect(new Set(heights).size).toBe(1);
+});
+
 test("material card headings sit below the results heading", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 
