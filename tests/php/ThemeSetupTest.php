@@ -966,50 +966,26 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * WordPress should ask for the template the theme provides for the
-	 * material category archive.
+	 * The theme must provide the template WordPress looks for on the material
+	 * category archive.
 	 *
-	 * The WordPress test suite pins its own stylesheet, so locate_template()
-	 * cannot resolve theme files here. Asserting the template hierarchy plus
-	 * the file on disk covers the contract that was broken: the category URL
-	 * fell through to archive.php because this filename did not exist.
+	 * The expected name is derived from the plugin contract, so renaming the
+	 * taxonomy fails here instead of silently falling through to archive.php,
+	 * which is the blog index. The end-to-end suite covers the rendered page.
 	 *
 	 * @return void
 	 */
-	public function test_material_category_archive_asks_for_the_theme_template() {
-		$taxonomy   = proenem_get_free_materials_taxonomy();
-		$registered = taxonomy_exists( $taxonomy );
+	public function test_theme_provides_the_material_category_template() {
+		$taxonomy = proenem_get_free_materials_taxonomy();
 
-		if ( ! $registered ) {
-			// The plugin owns the taxonomy; the theme only has to provide the
-			// template for it, so a stand-in is enough to assert the contract.
-			register_taxonomy( $taxonomy, proenem_get_free_materials_post_type(), array( 'public' => true ) );
-		}
+		$this->assertSame( 'material_categoria', $taxonomy );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' );
 
-		$term = self::factory()->term->create_and_get( array( 'taxonomy' => $taxonomy ) );
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-		$this->go_to( get_term_link( $term ) );
-
-		$this->assertTrue( is_tax( $taxonomy ) );
-
-		$candidates = array();
-
-		$capture = static function ( $templates ) use ( &$candidates ) {
-			$candidates = $templates;
-
-			return $templates;
-		};
-
-		add_filter( 'taxonomy_template_hierarchy', $capture );
-		get_taxonomy_template();
-		remove_filter( 'taxonomy_template_hierarchy', $capture );
-
-		$this->assertContains( 'taxonomy-material_categoria.php', $candidates );
-		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-material_categoria.php' );
-
-		if ( ! $registered ) {
-			unregister_taxonomy( $taxonomy );
-		}
+		$this->assertStringContainsString( 'template-parts/materials/catalog', $template );
+		$this->assertStringContainsString( 'proenem_build_free_materials_query_args', $template );
+		$this->assertStringNotContainsString( 'get_the_archive_title', $template );
 	}
 
 	/**
