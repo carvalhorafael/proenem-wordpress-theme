@@ -1770,11 +1770,12 @@ img {
 
 .pro-materials-hero__back {
   color: var(--pen-color-on-red);
-  display: inline-flex;
+  display: flex;
   font-size: 1rem;
   font-weight: 900;
-  margin-bottom: var(--pen-space-4);
+  margin-bottom: var(--pen-space-5);
   text-decoration: none;
+  width: fit-content;
 }
 
 .pro-materials-hero__back:hover,
