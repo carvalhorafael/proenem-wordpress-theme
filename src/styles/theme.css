@@ -1768,6 +1768,20 @@ img {
   z-index: 2;
 }
 
+.pro-materials-hero__back {
+  color: var(--pen-color-on-red);
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 900;
+  margin-bottom: var(--pen-space-4);
+  text-decoration: none;
+}
+
+.pro-materials-hero__back:hover,
+.pro-materials-hero__back:focus-visible {
+  text-decoration: underline;
+}
+
 .pro-materials-hero .pen-section-pill,
 .pro-material-single__hero .pen-section-pill {
   background: var(--pen-color-surface);
@@ -1958,10 +1972,6 @@ img {
   transform 160ms ease;
 }
 
-.pro-material-card[hidden] {
-  display: none;
-}
-
 .pro-material-card:hover,
 .pro-material-card:focus-within {
   box-shadow: 2px 2px 0 var(--pen-color-ink);
@@ -2040,29 +2050,6 @@ img {
   text-decoration: none;
 }
 
-.pro-materials-pagination {
-  margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
-}
-
-.pro-materials-pagination .page-numbers {
-  align-items: center;
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-xs);
-  border-radius: 0.55rem;
-  box-shadow: var(--pen-shadow-hard-xs);
-  color: var(--pen-color-ink);
-  display: inline-flex;
-  font-weight: 800;
-  min-height: 2.5rem;
-  padding: 0.55rem 0.85rem;
-  text-decoration: none;
-}
-
-.pro-materials-pagination .page-numbers.current {
-  background: #bb0922;
-  color: var(--pen-color-on-red);
-}
-
 .pro-materials-empty {
   align-items: start;
   background: var(--pen-color-surface);
@@ -2073,10 +2060,6 @@ img {
   display: grid;
   gap: var(--pen-space-3);
   padding: clamp(var(--pen-space-6), 5vw, var(--pen-space-10));
-}
-
-.pro-materials-empty[hidden] {
-  display: none;
 }
 
 .pro-materials-empty > span {
@@ -2303,6 +2286,60 @@ img {
   justify-content: center;
   margin-top: var(--pen-space-2);
   width: 100%;
+}
+
+.pro-material-capture__field {
+  position: relative;
+}
+
+.pro-material-capture__field span small {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-left: 0.3rem;
+}
+
+.pro-material-capture__form input[aria-invalid="true"] {
+  border-color: #bb0922;
+  box-shadow: inset 0 0 0 1px #bb0922;
+}
+
+.pro-material-capture__error {
+  color: #99061b;
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pro-material-capture__error[hidden] {
+  display: none;
+}
+
+/*
+ * Feedback rendered by the crm-leads-capture plugin. The plugin ships neutral
+ * structure and exposes these custom properties for the host theme.
+ */
+.pro-material-capture .crm-leads-capture-message {
+  --crm-leads-capture-accent: #bb0922;
+  --crm-leads-capture-surface: #fff1f1;
+  --crm-leads-capture-radius: 0.7rem;
+
+  border-width: 2px;
+  border-color: var(--pen-color-ink);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+}
+
+.pro-material-capture .crm-leads-capture-message[data-feedback-tone="success"] {
+  --crm-leads-capture-accent: #0f7a4f;
+  --crm-leads-capture-surface: var(--pen-color-yellow-bright);
+}
+
+.pro-material-capture .crm-leads-capture-message__badge {
+  border-width: 2px;
+  border-color: var(--pen-color-ink);
+  color: var(--pen-color-ink);
 }
 
 .pro-material-download {

@@ -435,6 +435,43 @@ function proenem_get_free_materials_taxonomy() {
 }
 
 /**
+ * Get the Free Materials catalog URL.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_url() {
+	return home_url( '/materiais-gratuitos/' );
+}
+
+/**
+ * Build the catalog query args, applying the selected category filter.
+ *
+ * @param string[]             $selected_slugs Selected category slugs.
+ * @param array<string, mixed> $overrides      Query arg overrides.
+ * @return array<string, mixed>
+ */
+function proenem_build_free_materials_query_args( $selected_slugs, $overrides = array() ) {
+	$args = array(
+		'post_type'           => proenem_get_free_materials_post_type(),
+		'post_status'         => 'publish',
+		'posts_per_page'      => -1,
+		'ignore_sticky_posts' => true,
+	);
+
+	if ( ! empty( $selected_slugs ) ) {
+		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Catalog filtering is the purpose of this query.
+			array(
+				'taxonomy' => proenem_get_free_materials_taxonomy(),
+				'field'    => 'slug',
+				'terms'    => $selected_slugs,
+			),
+		);
+	}
+
+	return array_merge( $args, $overrides );
+}
+
+/**
  * Get the Free Materials CTA label meta key.
  *
  * @return string
@@ -560,39 +597,21 @@ function proenem_get_material_cta_label( $post_id ) {
 }
 
 /**
- * Get the material delivery URL.
- *
- * @param int $post_id Post ID.
- * @return string
- */
-function proenem_get_material_delivery_url( $post_id ) {
-	$url = get_post_meta( $post_id, proenem_get_free_materials_delivery_url_meta_key(), true );
-
-	return is_string( $url ) ? $url : '';
-}
-
-/**
  * Render a Free Materials card.
  *
  * @param int $post_id Post ID.
  * @return void
  */
 function proenem_render_material_card( $post_id ) {
-	$image          = proenem_get_material_image_slot( $post_id, 'large' );
-	$category_terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
-	$category_slugs = array();
-
-	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
-		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
-	}
+	$image = proenem_get_material_image_slot( $post_id, 'large' );
 	?>
-	<article class="pro-material-card" data-pro-material-card data-material-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+	<article class="pro-material-card" data-pro-material-card>
 		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 			<img src="<?php echo esc_url( $image['src'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
 			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
 		</a>
 		<div class="pro-material-card__body">
-			<h2><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h2>
+			<h3><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h3>
 			<p><?php echo esc_html( proenem_get_material_excerpt( $post_id ) ); ?></p>
 			<a class="pro-material-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 				<?php echo esc_html( proenem_get_material_cta_label( $post_id ) ); ?>
@@ -606,16 +625,22 @@ function proenem_render_material_card( $post_id ) {
 /**
  * Render material category filters.
  *
+ * The form is a real GET submission against the catalog URL, so filtering works
+ * without JavaScript. See proenem_build_free_materials_query_args().
+ *
  * @param WP_Term[] $terms          Terms.
  * @param string[]  $selected_slugs Selected slugs.
  * @return void
  */
 function proenem_render_material_category_filters( $terms, $selected_slugs ) {
+	$catalog_url = proenem_get_free_materials_url();
 	?>
-		<form class="pro-materials-filter" method="get" action="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-filter>
+		<form class="pro-materials-filter" method="get" action="<?php echo esc_url( $catalog_url ); ?>" data-pro-materials-filter>
 			<div class="pro-materials-filter__header">
 				<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
-				<a href="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-clear<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+				<?php if ( ! empty( $selected_slugs ) ) : ?>
+					<a href="<?php echo esc_url( $catalog_url ); ?>" data-pro-materials-clear><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+				<?php endif; ?>
 			</div>
 		<div class="pro-materials-filter__options">
 			<?php if ( empty( $terms ) ) : ?>
