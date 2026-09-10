@@ -780,42 +780,87 @@ function proenem_render_material_card( $post_id ) {
 }
 
 /**
- * Render material category filters.
+ * Pick the categories that deserve a tab.
  *
- * The form is a real GET submission against the catalog URL, so filtering works
- * without JavaScript. See proenem_build_free_materials_query_args().
+ * An empty category is a dead end, so it only earns a tab while it is the one
+ * being viewed and therefore needs to stay visible.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return WP_Term[]
+ */
+function proenem_get_material_category_tabs_terms( $terms, $selected_slugs ) {
+	if ( ! is_array( $terms ) ) {
+		return array();
+	}
+
+	return array_values(
+		array_filter(
+			$terms,
+			static function ( $term ) use ( $selected_slugs ) {
+				if ( ! isset( $term->slug ) ) {
+					return false;
+				}
+
+				return (int) ( $term->count ?? 0 ) > 0 || in_array( $term->slug, $selected_slugs, true );
+			}
+		)
+	);
+}
+
+/**
+ * Render the material category tabs.
+ *
+ * The tabs link to the real category archives created by
+ * taxonomy-material_categoria.php, so every filter state is a crawlable URL
+ * with its own heading and description, and filtering needs no JavaScript.
+ *
+ * The legacy `material_categoria` query argument keeps working on the server
+ * for links published before these archives existed.
  *
  * @param WP_Term[] $terms          Terms.
  * @param string[]  $selected_slugs Selected slugs.
  * @return void
  */
-function proenem_render_material_category_filters( $terms, $selected_slugs ) {
-	$catalog_url = proenem_get_free_materials_url();
+function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
+	if ( empty( $terms ) ) {
+		return;
+	}
+
+	$showing_all = empty( $selected_slugs );
+	$terms       = proenem_get_material_category_tabs_terms( $terms, $selected_slugs );
+
+	if ( empty( $terms ) ) {
+		return;
+	}
 	?>
-		<form class="pro-materials-filter" method="get" action="<?php echo esc_url( $catalog_url ); ?>" data-pro-materials-filter>
-			<div class="pro-materials-filter__header">
-				<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
-				<?php if ( ! empty( $selected_slugs ) ) : ?>
-					<a href="<?php echo esc_url( $catalog_url ); ?>" data-pro-materials-clear><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
-				<?php endif; ?>
-			</div>
-		<div class="pro-materials-filter__options">
-			<?php if ( empty( $terms ) ) : ?>
-				<p><?php esc_html_e( 'Nenhuma categoria cadastrada ainda.', 'proenem-wordpress-theme' ); ?></p>
-			<?php else : ?>
-				<?php foreach ( $terms as $term ) : ?>
-					<label class="pro-materials-filter__option">
-						<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
-						<span><?php echo esc_html( $term->name ); ?></span>
-						<small><?php echo esc_html( (string) $term->count ); ?></small>
-					</label>
-				<?php endforeach; ?>
-			<?php endif; ?>
-		</div>
-		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
-			<?php esc_html_e( 'Filtrar materiais', 'proenem-wordpress-theme' ); ?>
-		</button>
-	</form>
+	<nav class="pen-blog-category-tabs pro-materials-tabs" aria-label="<?php esc_attr_e( 'Categorias de materiais gratuitos', 'proenem-wordpress-theme' ); ?>">
+		<a
+			class="pen-blog-category-tabs__item<?php echo $showing_all ? ' is-active' : ''; ?>"
+			href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>"
+			<?php echo $showing_all ? ' aria-current="page"' : ''; ?>
+		>
+			<?php esc_html_e( 'Todos', 'proenem-wordpress-theme' ); ?>
+		</a>
+		<?php foreach ( $terms as $term ) : ?>
+			<?php
+			$is_current = in_array( $term->slug, $selected_slugs, true );
+			$term_link  = get_term_link( $term );
+
+			if ( is_wp_error( $term_link ) ) {
+				continue;
+			}
+			?>
+			<a
+				class="pen-blog-category-tabs__item<?php echo $is_current ? ' is-active' : ''; ?>"
+				href="<?php echo esc_url( $term_link ); ?>"
+				<?php echo $is_current ? ' aria-current="page"' : ''; ?>
+			>
+				<?php echo esc_html( $term->name ); ?>
+				<small class="pro-materials-tabs__count"><?php echo esc_html( number_format_i18n( $term->count ) ); ?></small>
+			</a>
+		<?php endforeach; ?>
+	</nav>
 	<?php
 }
 
