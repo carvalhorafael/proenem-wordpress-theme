@@ -2403,18 +2403,75 @@ img {
 .pro-material-single__hero {
   align-items: start;
   background:
-    repeating-linear-gradient(135deg, rgb(0 0 0 / 12%) 0 2px, transparent 2px 8px),
-    #e23a3a;
+    repeating-linear-gradient(135deg, rgb(0 0 0 / 10%) 0 2px, transparent 2px 8px),
+    var(--pen-color-proenem-red);
   border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-on-red);
   display: grid;
-  column-gap: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
-  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+  column-gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-7));
   grid-template-areas:
     "copy capture"
-    "cover capture";
-  grid-template-columns: minmax(0, 1.25fr) minmax(24rem, 0.58fr);
-  padding: clamp(var(--pen-space-10), 8vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-24));
+    "preview capture";
+  grid-template-columns: minmax(0, 1.1fr) minmax(23rem, 0.66fr);
+  padding: clamp(var(--pen-space-7), 4vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-16));
+}
+
+/* The cover plus what is inside, sitting beside the form instead of below a
+ * full width image that pushed the submit button past the fold. */
+.pro-material-single__preview {
+  align-items: start;
+  display: grid;
+  gap: clamp(var(--pen-space-5), 2.5vw, var(--pen-space-8));
+  grid-area: preview;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+}
+
+.pro-material-single__inside {
+  display: grid;
+  gap: var(--pen-space-3);
+  min-width: 0;
+}
+
+.pro-material-single__inside-title {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pro-material-single__highlights {
+  display: grid;
+  gap: var(--pen-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-material-single__highlights li {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.pro-material-single__highlights li::before {
+  color: var(--pen-color-on-red-accent);
+  content: "✦";
+  left: 0;
+  position: absolute;
+}
+
+.pro-material-single__specs {
+  color: var(--pen-color-on-red-muted);
+  font-family: var(--pen-font-mono, ui-monospace, monospace);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .pro-material-single__hero-copy {
@@ -2423,35 +2480,40 @@ img {
 }
 
 .pro-material-single__hero h1 {
-  font-size: 3.5vw;
-  max-width: none;
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  line-height: 1.02;
+  max-width: 20ch;
 }
 
 .pro-material-single__hero p {
-  font-size: clamp(1.12rem, 1.45vw, 1.35rem);
-  margin-top: clamp(var(--pen-space-4), 2vw, var(--pen-space-6));
-  max-width: none;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  margin-top: var(--pen-space-4);
+  max-width: 44rem;
 }
 
 .pro-material-single__back {
   color: var(--pen-color-on-red);
-  display: inline-flex;
+  display: flex;
   font-weight: 900;
-  margin-bottom: var(--pen-space-6);
+  margin-bottom: var(--pen-space-4);
   text-decoration: none;
+  width: fit-content;
 }
 
 .pro-material-single__cover {
-  align-self: stretch;
-  aspect-ratio: 16 / 9;
-  background: #ff90e8;
+  background: var(--pen-color-surface);
   border: var(--pen-border-brand-sm);
-  border-radius: 1rem;
+  border-radius: 0.9rem;
   box-shadow: var(--pen-shadow-hard-md);
-  grid-area: cover;
   margin: 0;
-  min-height: clamp(18rem, 28vw, 30rem);
   overflow: hidden;
+  transform: rotate(-1.5deg);
+  width: clamp(9rem, 16vw, 14rem);
+}
+
+.pro-material-single__cover img,
+.pro-material-single__cover .pro-material-placeholder {
+  aspect-ratio: 3 / 4;
 }
 
 .pro-material-single__cover img,
@@ -2459,7 +2521,7 @@ img {
   display: block;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
+  object-position: center top;
   width: 100%;
 }
 
@@ -2656,6 +2718,71 @@ img {
   border-width: 2px;
   border-color: var(--pen-color-ink);
   color: var(--pen-color-ink);
+}
+
+/*
+ * Mobile action bar. The submit button sits at y=1239 on a 375px screen, so
+ * without this there is no call to action on most of the page.
+ */
+.pro-material-sticky-cta {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border-top: var(--pen-border-brand-sm);
+  bottom: 0;
+  box-shadow: 0 -6px 18px rgb(27 29 35 / 0.16);
+  display: none;
+  gap: var(--pen-space-4);
+  justify-content: space-between;
+  left: 0;
+  padding: var(--pen-space-3) var(--pen-space-4) calc(var(--pen-space-3) + env(safe-area-inset-bottom, 0px));
+  position: fixed;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 180ms ease;
+  z-index: 60;
+}
+
+.pro-material-sticky-cta[hidden] {
+  display: none;
+}
+
+.pro-material-sticky-cta.is-visible {
+  transform: translateY(0);
+}
+
+.pro-material-sticky-cta__copy {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.pro-material-sticky-cta__copy strong {
+  color: var(--pen-color-ink);
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-material-sticky-cta__copy span {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pro-material-sticky-cta .pen-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-material-sticky-cta {
+    transition: none;
+  }
 }
 
 .pro-material-download {
@@ -7622,9 +7749,18 @@ body.proenem-home-template {
     align-items: start;
     grid-template-areas:
       "copy"
-      "cover"
-      "capture";
+      "capture"
+      "preview";
     grid-template-columns: 1fr;
+  }
+
+  /* The form comes before the cover, so the call to action is reachable. */
+  .pro-material-sticky-cta:not([hidden]) {
+    display: flex;
+  }
+
+  .pro-material-single-page {
+    padding-bottom: 5rem;
   }
 
   .pro-testimonial-single__hero {

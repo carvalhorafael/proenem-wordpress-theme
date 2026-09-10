@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
@@ -190,6 +191,61 @@ test("capture form blocks an empty submit and explains each field", async ({ pag
   await expect(page.locator("#pro-material-capture-whatsapp-error")).toBeHidden();
 });
 
+test("material hero keeps the submit button inside a laptop screen", async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await gotoMaterials(page, MATERIAL);
+
+  const button = page.locator(".pro-material-capture__button");
+  const box = await button.boundingBox();
+
+  // The hero used to be 887px tall and pushed the button to y=818.
+  expect(box.y + box.height).toBeLessThanOrEqual(768);
+});
+
+test("material hero states what is inside instead of repeating the content", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const hero = page.locator(".pro-material-single__hero");
+
+  await expect(hero.locator(".pro-material-single__highlights li").first()).toBeVisible();
+  await expect(hero.locator(".pro-material-single__specs")).toContainText("PDF");
+
+  // The hero paragraph used to be a truncated copy of the body text.
+  const heroText = await hero.locator(".pro-material-single__hero-copy p").allInnerTexts();
+  for (const text of heroText) {
+    expect(text).not.toContain("…");
+  }
+});
+
+test("mobile action bar appears only while the form is off screen", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, MATERIAL);
+
+  const bar = page.locator("[data-pro-material-sticky-cta]");
+
+  // The form is in the first screen, so the bar must stay out of the way.
+  await expect(bar).not.toHaveClass(/is-visible/);
+
+  await page.evaluate(() => window.scrollTo(0, 2500));
+  await expect(bar).toHaveClass(/is-visible/);
+  await expect(bar).toBeInViewport();
+
+  await bar.getByRole("link").click();
+
+  // It scrolls back to the form and hands over the first field.
+  await expect(page.locator("#pro-material-capture-name")).toBeFocused();
+  await expect(bar).not.toHaveClass(/is-visible/);
+});
+
+test("the action bar stays out of the desktop layout", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  await page.evaluate(() => window.scrollTo(0, 2500));
+
+  await expect(page.locator("[data-pro-material-sticky-cta]")).toBeHidden();
+});
+
 test("capture form masks the WhatsApp number", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
@@ -224,5 +280,17 @@ test("free materials surfaces have no critical accessibility violations", async 
     );
 
     expect(critical, `${url}: ${critical.map((v) => v.id).join(", ")}`).toEqual([]);
+  }
+});
+
+test("form patterns compile in the strict regex mode browsers use", () => {
+  // Browsers compile the pattern attribute in `v` mode, which rejects
+  // character classes that older modes accept. Playwright's Chromium still
+  // accepts them, so this has to be checked in Node.
+  const template = readFileSync("single-material_gratuito.php", "utf8");
+  const patterns = [...template.matchAll(/pattern="([^"]+)"/g)].map((match) => match[1]);
+
+  for (const pattern of patterns) {
+    expect(() => new RegExp(pattern, "v"), `pattern ${pattern}`).not.toThrow();
   }
 });
