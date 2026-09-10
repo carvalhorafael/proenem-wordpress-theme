@@ -570,14 +570,67 @@ function proenem_get_material_excerpt( $post_id, $word_count = 20 ) {
 }
 
 /**
- * Get the image slot expected by Proenem material cards.
+ * Render the image for a material, or a typographic placeholder.
+ *
+ * Uses wp_get_attachment_image() so WordPress supplies srcset, sizes, the
+ * intrinsic dimensions and lazy loading. The theme deliberately requests a
+ * default WordPress size instead of registering its own: a custom size only
+ * exists for images uploaded after it is registered, which would leave already
+ * published materials without it. The CSS crops with object-fit.
  *
  * @param int    $post_id Post ID.
- * @param string $size    Image size.
- * @return array{src:string,alt:string}
+ * @param string $size    WordPress image size to request.
+ * @param string $sizes   Value for the sizes attribute.
+ * @param bool   $eager   Whether the image is above the fold.
+ * @return void
  */
-function proenem_get_material_image_slot( $post_id, $size = 'large' ) {
-	return proenem_get_post_image_slot( $post_id, $size );
+function proenem_render_material_image( $post_id, $size = 'medium_large', $sizes = '100vw', $eager = false ) {
+	if ( has_post_thumbnail( $post_id ) ) {
+		$attr = array(
+			'alt'   => get_the_title( $post_id ),
+			'sizes' => $sizes,
+		);
+
+		if ( $eager ) {
+			// Above the fold: opt out of lazy loading and let the browser
+			// prioritise it as the likely LCP element.
+			$attr['fetchpriority'] = 'high';
+			$attr['loading']       = 'eager';
+		}
+
+		// Lazy loading and decoding are left to WordPress, which already adds
+		// them and would otherwise emit the attribute twice.
+		echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image() escapes its own markup.
+			get_post_thumbnail_id( $post_id ),
+			$size,
+			false,
+			$attr
+		);
+
+		return;
+	}
+
+	proenem_render_material_image_placeholder( $post_id );
+}
+
+/**
+ * Render the placeholder for a material without a cover.
+ *
+ * A material is a document, so a stock photo of a student misrepresents what
+ * the visitor is about to download. The placeholder names the category instead.
+ *
+ * @param int $post_id Post ID.
+ * @return void
+ */
+function proenem_render_material_image_placeholder( $post_id ) {
+	$format = proenem_get_material_format_label( $post_id );
+	$label  = '' !== $format ? $format : proenem_get_material_category_label( $post_id );
+	?>
+	<span class="pro-material-placeholder" aria-hidden="true">
+		<span class="pro-material-placeholder__mark">✦</span>
+		<span class="pro-material-placeholder__label"><?php echo esc_html( $label ); ?></span>
+	</span>
+	<?php
 }
 
 /**
@@ -760,11 +813,10 @@ function proenem_get_featured_material() {
  * @return void
  */
 function proenem_render_material_card( $post_id ) {
-	$image = proenem_get_material_image_slot( $post_id, 'large' );
 	?>
 	<article class="pro-material-card" data-pro-material-card>
 		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
-			<img src="<?php echo esc_url( $image['src'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
+			<?php proenem_render_material_image( $post_id, 'medium_large', '(max-width: 760px) 92vw, (max-width: 980px) 46vw, 380px' ); ?>
 			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
 		</a>
 		<div class="pro-material-card__body">
