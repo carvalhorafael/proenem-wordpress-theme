@@ -233,6 +233,39 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The front page must honour a template chosen in the editor.
+	 *
+	 * A hierarquia do WordPress consulta `front-page.php` antes do modelo da
+	 * pagina, entao um `front-page.php` incondicional torna o seletor de modelo
+	 * inerte na home: trocar o modelo no editor nao tem efeito nenhum. Foi o que
+	 * aconteceu com as variantes de conversao, que existem justamente para serem
+	 * trocadas sem deploy. Este teste guarda a condicao.
+	 *
+	 * @return void
+	 */
+	public function test_front_page_honours_the_assigned_page_template() {
+		$source = (string) file_get_contents( PROENEM_THEME_DIR . '/front-page.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString(
+			'get_page_template_slug',
+			$source,
+			'front-page.php deve consultar o modelo escolhido na pagina'
+		);
+
+		$this->assertStringContainsString(
+			'locate_template( $proenem_front_template',
+			$source,
+			'front-page.php deve carregar o modelo escolhido quando ele existe'
+		);
+
+		$this->assertStringContainsString(
+			"locate_template( 'page-templates/home.php'",
+			$source,
+			'front-page.php deve manter a home como padrao quando nao ha modelo escolhido'
+		);
+	}
+
+	/**
 	 * Get the files that declare Elementor widgets.
 	 *
 	 * @return string[]
