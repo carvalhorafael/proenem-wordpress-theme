@@ -25,6 +25,7 @@ $materials_tag      = isset( $args['heading_level'] ) && in_array( $args['headin
 	? $args['heading_level']
 	: 'h2';
 $materials_total    = $materials_query instanceof WP_Query ? (int) $materials_query->found_posts : 0;
+$materials_featured = isset( $args['featured_id'] ) ? (int) $args['featured_id'] : 0;
 ?>
 
 <div class="pro-materials-catalog">
@@ -58,7 +59,7 @@ $materials_total    = $materials_query instanceof WP_Query ? (int) $materials_qu
 				<?php
 				while ( $materials_query->have_posts() ) :
 					$materials_query->the_post();
-					proenem_render_material_card( get_the_ID() );
+					proenem_render_material_card( get_the_ID(), get_the_ID() === $materials_featured );
 				endwhile;
 				wp_reset_postdata();
 				?>

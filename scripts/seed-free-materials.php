@@ -81,6 +81,18 @@ $materials = array(
 			'slug' => 'simulados',
 			'name' => 'Simulados',
 		),
+		'meta'     => array(
+			'featured'   => true,
+			'format'     => 'pdf',
+			'pages'      => 14,
+			'file_size'  => '1,8 MB',
+			'level'      => 'Quem já fez simulado e não sabe o que fazer com o resultado',
+			'highlights' => array(
+				'Como ler o espelho de notas',
+				'Onde você perdeu pontos',
+				'Plano da semana seguinte',
+			),
+		),
 	),
 	array(
 		'slug'     => 'checklist-de-revisao-para-o-enem',
@@ -138,6 +150,23 @@ foreach ( $materials as $material ) {
 	}
 
 	wp_set_object_terms( $material_id, array( (int) $term->term_id ), $materials_taxonomy );
+
+	if ( ! empty( $material['meta'] ) && function_exists( 'free_materials_format_meta_key' ) ) {
+		$meta_keys = array(
+			'featured'   => free_materials_featured_meta_key(),
+			'file_size'  => free_materials_file_size_meta_key(),
+			'format'     => free_materials_format_meta_key(),
+			'highlights' => free_materials_highlights_meta_key(),
+			'level'      => free_materials_level_meta_key(),
+			'pages'      => free_materials_pages_meta_key(),
+		);
+
+		foreach ( $material['meta'] as $field => $value ) {
+			if ( isset( $meta_keys[ $field ] ) ) {
+				update_post_meta( $material_id, $meta_keys[ $field ], $value );
+			}
+		}
+	}
 
 	proenem_materials_seed_log( 'Material pronto: ' . get_permalink( $material_id ) );
 }

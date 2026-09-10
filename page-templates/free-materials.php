@@ -25,6 +25,13 @@ if ( is_wp_error( $terms ) ) {
 	$terms = array();
 }
 
+// The highlight only makes sense on the unfiltered catalog: on a category
+// archive it could promote a material from another category.
+$featured_material = empty( $selected_slugs ) ? proenem_get_featured_material() : null;
+$featured_id       = $featured_material instanceof WP_Post ? (int) $featured_material->ID : 0;
+
+// The highlight promotes a material, it does not remove it from the catalog.
+// Dropping it from the grid would make "Todos os materiais" and the count lie.
 $materials_query = proenem_free_materials_is_available()
 	? new WP_Query( proenem_build_free_materials_query_args( $selected_slugs ) )
 	: null;
@@ -40,6 +47,8 @@ $materials_query = proenem_free_materials_is_available()
 	</section>
 
 	<?php
+	proenem_render_featured_material( $featured_material );
+
 	get_template_part(
 		'template-parts/materials/catalog',
 		null,
@@ -47,6 +56,7 @@ $materials_query = proenem_free_materials_is_available()
 			'terms'          => $terms,
 			'selected_slugs' => $selected_slugs,
 			'query'          => $materials_query,
+			'featured_id'    => $featured_id,
 			'heading'        => __( 'Todos os materiais', 'proenem-wordpress-theme' ),
 		)
 	);

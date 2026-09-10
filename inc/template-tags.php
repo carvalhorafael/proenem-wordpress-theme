@@ -807,18 +807,77 @@ function proenem_get_featured_material() {
 }
 
 /**
- * Render a Free Materials card.
+ * Render the editorial highlight above the catalog grid.
  *
- * @param int $post_id Post ID.
+ * Renders nothing when the editors have not picked a material, so the catalog
+ * simply starts at the grid.
+ *
+ * @param WP_Post|null $material Featured material.
  * @return void
  */
-function proenem_render_material_card( $post_id ) {
+function proenem_render_featured_material( $material ) {
+	if ( ! $material instanceof WP_Post ) {
+		return;
+	}
+
+	$material_id = (int) $material->ID;
+	$specs       = proenem_get_material_specs( $material_id );
+	$highlights  = array_slice( proenem_get_material_highlights( $material_id ), 0, 4 );
+	$permalink   = get_permalink( $material_id );
+	?>
+	<section class="pro-materials-featured" aria-labelledby="pro-materials-featured-title">
+		<div class="pro-materials-featured__inner">
+			<a class="pro-materials-featured__media" href="<?php echo esc_url( $permalink ); ?>" tabindex="-1" aria-hidden="true">
+				<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 900px) 92vw, 340px' ); ?>
+			</a>
+
+			<div class="pro-materials-featured__copy">
+				<span class="pro-materials-featured__eyebrow"><?php esc_html_e( 'Material em destaque', 'proenem-wordpress-theme' ); ?></span>
+				<h3 id="pro-materials-featured-title">
+					<a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( get_the_title( $material_id ) ); ?></a>
+				</h3>
+				<p class="pro-materials-featured__excerpt"><?php echo esc_html( proenem_get_material_excerpt( $material_id, 30 ) ); ?></p>
+
+				<?php if ( $highlights ) : ?>
+					<ul class="pro-materials-featured__highlights">
+						<?php foreach ( $highlights as $highlight ) : ?>
+							<li><?php echo esc_html( $highlight ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+
+				<div class="pro-materials-featured__footer">
+					<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( $permalink ); ?>">
+						<?php echo esc_html( proenem_get_material_cta_label( $material_id ) ); ?>
+						<span aria-hidden="true">→</span>
+					</a>
+					<?php if ( $specs ) : ?>
+						<p class="pro-materials-featured__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php
+}
+
+/**
+ * Render a Free Materials card.
+ *
+ * @param int  $post_id     Post ID.
+ * @param bool $is_featured Whether this material is the one highlighted above the grid.
+ * @return void
+ */
+function proenem_render_material_card( $post_id, $is_featured = false ) {
 	$specs = proenem_get_material_specs( $post_id );
 	$level = proenem_get_material_level( $post_id );
 	?>
-	<article class="pro-material-card" data-pro-material-card>
+	<article class="pro-material-card<?php echo $is_featured ? ' pro-material-card--featured' : ''; ?>" data-pro-material-card<?php echo $is_featured ? ' data-pro-material-featured' : ''; ?>>
 		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 			<?php proenem_render_material_image( $post_id, 'medium_large', '(max-width: 760px) 92vw, (max-width: 980px) 46vw, 380px' ); ?>
+			<?php if ( $is_featured ) : ?>
+				<span class="pro-material-card__flag"><?php esc_html_e( 'Em destaque', 'proenem-wordpress-theme' ); ?></span>
+			<?php endif; ?>
 			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
 		</a>
 		<div class="pro-material-card__body">
