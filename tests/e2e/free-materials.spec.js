@@ -109,19 +109,21 @@ test("catalog hero leaves the first material inside the first mobile screen", as
   await gotoMaterials(page, CATALOG);
 
   const geometry = await page.evaluate(() => {
-    const box = (selector) => {
-      const el = document.querySelector(selector);
-      const rect = el.getBoundingClientRect();
+    const box = (el) => ({
+      height: Math.round(el.getBoundingClientRect().height),
+      top: Math.round(el.getBoundingClientRect().top + window.scrollY),
+    });
 
-      return { height: Math.round(rect.height), top: Math.round(rect.top + window.scrollY) };
-    };
+    // The first material is the highlight when there is one, otherwise the
+    // first card.
+    const first = document.querySelector(".pro-materials-featured, .pro-material-card");
 
-    return { hero: box(".pro-materials-hero"), card: box(".pro-material-card") };
+    return { hero: box(document.querySelector(".pro-materials-hero")), material: box(first) };
   });
 
-  // The hero used to take 492px and pushed the first card to y=1030.
+  // The hero used to take 492px and pushed the first material to y=1030.
   expect(geometry.hero.height).toBeLessThan(320);
-  expect(geometry.card.top).toBeLessThan(700);
+  expect(geometry.material.top).toBeLessThan(700);
 });
 
 test("material card states what the visitor gets", async ({ page }) => {
@@ -139,6 +141,29 @@ test("material card states what the visitor gets", async ({ page }) => {
     els.map((el) => Math.round(el.getBoundingClientRect().height)),
   );
   expect(new Set(heights).size).toBe(1);
+});
+
+test("featured material is promoted without leaving the catalog", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const band = page.locator(".pro-materials-featured");
+
+  await expect(band).toHaveCount(1);
+  await expect(band.locator("h3")).toHaveText("Mapa de análise de simulados");
+  await expect(band.locator(".pro-materials-featured__highlights li")).toHaveCount(3);
+
+  // Promoting a material must not remove it from the list, or the heading and
+  // the count would lie.
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(3);
+  await expect(page.locator("[data-pro-materials-count]")).toHaveText("3 materiais disponíveis");
+  await expect(page.locator("[data-pro-material-featured]")).toHaveCount(1);
+});
+
+test("category archive does not promote a material from another category", async ({ page }) => {
+  await gotoMaterials(page, CATEGORY);
+
+  await expect(page.locator(".pro-materials-featured")).toHaveCount(0);
+  await expect(page.locator("[data-pro-material-featured]")).toHaveCount(0);
 });
 
 test("material card headings sit below the results heading", async ({ page }) => {

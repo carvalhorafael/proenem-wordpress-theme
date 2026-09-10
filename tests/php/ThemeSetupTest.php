@@ -1333,6 +1333,89 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The catalog highlight is editorial and optional.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_is_opt_in() {
+		$this->assertNull( proenem_get_featured_material() );
+
+		// Nothing renders when the editors have not picked one.
+		ob_start();
+		proenem_render_featured_material( null );
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
+	 * The highlight promotes a material without removing it from the list.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_stays_in_the_catalog_count() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/free-materials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// Excluding it would make "Todos os materiais" and the count lie.
+		$this->assertStringNotContainsString( 'post__not_in', $template );
+		$this->assertStringContainsString( 'proenem_render_featured_material', $template );
+		$this->assertStringContainsString( "'featured_id'", $template );
+	}
+
+	/**
+	 * The highlighted material should be marked in the grid.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_card_is_flagged() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		ob_start();
+		proenem_render_material_card( $post_id );
+		$plain = (string) ob_get_clean();
+
+		$this->assertStringNotContainsString( 'pro-material-card--featured', $plain );
+		$this->assertStringNotContainsString( 'pro-material-card__flag', $plain );
+
+		ob_start();
+		proenem_render_material_card( $post_id, true );
+		$flagged = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-card--featured', $flagged );
+		$this->assertStringContainsString( 'Em destaque', $flagged );
+	}
+
+	/**
+	 * The highlight must render the material's own promise.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_band_renders_the_material() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_content' => 'Transforme o resultado do simulado em plano de estudo.',
+				'post_status'  => 'publish',
+				'post_title'   => 'Mapa de análise',
+			)
+		);
+
+		update_post_meta( $post_id, free_materials_format_meta_key(), 'pdf' );
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), array( 'Um', 'Dois' ) );
+
+		ob_start();
+		proenem_render_featured_material( get_post( $post_id ) );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Material em destaque', $markup );
+		$this->assertStringContainsString( 'Mapa de análise', $markup );
+		$this->assertStringContainsString( 'PDF', $markup );
+		$this->assertSame( 2, substr_count( $markup, '<li>' ) );
+
+		// The decorative cover link must not duplicate the title for screen
+		// readers or take a second tab stop.
+		$this->assertStringContainsString( 'aria-hidden="true"', $markup );
+		$this->assertStringContainsString( 'tabindex="-1"', $markup );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void
