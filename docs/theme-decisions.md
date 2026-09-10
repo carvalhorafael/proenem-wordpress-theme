@@ -639,3 +639,14 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Consequencia: a home de controle ganhou checagem axe propria no e2e, para esse tipo de regressao nao depender de as variantes existirem.
 - Copy: o subtitulo da secao deixou de anunciar uma oferta unica e passou a nomear o eixo da escolha, prazo contra ritmo. Ele tambem prometia "mais de 60 mil questoes", numero que nao batia com os cartoes, que dizem 50 mil e 55 mil; as contagens ficam so nos cartoes.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-09-10: front-page.php passa a honrar o modelo escolhido na pagina
+
+- Contexto: a troca do modelo da home pela variante de prova social nao surtia efeito. A pagina continuava servindo a home original.
+- Causa: a hierarquia do WordPress consulta `front-page.php` antes do modelo atribuido a pagina. O arquivo tinha uma unica linha, `locate_template( 'page-templates/home.php', true, false )`, sem condicao, entao o seletor de modelo era inerte na home. Nao era cache nem Elementor.
+- Reproduzido: com `page-templates/home-variant-prova.php` atribuido a pagina 5, a resposta de `/` trazia zero ocorrencias do marcador da variante e uma do marcador da home original. A mesma variante em `/home-variante-b/` trazia 17 ocorrencias, o que confirmava que o defeito era do caminho da home, e nao do modelo.
+- Decisao: o arquivo passa a carregar o modelo escolhido quando ele existe, e mantem a home como padrao. As variantes de conversao existem para serem trocadas sem deploy, e isso exige honrar a escolha.
+- Fallback verificado em cinco cenarios: variante B, variante A, home escolhida no editor, sem modelo escolhido e modelo inexistente. Os tres ultimos servem a home original, entao nao ha regressao para quem nunca escolheu modelo. O guarda `locate_template()` cobre o slug apontando para arquivo que nao existe.
+- Protecao: `test_front_page_honours_the_assigned_page_template` recusa um `front-page.php` que nao consulte `get_page_template_slug`. Verificado que falha ao voltar a versao incondicional.
+- Licao: template na raiz do tema tem precedencia sobre escolha do editor, e um arquivo de uma linha pode desligar um recurso inteiro do painel sem deixar rastro. Ao criar variante selecionavel, verificar a hierarquia da superficie onde ela sera usada.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
