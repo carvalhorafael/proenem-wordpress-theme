@@ -27,11 +27,7 @@ $materials_tag      = isset( $args['heading_level'] ) && in_array( $args['headin
 $materials_total    = $materials_query instanceof WP_Query ? (int) $materials_query->found_posts : 0;
 ?>
 
-<div class="pro-materials-layout">
-	<aside class="pro-materials-layout__sidebar" aria-label="<?php esc_attr_e( 'Filtros de materiais gratuitos', 'proenem-wordpress-theme' ); ?>">
-		<?php proenem_render_material_category_filters( $materials_terms, $materials_selected ); ?>
-	</aside>
-
+<div class="pro-materials-catalog">
 	<section class="pro-materials-results" aria-labelledby="pro-materials-results-title">
 		<div class="pro-materials-results__header">
 			<<?php echo esc_html( $materials_tag ); ?> id="pro-materials-results-title"><?php echo esc_html( $materials_heading ); ?></<?php echo esc_html( $materials_tag ); ?>>
@@ -44,6 +40,10 @@ $materials_total    = $materials_query instanceof WP_Query ? (int) $materials_qu
 				);
 				?>
 			</p>
+		</div>
+
+		<div class="pen-blog-filter-bar pro-materials-filter-bar">
+			<?php proenem_render_material_category_tabs( $materials_terms, $materials_selected ); ?>
 		</div>
 
 		<?php if ( ! proenem_free_materials_is_available() ) : ?>

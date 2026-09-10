@@ -1008,18 +1008,54 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The catalog filter must work as a plain GET form, without JavaScript.
+	 * The catalog must filter through links, not a form.
+	 *
+	 * The rendered markup and the active state are covered end to end in
+	 * tests/e2e/free-materials.spec.js, which runs against the real taxonomy.
 	 *
 	 * @return void
 	 */
-	public function test_catalog_filter_form_is_a_real_get_submission() {
-		ob_start();
-		proenem_render_material_category_filters( array(), array() );
-		$markup = (string) ob_get_clean();
+	public function test_catalog_filters_through_links_instead_of_a_form() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-		$this->assertStringContainsString( 'method="get"', $markup );
-		$this->assertStringContainsString( esc_url( proenem_get_free_materials_url() ), $markup );
-		$this->assertStringContainsString( 'type="submit"', $markup );
+		$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template );
+		$this->assertStringContainsString( 'pen-blog-filter-bar', $template );
+		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $template );
+		$this->assertFalse( function_exists( 'proenem_render_material_category_filters' ) );
+	}
+
+	/**
+	 * Only categories that lead somewhere should get a tab.
+	 *
+	 * @return void
+	 */
+	public function test_category_tabs_skip_empty_categories() {
+		$terms = array(
+			(object) array(
+				'slug'  => 'redacao',
+				'name'  => 'Redação',
+				'count' => 3,
+			),
+			(object) array(
+				'slug'  => 'vazia',
+				'name'  => 'Vazia',
+				'count' => 0,
+			),
+		);
+
+		$this->assertSame(
+			array( 'redacao' ),
+			wp_list_pluck( proenem_get_material_category_tabs_terms( $terms, array() ), 'slug' )
+		);
+
+		// The category being viewed stays visible even when it is empty, so the
+		// active tab does not disappear.
+		$this->assertSame(
+			array( 'redacao', 'vazia' ),
+			wp_list_pluck( proenem_get_material_category_tabs_terms( $terms, array( 'vazia' ) ), 'slug' )
+		);
+
+		$this->assertSame( array(), proenem_get_material_category_tabs_terms( 'nao e lista', array() ) );
 	}
 
 	/**

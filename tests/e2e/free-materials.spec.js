@@ -28,13 +28,19 @@ test("catalog lists every material and reports the count", async ({ page }) => {
   await expect(page.locator("[data-pro-materials-count]")).toHaveAttribute("aria-live", "polite");
 });
 
-test("catalog filters on the server, so the count and the cards agree", async ({ page }) => {
+test("category tabs link to the real category archives", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 
-  await page.getByRole("checkbox", { name: "Redação" }).check();
-  await page.getByRole("button", { name: "Filtrar materiais" }).click();
+  const tabs = page.locator(".pro-materials-tabs .pen-blog-category-tabs__item");
 
-  await expect(page).toHaveURL(/material_categoria/);
+  // "Todos" plus one tab per category that has material.
+  await expect(tabs).toHaveCount(4);
+  await expect(tabs.first()).toHaveText(/Todos/);
+  await expect(tabs.first()).toHaveClass(/is-active/);
+
+  await tabs.filter({ hasText: "Redação" }).click();
+
+  await expect(page).toHaveURL(new RegExp(`${CATEGORY}$`));
 
   const cards = page.locator("[data-pro-material-card]");
 
@@ -42,9 +48,30 @@ test("catalog filters on the server, so the count and the cards agree", async ({
   await expect(cards.first()).toContainText("Modelo de rotina de redação");
   // Singular, not "1 materiais".
   await expect(page.locator("[data-pro-materials-count]")).toHaveText("1 material disponível");
+  await expect(
+    page.locator(".pro-materials-tabs .pen-blog-category-tabs__item.is-active"),
+  ).toHaveText(/Redação/);
 });
 
-test("catalog filter survives with JavaScript disabled", async ({ browser }) => {
+test("category tabs scroll sideways on mobile instead of stacking", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, CATALOG);
+
+  const tabs = page.locator(".pro-materials-tabs");
+
+  // Wrapping the tabs used to stack several rows and push the first material
+  // off the screen.
+  const height = await tabs.evaluate((el) => el.getBoundingClientRect().height);
+  expect(height).toBeLessThan(80);
+
+  // The page itself must not scroll sideways.
+  const overflows = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(overflows).toBe(false);
+});
+
+test("legacy query argument still filters on the server, without JavaScript", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
 

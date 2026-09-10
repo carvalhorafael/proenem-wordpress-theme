@@ -1829,6 +1829,51 @@ img {
   max-width: 58rem;
 }
 
+/*
+ * Single column catalog. .pro-materials-layout keeps its two column rule
+ * because page-templates/testimonials.php still reuses it.
+ */
+.pro-materials-catalog {
+  margin-inline: auto;
+  max-width: 82rem;
+  padding: clamp(var(--pen-space-12), 9vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-materials-filter-bar {
+  border-bottom: var(--pen-border-brand-sm);
+  flex-wrap: wrap;
+  gap: var(--pen-space-4);
+  margin-bottom: clamp(var(--pen-space-8), 5vw, var(--pen-space-10));
+  padding-bottom: var(--pen-space-5);
+}
+
+.pro-materials-tabs {
+  min-width: 0;
+}
+
+.pro-materials-tabs .pen-blog-category-tabs__item {
+  border: var(--pen-border-brand-xs);
+  min-height: 2.4rem;
+  padding: 0 var(--pen-space-4);
+}
+
+.pro-materials-tabs .pen-blog-category-tabs__item.is-active {
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+}
+
+.pro-materials-tabs__count {
+  color: var(--pen-color-ink-soft);
+  font-size: 0.72rem;
+  font-weight: 900;
+  margin-left: 0.45rem;
+}
+
+.pro-materials-tabs .is-active .pro-materials-tabs__count {
+  color: var(--pen-color-ink);
+}
+
 .pro-materials-layout {
   display: grid;
   gap: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
@@ -1956,7 +2001,7 @@ img {
 .pro-materials-grid {
   display: grid;
   gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-10));
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .pro-material-card {
@@ -7390,6 +7435,10 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
+  .pro-materials-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .pro-materials-layout__sidebar {
     position: static;
   }
@@ -7910,8 +7959,47 @@ body.proenem-home-template {
   }
 
   .pro-materials-layout,
+  .pro-materials-catalog,
   .pro-material-single__layout {
     padding: var(--pen-space-6) var(--pen-space-4);
+  }
+
+  /*
+   * Scroll the tabs sideways instead of wrapping them. With ten categories,
+   * wrapping stacks five rows and pushes the first material off the screen.
+   */
+  .pro-materials-tabs {
+    flex-wrap: nowrap;
+    margin-inline: calc(var(--pen-space-4) * -1);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0 var(--pen-space-4) var(--pen-space-2);
+    scrollbar-color: var(--pen-color-ink) rgb(27 29 35 / 0.12);
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar {
+    height: 0.4rem;
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar-track {
+    background: rgb(27 29 35 / 0.12);
+    border-radius: var(--pen-radius-pill, 999px);
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar-thumb {
+    background: var(--pen-color-ink);
+    border-radius: var(--pen-radius-pill, 999px);
+  }
+
+  .pro-materials-tabs .pen-blog-category-tabs__item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .pro-materials-filter-bar {
+    display: block;
   }
 
   .pro-materials-results__header {
