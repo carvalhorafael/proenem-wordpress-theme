@@ -1067,6 +1067,154 @@ function proenem_get_related_material_ids( $post_id, $limit = 3 ) {
 }
 
 /**
+ * Get how many people already downloaded a material.
+ *
+ * Editorial, not counted: it only shows a number somebody on the team put in
+ * and can stand behind.
+ *
+ * @param int $post_id Material ID.
+ * @return int
+ */
+function proenem_get_material_downloads( $post_id ) {
+	if ( ! function_exists( 'free_materials_downloads_meta_key' ) ) {
+		return 0;
+	}
+
+	return absint( get_post_meta( $post_id, free_materials_downloads_meta_key(), true ) );
+}
+
+/**
+ * Get the questions shown on a material page.
+ *
+ * The defaults describe how this flow actually works, so they hold for every
+ * material. A site can replace or extend them per material.
+ *
+ * @param int $post_id Material ID.
+ * @return array<int, array{question:string,answer:string}>
+ */
+function proenem_get_material_faq( $post_id ) {
+	$privacy = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
+	$faq     = array(
+		array(
+			'question' => __( 'É gratuito mesmo?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'É. Não pedimos pagamento nem dados de cartão em nenhum momento.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'Como recebo o material?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'Assim que você completa o cadastro, enviamos o link de download para o contato informado.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'Posso baixar de novo depois?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'Pode. O link continua no seu email, e esta página segue disponível para você voltar quando precisar.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'O que vocês fazem com meus dados?', 'proenem-wordpress-theme' ),
+			'answer'   => $privacy
+				? __( 'Usamos para enviar o material e conteúdos de estudo. Você pode sair da lista quando quiser, e a política de privacidade está no rodapé desta página.', 'proenem-wordpress-theme' )
+				: __( 'Usamos para enviar o material e conteúdos de estudo. Você pode sair da lista quando quiser.', 'proenem-wordpress-theme' ),
+		),
+	);
+
+	/**
+	 * Filters the questions shown on a free material page.
+	 *
+	 * @param array<int, array{question:string,answer:string}> $faq     Questions.
+	 * @param int                                              $post_id Material ID.
+	 */
+	return (array) apply_filters( 'proenem_material_faq', $faq, $post_id );
+}
+
+/**
+ * Render the social proof and the questions for a material.
+ *
+ * Each half renders only when there is something to show, so a material
+ * without data does not get an empty band.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_reassurance( $post_id ) {
+	$downloads   = proenem_get_material_downloads( $post_id );
+	$testimonial = function_exists( 'proenem_get_featured_testimonial' ) ? proenem_get_featured_testimonial() : null;
+	$faq         = proenem_get_material_faq( $post_id );
+
+	if ( ! $downloads && ! $testimonial instanceof WP_Post && empty( $faq ) ) {
+		return;
+	}
+	?>
+	<section class="pro-material-reassurance" aria-labelledby="pro-material-faq-title">
+		<div class="pro-material-reassurance__inner">
+			<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
+				<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
+					<?php if ( $downloads ) : ?>
+						<p class="pro-material-proof__count">
+							<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
+							<span>
+								<?php
+								echo esc_html(
+									_n(
+										'estudante já baixou este material',
+										'estudantes já baixaram este material',
+										$downloads,
+										'proenem-wordpress-theme'
+									)
+								);
+								?>
+							</span>
+						</p>
+					<?php endif; ?>
+
+					<?php if ( $testimonial instanceof WP_Post ) : ?>
+						<?php
+						$testimonial_id   = (int) $testimonial->ID;
+						$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
+						$testimonial_line = implode(
+							' · ',
+							array_filter(
+								array(
+									proenem_get_testimonial_course( $testimonial_id ),
+									proenem_get_testimonial_institution( $testimonial_id ),
+								)
+							)
+						);
+						?>
+						<figure class="pro-material-proof__quote">
+							<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
+							<figcaption>
+								<strong><?php echo esc_html( $testimonial_name ); ?></strong>
+								<?php if ( $testimonial_line ) : ?>
+									<span><?php echo esc_html( $testimonial_line ); ?></span>
+								<?php endif; ?>
+							</figcaption>
+						</figure>
+					<?php endif; ?>
+				</aside>
+			<?php endif; ?>
+
+			<?php if ( $faq ) : ?>
+				<div class="pen-faq-section pro-material-faq">
+					<div class="pen-faq-section__header">
+						<h2 id="pro-material-faq-title"><?php esc_html_e( 'Antes de baixar', 'proenem-wordpress-theme' ); ?></h2>
+					</div>
+					<div class="pen-faq-section__items">
+						<?php foreach ( $faq as $index => $item ) : ?>
+							<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
+								<?php continue; ?>
+							<?php endif; ?>
+							<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
+								<summary><?php echo esc_html( $item['question'] ); ?></summary>
+								<p><?php echo esc_html( $item['answer'] ); ?></p>
+							</details>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+		</div>
+	</section>
+	<?php
+}
+
+/**
  * Render the share bar for a material.
  *
  * Leads with WhatsApp: the audience is students, and a shared material reaches
