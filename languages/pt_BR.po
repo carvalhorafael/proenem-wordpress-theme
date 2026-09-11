@@ -3055,14 +3055,18 @@ msgid "Guias, notícias e estratégias para estudar com método e transformar es
 msgstr "Guias, notícias e estratégias para estudar com método e transformar esforço em resultado."
 
 #: page-templates/free-materials.php:46
+msgid "100% grátis"
+msgstr "100% grátis"
+
+#: page-templates/free-materials.php:47
 msgid "Pegue o material que resolve o seu próximo passo"
 msgstr "Pegue o material que resolve o seu próximo passo"
 
-#: page-templates/free-materials.php:47
+#: page-templates/free-materials.php:48
 msgid "Guias, planners e checklists prontos para organizar revisão, prática e estratégia de estudo."
 msgstr "Guias, planners e checklists prontos para organizar revisão, prática e estratégia de estudo."
 
-#: page-templates/free-materials.php:64
+#: page-templates/free-materials.php:65
 #: template-parts/materials/catalog.php:23
 msgid "Todos os materiais"
 msgstr "Todos os materiais"

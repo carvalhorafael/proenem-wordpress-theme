@@ -1885,6 +1885,21 @@ img {
    * its own, narrower measure. */
   max-width: 58rem;
 }
+/*
+ * Local adaptation: .pen-sticker-tag ships yellow, cyan, pink, mint, orange
+ * and purple, but no red. This follows the same shape as --pink and --purple,
+ * which also pair a strong background with on-red text. Tracked as a design
+ * system gap.
+ */
+.pro-materials-hero__badge {
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--pen-space-5);
+  padding: var(--pen-space-2) var(--pen-space-4);
+}
+
 .pro-materials-hero--catalog h1 {
   color: var(--pen-color-ink);
   font-size: clamp(2.1rem, 4.6vw, 3.9rem);

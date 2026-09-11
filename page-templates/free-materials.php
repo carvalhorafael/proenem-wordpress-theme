@@ -43,6 +43,7 @@ $materials_query = proenem_free_materials_is_available()
 <main id="primary" class="site-main pro-materials-page">
 	<section class="pro-materials-hero pro-materials-hero--catalog" aria-labelledby="pro-materials-title">
 		<div class="pro-materials-hero__copy">
+			<span class="pen-sticker-tag pro-materials-hero__badge"><?php esc_html_e( '100% grátis', 'proenem-wordpress-theme' ); ?></span>
 			<h1 id="pro-materials-title"><?php esc_html_e( 'Pegue o material que resolve o seu próximo passo', 'proenem-wordpress-theme' ); ?></h1>
 			<p><?php esc_html_e( 'Guias, planners e checklists prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
