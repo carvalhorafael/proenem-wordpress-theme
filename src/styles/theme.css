@@ -2993,20 +2993,13 @@ img {
  * Social proof and questions. Both halves are optional, so the band collapses
  * to one column when only the questions exist.
  */
+/* Proof and objections ride along the content in the sidebar instead of
+ * waiting a screen below it, so everything below is sized for a 24rem column
+ * rather than for half of a full width band. */
 .pro-material-reassurance {
-  background: var(--pen-color-canvas);
-  border-top: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
-}
-
-.pro-material-reassurance__inner {
-  align-items: start;
   display: grid;
-  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  margin-inline: auto;
-  max-width: 76rem;
+  gap: clamp(var(--pen-space-6), 3vw, var(--pen-space-8));
 }
 
 .pro-material-proof {
@@ -3024,7 +3017,7 @@ img {
 
 .pro-material-proof__count strong {
   font-family: var(--pen-font-body);
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(2rem, 3vw, 2.5rem);
   font-variant-numeric: tabular-nums;
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -3033,7 +3026,7 @@ img {
 
 .pro-material-proof__count span {
   color: var(--pen-color-ink-muted);
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.3;
   max-width: 18ch;
@@ -3045,9 +3038,9 @@ img {
   border-radius: 0.9rem;
   box-shadow: var(--pen-shadow-hard-sm);
   display: grid;
-  gap: var(--pen-space-4);
+  gap: var(--pen-space-3);
   margin: 0;
-  padding: clamp(var(--pen-space-5), 3vw, var(--pen-space-6));
+  padding: var(--pen-space-5);
 }
 
 .pro-material-proof__quote blockquote {
@@ -3055,7 +3048,7 @@ img {
 }
 
 .pro-material-proof__quote blockquote p {
-  font-size: 1.02rem;
+  font-size: 0.95rem;
   line-height: 1.5;
   margin: 0;
 }
@@ -3075,8 +3068,24 @@ img {
   font-weight: 700;
 }
 
+.pro-material-faq {
+  gap: var(--pen-space-4);
+}
+
 .pro-material-faq .pen-faq-section__header h2 {
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+/* The design system sizes the questions for a full width band. In a 24rem
+ * column that wrapped every one of them onto three lines. */
+.pro-material-faq .pen-faq-item summary {
+  font-size: 0.98rem;
+  padding: var(--pen-space-4) var(--pen-space-5);
+}
+
+.pro-material-faq .pen-faq-item p {
+  font-size: 0.92rem;
+  padding: var(--pen-space-4) var(--pen-space-5) var(--pen-space-5);
 }
 
 /* Related materials, so leaving the page is not the only option. */

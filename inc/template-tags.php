@@ -1128,8 +1128,9 @@ function proenem_get_material_faq( $post_id ) {
 /**
  * Render the social proof and the questions for a material.
  *
- * Each half renders only when there is something to show, so a material
- * without data does not get an empty band.
+ * Sits in the sidebar beside the content, so the reader meets the proof and
+ * the objections while still reading instead of a screen further down. Each
+ * half renders only when there is something to show.
  *
  * @param int $post_id Material ID.
  * @return void
@@ -1143,75 +1144,73 @@ function proenem_render_material_reassurance( $post_id ) {
 		return;
 	}
 	?>
-	<section class="pro-material-reassurance" aria-labelledby="pro-material-faq-title">
-		<div class="pro-material-reassurance__inner">
-			<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
-				<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
-					<?php if ( $downloads ) : ?>
-						<p class="pro-material-proof__count">
-							<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
-							<span>
-								<?php
-								echo esc_html(
-									_n(
-										'estudante já baixou este material',
-										'estudantes já baixaram este material',
-										$downloads,
-										'proenem-wordpress-theme'
-									)
-								);
-								?>
-							</span>
-						</p>
-					<?php endif; ?>
-
-					<?php if ( $testimonial instanceof WP_Post ) : ?>
-						<?php
-						$testimonial_id   = (int) $testimonial->ID;
-						$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
-						$testimonial_line = implode(
-							' · ',
-							array_filter(
-								array(
-									proenem_get_testimonial_course( $testimonial_id ),
-									proenem_get_testimonial_institution( $testimonial_id ),
+	<div class="pro-material-reassurance">
+		<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
+			<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
+				<?php if ( $downloads ) : ?>
+					<p class="pro-material-proof__count">
+						<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
+						<span>
+							<?php
+							echo esc_html(
+								_n(
+									'estudante já baixou este material',
+									'estudantes já baixaram este material',
+									$downloads,
+									'proenem-wordpress-theme'
 								)
-							)
-						);
-						?>
-						<figure class="pro-material-proof__quote">
-							<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
-							<figcaption>
-								<strong><?php echo esc_html( $testimonial_name ); ?></strong>
-								<?php if ( $testimonial_line ) : ?>
-									<span><?php echo esc_html( $testimonial_line ); ?></span>
-								<?php endif; ?>
-							</figcaption>
-						</figure>
-					<?php endif; ?>
-				</aside>
-			<?php endif; ?>
+							);
+							?>
+						</span>
+					</p>
+				<?php endif; ?>
 
-			<?php if ( $faq ) : ?>
-				<div class="pen-faq-section pro-material-faq">
-					<div class="pen-faq-section__header">
-						<h2 id="pro-material-faq-title"><?php esc_html_e( 'Antes de baixar', 'proenem-wordpress-theme' ); ?></h2>
-					</div>
-					<div class="pen-faq-section__items">
-						<?php foreach ( $faq as $index => $item ) : ?>
-							<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
-								<?php continue; ?>
+				<?php if ( $testimonial instanceof WP_Post ) : ?>
+					<?php
+					$testimonial_id   = (int) $testimonial->ID;
+					$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
+					$testimonial_line = implode(
+						' · ',
+						array_filter(
+							array(
+								proenem_get_testimonial_course( $testimonial_id ),
+								proenem_get_testimonial_institution( $testimonial_id ),
+							)
+						)
+					);
+					?>
+					<figure class="pro-material-proof__quote">
+						<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
+						<figcaption>
+							<strong><?php echo esc_html( $testimonial_name ); ?></strong>
+							<?php if ( $testimonial_line ) : ?>
+								<span><?php echo esc_html( $testimonial_line ); ?></span>
 							<?php endif; ?>
-							<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
-								<summary><?php echo esc_html( $item['question'] ); ?></summary>
-								<p><?php echo esc_html( $item['answer'] ); ?></p>
-							</details>
-						<?php endforeach; ?>
-					</div>
+						</figcaption>
+					</figure>
+				<?php endif; ?>
+			</aside>
+		<?php endif; ?>
+
+		<?php if ( $faq ) : ?>
+			<section class="pen-faq-section pro-material-faq" aria-labelledby="pro-material-faq-title">
+				<div class="pen-faq-section__header">
+					<h2 id="pro-material-faq-title"><?php esc_html_e( 'Antes de baixar', 'proenem-wordpress-theme' ); ?></h2>
 				</div>
-			<?php endif; ?>
-		</div>
-	</section>
+				<div class="pen-faq-section__items">
+					<?php foreach ( $faq as $index => $item ) : ?>
+						<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
+							<?php continue; ?>
+						<?php endif; ?>
+						<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
+							<summary><?php echo esc_html( $item['question'] ); ?></summary>
+							<p><?php echo esc_html( $item['answer'] ); ?></p>
+						</details>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+	</div>
 	<?php
 }
 

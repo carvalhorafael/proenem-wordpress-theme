@@ -666,6 +666,36 @@ test("social proof shows only where there is data", async ({ page }) => {
   await expect(page.locator(".pro-material-faq .pen-faq-item")).toHaveCount(4);
 });
 
+test("proof and questions ride beside the content on desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const content = await box(".pro-material-single__content");
+  const proof = await box(".pro-material-proof");
+  const faq = await box(".pro-material-faq");
+
+  // They used to be a full width band a screen below the content.
+  expect(proof.left).toBeGreaterThanOrEqual(content.right);
+  expect(faq.left).toBeGreaterThanOrEqual(content.right);
+
+  // Stacked, proof first.
+  expect(faq.top).toBeGreaterThanOrEqual(proof.bottom);
+
+  // And the column is narrow, so both have to be sized for it.
+  expect(proof.width).toBeLessThan(420);
+
+  // Below the breakpoint they stack under the content at full width.
+  await page.setViewportSize({ width: 375, height: 812 });
+
+  const narrowContent = await box(".pro-material-single__content");
+  const narrowFaq = await box(".pro-material-faq");
+
+  expect(narrowFaq.top).toBeGreaterThan(narrowContent.bottom);
+  expect(Math.abs(narrowFaq.width - narrowContent.width)).toBeLessThan(8);
+});
+
 test("sharing a material leads with WhatsApp", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
