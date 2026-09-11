@@ -1883,34 +1883,6 @@ img {
 .pro-materials-hero--catalog .pro-materials-hero__copy {
   max-width: 46rem;
 }
-
-.pro-materials-hero--catalog .pen-section-pill {
-  background: var(--pen-color-yellow-bright);
-}
-
-/* The brand's own badge shape, carrying the one promise that matters here. */
-.pro-materials-hero__seal {
-  background: var(--pen-color-cyan);
-  height: 7.5rem;
-  position: absolute;
-  right: clamp(var(--pen-space-5), 6vw, var(--pen-space-16));
-  top: clamp(var(--pen-space-5), 4vw, var(--pen-space-10));
-  transform: rotate(-12deg);
-  width: 7.5rem;
-}
-
-.pro-materials-hero__seal strong {
-  font-size: 1.6rem;
-  line-height: 0.95;
-}
-
-.pro-materials-hero__seal small {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .pro-materials-hero--catalog h1 {
   color: var(--pen-color-ink);
   font-size: clamp(2.1rem, 4.6vw, 3.9rem);
@@ -1925,11 +1897,6 @@ img {
   margin: var(--pen-space-4) auto 0;
   max-width: 40rem;
 }
-
-.pro-materials-hero--catalog .pen-section-pill {
-  margin-bottom: var(--pen-space-4);
-}
-
 .pro-materials-hero__back {
   color: var(--pen-color-on-red);
   display: flex;
@@ -8509,13 +8476,6 @@ body.proenem-home-template {
   .pro-materials-hero--catalog h1 {
     font-size: clamp(1.9rem, 8vw, 2.5rem);
   }
-
-  /* No room for it beside the headline, and it would sit on top of it. */
-  .pro-materials-hero__seal {
-    display: none;
-  }
-
-
 
   .pro-materials-hero--catalog {
     padding-block: var(--pen-space-6);
