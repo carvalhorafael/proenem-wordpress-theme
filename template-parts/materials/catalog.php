@@ -32,7 +32,7 @@ $materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
 ?>
 
 <div class="pro-materials-catalog">
-	<section class="pro-materials-results" aria-labelledby="pro-materials-results-title">
+	<section id="materiais" class="pro-materials-results" aria-labelledby="pro-materials-results-title">
 		<div class="pro-materials-results__header">
 			<<?php echo esc_html( $materials_tag ); ?> id="pro-materials-results-title"><?php echo esc_html( $materials_heading ); ?></<?php echo esc_html( $materials_tag ); ?>>
 			<p data-pro-materials-count aria-live="polite">
@@ -45,6 +45,8 @@ $materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
 				?>
 			</p>
 		</div>
+
+		<?php proenem_render_material_category_filter_panel( $materials_terms, $materials_selected ); ?>
 
 		<div class="pen-blog-filter-bar pro-materials-filter-bar">
 			<?php proenem_render_materials_order_control( $materials_action ); ?>

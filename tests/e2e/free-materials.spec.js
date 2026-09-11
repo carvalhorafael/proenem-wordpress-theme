@@ -85,6 +85,59 @@ test("the category row scrolls from its first chip on mobile", async ({ page }) 
   expect(top).toBeLessThan(700);
 });
 
+test("Todos lands on the list, not back at the top of the hero", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, CATALOG);
+
+  await page.locator(".pro-materials-tabs").getByRole("link", { name: "Todos" }).click();
+
+  await expect(page).toHaveURL(/#materiais$/);
+
+  const heading = page.locator("#pro-materials-results-title");
+
+  await expect(heading).toBeInViewport();
+
+  // The sticky header must not cover it.
+  const top = await heading.evaluate((el) => Math.round(el.getBoundingClientRect().top));
+  const header = await page
+    .locator(".site-header")
+    .evaluate((el) => Math.round(el.getBoundingClientRect().height));
+
+  expect(top).toBeGreaterThanOrEqual(header);
+});
+
+test("the panel below the list combines categories", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const panel = page.locator(".pro-materials-filter--panel");
+
+  await expect(panel).toHaveCount(1);
+
+  // The chips in the hero pick one category; this picks several.
+  await panel.getByRole("checkbox", { name: /Redação/ }).check();
+  await panel.getByRole("checkbox", { name: /Simulados/ }).check();
+  await panel.getByRole("button", { name: "Ver materiais" }).click();
+
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(2);
+  await expect(page.locator("[data-pro-materials-count]")).toHaveText("2 materiais disponíveis");
+
+  // The selection survives the round trip, and can be cleared.
+  await expect(panel.getByRole("checkbox", { name: /Redação/ })).toBeChecked();
+  await expect(panel.getByRole("checkbox", { name: /Simulados/ })).toBeChecked();
+  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toBeVisible();
+});
+
+test("combining categories keeps the chosen order", async ({ page }) => {
+  await gotoMaterials(page, `${CATALOG}?ordenar=az`);
+
+  const panel = page.locator(".pro-materials-filter--panel");
+
+  await panel.getByRole("checkbox", { name: /Redação/ }).check();
+  await panel.getByRole("button", { name: "Ver materiais" }).click();
+
+  await expect(page).toHaveURL(/ordenar=az/);
+});
+
 test("category tabs link to the real category archives", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 

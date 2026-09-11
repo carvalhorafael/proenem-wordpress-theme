@@ -1484,9 +1484,10 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 	}
 	?>
 	<nav class="pen-blog-category-tabs pro-materials-tabs" aria-label="<?php esc_attr_e( 'Categorias de materiais gratuitos', 'proenem-wordpress-theme' ); ?>">
+		<?php // Land on the list, not back at the top of the hero. ?>
 		<a
 			class="pen-blog-category-tabs__item<?php echo $showing_all ? ' is-active' : ''; ?>"
-			href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>"
+			href="<?php echo esc_url( proenem_get_free_materials_url() . '#materiais' ); ?>"
 			<?php echo $showing_all ? ' aria-current="page"' : ''; ?>
 		>
 			<?php esc_html_e( 'Todos', 'proenem-wordpress-theme' ); ?>
@@ -1511,6 +1512,56 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 			</a>
 		<?php endforeach; ?>
 	</nav>
+	<?php
+}
+
+/**
+ * Render the category filter panel shown above the grid.
+ *
+ * The chips in the hero select one category at a time, because each is a real
+ * archive URL. This panel is what lets someone combine categories, through the
+ * query argument the server already understands.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return void
+ */
+function proenem_render_material_category_filter_panel( $terms, $selected_slugs ) {
+	$terms = proenem_get_material_category_tabs_terms( $terms, $selected_slugs );
+
+	if ( count( $terms ) < 2 ) {
+		return;
+	}
+
+	$catalog_url = proenem_get_free_materials_url();
+	$order       = proenem_get_selected_materials_order();
+	?>
+	<form class="pro-materials-filter pro-materials-filter--panel" method="get" action="<?php echo esc_url( $catalog_url ); ?>">
+		<div class="pro-materials-filter__header">
+			<strong><?php esc_html_e( 'Combine categorias', 'proenem-wordpress-theme' ); ?></strong>
+			<?php if ( ! empty( $selected_slugs ) ) : ?>
+				<a href="<?php echo esc_url( $catalog_url ); ?>"><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+			<?php endif; ?>
+		</div>
+
+		<?php if ( 'recentes' !== $order ) : ?>
+			<input type="hidden" name="ordenar" value="<?php echo esc_attr( $order ); ?>">
+		<?php endif; ?>
+
+		<div class="pro-materials-filter__options">
+			<?php foreach ( $terms as $term ) : ?>
+				<label class="pro-materials-filter__option">
+					<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
+					<span><?php echo esc_html( $term->name ); ?></span>
+					<small><?php echo esc_html( number_format_i18n( $term->count ) ); ?></small>
+				</label>
+			<?php endforeach; ?>
+		</div>
+
+		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
+			<?php esc_html_e( 'Ver materiais', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
 	<?php
 }
 

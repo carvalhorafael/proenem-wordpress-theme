@@ -2082,6 +2082,54 @@ img {
   padding: clamp(var(--pen-space-12), 9vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
 }
 
+/*
+ * Multi-select panel, the counterpart of the single-select chips in the hero.
+ * Reuses the base .pro-materials-filter that the approved students page also
+ * consumes, so the two filters stay recognisably the same control.
+ */
+.pro-materials-filter--panel {
+  align-items: center;
+  gap: var(--pen-space-4) var(--pen-space-5);
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header {
+  grid-column: 1 / -1;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header strong {
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-3);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  display: inline-flex;
+  gap: 0.5rem;
+  grid-template-columns: none;
+  min-height: 2.5rem;
+  padding: 0 var(--pen-space-4);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option:has(input:checked) {
+  background: var(--pen-color-yellow-bright);
+  box-shadow: var(--pen-shadow-hard-xs);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__submit {
+  justify-self: end;
+  width: auto;
+}
+
 .pro-materials-filter-bar {
   border-bottom: var(--pen-border-brand-sm);
   flex-wrap: wrap;
@@ -2284,6 +2332,8 @@ img {
 
 .pro-materials-results {
   min-width: 0;
+  /* The sticky header is 81px, so an anchor jump lands past the heading. */
+  scroll-margin-top: 7rem;
 }
 
 .pro-materials-results__header {
@@ -8688,6 +8738,15 @@ body.proenem-home-template {
 
   .pro-materials-filter-bar {
     display: block;
+  }
+
+  .pro-materials-filter--panel {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-materials-filter--panel .pro-materials-filter__submit {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .pro-materials-order {
