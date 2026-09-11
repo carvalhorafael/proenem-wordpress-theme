@@ -1738,13 +1738,25 @@ img {
 
 .pro-materials-page,
 .pro-material-single-page {
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* The catalog reads as a shelf, so it sits on white all the way down. */
+.pro-materials-page {
+  background:
+    linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+}
+
+.pro-material-single-page {
   background:
     linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
     #fff1f1;
-  max-width: none;
-  overflow: hidden;
-  padding: 0;
 }
 
 .pro-materials-hero {
