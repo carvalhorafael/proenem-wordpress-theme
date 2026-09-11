@@ -499,6 +499,73 @@ function proenem_free_materials_is_available() {
 }
 
 /**
+ * Check whether the current request is a single material capture page.
+ *
+ * The catalog and the category archives keep the full navigation. Only the
+ * page whose single job is the form gets the reduced header.
+ *
+ * @return bool
+ */
+function proenem_is_material_capture_surface() {
+	return is_singular( proenem_get_free_materials_post_type() );
+}
+
+/**
+ * Render the breadcrumb for a material.
+ *
+ * The SEO plugin already emits a BreadcrumbList in the page schema, but
+ * nothing was shown on screen. This mirrors that trail.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_breadcrumb( $post_id ) {
+	$crumbs = array(
+		array(
+			'label' => __( 'Início', 'proenem-wordpress-theme' ),
+			'url'   => home_url( '/' ),
+		),
+		array(
+			'label' => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_free_materials_url(),
+		),
+	);
+
+	$terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+
+	if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+		$term_link = get_term_link( $terms[0] );
+
+		if ( ! is_wp_error( $term_link ) ) {
+			$crumbs[] = array(
+				'label' => $terms[0]->name,
+				'url'   => $term_link,
+			);
+		}
+	}
+
+	$crumbs[] = array(
+		'label' => get_the_title( $post_id ),
+		'url'   => '',
+	);
+	?>
+	<nav class="pro-material-breadcrumb" aria-label="<?php esc_attr_e( 'Você está em', 'proenem-wordpress-theme' ); ?>">
+		<ol>
+			<?php foreach ( $crumbs as $crumb ) : ?>
+				<li>
+					<?php if ( '' !== $crumb['url'] ) : ?>
+						<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
+					<?php else : ?>
+						<span aria-current="page"><?php echo esc_html( $crumb['label'] ); ?></span>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ol>
+	</nav>
+	<?php
+}
+
+/**
  * Check whether the current request belongs to the Free Materials surface.
  *
  * @return bool

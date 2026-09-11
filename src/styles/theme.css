@@ -1769,6 +1769,58 @@ img {
 }
 
 .pro-materials-hero h1,
+/*
+ * Local adaptation: the design system has no breadcrumb contract yet. Tracked
+ * in the theme and design system issues linked from the pull request.
+ */
+.pro-material-breadcrumb {
+  margin-bottom: var(--pen-space-4);
+}
+
+.pro-material-breadcrumb ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-material-breadcrumb li {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 800;
+  gap: 0.5rem;
+}
+
+.pro-material-breadcrumb li + li::before {
+  color: var(--pen-color-on-red-muted);
+  content: "/";
+}
+
+.pro-material-breadcrumb a {
+  color: var(--pen-color-on-red);
+  text-decoration: none;
+}
+
+.pro-material-breadcrumb a:hover,
+.pro-material-breadcrumb a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The current page is the heading right below it, so it stays quiet. */
+.pro-material-breadcrumb [aria-current="page"] {
+  color: var(--pen-color-on-red-muted);
+  font-weight: 700;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .pro-material-single__hero h1 {
   color: inherit;
   font-family: var(--pen-font-body);
@@ -2409,12 +2461,12 @@ img {
   color: var(--pen-color-on-red);
   display: grid;
   column-gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
-  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-7));
+  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-6));
   grid-template-areas:
     "copy capture"
     "preview capture";
   grid-template-columns: minmax(0, 1.1fr) minmax(23rem, 0.66fr);
-  padding: clamp(var(--pen-space-7), 4vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-16));
+  padding: clamp(var(--pen-space-6), 4vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-16));
 }
 
 /* The cover plus what is inside, sitting beside the form instead of below a
@@ -2491,14 +2543,6 @@ img {
   max-width: 44rem;
 }
 
-.pro-material-single__back {
-  color: var(--pen-color-on-red);
-  display: flex;
-  font-weight: 900;
-  margin-bottom: var(--pen-space-4);
-  text-decoration: none;
-  width: fit-content;
-}
 
 .pro-material-single__cover {
   background: var(--pen-color-surface);
@@ -2793,7 +2837,7 @@ img {
   background: var(--pen-color-canvas);
   border-top: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-14)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
 }
 
 .pro-material-single__closing-inner {
@@ -8178,7 +8222,7 @@ body.proenem-home-template {
   }
 
   .pro-materials-hero--catalog {
-    padding-block: var(--pen-space-7);
+    padding-block: var(--pen-space-6);
   }
 
   .pro-testimonial-single__hero {

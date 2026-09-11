@@ -24,7 +24,7 @@ get_header();
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-material-single' ); ?>>
 			<section class="pro-material-single__hero" aria-labelledby="pro-material-title">
 				<div class="pro-material-single__hero-copy">
-					<a class="pro-material-single__back" href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>"><?php esc_html_e( '← Materiais gratuitos', 'proenem-wordpress-theme' ); ?></a>
+					<?php proenem_render_material_breadcrumb( $material_id ); ?>
 					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
 					<?php the_title( '<h1 id="pro-material-title">', '</h1>' ); ?>
 					<?php if ( '' !== $promise ) : ?>
