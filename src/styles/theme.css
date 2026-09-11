@@ -2833,6 +2833,75 @@ img {
  * Closing block. It used to be two calls to action pointing back up at the
  * form, with the arrow drawn as up. Now the form itself is here.
  */
+/* Related materials, so leaving the page is not the only option. */
+.pro-material-related {
+  background: var(--pen-color-surface);
+  border-top: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-material-related__inner {
+  margin-inline: auto;
+  max-width: 76rem;
+}
+
+.pro-material-related__header {
+  align-items: baseline;
+  border-bottom: var(--pen-border-brand-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4);
+  justify-content: space-between;
+  margin-bottom: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+  padding-bottom: var(--pen-space-4);
+}
+
+.pro-material-related__header h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-material-related__header a {
+  align-items: center;
+  color: var(--pen-color-proenem-red);
+  display: inline-flex;
+  font-weight: 900;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.pro-material-related__header a:hover,
+.pro-material-related__header a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/*
+ * The catalog may hold fewer than three related materials. Letting the columns
+ * follow the count avoids leaving a hole in the row.
+ */
+.pro-material-related .pro-materials-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.pro-material-share {
+  border-top: 1px solid rgb(27 29 35 / 0.12);
+  margin-top: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+  max-width: none;
+  padding-top: var(--pen-space-5);
+}
+
+.pro-material-share__label {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
 .pro-material-single__closing {
   background: var(--pen-color-canvas);
   border-top: var(--pen-border-brand-sm);
@@ -7883,6 +7952,12 @@ body.proenem-home-template {
 
   .pro-material-single__closing-inner {
     grid-template-columns: 1fr;
+  }
+
+  .pro-material-share {
+    align-items: start;
+    flex-direction: column;
+    gap: var(--pen-space-3);
   }
 
 
