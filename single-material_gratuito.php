@@ -15,22 +15,46 @@ get_header();
 
 		$material_id   = get_the_ID();
 		$category_name = proenem_get_material_category_label( $material_id );
+		// Only an excerpt the editor actually wrote. The generated one repeated
+		// the opening of the content, truncated with an ellipsis.
+		$promise    = has_excerpt( $material_id ) ? get_the_excerpt( $material_id ) : '';
+		$highlights = array_slice( proenem_get_material_highlights( $material_id ), 0, 5 );
+		$specs      = proenem_get_material_specs( $material_id );
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-material-single' ); ?>>
 			<section class="pro-material-single__hero" aria-labelledby="pro-material-title">
 				<div class="pro-material-single__hero-copy">
-					<a class="pro-material-single__back" href="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>"><?php esc_html_e( '← Materiais gratuitos', 'proenem-wordpress-theme' ); ?></a>
+					<a class="pro-material-single__back" href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>"><?php esc_html_e( '← Materiais gratuitos', 'proenem-wordpress-theme' ); ?></a>
 					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
 					<?php the_title( '<h1 id="pro-material-title">', '</h1>' ); ?>
-					<p><?php echo esc_html( proenem_get_material_excerpt( $material_id, 28 ) ); ?></p>
+					<?php if ( '' !== $promise ) : ?>
+						<p><?php echo esc_html( $promise ); ?></p>
+					<?php endif; ?>
 				</div>
-				<figure class="pro-material-single__cover">
-					<?php proenem_render_material_image( $material_id, 'large', '(max-width: 980px) 92vw, 800px', true ); ?>
-				</figure>
+
+				<div class="pro-material-single__preview">
+					<figure class="pro-material-single__cover">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 980px) 40vw, 240px', true ); ?>
+					</figure>
+
+					<div class="pro-material-single__inside">
+						<?php if ( $highlights ) : ?>
+							<p class="pro-material-single__inside-title"><?php esc_html_e( 'O que tem dentro', 'proenem-wordpress-theme' ); ?></p>
+							<ul class="pro-material-single__highlights">
+								<?php foreach ( $highlights as $highlight ) : ?>
+									<li><?php echo esc_html( $highlight ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+						<?php if ( $specs ) : ?>
+							<p class="pro-material-single__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+						<?php endif; ?>
+					</div>
+				</div>
 				<aside id="material-download-form" class="pro-material-capture" aria-labelledby="pro-material-capture-title">
 					<span class="pro-material-capture__eyebrow"><?php esc_html_e( 'Acesso imediato', 'proenem-wordpress-theme' ); ?></span>
-					<h2 id="pro-material-capture-title"><?php esc_html_e( 'Complete o formulário', 'proenem-wordpress-theme' ); ?></h2>
-					<p><?php esc_html_e( 'para receber o material.', 'proenem-wordpress-theme' ); ?></p>
+					<h2 id="pro-material-capture-title"><?php esc_html_e( 'Receba o material agora', 'proenem-wordpress-theme' ); ?></h2>
+					<p><?php esc_html_e( 'Enviamos o link de download para o contato que você informar.', 'proenem-wordpress-theme' ); ?></p>
 					<form class="pro-material-capture__form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-pro-material-capture-form>
 						<input type="hidden" name="action" value="crm_leads_capture_free_material">
 						<?php wp_nonce_field( 'crm_leads_capture_free_material' ); ?>
@@ -79,7 +103,6 @@ get_header();
 								autocomplete="tel"
 								inputmode="numeric"
 								maxlength="16"
-								pattern="\(?[0-9]{2}\)?[\s-]?[0-9]{4,5}-?[0-9]{4}"
 								placeholder="<?php esc_attr_e( '(00) 00000-0000', 'proenem-wordpress-theme' ); ?>"
 								aria-describedby="pro-material-capture-whatsapp-error"
 								data-pro-capture-phone
@@ -135,6 +158,16 @@ get_header();
 				</div>
 			</section>
 		</article>
+
+		<div class="pro-material-sticky-cta" data-pro-material-sticky-cta hidden>
+			<div class="pro-material-sticky-cta__copy">
+				<strong><?php echo esc_html( wp_trim_words( get_the_title( $material_id ), 6 ) ); ?></strong>
+				<span><?php echo esc_html( $specs ? implode( ' · ', $specs ) : __( 'Material gratuito', 'proenem-wordpress-theme' ) ); ?></span>
+			</div>
+			<a class="pen-button pen-button--primary pen-button--md" href="#material-download-form" data-pro-material-sticky-cta-action>
+				<?php echo esc_html( proenem_get_material_cta_label( $material_id ) ); ?>
+			</a>
+		</div>
 	<?php endwhile; ?>
 </main>
 

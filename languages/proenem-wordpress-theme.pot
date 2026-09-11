@@ -1130,7 +1130,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1291
 #: inc/class-proenem-elementor-sales-widget-base.php:1873
-#: single-material_gratuito.php:45
+#: single-material_gratuito.php:69
 msgid "Nome"
 msgstr ""
 
@@ -2665,8 +2665,9 @@ msgid "Todas as postagens"
 msgstr ""
 
 #: inc/template-tags.php:549
-#: single-material_gratuito.php:111
-#: single-material_gratuito.php:127
+#: single-material_gratuito.php:134
+#: single-material_gratuito.php:150
+#: single-material_gratuito.php:165
 msgid "Material gratuito"
 msgstr ""
 
@@ -3531,7 +3532,7 @@ msgid "A história de %s"
 msgstr ""
 
 #: single-depoimento.php:112
-#: single-material_gratuito.php:103
+#: single-material_gratuito.php:126
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
@@ -3607,72 +3608,76 @@ msgstr ""
 msgid "Footer da página de depoimento"
 msgstr ""
 
-#: single-material_gratuito.php:22
+#: single-material_gratuito.php:27
 msgid "← Materiais gratuitos"
 msgstr ""
 
-#: single-material_gratuito.php:31
+#: single-material_gratuito.php:42
+msgid "O que tem dentro"
+msgstr ""
+
+#: single-material_gratuito.php:55
 msgid "Acesso imediato"
 msgstr ""
 
-#: single-material_gratuito.php:32
-msgid "Complete o formulário"
+#: single-material_gratuito.php:56
+msgid "Receba o material agora"
 msgstr ""
 
-#: single-material_gratuito.php:33
-msgid "para receber o material."
+#: single-material_gratuito.php:57
+msgid "Enviamos o link de download para o contato que você informar."
 msgstr ""
 
-#: single-material_gratuito.php:51
+#: single-material_gratuito.php:75
 msgid "Seu nome completo"
 msgstr ""
 
-#: single-material_gratuito.php:58
+#: single-material_gratuito.php:82
 msgid "Email"
 msgstr ""
 
-#: single-material_gratuito.php:64
+#: single-material_gratuito.php:88
 msgid "voce@exemplo.com"
 msgstr ""
 
-#: single-material_gratuito.php:72
+#: single-material_gratuito.php:96
 msgid "WhatsApp"
 msgstr ""
 
-#: single-material_gratuito.php:73
+#: single-material_gratuito.php:97
 msgid "(opcional)"
 msgstr ""
 
-#: single-material_gratuito.php:83
+#: single-material_gratuito.php:106
 msgid "(00) 00000-0000"
 msgstr ""
 
-#: single-material_gratuito.php:90
+#: single-material_gratuito.php:113
 msgid "Baixar material gratuito"
 msgstr ""
 
-#: single-material_gratuito.php:93
+#: single-material_gratuito.php:116
 msgid "Sem pagamento. Enviaremos o material para o contato informado."
 msgstr ""
 
-#: single-material_gratuito.php:112
+#: single-material_gratuito.php:135
 msgid "Pronto para usar nos estudos"
 msgstr ""
 
-#: single-material_gratuito.php:113
+#: single-material_gratuito.php:136
 msgid "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
 msgstr ""
 
-#: single-material_gratuito.php:115
-#: single-material_gratuito.php:132
+#: single-material_gratuito.php:138
+#: single-material_gratuito.php:155
 msgid "Baixar material"
 msgstr ""
 
-#: single-material_gratuito.php:128
+#: single-material_gratuito.php:151
 msgid "Leve este material para sua rotina de estudos"
 msgstr ""
 
-#: single-material_gratuito.php:129
+#: single-material_gratuito.php:152
 msgid "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
 msgstr ""
 

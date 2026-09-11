@@ -1132,7 +1132,28 @@ document.querySelectorAll("[data-pro-testimonial-share]").forEach((shareDetails)
 });
 
 document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => {
-  const fields = Array.from(form.querySelectorAll("input[required], input[pattern]"));
+  const fields = Array.from(form.querySelectorAll("input[required], [data-pro-capture-phone]"));
+
+  // A field can throw from checkValidity() when a pattern attribute is not a
+  // valid regular expression in the browser's mode. Treat that as valid rather
+  // than letting it kill the whole submit handler.
+  const isValid = (field) => {
+    try {
+      return field.checkValidity() && phoneIsComplete(field);
+    } catch {
+      return true;
+    }
+  };
+
+  // The mask normalises the format, so the only thing left to check is whether
+  // the visitor finished typing. An empty field stays valid: it is optional.
+  const phoneIsComplete = (field) => {
+    if (!field.matches("[data-pro-capture-phone]") || field.value === "") {
+      return true;
+    }
+
+    return field.value.replace(/\D/g, "").length >= 10;
+  };
 
   if (!fields.length) {
     return;
@@ -1157,8 +1178,8 @@ document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => 
       return field.dataset.proCaptureType || "Informe um email válido, como voce@exemplo.com.";
     }
 
-    if (field.validity.patternMismatch) {
-      return field.dataset.proCapturePattern || "Informe o número com DDD, como (11) 91234-5678.";
+    if (!phoneIsComplete(field)) {
+      return field.dataset.proCapturePhone || "Informe o número com DDD, como (11) 91234-5678.";
     }
 
     return field.validationMessage;
@@ -1188,13 +1209,13 @@ document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => 
 
   fields.forEach((field) => {
     field.addEventListener("input", () => {
-      if (field.checkValidity()) {
+      if (isValid(field)) {
         clearField(field);
       }
     });
 
     field.addEventListener("blur", () => {
-      if (field.value !== "" && !field.checkValidity()) {
+      if (field.value !== "" && !isValid(field)) {
         showField(field);
       }
     });
@@ -1221,7 +1242,7 @@ document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => 
   });
 
   form.addEventListener("submit", (event) => {
-    const invalid = fields.filter((field) => !field.checkValidity());
+    const invalid = fields.filter((field) => !isValid(field));
 
     fields.forEach(clearField);
 
@@ -1235,5 +1256,35 @@ document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => 
 
     invalid.forEach(showField);
     invalid[0].focus();
+  });
+});
+
+document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
+  const form = document.querySelector("#material-download-form");
+
+  if (!form || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  bar.hidden = false;
+
+  // Show the bar only while the form is off screen, so it never competes with
+  // the form it points at.
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      bar.classList.toggle("is-visible", !entry.isIntersecting);
+    },
+    { rootMargin: "-72px 0px 0px 0px" },
+  );
+
+  observer.observe(form);
+
+  bar.querySelector("[data-pro-material-sticky-cta-action]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    form.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    form.querySelector("input:not([type=hidden]):not([tabindex='-1'])")?.focus({ preventScroll: true });
   });
 });
