@@ -486,11 +486,11 @@ function proenem_get_materials_paged() {
 	// Read from $_GET rather than filter_input(): the latter reads the real
 	// request and returns null under PHPUnit and WP-CLI, which makes this
 	// untestable. Read only, so no nonce applies.
-	$requested = isset( $_GET['pagina'] ) ? wp_unslash( $_GET['pagina'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$requested = isset( $_GET['pagina'] ) ? sanitize_text_field( wp_unslash( $_GET['pagina'] ) ) : '1'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	// Cast rather than absint(): absint( '-2' ) is 2, which would turn a
 	// negative page into a real one.
-	return max( 1, is_scalar( $requested ) ? (int) $requested : 1 );
+	return max( 1, (int) $requested );
 }
 
 /**
@@ -542,8 +542,7 @@ function proenem_get_materials_orders() {
  * @return string
  */
 function proenem_get_selected_materials_order() {
-	$requested = isset( $_GET['ordenar'] ) ? wp_unslash( $_GET['ordenar'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$requested = is_string( $requested ) ? sanitize_key( $requested ) : '';
+	$requested = isset( $_GET['ordenar'] ) ? sanitize_key( wp_unslash( $_GET['ordenar'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	return array_key_exists( $requested, proenem_get_materials_orders() ) ? $requested : 'recentes';
 }
