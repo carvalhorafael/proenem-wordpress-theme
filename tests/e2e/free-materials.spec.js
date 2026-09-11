@@ -699,6 +699,35 @@ test("the testimonial comes from the plugin pool, one per material", async ({ pa
   expect(await nameOn(MATERIAL)).toBe(first);
 });
 
+test("the sidebar reads as three things, not one block", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const count = await box(".pro-material-proof__count");
+  const quote = await box(".pro-material-proof__quote");
+  const faq = await box(".pro-material-faq");
+
+  // The count and the story are one argument; the questions are another. The
+  // space between the groups has to beat the space inside one.
+  expect(faq.top - quote.bottom).toBeGreaterThan(2 * (quote.top - count.bottom));
+
+  // A portrait or, when there is no photo, the monogram standing in for one.
+  await expect(page.locator(".pro-material-proof__avatar")).toHaveCount(1);
+
+  // And the story does not sit on the same white as the answers below it.
+  const quoteBackground = await page
+    .locator(".pro-material-proof__quote")
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+  const answerBackground = await page
+    .locator(".pro-material-faq .pen-faq-item")
+    .first()
+    .evaluate((el) => getComputedStyle(el).backgroundColor);
+
+  expect(quoteBackground).not.toBe(answerBackground);
+});
+
 test("proof and questions ride beside the content on desktop", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await gotoMaterials(page, MATERIAL);

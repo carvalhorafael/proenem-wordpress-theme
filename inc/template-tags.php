@@ -1204,10 +1204,29 @@ function proenem_render_material_reassurance( $post_id ) {
 					<figure class="pro-material-proof__quote">
 						<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
 						<figcaption>
-							<strong><?php echo esc_html( $testimonial_name ); ?></strong>
-							<?php if ( $testimonial_line ) : ?>
-								<span><?php echo esc_html( $testimonial_line ); ?></span>
+							<?php if ( has_post_thumbnail( $testimonial_id ) ) : ?>
+								<?php
+								echo get_the_post_thumbnail(
+									$testimonial_id,
+									'thumbnail',
+									array(
+										'alt'      => '',
+										'class'    => 'pro-material-proof__avatar',
+										'decoding' => 'async',
+										'loading'  => 'lazy',
+									)
+								);
+								?>
+							<?php else : ?>
+								<?php // A stock portrait beside their name would read as the student, so the monogram stands in. ?>
+								<span class="pro-material-proof__avatar pro-material-proof__avatar--initial" aria-hidden="true"><?php echo esc_html( mb_substr( $testimonial_name, 0, 1 ) ); ?></span>
 							<?php endif; ?>
+							<span class="pro-material-proof__who">
+								<strong><?php echo esc_html( $testimonial_name ); ?></strong>
+								<?php if ( $testimonial_line ) : ?>
+									<span><?php echo esc_html( $testimonial_line ); ?></span>
+								<?php endif; ?>
+							</span>
 						</figcaption>
 					</figure>
 				<?php endif; ?>

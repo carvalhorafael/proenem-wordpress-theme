@@ -2999,12 +2999,12 @@ img {
 .pro-material-reassurance {
   color: var(--pen-color-ink);
   display: grid;
-  gap: clamp(var(--pen-space-6), 3vw, var(--pen-space-8));
+  gap: clamp(var(--pen-space-10), 6vw, var(--pen-space-14, 3.5rem));
 }
 
 .pro-material-proof {
   display: grid;
-  gap: var(--pen-space-5);
+  gap: var(--pen-space-4);
 }
 
 /* The number is the strongest argument in this column, and as a line of text
@@ -3044,19 +3044,35 @@ img {
   text-wrap: balance;
 }
 
+/* Everything here says "a person said this": the mark, the portrait and a
+ * surface that is not the white of the answers below. */
 .pro-material-proof__quote {
-  background: var(--pen-color-surface);
+  background: var(--pen-color-canvas);
   border: var(--pen-border-brand-sm);
   border-radius: 0.9rem;
   box-shadow: var(--pen-shadow-hard-sm);
   display: grid;
-  gap: var(--pen-space-3);
+  gap: var(--pen-space-4);
   margin: 0;
-  padding: var(--pen-space-5);
+  padding: var(--pen-space-6) var(--pen-space-5) var(--pen-space-5);
+  position: relative;
+}
+
+.pro-material-proof__quote::before {
+  color: var(--pen-color-proenem-red);
+  content: "\201C";
+  font-family: var(--pen-font-display, var(--pen-font-body));
+  font-size: 4rem;
+  font-weight: 900;
+  left: var(--pen-space-4);
+  line-height: 1;
+  position: absolute;
+  top: -0.35rem;
 }
 
 .pro-material-proof__quote blockquote {
   margin: 0;
+  padding-top: var(--pen-space-4);
 }
 
 .pro-material-proof__quote blockquote p {
@@ -3066,18 +3082,49 @@ img {
 }
 
 .pro-material-proof__quote figcaption {
+  align-items: center;
+  border-top: 1px solid rgb(26 26 26 / 12%);
+  display: flex;
+  gap: var(--pen-space-3);
+  padding-top: var(--pen-space-4);
+}
+
+.pro-material-proof__avatar {
+  border: var(--pen-border-brand-sm);
+  border-radius: 50%;
+  flex: none;
+  height: 2.75rem;
+  object-fit: cover;
+  width: 2.75rem;
+}
+
+.pro-material-proof__avatar--initial {
+  align-items: center;
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  display: flex;
+  font-size: 1.15rem;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 1;
+}
+
+.pro-material-proof__who {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.1rem;
+  min-width: 0;
 }
 
 .pro-material-proof__quote figcaption strong {
   font-weight: 900;
+  line-height: 1.2;
 }
 
-.pro-material-proof__quote figcaption span {
+.pro-material-proof__who span {
   color: var(--pen-color-ink-muted);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
+  line-height: 1.25;
 }
 
 .pro-material-faq {
