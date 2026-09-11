@@ -1195,7 +1195,7 @@ function proenem_render_material_reassurance( $post_id ) {
 		<?php if ( $faq ) : ?>
 			<section class="pen-faq-section pro-material-faq" aria-labelledby="pro-material-faq-title">
 				<div class="pen-faq-section__header">
-					<h2 id="pro-material-faq-title"><?php esc_html_e( 'Antes de baixar', 'proenem-wordpress-theme' ); ?></h2>
+					<h2 id="pro-material-faq-title"><?php esc_html_e( 'Perguntas frequentes', 'proenem-wordpress-theme' ); ?></h2>
 				</div>
 				<div class="pen-faq-section__items">
 					<?php foreach ( $faq as $index => $item ) : ?>

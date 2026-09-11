@@ -2385,6 +2385,7 @@ msgstr "Pro FAQ"
 
 #: inc/class-proenem-elementor-sales-widget-base.php:2712
 #: inc/template-tags.php:367
+#: inc/template-tags.php:1198
 msgid "Perguntas frequentes"
 msgstr "Perguntas frequentes"
 
@@ -2768,10 +2769,6 @@ msgid "estudante já baixou este material"
 msgid_plural "estudantes já baixaram este material"
 msgstr[0] "estudante já baixou este material"
 msgstr[1] "estudantes já baixaram este material"
-
-#: inc/template-tags.php:1198
-msgid "Antes de baixar"
-msgstr "Antes de baixar"
 
 #. translators: 1: Material title. 2: Material URL.
 #: inc/template-tags.php:1238

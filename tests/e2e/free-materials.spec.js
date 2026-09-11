@@ -659,6 +659,20 @@ test("social proof shows only where there is data", async ({ page }) => {
   // The fixture carries a placeholder count.
   await expect(page.locator(".pro-material-proof__count")).toHaveCount(1);
 
+  // The number leads as a badge with its label underneath, not as a line of
+  // text with a caption beside it.
+  const number = await page.locator(".pro-material-proof__count strong").evaluate((el) => ({
+    ...el.getBoundingClientRect().toJSON(),
+    background: getComputedStyle(el).backgroundColor,
+  }));
+  const label = await page.locator(".pro-material-proof__count span").evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  expect(label.top).toBeGreaterThanOrEqual(number.bottom);
+  expect(number.background).not.toBe("rgba(0, 0, 0, 0)");
+
+  // Both centred on the same axis.
+  expect(Math.abs((number.left + number.width / 2) - (label.left + label.width / 2))).toBeLessThan(4);
+
   // A material without the field must not render an empty proof block.
   await gotoMaterials(page, "/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
 

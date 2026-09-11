@@ -2370,6 +2370,7 @@ msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:2712
 #: inc/template-tags.php:367
+#: inc/template-tags.php:1198
 msgid "Perguntas frequentes"
 msgstr ""
 
@@ -2753,10 +2754,6 @@ msgid "estudante já baixou este material"
 msgid_plural "estudantes já baixaram este material"
 msgstr[0] ""
 msgstr[1] ""
-
-#: inc/template-tags.php:1198
-msgid "Antes de baixar"
-msgstr ""
 
 #. translators: 1: Material title. 2: Material URL.
 #: inc/template-tags.php:1238
