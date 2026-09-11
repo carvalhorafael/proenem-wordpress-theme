@@ -716,16 +716,12 @@ test("the sidebar reads as three things, not one block", async ({ page }) => {
   // A portrait or, when there is no photo, the monogram standing in for one.
   await expect(page.locator(".pro-material-proof__avatar")).toHaveCount(1);
 
-  // And the story does not sit on the same white as the answers below it.
-  const quoteBackground = await page
+  // The quotation mark is what marks it as somebody speaking.
+  const mark = await page
     .locator(".pro-material-proof__quote")
-    .evaluate((el) => getComputedStyle(el).backgroundColor);
-  const answerBackground = await page
-    .locator(".pro-material-faq .pen-faq-item")
-    .first()
-    .evaluate((el) => getComputedStyle(el).backgroundColor);
+    .evaluate((el) => getComputedStyle(el, "::before").content);
 
-  expect(quoteBackground).not.toBe(answerBackground);
+  expect(mark).toContain("\u201c");
 });
 
 test("proof and questions ride beside the content on desktop", async ({ page }) => {

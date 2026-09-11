@@ -3044,10 +3044,11 @@ img {
   text-wrap: balance;
 }
 
-/* Everything here says "a person said this": the mark, the portrait and a
- * surface that is not the white of the answers below. */
+/* Everything here says "a person said this": the mark, the portrait and the
+ * rule under the words. The separation from the answers below is carried by
+ * the space between the groups, not by the surface colour. */
 .pro-material-proof__quote {
-  background: var(--pen-color-canvas);
+  background: var(--pen-color-surface);
   border: var(--pen-border-brand-sm);
   border-radius: 0.9rem;
   box-shadow: var(--pen-shadow-hard-sm);
