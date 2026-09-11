@@ -167,6 +167,63 @@ test("category archive does not promote a material from another category", async
   await expect(page.locator("[data-pro-material-featured]")).toHaveCount(0);
 });
 
+test("catalog offers an order that survives without JavaScript", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const titles = () =>
+    page.locator("[data-pro-material-card] h3").allInnerTexts();
+
+  const byDate = await titles();
+
+  await page.locator("[data-pro-materials-order] select").selectOption("az");
+  await expect(page).toHaveURL(/ordenar=az/);
+
+  const alphabetical = await titles();
+
+  expect(alphabetical).not.toEqual(byDate);
+  expect(alphabetical).toEqual([...alphabetical].sort((a, b) => a.localeCompare(b, "pt-BR")));
+});
+
+test("the order control works without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  const response = await page.goto(CATALOG);
+
+  if (!response || response.status() !== 200) {
+    await context.close();
+    test.skip(true, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  }
+
+  // With JavaScript the button is removed and the select submits on change.
+  await page.locator("[data-pro-materials-order] select").selectOption("az");
+  await page.locator('[data-pro-materials-order] [type="submit"]').click();
+
+  await expect(page).toHaveURL(/ordenar=az/);
+
+  const titles = await page.locator("[data-pro-material-card] h3").allInnerTexts();
+  expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, "pt-BR")));
+
+  await context.close();
+});
+
+test("catalog stops loading every material at once", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  // posts_per_page was -1, so the page loaded the whole catalog and every
+  // cover with it.
+  const perPage = await page.evaluate(() => {
+    return document.querySelectorAll("[data-pro-material-card]").length;
+  });
+
+  expect(perPage).toBeLessThanOrEqual(18);
+
+  // A page out of range must not 404 or blow up.
+  const response = await page.goto(`${CATALOG}?pagina=99`);
+  expect(response.status()).toBe(200);
+  await expect(page.locator(".pro-materials-empty")).toHaveCount(1);
+});
+
 test("material card headings sit below the results heading", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 

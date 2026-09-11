@@ -26,6 +26,9 @@ $materials_tag      = isset( $args['heading_level'] ) && in_array( $args['headin
 	: 'h2';
 $materials_total    = $materials_query instanceof WP_Query ? (int) $materials_query->found_posts : 0;
 $materials_featured = isset( $args['featured_id'] ) ? (int) $args['featured_id'] : 0;
+$materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
+	? $args['action_url']
+	: proenem_get_free_materials_url();
 ?>
 
 <div class="pro-materials-catalog">
@@ -44,7 +47,10 @@ $materials_featured = isset( $args['featured_id'] ) ? (int) $args['featured_id']
 		</div>
 
 		<div class="pen-blog-filter-bar pro-materials-filter-bar">
-			<?php proenem_render_material_category_tabs( $materials_terms, $materials_selected ); ?>
+			<?php
+			proenem_render_material_category_tabs( $materials_terms, $materials_selected );
+			proenem_render_materials_order_control( $materials_action );
+			?>
 		</div>
 
 		<?php if ( ! proenem_free_materials_is_available() ) : ?>
@@ -62,6 +68,16 @@ $materials_featured = isset( $args['featured_id'] ) ? (int) $args['featured_id']
 					proenem_render_material_card( get_the_ID(), get_the_ID() === $materials_featured );
 				endwhile;
 				wp_reset_postdata();
+				?>
+			</div>
+
+			<div class="pro-materials-pagination">
+				<?php
+				proenem_render_design_system_posts_pagination(
+					$materials_query,
+					proenem_get_materials_paged(),
+					proenem_get_materials_page_link( $materials_action )
+				);
 				?>
 			</div>
 		<?php elseif ( ! empty( $materials_selected ) ) : ?>

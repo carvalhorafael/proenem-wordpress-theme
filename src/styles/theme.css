@@ -2060,6 +2060,21 @@ img {
   min-width: 0;
 }
 
+.pro-materials-order {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--pen-space-3);
+}
+
+.pro-materials-order .pen-blog-sort-select {
+  min-width: min(13rem, 100%);
+}
+
+.pro-materials-pagination {
+  margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
+}
+
 .pro-materials-tabs .pen-blog-category-tabs__item {
   border: var(--pen-border-brand-xs);
   min-height: 2.4rem;
@@ -8487,6 +8502,14 @@ body.proenem-home-template {
 
   .pro-materials-filter-bar {
     display: block;
+  }
+
+  .pro-materials-order {
+    margin-top: var(--pen-space-4);
+  }
+
+  .pro-materials-order .pen-blog-sort-select {
+    width: 100%;
   }
 
   .pro-materials-results__header {

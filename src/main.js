@@ -1306,3 +1306,20 @@ document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
     target.querySelector("input:not([type=hidden]):not([tabindex='-1'])")?.focus({ preventScroll: true });
   });
 });
+
+document.querySelectorAll("[data-pro-materials-order]").forEach((form) => {
+  const select = form.querySelector("select");
+  const submit = form.querySelector('[type="submit"]');
+
+  if (!select) {
+    return;
+  }
+
+  // Without JavaScript the button is the way to apply the order, so it only
+  // disappears once the change handler is in place.
+  submit?.remove();
+
+  select.addEventListener("change", () => {
+    form.submit();
+  });
+});

@@ -281,20 +281,29 @@ function proenem_render_blog_filter_bar() {
 /**
  * Render pagination using the public Proenem pagination markup.
  *
+ * @param WP_Query|null $query   Query to paginate. Defaults to the main query.
+ * @param int           $current Current page. Defaults to the `paged` query var.
+ * @param callable|null $link    Maps a page number to a URL. Defaults to
+ *                               get_pagenum_link().
  * @return void
  */
-function proenem_render_design_system_posts_pagination() {
-	global $wp_query;
+function proenem_render_design_system_posts_pagination( $query = null, $current = 0, $link = null ) {
+	if ( ! $query instanceof WP_Query ) {
+		global $wp_query;
 
-	$total = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 1;
+		$query = $wp_query;
+	}
+
+	$total = isset( $query->max_num_pages ) ? (int) $query->max_num_pages : 1;
 
 	if ( $total < 2 ) {
 		return;
 	}
 
-	$current  = max( 1, (int) get_query_var( 'paged' ) );
-	$previous = $current > 1 ? get_pagenum_link( $current - 1 ) : '';
-	$next     = $current < $total ? get_pagenum_link( $current + 1 ) : '';
+	$current  = $current > 0 ? (int) $current : max( 1, (int) get_query_var( 'paged' ) );
+	$link     = is_callable( $link ) ? $link : 'get_pagenum_link';
+	$previous = $current > 1 ? call_user_func( $link, $current - 1 ) : '';
+	$next     = $current < $total ? call_user_func( $link, $current + 1 ) : '';
 	?>
 	<nav class="pen-pagination" aria-label="<?php esc_attr_e( 'Paginação', 'proenem-wordpress-theme' ); ?>">
 		<?php if ( $previous ) : ?>
@@ -305,7 +314,7 @@ function proenem_render_design_system_posts_pagination() {
 
 		<div class="pen-pagination__pages">
 			<?php for ( $page = 1; $page <= $total; $page++ ) : ?>
-				<a class="pen-pagination__item<?php echo $page === $current ? ' is-current' : ''; ?>" href="<?php echo esc_url( get_pagenum_link( $page ) ); ?>"<?php echo $page === $current ? ' aria-current="page"' : ''; ?>>
+				<a class="pen-pagination__item<?php echo $page === $current ? ' is-current' : ''; ?>" href="<?php echo esc_url( call_user_func( $link, $page ) ); ?>"<?php echo $page === $current ? ' aria-current="page"' : ''; ?>>
 					<?php echo esc_html( (string) $page ); ?>
 				</a>
 			<?php endfor; ?>
@@ -444,6 +453,121 @@ function proenem_get_free_materials_url() {
 }
 
 /**
+ * How many materials a catalog page shows.
+ *
+ * Sized so the current catalog fits on a single page. The point of the limit
+ * is to stop loading every material and every cover at once, not to split a
+ * short catalog in two.
+ *
+ * @return int
+ */
+function proenem_get_materials_per_page() {
+	/**
+	 * Filters how many materials each catalog page shows.
+	 *
+	 * @param int $per_page Materials per page.
+	 */
+	return max( 1, (int) apply_filters( 'proenem_materials_per_page', 18 ) );
+}
+
+/**
+ * Get the current catalog page.
+ *
+ * Read from a query argument rather than a pretty `/page/N/` URL. The plugin
+ * registers the material post type on the same slug the catalog page uses, so
+ * WordPress resolves /materiais-gratuitos/page/2/ with the rule
+ * `materiais-gratuitos/([^/]+)/page/?([0-9]{1,})` and looks for a material
+ * named "page", which is a 404. Reordering those rewrites would put every
+ * single material URL at risk for a catalog that rarely needs a second page.
+ *
+ * @return int
+ */
+function proenem_get_materials_paged() {
+	// Read from $_GET rather than filter_input(): the latter reads the real
+	// request and returns null under PHPUnit and WP-CLI, which makes this
+	// untestable. Read only, so no nonce applies.
+	$requested = isset( $_GET['pagina'] ) ? sanitize_text_field( wp_unslash( $_GET['pagina'] ) ) : '1'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	// Cast rather than absint(): absint( '-2' ) is 2, which would turn a
+	// negative page into a real one.
+	return max( 1, (int) $requested );
+}
+
+/**
+ * Build the URL for a catalog page, preserving filter and order.
+ *
+ * @param string $base_url Surface URL.
+ * @return callable
+ */
+function proenem_get_materials_page_link( $base_url ) {
+	$order      = proenem_get_selected_materials_order();
+	$categories = proenem_get_selected_material_category_slugs();
+
+	return static function ( $page ) use ( $base_url, $order, $categories ) {
+		$args = array();
+
+		if ( $page > 1 ) {
+			$args['pagina'] = (int) $page;
+		}
+
+		if ( 'recentes' !== $order ) {
+			$args['ordenar'] = $order;
+		}
+
+		$url = $args ? add_query_arg( $args, $base_url ) : $base_url;
+
+		foreach ( $categories as $slug ) {
+			$url = add_query_arg( 'material_categoria[]', $slug, $url );
+		}
+
+		return $url;
+	};
+}
+
+/**
+ * Get the orders the catalog offers.
+ *
+ * @return array<string, string>
+ */
+function proenem_get_materials_orders() {
+	return array(
+		'recentes' => __( 'Mais recentes', 'proenem-wordpress-theme' ),
+		'az'       => __( 'Ordem alfabética', 'proenem-wordpress-theme' ),
+	);
+}
+
+/**
+ * Get the order selected in the request.
+ *
+ * @return string
+ */
+function proenem_get_selected_materials_order() {
+	$requested = isset( $_GET['ordenar'] ) ? sanitize_key( wp_unslash( $_GET['ordenar'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	return array_key_exists( $requested, proenem_get_materials_orders() ) ? $requested : 'recentes';
+}
+
+/**
+ * Translate an order slug into query args.
+ *
+ * @param string $order Order slug.
+ * @return array<string, mixed>
+ */
+function proenem_get_materials_order_args( $order ) {
+	if ( 'az' === $order ) {
+		return array(
+			'order'   => 'ASC',
+			'orderby' => 'title',
+		);
+	}
+
+	return array(
+		'order'   => 'DESC',
+		'orderby' => 'date',
+	);
+}
+
+/**
  * Build the catalog query args, applying the selected category filter.
  *
  * @param string[]             $selected_slugs Selected category slugs.
@@ -454,9 +578,12 @@ function proenem_build_free_materials_query_args( $selected_slugs, $overrides = 
 	$args = array(
 		'post_type'           => proenem_get_free_materials_post_type(),
 		'post_status'         => 'publish',
-		'posts_per_page'      => -1,
+		'posts_per_page'      => proenem_get_materials_per_page(),
+		'paged'               => proenem_get_materials_paged(),
 		'ignore_sticky_posts' => true,
 	);
+
+	$args = array_merge( $args, proenem_get_materials_order_args( proenem_get_selected_materials_order() ) );
 
 	if ( ! empty( $selected_slugs ) ) {
 		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Catalog filtering is the purpose of this query.
@@ -1194,6 +1321,49 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 			</a>
 		<?php endforeach; ?>
 	</nav>
+	<?php
+}
+
+/**
+ * Render the catalog order control.
+ *
+ * A plain GET form against the current surface, so ordering works without
+ * JavaScript. The script hides the submit button and submits on change.
+ *
+ * @param string $action_url URL the form submits to.
+ * @return void
+ */
+function proenem_render_materials_order_control( $action_url ) {
+	$orders   = proenem_get_materials_orders();
+	$selected = proenem_get_selected_materials_order();
+
+	if ( count( $orders ) < 2 ) {
+		return;
+	}
+	?>
+	<form class="pro-materials-order" method="get" action="<?php echo esc_url( $action_url ); ?>" data-pro-materials-order>
+		<?php
+		// Carry the legacy category argument so ordering does not drop a filter
+		// applied through it.
+		foreach ( proenem_get_selected_material_category_slugs() as $slug ) :
+			?>
+			<input type="hidden" name="material_categoria[]" value="<?php echo esc_attr( $slug ); ?>">
+		<?php endforeach; ?>
+
+		<label class="pen-blog-sort-select">
+			<span><?php esc_html_e( 'Ordenar materiais', 'proenem-wordpress-theme' ); ?></span>
+			<select name="ordenar" aria-label="<?php esc_attr_e( 'Ordenar materiais', 'proenem-wordpress-theme' ); ?>">
+				<?php foreach ( $orders as $slug => $label ) : ?>
+					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $selected, $slug ); ?>>
+						<?php echo esc_html( $label ); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</label>
+		<button class="pen-button pen-button--secondary pen-button--sm pro-materials-order__submit" type="submit">
+			<?php esc_html_e( 'Ordenar', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
 	<?php
 }
 

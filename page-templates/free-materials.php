@@ -25,9 +25,12 @@ if ( is_wp_error( $terms ) ) {
 	$terms = array();
 }
 
-// The highlight only makes sense on the unfiltered catalog: on a category
-// archive it could promote a material from another category.
-$featured_material = empty( $selected_slugs ) ? proenem_get_featured_material() : null;
+// The highlight only makes sense on the unfiltered first page: on a category
+// archive it could promote a material from another category, and repeating it
+// on page two would just take the place of the materials being paged to.
+$featured_material = empty( $selected_slugs ) && 1 === proenem_get_materials_paged()
+	? proenem_get_featured_material()
+	: null;
 $featured_id       = $featured_material instanceof WP_Post ? (int) $featured_material->ID : 0;
 
 // The highlight promotes a material, it does not remove it from the catalog.

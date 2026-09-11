@@ -1612,6 +1612,144 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The catalog must stop loading every material at once.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_query_is_paged_and_ordered() {
+		$args = proenem_build_free_materials_query_args( array() );
+
+		$this->assertNotSame( -1, $args['posts_per_page'] );
+		$this->assertSame( proenem_get_materials_per_page(), $args['posts_per_page'] );
+		$this->assertSame( 1, $args['paged'] );
+		$this->assertSame( 'date', $args['orderby'] );
+		$this->assertSame( 'DESC', $args['order'] );
+	}
+
+	/**
+	 * The page size should be tunable without patching the theme.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_page_size_is_filterable() {
+		$smaller = static function () {
+			return 4;
+		};
+
+		add_filter( 'proenem_materials_per_page', $smaller );
+
+		$this->assertSame( 4, proenem_get_materials_per_page() );
+
+		remove_filter( 'proenem_materials_per_page', $smaller );
+
+		// A nonsense value must not produce an empty query.
+		$zero = static function () {
+			return 0;
+		};
+
+		add_filter( 'proenem_materials_per_page', $zero );
+
+		$this->assertSame( 1, proenem_get_materials_per_page() );
+
+		remove_filter( 'proenem_materials_per_page', $zero );
+	}
+
+	/**
+	 * Only the orders the catalog offers may reach the query.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_order_is_constrained_to_the_offered_options() {
+		$this->assertSame(
+			array(
+				'order'   => 'ASC',
+				'orderby' => 'title',
+			),
+			proenem_get_materials_order_args( 'az' )
+		);
+
+		// Anything unknown falls back to the default rather than reaching the
+		// query as-is.
+		$this->assertSame(
+			array(
+				'order'   => 'DESC',
+				'orderby' => 'date',
+			),
+			proenem_get_materials_order_args( 'DROP TABLE' )
+		);
+
+		$this->assertArrayHasKey( 'recentes', proenem_get_materials_orders() );
+	}
+
+	/**
+	 * Catalog pagination has to keep the filter and the order.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_pagination_links_preserve_the_context() {
+		$_GET['ordenar'] = 'az';
+
+		$link = proenem_get_materials_page_link( proenem_get_free_materials_url() );
+
+		$this->assertStringNotContainsString( 'pagina=', call_user_func( $link, 1 ) );
+		$this->assertStringContainsString( 'pagina=3', call_user_func( $link, 3 ) );
+
+		// Paging must not silently reset the order the visitor chose.
+		$this->assertStringContainsString( 'ordenar=az', call_user_func( $link, 1 ) );
+		$this->assertStringContainsString( 'ordenar=az', call_user_func( $link, 3 ) );
+
+		unset( $_GET['ordenar'] );
+	}
+
+	/**
+	 * An unknown order must not reach the query.
+	 *
+	 * @return void
+	 */
+	public function test_unknown_order_falls_back_to_the_default() {
+		$_GET['ordenar'] = 'az';
+
+		$this->assertSame( 'az', proenem_get_selected_materials_order() );
+
+		$_GET['ordenar'] = 'nao-existe';
+
+		$this->assertSame( 'recentes', proenem_get_selected_materials_order() );
+
+		unset( $_GET['ordenar'] );
+	}
+
+	/**
+	 * The catalog page and the material post type share a slug, so pagination
+	 * cannot use a pretty /page/N/ URL.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_pagination_uses_a_query_argument() {
+		$_GET['pagina'] = '3';
+
+		$this->assertSame( 3, proenem_get_materials_paged() );
+
+		$_GET['pagina'] = '-2';
+
+		$this->assertSame( 1, proenem_get_materials_paged() );
+
+		unset( $_GET['pagina'] );
+
+		$this->assertSame( 1, proenem_get_materials_paged() );
+	}
+
+	/**
+	 * The highlight belongs to the first page only.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_is_limited_to_the_first_page() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/free-materials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '1 === proenem_get_materials_paged()', $template );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void
