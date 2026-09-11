@@ -3004,7 +3004,7 @@ img {
 
 .pro-material-proof {
   display: grid;
-  gap: var(--pen-space-4);
+  gap: var(--pen-space-6);
 }
 
 /* The number is the strongest argument in this column, and as a line of text
@@ -3038,7 +3038,7 @@ img {
  * translation should break into even lines rather than leave an orphan. */
 .pro-material-proof__count span {
   color: var(--pen-color-ink-muted);
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   line-height: 1.35;
   text-wrap: balance;
@@ -3130,6 +3130,11 @@ img {
 
 .pro-material-faq {
   gap: var(--pen-space-4);
+}
+
+.pro-material-faq .pen-faq-section__header {
+  justify-items: center;
+  text-align: center;
 }
 
 .pro-material-faq .pen-faq-section__header h2 {
