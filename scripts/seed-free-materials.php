@@ -176,5 +176,7 @@ foreach ( $materials as $material ) {
 	proenem_materials_seed_log( 'Material pronto: ' . get_permalink( $material_id ) );
 }
 
-flush_rewrite_rules( false );
+// Hard flush: the browser suite runs immediately after this script, and the
+// category URLs 404 while the rules are not persisted yet.
+flush_rewrite_rules( true );
 proenem_materials_seed_log( 'Regras de rewrite atualizadas.' );

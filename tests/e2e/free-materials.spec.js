@@ -12,11 +12,15 @@ const MATERIAL = "/materiais-gratuitos/mapa-de-analise-de-simulados/";
  */
 const gotoMaterials = async (page, url) => {
   const response = await page.goto(url);
-  const available = Boolean(response) && response.status() === 200;
+  const status = response ? response.status() : 0;
 
-  test.skip(!available, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  // Only a 404 means the plugin is not mounted. Skipping on any other status
+  // would turn a slow start or a 5xx into a silently missing test.
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
 
-  return available;
+  expect(status, `${url} respondeu ${status}`).toBe(200);
+
+  return true;
 };
 
 test("catalog lists every material and reports the count", async ({ page }) => {
@@ -77,13 +81,14 @@ test("legacy query argument still filters on the server, without JavaScript", as
   const page = await context.newPage();
 
   const response = await page.goto(`${CATALOG}?material_categoria%5B%5D=redacao`);
-  const available = Boolean(response) && response.status() === 200;
+  const status = response ? response.status() : 0;
 
-  if (!available) {
+  if (status === 404) {
     await context.close();
   }
 
-  test.skip(!available, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
 
   await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
   await expect(page.locator("[data-pro-materials-count]")).toHaveText("1 material disponível");
@@ -189,11 +194,14 @@ test("the order control works without JavaScript", async ({ browser }) => {
   const page = await context.newPage();
 
   const response = await page.goto(CATALOG);
+  const status = response ? response.status() : 0;
 
-  if (!response || response.status() !== 200) {
+  if (status === 404) {
     await context.close();
-    test.skip(true, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
   }
+
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
 
   // With JavaScript the button is removed and the select submits on change.
   await page.locator("[data-pro-materials-order] select").selectOption("az");
