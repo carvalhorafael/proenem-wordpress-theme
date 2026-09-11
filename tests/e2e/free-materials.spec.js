@@ -322,6 +322,50 @@ test("both forms explain what happens to the data", async ({ page }) => {
   }
 });
 
+test("the capture page reduces the header and shows where you are", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // Seven ways out of a page whose only job is the form.
+  await expect(page.locator(".site-header .pro-site-navbar--logo-only")).toHaveCount(1);
+  await expect(page.locator(".site-header .pro-home-navbar-toggle")).toHaveCount(0);
+  await expect(page.locator(".site-header .pro-home-navbar-menu")).toHaveCount(0);
+
+  // Brand plus a single action.
+  await expect(page.locator(".site-header").getByRole("link")).toHaveCount(2);
+
+  const crumbs = page.locator(".pro-material-breadcrumb li");
+
+  await expect(crumbs).toHaveCount(4);
+  await expect(crumbs.nth(3)).toHaveText("Mapa de análise de simulados");
+  await expect(crumbs.nth(3).locator("[aria-current=page]")).toHaveCount(1);
+
+  await crumbs.nth(1).getByRole("link").click();
+  await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
+});
+
+test("the catalog keeps the full navigation", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  await expect(page.locator(".site-header .pro-site-navbar--logo-only")).toHaveCount(0);
+
+  // The menu and its mobile toggle only exist in the full navbar. Asserting on
+  // the links themselves would depend on a menu being assigned.
+  await expect(page.locator(".site-header .pro-home-navbar-toggle")).toHaveCount(1);
+  await expect(page.locator(".site-header .pro-home-navbar-menu")).toHaveCount(1);
+});
+
+test("the material hero keeps its horizontal padding", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // An undefined token inside clamp() made the whole padding shorthand invalid
+  // and CSS dropped it without a word.
+  const padding = await page
+    .locator(".pro-material-single__hero")
+    .evaluate((el) => Number.parseFloat(getComputedStyle(el).paddingLeft));
+
+  expect(padding).toBeGreaterThan(16);
+});
+
 test("capture form masks the WhatsApp number", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 

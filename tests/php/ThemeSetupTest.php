@@ -1490,6 +1490,61 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Only the capture page gets the reduced header.
+	 *
+	 * @return void
+	 */
+	public function test_reduced_header_is_limited_to_the_capture_surface() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/free-materials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		// The catalog still needs the full navigation.
+		$this->assertFalse( proenem_is_material_capture_surface() );
+
+		$this->go_to( home_url( '/' ) );
+
+		$this->assertFalse( proenem_is_material_capture_surface() );
+
+		$header = (string) file_get_contents( PROENEM_THEME_DIR . '/header.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'proenem_is_material_capture_surface', $header );
+		$this->assertStringContainsString( "'logo_only'  => true", $header );
+	}
+
+	/**
+	 * The breadcrumb should mirror the trail the SEO plugin already emits.
+	 *
+	 * @return void
+	 */
+	public function test_material_breadcrumb_renders_the_trail() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Mapa de análise',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_breadcrumb( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Início', $markup );
+		$this->assertStringContainsString( 'Materiais gratuitos', $markup );
+		$this->assertStringContainsString( 'Mapa de análise', $markup );
+
+		// The current page is text, not a link.
+		$this->assertStringContainsString( 'aria-current="page"', $markup );
+		$this->assertSame( 2, substr_count( $markup, '<a href' ) );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void
