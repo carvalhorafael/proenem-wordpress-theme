@@ -52,6 +52,7 @@ $materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
 			<?php proenem_render_materials_order_control( $materials_action ); ?>
 		</div>
 
+		<div data-pro-materials-list>
 		<?php if ( ! proenem_free_materials_is_available() ) : ?>
 			<?php
 			proenem_render_materials_empty_state(
@@ -94,5 +95,6 @@ $materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
 			);
 			?>
 		<?php endif; ?>
+		</div>
 	</section>
 </div>

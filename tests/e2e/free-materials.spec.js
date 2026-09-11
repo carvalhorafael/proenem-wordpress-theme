@@ -106,36 +106,83 @@ test("Todos lands on the list, not back at the top of the hero", async ({ page }
   expect(top).toBeGreaterThanOrEqual(header);
 });
 
-test("the panel below the list combines categories", async ({ page }) => {
+test("ticking a category updates the cards without reloading", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 
   const panel = page.locator(".pro-materials-filter--panel");
+  const cards = page.locator("[data-pro-material-card]");
+  const count = page.locator("[data-pro-materials-count]");
 
   await expect(panel).toHaveCount(1);
+  await expect(cards).toHaveCount(3);
 
-  // The chips in the hero pick one category; this picks several.
+  // With JavaScript the tick applies straight away, so the button goes.
+  await expect(panel.getByRole("button", { name: "Ver materiais" })).toHaveCount(0);
+
+  await page.evaluate(() => {
+    window.__navegacoes = performance.getEntriesByType("navigation").length;
+  });
+
   await panel.getByRole("checkbox", { name: /Redação/ }).check();
+
+  await expect(cards).toHaveCount(1);
+  await expect(count).toHaveText("1 material disponível");
+  await expect(page).toHaveURL(/material_categoria/);
+
+  // Combining adds to the selection instead of replacing it.
   await panel.getByRole("checkbox", { name: /Simulados/ }).check();
+
+  await expect(cards).toHaveCount(2);
+  await expect(count).toHaveText("2 materiais disponíveis");
+  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toBeVisible();
+
+  // Unticking everything brings the whole catalog back.
+  await panel.getByRole("checkbox", { name: /Redação/ }).uncheck();
+  await panel.getByRole("checkbox", { name: /Simulados/ }).uncheck();
+
+  await expect(cards).toHaveCount(3);
+  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toHaveCount(0);
+
+  // None of it cost a page load.
+  const navegou = await page.evaluate(
+    () => performance.getEntriesByType("navigation").length !== window.__navegacoes,
+  );
+  expect(navegou).toBe(false);
+});
+
+test("the filter still works without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  const response = await page.goto(CATALOG);
+  const status = response ? response.status() : 0;
+
+  if (status === 404) {
+    await context.close();
+  }
+
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
+
+  const panel = page.locator(".pro-materials-filter--panel");
+
+  // Without JavaScript the button is the way to apply it, so it stays.
+  await panel.getByRole("checkbox", { name: /Redação/ }).check();
   await panel.getByRole("button", { name: "Ver materiais" }).click();
 
-  await expect(page.locator("[data-pro-material-card]")).toHaveCount(2);
-  await expect(page.locator("[data-pro-materials-count]")).toHaveText("2 materiais disponíveis");
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
+  await expect(page.locator("[data-pro-materials-count]")).toHaveText("1 material disponível");
 
-  // The selection survives the round trip, and can be cleared.
-  await expect(panel.getByRole("checkbox", { name: /Redação/ })).toBeChecked();
-  await expect(panel.getByRole("checkbox", { name: /Simulados/ })).toBeChecked();
-  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toBeVisible();
+  await context.close();
 });
 
 test("combining categories keeps the chosen order", async ({ page }) => {
   await gotoMaterials(page, `${CATALOG}?ordenar=az`);
 
-  const panel = page.locator(".pro-materials-filter--panel");
-
-  await panel.getByRole("checkbox", { name: /Redação/ }).check();
-  await panel.getByRole("button", { name: "Ver materiais" }).click();
+  await page.locator(".pro-materials-filter--panel").getByRole("checkbox", { name: /Redação/ }).check();
 
   await expect(page).toHaveURL(/ordenar=az/);
+  await expect(page).toHaveURL(/material_categoria/);
 });
 
 test("category tabs link to the real category archives", async ({ page }) => {

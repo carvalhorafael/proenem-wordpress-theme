@@ -1307,6 +1307,70 @@ document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
   });
 });
 
+/*
+ * Filtering and ordering the catalog without a full page load.
+ *
+ * The server stays the single source of truth: the same URL a plain form would
+ * submit is fetched, and only the list and the count are swapped in. Hiding
+ * cards on the client would be wrong the moment the catalog needs a second
+ * page, because the client only holds the current one.
+ */
+const proMaterialsList = document.querySelector("[data-pro-materials-list]");
+
+const proMaterialsSwap = async (url) => {
+  const list = document.querySelector("[data-pro-materials-list]");
+  const count = document.querySelector("[data-pro-materials-count]");
+
+  if (!list) {
+    return false;
+  }
+
+  list.setAttribute("aria-busy", "true");
+
+  try {
+    const response = await fetch(url, { credentials: "same-origin" });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const doc = new DOMParser().parseFromString(await response.text(), "text/html");
+    const freshList = doc.querySelector("[data-pro-materials-list]");
+    const freshCount = doc.querySelector("[data-pro-materials-count]");
+    const freshClear = doc.querySelector(".pro-materials-filter--panel .pro-materials-filter__header a");
+
+    if (!freshList) {
+      return false;
+    }
+
+    list.innerHTML = freshList.innerHTML;
+
+    // The count carries aria-live, so replacing its text announces the result.
+    if (count && freshCount) {
+      count.textContent = freshCount.textContent;
+    }
+
+    const header = document.querySelector(".pro-materials-filter--panel .pro-materials-filter__header");
+    const clear = header?.querySelector("a");
+
+    if (header) {
+      if (freshClear && !clear) {
+        header.append(freshClear.cloneNode(true));
+      } else if (!freshClear && clear) {
+        clear.remove();
+      }
+    }
+
+    window.history.replaceState({}, "", url);
+
+    return true;
+  } catch {
+    return false;
+  } finally {
+    list.removeAttribute("aria-busy");
+  }
+};
+
 document.querySelectorAll("[data-pro-materials-order]").forEach((form) => {
   const select = form.querySelector("select");
   const submit = form.querySelector('[type="submit"]');
@@ -1316,10 +1380,39 @@ document.querySelectorAll("[data-pro-materials-order]").forEach((form) => {
   }
 
   // Without JavaScript the button is the way to apply the order, so it only
-  // disappears once the change handler is in place.
+  // disappears once the handler is in place.
+  if (proMaterialsList) {
+    submit?.remove();
+  }
+
+  select.addEventListener("change", async () => {
+    const url = `${form.action}?${new URLSearchParams(new FormData(form))}`;
+
+    if (!(await proMaterialsSwap(url))) {
+      form.submit();
+    }
+  });
+});
+
+document.querySelectorAll(".pro-materials-filter--panel").forEach((form) => {
+  const submit = form.querySelector('[type="submit"]');
+
+  if (!proMaterialsList) {
+    return;
+  }
+
+  // Ticking a box applies it, the way the approved students filter behaves.
   submit?.remove();
 
-  select.addEventListener("change", () => {
-    form.submit();
+  form.addEventListener("change", async (event) => {
+    if (!(event.target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const url = `${form.action}?${new URLSearchParams(new FormData(form))}`;
+
+    if (!(await proMaterialsSwap(url))) {
+      form.submit();
+    }
   });
 });

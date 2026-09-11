@@ -3848,23 +3848,23 @@ msgid_plural "%s materiais disponíveis"
 msgstr[0] ""
 msgstr[1] ""
 
-#: template-parts/materials/catalog.php:58
+#: template-parts/materials/catalog.php:59
 msgid "Plugin Free Materials não está ativo."
 msgstr ""
 
-#: template-parts/materials/catalog.php:59
+#: template-parts/materials/catalog.php:60
 msgid "Ative o plugin para publicar e listar materiais gratuitos nesta página."
 msgstr ""
 
-#: template-parts/materials/catalog.php:85
-#: template-parts/materials/catalog.php:92
+#: template-parts/materials/catalog.php:86
+#: template-parts/materials/catalog.php:93
 msgid "Nenhum material encontrado."
 msgstr ""
 
-#: template-parts/materials/catalog.php:86
+#: template-parts/materials/catalog.php:87
 msgid "Tente selecionar outra categoria ou limpar os filtros."
 msgstr ""
 
-#: template-parts/materials/catalog.php:93
+#: template-parts/materials/catalog.php:94
 msgid "Cadastre novos materiais gratuitos no WordPress para vê-los aqui."
 msgstr ""
