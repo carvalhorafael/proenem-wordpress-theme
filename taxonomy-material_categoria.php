@@ -58,6 +58,7 @@ if ( '' === trim( $material_description ) ) {
 		null,
 		array(
 			'terms'          => $terms,
+			'action_url'     => get_term_link( $material_term ) && ! is_wp_error( get_term_link( $material_term ) ) ? get_term_link( $material_term ) : proenem_get_free_materials_url(),
 			'selected_slugs' => $selected_slugs,
 			'query'          => $materials_query,
 			'heading'        => sprintf(
