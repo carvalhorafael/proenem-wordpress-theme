@@ -1881,14 +1881,17 @@ img {
 }
 
 .pro-materials-hero--catalog .pro-materials-hero__copy {
-  max-width: 46rem;
+  /* Wide enough for the headline to settle on two lines; the paragraph keeps
+   * its own, narrower measure. */
+  max-width: 58rem;
 }
 .pro-materials-hero--catalog h1 {
   color: var(--pen-color-ink);
   font-size: clamp(2.1rem, 4.6vw, 3.9rem);
   line-height: 0.98;
   margin-inline: auto;
-  max-width: 18ch;
+  max-width: 100%;
+  text-wrap: balance;
 }
 
 .pro-materials-hero--catalog p {
