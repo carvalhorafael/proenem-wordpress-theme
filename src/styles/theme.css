@@ -1857,7 +1857,9 @@ img {
  * .pro-material-single__hero share the base rules and their own sizes.
  */
 .pro-materials-hero--catalog {
-  align-items: start;
+  align-items: center;
+  gap: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
   /* --pen-color-proenem-red reaches 6.61:1 with white, against 4.29:1. */
   background:
     repeating-linear-gradient(135deg, rgb(0 0 0 / 10%) 0 2px, transparent 2px 8px),
@@ -1866,15 +1868,113 @@ img {
   padding-block: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
 }
 
+/*
+ * The approved students hero shows students. This one shows the materials, so
+ * the visitor sees what the catalog holds before scrolling into it. It fills
+ * the empty right half instead of adding height.
+ */
+.pro-materials-hero__stage {
+  height: clamp(17rem, 26vw, 23rem);
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.pro-materials-hero__stage::before {
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-sm);
+  border-radius: 50%;
+  content: "";
+  height: clamp(13rem, 20vw, 18rem);
+  left: 50%;
+  position: absolute;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  width: clamp(13rem, 20vw, 18rem);
+}
+
+.pro-materials-hero__cover {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.9rem;
+  box-shadow: var(--pen-shadow-hard-md);
+  color: var(--pen-color-ink);
+  display: grid;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  width: clamp(8rem, 13vw, 11rem);
+}
+
+.pro-materials-hero__cover img,
+.pro-materials-hero__cover .pro-material-placeholder {
+  aspect-ratio: 4 / 5;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.pro-materials-hero__cover .pro-material-placeholder {
+  display: flex;
+}
+
+.pro-materials-hero__cover figcaption {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem 0.7rem;
+}
+
+.pro-materials-hero__cover figcaption strong {
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.pro-materials-hero__cover figcaption span {
+  color: var(--pen-color-ink-muted);
+  font-family: var(--pen-font-mono, ui-monospace, monospace);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pro-materials-hero__cover--1 {
+  left: 30%;
+  top: 0;
+  transform: rotate(-2deg);
+  z-index: 3;
+}
+
+.pro-materials-hero__cover--2 {
+  bottom: 4%;
+  left: 2%;
+  transform: rotate(-5deg);
+  z-index: 2;
+}
+
+.pro-materials-hero__cover--3 {
+  bottom: 0;
+  right: 2%;
+  transform: rotate(4deg);
+  z-index: 1;
+}
+
 .pro-materials-hero--catalog h1 {
-  font-size: clamp(2rem, 3.6vw, 3.1rem);
-  line-height: 1;
+  /*
+   * The stage sets the height of this hero, so the title can be close to the
+   * one on the approved students page without costing a pixel.
+   */
+  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  line-height: 0.98;
+  max-width: 14ch;
 }
 
 .pro-materials-hero--catalog p {
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  margin-top: var(--pen-space-4);
-  max-width: 46rem;
+  font-size: clamp(1rem, 1.45vw, 1.25rem);
+  margin-top: var(--pen-space-5);
+  max-width: 34rem;
 }
 
 .pro-materials-hero--catalog .pen-section-pill {
@@ -7948,6 +8048,18 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
+  .pro-materials-hero--catalog {
+    grid-template-columns: 1fr;
+  }
+
+  /*
+   * The stage earns its place beside the copy, not stacked under it: below two
+   * columns it only adds height, and that space belongs to the materials.
+   */
+  .pro-materials-hero__stage {
+    display: none;
+  }
+
   .pro-material-single__hero {
     align-items: start;
     grid-template-areas:
@@ -8400,6 +8512,8 @@ body.proenem-home-template {
   .pro-materials-hero--catalog h1 {
     font-size: clamp(1.9rem, 8vw, 2.5rem);
   }
+
+
 
   .pro-materials-hero--catalog {
     padding-block: var(--pen-space-6);

@@ -47,6 +47,8 @@ $materials_query = proenem_free_materials_is_available()
 			<h1 id="pro-materials-title"><?php esc_html_e( 'Guias para estudar com método antes da próxima prova', 'proenem-wordpress-theme' ); ?></h1>
 			<p><?php esc_html_e( 'Materiais prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
+
+		<?php proenem_render_materials_hero_stage(); ?>
 	</section>
 
 	<?php

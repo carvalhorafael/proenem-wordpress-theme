@@ -1411,6 +1411,22 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
+	public function test_featured_material_selection_is_deterministic() {
+		$helpers = (string) file_get_contents( PROENEM_THEME_DIR . '/inc/template-tags.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start   = strpos( $helpers, 'function proenem_get_featured_material()' );
+		$query   = substr( $helpers, $start, 900 );
+
+		// Two editors can each flag a material. Without a tie-break the catalog
+		// promotes a different one between requests.
+		$this->assertStringContainsString( "'orderby'", $query );
+		$this->assertStringContainsString( "'ID'   => 'DESC'", $query );
+	}
+
+	/**
+	 * The catalog highlight is editorial and optional.
+	 *
+	 * @return void
+	 */
 	public function test_featured_material_is_opt_in() {
 		$this->assertNull( proenem_get_featured_material() );
 
@@ -1840,6 +1856,33 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertSame( 1, substr_count( $markup, '<summary>' ) );
 		$this->assertStringNotContainsString( 'Sem resposta', $markup );
+	}
+
+	/**
+	 * The hero stage leads with the material the team chose to promote.
+	 *
+	 * @return void
+	 */
+	public function test_hero_stage_leads_with_the_featured_material() {
+		if ( ! proenem_free_materials_is_available() ) {
+			$this->assertSame( array(), proenem_get_materials_hero_selection() );
+
+			return;
+		}
+
+		$this->assertLessThanOrEqual( 3, count( proenem_get_materials_hero_selection( 3 ) ) );
+	}
+
+	/**
+	 * The stage is decorative: the same materials are listed, with links, right
+	 * below it.
+	 *
+	 * @return void
+	 */
+	public function test_hero_stage_is_not_announced_twice() {
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/inc/template-tags.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'class="pro-materials-hero__stage" aria-hidden="true"', $css );
 	}
 
 	/**

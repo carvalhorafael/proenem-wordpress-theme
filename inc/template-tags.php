@@ -991,6 +991,14 @@ function proenem_get_featured_material() {
 			'ignore_sticky_posts' => true,
 			'meta_key'            => free_materials_featured_meta_key(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Editorial selection of a single post.
 			'meta_value'          => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Editorial selection of a single post.
+			// Nothing stops two editors from flagging a material each. Without
+			// an explicit tie-break the catalog would promote a different one
+			// between requests.
+			'order'               => 'DESC',
+			'orderby'             => array(
+				'date' => 'DESC',
+				'ID'   => 'DESC',
+			),
 			'post_status'         => 'publish',
 			'post_type'           => proenem_get_free_materials_post_type(),
 			'posts_per_page'      => 1,
@@ -1284,6 +1292,84 @@ function proenem_render_related_materials( $post_id ) {
 			</div>
 		</div>
 	</section>
+	<?php
+}
+
+/**
+ * Pick the materials shown in the catalog hero.
+ *
+ * The highlight first, then the most recent ones, so the stage leads with what
+ * the team chose to promote.
+ *
+ * @param int $limit How many to return.
+ * @return WP_Post[]
+ */
+function proenem_get_materials_hero_selection( $limit = 3 ) {
+	$limit = max( 1, absint( $limit ) );
+
+	if ( ! proenem_free_materials_is_available() ) {
+		return array();
+	}
+
+	$selection = array();
+	$featured  = proenem_get_featured_material();
+
+	if ( $featured instanceof WP_Post ) {
+		$selection[] = $featured;
+	}
+
+	$remaining = $limit - count( $selection );
+
+	if ( $remaining > 0 ) {
+		$recent = get_posts(
+			array(
+				'ignore_sticky_posts' => true,
+				'post__not_in'        => wp_list_pluck( $selection, 'ID' ),
+				'post_status'         => 'publish',
+				'post_type'           => proenem_get_free_materials_post_type(),
+				'posts_per_page'      => $remaining,
+			)
+		);
+
+		$selection = array_merge( $selection, $recent );
+	}
+
+	return $selection;
+}
+
+/**
+ * Render the catalog hero stage.
+ *
+ * The approved students hero shows students; this one shows the materials
+ * themselves, which is both the closest parallel and the most useful thing to
+ * put in front of someone deciding whether to browse.
+ *
+ * @return void
+ */
+function proenem_render_materials_hero_stage() {
+	$materials = proenem_get_materials_hero_selection( 3 );
+
+	if ( empty( $materials ) ) {
+		return;
+	}
+	?>
+	<div class="pro-materials-hero__stage" aria-hidden="true">
+		<?php foreach ( $materials as $index => $material ) : ?>
+			<?php
+			$material_id = (int) $material->ID;
+			$specs       = proenem_get_material_specs( $material_id );
+			?>
+			<figure class="pro-materials-hero__cover pro-materials-hero__cover--<?php echo esc_attr( (string) ( $index + 1 ) ); ?>">
+				<?php proenem_render_material_image( $material_id, 'medium', '(max-width: 1200px) 20vw, 14rem' ); ?>
+				<figcaption>
+					<strong><?php echo esc_html( wp_trim_words( get_the_title( $material_id ), 5 ) ); ?></strong>
+					<?php if ( $specs ) : ?>
+						<span><?php echo esc_html( implode( ' · ', array_slice( $specs, 0, 2 ) ) ); ?></span>
+					<?php endif; ?>
+				</figcaption>
+			</figure>
+		<?php endforeach; ?>
+	</div>
 	<?php
 }
 

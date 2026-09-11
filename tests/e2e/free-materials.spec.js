@@ -33,6 +33,40 @@ test("catalog lists every material and reports the count", async ({ page }) => {
   await expect(page.locator("[data-pro-materials-count]")).toHaveAttribute("aria-live", "polite");
 });
 
+test("catalog hero shows the materials instead of an empty red band", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, CATALOG);
+
+  const covers = page.locator(".pro-materials-hero__cover");
+
+  expect(await covers.count()).toBeGreaterThan(0);
+  await expect(covers.first()).toBeVisible();
+
+  // The stage is decorative: the same materials are listed with links below.
+  await expect(page.locator(".pro-materials-hero__stage")).toHaveAttribute("aria-hidden", "true");
+});
+
+test("hero stage steps aside where there is no room for a second column", async ({ page }) => {
+  for (const width of [375, 900]) {
+    await page.setViewportSize({ width, height: 812 });
+    await gotoMaterials(page, CATALOG);
+
+    await expect(
+      page.locator(".pro-materials-hero__stage"),
+      `viewport ${width}`,
+    ).toBeHidden();
+
+    // And the first material stays inside the first screen.
+    const top = await page.evaluate(() => {
+      const el = document.querySelector(".pro-materials-featured, .pro-material-card");
+
+      return Math.round(el.getBoundingClientRect().top + window.scrollY);
+    });
+
+    expect(top, `viewport ${width}`).toBeLessThan(700);
+  }
+});
+
 test("category tabs link to the real category archives", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 
