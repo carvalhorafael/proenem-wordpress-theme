@@ -50,6 +50,8 @@ if ( '' === trim( $material_description ) ) {
 			<h1 id="pro-materials-title"><?php echo esc_html( $material_term_name ); ?></h1>
 			<p><?php echo esc_html( $material_description ); ?></p>
 		</div>
+
+		<?php proenem_render_material_category_tabs( $terms, $selected_slugs ); ?>
 	</section>
 
 	<?php

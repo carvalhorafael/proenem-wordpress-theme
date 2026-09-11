@@ -44,11 +44,16 @@ $materials_query = proenem_free_materials_is_available()
 	<section class="pro-materials-hero pro-materials-hero--catalog" aria-labelledby="pro-materials-title">
 		<div class="pro-materials-hero__copy">
 			<span class="pen-section-pill"><?php esc_html_e( 'Materiais gratuitos', 'proenem-wordpress-theme' ); ?></span>
-			<h1 id="pro-materials-title"><?php esc_html_e( 'Guias para estudar com método antes da próxima prova', 'proenem-wordpress-theme' ); ?></h1>
-			<p><?php esc_html_e( 'Materiais prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
+			<h1 id="pro-materials-title"><?php esc_html_e( 'Pegue o material que resolve o seu próximo passo', 'proenem-wordpress-theme' ); ?></h1>
+			<p><?php esc_html_e( 'Guias, planners e checklists prontos para organizar revisão, prática e estratégia de estudo.', 'proenem-wordpress-theme' ); ?></p>
 		</div>
 
-		<?php proenem_render_materials_hero_stage(); ?>
+		<?php proenem_render_material_category_tabs( $terms, $selected_slugs ); ?>
+
+		<span class="pen-starburst pen-starburst--cyan pro-materials-hero__seal" aria-hidden="true">
+			<strong><?php esc_html_e( '100%', 'proenem-wordpress-theme' ); ?></strong>
+			<small><?php esc_html_e( 'gratuito', 'proenem-wordpress-theme' ); ?></small>
+		</span>
 	</section>
 
 	<?php

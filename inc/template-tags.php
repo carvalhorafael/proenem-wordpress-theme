@@ -1296,84 +1296,6 @@ function proenem_render_related_materials( $post_id ) {
 }
 
 /**
- * Pick the materials shown in the catalog hero.
- *
- * The highlight first, then the most recent ones, so the stage leads with what
- * the team chose to promote.
- *
- * @param int $limit How many to return.
- * @return WP_Post[]
- */
-function proenem_get_materials_hero_selection( $limit = 3 ) {
-	$limit = max( 1, absint( $limit ) );
-
-	if ( ! proenem_free_materials_is_available() ) {
-		return array();
-	}
-
-	$selection = array();
-	$featured  = proenem_get_featured_material();
-
-	if ( $featured instanceof WP_Post ) {
-		$selection[] = $featured;
-	}
-
-	$remaining = $limit - count( $selection );
-
-	if ( $remaining > 0 ) {
-		$recent = get_posts(
-			array(
-				'ignore_sticky_posts' => true,
-				'post__not_in'        => wp_list_pluck( $selection, 'ID' ),
-				'post_status'         => 'publish',
-				'post_type'           => proenem_get_free_materials_post_type(),
-				'posts_per_page'      => $remaining,
-			)
-		);
-
-		$selection = array_merge( $selection, $recent );
-	}
-
-	return $selection;
-}
-
-/**
- * Render the catalog hero stage.
- *
- * The approved students hero shows students; this one shows the materials
- * themselves, which is both the closest parallel and the most useful thing to
- * put in front of someone deciding whether to browse.
- *
- * @return void
- */
-function proenem_render_materials_hero_stage() {
-	$materials = proenem_get_materials_hero_selection( 3 );
-
-	if ( empty( $materials ) ) {
-		return;
-	}
-	?>
-	<div class="pro-materials-hero__stage" aria-hidden="true">
-		<?php foreach ( $materials as $index => $material ) : ?>
-			<?php
-			$material_id = (int) $material->ID;
-			$specs       = proenem_get_material_specs( $material_id );
-			?>
-			<figure class="pro-materials-hero__cover pro-materials-hero__cover--<?php echo esc_attr( (string) ( $index + 1 ) ); ?>">
-				<?php proenem_render_material_image( $material_id, 'medium', '(max-width: 1200px) 20vw, 14rem' ); ?>
-				<figcaption>
-					<strong><?php echo esc_html( wp_trim_words( get_the_title( $material_id ), 5 ) ); ?></strong>
-					<?php if ( $specs ) : ?>
-						<span><?php echo esc_html( implode( ' · ', array_slice( $specs, 0, 2 ) ) ); ?></span>
-					<?php endif; ?>
-				</figcaption>
-			</figure>
-		<?php endforeach; ?>
-	</div>
-	<?php
-}
-
-/**
  * Render the editorial highlight above the catalog grid.
  *
  * Renders nothing when the editors have not picked a material, so the catalog
@@ -1503,6 +1425,39 @@ function proenem_get_material_category_tabs_terms( $terms, $selected_slugs ) {
 }
 
 /**
+ * The colours a category chip can take.
+ *
+ * Only tones that reach 4.5:1 with ink text, which rules out purple and
+ * platform blue. The order is stable, so a category keeps its colour from one
+ * page to the next.
+ *
+ * @return string[]
+ */
+function proenem_get_material_category_tones() {
+	/**
+	 * Filters the colour tones used by the category chips.
+	 *
+	 * @param string[] $tones Tone slugs.
+	 */
+	return (array) apply_filters(
+		'proenem_material_category_tones',
+		array( 'cyan', 'yellow', 'mint', 'pink', 'orange', 'teal', 'magenta', 'rose' )
+	);
+}
+
+/**
+ * Get the colour tone for a category.
+ *
+ * @param int $index Position in the ordered term list.
+ * @return string
+ */
+function proenem_get_material_category_tone( $index ) {
+	$tones = proenem_get_material_category_tones();
+
+	return empty( $tones ) ? 'cyan' : $tones[ absint( $index ) % count( $tones ) ];
+}
+
+/**
  * Render the material category tabs.
  *
  * The tabs link to the real category archives created by
@@ -1536,7 +1491,7 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 		>
 			<?php esc_html_e( 'Todos', 'proenem-wordpress-theme' ); ?>
 		</a>
-		<?php foreach ( $terms as $term ) : ?>
+		<?php foreach ( $terms as $index => $term ) : ?>
 			<?php
 			$is_current = in_array( $term->slug, $selected_slugs, true );
 			$term_link  = get_term_link( $term );
@@ -1547,6 +1502,7 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 			?>
 			<a
 				class="pen-blog-category-tabs__item<?php echo $is_current ? ' is-active' : ''; ?>"
+				data-tone="<?php echo esc_attr( proenem_get_material_category_tone( $index ) ); ?>"
 				href="<?php echo esc_url( $term_link ); ?>"
 				<?php echo $is_current ? ' aria-current="page"' : ''; ?>
 			>

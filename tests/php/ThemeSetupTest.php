@@ -1016,12 +1016,21 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_catalog_filters_through_links_instead_of_a_form() {
-		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$part = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-		$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template );
-		$this->assertStringContainsString( 'pen-blog-filter-bar', $template );
-		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $template );
+		$this->assertStringContainsString( 'pen-blog-filter-bar', $part );
+		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $part );
 		$this->assertFalse( function_exists( 'proenem_render_material_category_filters' ) );
+
+		// The categories live in the hero of both surfaces, where they are the
+		// artwork as well as the filter.
+		foreach ( array( '/page-templates/free-materials.php', '/taxonomy-material_categoria.php' ) as $file ) {
+			$template = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template, $file );
+		}
+
+		$this->assertStringNotContainsString( 'proenem_render_material_category_tabs', $part );
 	}
 
 	/**
@@ -1858,31 +1867,48 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringNotContainsString( 'Sem resposta', $markup );
 	}
 
+
+
 	/**
-	 * The hero stage leads with the material the team chose to promote.
+	 * The category chips are the artwork of this hero, so every tone has to be
+	 * readable with ink text.
 	 *
 	 * @return void
 	 */
-	public function test_hero_stage_leads_with_the_featured_material() {
-		if ( ! proenem_free_materials_is_available() ) {
-			$this->assertSame( array(), proenem_get_materials_hero_selection() );
+	public function test_category_tones_are_readable_with_ink_text() {
+		$tones = proenem_get_material_category_tones();
 
-			return;
-		}
+		$this->assertNotEmpty( $tones );
 
-		$this->assertLessThanOrEqual( 3, count( proenem_get_materials_hero_selection( 3 ) ) );
+		// purple (3.89:1) and platform blue (3.37:1) fail against ink.
+		$this->assertNotContains( 'purple', $tones );
+		$this->assertNotContains( 'blue', $tones );
+
+		// A category keeps its colour from one page to the next.
+		$this->assertSame( proenem_get_material_category_tone( 0 ), proenem_get_material_category_tone( 0 ) );
+		$this->assertSame(
+			proenem_get_material_category_tone( 0 ),
+			proenem_get_material_category_tone( count( $tones ) )
+		);
 	}
 
 	/**
-	 * The stage is decorative: the same materials are listed, with links, right
-	 * below it.
+	 * The catalog hero must not repeat the approved students one.
 	 *
 	 * @return void
 	 */
-	public function test_hero_stage_is_not_announced_twice() {
-		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/inc/template-tags.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	public function test_catalog_hero_does_not_reuse_the_testimonials_treatment() {
+		$css   = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start = strpos( $css, '.pro-materials-hero--catalog {' );
+		$rule  = substr( $css, $start, strpos( $css, '}', $start ) - $start );
 
-		$this->assertStringContainsString( 'class="pro-materials-hero__stage" aria-hidden="true"', $css );
+		// Light ground with an ink headline, not a solid brand band.
+		$this->assertStringContainsString( 'canvas-white', $rule );
+		$this->assertStringNotContainsString( 'proenem-red', $rule );
+
+		// The photo stage belongs to the approved students page.
+		$this->assertStringNotContainsString( '.pro-materials-hero__stage', $css );
+		$this->assertStringContainsString( '.pro-testimonials-hero__stage', $css );
 	}
 
 	/**

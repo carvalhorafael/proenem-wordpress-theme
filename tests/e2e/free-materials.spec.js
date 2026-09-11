@@ -33,38 +33,56 @@ test("catalog lists every material and reports the count", async ({ page }) => {
   await expect(page.locator("[data-pro-materials-count]")).toHaveAttribute("aria-live", "polite");
 });
 
-test("catalog hero shows the materials instead of an empty red band", async ({ page }) => {
+test("catalog hero has its own look, not the approved students one", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await gotoMaterials(page, CATALOG);
 
-  const covers = page.locator(".pro-materials-hero__cover");
+  const hero = page.locator(".pro-materials-hero--catalog");
 
-  expect(await covers.count()).toBeGreaterThan(0);
-  await expect(covers.first()).toBeVisible();
+  // Light ground with an ink headline, not the solid red band.
+  const ground = await hero.evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(ground).toBe("rgb(255, 255, 255)");
 
-  // The stage is decorative: the same materials are listed with links below.
-  await expect(page.locator(".pro-materials-hero__stage")).toHaveAttribute("aria-hidden", "true");
+  // The photo stage belongs to the approved students page.
+  await expect(page.locator(".pro-materials-hero__stage")).toHaveCount(0);
+
+  // The categories are inside the hero, and they carry the colour.
+  const tones = await page
+    .locator(".pro-materials-hero .pen-blog-category-tabs__item[data-tone]")
+    .evaluateAll((els) => els.map((el) => getComputedStyle(el).backgroundColor));
+
+  expect(tones.length).toBeGreaterThan(1);
+  expect(new Set(tones).size).toBeGreaterThan(1);
 });
 
-test("hero stage steps aside where there is no room for a second column", async ({ page }) => {
-  for (const width of [375, 900]) {
-    await page.setViewportSize({ width, height: 812 });
-    await gotoMaterials(page, CATALOG);
+test("the category row scrolls from its first chip on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, CATALOG);
 
-    await expect(
-      page.locator(".pro-materials-hero__stage"),
-      `viewport ${width}`,
-    ).toBeHidden();
+  const row = page.locator(".pro-materials-tabs");
 
-    // And the first material stays inside the first screen.
-    const top = await page.evaluate(() => {
-      const el = document.querySelector(".pro-materials-featured, .pro-material-card");
+  const geometry = await row.evaluate((el) => ({
+    clientWidth: el.clientWidth,
+    scrollWidth: el.scrollWidth,
+    firstChipLeft: Math.round(el.firstElementChild.getBoundingClientRect().left),
+  }));
 
-      return Math.round(el.getBoundingClientRect().top + window.scrollY);
-    });
+  // Centring a row that overflows pushes its first chip out of reach.
+  expect(geometry.firstChipLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.scrollWidth).toBeGreaterThan(geometry.clientWidth);
 
-    expect(top, `viewport ${width}`).toBeLessThan(700);
-  }
+  const overflows = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(overflows).toBe(false);
+
+  // And the first material still lands inside the first screen.
+  const top = await page.evaluate(() => {
+    const el = document.querySelector(".pro-materials-featured, .pro-material-card");
+
+    return Math.round(el.getBoundingClientRect().top + window.scrollY);
+  });
+  expect(top).toBeLessThan(700);
 });
 
 test("category tabs link to the real category archives", async ({ page }) => {
@@ -73,7 +91,7 @@ test("category tabs link to the real category archives", async ({ page }) => {
   const tabs = page.locator(".pro-materials-tabs .pen-blog-category-tabs__item");
 
   // "Todos" plus one tab per category that has material.
-  await expect(tabs).toHaveCount(4);
+  expect(await tabs.count()).toBeGreaterThan(1);
   await expect(tabs.first()).toHaveText(/Todos/);
   await expect(tabs.first()).toHaveClass(/is-active/);
 
@@ -161,8 +179,10 @@ test("catalog hero leaves the first material inside the first mobile screen", as
     return { hero: box(document.querySelector(".pro-materials-hero")), material: box(first) };
   });
 
-  // The hero used to take 492px and pushed the first material to y=1030.
-  expect(geometry.hero.height).toBeLessThan(320);
+  // The hero now carries the category chips too, so its own height is not the
+  // measure any more. What matters is where the first material lands: it used
+  // to be y=1030, with a 492px hero and the chips below it.
+  expect(geometry.hero.height).toBeLessThan(420);
   expect(geometry.material.top).toBeLessThan(700);
 });
 

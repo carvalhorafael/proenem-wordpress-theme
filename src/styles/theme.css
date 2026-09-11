@@ -1856,125 +1856,74 @@ img {
  * Scoped to a modifier because .pro-testimonials-hero and
  * .pro-material-single__hero share the base rules and their own sizes.
  */
+/*
+ * Deliberately not the approved students hero. That page is about people and
+ * aspiration, so it is a red band with faces. This one is a shelf: the visitor
+ * came to take something and start today. Light ground, ink headline, and the
+ * categories carry the colour — which is also the only part of this hero that
+ * does any work.
+ */
 .pro-materials-hero--catalog {
   align-items: center;
-  gap: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.86fr);
-  /* --pen-color-proenem-red reaches 6.61:1 with white, against 4.29:1. */
   background:
-    repeating-linear-gradient(135deg, rgb(0 0 0 / 10%) 0 2px, transparent 2px 8px),
-    var(--pen-color-proenem-red);
-  min-height: 0;
-  padding-block: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
-}
-
-/*
- * The approved students hero shows students. This one shows the materials, so
- * the visitor sees what the catalog holds before scrolling into it. It fills
- * the empty right half instead of adding height.
- */
-.pro-materials-hero__stage {
-  height: clamp(17rem, 26vw, 23rem);
-  min-width: 0;
-  position: relative;
-  width: 100%;
-}
-
-.pro-materials-hero__stage::before {
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand-sm);
-  border-radius: 50%;
-  content: "";
-  height: clamp(13rem, 20vw, 18rem);
-  left: 50%;
-  position: absolute;
-  top: 48%;
-  transform: translate(-50%, -50%);
-  width: clamp(13rem, 20vw, 18rem);
-}
-
-.pro-materials-hero__cover {
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-sm);
-  border-radius: 0.9rem;
-  box-shadow: var(--pen-shadow-hard-md);
+    linear-gradient(rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+  border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  display: grid;
-  margin: 0;
-  overflow: hidden;
+  gap: clamp(var(--pen-space-6), 3vw, var(--pen-space-8));
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  min-height: 0;
+  padding-block: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
+  text-align: center;
+}
+
+.pro-materials-hero--catalog .pro-materials-hero__copy {
+  max-width: 46rem;
+}
+
+.pro-materials-hero--catalog .pen-section-pill {
+  background: var(--pen-color-yellow-bright);
+}
+
+/* The brand's own badge shape, carrying the one promise that matters here. */
+.pro-materials-hero__seal {
+  background: var(--pen-color-cyan);
+  height: 7.5rem;
   position: absolute;
-  width: clamp(8rem, 13vw, 11rem);
+  right: clamp(var(--pen-space-5), 6vw, var(--pen-space-16));
+  top: clamp(var(--pen-space-5), 4vw, var(--pen-space-10));
+  transform: rotate(-12deg);
+  width: 7.5rem;
 }
 
-.pro-materials-hero__cover img,
-.pro-materials-hero__cover .pro-material-placeholder {
-  aspect-ratio: 4 / 5;
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
+.pro-materials-hero__seal strong {
+  font-size: 1.6rem;
+  line-height: 0.95;
 }
 
-.pro-materials-hero__cover .pro-material-placeholder {
-  display: flex;
-}
-
-.pro-materials-hero__cover figcaption {
-  display: grid;
-  gap: 0.15rem;
-  padding: 0.6rem 0.7rem 0.7rem;
-}
-
-.pro-materials-hero__cover figcaption strong {
-  font-size: 0.78rem;
-  font-weight: 900;
-  line-height: 1.1;
-}
-
-.pro-materials-hero__cover figcaption span {
-  color: var(--pen-color-ink-muted);
-  font-family: var(--pen-font-mono, ui-monospace, monospace);
-  font-size: 0.6rem;
-  font-weight: 700;
+.pro-materials-hero__seal small {
+  font-size: 0.62rem;
+  font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.pro-materials-hero__cover--1 {
-  left: 30%;
-  top: 0;
-  transform: rotate(-2deg);
-  z-index: 3;
-}
-
-.pro-materials-hero__cover--2 {
-  bottom: 4%;
-  left: 2%;
-  transform: rotate(-5deg);
-  z-index: 2;
-}
-
-.pro-materials-hero__cover--3 {
-  bottom: 0;
-  right: 2%;
-  transform: rotate(4deg);
-  z-index: 1;
-}
-
 .pro-materials-hero--catalog h1 {
-  /*
-   * The stage sets the height of this hero, so the title can be close to the
-   * one on the approved students page without costing a pixel.
-   */
-  font-size: clamp(2.1rem, 4.4vw, 4rem);
+  color: var(--pen-color-ink);
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem);
   line-height: 0.98;
-  max-width: 14ch;
+  margin-inline: auto;
+  max-width: 18ch;
 }
 
 .pro-materials-hero--catalog p {
-  font-size: clamp(1rem, 1.45vw, 1.25rem);
-  margin-top: var(--pen-space-5);
-  max-width: 34rem;
+  color: var(--pen-color-ink-muted);
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  margin: var(--pen-space-4) auto 0;
+  max-width: 40rem;
 }
 
 .pro-materials-hero--catalog .pen-section-pill {
@@ -2152,12 +2101,22 @@ img {
   border-bottom: var(--pen-border-brand-sm);
   flex-wrap: wrap;
   gap: var(--pen-space-4);
+  justify-content: flex-end;
   margin-bottom: clamp(var(--pen-space-8), 5vw, var(--pen-space-10));
   padding-bottom: var(--pen-space-5);
 }
 
 .pro-materials-tabs {
+  gap: var(--pen-space-3);
+  justify-content: center;
   min-width: 0;
+  position: relative;
+  /*
+   * The hero centres its grid items, so without a width this row sizes to its
+   * content and overflows both sides of the viewport instead of scrolling.
+   */
+  width: 100%;
+  z-index: 2;
 }
 
 .pro-materials-order {
@@ -2175,27 +2134,73 @@ img {
   margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
 }
 
+/*
+ * The categories are the artwork of this hero. Every tone reaches 4.5:1 with
+ * ink text, which is why purple and platform blue are not in the rotation.
+ */
 .pro-materials-tabs .pen-blog-category-tabs__item {
-  border: var(--pen-border-brand-xs);
-  min-height: 2.4rem;
-  padding: 0 var(--pen-space-4);
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+  min-height: 2.75rem;
+  padding: 0 var(--pen-space-5);
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease;
 }
 
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="cyan"] { background: var(--pen-color-cyan); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="yellow"] { background: var(--pen-color-yellow-bright); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="mint"] { background: var(--pen-color-mint); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="pink"] { background: var(--pen-color-pink-lp); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="orange"] { background: var(--pen-color-orange); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="teal"] { background: var(--pen-color-teal); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="magenta"] { background: var(--pen-color-pink-mid); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="rose"] { background: var(--pen-color-pain-pink); }
+
+.pro-materials-tabs .pen-blog-category-tabs__item:hover,
+.pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+  box-shadow: var(--pen-shadow-hard-sm);
+  transform: translate(-1px, -1px);
+}
+
+/* The active one is pressed in rather than recoloured, so the palette holds. */
 .pro-materials-tabs .pen-blog-category-tabs__item.is-active {
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand-sm);
-  color: var(--pen-color-ink);
+  box-shadow: inset 2px 2px 0 rgb(26 26 26 / 0.25);
+  transform: none;
+}
+
+/*
+ * The cross means "remove this filter", so it belongs to a selected category.
+ * "Todos" is already the cleared state, and it carries no tone.
+ */
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone].is-active::after {
+  content: "✕";
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-materials-tabs .pen-blog-category-tabs__item {
+    transition: none;
+  }
+
+  .pro-materials-tabs .pen-blog-category-tabs__item:hover,
+  .pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+    transform: none;
+  }
 }
 
 .pro-materials-tabs__count {
-  color: var(--pen-color-ink-soft);
-  font-size: 0.72rem;
-  font-weight: 900;
-  margin-left: 0.45rem;
-}
-
-.pro-materials-tabs .is-active .pro-materials-tabs__count {
+  background: rgb(26 26 26 / 0.14);
+  border-radius: var(--pen-radius-pill);
   color: var(--pen-color-ink);
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
 }
 
 .pro-materials-layout {
@@ -8052,14 +8057,6 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
-  /*
-   * The stage earns its place beside the copy, not stacked under it: below two
-   * columns it only adds height, and that space belongs to the materials.
-   */
-  .pro-materials-hero__stage {
-    display: none;
-  }
-
   .pro-material-single__hero {
     align-items: start;
     grid-template-areas:
@@ -8513,6 +8510,11 @@ body.proenem-home-template {
     font-size: clamp(1.9rem, 8vw, 2.5rem);
   }
 
+  /* No room for it beside the headline, and it would sit on top of it. */
+  .pro-materials-hero__seal {
+    display: none;
+  }
+
 
 
   .pro-materials-hero--catalog {
@@ -8676,6 +8678,8 @@ body.proenem-home-template {
    */
   .pro-materials-tabs {
     flex-wrap: nowrap;
+    /* Centring a scrolling row clips its first item out of reach. */
+    justify-content: flex-start;
     margin-inline: calc(var(--pen-space-4) * -1);
     overflow-x: auto;
     overscroll-behavior-x: contain;

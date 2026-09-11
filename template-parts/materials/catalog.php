@@ -47,10 +47,7 @@ $materials_action   = isset( $args['action_url'] ) && '' !== $args['action_url']
 		</div>
 
 		<div class="pen-blog-filter-bar pro-materials-filter-bar">
-			<?php
-			proenem_render_material_category_tabs( $materials_terms, $materials_selected );
-			proenem_render_materials_order_control( $materials_action );
-			?>
+			<?php proenem_render_materials_order_control( $materials_action ); ?>
 		</div>
 
 		<?php if ( ! proenem_free_materials_is_available() ) : ?>
