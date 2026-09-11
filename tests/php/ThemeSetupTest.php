@@ -1545,6 +1545,73 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Related materials should prefer the same category and never repeat the
+	 * material being viewed.
+	 *
+	 * @return void
+	 */
+	public function test_related_materials_prefer_the_same_category() {
+		if ( ! proenem_free_materials_is_available() ) {
+			$this->assertSame( array(), proenem_get_related_material_ids( 1 ) );
+
+			return;
+		}
+
+		$current = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => proenem_get_free_materials_post_type(),
+			)
+		);
+		$related = proenem_get_related_material_ids( $current, 3 );
+
+		$this->assertNotContains( $current, $related );
+	}
+
+	/**
+	 * The share bar must consume the design system contract.
+	 *
+	 * @return void
+	 */
+	public function test_material_share_uses_the_design_system_contract() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Mapa de análise',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_share( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pen-article-share-bar', $markup );
+		$this->assertStringContainsString( 'pen-article-share--green', $markup );
+
+		// WhatsApp comes first: the audience is students sharing with students.
+		$this->assertLessThan(
+			strpos( $markup, 'facebook.com' ),
+			strpos( $markup, 'wa.me' )
+		);
+
+		// Every share link must be labelled and safe to open.
+		$this->assertSame( 3, substr_count( $markup, 'rel="noopener noreferrer"' ) );
+		$this->assertSame( 3, substr_count( $markup, 'aria-label=' ) );
+	}
+
+	/**
+	 * The related section is absent rather than empty.
+	 *
+	 * @return void
+	 */
+	public function test_related_materials_section_is_absent_when_there_is_nothing_to_show() {
+		ob_start();
+		proenem_render_related_materials( 0 );
+
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void

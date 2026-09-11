@@ -75,9 +75,12 @@ get_header();
 						)
 					);
 					?>
-				</div>
 
+					<?php proenem_render_material_share( $material_id ); ?>
+				</div>
 			</div>
+
+			<?php proenem_render_related_materials( $material_id ); ?>
 
 			<section class="pro-material-single__closing" aria-labelledby="pro-material-capture-footer-title">
 				<div class="pro-material-single__closing-inner">

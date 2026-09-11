@@ -874,6 +874,145 @@ function proenem_get_featured_material() {
 }
 
 /**
+ * Get materials related to the one being viewed.
+ *
+ * Prefers the same category, then fills the remaining slots with other recent
+ * materials, so the section is either complete or absent. A catalog this small
+ * would otherwise show a single lonely card.
+ *
+ * @param int $post_id Material ID.
+ * @param int $limit   How many to return.
+ * @return int[]
+ */
+function proenem_get_related_material_ids( $post_id, $limit = 3 ) {
+	$post_id = absint( $post_id );
+	$limit   = max( 1, absint( $limit ) );
+
+	if ( ! $post_id || ! proenem_free_materials_is_available() ) {
+		return array();
+	}
+
+	$base = array(
+		'fields'              => 'ids',
+		'ignore_sticky_posts' => true,
+		'post__not_in'        => array( $post_id ),
+		'post_status'         => 'publish',
+		'post_type'           => proenem_get_free_materials_post_type(),
+		'posts_per_page'      => $limit,
+	);
+
+	$terms    = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+	$term_ids = empty( $terms ) || is_wp_error( $terms ) ? array() : wp_list_pluck( $terms, 'term_id' );
+	$related  = array();
+
+	if ( $term_ids ) {
+		$related = get_posts(
+			array_merge(
+				$base,
+				array(
+					'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Finding materials in the same category is the purpose of this query.
+						array(
+							'taxonomy' => proenem_get_free_materials_taxonomy(),
+							'field'    => 'term_id',
+							'terms'    => $term_ids,
+						),
+					),
+				)
+			)
+		);
+	}
+
+	if ( count( $related ) >= $limit ) {
+		return array_map( 'absint', $related );
+	}
+
+	$fill = get_posts(
+		array_merge(
+			$base,
+			array(
+				'post__not_in'   => array_merge( array( $post_id ), $related ),
+				'posts_per_page' => $limit - count( $related ),
+			)
+		)
+	);
+
+	return array_map( 'absint', array_merge( $related, $fill ) );
+}
+
+/**
+ * Render the share bar for a material.
+ *
+ * Leads with WhatsApp: the audience is students, and a shared material reaches
+ * the friend who also needs it.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_share( $post_id ) {
+	$url   = get_permalink( $post_id );
+	$title = get_the_title( $post_id );
+
+	if ( ! $url ) {
+		return;
+	}
+
+	$encoded_url = rawurlencode( $url );
+	$message     = rawurlencode(
+		sprintf(
+			/* translators: 1: Material title. 2: Material URL. */
+			__( 'Achei este material gratuito da Proenem: %1$s %2$s', 'proenem-wordpress-theme' ),
+			$title,
+			$url
+		)
+	);
+	?>
+	<div class="pen-article-share-bar pro-material-share">
+		<span class="pro-material-share__label"><?php esc_html_e( 'Compartilhe com quem também precisa', 'proenem-wordpress-theme' ); ?></span>
+		<div class="pen-article-share-bar__links">
+			<a class="pen-article-share pen-article-share--green" href="<?php echo esc_url( 'https://wa.me/?text=' . $message ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no WhatsApp', 'proenem-wordpress-theme' ); ?>">W</a>
+			<a class="pen-article-share pen-article-share--yellow" href="<?php echo esc_url( 'https://www.facebook.com/sharer/sharer.php?u=' . $encoded_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no Facebook', 'proenem-wordpress-theme' ); ?>">F</a>
+			<a class="pen-article-share pen-article-share--pink" href="<?php echo esc_url( 'https://twitter.com/intent/tweet?url=' . $encoded_url . '&text=' . rawurlencode( $title ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no X', 'proenem-wordpress-theme' ); ?>">X</a>
+		</div>
+	</div>
+	<?php
+}
+
+/**
+ * Render the related materials section.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_related_materials( $post_id ) {
+	$related = proenem_get_related_material_ids( $post_id, 3 );
+
+	if ( empty( $related ) ) {
+		return;
+	}
+	?>
+	<section class="pro-material-related" aria-labelledby="pro-material-related-title">
+		<div class="pro-material-related__inner">
+			<header class="pro-material-related__header">
+				<h2 id="pro-material-related-title"><?php esc_html_e( 'Outros materiais para a sua rotina', 'proenem-wordpress-theme' ); ?></h2>
+				<a href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>">
+					<?php esc_html_e( 'Ver todos', 'proenem-wordpress-theme' ); ?>
+					<span aria-hidden="true">→</span>
+				</a>
+			</header>
+
+			<div class="pro-materials-grid">
+				<?php
+				foreach ( $related as $related_id ) {
+					proenem_render_material_card( $related_id );
+				}
+				?>
+			</div>
+		</div>
+	</section>
+	<?php
+}
+
+/**
  * Render the editorial highlight above the catalog grid.
  *
  * Renders nothing when the editors have not picked a material, so the catalog

@@ -366,6 +366,44 @@ test("the material hero keeps its horizontal padding", async ({ page }) => {
   expect(padding).toBeGreaterThan(16);
 });
 
+test("the material page offers other materials instead of only the exit", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const related = page.locator(".pro-material-related");
+
+  await expect(related).toHaveCount(1);
+
+  const cards = related.locator("[data-pro-material-card]");
+
+  expect(await cards.count()).toBeGreaterThan(0);
+
+  // The material being read must not be offered back to the reader.
+  for (const href of await cards.locator("h3 a").evaluateAll((els) => els.map((el) => el.href))) {
+    expect(href).not.toContain("mapa-de-analise-de-simulados");
+  }
+
+  await related.getByRole("link", { name: /ver todos/i }).click();
+  await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
+});
+
+test("sharing a material leads with WhatsApp", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const share = page.locator(".pro-material-share");
+
+  await expect(share).toHaveCount(1);
+
+  const links = share.locator("a");
+
+  await expect(links).toHaveCount(3);
+  await expect(links.first()).toHaveAttribute("href", /wa\.me/);
+
+  for (let i = 0; i < 3; i += 1) {
+    await expect(links.nth(i)).toHaveAttribute("target", "_blank");
+    await expect(links.nth(i)).toHaveAttribute("rel", "noopener noreferrer");
+  }
+});
+
 test("capture form masks the WhatsApp number", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
