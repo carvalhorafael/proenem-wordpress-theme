@@ -680,6 +680,25 @@ test("social proof shows only where there is data", async ({ page }) => {
   await expect(page.locator(".pro-material-faq .pen-faq-item")).toHaveCount(4);
 });
 
+test("the testimonial comes from the plugin pool, one per material", async ({ page }) => {
+  const nameOn = async (path) => {
+    await gotoMaterials(page, path);
+
+    return page.locator(".pro-material-proof__quote figcaption strong").textContent();
+  };
+
+  const first = await nameOn(MATERIAL);
+  const second = await nameOn("/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
+
+  expect(first?.trim()).toBeTruthy();
+
+  // Not one global story repeated on every material.
+  expect(second).not.toBe(first);
+
+  // And the same material keeps its story across requests.
+  expect(await nameOn(MATERIAL)).toBe(first);
+});
+
 test("proof and questions ride beside the content on desktop", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await gotoMaterials(page, MATERIAL);

@@ -1126,6 +1126,28 @@ function proenem_get_material_faq( $post_id ) {
 }
 
 /**
+ * Get the testimonial that backs a material.
+ *
+ * Reads the pool the plugin exposes for the home carousel, so a story is
+ * curated once and reused instead of copied per material. The choice is
+ * derived from the material so every page keeps its own story and keeps it
+ * across requests. Falls back to the featured story when nothing was selected
+ * for the home.
+ *
+ * @param int $post_id Material ID.
+ * @return WP_Post|null
+ */
+function proenem_get_material_proof_testimonial( $post_id ) {
+	$pool = proenem_get_home_testimonials( array(), 12 );
+
+	if ( $pool ) {
+		return $pool[ absint( $post_id ) % count( $pool ) ];
+	}
+
+	return proenem_get_featured_testimonial();
+}
+
+/**
  * Render the social proof and the questions for a material.
  *
  * Sits in the sidebar beside the content, so the reader meets the proof and
@@ -1137,7 +1159,7 @@ function proenem_get_material_faq( $post_id ) {
  */
 function proenem_render_material_reassurance( $post_id ) {
 	$downloads   = proenem_get_material_downloads( $post_id );
-	$testimonial = function_exists( 'proenem_get_featured_testimonial' ) ? proenem_get_featured_testimonial() : null;
+	$testimonial = proenem_get_material_proof_testimonial( $post_id );
 	$faq         = proenem_get_material_faq( $post_id );
 
 	if ( ! $downloads && ! $testimonial instanceof WP_Post && empty( $faq ) ) {

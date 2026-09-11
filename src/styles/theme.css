@@ -3034,12 +3034,14 @@ img {
   transform: rotate(-2deg);
 }
 
+/* No max-width: the label fits the column on one line, and a longer
+ * translation should break into even lines rather than leave an orphan. */
 .pro-material-proof__count span {
   color: var(--pen-color-ink-muted);
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.35;
-  max-width: 24ch;
+  text-wrap: balance;
 }
 
 .pro-material-proof__quote {
