@@ -1097,13 +1097,87 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_capture_form_marks_required_fields() {
-		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-material_gratuito.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
 		$this->assertStringContainsString( 'name="name"', $template );
 		$this->assertStringContainsString( 'name="email"', $template );
 		$this->assertSame( 2, substr_count( $template, 'required' ) );
 		$this->assertStringContainsString( 'inputmode="numeric"', $template );
-		$this->assertStringContainsString( 'aria-describedby="pro-material-capture-email-error"', $template );
+
+		// A pattern attribute compiled in the browser's strict regex mode threw
+		// and silently killed the whole submit handler. See the Node guard in
+		// tests/e2e/free-materials.spec.js.
+		$this->assertStringNotContainsString( 'pattern=', $template );
+	}
+
+	/**
+	 * Every id in the capture panel must carry its instance, because the page
+	 * renders the panel twice.
+	 *
+	 * @return void
+	 */
+	public function test_capture_panel_ids_are_scoped_to_the_instance() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '$capture_field', $template );
+		$this->assertStringNotContainsString( 'id="pro-material-capture-name"', $template );
+
+		// The nonce is written by hand because the WordPress helper derives the
+		// id from the field name, duplicating id="_wpnonce" across both forms.
+		$this->assertStringContainsString( 'wp_create_nonce', $template );
+		$this->assertStringContainsString( 'wp_referer_field', $template );
+
+		// Rendering the panel twice must not repeat a single id. The end to end
+		// suite checks the whole page; this checks the panel in isolation.
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$markup  = '';
+
+		foreach ( array( 'hero', 'footer' ) as $instance ) {
+			ob_start();
+			$args = array(
+				'instance'    => $instance,
+				'material_id' => $post_id,
+			);
+			require PROENEM_THEME_DIR . '/template-parts/materials/capture.php';
+			$markup .= (string) ob_get_clean();
+		}
+
+		preg_match_all( '/\sid="([^"]+)"/', $markup, $matches );
+
+		$this->assertNotEmpty( $matches[1] );
+		$this->assertSame( $matches[1], array_unique( $matches[1] ) );
+	}
+
+	/**
+	 * The page must end with a form, not with a link back up to one.
+	 *
+	 * @return void
+	 */
+	public function test_material_page_ends_with_a_second_form() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-material_gratuito.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertSame( 2, substr_count( $template, "'template-parts/materials/capture'" ) );
+		$this->assertStringContainsString( "'instance'    => 'hero'", $template );
+		$this->assertStringContainsString( "'instance'    => 'footer'", $template );
+
+		// Both of these pointed at the form above them, with the arrow drawn up.
+		$this->assertStringNotContainsString( 'pro-material-download', $template );
+		$this->assertStringNotContainsString( 'pro-material-footer-cta', $template );
+	}
+
+	/**
+	 * The form must say what happens to the data it collects.
+	 *
+	 * @return void
+	 */
+	public function test_capture_form_carries_a_privacy_notice() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'pro-material-capture__privacy', $template );
+		$this->assertStringContainsString( 'get_privacy_policy_url', $template );
+
+		// The notice still has to make sense before a privacy page is set.
+		$this->assertSame( 2, substr_count( $template, 'Sem pagamento.' ) );
 	}
 
 	/**

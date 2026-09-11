@@ -1145,7 +1145,7 @@ msgstr "Link dos planos"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1291
 #: inc/class-proenem-elementor-sales-widget-base.php:1873
-#: single-material_gratuito.php:69
+#: template-parts/materials/capture.php:65
 msgid "Nome"
 msgstr "Nome"
 
@@ -2680,9 +2680,8 @@ msgid "Todas as postagens"
 msgstr "Todas as postagens"
 
 #: inc/template-tags.php:549
-#: single-material_gratuito.php:134
-#: single-material_gratuito.php:150
-#: single-material_gratuito.php:165
+#: single-material_gratuito.php:85
+#: single-material_gratuito.php:115
 msgid "Material gratuito"
 msgstr "Material gratuito"
 
@@ -3547,7 +3546,7 @@ msgid "A história de %s"
 msgstr "A história de %s"
 
 #: single-depoimento.php:112
-#: single-material_gratuito.php:126
+#: single-material_gratuito.php:73
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
@@ -3631,70 +3630,17 @@ msgstr "← Materiais gratuitos"
 msgid "O que tem dentro"
 msgstr "O que tem dentro"
 
-#: single-material_gratuito.php:55
-msgid "Acesso imediato"
-msgstr "Acesso imediato"
-
-#: single-material_gratuito.php:56
-msgid "Receba o material agora"
-msgstr "Receba o material agora"
-
-#: single-material_gratuito.php:57
-msgid "Enviamos o link de download para o contato que você informar."
-msgstr "Enviamos o link de download para o contato que você informar."
-
-#: single-material_gratuito.php:75
-msgid "Seu nome completo"
-msgstr "Seu nome completo"
-
-#: single-material_gratuito.php:82
-msgid "Email"
-msgstr "Email"
-
-#: single-material_gratuito.php:88
-msgid "voce@exemplo.com"
-msgstr "voce@exemplo.com"
-
-#: single-material_gratuito.php:96
-msgid "WhatsApp"
-msgstr "WhatsApp"
-
-#: single-material_gratuito.php:97
-msgid "(opcional)"
-msgstr "(opcional)"
-
-#: single-material_gratuito.php:106
-msgid "(00) 00000-0000"
-msgstr "(00) 00000-0000"
-
-#: single-material_gratuito.php:113
-msgid "Baixar material gratuito"
-msgstr "Baixar material gratuito"
-
-#: single-material_gratuito.php:116
-msgid "Sem pagamento. Enviaremos o material para o contato informado."
-msgstr "Sem pagamento. Enviaremos o material para o contato informado."
-
-#: single-material_gratuito.php:135
-msgid "Pronto para usar nos estudos"
-msgstr "Pronto para usar nos estudos"
-
-#: single-material_gratuito.php:136
-msgid "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
-msgstr "Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar."
-
-#: single-material_gratuito.php:138
-#: single-material_gratuito.php:155
-msgid "Baixar material"
-msgstr "Baixar material"
-
-#: single-material_gratuito.php:151
+#: single-material_gratuito.php:86
 msgid "Leve este material para sua rotina de estudos"
 msgstr "Leve este material para sua rotina de estudos"
 
-#: single-material_gratuito.php:152
-msgid "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
-msgstr "Baixe agora e consulte sempre que precisar organizar sua próxima etapa."
+#: single-material_gratuito.php:101
+msgid "Ainda dá tempo"
+msgstr "Ainda dá tempo"
+
+#: single-material_gratuito.php:102
+msgid "Baixe agora, é gratuito"
+msgstr "Baixe agora, é gratuito"
 
 #. translators: %s: Material category name.
 #: taxonomy-material_categoria.php:37
@@ -3739,6 +3685,60 @@ msgstr "Compartilhar no Facebook"
 #: template-parts/content-single.php:38
 msgid "Compartilhar no LinkedIn"
 msgstr "Compartilhar no LinkedIn"
+
+#: template-parts/materials/capture.php:28
+msgid "Receba o material agora"
+msgstr "Receba o material agora"
+
+#: template-parts/materials/capture.php:31
+msgid "Acesso imediato"
+msgstr "Acesso imediato"
+
+#: template-parts/materials/capture.php:47
+msgid "Enviamos o link de download para o contato que você informar."
+msgstr "Enviamos o link de download para o contato que você informar."
+
+#: template-parts/materials/capture.php:71
+msgid "Seu nome completo"
+msgstr "Seu nome completo"
+
+#: template-parts/materials/capture.php:78
+msgid "Email"
+msgstr "Email"
+
+#: template-parts/materials/capture.php:84
+msgid "voce@exemplo.com"
+msgstr "voce@exemplo.com"
+
+#: template-parts/materials/capture.php:92
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#: template-parts/materials/capture.php:93
+msgid "(opcional)"
+msgstr "(opcional)"
+
+#: template-parts/materials/capture.php:102
+msgid "(00) 00000-0000"
+msgstr "(00) 00000-0000"
+
+#: template-parts/materials/capture.php:109
+msgid "Baixar material gratuito"
+msgstr "Baixar material gratuito"
+
+#. translators: %s: Link to the privacy policy.
+#: template-parts/materials/capture.php:118
+#, php-format
+msgid "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser. Veja a %s."
+msgstr "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser. Veja a %s."
+
+#: template-parts/materials/capture.php:119
+msgid "política de privacidade"
+msgstr "política de privacidade"
+
+#: template-parts/materials/capture.php:122
+msgid "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser."
+msgstr "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser."
 
 #. translators: %s: Number of materials found.
 #: template-parts/materials/catalog.php:39

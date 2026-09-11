@@ -177,25 +177,25 @@ test("material card headings sit below the results heading", async ({ page }) =>
 test("capture form blocks an empty submit and explains each field", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
-  const form = page.locator("[data-pro-material-capture-form]");
+  const form = page.locator(".pro-material-single__hero [data-pro-material-capture-form]");
 
   await form.getByRole("button", { name: "Baixar material gratuito" }).click();
 
   await expect(page).toHaveURL(new RegExp(`${MATERIAL}$`));
-  await expect(page.locator("#pro-material-capture-name-error")).toBeVisible();
-  await expect(page.locator("#pro-material-capture-email-error")).toBeVisible();
-  await expect(page.locator("#pro-material-capture-name")).toHaveAttribute("aria-invalid", "true");
-  await expect(page.locator("#pro-material-capture-name")).toBeFocused();
+  await expect(page.locator("#pro-material-capture-hero-name-error")).toBeVisible();
+  await expect(page.locator("#pro-material-capture-hero-email-error")).toBeVisible();
+  await expect(page.locator("#pro-material-capture-hero-name")).toHaveAttribute("aria-invalid", "true");
+  await expect(page.locator("#pro-material-capture-hero-name")).toBeFocused();
 
   // WhatsApp is optional, so it must not be flagged.
-  await expect(page.locator("#pro-material-capture-whatsapp-error")).toBeHidden();
+  await expect(page.locator("#pro-material-capture-hero-whatsapp-error")).toBeHidden();
 });
 
 test("material hero keeps the submit button inside a laptop screen", async ({ page }) => {
   await page.setViewportSize({ width: 1366, height: 768 });
   await gotoMaterials(page, MATERIAL);
 
-  const button = page.locator(".pro-material-capture__button");
+  const button = page.locator(".pro-material-capture--hero .pro-material-capture__button");
   const box = await button.boundingBox();
 
   // The hero used to be 887px tall and pushed the button to y=818.
@@ -226,14 +226,29 @@ test("mobile action bar appears only while the form is off screen", async ({ pag
   // The form is in the first screen, so the bar must stay out of the way.
   await expect(bar).not.toHaveClass(/is-visible/);
 
-  await page.evaluate(() => window.scrollTo(0, 2500));
+  // Scroll into the stretch between the two forms, where neither is on screen.
+  const gap = await page.evaluate(() => {
+    const panels = [...document.querySelectorAll("[data-pro-material-capture]")];
+    const rects = panels.map((p) => p.getBoundingClientRect());
+
+    return Math.round(rects[0].bottom + window.scrollY + 40);
+  });
+
+  await page.evaluate((y) => window.scrollTo(0, y), gap);
   await expect(bar).toHaveClass(/is-visible/);
   await expect(bar).toBeInViewport();
 
+  // It steps aside again once the closing form arrives.
+  await page.locator(".pro-material-single__closing").scrollIntoViewIfNeeded();
+  await expect(bar).not.toHaveClass(/is-visible/);
+
+  await page.evaluate((y) => window.scrollTo(0, y), gap);
+  await expect(bar).toHaveClass(/is-visible/);
+
   await bar.getByRole("link").click();
 
-  // It scrolls back to the form and hands over the first field.
-  await expect(page.locator("#pro-material-capture-name")).toBeFocused();
+  // It scrolls to a form and hands over the first field.
+  await expect(page.locator("input:focus")).toHaveAttribute("name", "name");
   await expect(bar).not.toHaveClass(/is-visible/);
 });
 
@@ -246,10 +261,71 @@ test("the action bar stays out of the desktop layout", async ({ page }) => {
   await expect(page.locator("[data-pro-material-sticky-cta]")).toBeHidden();
 });
 
+test("the page ends with a form instead of a link back up", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  await expect(page.locator("[data-pro-material-capture-form]")).toHaveCount(2);
+
+  // The yellow box and the footer banner both pointed at the form above them,
+  // with the arrow drawn as up.
+  await expect(page.locator(".pro-material-download")).toHaveCount(0);
+  await expect(page.locator(".pro-material-footer-cta")).toHaveCount(0);
+
+  const closing = page.locator(".pro-material-single__closing");
+  await expect(closing.locator("[data-pro-material-capture-form]")).toHaveCount(1);
+});
+
+test("the two forms validate independently", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  await page
+    .locator(".pro-material-single__closing")
+    .getByRole("button", { name: /baixar/i })
+    .click();
+
+  await expect(page.locator("#pro-material-capture-footer-name-error")).toBeVisible();
+  await expect(page.locator("#pro-material-capture-footer-name")).toBeFocused();
+
+  // The form in the hero must be untouched.
+  await expect(page.locator("#pro-material-capture-hero-name-error")).toBeHidden();
+  await expect(page.locator("#pro-material-capture-hero-name")).not.toHaveAttribute("aria-invalid", "true");
+});
+
+test("every id on the material page is unique", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // Two capture panels means every id has to carry its instance, or the label
+  // and aria wiring silently points at the wrong field.
+  const duplicates = await page.evaluate(() => {
+    const seen = new Map();
+
+    document.querySelectorAll("[id]").forEach((el) => {
+      seen.set(el.id, (seen.get(el.id) || 0) + 1);
+    });
+
+    return [...seen].filter(([, count]) => count > 1).map(([id]) => id);
+  });
+
+  expect(duplicates).toEqual([]);
+});
+
+test("both forms explain what happens to the data", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const notices = page.locator(".pro-material-capture__privacy");
+
+  await expect(notices).toHaveCount(2);
+
+  for (let i = 0; i < 2; i += 1) {
+    await expect(notices.nth(i)).toContainText("dados");
+    await expect(notices.nth(i).getByRole("link")).toHaveAttribute("href", /privacy|privacidade/);
+  }
+});
+
 test("capture form masks the WhatsApp number", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
-  const phone = page.locator("#pro-material-capture-whatsapp");
+  const phone = page.locator("#pro-material-capture-hero-whatsapp");
 
   await phone.fill("");
   await phone.pressSequentially("11987654321");
@@ -260,7 +336,7 @@ test("capture form masks the WhatsApp number", async ({ page }) => {
 test("capture feedback carries the Proenem identity, not Executive Signal", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
-  const message = page.locator("[data-crm-leads-capture-message]");
+  const message = page.locator(".pro-material-capture--hero [data-crm-leads-capture-message]");
 
   await expect(message).toHaveCount(1);
   await expect(page.locator(".es-panel, .es-badge, .es-operational-feedback")).toHaveCount(0);
@@ -287,7 +363,7 @@ test("form patterns compile in the strict regex mode browsers use", () => {
   // Browsers compile the pattern attribute in `v` mode, which rejects
   // character classes that older modes accept. Playwright's Chromium still
   // accepts them, so this has to be checked in Node.
-  const template = readFileSync("single-material_gratuito.php", "utf8");
+  const template = readFileSync("template-parts/materials/capture.php", "utf8");
   const patterns = [...template.matchAll(/pattern="([^"]+)"/g)].map((match) => match[1]);
 
   for (const pattern of patterns) {

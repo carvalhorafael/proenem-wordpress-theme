@@ -2785,6 +2785,61 @@ img {
   }
 }
 
+/*
+ * Closing block. It used to be two calls to action pointing back up at the
+ * form, with the arrow drawn as up. Now the form itself is here.
+ */
+.pro-material-single__closing {
+  background: var(--pen-color-canvas);
+  border-top: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-14)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-material-single__closing-inner {
+  align-items: start;
+  display: grid;
+  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.72fr);
+  margin-inline: auto;
+  max-width: 76rem;
+}
+
+.pro-material-single__closing-copy {
+  display: grid;
+  gap: var(--pen-space-4);
+}
+
+.pro-material-single__closing-copy span {
+  color: var(--pen-color-proenem-red);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pro-material-single__closing-copy h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pro-material-single__closing .pro-material-single__highlights li {
+  color: var(--pen-color-ink);
+}
+
+.pro-material-single__closing .pro-material-single__highlights li::before {
+  color: var(--pen-color-proenem-red);
+}
+
+.pro-material-capture__privacy a {
+  color: #99061b;
+  font-weight: 800;
+}
+
 .pro-material-download {
   background: var(--pen-color-yellow-bright);
   border: var(--pen-border-brand-sm);
@@ -2823,85 +2878,15 @@ img {
   margin-top: var(--pen-space-2);
 }
 
-.pro-material-footer-cta {
-  background: transparent;
-  color: var(--pen-color-ink);
-  margin: 0 auto clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
-  padding: 0 clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
-}
 
-.pro-material-footer-cta__inner {
-  align-items: center;
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand-sm);
-  border-radius: 0.9rem;
-  box-shadow: var(--pen-shadow-hard-md);
-  display: grid;
-  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-10));
-  grid-template-columns: minmax(10rem, 18rem) minmax(0, 1fr) auto;
-  margin-inline: auto;
-  max-width: 76rem;
-  padding: clamp(var(--pen-space-4), 3vw, var(--pen-space-6));
-}
 
-.pro-material-footer-cta__media {
-  background: #ff90e8;
-  border: var(--pen-border-brand-sm);
-  border-radius: 0.9rem;
-  box-shadow: var(--pen-shadow-hard-sm);
-  margin: 0;
-  overflow: hidden;
-}
 
-.pro-material-footer-cta__media img,
-.pro-material-footer-cta__media .pro-material-placeholder {
-  aspect-ratio: 16 / 10;
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 32%;
-  width: 100%;
-}
 
-.pro-material-footer-cta__media .pro-material-placeholder {
-  display: flex;
-}
 
-.pro-material-footer-cta__copy {
-  display: grid;
-  gap: var(--pen-space-3);
-}
 
-.pro-material-footer-cta__copy span {
-  color: #bb0922;
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 
-.pro-material-footer-cta__copy h2 {
-  color: inherit;
-  font-family: var(--pen-font-body);
-  font-size: clamp(1.85rem, 3.2vw, 3.2rem);
-  font-weight: 900;
-  line-height: 0.98;
-  margin: 0;
-}
 
-.pro-material-footer-cta__copy p {
-  color: inherit;
-  font-size: clamp(1rem, 1.35vw, 1.22rem);
-  line-height: 1.4;
-  margin: 0;
-  max-width: 42rem;
-}
 
-.pro-material-footer-cta__button {
-  justify-content: center;
-  min-width: 14rem;
-  white-space: nowrap;
-}
 
 .pro-testimonials-page {
   background: #fff;
@@ -7852,14 +7837,11 @@ body.proenem-home-template {
     position: static;
   }
 
-  .pro-material-footer-cta__inner {
-    grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr);
+  .pro-material-single__closing-inner {
+    grid-template-columns: 1fr;
   }
 
-  .pro-material-footer-cta__button {
-    grid-column: 2;
-    justify-self: start;
-  }
+
 
   .pro-home .pro-home-platform-header {
     grid-template-columns: 1fr;
@@ -8420,23 +8402,9 @@ body.proenem-home-template {
     min-height: 16rem;
   }
 
-  .pro-material-footer-cta {
-    padding: 0 var(--pen-space-5);
-  }
 
-  .pro-material-footer-cta__inner {
-    grid-template-columns: 1fr;
-  }
 
-  .pro-material-footer-cta__media {
-    max-width: 22rem;
-  }
 
-  .pro-material-footer-cta__button {
-    grid-column: auto;
-    justify-self: stretch;
-    width: 100%;
-  }
 
   .pro-home .pen-platform-showcase {
     padding-inline: 0.85rem;
