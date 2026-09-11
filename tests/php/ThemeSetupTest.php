@@ -1544,7 +1544,9 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The breadcrumb should mirror the trail the SEO plugin already emits.
+	 * The breadcrumb should only offer the steps back the reader cannot reach
+	 * otherwise: the logo already goes home and the h1 already names the
+	 * material, so neither belongs in the trail.
 	 *
 	 * @return void
 	 */
@@ -1560,13 +1562,13 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		proenem_render_material_breadcrumb( $post_id );
 		$markup = (string) ob_get_clean();
 
-		$this->assertStringContainsString( 'Início', $markup );
 		$this->assertStringContainsString( 'Materiais gratuitos', $markup );
-		$this->assertStringContainsString( 'Mapa de análise', $markup );
+		$this->assertStringNotContainsString( 'Início', $markup );
+		$this->assertStringNotContainsString( 'Mapa de análise', $markup );
 
-		// The current page is text, not a link.
-		$this->assertStringContainsString( 'aria-current="page"', $markup );
-		$this->assertSame( 2, substr_count( $markup, '<a href' ) );
+		// Every crumb leads somewhere, so none of them is the current page.
+		$this->assertStringNotContainsString( 'aria-current', $markup );
+		$this->assertSame( 1, substr_count( $markup, '<a href' ) );
 	}
 
 	/**

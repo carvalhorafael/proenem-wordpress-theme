@@ -643,15 +643,16 @@ function proenem_is_material_capture_surface() {
  * The SEO plugin already emits a BreadcrumbList in the page schema, but
  * nothing was shown on screen. This mirrors that trail.
  *
+ * The trail starts at the catalog: the logo in the navbar is already the way
+ * home, and the h1 right below already names the material, so neither earns a
+ * crumb. What is left are the two steps back the reader cannot get to
+ * otherwise.
+ *
  * @param int $post_id Material ID.
  * @return void
  */
 function proenem_render_material_breadcrumb( $post_id ) {
 	$crumbs = array(
-		array(
-			'label' => __( 'Início', 'proenem-wordpress-theme' ),
-			'url'   => home_url( '/' ),
-		),
 		array(
 			'label' => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
 			'url'   => proenem_get_free_materials_url(),
@@ -671,20 +672,12 @@ function proenem_render_material_breadcrumb( $post_id ) {
 		}
 	}
 
-	$crumbs[] = array(
-		'label' => get_the_title( $post_id ),
-		'url'   => '',
-	);
 	?>
 	<nav class="pro-material-breadcrumb" aria-label="<?php esc_attr_e( 'Você está em', 'proenem-wordpress-theme' ); ?>">
 		<ol>
 			<?php foreach ( $crumbs as $crumb ) : ?>
 				<li>
-					<?php if ( '' !== $crumb['url'] ) : ?>
-						<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
-					<?php else : ?>
-						<span aria-current="page"><?php echo esc_html( $crumb['label'] ); ?></span>
-					<?php endif; ?>
+					<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ol>

@@ -554,11 +554,14 @@ test("the capture page reduces the header and shows where you are", async ({ pag
 
   const crumbs = page.locator(".pro-material-breadcrumb li");
 
-  await expect(crumbs).toHaveCount(4);
-  await expect(crumbs.nth(3)).toHaveText("Mapa de análise de simulados");
-  await expect(crumbs.nth(3).locator("[aria-current=page]")).toHaveCount(1);
+  // The logo is already the way home and the h1 already names the material,
+  // so the trail is only the catalog and the category.
+  await expect(crumbs).toHaveCount(2);
+  await expect(crumbs.nth(0)).toHaveText("Materiais gratuitos");
+  await expect(crumbs.nth(1)).toHaveText("Simulados");
+  await expect(page.locator(".pro-material-breadcrumb [aria-current]")).toHaveCount(0);
 
-  await crumbs.nth(1).getByRole("link").click();
+  await crumbs.nth(0).getByRole("link").click();
   await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
 });
 
@@ -583,6 +586,36 @@ test("the material hero keeps its horizontal padding", async ({ page }) => {
     .evaluate((el) => Number.parseFloat(getComputedStyle(el).paddingLeft));
 
   expect(padding).toBeGreaterThan(16);
+});
+
+test("the material hero fills its column and centres the preview", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const copy = await box(".pro-material-single__hero-copy");
+  const title = await box(".pro-material-single__hero h1");
+
+  // The title used to stop at 20ch, leaving a third of its own column empty.
+  expect(title.width).toBeCloseTo(copy.width, 0);
+
+  const preview = await box(".pro-material-single__preview");
+  const cover = await box(".pro-material-single__cover");
+  const inside = await box(".pro-material-single__inside");
+
+  // The cover is rotated, so its client rect is wider than its layout box on
+  // both sides. Measuring the gaps against each other absorbs that.
+  const left = cover.left - preview.left;
+  const right = preview.right - inside.right;
+
+  expect(Math.abs(left - right)).toBeLessThan(12);
+
+  // And the two sit on the same optical line rather than both hugging the top.
+  expect(Math.abs((cover.top + cover.height / 2) - (inside.top + inside.height / 2))).toBeLessThan(12);
+
+  // The cover carries the product. It was the smallest thing in the hero.
+  expect(cover.width).toBeGreaterThan(260);
 });
 
 test("the material page offers other materials instead of only the exit", async ({ page }) => {

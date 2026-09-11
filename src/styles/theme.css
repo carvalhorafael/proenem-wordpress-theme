@@ -2637,18 +2637,23 @@ img {
 }
 
 /* The cover plus what is inside, sitting beside the form instead of below a
- * full width image that pushed the submit button past the fold. */
+ * full width image that pushed the submit button past the fold. Flex rather
+ * than grid so the pair sizes to its content and can be centred in the column
+ * it shares, instead of being pinned to the left edge by a 1fr track. */
 .pro-material-single__preview {
-  align-items: start;
-  display: grid;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
   gap: clamp(var(--pen-space-5), 2.5vw, var(--pen-space-8));
   grid-area: preview;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  justify-content: center;
 }
 
 .pro-material-single__inside {
   display: grid;
+  flex: 0 1 auto;
   gap: var(--pen-space-3);
+  max-width: 26rem;
   min-width: 0;
 }
 
@@ -2701,7 +2706,7 @@ img {
 .pro-material-single__hero h1 {
   font-size: clamp(1.9rem, 3vw, 2.9rem);
   line-height: 1.02;
-  max-width: 20ch;
+  max-width: none;
 }
 
 .pro-material-single__hero p {
@@ -2719,7 +2724,7 @@ img {
   margin: 0;
   overflow: hidden;
   transform: rotate(-1.5deg);
-  width: clamp(9rem, 16vw, 14rem);
+  width: clamp(12rem, 21vw, 19rem);
 }
 
 .pro-material-single__cover img,
