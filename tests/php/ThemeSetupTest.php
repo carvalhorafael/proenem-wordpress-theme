@@ -1750,6 +1750,99 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Social proof must only appear when somebody put a number in.
+	 *
+	 * @return void
+	 */
+	public function test_social_proof_needs_real_data() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		$this->assertSame( 0, proenem_get_material_downloads( $post_id ) );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$without = (string) ob_get_clean();
+
+		// The questions still render; the proof block does not.
+		$this->assertStringNotContainsString( 'pro-material-proof__count', $without );
+		$this->assertStringContainsString( 'pen-faq-item', $without );
+
+		update_post_meta( $post_id, free_materials_downloads_meta_key(), 1847 );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$with = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-proof__count', $with );
+		$this->assertStringContainsString( number_format_i18n( 1847 ), $with );
+	}
+
+	/**
+	 * The default questions describe this flow, so they hold for any material,
+	 * and a site can still replace them.
+	 *
+	 * @return void
+	 */
+	public function test_material_faq_has_defaults_and_is_filterable() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$faq     = proenem_get_material_faq( $post_id );
+
+		$this->assertCount( 4, $faq );
+
+		foreach ( $faq as $item ) {
+			$this->assertNotEmpty( $item['question'] );
+			$this->assertNotEmpty( $item['answer'] );
+		}
+
+		$replace = static function () {
+			return array(
+				array(
+					'question' => 'Pergunta do site',
+					'answer'   => 'Resposta do site',
+				),
+			);
+		};
+
+		add_filter( 'proenem_material_faq', $replace );
+
+		$this->assertCount( 1, proenem_get_material_faq( $post_id ) );
+
+		remove_filter( 'proenem_material_faq', $replace );
+	}
+
+	/**
+	 * An entry missing a question or an answer must not render an empty item.
+	 *
+	 * @return void
+	 */
+	public function test_material_faq_skips_incomplete_entries() {
+		$post_id    = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$incomplete = static function () {
+			return array(
+				array(
+					'question' => 'Completa',
+					'answer'   => 'Com resposta',
+				),
+				array(
+					'question' => 'Sem resposta',
+					'answer'   => '',
+				),
+			);
+		};
+
+		add_filter( 'proenem_material_faq', $incomplete );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$markup = (string) ob_get_clean();
+
+		remove_filter( 'proenem_material_faq', $incomplete );
+
+		$this->assertSame( 1, substr_count( $markup, '<summary>' ) );
+		$this->assertStringNotContainsString( 'Sem resposta', $markup );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void

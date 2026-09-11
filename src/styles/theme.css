@@ -2848,6 +2848,96 @@ img {
  * Closing block. It used to be two calls to action pointing back up at the
  * form, with the arrow drawn as up. Now the form itself is here.
  */
+/*
+ * Social proof and questions. Both halves are optional, so the band collapses
+ * to one column when only the questions exist.
+ */
+.pro-material-reassurance {
+  background: var(--pen-color-canvas);
+  border-top: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-material-reassurance__inner {
+  align-items: start;
+  display: grid;
+  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  margin-inline: auto;
+  max-width: 76rem;
+}
+
+.pro-material-proof {
+  display: grid;
+  gap: var(--pen-space-5);
+}
+
+.pro-material-proof__count {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.pro-material-proof__count strong {
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.pro-material-proof__count span {
+  color: var(--pen-color-ink-muted);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  max-width: 18ch;
+}
+
+.pro-material-proof__quote {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.9rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  display: grid;
+  gap: var(--pen-space-4);
+  margin: 0;
+  padding: clamp(var(--pen-space-5), 3vw, var(--pen-space-6));
+}
+
+.pro-material-proof__quote blockquote {
+  margin: 0;
+}
+
+.pro-material-proof__quote blockquote p {
+  font-size: 1.02rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pro-material-proof__quote figcaption {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.pro-material-proof__quote figcaption strong {
+  font-weight: 900;
+}
+
+.pro-material-proof__quote figcaption span {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.pro-material-faq .pen-faq-section__header h2 {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+}
+
 /* Related materials, so leaving the page is not the only option. */
 .pro-material-related {
   background: var(--pen-color-surface);

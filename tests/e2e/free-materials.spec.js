@@ -443,6 +443,34 @@ test("the material page offers other materials instead of only the exit", async 
   await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
 });
 
+test("the page answers the doubts that come before a download", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const faq = page.locator(".pro-material-faq .pen-faq-item");
+
+  await expect(faq).toHaveCount(4);
+  await expect(faq.first()).toHaveAttribute("open", "");
+  await expect(faq.first().locator("summary")).toContainText("gratuito");
+
+  // A closed question opens on click, with no JavaScript of ours involved.
+  await expect(faq.nth(1)).not.toHaveAttribute("open", "");
+  await faq.nth(1).locator("summary").click();
+  await expect(faq.nth(1)).toHaveAttribute("open", "");
+});
+
+test("social proof shows only where there is data", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // The fixture carries a placeholder count.
+  await expect(page.locator(".pro-material-proof__count")).toHaveCount(1);
+
+  // A material without the field must not render an empty proof block.
+  await gotoMaterials(page, "/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
+
+  await expect(page.locator(".pro-material-proof__count")).toHaveCount(0);
+  await expect(page.locator(".pro-material-faq .pen-faq-item")).toHaveCount(4);
+});
+
 test("sharing a material leads with WhatsApp", async ({ page }) => {
   await gotoMaterials(page, MATERIAL);
 
