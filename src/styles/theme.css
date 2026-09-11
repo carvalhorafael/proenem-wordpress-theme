@@ -5638,6 +5638,17 @@ body.proenem-home-template {
   text-transform: uppercase;
 }
 
+/*
+ * The design system groups `.pen-site-footer h2` with the section headings in
+ * patterns.css, at clamp(2.4rem, 5vw, 4.4rem). That selector is (0,1,1) and
+ * beat the (0,1,0) below, so every page except the home rendered the footer
+ * title at 70.4px instead of 28.8px. The home only escaped because of the
+ * `.pro-home` prefix, which happens to be (0,2,0).
+ *
+ * The footer scope below matches that specificity without depending on a page
+ * class. Tracked as a design system gap.
+ */
+.pen-site-footer .pen-site-footer__title,
 .pro-home .pen-site-footer__title,
 .pen-site-footer__title {
   color: var(--pen-color-surface);

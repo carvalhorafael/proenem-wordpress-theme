@@ -1912,6 +1912,20 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The footer title must not be beaten by the section heading rule.
+	 *
+	 * @return void
+	 */
+	public function test_footer_title_wins_over_the_section_heading_rule() {
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// The design system groups `.pen-site-footer h2` with the section
+		// headings, at (0,1,1). A bare `.pen-site-footer__title` is (0,1,0) and
+		// loses, which rendered the footer at 70.4px on every page but the home.
+		$this->assertStringContainsString( '.pen-site-footer .pen-site-footer__title', $css );
+	}
+
+	/**
 	 * The unused delivery URL helper should be gone.
 	 *
 	 * @return void

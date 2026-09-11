@@ -1489,3 +1489,26 @@ test("front page trust badges do not overlap in the WordPress grid", async ({ pa
 
   expect(overlaps).toBe(false);
 });
+
+test("the footer title is the same size on every page", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+
+  const sizes = [];
+
+  for (const url of ["/", "/aprovados/", "/blog/"]) {
+    await page.goto(url);
+
+    sizes.push(
+      await page.evaluate(() => {
+        const titles = [...document.querySelectorAll(".pen-site-footer__title")];
+
+        return titles.length ? getComputedStyle(titles[titles.length - 1]).fontSize : "ausente";
+      }),
+    );
+  }
+
+  // The design system groups `.pen-site-footer h2` with the section headings,
+  // which used to win everywhere except the home and render it at 70.4px.
+  expect(new Set(sizes).size, sizes.join(" / ")).toBe(1);
+  expect(sizes[0]).not.toBe("70.4px");
+});
