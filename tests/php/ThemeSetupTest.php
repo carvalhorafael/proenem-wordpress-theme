@@ -204,6 +204,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( home_url( '/aprovados/' ), proenem_get_testimonials_url() );
 		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
 		$this->assertNull( proenem_get_featured_testimonial() );
+		$this->assertNull( proenem_get_material_proof_testimonial( 1 ) );
 		$this->assertSame( array(), proenem_get_testimonials_hero_selection() );
 	}
 
@@ -1016,12 +1017,21 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 * @return void
 	 */
 	public function test_catalog_filters_through_links_instead_of_a_form() {
-		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$part = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 
-		$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template );
-		$this->assertStringContainsString( 'pen-blog-filter-bar', $template );
-		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $template );
+		$this->assertStringContainsString( 'pen-blog-filter-bar', $part );
+		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $part );
 		$this->assertFalse( function_exists( 'proenem_render_material_category_filters' ) );
+
+		// The categories live in the hero of both surfaces, where they are the
+		// artwork as well as the filter.
+		foreach ( array( '/page-templates/free-materials.php', '/taxonomy-material_categoria.php' ) as $file ) {
+			$template = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template, $file );
+		}
+
+		$this->assertStringNotContainsString( 'proenem_render_material_category_tabs', $part );
 	}
 
 	/**
@@ -1411,6 +1421,22 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
+	public function test_featured_material_selection_is_deterministic() {
+		$helpers = (string) file_get_contents( PROENEM_THEME_DIR . '/inc/template-tags.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start   = strpos( $helpers, 'function proenem_get_featured_material()' );
+		$query   = substr( $helpers, $start, 900 );
+
+		// Two editors can each flag a material. Without a tie-break the catalog
+		// promotes a different one between requests.
+		$this->assertStringContainsString( "'orderby'", $query );
+		$this->assertStringContainsString( "'ID'   => 'DESC'", $query );
+	}
+
+	/**
+	 * The catalog highlight is editorial and optional.
+	 *
+	 * @return void
+	 */
 	public function test_featured_material_is_opt_in() {
 		$this->assertNull( proenem_get_featured_material() );
 
@@ -1519,7 +1545,9 @@ class ThemeSetupTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The breadcrumb should mirror the trail the SEO plugin already emits.
+	 * The breadcrumb should only offer the steps back the reader cannot reach
+	 * otherwise: the logo already goes home and the h1 already names the
+	 * material, so neither belongs in the trail.
 	 *
 	 * @return void
 	 */
@@ -1535,13 +1563,13 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		proenem_render_material_breadcrumb( $post_id );
 		$markup = (string) ob_get_clean();
 
-		$this->assertStringContainsString( 'Início', $markup );
 		$this->assertStringContainsString( 'Materiais gratuitos', $markup );
-		$this->assertStringContainsString( 'Mapa de análise', $markup );
+		$this->assertStringNotContainsString( 'Início', $markup );
+		$this->assertStringNotContainsString( 'Mapa de análise', $markup );
 
-		// The current page is text, not a link.
-		$this->assertStringContainsString( 'aria-current="page"', $markup );
-		$this->assertSame( 2, substr_count( $markup, '<a href' ) );
+		// Every crumb leads somewhere, so none of them is the current page.
+		$this->assertStringNotContainsString( 'aria-current', $markup );
+		$this->assertSame( 1, substr_count( $markup, '<a href' ) );
 	}
 
 	/**
@@ -1840,6 +1868,64 @@ class ThemeSetupTest extends WP_UnitTestCase {
 
 		$this->assertSame( 1, substr_count( $markup, '<summary>' ) );
 		$this->assertStringNotContainsString( 'Sem resposta', $markup );
+	}
+
+
+
+	/**
+	 * The category chips are the artwork of this hero, so every tone has to be
+	 * readable with ink text.
+	 *
+	 * @return void
+	 */
+	public function test_category_tones_are_readable_with_ink_text() {
+		$tones = proenem_get_material_category_tones();
+
+		$this->assertNotEmpty( $tones );
+
+		// purple (3.89:1) and platform blue (3.37:1) fail against ink.
+		$this->assertNotContains( 'purple', $tones );
+		$this->assertNotContains( 'blue', $tones );
+
+		// A category keeps its colour from one page to the next.
+		$this->assertSame( proenem_get_material_category_tone( 0 ), proenem_get_material_category_tone( 0 ) );
+		$this->assertSame(
+			proenem_get_material_category_tone( 0 ),
+			proenem_get_material_category_tone( count( $tones ) )
+		);
+	}
+
+	/**
+	 * The catalog hero must not repeat the approved students one.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_hero_does_not_reuse_the_testimonials_treatment() {
+		$css   = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start = strpos( $css, '.pro-materials-hero--catalog {' );
+		$rule  = substr( $css, $start, strpos( $css, '}', $start ) - $start );
+
+		// Light ground with an ink headline, not a solid brand band.
+		$this->assertStringContainsString( 'canvas-white', $rule );
+		$this->assertStringNotContainsString( 'proenem-red', $rule );
+
+		// The photo stage belongs to the approved students page.
+		$this->assertStringNotContainsString( '.pro-materials-hero__stage', $css );
+		$this->assertStringContainsString( '.pro-testimonials-hero__stage', $css );
+	}
+
+	/**
+	 * The footer title must not be beaten by the section heading rule.
+	 *
+	 * @return void
+	 */
+	public function test_footer_title_wins_over_the_section_heading_rule() {
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// The design system groups `.pen-site-footer h2` with the section
+		// headings, at (0,1,1). A bare `.pen-site-footer__title` is (0,1,0) and
+		// loses, which rendered the footer at 70.4px on every page but the home.
+		$this->assertStringContainsString( '.pen-site-footer .pen-site-footer__title', $css );
 	}
 
 	/**

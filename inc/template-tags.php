@@ -643,15 +643,16 @@ function proenem_is_material_capture_surface() {
  * The SEO plugin already emits a BreadcrumbList in the page schema, but
  * nothing was shown on screen. This mirrors that trail.
  *
+ * The trail starts at the catalog: the logo in the navbar is already the way
+ * home, and the h1 right below already names the material, so neither earns a
+ * crumb. What is left are the two steps back the reader cannot get to
+ * otherwise.
+ *
  * @param int $post_id Material ID.
  * @return void
  */
 function proenem_render_material_breadcrumb( $post_id ) {
 	$crumbs = array(
-		array(
-			'label' => __( 'Início', 'proenem-wordpress-theme' ),
-			'url'   => home_url( '/' ),
-		),
 		array(
 			'label' => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
 			'url'   => proenem_get_free_materials_url(),
@@ -671,20 +672,12 @@ function proenem_render_material_breadcrumb( $post_id ) {
 		}
 	}
 
-	$crumbs[] = array(
-		'label' => get_the_title( $post_id ),
-		'url'   => '',
-	);
 	?>
 	<nav class="pro-material-breadcrumb" aria-label="<?php esc_attr_e( 'Você está em', 'proenem-wordpress-theme' ); ?>">
 		<ol>
 			<?php foreach ( $crumbs as $crumb ) : ?>
 				<li>
-					<?php if ( '' !== $crumb['url'] ) : ?>
-						<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
-					<?php else : ?>
-						<span aria-current="page"><?php echo esc_html( $crumb['label'] ); ?></span>
-					<?php endif; ?>
+					<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
 				</li>
 			<?php endforeach; ?>
 		</ol>
@@ -991,6 +984,14 @@ function proenem_get_featured_material() {
 			'ignore_sticky_posts' => true,
 			'meta_key'            => free_materials_featured_meta_key(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Editorial selection of a single post.
 			'meta_value'          => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Editorial selection of a single post.
+			// Nothing stops two editors from flagging a material each. Without
+			// an explicit tie-break the catalog would promote a different one
+			// between requests.
+			'order'               => 'DESC',
+			'orderby'             => array(
+				'date' => 'DESC',
+				'ID'   => 'DESC',
+			),
 			'post_status'         => 'publish',
 			'post_type'           => proenem_get_free_materials_post_type(),
 			'posts_per_page'      => 1,
@@ -1125,92 +1126,132 @@ function proenem_get_material_faq( $post_id ) {
 }
 
 /**
+ * Get the testimonial that backs a material.
+ *
+ * Reads the pool the plugin exposes for the home carousel, so a story is
+ * curated once and reused instead of copied per material. The choice is
+ * derived from the material so every page keeps its own story and keeps it
+ * across requests. Falls back to the featured story when nothing was selected
+ * for the home.
+ *
+ * @param int $post_id Material ID.
+ * @return WP_Post|null
+ */
+function proenem_get_material_proof_testimonial( $post_id ) {
+	$pool = proenem_get_home_testimonials( array(), 12 );
+
+	if ( $pool ) {
+		return $pool[ absint( $post_id ) % count( $pool ) ];
+	}
+
+	return proenem_get_featured_testimonial();
+}
+
+/**
  * Render the social proof and the questions for a material.
  *
- * Each half renders only when there is something to show, so a material
- * without data does not get an empty band.
+ * Sits in the sidebar beside the content, so the reader meets the proof and
+ * the objections while still reading instead of a screen further down. Each
+ * half renders only when there is something to show.
  *
  * @param int $post_id Material ID.
  * @return void
  */
 function proenem_render_material_reassurance( $post_id ) {
 	$downloads   = proenem_get_material_downloads( $post_id );
-	$testimonial = function_exists( 'proenem_get_featured_testimonial' ) ? proenem_get_featured_testimonial() : null;
+	$testimonial = proenem_get_material_proof_testimonial( $post_id );
 	$faq         = proenem_get_material_faq( $post_id );
 
 	if ( ! $downloads && ! $testimonial instanceof WP_Post && empty( $faq ) ) {
 		return;
 	}
 	?>
-	<section class="pro-material-reassurance" aria-labelledby="pro-material-faq-title">
-		<div class="pro-material-reassurance__inner">
-			<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
-				<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
-					<?php if ( $downloads ) : ?>
-						<p class="pro-material-proof__count">
-							<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
-							<span>
+	<div class="pro-material-reassurance">
+		<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
+			<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
+				<?php if ( $downloads ) : ?>
+					<p class="pro-material-proof__count">
+						<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
+						<span>
+							<?php
+							echo esc_html(
+								_n(
+									'estudante já baixou este material',
+									'estudantes já baixaram este material',
+									$downloads,
+									'proenem-wordpress-theme'
+								)
+							);
+							?>
+						</span>
+					</p>
+				<?php endif; ?>
+
+				<?php if ( $testimonial instanceof WP_Post ) : ?>
+					<?php
+					$testimonial_id   = (int) $testimonial->ID;
+					$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
+					$testimonial_line = implode(
+						' · ',
+						array_filter(
+							array(
+								proenem_get_testimonial_course( $testimonial_id ),
+								proenem_get_testimonial_institution( $testimonial_id ),
+							)
+						)
+					);
+					?>
+					<figure class="pro-material-proof__quote">
+						<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
+						<figcaption>
+							<?php if ( has_post_thumbnail( $testimonial_id ) ) : ?>
 								<?php
-								echo esc_html(
-									_n(
-										'estudante já baixou este material',
-										'estudantes já baixaram este material',
-										$downloads,
-										'proenem-wordpress-theme'
+								echo get_the_post_thumbnail(
+									$testimonial_id,
+									'thumbnail',
+									array(
+										'alt'      => '',
+										'class'    => 'pro-material-proof__avatar',
+										'decoding' => 'async',
+										'loading'  => 'lazy',
 									)
 								);
 								?>
-							</span>
-						</p>
-					<?php endif; ?>
-
-					<?php if ( $testimonial instanceof WP_Post ) : ?>
-						<?php
-						$testimonial_id   = (int) $testimonial->ID;
-						$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
-						$testimonial_line = implode(
-							' · ',
-							array_filter(
-								array(
-									proenem_get_testimonial_course( $testimonial_id ),
-									proenem_get_testimonial_institution( $testimonial_id ),
-								)
-							)
-						);
-						?>
-						<figure class="pro-material-proof__quote">
-							<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
-							<figcaption>
+							<?php else : ?>
+								<?php // A stock portrait beside their name would read as the student, so the monogram stands in. ?>
+								<span class="pro-material-proof__avatar pro-material-proof__avatar--initial" aria-hidden="true"><?php echo esc_html( mb_substr( $testimonial_name, 0, 1 ) ); ?></span>
+							<?php endif; ?>
+							<span class="pro-material-proof__who">
 								<strong><?php echo esc_html( $testimonial_name ); ?></strong>
 								<?php if ( $testimonial_line ) : ?>
 									<span><?php echo esc_html( $testimonial_line ); ?></span>
 								<?php endif; ?>
-							</figcaption>
-						</figure>
-					<?php endif; ?>
-				</aside>
-			<?php endif; ?>
+							</span>
+						</figcaption>
+					</figure>
+				<?php endif; ?>
+			</aside>
+		<?php endif; ?>
 
-			<?php if ( $faq ) : ?>
-				<div class="pen-faq-section pro-material-faq">
-					<div class="pen-faq-section__header">
-						<h2 id="pro-material-faq-title"><?php esc_html_e( 'Antes de baixar', 'proenem-wordpress-theme' ); ?></h2>
-					</div>
-					<div class="pen-faq-section__items">
-						<?php foreach ( $faq as $index => $item ) : ?>
-							<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
-								<?php continue; ?>
-							<?php endif; ?>
-							<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
-								<summary><?php echo esc_html( $item['question'] ); ?></summary>
-								<p><?php echo esc_html( $item['answer'] ); ?></p>
-							</details>
-						<?php endforeach; ?>
-					</div>
+		<?php if ( $faq ) : ?>
+			<section class="pen-faq-section pro-material-faq" aria-labelledby="pro-material-faq-title">
+				<div class="pen-faq-section__header">
+					<h2 id="pro-material-faq-title"><?php esc_html_e( 'Perguntas frequentes', 'proenem-wordpress-theme' ); ?></h2>
 				</div>
-			<?php endif; ?>
-		</div>
-	</section>
+				<div class="pen-faq-section__items">
+					<?php foreach ( $faq as $index => $item ) : ?>
+						<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
+							<?php continue; ?>
+						<?php endif; ?>
+						<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
+							<summary><?php echo esc_html( $item['question'] ); ?></summary>
+							<p><?php echo esc_html( $item['answer'] ); ?></p>
+						</details>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+	</div>
 	<?php
 }
 
@@ -1417,6 +1458,39 @@ function proenem_get_material_category_tabs_terms( $terms, $selected_slugs ) {
 }
 
 /**
+ * The colours a category chip can take.
+ *
+ * Only tones that reach 4.5:1 with ink text, which rules out purple and
+ * platform blue. The order is stable, so a category keeps its colour from one
+ * page to the next.
+ *
+ * @return string[]
+ */
+function proenem_get_material_category_tones() {
+	/**
+	 * Filters the colour tones used by the category chips.
+	 *
+	 * @param string[] $tones Tone slugs.
+	 */
+	return (array) apply_filters(
+		'proenem_material_category_tones',
+		array( 'cyan', 'yellow', 'mint', 'pink', 'orange', 'teal', 'magenta', 'rose' )
+	);
+}
+
+/**
+ * Get the colour tone for a category.
+ *
+ * @param int $index Position in the ordered term list.
+ * @return string
+ */
+function proenem_get_material_category_tone( $index ) {
+	$tones = proenem_get_material_category_tones();
+
+	return empty( $tones ) ? 'cyan' : $tones[ absint( $index ) % count( $tones ) ];
+}
+
+/**
  * Render the material category tabs.
  *
  * The tabs link to the real category archives created by
@@ -1443,14 +1517,15 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 	}
 	?>
 	<nav class="pen-blog-category-tabs pro-materials-tabs" aria-label="<?php esc_attr_e( 'Categorias de materiais gratuitos', 'proenem-wordpress-theme' ); ?>">
+		<?php // Land on the list, not back at the top of the hero. ?>
 		<a
 			class="pen-blog-category-tabs__item<?php echo $showing_all ? ' is-active' : ''; ?>"
-			href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>"
+			href="<?php echo esc_url( proenem_get_free_materials_url() . '#materiais' ); ?>"
 			<?php echo $showing_all ? ' aria-current="page"' : ''; ?>
 		>
 			<?php esc_html_e( 'Todos', 'proenem-wordpress-theme' ); ?>
 		</a>
-		<?php foreach ( $terms as $term ) : ?>
+		<?php foreach ( $terms as $index => $term ) : ?>
 			<?php
 			$is_current = in_array( $term->slug, $selected_slugs, true );
 			$term_link  = get_term_link( $term );
@@ -1461,6 +1536,7 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 			?>
 			<a
 				class="pen-blog-category-tabs__item<?php echo $is_current ? ' is-active' : ''; ?>"
+				data-tone="<?php echo esc_attr( proenem_get_material_category_tone( $index ) ); ?>"
 				href="<?php echo esc_url( $term_link ); ?>"
 				<?php echo $is_current ? ' aria-current="page"' : ''; ?>
 			>
@@ -1469,6 +1545,56 @@ function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
 			</a>
 		<?php endforeach; ?>
 	</nav>
+	<?php
+}
+
+/**
+ * Render the category filter panel shown above the grid.
+ *
+ * The chips in the hero select one category at a time, because each is a real
+ * archive URL. This panel is what lets someone combine categories, through the
+ * query argument the server already understands.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return void
+ */
+function proenem_render_material_category_filter_panel( $terms, $selected_slugs ) {
+	$terms = proenem_get_material_category_tabs_terms( $terms, $selected_slugs );
+
+	if ( count( $terms ) < 2 ) {
+		return;
+	}
+
+	$catalog_url = proenem_get_free_materials_url();
+	$order       = proenem_get_selected_materials_order();
+	?>
+	<form class="pro-materials-filter pro-materials-filter--panel" method="get" action="<?php echo esc_url( $catalog_url ); ?>">
+		<div class="pro-materials-filter__header">
+			<strong><?php esc_html_e( 'Combine categorias', 'proenem-wordpress-theme' ); ?></strong>
+			<?php if ( ! empty( $selected_slugs ) ) : ?>
+				<a href="<?php echo esc_url( $catalog_url ); ?>"><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
+			<?php endif; ?>
+		</div>
+
+		<?php if ( 'recentes' !== $order ) : ?>
+			<input type="hidden" name="ordenar" value="<?php echo esc_attr( $order ); ?>">
+		<?php endif; ?>
+
+		<div class="pro-materials-filter__options">
+			<?php foreach ( $terms as $term ) : ?>
+				<label class="pro-materials-filter__option">
+					<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
+					<span><?php echo esc_html( $term->name ); ?></span>
+					<small><?php echo esc_html( number_format_i18n( $term->count ) ); ?></small>
+				</label>
+			<?php endforeach; ?>
+		</div>
+
+		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
+			<?php esc_html_e( 'Ver materiais', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
 	<?php
 }
 

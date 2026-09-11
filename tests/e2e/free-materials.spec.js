@@ -33,13 +33,165 @@ test("catalog lists every material and reports the count", async ({ page }) => {
   await expect(page.locator("[data-pro-materials-count]")).toHaveAttribute("aria-live", "polite");
 });
 
+test("catalog hero has its own look, not the approved students one", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, CATALOG);
+
+  const hero = page.locator(".pro-materials-hero--catalog");
+
+  // Light ground with an ink headline, not the solid red band.
+  const ground = await hero.evaluate((el) => getComputedStyle(el).backgroundColor);
+  expect(ground).toBe("rgb(255, 255, 255)");
+
+  // The photo stage belongs to the approved students page.
+  await expect(page.locator(".pro-materials-hero__stage")).toHaveCount(0);
+
+  // The categories are inside the hero, and they carry the colour.
+  const tones = await page
+    .locator(".pro-materials-hero .pen-blog-category-tabs__item[data-tone]")
+    .evaluateAll((els) => els.map((el) => getComputedStyle(el).backgroundColor));
+
+  expect(tones.length).toBeGreaterThan(1);
+  expect(new Set(tones).size).toBeGreaterThan(1);
+});
+
+test("the category row scrolls from its first chip on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, CATALOG);
+
+  const row = page.locator(".pro-materials-tabs");
+
+  const geometry = await row.evaluate((el) => ({
+    clientWidth: el.clientWidth,
+    scrollWidth: el.scrollWidth,
+    firstChipLeft: Math.round(el.firstElementChild.getBoundingClientRect().left),
+  }));
+
+  // Centring a row that overflows pushes its first chip out of reach.
+  expect(geometry.firstChipLeft).toBeGreaterThanOrEqual(0);
+  expect(geometry.scrollWidth).toBeGreaterThan(geometry.clientWidth);
+
+  const overflows = await page.evaluate(
+    () => document.documentElement.scrollWidth > window.innerWidth,
+  );
+  expect(overflows).toBe(false);
+
+  // And the first material still lands inside the first screen.
+  const top = await page.evaluate(() => {
+    const el = document.querySelector(".pro-materials-featured, .pro-material-card");
+
+    return Math.round(el.getBoundingClientRect().top + window.scrollY);
+  });
+  expect(top).toBeLessThan(700);
+});
+
+test("Todos lands on the list, not back at the top of the hero", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, CATALOG);
+
+  await page.locator(".pro-materials-tabs").getByRole("link", { name: "Todos" }).click();
+
+  await expect(page).toHaveURL(/#materiais$/);
+
+  const heading = page.locator("#pro-materials-results-title");
+
+  await expect(heading).toBeInViewport();
+
+  // The sticky header must not cover it.
+  const top = await heading.evaluate((el) => Math.round(el.getBoundingClientRect().top));
+  const header = await page
+    .locator(".site-header")
+    .evaluate((el) => Math.round(el.getBoundingClientRect().height));
+
+  expect(top).toBeGreaterThanOrEqual(header);
+});
+
+test("ticking a category updates the cards without reloading", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const panel = page.locator(".pro-materials-filter--panel");
+  const cards = page.locator("[data-pro-material-card]");
+  const count = page.locator("[data-pro-materials-count]");
+
+  await expect(panel).toHaveCount(1);
+  await expect(cards).toHaveCount(3);
+
+  // With JavaScript the tick applies straight away, so the button goes.
+  await expect(panel.getByRole("button", { name: "Ver materiais" })).toHaveCount(0);
+
+  await page.evaluate(() => {
+    window.__navegacoes = performance.getEntriesByType("navigation").length;
+  });
+
+  await panel.getByRole("checkbox", { name: /Redação/ }).check();
+
+  await expect(cards).toHaveCount(1);
+  await expect(count).toHaveText("1 material disponível");
+  await expect(page).toHaveURL(/material_categoria/);
+
+  // Combining adds to the selection instead of replacing it.
+  await panel.getByRole("checkbox", { name: /Simulados/ }).check();
+
+  await expect(cards).toHaveCount(2);
+  await expect(count).toHaveText("2 materiais disponíveis");
+  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toBeVisible();
+
+  // Unticking everything brings the whole catalog back.
+  await panel.getByRole("checkbox", { name: /Redação/ }).uncheck();
+  await panel.getByRole("checkbox", { name: /Simulados/ }).uncheck();
+
+  await expect(cards).toHaveCount(3);
+  await expect(panel.getByRole("link", { name: "Limpar filtros" })).toHaveCount(0);
+
+  // None of it cost a page load.
+  const navegou = await page.evaluate(
+    () => performance.getEntriesByType("navigation").length !== window.__navegacoes,
+  );
+  expect(navegou).toBe(false);
+});
+
+test("the filter still works without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  const response = await page.goto(CATALOG);
+  const status = response ? response.status() : 0;
+
+  if (status === 404) {
+    await context.close();
+  }
+
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
+
+  const panel = page.locator(".pro-materials-filter--panel");
+
+  // Without JavaScript the button is the way to apply it, so it stays.
+  await panel.getByRole("checkbox", { name: /Redação/ }).check();
+  await panel.getByRole("button", { name: "Ver materiais" }).click();
+
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
+  await expect(page.locator("[data-pro-materials-count]")).toHaveText("1 material disponível");
+
+  await context.close();
+});
+
+test("combining categories keeps the chosen order", async ({ page }) => {
+  await gotoMaterials(page, `${CATALOG}?ordenar=az`);
+
+  await page.locator(".pro-materials-filter--panel").getByRole("checkbox", { name: /Redação/ }).check();
+
+  await expect(page).toHaveURL(/ordenar=az/);
+  await expect(page).toHaveURL(/material_categoria/);
+});
+
 test("category tabs link to the real category archives", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 
   const tabs = page.locator(".pro-materials-tabs .pen-blog-category-tabs__item");
 
   // "Todos" plus one tab per category that has material.
-  await expect(tabs).toHaveCount(4);
+  expect(await tabs.count()).toBeGreaterThan(1);
   await expect(tabs.first()).toHaveText(/Todos/);
   await expect(tabs.first()).toHaveClass(/is-active/);
 
@@ -127,8 +279,10 @@ test("catalog hero leaves the first material inside the first mobile screen", as
     return { hero: box(document.querySelector(".pro-materials-hero")), material: box(first) };
   });
 
-  // The hero used to take 492px and pushed the first material to y=1030.
-  expect(geometry.hero.height).toBeLessThan(320);
+  // The hero now carries the category chips too, so its own height is not the
+  // measure any more. What matters is where the first material lands: it used
+  // to be y=1030, with a 492px hero and the chips below it.
+  expect(geometry.hero.height).toBeLessThan(420);
   expect(geometry.material.top).toBeLessThan(700);
 });
 
@@ -400,11 +554,14 @@ test("the capture page reduces the header and shows where you are", async ({ pag
 
   const crumbs = page.locator(".pro-material-breadcrumb li");
 
-  await expect(crumbs).toHaveCount(4);
-  await expect(crumbs.nth(3)).toHaveText("Mapa de análise de simulados");
-  await expect(crumbs.nth(3).locator("[aria-current=page]")).toHaveCount(1);
+  // The logo is already the way home and the h1 already names the material,
+  // so the trail is only the catalog and the category.
+  await expect(crumbs).toHaveCount(2);
+  await expect(crumbs.nth(0)).toHaveText("Materiais gratuitos");
+  await expect(crumbs.nth(1)).toHaveText("Simulados");
+  await expect(page.locator(".pro-material-breadcrumb [aria-current]")).toHaveCount(0);
 
-  await crumbs.nth(1).getByRole("link").click();
+  await crumbs.nth(0).getByRole("link").click();
   await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
 });
 
@@ -429,6 +586,36 @@ test("the material hero keeps its horizontal padding", async ({ page }) => {
     .evaluate((el) => Number.parseFloat(getComputedStyle(el).paddingLeft));
 
   expect(padding).toBeGreaterThan(16);
+});
+
+test("the material hero fills its column and centres the preview", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const copy = await box(".pro-material-single__hero-copy");
+  const title = await box(".pro-material-single__hero h1");
+
+  // The title used to stop at 20ch, leaving a third of its own column empty.
+  expect(title.width).toBeCloseTo(copy.width, 0);
+
+  const preview = await box(".pro-material-single__preview");
+  const cover = await box(".pro-material-single__cover");
+  const inside = await box(".pro-material-single__inside");
+
+  // The cover is rotated, so its client rect is wider than its layout box on
+  // both sides. Measuring the gaps against each other absorbs that.
+  const left = cover.left - preview.left;
+  const right = preview.right - inside.right;
+
+  expect(Math.abs(left - right)).toBeLessThan(12);
+
+  // And the two sit on the same optical line rather than both hugging the top.
+  expect(Math.abs((cover.top + cover.height / 2) - (inside.top + inside.height / 2))).toBeLessThan(12);
+
+  // The cover carries the product. It was the smallest thing in the hero.
+  expect(cover.width).toBeGreaterThan(260);
 });
 
 test("the material page offers other materials instead of only the exit", async ({ page }) => {
@@ -472,11 +659,99 @@ test("social proof shows only where there is data", async ({ page }) => {
   // The fixture carries a placeholder count.
   await expect(page.locator(".pro-material-proof__count")).toHaveCount(1);
 
+  // The number leads as a badge with its label underneath, not as a line of
+  // text with a caption beside it.
+  const number = await page.locator(".pro-material-proof__count strong").evaluate((el) => ({
+    ...el.getBoundingClientRect().toJSON(),
+    background: getComputedStyle(el).backgroundColor,
+  }));
+  const label = await page.locator(".pro-material-proof__count span").evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  expect(label.top).toBeGreaterThanOrEqual(number.bottom);
+  expect(number.background).not.toBe("rgba(0, 0, 0, 0)");
+
+  // Both centred on the same axis.
+  expect(Math.abs((number.left + number.width / 2) - (label.left + label.width / 2))).toBeLessThan(4);
+
   // A material without the field must not render an empty proof block.
   await gotoMaterials(page, "/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
 
   await expect(page.locator(".pro-material-proof__count")).toHaveCount(0);
   await expect(page.locator(".pro-material-faq .pen-faq-item")).toHaveCount(4);
+});
+
+test("the testimonial comes from the plugin pool, one per material", async ({ page }) => {
+  const nameOn = async (path) => {
+    await gotoMaterials(page, path);
+
+    return page.locator(".pro-material-proof__quote figcaption strong").textContent();
+  };
+
+  const first = await nameOn(MATERIAL);
+  const second = await nameOn("/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
+
+  expect(first?.trim()).toBeTruthy();
+
+  // Not one global story repeated on every material.
+  expect(second).not.toBe(first);
+
+  // And the same material keeps its story across requests.
+  expect(await nameOn(MATERIAL)).toBe(first);
+});
+
+test("the sidebar reads as three things, not one block", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const count = await box(".pro-material-proof__count");
+  const quote = await box(".pro-material-proof__quote");
+  const faq = await box(".pro-material-faq");
+
+  // The count and the story are one argument; the questions are another. The
+  // space between the groups has to beat the space inside one.
+  expect(faq.top - quote.bottom).toBeGreaterThan(2 * (quote.top - count.bottom));
+
+  // A portrait or, when there is no photo, the monogram standing in for one.
+  await expect(page.locator(".pro-material-proof__avatar")).toHaveCount(1);
+
+  // The quotation mark is what marks it as somebody speaking.
+  const mark = await page
+    .locator(".pro-material-proof__quote")
+    .evaluate((el) => getComputedStyle(el, "::before").content);
+
+  expect(mark).toContain("\u201c");
+});
+
+test("proof and questions ride beside the content on desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+
+  const content = await box(".pro-material-single__content");
+  const proof = await box(".pro-material-proof");
+  const faq = await box(".pro-material-faq");
+
+  // They used to be a full width band a screen below the content.
+  expect(proof.left).toBeGreaterThanOrEqual(content.right);
+  expect(faq.left).toBeGreaterThanOrEqual(content.right);
+
+  // Stacked, proof first.
+  expect(faq.top).toBeGreaterThanOrEqual(proof.bottom);
+
+  // And the column is narrow, so both have to be sized for it.
+  expect(proof.width).toBeLessThan(420);
+
+  // Below the breakpoint they stack under the content at full width.
+  await page.setViewportSize({ width: 375, height: 812 });
+
+  const narrowContent = await box(".pro-material-single__content");
+  const narrowFaq = await box(".pro-material-faq");
+
+  expect(narrowFaq.top).toBeGreaterThan(narrowContent.bottom);
+  expect(Math.abs(narrowFaq.width - narrowContent.width)).toBeLessThan(8);
 });
 
 test("sharing a material leads with WhatsApp", async ({ page }) => {

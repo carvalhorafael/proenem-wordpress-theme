@@ -46,10 +46,11 @@ if ( '' === trim( $material_description ) ) {
 			<a class="pro-materials-hero__back" href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>">
 				<?php esc_html_e( '← Todos os materiais gratuitos', 'proenem-wordpress-theme' ); ?>
 			</a>
-			<span class="pen-section-pill"><?php esc_html_e( 'Materiais gratuitos', 'proenem-wordpress-theme' ); ?></span>
 			<h1 id="pro-materials-title"><?php echo esc_html( $material_term_name ); ?></h1>
 			<p><?php echo esc_html( $material_description ); ?></p>
 		</div>
+
+		<?php proenem_render_material_category_tabs( $terms, $selected_slugs ); ?>
 	</section>
 
 	<?php

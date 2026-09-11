@@ -1738,13 +1738,25 @@ img {
 
 .pro-materials-page,
 .pro-material-single-page {
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* The catalog reads as a shelf, so it sits on white all the way down. */
+.pro-materials-page {
+  background:
+    linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+}
+
+.pro-material-single-page {
   background:
     linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
     #fff1f1;
-  max-width: none;
-  overflow: hidden;
-  padding: 0;
 }
 
 .pro-materials-hero {
@@ -1856,31 +1868,65 @@ img {
  * Scoped to a modifier because .pro-testimonials-hero and
  * .pro-material-single__hero share the base rules and their own sizes.
  */
+/*
+ * Deliberately not the approved students hero. That page is about people and
+ * aspiration, so it is a red band with faces. This one is a shelf: the visitor
+ * came to take something and start today. Light ground, ink headline, and the
+ * categories carry the colour — which is also the only part of this hero that
+ * does any work.
+ */
 .pro-materials-hero--catalog {
-  align-items: start;
-  /* --pen-color-proenem-red reaches 6.61:1 with white, against 4.29:1. */
+  align-items: center;
   background:
-    repeating-linear-gradient(135deg, rgb(0 0 0 / 10%) 0 2px, transparent 2px 8px),
-    var(--pen-color-proenem-red);
+    linear-gradient(rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+  border-bottom: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  gap: clamp(var(--pen-space-6), 3vw, var(--pen-space-8));
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
   min-height: 0;
-  padding-block: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  padding-block: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
+  text-align: center;
+}
+
+.pro-materials-hero--catalog .pro-materials-hero__copy {
+  /* Wide enough for the headline to settle on two lines; the paragraph keeps
+   * its own, narrower measure. */
+  max-width: 58rem;
+}
+/*
+ * Local adaptation: .pen-sticker-tag ships yellow, cyan, pink, mint, orange
+ * and purple, but no red. This follows the same shape as --pink and --purple,
+ * which also pair a strong background with on-red text. Tracked as a design
+ * system gap.
+ */
+.pro-materials-hero__badge {
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--pen-space-5);
+  padding: var(--pen-space-2) var(--pen-space-4);
 }
 
 .pro-materials-hero--catalog h1 {
-  font-size: clamp(2rem, 3.6vw, 3.1rem);
-  line-height: 1;
+  color: var(--pen-color-ink);
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem);
+  line-height: 0.98;
+  margin-inline: auto;
+  max-width: 100%;
+  text-wrap: balance;
 }
 
 .pro-materials-hero--catalog p {
-  font-size: clamp(1rem, 1.35vw, 1.15rem);
-  margin-top: var(--pen-space-4);
-  max-width: 46rem;
+  color: var(--pen-color-ink-muted);
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  margin: var(--pen-space-4) auto 0;
+  max-width: 40rem;
 }
-
-.pro-materials-hero--catalog .pen-section-pill {
-  margin-bottom: var(--pen-space-4);
-}
-
 .pro-materials-hero__back {
   color: var(--pen-color-on-red);
   display: flex;
@@ -1894,22 +1940,6 @@ img {
 .pro-materials-hero__back:hover,
 .pro-materials-hero__back:focus-visible {
   text-decoration: underline;
-}
-
-.pro-materials-hero .pen-section-pill,
-.pro-material-single__hero .pen-section-pill {
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-sm);
-  border-radius: var(--pen-radius-pill);
-  box-shadow: var(--pen-shadow-hard-sm);
-  color: var(--pen-color-ink);
-  display: inline-flex;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  margin: 0 0 clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
-  padding: 0.34rem 0.9rem;
-  text-transform: none;
 }
 
 /*
@@ -2048,16 +2078,74 @@ img {
   padding: clamp(var(--pen-space-12), 9vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
 }
 
+/*
+ * Multi-select panel, the counterpart of the single-select chips in the hero.
+ * Reuses the base .pro-materials-filter that the approved students page also
+ * consumes, so the two filters stay recognisably the same control.
+ */
+.pro-materials-filter--panel {
+  align-items: center;
+  gap: var(--pen-space-4) var(--pen-space-5);
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header {
+  grid-column: 1 / -1;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header strong {
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-3);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  display: inline-flex;
+  gap: 0.5rem;
+  grid-template-columns: none;
+  min-height: 2.5rem;
+  padding: 0 var(--pen-space-4);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option:has(input:checked) {
+  background: var(--pen-color-yellow-bright);
+  box-shadow: var(--pen-shadow-hard-xs);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__submit {
+  justify-self: end;
+  width: auto;
+}
+
 .pro-materials-filter-bar {
   border-bottom: var(--pen-border-brand-sm);
   flex-wrap: wrap;
   gap: var(--pen-space-4);
+  justify-content: flex-end;
   margin-bottom: clamp(var(--pen-space-8), 5vw, var(--pen-space-10));
   padding-bottom: var(--pen-space-5);
 }
 
 .pro-materials-tabs {
+  gap: var(--pen-space-3);
+  justify-content: center;
   min-width: 0;
+  position: relative;
+  /*
+   * The hero centres its grid items, so without a width this row sizes to its
+   * content and overflows both sides of the viewport instead of scrolling.
+   */
+  width: 100%;
+  z-index: 2;
 }
 
 .pro-materials-order {
@@ -2075,27 +2163,73 @@ img {
   margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
 }
 
+/*
+ * The categories are the artwork of this hero. Every tone reaches 4.5:1 with
+ * ink text, which is why purple and platform blue are not in the rotation.
+ */
 .pro-materials-tabs .pen-blog-category-tabs__item {
-  border: var(--pen-border-brand-xs);
-  min-height: 2.4rem;
-  padding: 0 var(--pen-space-4);
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+  min-height: 2.75rem;
+  padding: 0 var(--pen-space-5);
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease;
 }
 
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="cyan"] { background: var(--pen-color-cyan); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="yellow"] { background: var(--pen-color-yellow-bright); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="mint"] { background: var(--pen-color-mint); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="pink"] { background: var(--pen-color-pink-lp); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="orange"] { background: var(--pen-color-orange); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="teal"] { background: var(--pen-color-teal); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="magenta"] { background: var(--pen-color-pink-mid); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="rose"] { background: var(--pen-color-pain-pink); }
+
+.pro-materials-tabs .pen-blog-category-tabs__item:hover,
+.pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+  box-shadow: var(--pen-shadow-hard-sm);
+  transform: translate(-1px, -1px);
+}
+
+/* The active one is pressed in rather than recoloured, so the palette holds. */
 .pro-materials-tabs .pen-blog-category-tabs__item.is-active {
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand-sm);
-  color: var(--pen-color-ink);
+  box-shadow: inset 2px 2px 0 rgb(26 26 26 / 0.25);
+  transform: none;
+}
+
+/*
+ * The cross means "remove this filter", so it belongs to a selected category.
+ * "Todos" is already the cleared state, and it carries no tone.
+ */
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone].is-active::after {
+  content: "✕";
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-materials-tabs .pen-blog-category-tabs__item {
+    transition: none;
+  }
+
+  .pro-materials-tabs .pen-blog-category-tabs__item:hover,
+  .pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+    transform: none;
+  }
 }
 
 .pro-materials-tabs__count {
-  color: var(--pen-color-ink-soft);
-  font-size: 0.72rem;
-  font-weight: 900;
-  margin-left: 0.45rem;
-}
-
-.pro-materials-tabs .is-active .pro-materials-tabs__count {
+  background: rgb(26 26 26 / 0.14);
+  border-radius: var(--pen-radius-pill);
   color: var(--pen-color-ink);
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
 }
 
 .pro-materials-layout {
@@ -2194,6 +2328,8 @@ img {
 
 .pro-materials-results {
   min-width: 0;
+  /* The sticky header is 81px, so an anchor jump lands past the heading. */
+  scroll-margin-top: 7rem;
 }
 
 .pro-materials-results__header {
@@ -2485,18 +2621,23 @@ img {
 }
 
 /* The cover plus what is inside, sitting beside the form instead of below a
- * full width image that pushed the submit button past the fold. */
+ * full width image that pushed the submit button past the fold. Flex rather
+ * than grid so the pair sizes to its content and can be centred in the column
+ * it shares, instead of being pinned to the left edge by a 1fr track. */
 .pro-material-single__preview {
-  align-items: start;
-  display: grid;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
   gap: clamp(var(--pen-space-5), 2.5vw, var(--pen-space-8));
   grid-area: preview;
-  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  justify-content: center;
 }
 
 .pro-material-single__inside {
   display: grid;
+  flex: 0 1 auto;
   gap: var(--pen-space-3);
+  max-width: 26rem;
   min-width: 0;
 }
 
@@ -2549,7 +2690,7 @@ img {
 .pro-material-single__hero h1 {
   font-size: clamp(1.9rem, 3vw, 2.9rem);
   line-height: 1.02;
-  max-width: 20ch;
+  max-width: none;
 }
 
 .pro-material-single__hero p {
@@ -2567,7 +2708,7 @@ img {
   margin: 0;
   overflow: hidden;
   transform: rotate(-1.5deg);
-  width: clamp(9rem, 16vw, 14rem);
+  width: clamp(12rem, 21vw, 19rem);
 }
 
 .pro-material-single__cover img,
@@ -2852,52 +2993,60 @@ img {
  * Social proof and questions. Both halves are optional, so the band collapses
  * to one column when only the questions exist.
  */
+/* Proof and objections ride along the content in the sidebar instead of
+ * waiting a screen below it, so everything below is sized for a 24rem column
+ * rather than for half of a full width band. */
 .pro-material-reassurance {
-  background: var(--pen-color-canvas);
-  border-top: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
-}
-
-.pro-material-reassurance__inner {
-  align-items: start;
   display: grid;
-  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  margin-inline: auto;
-  max-width: 76rem;
+  gap: clamp(var(--pen-space-10), 6vw, var(--pen-space-14, 3.5rem));
 }
 
 .pro-material-proof {
   display: grid;
-  gap: var(--pen-space-5);
+  gap: var(--pen-space-6);
 }
 
+/* The number is the strongest argument in this column, and as a line of text
+ * beside its own label it read as a caption. It carries the sticker language
+ * the rest of the brand uses. */
 .pro-material-proof__count {
-  align-items: baseline;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  display: grid;
+  gap: var(--pen-space-3);
+  justify-items: center;
   margin: 0;
+  text-align: center;
 }
 
 .pro-material-proof__count strong {
+  background: var(--pen-color-proenem-red);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-md);
+  box-shadow: var(--pen-shadow-hard-md);
+  color: var(--pen-color-on-red);
   font-family: var(--pen-font-body);
-  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
   font-variant-numeric: tabular-nums;
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1;
+  padding: var(--pen-space-3) var(--pen-space-5);
+  transform: rotate(-2deg);
 }
 
+/* No max-width: the label fits the column on one line, and a longer
+ * translation should break into even lines rather than leave an orphan. */
 .pro-material-proof__count span {
   color: var(--pen-color-ink-muted);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  line-height: 1.3;
-  max-width: 18ch;
+  line-height: 1.35;
+  text-wrap: balance;
 }
 
+/* Everything here says "a person said this": the mark, the portrait and the
+ * rule under the words. The separation from the answers below is carried by
+ * the space between the groups, not by the surface colour. */
 .pro-material-proof__quote {
   background: var(--pen-color-surface);
   border: var(--pen-border-brand-sm);
@@ -2906,36 +3055,102 @@ img {
   display: grid;
   gap: var(--pen-space-4);
   margin: 0;
-  padding: clamp(var(--pen-space-5), 3vw, var(--pen-space-6));
+  padding: var(--pen-space-6) var(--pen-space-5) var(--pen-space-5);
+  position: relative;
+}
+
+.pro-material-proof__quote::before {
+  color: var(--pen-color-proenem-red);
+  content: "\201C";
+  font-family: var(--pen-font-display, var(--pen-font-body));
+  font-size: 4rem;
+  font-weight: 900;
+  left: var(--pen-space-4);
+  line-height: 1;
+  position: absolute;
+  top: -0.35rem;
 }
 
 .pro-material-proof__quote blockquote {
   margin: 0;
+  padding-top: var(--pen-space-4);
 }
 
 .pro-material-proof__quote blockquote p {
-  font-size: 1.02rem;
+  font-size: 0.95rem;
   line-height: 1.5;
   margin: 0;
 }
 
 .pro-material-proof__quote figcaption {
+  align-items: center;
+  border-top: 1px solid rgb(26 26 26 / 12%);
+  display: flex;
+  gap: var(--pen-space-3);
+  padding-top: var(--pen-space-4);
+}
+
+.pro-material-proof__avatar {
+  border: var(--pen-border-brand-sm);
+  border-radius: 50%;
+  flex: none;
+  height: 2.75rem;
+  object-fit: cover;
+  width: 2.75rem;
+}
+
+.pro-material-proof__avatar--initial {
+  align-items: center;
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  display: flex;
+  font-size: 1.15rem;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 1;
+}
+
+.pro-material-proof__who {
   display: grid;
-  gap: 0.15rem;
+  gap: 0.1rem;
+  min-width: 0;
 }
 
 .pro-material-proof__quote figcaption strong {
   font-weight: 900;
+  line-height: 1.2;
 }
 
-.pro-material-proof__quote figcaption span {
+.pro-material-proof__who span {
   color: var(--pen-color-ink-muted);
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
+  line-height: 1.25;
+}
+
+.pro-material-faq {
+  gap: var(--pen-space-4);
+}
+
+.pro-material-faq .pen-faq-section__header {
+  justify-items: center;
+  text-align: center;
 }
 
 .pro-material-faq .pen-faq-section__header h2 {
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+/* The design system sizes the questions for a full width band. In a 24rem
+ * column that wrapped every one of them onto three lines. */
+.pro-material-faq .pen-faq-item summary {
+  font-size: 0.98rem;
+  padding: var(--pen-space-4) var(--pen-space-5);
+}
+
+.pro-material-faq .pen-faq-item p {
+  font-size: 0.92rem;
+  padding: var(--pen-space-4) var(--pen-space-5) var(--pen-space-5);
 }
 
 /* Related materials, so leaving the page is not the only option. */
@@ -5486,6 +5701,17 @@ body.proenem-home-template {
   text-transform: uppercase;
 }
 
+/*
+ * The design system groups `.pen-site-footer h2` with the section headings in
+ * patterns.css, at clamp(2.4rem, 5vw, 4.4rem). That selector is (0,1,1) and
+ * beat the (0,1,0) below, so every page except the home rendered the footer
+ * title at 70.4px instead of 28.8px. The home only escaped because of the
+ * `.pro-home` prefix, which happens to be (0,2,0).
+ *
+ * The footer scope below matches that specificity without depending on a page
+ * class. Tracked as a design system gap.
+ */
+.pen-site-footer .pen-site-footer__title,
 .pro-home .pen-site-footer__title,
 .pen-site-footer__title {
   color: var(--pen-color-surface);
@@ -7948,6 +8174,10 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
+  .pro-materials-hero--catalog {
+    grid-template-columns: 1fr;
+  }
+
   .pro-material-single__hero {
     align-items: start;
     grid-template-areas:
@@ -8562,6 +8792,8 @@ body.proenem-home-template {
    */
   .pro-materials-tabs {
     flex-wrap: nowrap;
+    /* Centring a scrolling row clips its first item out of reach. */
+    justify-content: flex-start;
     margin-inline: calc(var(--pen-space-4) * -1);
     overflow-x: auto;
     overscroll-behavior-x: contain;
@@ -8592,6 +8824,15 @@ body.proenem-home-template {
 
   .pro-materials-filter-bar {
     display: block;
+  }
+
+  .pro-materials-filter--panel {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-materials-filter--panel .pro-materials-filter__submit {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .pro-materials-order {
