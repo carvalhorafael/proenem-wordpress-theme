@@ -2691,8 +2691,8 @@ msgid "Você está em"
 msgstr ""
 
 #: inc/template-tags.php:736
-#: single-material_gratuito.php:90
-#: single-material_gratuito.php:120
+#: single-material_gratuito.php:88
+#: single-material_gratuito.php:118
 msgid "Material gratuito"
 msgstr ""
 
@@ -3654,7 +3654,7 @@ msgid "A história de %s"
 msgstr ""
 
 #: single-depoimento.php:112
-#: single-material_gratuito.php:73
+#: single-material_gratuito.php:71
 #: template-parts/content-page.php:19
 #: template-parts/content-single.php:26
 msgid "Page navigation"
@@ -3730,19 +3730,19 @@ msgstr ""
 msgid "Footer da página de depoimento"
 msgstr ""
 
-#: single-material_gratuito.php:42
+#: single-material_gratuito.php:40
 msgid "O que tem dentro"
 msgstr ""
 
-#: single-material_gratuito.php:91
+#: single-material_gratuito.php:89
 msgid "Leve este material para sua rotina de estudos"
 msgstr ""
 
-#: single-material_gratuito.php:106
+#: single-material_gratuito.php:104
 msgid "Ainda dá tempo"
 msgstr ""
 
-#: single-material_gratuito.php:107
+#: single-material_gratuito.php:105
 msgid "Baixe agora, é gratuito"
 msgstr ""
 

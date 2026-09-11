@@ -1942,22 +1942,6 @@ img {
   text-decoration: underline;
 }
 
-.pro-materials-hero .pen-section-pill,
-.pro-material-single__hero .pen-section-pill {
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-sm);
-  border-radius: var(--pen-radius-pill);
-  box-shadow: var(--pen-shadow-hard-sm);
-  color: var(--pen-color-ink);
-  display: inline-flex;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  margin: 0 0 clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
-  padding: 0.34rem 0.9rem;
-  text-transform: none;
-}
-
 /*
  * Single column catalog. .pro-materials-layout keeps its two column rule
  * because page-templates/testimonials.php still reuses it.
