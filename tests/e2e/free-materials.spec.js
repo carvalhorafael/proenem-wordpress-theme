@@ -671,6 +671,24 @@ test("the closing form does not collapse the copy beside it", async ({ page }) =
   expect(columns).toHaveLength(3);
   expect(columns).not.toContain("0px");
 
+  // The cover sits between the words and the form, not stranded in the empty
+  // half of a copy box wider than its own longest line.
+  const ink = await page.locator(".pro-material-single__closing-copy h2").evaluate((el) => {
+    const range = document.createRange();
+
+    range.selectNodeContents(el);
+
+    return Math.max(...[...range.getClientRects()].map((rect) => rect.right));
+  });
+  const cover = await page
+    .locator(".pro-material-single__closing-cover")
+    .evaluate((el) => el.getBoundingClientRect().toJSON());
+  const form = await page
+    .locator(".pro-material-capture--footer")
+    .evaluate((el) => el.getBoundingClientRect().left);
+
+  expect(Math.abs((cover.left - ink) - (form - cover.right))).toBeLessThan(40);
+
   const copy = await page
     .locator(".pro-material-single__closing-copy")
     .evaluate((el) => el.getBoundingClientRect().width);
