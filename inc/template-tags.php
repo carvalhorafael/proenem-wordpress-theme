@@ -1300,7 +1300,7 @@ function proenem_render_material_share( $post_id ) {
  * @return void
  */
 function proenem_render_related_materials( $post_id ) {
-	$related = proenem_get_related_material_ids( $post_id, 3 );
+	$related = proenem_get_related_material_ids( $post_id, 4 );
 
 	if ( empty( $related ) ) {
 		return;

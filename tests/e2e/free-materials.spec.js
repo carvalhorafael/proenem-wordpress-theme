@@ -634,8 +634,52 @@ test("the material page offers other materials instead of only the exit", async 
     expect(href).not.toContain("mapa-de-analise-de-simulados");
   }
 
+  const tracks = (width) =>
+    page.setViewportSize({ width, height: 900 }).then(() =>
+      related
+        .locator(".pro-materials-grid")
+        .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length)
+    );
+
+  // Four across on desktop: two filled the row with cards wider than the ones
+  // in the catalog itself.
+  expect(await tracks(1440)).toBe(4);
+
+  // The shared breakpoints are outranked by this grid's own selector, so it
+  // has to step down on its own.
+  expect(await tracks(900)).toBe(2);
+  expect(await tracks(375)).toBe(1);
+
+  await page.setViewportSize({ width: 1280, height: 900 });
   await related.getByRole("link", { name: /ver todos/i }).click();
   await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
+});
+
+test("the closing form does not collapse the copy beside it", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  // The capture panel is rendered twice. It carried grid-area: capture, a name
+  // only the hero grid defines, so on the closing grid it opened implicit
+  // columns and squeezed the copy to nothing.
+  const columns = await page
+    .locator(".pro-material-single__closing-inner")
+    .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+
+  expect(columns).toBe(2);
+
+  const copy = await page
+    .locator(".pro-material-single__closing-copy")
+    .evaluate((el) => el.getBoundingClientRect().width);
+
+  expect(copy).toBeGreaterThan(400);
+
+  // The hero grid still places its own panel by name.
+  const heroArea = await page
+    .locator(".pro-material-capture--hero")
+    .evaluate((el) => getComputedStyle(el).gridArea);
+
+  expect(heroArea).toContain("capture");
 });
 
 test("the page answers the doubts that come before a download", async ({ page }) => {

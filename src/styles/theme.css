@@ -2779,9 +2779,15 @@ img {
   color: var(--pen-color-ink);
   display: grid;
   gap: var(--pen-space-4);
-  grid-area: capture;
   padding: clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
   scroll-margin-top: var(--pen-space-8);
+}
+
+/* Only the hero grid names this area. On the closing grid the unknown name
+ * resolved to line names that do not exist, which added implicit columns and
+ * collapsed the copy beside it to zero width. */
+.pro-material-capture--hero {
+  grid-area: capture;
 }
 
 .pro-material-capture__eyebrow {
@@ -3201,11 +3207,12 @@ img {
 }
 
 /*
- * The catalog may hold fewer than three related materials. Letting the columns
- * follow the count avoids leaving a hole in the row.
+ * Four across. Following the count with auto-fit made two materials fill the
+ * row as banners wider than the cards in the catalog itself. Fixed tracks need
+ * the breakpoints below, because this selector outranks the shared ones.
  */
 .pro-material-related .pro-materials-grid {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .pro-material-share {
@@ -8231,7 +8238,8 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
-  .pro-materials-grid {
+  .pro-materials-grid,
+  .pro-material-related .pro-materials-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -8852,7 +8860,8 @@ body.proenem-home-template {
     text-align: left;
   }
 
-  .pro-materials-grid {
+  .pro-materials-grid,
+  .pro-material-related .pro-materials-grid {
     grid-template-columns: 1fr;
   }
 
