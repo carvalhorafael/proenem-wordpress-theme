@@ -2693,7 +2693,7 @@ msgstr ""
 
 #: inc/template-tags.php:736
 #: single-material_gratuito.php:88
-#: single-material_gratuito.php:118
+#: single-material_gratuito.php:125
 msgid "Material gratuito"
 msgstr ""
 
@@ -3735,11 +3735,11 @@ msgstr ""
 msgid "Leve este material para sua rotina de estudos"
 msgstr ""
 
-#: single-material_gratuito.php:104
+#: single-material_gratuito.php:111
 msgid "Ainda dá tempo"
 msgstr ""
 
-#: single-material_gratuito.php:105
+#: single-material_gratuito.php:112
 msgid "Baixe agora, é gratuito"
 msgstr ""
 

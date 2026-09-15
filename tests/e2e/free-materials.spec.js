@@ -664,9 +664,12 @@ test("the closing form does not collapse the copy beside it", async ({ page }) =
   // columns and squeezed the copy to nothing.
   const columns = await page
     .locator(".pro-material-single__closing-inner")
-    .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+    .evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" "));
 
-  expect(columns).toBe(2);
+  // Copy, cover, form — and no zero width track, which is what the implicit
+  // columns looked like.
+  expect(columns).toHaveLength(3);
+  expect(columns).not.toContain("0px");
 
   const copy = await page
     .locator(".pro-material-single__closing-copy")
@@ -680,6 +683,32 @@ test("the closing form does not collapse the copy beside it", async ({ page }) =
     .evaluate((el) => getComputedStyle(el).gridArea);
 
   expect(heroArea).toContain("capture");
+});
+
+test("the closing block shows the material next to the form", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await gotoMaterials(page, MATERIAL);
+
+  const inner = page.locator(".pro-material-single__closing-inner");
+
+  // Copy, cover, form. The copy column used to be a heading over empty space.
+  await expect(inner.locator(".pro-material-single__closing-cover img, .pro-material-single__closing-cover .pro-material-placeholder")).toHaveCount(1);
+  expect(
+    await inner.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length)
+  ).toBe(3);
+
+  // On mobile the three stack and the headline centres, but a form whose
+  // labels drift to the middle of their own fields is harder to scan.
+  await page.setViewportSize({ width: 375, height: 812 });
+
+  await expect(page.locator(".pro-material-single__closing-copy")).toHaveCSS("text-align", "center");
+
+  const labelAlign = await page
+    .locator(".pro-material-single__closing .pro-material-capture label")
+    .first()
+    .evaluate((el) => getComputedStyle(el).textAlign);
+
+  expect(["start", "left"]).toContain(labelAlign);
 });
 
 test("the page answers the doubts that come before a download", async ({ page }) => {

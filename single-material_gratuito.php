@@ -94,7 +94,14 @@ get_header();
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
+						<?php if ( $specs ) : ?>
+							<p class="pro-material-single__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+						<?php endif; ?>
 					</div>
+
+					<figure class="pro-material-single__closing-cover">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 980px) 40vw, 200px' ); ?>
+					</figure>
 
 					<?php
 					get_template_part(

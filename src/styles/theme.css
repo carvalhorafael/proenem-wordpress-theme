@@ -2813,6 +2813,18 @@ img {
   margin: 0;
 }
 
+/* The second copy of the form closes the page rather than opening it, and the
+ * reader has already read the pitch once. It gets the narrower column, so it
+ * cannot carry the hero's type sizes. */
+.pro-material-capture--footer {
+  gap: var(--pen-space-3);
+  padding: var(--pen-space-6) var(--pen-space-5);
+}
+
+.pro-material-capture--footer h2 {
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
+}
+
 .pro-material-capture small {
   font-size: 0.88rem;
   font-weight: 700;
@@ -3233,21 +3245,48 @@ img {
   background: var(--pen-color-canvas);
   border-top: var(--pen-border-brand-sm);
   color: var(--pen-color-ink);
-  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+  padding: clamp(var(--pen-space-6), 3.5vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
 }
 
 .pro-material-single__closing-inner {
-  align-items: start;
+  align-items: center;
   display: grid;
-  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-12));
-  grid-template-columns: minmax(0, 1fr) minmax(22rem, 0.72fr);
+  gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+  grid-template-columns: minmax(0, 1fr) auto minmax(20rem, 24rem);
   margin-inline: auto;
   max-width: 76rem;
 }
 
 .pro-material-single__closing-copy {
   display: grid;
-  gap: var(--pen-space-4);
+  gap: var(--pen-space-3);
+}
+
+/* The material itself, so the last thing before the form shows what is being
+ * offered instead of a heading over empty space. */
+.pro-material-single__closing-cover {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.75rem;
+  box-shadow: var(--pen-shadow-hard-md);
+  margin: 0;
+  overflow: hidden;
+  transform: rotate(-2deg);
+  width: clamp(8rem, 14vw, 12.5rem);
+}
+
+.pro-material-single__closing-cover img,
+.pro-material-single__closing-cover .pro-material-placeholder {
+  aspect-ratio: 3 / 4;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  width: 100%;
+}
+
+.pro-material-single__closing-cover .pro-material-placeholder {
+  display: flex;
 }
 
 .pro-material-single__closing-copy span {
@@ -3260,11 +3299,15 @@ img {
 
 .pro-material-single__closing-copy h2 {
   font-family: var(--pen-font-body);
-  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-size: clamp(1.6rem, 2.6vw, 2.35rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 1.02;
   margin: 0;
   text-wrap: balance;
+}
+
+.pro-material-single__closing .pro-material-single__specs {
+  color: var(--pen-color-ink-muted);
 }
 
 .pro-material-single__closing .pro-material-single__highlights li {
@@ -8295,6 +8338,26 @@ body.proenem-home-template {
 
   .pro-material-single__closing-inner {
     grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  /* Centred only where it is a headline. A form whose labels drift to the
+   * middle of their own fields is harder to scan. */
+  .pro-material-single__closing-copy {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .pro-material-single__closing .pro-material-single__highlights {
+    text-align: left;
+  }
+
+  .pro-material-single__closing-cover {
+    width: clamp(8rem, 34vw, 11rem);
+  }
+
+  .pro-material-single__closing .pro-material-capture {
+    width: 100%;
   }
 
   .pro-material-share {
