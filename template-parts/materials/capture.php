@@ -76,6 +76,13 @@ $capture_category = proenem_get_material_category_label( $capture_material );
 		<input type="hidden" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( 'crm_leads_capture_free_material' ) ); ?>">
 		<?php wp_referer_field(); ?>
 		<input type="hidden" name="material_id" value="<?php echo esc_attr( (string) $capture_material ); ?>">
+		<?php
+		// Filled in the browser with the anonymous id the analytics SDK gave
+		// this device, so the CRM can reconstruct the path this person took.
+		// Stays empty when there is no analytics, and the lead is created all
+		// the same.
+		?>
+		<input type="hidden" name="analytics_device_id" value="" data-pro-analytics-device-id>
 		<input class="pro-material-capture__honeypot" type="text" name="crm_leads_capture_website" value="" autocomplete="off" tabindex="-1" aria-hidden="true">
 		<?php
 		if ( function_exists( 'crm_leads_capture_render_free_material_error_message' ) ) {
