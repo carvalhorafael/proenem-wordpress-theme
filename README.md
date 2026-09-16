@@ -59,6 +59,7 @@ npm run validate
 - `scripts/`: automações de i18n, release e empacotamento.
 - `docs/`: decisões e documentação de desenvolvimento.
 - `docs/performance.md`: fluxo de auditoria PageSpeed/Lighthouse.
+- `docs/materials-events.md`: contrato de medição dos materiais gratuitos.
 
 ## Design system
 
