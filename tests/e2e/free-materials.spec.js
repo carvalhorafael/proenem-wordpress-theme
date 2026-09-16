@@ -1039,6 +1039,50 @@ test("free materials surfaces have no critical accessibility violations", async 
   }
 });
 
+test("free materials surfaces stay accessible on a phone", async ({ page }) => {
+  // The desktop pass above misses what only exists at this width: the sticky
+  // bar, the stacked filter panel and the collapsed navbar.
+  await page.setViewportSize({ width: 375, height: 812 });
+
+  for (const url of [CATALOG, CATEGORY, MATERIAL]) {
+    await gotoMaterials(page, url);
+
+    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
+    const critical = results.violations.filter((violation) =>
+      ["critical", "serious"].includes(violation.impact),
+    );
+
+    expect(critical, `${url}: ${critical.map((v) => v.id).join(", ")}`).toEqual([]);
+  }
+});
+
+test("the sticky bar covers the gap between the two forms", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, MATERIAL);
+
+  const visible = () =>
+    page.locator("[data-pro-material-sticky-cta]").evaluate((el) => {
+      const box = el.getBoundingClientRect();
+
+      return getComputedStyle(el).display !== "none" && box.top < window.innerHeight && box.bottom > 0;
+    });
+
+  // While a form is on screen the bar would compete with what it points at.
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(400);
+  expect(await visible()).toBe(false);
+
+  await page.evaluate(() => window.scrollTo(0, 2500));
+  await page.waitForTimeout(600);
+  expect(await visible()).toBe(true);
+
+  await page.evaluate(() =>
+    document.querySelector(".pro-material-capture--footer").scrollIntoView({ block: "center" }),
+  );
+  await page.waitForTimeout(600);
+  expect(await visible()).toBe(false);
+});
+
 test("form patterns compile in the strict regex mode browsers use", () => {
   // Browsers compile the pattern attribute in `v` mode, which rejects
   // character classes that older modes accept. Playwright's Chromium still
