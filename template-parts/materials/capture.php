@@ -35,12 +35,21 @@ $capture_field    = static function ( $name ) use ( $capture_instance ) {
 };
 $capture_title_id = $capture_field( 'title' );
 $capture_privacy  = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
+// Read by the analytics listener. The panel is the only place that knows both
+// the material and which of the two instances this is.
+$capture_slug     = (string) get_post_field( 'post_name', $capture_material );
+$capture_format   = proenem_get_material_format_label( $capture_material );
+$capture_category = proenem_get_material_category_label( $capture_material );
 ?>
 <aside
 	<?php echo $capture_anchor ? 'id="' . esc_attr( $capture_anchor ) . '"' : ''; ?>
 	class="pro-material-capture pro-material-capture--<?php echo esc_attr( $capture_instance ); ?>"
 	aria-labelledby="<?php echo esc_attr( $capture_title_id ); ?>"
 	data-pro-material-capture
+	data-capture-instance="<?php echo esc_attr( $capture_instance ); ?>"
+	data-material-slug="<?php echo esc_attr( $capture_slug ); ?>"
+	data-material-format="<?php echo esc_attr( $capture_format ); ?>"
+	data-material-category="<?php echo esc_attr( $capture_category ); ?>"
 >
 	<span class="pro-material-capture__eyebrow"><?php echo esc_html( $capture_eyebrow ); ?></span>
 	<h2 id="<?php echo esc_attr( $capture_title_id ); ?>"><?php echo esc_html( $capture_heading ); ?></h2>

@@ -1317,6 +1317,49 @@ document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
  */
 const proMaterialsList = document.querySelector("[data-pro-materials-list]");
 
+/**
+ * Send an event to Amplitude, when Amplitude is there.
+ *
+ * The SDK comes from a plugin we do not control, so every call is guarded: an
+ * unconfigured key, a blocked CDN or a disabled plugin must cost the visitor
+ * nothing. The SDK queues events tracked before init resolves, so there is no
+ * need to wait for it.
+ */
+const proTrack = (event, properties) => {
+  try {
+    if (typeof window.amplitude?.track === "function") {
+      window.amplitude.track(event, properties);
+    }
+  } catch {
+    // Analytics must never break the page.
+  }
+};
+
+/*
+ * The capture posts over fetch, so success and failure share one URL and one
+ * click. Autocapture cannot tell them apart; the plugin announces the outcome
+ * and the theme adds the material context only it knows.
+ */
+document.addEventListener("crm-leads-capture:result", (event) => {
+  const panel = event.target.closest("[data-pro-material-capture]");
+  const detail = event.detail || {};
+  const properties = {
+    material_id: Number(detail.materialId) || 0,
+    material_slug: panel?.dataset.materialSlug || "",
+    material_format: panel?.dataset.materialFormat || "",
+    material_category: panel?.dataset.materialCategory || "",
+    instance: panel?.dataset.captureInstance || "",
+  };
+
+  if (detail.success) {
+    proTrack("material_capture_succeeded", properties);
+
+    return;
+  }
+
+  proTrack("material_capture_failed", { ...properties, error_code: detail.errorCode || "unknown" });
+});
+
 const proMaterialsSwap = async (url) => {
   const list = document.querySelector("[data-pro-materials-list]");
   const count = document.querySelector("[data-pro-materials-count]");
@@ -1362,6 +1405,17 @@ const proMaterialsSwap = async (url) => {
     }
 
     window.history.replaceState({}, "", url);
+
+    // Filtering used to be a GET, so each one was a page view. Swapping the
+    // list in place is better to use and invisible to analytics.
+    const parameters = new URL(url, window.location.href).searchParams;
+
+    proTrack("material_filter_applied", {
+      categories: parameters.getAll("material_categoria[]"),
+      order: parameters.get("ordenar") || "recentes",
+      page: Number(parameters.get("pagina")) || 1,
+      results: Number.parseInt(count?.textContent ?? "", 10) || 0,
+    });
 
     return true;
   } catch {
