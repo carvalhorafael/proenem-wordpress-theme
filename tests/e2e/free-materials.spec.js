@@ -1023,6 +1023,44 @@ test("capture feedback carries the Proenem identity, not Executive Signal", asyn
   await expect(message.locator(".crm-leads-capture-message__text")).toHaveCount(1);
 });
 
+test("the featured band stays compact on a phone", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await gotoMaterials(page, CATALOG);
+
+  const band = page.locator(".pro-materials-featured");
+
+  await expect(band).toHaveCount(1);
+
+  const height = await band.evaluate((el) => el.getBoundingClientRect().height);
+
+  // It took 557px stacked, which pushed the first card of the grid to 1682px.
+  expect(height).toBeLessThan(420);
+
+  // What it must not lose is the reason it exists: one material, sellable.
+  await expect(
+    band.locator(
+      ".pro-materials-featured__media img, .pro-materials-featured__media .pro-material-placeholder",
+    ),
+  ).toHaveCount(1);
+  await expect(band.locator("h3 a")).toBeVisible();
+  await expect(band.locator(".pro-materials-featured__excerpt")).toBeVisible();
+
+  const cta = band.locator(".pro-materials-featured__footer a");
+
+  await expect(cta).toBeVisible();
+
+  // The button is the point of the band, so it stays within the first screens.
+  const ctaTop = await cta.evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+
+  expect(ctaTop).toBeLessThan(800);
+
+  // The list belongs to the material's own page; on desktop it comes back.
+  await expect(band.locator(".pro-materials-featured__highlights")).toBeHidden();
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await expect(band.locator(".pro-materials-featured__highlights")).toBeVisible();
+});
+
 test("free materials surfaces have no critical accessibility violations", async ({ page }) => {
   for (const url of [CATALOG, CATEGORY, MATERIAL]) {
     await gotoMaterials(page, url);
