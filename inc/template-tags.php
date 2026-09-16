@@ -281,20 +281,29 @@ function proenem_render_blog_filter_bar() {
 /**
  * Render pagination using the public Proenem pagination markup.
  *
+ * @param WP_Query|null $query   Query to paginate. Defaults to the main query.
+ * @param int           $current Current page. Defaults to the `paged` query var.
+ * @param callable|null $link    Maps a page number to a URL. Defaults to
+ *                               get_pagenum_link().
  * @return void
  */
-function proenem_render_design_system_posts_pagination() {
-	global $wp_query;
+function proenem_render_design_system_posts_pagination( $query = null, $current = 0, $link = null ) {
+	if ( ! $query instanceof WP_Query ) {
+		global $wp_query;
 
-	$total = isset( $wp_query->max_num_pages ) ? (int) $wp_query->max_num_pages : 1;
+		$query = $wp_query;
+	}
+
+	$total = isset( $query->max_num_pages ) ? (int) $query->max_num_pages : 1;
 
 	if ( $total < 2 ) {
 		return;
 	}
 
-	$current  = max( 1, (int) get_query_var( 'paged' ) );
-	$previous = $current > 1 ? get_pagenum_link( $current - 1 ) : '';
-	$next     = $current < $total ? get_pagenum_link( $current + 1 ) : '';
+	$current  = $current > 0 ? (int) $current : max( 1, (int) get_query_var( 'paged' ) );
+	$link     = is_callable( $link ) ? $link : 'get_pagenum_link';
+	$previous = $current > 1 ? call_user_func( $link, $current - 1 ) : '';
+	$next     = $current < $total ? call_user_func( $link, $current + 1 ) : '';
 	?>
 	<nav class="pen-pagination" aria-label="<?php esc_attr_e( 'Paginação', 'proenem-wordpress-theme' ); ?>">
 		<?php if ( $previous ) : ?>
@@ -305,7 +314,7 @@ function proenem_render_design_system_posts_pagination() {
 
 		<div class="pen-pagination__pages">
 			<?php for ( $page = 1; $page <= $total; $page++ ) : ?>
-				<a class="pen-pagination__item<?php echo $page === $current ? ' is-current' : ''; ?>" href="<?php echo esc_url( get_pagenum_link( $page ) ); ?>"<?php echo $page === $current ? ' aria-current="page"' : ''; ?>>
+				<a class="pen-pagination__item<?php echo $page === $current ? ' is-current' : ''; ?>" href="<?php echo esc_url( call_user_func( $link, $page ) ); ?>"<?php echo $page === $current ? ' aria-current="page"' : ''; ?>>
 					<?php echo esc_html( (string) $page ); ?>
 				</a>
 			<?php endfor; ?>
@@ -435,6 +444,161 @@ function proenem_get_free_materials_taxonomy() {
 }
 
 /**
+ * Get the Free Materials catalog URL.
+ *
+ * @return string
+ */
+function proenem_get_free_materials_url() {
+	return home_url( '/materiais-gratuitos/' );
+}
+
+/**
+ * How many materials a catalog page shows.
+ *
+ * Sized so the current catalog fits on a single page. The point of the limit
+ * is to stop loading every material and every cover at once, not to split a
+ * short catalog in two.
+ *
+ * @return int
+ */
+function proenem_get_materials_per_page() {
+	/**
+	 * Filters how many materials each catalog page shows.
+	 *
+	 * @param int $per_page Materials per page.
+	 */
+	return max( 1, (int) apply_filters( 'proenem_materials_per_page', 18 ) );
+}
+
+/**
+ * Get the current catalog page.
+ *
+ * Read from a query argument rather than a pretty `/page/N/` URL. The plugin
+ * registers the material post type on the same slug the catalog page uses, so
+ * WordPress resolves /materiais-gratuitos/page/2/ with the rule
+ * `materiais-gratuitos/([^/]+)/page/?([0-9]{1,})` and looks for a material
+ * named "page", which is a 404. Reordering those rewrites would put every
+ * single material URL at risk for a catalog that rarely needs a second page.
+ *
+ * @return int
+ */
+function proenem_get_materials_paged() {
+	// Read from $_GET rather than filter_input(): the latter reads the real
+	// request and returns null under PHPUnit and WP-CLI, which makes this
+	// untestable. Read only, so no nonce applies.
+	$requested = isset( $_GET['pagina'] ) ? sanitize_text_field( wp_unslash( $_GET['pagina'] ) ) : '1'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	// Cast rather than absint(): absint( '-2' ) is 2, which would turn a
+	// negative page into a real one.
+	return max( 1, (int) $requested );
+}
+
+/**
+ * Build the URL for a catalog page, preserving filter and order.
+ *
+ * @param string $base_url Surface URL.
+ * @return callable
+ */
+function proenem_get_materials_page_link( $base_url ) {
+	$order      = proenem_get_selected_materials_order();
+	$categories = proenem_get_selected_material_category_slugs();
+
+	return static function ( $page ) use ( $base_url, $order, $categories ) {
+		$args = array();
+
+		if ( $page > 1 ) {
+			$args['pagina'] = (int) $page;
+		}
+
+		if ( 'recentes' !== $order ) {
+			$args['ordenar'] = $order;
+		}
+
+		$url = $args ? add_query_arg( $args, $base_url ) : $base_url;
+
+		foreach ( $categories as $slug ) {
+			$url = add_query_arg( 'material_categoria[]', $slug, $url );
+		}
+
+		return $url;
+	};
+}
+
+/**
+ * Get the orders the catalog offers.
+ *
+ * @return array<string, string>
+ */
+function proenem_get_materials_orders() {
+	return array(
+		'recentes' => __( 'Mais recentes', 'proenem-wordpress-theme' ),
+		'az'       => __( 'Ordem alfabética', 'proenem-wordpress-theme' ),
+	);
+}
+
+/**
+ * Get the order selected in the request.
+ *
+ * @return string
+ */
+function proenem_get_selected_materials_order() {
+	$requested = isset( $_GET['ordenar'] ) ? sanitize_key( wp_unslash( $_GET['ordenar'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	return array_key_exists( $requested, proenem_get_materials_orders() ) ? $requested : 'recentes';
+}
+
+/**
+ * Translate an order slug into query args.
+ *
+ * @param string $order Order slug.
+ * @return array<string, mixed>
+ */
+function proenem_get_materials_order_args( $order ) {
+	if ( 'az' === $order ) {
+		return array(
+			'order'   => 'ASC',
+			'orderby' => 'title',
+		);
+	}
+
+	return array(
+		'order'   => 'DESC',
+		'orderby' => 'date',
+	);
+}
+
+/**
+ * Build the catalog query args, applying the selected category filter.
+ *
+ * @param string[]             $selected_slugs Selected category slugs.
+ * @param array<string, mixed> $overrides      Query arg overrides.
+ * @return array<string, mixed>
+ */
+function proenem_build_free_materials_query_args( $selected_slugs, $overrides = array() ) {
+	$args = array(
+		'post_type'           => proenem_get_free_materials_post_type(),
+		'post_status'         => 'publish',
+		'posts_per_page'      => proenem_get_materials_per_page(),
+		'paged'               => proenem_get_materials_paged(),
+		'ignore_sticky_posts' => true,
+	);
+
+	$args = array_merge( $args, proenem_get_materials_order_args( proenem_get_selected_materials_order() ) );
+
+	if ( ! empty( $selected_slugs ) ) {
+		$args['tax_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Catalog filtering is the purpose of this query.
+			array(
+				'taxonomy' => proenem_get_free_materials_taxonomy(),
+				'field'    => 'slug',
+				'terms'    => $selected_slugs,
+			),
+		);
+	}
+
+	return array_merge( $args, $overrides );
+}
+
+/**
  * Get the Free Materials CTA label meta key.
  *
  * @return string
@@ -459,6 +623,66 @@ function proenem_get_free_materials_delivery_url_meta_key() {
  */
 function proenem_free_materials_is_available() {
 	return post_type_exists( proenem_get_free_materials_post_type() ) && taxonomy_exists( proenem_get_free_materials_taxonomy() );
+}
+
+/**
+ * Check whether the current request is a single material capture page.
+ *
+ * The catalog and the category archives keep the full navigation. Only the
+ * page whose single job is the form gets the reduced header.
+ *
+ * @return bool
+ */
+function proenem_is_material_capture_surface() {
+	return is_singular( proenem_get_free_materials_post_type() );
+}
+
+/**
+ * Render the breadcrumb for a material.
+ *
+ * The SEO plugin already emits a BreadcrumbList in the page schema, but
+ * nothing was shown on screen. This mirrors that trail.
+ *
+ * The trail starts at the catalog: the logo in the navbar is already the way
+ * home, and the h1 right below already names the material, so neither earns a
+ * crumb. What is left are the two steps back the reader cannot get to
+ * otherwise.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_breadcrumb( $post_id ) {
+	$crumbs = array(
+		array(
+			'label' => __( 'Materiais gratuitos', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_free_materials_url(),
+		),
+	);
+
+	$terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+
+	if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+		$term_link = get_term_link( $terms[0] );
+
+		if ( ! is_wp_error( $term_link ) ) {
+			$crumbs[] = array(
+				'label' => $terms[0]->name,
+				'url'   => $term_link,
+			);
+		}
+	}
+
+	?>
+	<nav class="pro-material-breadcrumb" aria-label="<?php esc_attr_e( 'Você está em', 'proenem-wordpress-theme' ); ?>">
+		<ol>
+			<?php foreach ( $crumbs as $crumb ) : ?>
+				<li>
+					<a href="<?php echo esc_url( $crumb['url'] ); ?>"><?php echo esc_html( $crumb['label'] ); ?></a>
+				</li>
+			<?php endforeach; ?>
+		</ol>
+	</nav>
+	<?php
 }
 
 /**
@@ -533,14 +757,67 @@ function proenem_get_material_excerpt( $post_id, $word_count = 20 ) {
 }
 
 /**
- * Get the image slot expected by Proenem material cards.
+ * Render the image for a material, or a typographic placeholder.
+ *
+ * Uses wp_get_attachment_image() so WordPress supplies srcset, sizes, the
+ * intrinsic dimensions and lazy loading. The theme deliberately requests a
+ * default WordPress size instead of registering its own: a custom size only
+ * exists for images uploaded after it is registered, which would leave already
+ * published materials without it. The CSS crops with object-fit.
  *
  * @param int    $post_id Post ID.
- * @param string $size    Image size.
- * @return array{src:string,alt:string}
+ * @param string $size    WordPress image size to request.
+ * @param string $sizes   Value for the sizes attribute.
+ * @param bool   $eager   Whether the image is above the fold.
+ * @return void
  */
-function proenem_get_material_image_slot( $post_id, $size = 'large' ) {
-	return proenem_get_post_image_slot( $post_id, $size );
+function proenem_render_material_image( $post_id, $size = 'medium_large', $sizes = '100vw', $eager = false ) {
+	if ( has_post_thumbnail( $post_id ) ) {
+		$attr = array(
+			'alt'   => get_the_title( $post_id ),
+			'sizes' => $sizes,
+		);
+
+		if ( $eager ) {
+			// Above the fold: opt out of lazy loading and let the browser
+			// prioritise it as the likely LCP element.
+			$attr['fetchpriority'] = 'high';
+			$attr['loading']       = 'eager';
+		}
+
+		// Lazy loading and decoding are left to WordPress, which already adds
+		// them and would otherwise emit the attribute twice.
+		echo wp_get_attachment_image( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image() escapes its own markup.
+			get_post_thumbnail_id( $post_id ),
+			$size,
+			false,
+			$attr
+		);
+
+		return;
+	}
+
+	proenem_render_material_image_placeholder( $post_id );
+}
+
+/**
+ * Render the placeholder for a material without a cover.
+ *
+ * A material is a document, so a stock photo of a student misrepresents what
+ * the visitor is about to download. The placeholder names the category instead.
+ *
+ * @param int $post_id Post ID.
+ * @return void
+ */
+function proenem_render_material_image_placeholder( $post_id ) {
+	$format = proenem_get_material_format_label( $post_id );
+	$label  = '' !== $format ? $format : proenem_get_material_category_label( $post_id );
+	?>
+	<span class="pro-material-placeholder" aria-hidden="true">
+		<span class="pro-material-placeholder__mark">✦</span>
+		<span class="pro-material-placeholder__label"><?php echo esc_html( $label ); ?></span>
+	</span>
+	<?php
 }
 
 /**
@@ -556,44 +833,592 @@ function proenem_get_material_cta_label( $post_id ) {
 		return $label;
 	}
 
-	return __( 'Acessar material', 'proenem-wordpress-theme' );
+	return __( 'Baixar grátis', 'proenem-wordpress-theme' );
 }
 
 /**
- * Get the material delivery URL.
+ * Get the material format label, or an empty string.
+ *
+ * The plugin validates the stored slug against its own list, so the theme only
+ * has to resolve the label and tolerate the field being empty.
  *
  * @param int $post_id Post ID.
  * @return string
  */
-function proenem_get_material_delivery_url( $post_id ) {
-	$url = get_post_meta( $post_id, proenem_get_free_materials_delivery_url_meta_key(), true );
+function proenem_get_material_format_label( $post_id ) {
+	if ( ! function_exists( 'free_materials_format_meta_key' ) || ! function_exists( 'free_materials_format_label' ) ) {
+		return '';
+	}
 
-	return is_string( $url ) ? $url : '';
+	$slug = get_post_meta( $post_id, free_materials_format_meta_key(), true );
+
+	return is_string( $slug ) && '' !== $slug ? free_materials_format_label( $slug ) : '';
+}
+
+/**
+ * Get the material page or item count.
+ *
+ * @param int $post_id Post ID.
+ * @return int
+ */
+function proenem_get_material_pages( $post_id ) {
+	if ( ! function_exists( 'free_materials_pages_meta_key' ) ) {
+		return 0;
+	}
+
+	return absint( get_post_meta( $post_id, free_materials_pages_meta_key(), true ) );
+}
+
+/**
+ * Get the material file size as stored by the editor.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_file_size( $post_id ) {
+	if ( ! function_exists( 'free_materials_file_size_meta_key' ) ) {
+		return '';
+	}
+
+	$size = get_post_meta( $post_id, free_materials_file_size_meta_key(), true );
+
+	return is_string( $size ) ? $size : '';
+}
+
+/**
+ * Get who the material is for.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function proenem_get_material_level( $post_id ) {
+	if ( ! function_exists( 'free_materials_level_meta_key' ) ) {
+		return '';
+	}
+
+	$level = get_post_meta( $post_id, free_materials_level_meta_key(), true );
+
+	return is_string( $level ) ? $level : '';
+}
+
+/**
+ * Get the "what is inside" topics.
+ *
+ * @param int $post_id Post ID.
+ * @return string[]
+ */
+function proenem_get_material_highlights( $post_id ) {
+	if ( ! function_exists( 'free_materials_highlights_meta_key' ) ) {
+		return array();
+	}
+
+	$highlights = get_post_meta( $post_id, free_materials_highlights_meta_key(), true );
+
+	if ( ! is_array( $highlights ) ) {
+		return array();
+	}
+
+	return array_values( array_filter( array_map( 'strval', $highlights ), 'strlen' ) );
+}
+
+/**
+ * Check whether the material is featured in the catalog.
+ *
+ * @param int $post_id Post ID.
+ * @return bool
+ */
+function proenem_material_is_featured( $post_id ) {
+	if ( ! function_exists( 'free_materials_featured_meta_key' ) ) {
+		return false;
+	}
+
+	return (bool) get_post_meta( $post_id, free_materials_featured_meta_key(), true );
+}
+
+/**
+ * Build the short specs shown on a card: format, extent and audience.
+ *
+ * Returns only the parts the editor actually filled in, so a material without
+ * metadata renders nothing instead of empty labels.
+ *
+ * @param int $post_id Post ID.
+ * @return string[]
+ */
+function proenem_get_material_specs( $post_id ) {
+	$specs  = array();
+	$format = proenem_get_material_format_label( $post_id );
+	$pages  = proenem_get_material_pages( $post_id );
+	$size   = proenem_get_material_file_size( $post_id );
+
+	if ( '' !== $format ) {
+		$specs[] = $format;
+	}
+
+	if ( $pages > 0 ) {
+		$specs[] = sprintf(
+			/* translators: %s: Number of pages or items in the material. */
+			_n( '%s página', '%s páginas', $pages, 'proenem-wordpress-theme' ),
+			number_format_i18n( $pages )
+		);
+	}
+
+	if ( '' !== $size ) {
+		$specs[] = $size;
+	}
+
+	return $specs;
+}
+
+/**
+ * Get the material featured in the catalog, if the editors picked one.
+ *
+ * @return WP_Post|null
+ */
+function proenem_get_featured_material() {
+	if ( ! proenem_free_materials_is_available() || ! function_exists( 'free_materials_featured_meta_key' ) ) {
+		return null;
+	}
+
+	$featured = get_posts(
+		array(
+			'ignore_sticky_posts' => true,
+			'meta_key'            => free_materials_featured_meta_key(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Editorial selection of a single post.
+			'meta_value'          => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Editorial selection of a single post.
+			// Nothing stops two editors from flagging a material each. Without
+			// an explicit tie-break the catalog would promote a different one
+			// between requests.
+			'order'               => 'DESC',
+			'orderby'             => array(
+				'date' => 'DESC',
+				'ID'   => 'DESC',
+			),
+			'post_status'         => 'publish',
+			'post_type'           => proenem_get_free_materials_post_type(),
+			'posts_per_page'      => 1,
+		)
+	);
+
+	return $featured ? $featured[0] : null;
+}
+
+/**
+ * Get materials related to the one being viewed.
+ *
+ * Prefers the same category, then fills the remaining slots with other recent
+ * materials, so the section is either complete or absent. A catalog this small
+ * would otherwise show a single lonely card.
+ *
+ * @param int $post_id Material ID.
+ * @param int $limit   How many to return.
+ * @return int[]
+ */
+function proenem_get_related_material_ids( $post_id, $limit = 3 ) {
+	$post_id = absint( $post_id );
+	$limit   = max( 1, absint( $limit ) );
+
+	if ( ! $post_id || ! proenem_free_materials_is_available() ) {
+		return array();
+	}
+
+	$base = array(
+		'fields'              => 'ids',
+		'ignore_sticky_posts' => true,
+		'post__not_in'        => array( $post_id ),
+		'post_status'         => 'publish',
+		'post_type'           => proenem_get_free_materials_post_type(),
+		'posts_per_page'      => $limit,
+	);
+
+	$terms    = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
+	$term_ids = empty( $terms ) || is_wp_error( $terms ) ? array() : wp_list_pluck( $terms, 'term_id' );
+	$related  = array();
+
+	if ( $term_ids ) {
+		$related = get_posts(
+			array_merge(
+				$base,
+				array(
+					'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Finding materials in the same category is the purpose of this query.
+						array(
+							'taxonomy' => proenem_get_free_materials_taxonomy(),
+							'field'    => 'term_id',
+							'terms'    => $term_ids,
+						),
+					),
+				)
+			)
+		);
+	}
+
+	if ( count( $related ) >= $limit ) {
+		return array_map( 'absint', $related );
+	}
+
+	$fill = get_posts(
+		array_merge(
+			$base,
+			array(
+				'post__not_in'   => array_merge( array( $post_id ), $related ),
+				'posts_per_page' => $limit - count( $related ),
+			)
+		)
+	);
+
+	return array_map( 'absint', array_merge( $related, $fill ) );
+}
+
+/**
+ * Get how many people already downloaded a material.
+ *
+ * Editorial, not counted: it only shows a number somebody on the team put in
+ * and can stand behind.
+ *
+ * @param int $post_id Material ID.
+ * @return int
+ */
+function proenem_get_material_downloads( $post_id ) {
+	if ( ! function_exists( 'free_materials_downloads_meta_key' ) ) {
+		return 0;
+	}
+
+	return absint( get_post_meta( $post_id, free_materials_downloads_meta_key(), true ) );
+}
+
+/**
+ * Get the questions shown on a material page.
+ *
+ * The defaults describe how this flow actually works, so they hold for every
+ * material. A site can replace or extend them per material.
+ *
+ * @param int $post_id Material ID.
+ * @return array<int, array{question:string,answer:string}>
+ */
+function proenem_get_material_faq( $post_id ) {
+	$privacy = function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '';
+	$faq     = array(
+		array(
+			'question' => __( 'É gratuito mesmo?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'É. Não pedimos pagamento nem dados de cartão em nenhum momento.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'Como recebo o material?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'Assim que você completa o cadastro, enviamos o link de download para o contato informado.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'Posso baixar de novo depois?', 'proenem-wordpress-theme' ),
+			'answer'   => __( 'Pode. O link continua no seu email, e esta página segue disponível para você voltar quando precisar.', 'proenem-wordpress-theme' ),
+		),
+		array(
+			'question' => __( 'O que vocês fazem com meus dados?', 'proenem-wordpress-theme' ),
+			'answer'   => $privacy
+				? __( 'Usamos para enviar o material e conteúdos de estudo. Você pode sair da lista quando quiser, e a política de privacidade está no rodapé desta página.', 'proenem-wordpress-theme' )
+				: __( 'Usamos para enviar o material e conteúdos de estudo. Você pode sair da lista quando quiser.', 'proenem-wordpress-theme' ),
+		),
+	);
+
+	/**
+	 * Filters the questions shown on a free material page.
+	 *
+	 * @param array<int, array{question:string,answer:string}> $faq     Questions.
+	 * @param int                                              $post_id Material ID.
+	 */
+	return (array) apply_filters( 'proenem_material_faq', $faq, $post_id );
+}
+
+/**
+ * Get the testimonial that backs a material.
+ *
+ * Reads the pool the plugin exposes for the home carousel, so a story is
+ * curated once and reused instead of copied per material. The choice is
+ * derived from the material so every page keeps its own story and keeps it
+ * across requests. Falls back to the featured story when nothing was selected
+ * for the home.
+ *
+ * @param int $post_id Material ID.
+ * @return WP_Post|null
+ */
+function proenem_get_material_proof_testimonial( $post_id ) {
+	$pool = proenem_get_home_testimonials( array(), 12 );
+
+	if ( $pool ) {
+		return $pool[ absint( $post_id ) % count( $pool ) ];
+	}
+
+	return proenem_get_featured_testimonial();
+}
+
+/**
+ * Render the social proof and the questions for a material.
+ *
+ * Sits in the sidebar beside the content, so the reader meets the proof and
+ * the objections while still reading instead of a screen further down. Each
+ * half renders only when there is something to show.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_reassurance( $post_id ) {
+	$downloads   = proenem_get_material_downloads( $post_id );
+	$testimonial = proenem_get_material_proof_testimonial( $post_id );
+	$faq         = proenem_get_material_faq( $post_id );
+
+	if ( ! $downloads && ! $testimonial instanceof WP_Post && empty( $faq ) ) {
+		return;
+	}
+	?>
+	<div class="pro-material-reassurance">
+		<?php if ( $downloads || $testimonial instanceof WP_Post ) : ?>
+			<aside class="pro-material-proof" aria-label="<?php esc_attr_e( 'Prova social', 'proenem-wordpress-theme' ); ?>">
+				<?php if ( $downloads ) : ?>
+					<p class="pro-material-proof__count">
+						<strong><?php echo esc_html( number_format_i18n( $downloads ) ); ?></strong>
+						<span>
+							<?php
+							echo esc_html(
+								_n(
+									'estudante já baixou este material',
+									'estudantes já baixaram este material',
+									$downloads,
+									'proenem-wordpress-theme'
+								)
+							);
+							?>
+						</span>
+					</p>
+				<?php endif; ?>
+
+				<?php if ( $testimonial instanceof WP_Post ) : ?>
+					<?php
+					$testimonial_id   = (int) $testimonial->ID;
+					$testimonial_name = proenem_get_testimonial_student_name( $testimonial_id );
+					$testimonial_line = implode(
+						' · ',
+						array_filter(
+							array(
+								proenem_get_testimonial_course( $testimonial_id ),
+								proenem_get_testimonial_institution( $testimonial_id ),
+							)
+						)
+					);
+					?>
+					<figure class="pro-material-proof__quote">
+						<blockquote><p><?php echo esc_html( proenem_get_testimonial_quote( $testimonial_id, 30 ) ); ?></p></blockquote>
+						<figcaption>
+							<?php if ( has_post_thumbnail( $testimonial_id ) ) : ?>
+								<?php
+								echo get_the_post_thumbnail(
+									$testimonial_id,
+									'thumbnail',
+									array(
+										'alt'      => '',
+										'class'    => 'pro-material-proof__avatar',
+										'decoding' => 'async',
+										'loading'  => 'lazy',
+									)
+								);
+								?>
+							<?php else : ?>
+								<?php // A stock portrait beside their name would read as the student, so the monogram stands in. ?>
+								<span class="pro-material-proof__avatar pro-material-proof__avatar--initial" aria-hidden="true"><?php echo esc_html( mb_substr( $testimonial_name, 0, 1 ) ); ?></span>
+							<?php endif; ?>
+							<span class="pro-material-proof__who">
+								<strong><?php echo esc_html( $testimonial_name ); ?></strong>
+								<?php if ( $testimonial_line ) : ?>
+									<span><?php echo esc_html( $testimonial_line ); ?></span>
+								<?php endif; ?>
+							</span>
+						</figcaption>
+					</figure>
+				<?php endif; ?>
+			</aside>
+		<?php endif; ?>
+
+		<?php if ( $faq ) : ?>
+			<section class="pen-faq-section pro-material-faq" aria-labelledby="pro-material-faq-title">
+				<div class="pen-faq-section__header">
+					<h2 id="pro-material-faq-title"><?php esc_html_e( 'Perguntas frequentes', 'proenem-wordpress-theme' ); ?></h2>
+				</div>
+				<div class="pen-faq-section__items">
+					<?php foreach ( $faq as $index => $item ) : ?>
+						<?php if ( empty( $item['question'] ) || empty( $item['answer'] ) ) : ?>
+							<?php continue; ?>
+						<?php endif; ?>
+						<details class="pen-faq-item"<?php echo 0 === $index ? ' open' : ''; ?>>
+							<summary><?php echo esc_html( $item['question'] ); ?></summary>
+							<p><?php echo esc_html( $item['answer'] ); ?></p>
+						</details>
+					<?php endforeach; ?>
+				</div>
+			</section>
+		<?php endif; ?>
+	</div>
+	<?php
+}
+
+/**
+ * Render the share bar for a material.
+ *
+ * Leads with WhatsApp: the audience is students, and a shared material reaches
+ * the friend who also needs it.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_material_share( $post_id ) {
+	$url   = get_permalink( $post_id );
+	$title = get_the_title( $post_id );
+
+	if ( ! $url ) {
+		return;
+	}
+
+	$encoded_url = rawurlencode( $url );
+	$message     = rawurlencode(
+		sprintf(
+			/* translators: 1: Material title. 2: Material URL. */
+			__( 'Achei este material gratuito da Proenem: %1$s %2$s', 'proenem-wordpress-theme' ),
+			$title,
+			$url
+		)
+	);
+	?>
+	<div class="pen-article-share-bar pro-material-share">
+		<span class="pro-material-share__label"><?php esc_html_e( 'Compartilhe com quem também precisa', 'proenem-wordpress-theme' ); ?></span>
+		<div class="pen-article-share-bar__links">
+			<a class="pen-article-share pen-article-share--green" href="<?php echo esc_url( 'https://wa.me/?text=' . $message ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no WhatsApp', 'proenem-wordpress-theme' ); ?>">W</a>
+			<a class="pen-article-share pen-article-share--yellow" href="<?php echo esc_url( 'https://www.facebook.com/sharer/sharer.php?u=' . $encoded_url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no Facebook', 'proenem-wordpress-theme' ); ?>">F</a>
+			<a class="pen-article-share pen-article-share--pink" href="<?php echo esc_url( 'https://twitter.com/intent/tweet?url=' . $encoded_url . '&text=' . rawurlencode( $title ) ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Compartilhar no X', 'proenem-wordpress-theme' ); ?>">X</a>
+		</div>
+	</div>
+	<?php
+}
+
+/**
+ * Render the related materials section.
+ *
+ * @param int $post_id Material ID.
+ * @return void
+ */
+function proenem_render_related_materials( $post_id ) {
+	$related = proenem_get_related_material_ids( $post_id, 4 );
+
+	if ( empty( $related ) ) {
+		return;
+	}
+	?>
+	<section class="pro-material-related" aria-labelledby="pro-material-related-title">
+		<div class="pro-material-related__inner">
+			<header class="pro-material-related__header">
+				<h2 id="pro-material-related-title"><?php esc_html_e( 'Outros materiais para a sua rotina', 'proenem-wordpress-theme' ); ?></h2>
+				<a href="<?php echo esc_url( proenem_get_free_materials_url() ); ?>">
+					<?php esc_html_e( 'Ver todos', 'proenem-wordpress-theme' ); ?>
+					<span aria-hidden="true">→</span>
+				</a>
+			</header>
+
+			<div class="pro-materials-grid">
+				<?php
+				foreach ( $related as $related_id ) {
+					proenem_render_material_card( $related_id );
+				}
+				?>
+			</div>
+		</div>
+	</section>
+	<?php
+}
+
+/**
+ * Render the editorial highlight above the catalog grid.
+ *
+ * Renders nothing when the editors have not picked a material, so the catalog
+ * simply starts at the grid.
+ *
+ * @param WP_Post|null $material Featured material.
+ * @return void
+ */
+function proenem_render_featured_material( $material ) {
+	if ( ! $material instanceof WP_Post ) {
+		return;
+	}
+
+	$material_id = (int) $material->ID;
+	$specs       = proenem_get_material_specs( $material_id );
+	$highlights  = array_slice( proenem_get_material_highlights( $material_id ), 0, 4 );
+	$permalink   = get_permalink( $material_id );
+	?>
+	<section class="pro-materials-featured" aria-labelledby="pro-materials-featured-title">
+		<div class="pro-materials-featured__inner">
+			<a class="pro-materials-featured__media" href="<?php echo esc_url( $permalink ); ?>" tabindex="-1" aria-hidden="true">
+				<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 900px) 92vw, 340px' ); ?>
+			</a>
+
+			<div class="pro-materials-featured__copy">
+				<span class="pro-materials-featured__eyebrow"><?php esc_html_e( 'Material em destaque', 'proenem-wordpress-theme' ); ?></span>
+				<h3 id="pro-materials-featured-title">
+					<a href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( get_the_title( $material_id ) ); ?></a>
+				</h3>
+				<p class="pro-materials-featured__excerpt"><?php echo esc_html( proenem_get_material_excerpt( $material_id, 30 ) ); ?></p>
+
+				<?php if ( $highlights ) : ?>
+					<ul class="pro-materials-featured__highlights">
+						<?php foreach ( $highlights as $highlight ) : ?>
+							<li><?php echo esc_html( $highlight ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+
+				<div class="pro-materials-featured__footer">
+					<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( $permalink ); ?>">
+						<?php echo esc_html( proenem_get_material_cta_label( $material_id ) ); ?>
+						<span aria-hidden="true">→</span>
+					</a>
+					<?php if ( $specs ) : ?>
+						<p class="pro-materials-featured__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php
 }
 
 /**
  * Render a Free Materials card.
  *
- * @param int $post_id Post ID.
+ * @param int  $post_id     Post ID.
+ * @param bool $is_featured Whether this material is the one highlighted above the grid.
  * @return void
  */
-function proenem_render_material_card( $post_id ) {
-	$image          = proenem_get_material_image_slot( $post_id, 'large' );
-	$category_terms = get_the_terms( $post_id, proenem_get_free_materials_taxonomy() );
-	$category_slugs = array();
-
-	if ( ! empty( $category_terms ) && ! is_wp_error( $category_terms ) ) {
-		$category_slugs = wp_list_pluck( $category_terms, 'slug' );
-	}
+function proenem_render_material_card( $post_id, $is_featured = false ) {
+	$specs = proenem_get_material_specs( $post_id );
+	$level = proenem_get_material_level( $post_id );
 	?>
-	<article class="pro-material-card" data-pro-material-card data-material-categories="<?php echo esc_attr( wp_json_encode( array_values( $category_slugs ) ) ); ?>">
+	<article class="pro-material-card<?php echo $is_featured ? ' pro-material-card--featured' : ''; ?>" data-pro-material-card<?php echo $is_featured ? ' data-pro-material-featured' : ''; ?>>
 		<a class="pro-material-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
-			<img src="<?php echo esc_url( $image['src'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
+			<?php proenem_render_material_image( $post_id, 'medium_large', '(max-width: 760px) 92vw, (max-width: 980px) 46vw, 380px' ); ?>
+			<?php if ( $is_featured ) : ?>
+				<span class="pro-material-card__flag"><?php esc_html_e( 'Em destaque', 'proenem-wordpress-theme' ); ?></span>
+			<?php endif; ?>
 			<span class="pro-material-card__badge"><?php echo esc_html( proenem_get_material_category_label( $post_id ) ); ?></span>
 		</a>
 		<div class="pro-material-card__body">
-			<h2><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h2>
-			<p><?php echo esc_html( proenem_get_material_excerpt( $post_id ) ); ?></p>
+			<?php if ( $specs ) : ?>
+				<p class="pro-material-card__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+			<?php endif; ?>
+			<h3><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></h3>
+			<p class="pro-material-card__excerpt"><?php echo esc_html( proenem_get_material_excerpt( $post_id, 16 ) ); ?></p>
+			<?php if ( '' !== $level ) : ?>
+				<p class="pro-material-card__level">
+					<?php
+					printf(
+						/* translators: %s: Who the material is for. */
+						esc_html__( 'Para %s', 'proenem-wordpress-theme' ),
+						esc_html( strtolower( wp_trim_words( $level, 10 ) ) )
+					);
+					?>
+				</p>
+			<?php endif; ?>
 			<a class="pro-material-card__action" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>">
 				<?php echo esc_html( proenem_get_material_cta_label( $post_id ) ); ?>
 				<span aria-hidden="true">→</span>
@@ -604,34 +1429,213 @@ function proenem_render_material_card( $post_id ) {
 }
 
 /**
- * Render material category filters.
+ * Pick the categories that deserve a tab.
+ *
+ * An empty category is a dead end, so it only earns a tab while it is the one
+ * being viewed and therefore needs to stay visible.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return WP_Term[]
+ */
+function proenem_get_material_category_tabs_terms( $terms, $selected_slugs ) {
+	if ( ! is_array( $terms ) ) {
+		return array();
+	}
+
+	return array_values(
+		array_filter(
+			$terms,
+			static function ( $term ) use ( $selected_slugs ) {
+				if ( ! isset( $term->slug ) ) {
+					return false;
+				}
+
+				return (int) ( $term->count ?? 0 ) > 0 || in_array( $term->slug, $selected_slugs, true );
+			}
+		)
+	);
+}
+
+/**
+ * The colours a category chip can take.
+ *
+ * Only tones that reach 4.5:1 with ink text, which rules out purple and
+ * platform blue. The order is stable, so a category keeps its colour from one
+ * page to the next.
+ *
+ * @return string[]
+ */
+function proenem_get_material_category_tones() {
+	/**
+	 * Filters the colour tones used by the category chips.
+	 *
+	 * @param string[] $tones Tone slugs.
+	 */
+	return (array) apply_filters(
+		'proenem_material_category_tones',
+		array( 'cyan', 'yellow', 'mint', 'pink', 'orange', 'teal', 'magenta', 'rose' )
+	);
+}
+
+/**
+ * Get the colour tone for a category.
+ *
+ * @param int $index Position in the ordered term list.
+ * @return string
+ */
+function proenem_get_material_category_tone( $index ) {
+	$tones = proenem_get_material_category_tones();
+
+	return empty( $tones ) ? 'cyan' : $tones[ absint( $index ) % count( $tones ) ];
+}
+
+/**
+ * Render the material category tabs.
+ *
+ * The tabs link to the real category archives created by
+ * taxonomy-material_categoria.php, so every filter state is a crawlable URL
+ * with its own heading and description, and filtering needs no JavaScript.
+ *
+ * The legacy `material_categoria` query argument keeps working on the server
+ * for links published before these archives existed.
  *
  * @param WP_Term[] $terms          Terms.
  * @param string[]  $selected_slugs Selected slugs.
  * @return void
  */
-function proenem_render_material_category_filters( $terms, $selected_slugs ) {
+function proenem_render_material_category_tabs( $terms, $selected_slugs ) {
+	if ( empty( $terms ) ) {
+		return;
+	}
+
+	$showing_all = empty( $selected_slugs );
+	$terms       = proenem_get_material_category_tabs_terms( $terms, $selected_slugs );
+
+	if ( empty( $terms ) ) {
+		return;
+	}
 	?>
-		<form class="pro-materials-filter" method="get" action="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-filter>
-			<div class="pro-materials-filter__header">
-				<h2><?php esc_html_e( 'Categorias', 'proenem-wordpress-theme' ); ?></h2>
-				<a href="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>" data-pro-materials-clear<?php echo empty( $selected_slugs ) ? ' hidden' : ''; ?>><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
-			</div>
-		<div class="pro-materials-filter__options">
-			<?php if ( empty( $terms ) ) : ?>
-				<p><?php esc_html_e( 'Nenhuma categoria cadastrada ainda.', 'proenem-wordpress-theme' ); ?></p>
-			<?php else : ?>
-				<?php foreach ( $terms as $term ) : ?>
-					<label class="pro-materials-filter__option">
-						<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
-						<span><?php echo esc_html( $term->name ); ?></span>
-						<small><?php echo esc_html( (string) $term->count ); ?></small>
-					</label>
-				<?php endforeach; ?>
+	<nav class="pen-blog-category-tabs pro-materials-tabs" aria-label="<?php esc_attr_e( 'Categorias de materiais gratuitos', 'proenem-wordpress-theme' ); ?>">
+		<?php // Land on the list, not back at the top of the hero. ?>
+		<a
+			class="pen-blog-category-tabs__item<?php echo $showing_all ? ' is-active' : ''; ?>"
+			href="<?php echo esc_url( proenem_get_free_materials_url() . '#materiais' ); ?>"
+			<?php echo $showing_all ? ' aria-current="page"' : ''; ?>
+		>
+			<?php esc_html_e( 'Todos', 'proenem-wordpress-theme' ); ?>
+		</a>
+		<?php foreach ( $terms as $index => $term ) : ?>
+			<?php
+			$is_current = in_array( $term->slug, $selected_slugs, true );
+			$term_link  = get_term_link( $term );
+
+			if ( is_wp_error( $term_link ) ) {
+				continue;
+			}
+			?>
+			<a
+				class="pen-blog-category-tabs__item<?php echo $is_current ? ' is-active' : ''; ?>"
+				data-tone="<?php echo esc_attr( proenem_get_material_category_tone( $index ) ); ?>"
+				href="<?php echo esc_url( $term_link ); ?>"
+				<?php echo $is_current ? ' aria-current="page"' : ''; ?>
+			>
+				<?php echo esc_html( $term->name ); ?>
+				<small class="pro-materials-tabs__count"><?php echo esc_html( number_format_i18n( $term->count ) ); ?></small>
+			</a>
+		<?php endforeach; ?>
+	</nav>
+	<?php
+}
+
+/**
+ * Render the category filter panel shown above the grid.
+ *
+ * The chips in the hero select one category at a time, because each is a real
+ * archive URL. This panel is what lets someone combine categories, through the
+ * query argument the server already understands.
+ *
+ * @param WP_Term[] $terms          Terms.
+ * @param string[]  $selected_slugs Selected slugs.
+ * @return void
+ */
+function proenem_render_material_category_filter_panel( $terms, $selected_slugs ) {
+	$terms = proenem_get_material_category_tabs_terms( $terms, $selected_slugs );
+
+	if ( count( $terms ) < 2 ) {
+		return;
+	}
+
+	$catalog_url = proenem_get_free_materials_url();
+	$order       = proenem_get_selected_materials_order();
+	?>
+	<form class="pro-materials-filter pro-materials-filter--panel" method="get" action="<?php echo esc_url( $catalog_url ); ?>">
+		<div class="pro-materials-filter__header">
+			<strong><?php esc_html_e( 'Combine categorias', 'proenem-wordpress-theme' ); ?></strong>
+			<?php if ( ! empty( $selected_slugs ) ) : ?>
+				<a href="<?php echo esc_url( $catalog_url ); ?>"><?php esc_html_e( 'Limpar filtros', 'proenem-wordpress-theme' ); ?></a>
 			<?php endif; ?>
 		</div>
+
+		<?php if ( 'recentes' !== $order ) : ?>
+			<input type="hidden" name="ordenar" value="<?php echo esc_attr( $order ); ?>">
+		<?php endif; ?>
+
+		<div class="pro-materials-filter__options">
+			<?php foreach ( $terms as $term ) : ?>
+				<label class="pro-materials-filter__option">
+					<input type="checkbox" name="material_categoria[]" value="<?php echo esc_attr( $term->slug ); ?>"<?php checked( in_array( $term->slug, $selected_slugs, true ) ); ?>>
+					<span><?php echo esc_html( $term->name ); ?></span>
+					<small><?php echo esc_html( number_format_i18n( $term->count ) ); ?></small>
+				</label>
+			<?php endforeach; ?>
+		</div>
+
 		<button class="pen-button pen-button--primary pen-button--sm pro-materials-filter__submit" type="submit">
-			<?php esc_html_e( 'Filtrar materiais', 'proenem-wordpress-theme' ); ?>
+			<?php esc_html_e( 'Ver materiais', 'proenem-wordpress-theme' ); ?>
+		</button>
+	</form>
+	<?php
+}
+
+/**
+ * Render the catalog order control.
+ *
+ * A plain GET form against the current surface, so ordering works without
+ * JavaScript. The script hides the submit button and submits on change.
+ *
+ * @param string $action_url URL the form submits to.
+ * @return void
+ */
+function proenem_render_materials_order_control( $action_url ) {
+	$orders   = proenem_get_materials_orders();
+	$selected = proenem_get_selected_materials_order();
+
+	if ( count( $orders ) < 2 ) {
+		return;
+	}
+	?>
+	<form class="pro-materials-order" method="get" action="<?php echo esc_url( $action_url ); ?>" data-pro-materials-order>
+		<?php
+		// Carry the legacy category argument so ordering does not drop a filter
+		// applied through it.
+		foreach ( proenem_get_selected_material_category_slugs() as $slug ) :
+			?>
+			<input type="hidden" name="material_categoria[]" value="<?php echo esc_attr( $slug ); ?>">
+		<?php endforeach; ?>
+
+		<label class="pen-blog-sort-select">
+			<span><?php esc_html_e( 'Ordenar materiais', 'proenem-wordpress-theme' ); ?></span>
+			<select name="ordenar" aria-label="<?php esc_attr_e( 'Ordenar materiais', 'proenem-wordpress-theme' ); ?>">
+				<?php foreach ( $orders as $slug => $label ) : ?>
+					<option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $selected, $slug ); ?>>
+						<?php echo esc_html( $label ); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</label>
+		<button class="pen-button pen-button--secondary pen-button--sm pro-materials-order__submit" type="submit">
+			<?php esc_html_e( 'Ordenar', 'proenem-wordpress-theme' ); ?>
 		</button>
 	</form>
 	<?php

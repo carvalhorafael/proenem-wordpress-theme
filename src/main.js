@@ -961,100 +961,6 @@ document.querySelectorAll(".testimonials-block--slider, .testimonials-block--vid
   startAutoplay();
 });
 
-document.querySelectorAll("[data-pro-materials-filter]").forEach((form) => {
-  const grid = document.querySelector("[data-pro-materials-grid]");
-  const count = document.querySelector("[data-pro-materials-count]");
-  const emptyState = document.querySelector("[data-pro-materials-empty]");
-  const clearLink = form.querySelector("[data-pro-materials-clear]");
-  const cards = Array.from(document.querySelectorAll("[data-pro-material-card]"));
-  const checkboxes = Array.from(form.querySelectorAll('input[name="material_categoria[]"]'));
-
-  if (!grid || !cards.length || !checkboxes.length) {
-    return;
-  }
-
-  const getCardCategories = (card) => {
-    try {
-      return JSON.parse(card.dataset.materialCategories || "[]");
-    } catch {
-      return [];
-    }
-  };
-
-  const updateUrl = (selectedCategories) => {
-    const url = new URL(window.location.href);
-
-    url.searchParams.delete("material_categoria[]");
-    url.searchParams.delete("material_categoria");
-
-    selectedCategories.forEach((category) => {
-      url.searchParams.append("material_categoria[]", category);
-    });
-
-    window.history.replaceState({}, "", url);
-  };
-
-  const render = () => {
-    const selectedCategories = checkboxes
-      .filter((checkbox) => checkbox.checked)
-      .map((checkbox) => checkbox.value);
-    let visibleCount = 0;
-
-    cards.forEach((card) => {
-      const cardCategories = getCardCategories(card);
-      const isVisible =
-        selectedCategories.length === 0 ||
-        selectedCategories.some((category) => cardCategories.includes(category));
-
-      card.hidden = !isVisible;
-
-      if (isVisible) {
-        visibleCount += 1;
-      }
-    });
-
-    if (count) {
-      const countTemplate =
-        visibleCount === 1
-          ? count.dataset.countTemplateSingular || "%s"
-          : count.dataset.countTemplatePlural || "%s";
-
-      count.textContent = countTemplate.replace("%s", visibleCount.toLocaleString("pt-BR"));
-    }
-
-    if (emptyState) {
-      emptyState.hidden = visibleCount !== 0;
-    }
-
-    if (clearLink) {
-      clearLink.hidden = selectedCategories.length === 0;
-    }
-
-    updateUrl(selectedCategories);
-  };
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    render();
-  });
-
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", render);
-  });
-
-  clearLink?.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-    render();
-  });
-
-  render();
-});
-
 document.querySelectorAll("[data-pro-testimonials-filter]").forEach((form) => {
   const grid = document.querySelector("[data-pro-testimonials-grid]");
   const count = document.querySelector("[data-pro-testimonials-count]");
@@ -1222,5 +1128,372 @@ document.querySelectorAll("[data-pro-testimonial-share]").forEach((shareDetails)
     window.setTimeout(() => {
       copyButton.textContent = copyLabel;
     }, 2400);
+  });
+});
+
+document.querySelectorAll("[data-pro-material-capture-form]").forEach((form) => {
+  const fields = Array.from(form.querySelectorAll("input[required], [data-pro-capture-phone]"));
+
+  // A field can throw from checkValidity() when a pattern attribute is not a
+  // valid regular expression in the browser's mode. Treat that as valid rather
+  // than letting it kill the whole submit handler.
+  const isValid = (field) => {
+    try {
+      return field.checkValidity() && phoneIsComplete(field);
+    } catch {
+      return true;
+    }
+  };
+
+  // The mask normalises the format, so the only thing left to check is whether
+  // the visitor finished typing. An empty field stays valid: it is optional.
+  const phoneIsComplete = (field) => {
+    if (!field.matches("[data-pro-capture-phone]") || field.value === "") {
+      return true;
+    }
+
+    return field.value.replace(/\D/g, "").length >= 10;
+  };
+
+  if (!fields.length) {
+    return;
+  }
+
+  // Take over validation messaging so the browser bubbles do not compete with
+  // the inline errors. Without JS the native `required` handling still applies.
+  form.noValidate = true;
+
+  const errorFor = (field) => {
+    const id = field.getAttribute("aria-describedby");
+
+    return id ? document.getElementById(id) : null;
+  };
+
+  const messageFor = (field) => {
+    if (field.validity.valueMissing) {
+      return field.dataset.proCaptureRequired || "Preencha este campo para continuar.";
+    }
+
+    if (field.validity.typeMismatch) {
+      return field.dataset.proCaptureType || "Informe um email válido, como voce@exemplo.com.";
+    }
+
+    if (!phoneIsComplete(field)) {
+      return field.dataset.proCapturePhone || "Informe o número com DDD, como (11) 91234-5678.";
+    }
+
+    return field.validationMessage;
+  };
+
+  const clearField = (field) => {
+    const error = errorFor(field);
+
+    field.removeAttribute("aria-invalid");
+
+    if (error) {
+      error.textContent = "";
+      error.hidden = true;
+    }
+  };
+
+  const showField = (field) => {
+    const error = errorFor(field);
+
+    field.setAttribute("aria-invalid", "true");
+
+    if (error) {
+      error.textContent = messageFor(field);
+      error.hidden = false;
+    }
+  };
+
+  fields.forEach((field) => {
+    field.addEventListener("input", () => {
+      if (isValid(field)) {
+        clearField(field);
+      }
+    });
+
+    field.addEventListener("blur", () => {
+      if (field.value !== "" && !isValid(field)) {
+        showField(field);
+      }
+    });
+  });
+
+  const phone = form.querySelector("[data-pro-capture-phone]");
+
+  phone?.addEventListener("input", () => {
+    const digits = phone.value.replace(/\D/g, "").slice(0, 11);
+
+    if (!digits) {
+      phone.value = "";
+      return;
+    }
+
+    const area = digits.slice(0, 2);
+    const rest = digits.slice(2);
+    const split = rest.length > 4 ? rest.length - 4 : 0;
+
+    phone.value = [
+      digits.length > 2 ? `(${area}) ` : `(${area}`,
+      split ? `${rest.slice(0, split)}-${rest.slice(split)}` : rest,
+    ].join("");
+  });
+
+  form.addEventListener("submit", (event) => {
+    const invalid = fields.filter((field) => !isValid(field));
+
+    fields.forEach(clearField);
+
+    if (!invalid.length) {
+      return;
+    }
+
+    // Stop the capture plugin's delegated document listener from taking over.
+    event.preventDefault();
+    event.stopPropagation();
+
+    invalid.forEach(showField);
+    invalid[0].focus();
+  });
+});
+
+document.querySelectorAll("[data-pro-material-sticky-cta]").forEach((bar) => {
+  const panels = Array.from(document.querySelectorAll("[data-pro-material-capture]"));
+
+  if (!panels.length || !("IntersectionObserver" in window)) {
+    return;
+  }
+
+  bar.hidden = false;
+
+  const onScreen = new Set();
+
+  // The page carries a form in the hero and another at the end. The bar shows
+  // only while none of them is on screen, so it never competes with the form
+  // it points at.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          onScreen.add(entry.target);
+        } else {
+          onScreen.delete(entry.target);
+        }
+      });
+
+      bar.classList.toggle("is-visible", onScreen.size === 0);
+    },
+    { rootMargin: "-72px 0px 0px 0px" },
+  );
+
+  panels.forEach((panel) => observer.observe(panel));
+
+  bar.querySelector("[data-pro-material-sticky-cta-action]")?.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    // Send the visitor to whichever form is closest to where they are.
+    const target = panels.reduce((closest, panel) => {
+      const distance = Math.abs(panel.getBoundingClientRect().top);
+
+      return distance < Math.abs(closest.getBoundingClientRect().top) ? panel : closest;
+    }, panels[0]);
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    target.querySelector("input:not([type=hidden]):not([tabindex='-1'])")?.focus({ preventScroll: true });
+  });
+});
+
+/*
+ * Filtering and ordering the catalog without a full page load.
+ *
+ * The server stays the single source of truth: the same URL a plain form would
+ * submit is fetched, and only the list and the count are swapped in. Hiding
+ * cards on the client would be wrong the moment the catalog needs a second
+ * page, because the client only holds the current one.
+ */
+const proMaterialsList = document.querySelector("[data-pro-materials-list]");
+
+/**
+ * Send an event to Amplitude, when Amplitude is there.
+ *
+ * The SDK comes from a plugin we do not control, so every call is guarded: an
+ * unconfigured key, a blocked CDN or a disabled plugin must cost the visitor
+ * nothing. The SDK queues events tracked before init resolves, so there is no
+ * need to wait for it.
+ */
+const proTrack = (event, properties) => {
+  try {
+    if (typeof window.amplitude?.track === "function") {
+      window.amplitude.track(event, properties);
+    }
+  } catch {
+    // Analytics must never break the page.
+  }
+};
+
+/*
+ * Carry the anonymous device id to the CRM, so the conversion recorded there
+ * can be tied back to the session that produced it. The opposite direction —
+ * sending the email to analytics — would put personal data in a tool that has
+ * no business holding it.
+ *
+ * Filled in the capture phase, which runs before the capture plugin's own
+ * listener on document, so the value is fresh at the moment it is read.
+ */
+document.addEventListener(
+  "submit",
+  (event) => {
+    const field = event.target?.querySelector?.("[data-pro-analytics-device-id]");
+
+    if (!field) {
+      return;
+    }
+
+    try {
+      field.value = window.amplitude?.getDeviceId?.() ?? "";
+    } catch {
+      field.value = "";
+    }
+  },
+  true,
+);
+
+/*
+ * The capture posts over fetch, so success and failure share one URL and one
+ * click. Autocapture cannot tell them apart; the plugin announces the outcome
+ * and the theme adds the material context only it knows.
+ */
+document.addEventListener("crm-leads-capture:result", (event) => {
+  const panel = event.target.closest("[data-pro-material-capture]");
+  const detail = event.detail || {};
+  const properties = {
+    material_id: Number(detail.materialId) || 0,
+    material_slug: panel?.dataset.materialSlug || "",
+    material_format: panel?.dataset.materialFormat || "",
+    material_category: panel?.dataset.materialCategory || "",
+    instance: panel?.dataset.captureInstance || "",
+  };
+
+  if (detail.success) {
+    proTrack("material_capture_succeeded", properties);
+
+    return;
+  }
+
+  proTrack("material_capture_failed", { ...properties, error_code: detail.errorCode || "unknown" });
+});
+
+const proMaterialsSwap = async (url) => {
+  const list = document.querySelector("[data-pro-materials-list]");
+  const count = document.querySelector("[data-pro-materials-count]");
+
+  if (!list) {
+    return false;
+  }
+
+  list.setAttribute("aria-busy", "true");
+
+  try {
+    const response = await fetch(url, { credentials: "same-origin" });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const doc = new DOMParser().parseFromString(await response.text(), "text/html");
+    const freshList = doc.querySelector("[data-pro-materials-list]");
+    const freshCount = doc.querySelector("[data-pro-materials-count]");
+    const freshClear = doc.querySelector(".pro-materials-filter--panel .pro-materials-filter__header a");
+
+    if (!freshList) {
+      return false;
+    }
+
+    list.innerHTML = freshList.innerHTML;
+
+    // The count carries aria-live, so replacing its text announces the result.
+    if (count && freshCount) {
+      count.textContent = freshCount.textContent;
+    }
+
+    const header = document.querySelector(".pro-materials-filter--panel .pro-materials-filter__header");
+    const clear = header?.querySelector("a");
+
+    if (header) {
+      if (freshClear && !clear) {
+        header.append(freshClear.cloneNode(true));
+      } else if (!freshClear && clear) {
+        clear.remove();
+      }
+    }
+
+    window.history.replaceState({}, "", url);
+
+    // Filtering used to be a GET, so each one was a page view. Swapping the
+    // list in place is better to use and invisible to analytics.
+    const parameters = new URL(url, window.location.href).searchParams;
+
+    proTrack("material_filter_applied", {
+      categories: parameters.getAll("material_categoria[]"),
+      order: parameters.get("ordenar") || "recentes",
+      page: Number(parameters.get("pagina")) || 1,
+      results: Number.parseInt(count?.textContent ?? "", 10) || 0,
+    });
+
+    return true;
+  } catch {
+    return false;
+  } finally {
+    list.removeAttribute("aria-busy");
+  }
+};
+
+document.querySelectorAll("[data-pro-materials-order]").forEach((form) => {
+  const select = form.querySelector("select");
+  const submit = form.querySelector('[type="submit"]');
+
+  if (!select) {
+    return;
+  }
+
+  // Without JavaScript the button is the way to apply the order, so it only
+  // disappears once the handler is in place.
+  if (proMaterialsList) {
+    submit?.remove();
+  }
+
+  select.addEventListener("change", async () => {
+    const url = `${form.action}?${new URLSearchParams(new FormData(form))}`;
+
+    if (!(await proMaterialsSwap(url))) {
+      form.submit();
+    }
+  });
+});
+
+document.querySelectorAll(".pro-materials-filter--panel").forEach((form) => {
+  const submit = form.querySelector('[type="submit"]');
+
+  if (!proMaterialsList) {
+    return;
+  }
+
+  // Ticking a box applies it, the way the approved students filter behaves.
+  submit?.remove();
+
+  form.addEventListener("change", async (event) => {
+    if (!(event.target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const url = `${form.action}?${new URLSearchParams(new FormData(form))}`;
+
+    if (!(await proMaterialsSwap(url))) {
+      form.submit();
+    }
   });
 });

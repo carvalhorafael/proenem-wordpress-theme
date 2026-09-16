@@ -1738,13 +1738,25 @@ img {
 
 .pro-materials-page,
 .pro-material-single-page {
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* The catalog reads as a shelf, so it sits on white all the way down. */
+.pro-materials-page {
+  background:
+    linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+}
+
+.pro-material-single-page {
   background:
     linear-gradient(rgb(153 6 27 / 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgb(153 6 27 / 0.045) 1px, transparent 1px),
     #fff1f1;
-  max-width: none;
-  overflow: hidden;
-  padding: 0;
 }
 
 .pro-materials-hero {
@@ -1768,23 +1780,59 @@ img {
   z-index: 2;
 }
 
-.pro-materials-hero .pen-section-pill,
-.pro-material-single__hero .pen-section-pill {
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-sm);
-  border-radius: var(--pen-radius-pill);
-  box-shadow: var(--pen-shadow-hard-sm);
-  color: var(--pen-color-ink);
-  display: inline-flex;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  margin: 0 0 clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
-  padding: 0.34rem 0.9rem;
-  text-transform: none;
+.pro-materials-hero h1,
+/*
+ * Local adaptation: the design system has no breadcrumb contract yet. Tracked
+ * in the theme and design system issues linked from the pull request.
+ */
+.pro-material-breadcrumb {
+  margin-bottom: var(--pen-space-4);
 }
 
-.pro-materials-hero h1,
+.pro-material-breadcrumb ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-material-breadcrumb li {
+  align-items: center;
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 800;
+  gap: 0.5rem;
+}
+
+.pro-material-breadcrumb li + li::before {
+  color: var(--pen-color-on-red-muted);
+  content: "/";
+}
+
+.pro-material-breadcrumb a {
+  color: var(--pen-color-on-red);
+  text-decoration: none;
+}
+
+.pro-material-breadcrumb a:hover,
+.pro-material-breadcrumb a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The current page is the heading right below it, so it stays quiet. */
+.pro-material-breadcrumb [aria-current="page"] {
+  color: var(--pen-color-on-red-muted);
+  font-weight: 700;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .pro-material-single__hero h1 {
   color: inherit;
   font-family: var(--pen-font-body);
@@ -1812,6 +1860,376 @@ img {
 .pro-materials-hero p {
   font-size: clamp(1.25rem, 2.15vw, 1.75rem);
   max-width: 58rem;
+}
+
+/*
+ * The catalog hero took 587px on desktop and 492px on mobile to show a title
+ * and a subtitle, pushing the first material past a full screen of scrolling.
+ * Scoped to a modifier because .pro-testimonials-hero and
+ * .pro-material-single__hero share the base rules and their own sizes.
+ */
+/*
+ * Deliberately not the approved students hero. That page is about people and
+ * aspiration, so it is a red band with faces. This one is a shelf: the visitor
+ * came to take something and start today. Light ground, ink headline, and the
+ * categories carry the colour — which is also the only part of this hero that
+ * does any work.
+ */
+.pro-materials-hero--catalog {
+  align-items: center;
+  background:
+    linear-gradient(rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(153 6 27 / 0.05) 1px, transparent 1px),
+    var(--pen-color-canvas-white);
+  background-size: 2.2rem 2.2rem;
+  border-bottom: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  gap: clamp(var(--pen-space-6), 3vw, var(--pen-space-8));
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  min-height: 0;
+  padding-block: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
+  text-align: center;
+}
+
+.pro-materials-hero--catalog .pro-materials-hero__copy {
+  /* Wide enough for the headline to settle on two lines; the paragraph keeps
+   * its own, narrower measure. */
+  max-width: 58rem;
+}
+/*
+ * Local adaptation: .pen-sticker-tag ships yellow, cyan, pink, mint, orange
+ * and purple, but no red. This follows the same shape as --pink and --purple,
+ * which also pair a strong background with on-red text. Tracked as a design
+ * system gap.
+ */
+.pro-materials-hero__badge {
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--pen-space-5);
+  padding: var(--pen-space-2) var(--pen-space-4);
+}
+
+.pro-materials-hero--catalog h1 {
+  color: var(--pen-color-ink);
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem);
+  line-height: 0.98;
+  margin-inline: auto;
+  max-width: 100%;
+  text-wrap: balance;
+}
+
+.pro-materials-hero--catalog p {
+  color: var(--pen-color-ink-muted);
+  font-size: clamp(1rem, 1.45vw, 1.2rem);
+  margin: var(--pen-space-4) auto 0;
+  max-width: 40rem;
+}
+.pro-materials-hero__back {
+  color: var(--pen-color-on-red);
+  display: flex;
+  font-size: 1rem;
+  font-weight: 900;
+  margin-bottom: var(--pen-space-5);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.pro-materials-hero__back:hover,
+.pro-materials-hero__back:focus-visible {
+  text-decoration: underline;
+}
+
+/*
+ * Single column catalog. .pro-materials-layout keeps its two column rule
+ * because page-templates/testimonials.php still reuses it.
+ */
+/* Editorial highlight above the grid. */
+.pro-materials-featured {
+  background: var(--pen-color-canvas);
+  border-bottom: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-8), 4vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-materials-featured__inner {
+  align-items: center;
+  display: grid;
+  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-10));
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1fr);
+  margin-inline: auto;
+  max-width: 82rem;
+}
+
+.pro-materials-featured__media {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 1rem;
+  box-shadow: var(--pen-shadow-hard-md);
+  display: block;
+  margin: 0;
+  max-width: 22rem;
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+  width: 100%;
+}
+
+.pro-materials-featured__media img,
+.pro-materials-featured__media .pro-material-placeholder {
+  aspect-ratio: 4 / 3;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.pro-materials-featured__media .pro-material-placeholder {
+  display: flex;
+}
+
+.pro-materials-featured__copy {
+  display: grid;
+  gap: var(--pen-space-4);
+  min-width: 0;
+}
+
+.pro-materials-featured__eyebrow {
+  color: var(--pen-color-proenem-red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pro-materials-featured h3 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pro-materials-featured h3 a {
+  color: var(--pen-color-ink);
+  text-decoration: none;
+}
+
+.pro-materials-featured h3 a:hover,
+.pro-materials-featured h3 a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.pro-materials-featured__excerpt {
+  color: var(--pen-color-ink-muted);
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 46rem;
+}
+
+.pro-materials-featured__highlights {
+  display: grid;
+  gap: var(--pen-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-materials-featured__highlights li {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.pro-materials-featured__highlights li::before {
+  color: var(--pen-color-proenem-red);
+  content: "✦";
+  left: 0;
+  position: absolute;
+}
+
+.pro-materials-featured__footer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4);
+  margin-top: var(--pen-space-2);
+}
+
+.pro-materials-featured__specs {
+  color: var(--pen-color-ink-muted);
+  font-family: var(--pen-font-mono, ui-monospace, monospace);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pro-materials-catalog {
+  margin-inline: auto;
+  max-width: 82rem;
+  padding: clamp(var(--pen-space-12), 9vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+/*
+ * Multi-select panel, the counterpart of the single-select chips in the hero.
+ * Reuses the base .pro-materials-filter that the approved students page also
+ * consumes, so the two filters stay recognisably the same control.
+ */
+.pro-materials-filter--panel {
+  align-items: center;
+  gap: var(--pen-space-4) var(--pen-space-5);
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header {
+  grid-column: 1 / -1;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__header strong {
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.pro-materials-filter--panel .pro-materials-filter__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-3);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  display: inline-flex;
+  gap: 0.5rem;
+  grid-template-columns: none;
+  min-height: 2.5rem;
+  padding: 0 var(--pen-space-4);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__option:has(input:checked) {
+  background: var(--pen-color-yellow-bright);
+  box-shadow: var(--pen-shadow-hard-xs);
+}
+
+.pro-materials-filter--panel .pro-materials-filter__submit {
+  justify-self: end;
+  width: auto;
+}
+
+.pro-materials-filter-bar {
+  border-bottom: var(--pen-border-brand-sm);
+  flex-wrap: wrap;
+  gap: var(--pen-space-4);
+  justify-content: flex-end;
+  margin-bottom: clamp(var(--pen-space-8), 5vw, var(--pen-space-10));
+  padding-bottom: var(--pen-space-5);
+}
+
+.pro-materials-tabs {
+  gap: var(--pen-space-3);
+  justify-content: center;
+  min-width: 0;
+  position: relative;
+  /*
+   * The hero centres its grid items, so without a width this row sizes to its
+   * content and overflows both sides of the viewport instead of scrolling.
+   */
+  width: 100%;
+  z-index: 2;
+}
+
+.pro-materials-order {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--pen-space-3);
+}
+
+.pro-materials-order .pen-blog-sort-select {
+  min-width: min(13rem, 100%);
+}
+
+.pro-materials-pagination {
+  margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
+}
+
+/*
+ * The categories are the artwork of this hero. Every tone reaches 4.5:1 with
+ * ink text, which is why purple and platform blue are not in the rotation.
+ */
+.pro-materials-tabs .pen-blog-category-tabs__item {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+  min-height: 2.75rem;
+  padding: 0 var(--pen-space-5);
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="cyan"] { background: var(--pen-color-cyan); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="yellow"] { background: var(--pen-color-yellow-bright); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="mint"] { background: var(--pen-color-mint); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="pink"] { background: var(--pen-color-pink-lp); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="orange"] { background: var(--pen-color-orange); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="teal"] { background: var(--pen-color-teal); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="magenta"] { background: var(--pen-color-pink-mid); }
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone="rose"] { background: var(--pen-color-pain-pink); }
+
+.pro-materials-tabs .pen-blog-category-tabs__item:hover,
+.pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+  box-shadow: var(--pen-shadow-hard-sm);
+  transform: translate(-1px, -1px);
+}
+
+/* The active one is pressed in rather than recoloured, so the palette holds. */
+.pro-materials-tabs .pen-blog-category-tabs__item.is-active {
+  box-shadow: inset 2px 2px 0 rgb(26 26 26 / 0.25);
+  transform: none;
+}
+
+/*
+ * The cross means "remove this filter", so it belongs to a selected category.
+ * "Todos" is already the cleared state, and it carries no tone.
+ */
+.pro-materials-tabs .pen-blog-category-tabs__item[data-tone].is-active::after {
+  content: "✕";
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-materials-tabs .pen-blog-category-tabs__item {
+    transition: none;
+  }
+
+  .pro-materials-tabs .pen-blog-category-tabs__item:hover,
+  .pro-materials-tabs .pen-blog-category-tabs__item:focus-visible {
+    transform: none;
+  }
+}
+
+.pro-materials-tabs__count {
+  background: rgb(26 26 26 / 0.14);
+  border-radius: var(--pen-radius-pill);
+  color: var(--pen-color-ink);
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
 }
 
 .pro-materials-layout {
@@ -1910,6 +2328,8 @@ img {
 
 .pro-materials-results {
   min-width: 0;
+  /* The sticky header is 81px, so an anchor jump lands past the heading. */
+  scroll-margin-top: 7rem;
 }
 
 .pro-materials-results__header {
@@ -1941,7 +2361,7 @@ img {
 .pro-materials-grid {
   display: grid;
   gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-10));
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .pro-material-card {
@@ -1958,10 +2378,6 @@ img {
   transform 160ms ease;
 }
 
-.pro-material-card[hidden] {
-  display: none;
-}
-
 .pro-material-card:hover,
 .pro-material-card:focus-within {
   box-shadow: 2px 2px 0 var(--pen-color-ink);
@@ -1973,7 +2389,7 @@ img {
   border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-on-red);
   display: block;
-  min-height: 13rem;
+  min-height: 10rem;
   overflow: hidden;
   position: relative;
   text-decoration: none;
@@ -1985,6 +2401,78 @@ img {
   height: 100%;
   object-fit: cover;
   width: 100%;
+}
+
+/*
+ * Placeholder for a material without a cover. A material is a document, so a
+ * photo of a student would misrepresent what the visitor is downloading.
+ */
+.pro-material-placeholder {
+  align-items: center;
+  /*
+   * Deliberately quieter than a real cover. The migration will bring
+   * materials with uneven artwork, and a wall of brand yellow would shout
+   * louder than the actual content.
+   */
+  background:
+    repeating-linear-gradient(135deg, rgb(153 6 27 / 7%) 0 2px, transparent 2px 10px),
+    #fff1f1;
+  color: var(--pen-color-ink);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pen-space-2);
+  height: 100%;
+  justify-content: center;
+  min-height: inherit;
+  padding: var(--pen-space-6);
+  text-align: center;
+  width: 100%;
+}
+
+.pro-material-placeholder__mark {
+  color: var(--pen-color-proenem-red);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.pro-material-placeholder__label {
+  color: var(--pen-color-ink-muted);
+  font-family: var(--pen-font-body);
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.pro-material-card__media .pro-material-placeholder {
+  aspect-ratio: 16 / 10;
+}
+
+/*
+ * The highlight promotes a material, it does not remove it from the list, so
+ * the card is marked instead of hidden and the count stays truthful.
+ */
+.pro-material-card--featured {
+  box-shadow: var(--pen-shadow-hard-md);
+}
+
+.pro-material-card__flag {
+  background: var(--pen-color-yellow-bright);
+  border: var(--pen-border-brand-xs);
+  border-radius: var(--pen-radius-pill);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+  font-size: 0.66rem;
+  font-weight: 900;
+  left: var(--pen-space-4);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  padding: 0.34rem 0.6rem;
+  position: absolute;
+  text-transform: uppercase;
+  top: var(--pen-space-4);
+  z-index: 2;
 }
 
 .pro-material-card__badge {
@@ -2005,29 +2493,59 @@ img {
 }
 
 .pro-material-card__body {
+  align-content: start;
   display: grid;
-  gap: var(--pen-space-4);
-  padding: clamp(var(--pen-space-5), 4vw, var(--pen-space-6));
+  gap: var(--pen-space-3);
+  padding: clamp(var(--pen-space-4), 3vw, var(--pen-space-5));
 }
 
-.pro-material-card h2 {
-  font-family: var(--pen-font-body);
-  font-size: clamp(1.35rem, 2.3vw, 1.9rem);
-  font-weight: 900;
-  line-height: 1.02;
+/* What the visitor gets, stated before the pitch. */
+.pro-material-card__specs {
+  color: var(--pen-color-ink);
+  font-family: var(--pen-font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   margin: 0;
+  text-transform: uppercase;
 }
 
-.pro-material-card h2 a {
+.pro-material-card h3 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pro-material-card h3 a {
   color: var(--pen-color-ink);
   text-decoration: none;
 }
 
-.pro-material-card p {
+.pro-material-card__excerpt {
   color: var(--pen-color-ink-muted);
-  font-size: 0.98rem;
+  display: -webkit-box;
+  font-size: 0.92rem;
   line-height: 1.45;
   margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Answers "is this for me?", which the title alone cannot. */
+.pro-material-card__level {
+  color: var(--pen-color-ink-soft);
+  display: -webkit-box;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .pro-material-card__action {
@@ -2036,31 +2554,14 @@ img {
   display: inline-flex;
   font-weight: 900;
   gap: 0.45rem;
-  margin-top: auto;
+  margin-top: var(--pen-space-2);
   text-decoration: none;
 }
 
-.pro-materials-pagination {
-  margin-top: clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
-}
-
-.pro-materials-pagination .page-numbers {
-  align-items: center;
-  background: var(--pen-color-surface);
-  border: var(--pen-border-brand-xs);
-  border-radius: 0.55rem;
-  box-shadow: var(--pen-shadow-hard-xs);
-  color: var(--pen-color-ink);
-  display: inline-flex;
-  font-weight: 800;
-  min-height: 2.5rem;
-  padding: 0.55rem 0.85rem;
-  text-decoration: none;
-}
-
-.pro-materials-pagination .page-numbers.current {
-  background: #bb0922;
-  color: var(--pen-color-on-red);
+.pro-material-card__action:hover,
+.pro-material-card:focus-within .pro-material-card__action {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .pro-materials-empty {
@@ -2073,10 +2574,6 @@ img {
   display: grid;
   gap: var(--pen-space-3);
   padding: clamp(var(--pen-space-6), 5vw, var(--pen-space-10));
-}
-
-.pro-materials-empty[hidden] {
-  display: none;
 }
 
 .pro-materials-empty > span {
@@ -2109,18 +2606,80 @@ img {
 .pro-material-single__hero {
   align-items: start;
   background:
-    repeating-linear-gradient(135deg, rgb(0 0 0 / 12%) 0 2px, transparent 2px 8px),
-    #e23a3a;
+    repeating-linear-gradient(135deg, rgb(0 0 0 / 10%) 0 2px, transparent 2px 8px),
+    var(--pen-color-proenem-red);
   border-bottom: var(--pen-border-brand-sm);
   color: var(--pen-color-on-red);
   display: grid;
-  column-gap: clamp(var(--pen-space-8), 5vw, var(--pen-space-16));
-  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+  column-gap: clamp(var(--pen-space-8), 4vw, var(--pen-space-12));
+  row-gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-6));
   grid-template-areas:
     "copy capture"
-    "cover capture";
-  grid-template-columns: minmax(0, 1.25fr) minmax(24rem, 0.58fr);
-  padding: clamp(var(--pen-space-10), 8vw, var(--pen-space-20)) clamp(var(--pen-space-5), 8vw, var(--pen-space-24));
+    "preview capture";
+  grid-template-columns: minmax(0, 1.1fr) minmax(23rem, 0.66fr);
+  padding: clamp(var(--pen-space-6), 4vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-16));
+}
+
+/* The cover plus what is inside, sitting beside the form instead of below a
+ * full width image that pushed the submit button past the fold. Flex rather
+ * than grid so the pair sizes to its content and can be centred in the column
+ * it shares, instead of being pinned to the left edge by a 1fr track. */
+.pro-material-single__preview {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(var(--pen-space-5), 2.5vw, var(--pen-space-8));
+  grid-area: preview;
+  justify-content: center;
+}
+
+.pro-material-single__inside {
+  display: grid;
+  flex: 0 1 auto;
+  gap: var(--pen-space-3);
+  max-width: 26rem;
+  min-width: 0;
+}
+
+.pro-material-single__inside-title {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pro-material-single__highlights {
+  display: grid;
+  gap: var(--pen-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pro-material-single__highlights li {
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.35;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.pro-material-single__highlights li::before {
+  color: var(--pen-color-on-red-accent);
+  content: "✦";
+  left: 0;
+  position: absolute;
+}
+
+.pro-material-single__specs {
+  color: var(--pen-color-on-red-muted);
+  font-family: var(--pen-font-mono, ui-monospace, monospace);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-transform: uppercase;
 }
 
 .pro-material-single__hero-copy {
@@ -2129,43 +2688,45 @@ img {
 }
 
 .pro-material-single__hero h1 {
-  font-size: 3.5vw;
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  line-height: 1.02;
   max-width: none;
 }
 
 .pro-material-single__hero p {
-  font-size: clamp(1.12rem, 1.45vw, 1.35rem);
-  margin-top: clamp(var(--pen-space-4), 2vw, var(--pen-space-6));
-  max-width: none;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  margin-top: var(--pen-space-4);
+  max-width: 44rem;
 }
 
-.pro-material-single__back {
-  color: var(--pen-color-on-red);
-  display: inline-flex;
-  font-weight: 900;
-  margin-bottom: var(--pen-space-6);
-  text-decoration: none;
-}
 
 .pro-material-single__cover {
-  align-self: stretch;
-  aspect-ratio: 16 / 9;
-  background: #ff90e8;
+  background: var(--pen-color-surface);
   border: var(--pen-border-brand-sm);
-  border-radius: 1rem;
+  border-radius: 0.9rem;
   box-shadow: var(--pen-shadow-hard-md);
-  grid-area: cover;
   margin: 0;
-  min-height: clamp(18rem, 28vw, 30rem);
   overflow: hidden;
+  transform: rotate(-1.5deg);
+  width: clamp(12rem, 21vw, 19rem);
 }
 
-.pro-material-single__cover img {
+.pro-material-single__cover img,
+.pro-material-single__cover .pro-material-placeholder {
+  aspect-ratio: 3 / 4;
+}
+
+.pro-material-single__cover img,
+.pro-material-single__cover .pro-material-placeholder {
   display: block;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
+  object-position: center top;
   width: 100%;
+}
+
+.pro-material-single__cover .pro-material-placeholder {
+  display: flex;
 }
 
 .pro-material-single__layout {
@@ -2218,9 +2779,15 @@ img {
   color: var(--pen-color-ink);
   display: grid;
   gap: var(--pen-space-4);
-  grid-area: capture;
   padding: clamp(var(--pen-space-5), 4vw, var(--pen-space-8));
   scroll-margin-top: var(--pen-space-8);
+}
+
+/* Only the hero grid names this area. On the closing grid the unknown name
+ * resolved to line names that do not exist, which added implicit columns and
+ * collapsed the copy beside it to zero width. */
+.pro-material-capture--hero {
+  grid-area: capture;
 }
 
 .pro-material-capture__eyebrow {
@@ -2244,6 +2811,18 @@ img {
   color: var(--pen-color-ink-muted);
   line-height: 1.4;
   margin: 0;
+}
+
+/* The second copy of the form closes the page rather than opening it, and the
+ * reader has already read the pitch once. It gets the narrower column, so it
+ * cannot carry the hero's type sizes. */
+.pro-material-capture--footer {
+  gap: var(--pen-space-3);
+  padding: var(--pen-space-6) var(--pen-space-5);
+}
+
+.pro-material-capture--footer h2 {
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
 }
 
 .pro-material-capture small {
@@ -2305,6 +2884,450 @@ img {
   width: 100%;
 }
 
+.pro-material-capture__field {
+  position: relative;
+}
+
+.pro-material-capture__field span small {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-left: 0.3rem;
+}
+
+.pro-material-capture__form input[aria-invalid="true"] {
+  border-color: #bb0922;
+  box-shadow: inset 0 0 0 1px #bb0922;
+}
+
+.pro-material-capture__error {
+  color: #99061b;
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pro-material-capture__error[hidden] {
+  display: none;
+}
+
+/*
+ * Feedback rendered by the crm-leads-capture plugin. The plugin ships neutral
+ * structure and exposes these custom properties for the host theme.
+ */
+.pro-material-capture .crm-leads-capture-message {
+  --crm-leads-capture-accent: #bb0922;
+  --crm-leads-capture-surface: #fff1f1;
+  --crm-leads-capture-radius: 0.7rem;
+
+  border-width: 2px;
+  border-color: var(--pen-color-ink);
+  box-shadow: var(--pen-shadow-hard-xs);
+  color: var(--pen-color-ink);
+}
+
+.pro-material-capture .crm-leads-capture-message[data-feedback-tone="success"] {
+  --crm-leads-capture-accent: #0f7a4f;
+  --crm-leads-capture-surface: var(--pen-color-yellow-bright);
+}
+
+.pro-material-capture .crm-leads-capture-message__badge {
+  border-width: 2px;
+  border-color: var(--pen-color-ink);
+  color: var(--pen-color-ink);
+}
+
+/*
+ * Mobile action bar. The submit button sits at y=1239 on a 375px screen, so
+ * without this there is no call to action on most of the page.
+ */
+.pro-material-sticky-cta {
+  align-items: center;
+  background: var(--pen-color-surface);
+  border-top: var(--pen-border-brand-sm);
+  bottom: 0;
+  box-shadow: 0 -6px 18px rgb(27 29 35 / 0.16);
+  display: none;
+  gap: var(--pen-space-4);
+  justify-content: space-between;
+  left: 0;
+  padding: var(--pen-space-3) var(--pen-space-4) calc(var(--pen-space-3) + env(safe-area-inset-bottom, 0px));
+  position: fixed;
+  right: 0;
+  transform: translateY(100%);
+  transition: transform 180ms ease;
+  z-index: 60;
+}
+
+.pro-material-sticky-cta[hidden] {
+  display: none;
+}
+
+.pro-material-sticky-cta.is-visible {
+  transform: translateY(0);
+}
+
+.pro-material-sticky-cta__copy {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.pro-material-sticky-cta__copy strong {
+  color: var(--pen-color-ink);
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pro-material-sticky-cta__copy span {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.pro-material-sticky-cta .pen-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pro-material-sticky-cta {
+    transition: none;
+  }
+}
+
+/*
+ * Closing block. It used to be two calls to action pointing back up at the
+ * form, with the arrow drawn as up. Now the form itself is here.
+ */
+/*
+ * Social proof and questions. Both halves are optional, so the band collapses
+ * to one column when only the questions exist.
+ */
+/* Proof and objections ride along the content in the sidebar instead of
+ * waiting a screen below it, so everything below is sized for a 24rem column
+ * rather than for half of a full width band. */
+.pro-material-reassurance {
+  color: var(--pen-color-ink);
+  display: grid;
+  gap: clamp(var(--pen-space-10), 6vw, var(--pen-space-14, 3.5rem));
+}
+
+.pro-material-proof {
+  display: grid;
+  gap: var(--pen-space-6);
+}
+
+/* The number is the strongest argument in this column, and as a line of text
+ * beside its own label it read as a caption. It carries the sticker language
+ * the rest of the brand uses. */
+.pro-material-proof__count {
+  display: grid;
+  gap: var(--pen-space-3);
+  justify-items: center;
+  margin: 0;
+  text-align: center;
+}
+
+.pro-material-proof__count strong {
+  background: var(--pen-color-proenem-red);
+  border: var(--pen-border-brand);
+  border-radius: var(--pen-radius-md);
+  box-shadow: var(--pen-shadow-hard-md);
+  color: var(--pen-color-on-red);
+  font-family: var(--pen-font-body);
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  padding: var(--pen-space-3) var(--pen-space-5);
+  transform: rotate(-2deg);
+}
+
+/* No max-width: the label fits the column on one line, and a longer
+ * translation should break into even lines rather than leave an orphan. */
+.pro-material-proof__count span {
+  color: var(--pen-color-ink-muted);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+/* Everything here says "a person said this": the mark, the portrait and the
+ * rule under the words. The separation from the answers below is carried by
+ * the space between the groups, not by the surface colour. */
+.pro-material-proof__quote {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.9rem;
+  box-shadow: var(--pen-shadow-hard-sm);
+  display: grid;
+  gap: var(--pen-space-4);
+  margin: 0;
+  padding: var(--pen-space-6) var(--pen-space-5) var(--pen-space-5);
+  position: relative;
+}
+
+.pro-material-proof__quote::before {
+  color: var(--pen-color-proenem-red);
+  content: "\201C";
+  font-family: var(--pen-font-display, var(--pen-font-body));
+  font-size: 4rem;
+  font-weight: 900;
+  left: var(--pen-space-4);
+  line-height: 1;
+  position: absolute;
+  top: -0.35rem;
+}
+
+.pro-material-proof__quote blockquote {
+  margin: 0;
+  padding-top: var(--pen-space-4);
+}
+
+.pro-material-proof__quote blockquote p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pro-material-proof__quote figcaption {
+  align-items: center;
+  border-top: 1px solid rgb(26 26 26 / 12%);
+  display: flex;
+  gap: var(--pen-space-3);
+  padding-top: var(--pen-space-4);
+}
+
+.pro-material-proof__avatar {
+  border: var(--pen-border-brand-sm);
+  border-radius: 50%;
+  flex: none;
+  height: 2.75rem;
+  object-fit: cover;
+  width: 2.75rem;
+}
+
+.pro-material-proof__avatar--initial {
+  align-items: center;
+  background: var(--pen-color-proenem-red);
+  color: var(--pen-color-on-red);
+  display: flex;
+  font-size: 1.15rem;
+  font-weight: 900;
+  justify-content: center;
+  line-height: 1;
+}
+
+.pro-material-proof__who {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.pro-material-proof__quote figcaption strong {
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.pro-material-proof__who span {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.pro-material-faq {
+  gap: var(--pen-space-4);
+}
+
+.pro-material-faq .pen-faq-section__header {
+  justify-items: center;
+  text-align: center;
+}
+
+.pro-material-faq .pen-faq-section__header h2 {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+/* The design system sizes the questions for a full width band. In a 24rem
+ * column that wrapped every one of them onto three lines. */
+.pro-material-faq .pen-faq-item summary {
+  font-size: 0.98rem;
+  padding: var(--pen-space-4) var(--pen-space-5);
+}
+
+.pro-material-faq .pen-faq-item p {
+  font-size: 0.92rem;
+  padding: var(--pen-space-4) var(--pen-space-5) var(--pen-space-5);
+}
+
+/* Related materials, so leaving the page is not the only option. */
+.pro-material-related {
+  background: var(--pen-color-surface);
+  border-top: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-8), 5vw, var(--pen-space-12)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-material-related__inner {
+  margin-inline: auto;
+  max-width: 76rem;
+}
+
+.pro-material-related__header {
+  align-items: baseline;
+  border-bottom: var(--pen-border-brand-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pen-space-4);
+  justify-content: space-between;
+  margin-bottom: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+  padding-bottom: var(--pen-space-4);
+}
+
+.pro-material-related__header h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.pro-material-related__header a {
+  align-items: center;
+  color: var(--pen-color-proenem-red);
+  display: inline-flex;
+  font-weight: 900;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.pro-material-related__header a:hover,
+.pro-material-related__header a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/*
+ * Four across. Following the count with auto-fit made two materials fill the
+ * row as banners wider than the cards in the catalog itself. Fixed tracks need
+ * the breakpoints below, because this selector outranks the shared ones.
+ */
+.pro-material-related .pro-materials-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.pro-material-share {
+  border-top: 1px solid rgb(27 29 35 / 0.12);
+  margin-top: clamp(var(--pen-space-6), 4vw, var(--pen-space-8));
+  max-width: none;
+  padding-top: var(--pen-space-5);
+}
+
+.pro-material-share__label {
+  color: var(--pen-color-ink-muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.pro-material-single__closing {
+  background: var(--pen-color-canvas);
+  border-top: var(--pen-border-brand-sm);
+  color: var(--pen-color-ink);
+  padding: clamp(var(--pen-space-6), 3.5vw, var(--pen-space-10)) clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
+}
+
+.pro-material-single__closing-inner {
+  align-items: center;
+  display: grid;
+  gap: clamp(var(--pen-space-5), 3vw, var(--pen-space-8));
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(20rem, 24rem);
+  margin-inline: auto;
+  max-width: 76rem;
+}
+
+/* Capped so the track ends where the words end. At 1fr the box ran 173px past
+ * the longest line, and the cover read as stranded in that emptiness rather
+ * than as the middle of a row. */
+.pro-material-single__closing-copy {
+  display: grid;
+  gap: var(--pen-space-3);
+  max-width: 28rem;
+}
+
+/* The material itself, so the last thing before the form shows what is being
+ * offered instead of a heading over empty space. */
+.pro-material-single__closing-cover {
+  background: var(--pen-color-surface);
+  border: var(--pen-border-brand-sm);
+  border-radius: 0.75rem;
+  box-shadow: var(--pen-shadow-hard-md);
+  margin: 0;
+  justify-self: center;
+  overflow: hidden;
+  transform: rotate(-2deg);
+  width: clamp(8rem, 16vw, 15rem);
+}
+
+.pro-material-single__closing-cover img,
+.pro-material-single__closing-cover .pro-material-placeholder {
+  aspect-ratio: 3 / 4;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  width: 100%;
+}
+
+.pro-material-single__closing-cover .pro-material-placeholder {
+  display: flex;
+}
+
+.pro-material-single__closing-copy span {
+  color: var(--pen-color-proenem-red);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pro-material-single__closing-copy h2 {
+  font-family: var(--pen-font-body);
+  font-size: clamp(1.6rem, 2.6vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.pro-material-single__closing .pro-material-single__specs {
+  color: var(--pen-color-ink-muted);
+}
+
+.pro-material-single__closing .pro-material-single__highlights li {
+  color: var(--pen-color-ink);
+}
+
+.pro-material-single__closing .pro-material-single__highlights li::before {
+  color: var(--pen-color-proenem-red);
+}
+
+.pro-material-capture__privacy a {
+  color: #99061b;
+  font-weight: 800;
+}
+
 .pro-material-download {
   background: var(--pen-color-yellow-bright);
   border: var(--pen-border-brand-sm);
@@ -2343,80 +3366,15 @@ img {
   margin-top: var(--pen-space-2);
 }
 
-.pro-material-footer-cta {
-  background: transparent;
-  color: var(--pen-color-ink);
-  margin: 0 auto clamp(var(--pen-space-8), 5vw, var(--pen-space-12));
-  padding: 0 clamp(var(--pen-space-5), 8vw, var(--pen-space-12));
-}
 
-.pro-material-footer-cta__inner {
-  align-items: center;
-  background: var(--pen-color-yellow-bright);
-  border: var(--pen-border-brand-sm);
-  border-radius: 0.9rem;
-  box-shadow: var(--pen-shadow-hard-md);
-  display: grid;
-  gap: clamp(var(--pen-space-6), 4vw, var(--pen-space-10));
-  grid-template-columns: minmax(10rem, 18rem) minmax(0, 1fr) auto;
-  margin-inline: auto;
-  max-width: 76rem;
-  padding: clamp(var(--pen-space-4), 3vw, var(--pen-space-6));
-}
 
-.pro-material-footer-cta__media {
-  background: #ff90e8;
-  border: var(--pen-border-brand-sm);
-  border-radius: 0.9rem;
-  box-shadow: var(--pen-shadow-hard-sm);
-  margin: 0;
-  overflow: hidden;
-}
 
-.pro-material-footer-cta__media img {
-  aspect-ratio: 16 / 10;
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 32%;
-  width: 100%;
-}
 
-.pro-material-footer-cta__copy {
-  display: grid;
-  gap: var(--pen-space-3);
-}
 
-.pro-material-footer-cta__copy span {
-  color: #bb0922;
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
 
-.pro-material-footer-cta__copy h2 {
-  color: inherit;
-  font-family: var(--pen-font-body);
-  font-size: clamp(1.85rem, 3.2vw, 3.2rem);
-  font-weight: 900;
-  line-height: 0.98;
-  margin: 0;
-}
 
-.pro-material-footer-cta__copy p {
-  color: inherit;
-  font-size: clamp(1rem, 1.35vw, 1.22rem);
-  line-height: 1.4;
-  margin: 0;
-  max-width: 42rem;
-}
 
-.pro-material-footer-cta__button {
-  justify-content: center;
-  min-width: 14rem;
-  white-space: nowrap;
-}
+
 
 .pro-testimonials-page {
   background: #fff;
@@ -4798,6 +5756,17 @@ body.proenem-home-template {
   text-transform: uppercase;
 }
 
+/*
+ * The design system groups `.pen-site-footer h2` with the section headings in
+ * patterns.css, at clamp(2.4rem, 5vw, 4.4rem). That selector is (0,1,1) and
+ * beat the (0,1,0) below, so every page except the home rendered the footer
+ * title at 70.4px instead of 28.8px. The home only escaped because of the
+ * `.pro-home` prefix, which happens to be (0,2,0).
+ *
+ * The footer scope below matches that specificity without depending on a page
+ * class. Tracked as a design system gap.
+ */
+.pen-site-footer .pen-site-footer__title,
 .pro-home .pen-site-footer__title,
 .pen-site-footer__title {
   color: var(--pen-color-surface);
@@ -7260,13 +8229,26 @@ body.proenem-home-template {
     grid-template-columns: 1fr;
   }
 
+  .pro-materials-hero--catalog {
+    grid-template-columns: 1fr;
+  }
+
   .pro-material-single__hero {
     align-items: start;
     grid-template-areas:
       "copy"
-      "cover"
-      "capture";
+      "capture"
+      "preview";
     grid-template-columns: 1fr;
+  }
+
+  /* The form comes before the cover, so the call to action is reachable. */
+  .pro-material-sticky-cta:not([hidden]) {
+    display: flex;
+  }
+
+  .pro-material-single-page {
+    padding-bottom: 5rem;
   }
 
   .pro-testimonial-single__hero {
@@ -7302,6 +8284,11 @@ body.proenem-home-template {
   .pro-materials-layout,
   .pro-material-single__layout {
     grid-template-columns: 1fr;
+  }
+
+  .pro-materials-grid,
+  .pro-material-related .pro-materials-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .pro-materials-layout__sidebar {
@@ -7354,14 +8341,37 @@ body.proenem-home-template {
     position: static;
   }
 
-  .pro-material-footer-cta__inner {
-    grid-template-columns: minmax(8rem, 14rem) minmax(0, 1fr);
+  .pro-material-single__closing-inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
   }
 
-  .pro-material-footer-cta__button {
-    grid-column: 2;
-    justify-self: start;
+  /* Centred only where it is a headline. A form whose labels drift to the
+   * middle of their own fields is harder to scan. */
+  .pro-material-single__closing-copy {
+    justify-items: center;
+    text-align: center;
   }
+
+  .pro-material-single__closing .pro-material-single__highlights {
+    text-align: left;
+  }
+
+  .pro-material-single__closing-cover {
+    width: clamp(8rem, 34vw, 11rem);
+  }
+
+  .pro-material-single__closing .pro-material-capture {
+    width: 100%;
+  }
+
+  .pro-material-share {
+    align-items: start;
+    flex-direction: column;
+    gap: var(--pen-space-3);
+  }
+
+
 
   .pro-home .pro-home-platform-header {
     grid-template-columns: 1fr;
@@ -7693,6 +8703,14 @@ body.proenem-home-template {
     font-size: clamp(2.25rem, 13vw, 3.65rem);
   }
 
+  .pro-materials-hero--catalog h1 {
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
+  }
+
+  .pro-materials-hero--catalog {
+    padding-block: var(--pen-space-6);
+  }
+
   .pro-testimonial-single__hero {
     padding-block: var(--pen-space-7, 1.75rem) var(--pen-space-9, 2.25rem);
   }
@@ -7824,8 +8842,106 @@ body.proenem-home-template {
   }
 
   .pro-materials-layout,
+  .pro-materials-catalog,
   .pro-material-single__layout {
     padding: var(--pen-space-6) var(--pen-space-4);
+  }
+
+  /*
+   * Stacked, this band took 557px between the hero and the catalog, so the
+   * first card of the grid started at 1682px. It keeps the job of selling one
+   * material — cover, label, title, promise, button — and drops what belongs
+   * to the material's own page.
+   */
+  .pro-materials-featured {
+    padding-block: var(--pen-space-5);
+  }
+
+  .pro-materials-featured__inner {
+    gap: var(--pen-space-4);
+    grid-template-columns: 1fr;
+  }
+
+  /* Leading with a large cover pushed the promise itself past the fold. */
+  .pro-materials-featured__media {
+    justify-self: start;
+    max-width: 7.5rem;
+  }
+
+  .pro-materials-featured__copy {
+    gap: var(--pen-space-3);
+  }
+
+  .pro-materials-featured h3 {
+    font-size: 1.4rem;
+  }
+
+  /* The list is what the material page opens with. Here it only pushed the
+   * button, which is the whole point of the band, further down. */
+  .pro-materials-featured__highlights {
+    display: none;
+  }
+
+  .pro-materials-featured__footer {
+    gap: var(--pen-space-3);
+    margin-top: 0;
+  }
+
+  /*
+   * Scroll the tabs sideways instead of wrapping them. With ten categories,
+   * wrapping stacks five rows and pushes the first material off the screen.
+   */
+  .pro-materials-tabs {
+    flex-wrap: nowrap;
+    /* Centring a scrolling row clips its first item out of reach. */
+    justify-content: flex-start;
+    margin-inline: calc(var(--pen-space-4) * -1);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0 var(--pen-space-4) var(--pen-space-2);
+    scrollbar-color: var(--pen-color-ink) rgb(27 29 35 / 0.12);
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar {
+    height: 0.4rem;
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar-track {
+    background: rgb(27 29 35 / 0.12);
+    border-radius: var(--pen-radius-pill, 999px);
+  }
+
+  .pro-materials-tabs::-webkit-scrollbar-thumb {
+    background: var(--pen-color-ink);
+    border-radius: var(--pen-radius-pill, 999px);
+  }
+
+  .pro-materials-tabs .pen-blog-category-tabs__item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .pro-materials-filter-bar {
+    display: block;
+  }
+
+  .pro-materials-filter--panel {
+    grid-template-columns: 1fr;
+  }
+
+  .pro-materials-filter--panel .pro-materials-filter__submit {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  .pro-materials-order {
+    margin-top: var(--pen-space-4);
+  }
+
+  .pro-materials-order .pen-blog-sort-select {
+    width: 100%;
   }
 
   .pro-materials-results__header {
@@ -7837,7 +8953,8 @@ body.proenem-home-template {
     text-align: left;
   }
 
-  .pro-materials-grid {
+  .pro-materials-grid,
+  .pro-material-related .pro-materials-grid {
     grid-template-columns: 1fr;
   }
 
@@ -7860,23 +8977,9 @@ body.proenem-home-template {
     min-height: 16rem;
   }
 
-  .pro-material-footer-cta {
-    padding: 0 var(--pen-space-5);
-  }
 
-  .pro-material-footer-cta__inner {
-    grid-template-columns: 1fr;
-  }
 
-  .pro-material-footer-cta__media {
-    max-width: 22rem;
-  }
 
-  .pro-material-footer-cta__button {
-    grid-column: auto;
-    justify-self: stretch;
-    width: 100%;
-  }
 
   .pro-home .pen-platform-showcase {
     padding-inline: 0.85rem;

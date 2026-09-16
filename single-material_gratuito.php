@@ -13,53 +13,53 @@ get_header();
 	while ( have_posts() ) :
 		the_post();
 
-		$material_id   = get_the_ID();
-		$cover_image   = proenem_get_material_image_slot( $material_id, 'full' );
-		$category_name = proenem_get_material_category_label( $material_id );
+		$material_id = get_the_ID();
+		// Only an excerpt the editor actually wrote. The generated one repeated
+		// the opening of the content, truncated with an ellipsis.
+		$promise    = has_excerpt( $material_id ) ? get_the_excerpt( $material_id ) : '';
+		$highlights = array_slice( proenem_get_material_highlights( $material_id ), 0, 5 );
+		$specs      = proenem_get_material_specs( $material_id );
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'pro-material-single' ); ?>>
 			<section class="pro-material-single__hero" aria-labelledby="pro-material-title">
 				<div class="pro-material-single__hero-copy">
-					<a class="pro-material-single__back" href="<?php echo esc_url( home_url( '/materiais-gratuitos/' ) ); ?>"><?php esc_html_e( '← Materiais gratuitos', 'proenem-wordpress-theme' ); ?></a>
-					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
+					<?php proenem_render_material_breadcrumb( $material_id ); ?>
 					<?php the_title( '<h1 id="pro-material-title">', '</h1>' ); ?>
-					<p><?php echo esc_html( proenem_get_material_excerpt( $material_id, 28 ) ); ?></p>
+					<?php if ( '' !== $promise ) : ?>
+						<p><?php echo esc_html( $promise ); ?></p>
+					<?php endif; ?>
 				</div>
-				<figure class="pro-material-single__cover">
-					<img src="<?php echo esc_url( $cover_image['src'] ); ?>" alt="<?php echo esc_attr( $cover_image['alt'] ); ?>">
-				</figure>
-				<aside id="material-download-form" class="pro-material-capture" aria-labelledby="pro-material-capture-title">
-					<span class="pro-material-capture__eyebrow"><?php esc_html_e( 'Acesso imediato', 'proenem-wordpress-theme' ); ?></span>
-					<h2 id="pro-material-capture-title"><?php esc_html_e( 'Complete o formulário', 'proenem-wordpress-theme' ); ?></h2>
-					<p><?php esc_html_e( 'para receber o material.', 'proenem-wordpress-theme' ); ?></p>
-					<form class="pro-material-capture__form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-						<input type="hidden" name="action" value="crm_leads_capture_free_material">
-						<?php wp_nonce_field( 'crm_leads_capture_free_material' ); ?>
-						<input type="hidden" name="material_id" value="<?php echo esc_attr( (string) $material_id ); ?>">
-						<input class="pro-material-capture__honeypot" type="text" name="crm_leads_capture_website" value="" autocomplete="off" tabindex="-1" aria-hidden="true">
-						<?php
-						if ( function_exists( 'crm_leads_capture_render_free_material_error_message' ) ) {
-							crm_leads_capture_render_free_material_error_message();
-						}
-						?>
-						<label>
-							<span><?php esc_html_e( 'Nome', 'proenem-wordpress-theme' ); ?></span>
-							<input type="text" name="name" autocomplete="name" placeholder="<?php esc_attr_e( 'Seu nome completo', 'proenem-wordpress-theme' ); ?>">
-						</label>
-						<label>
-							<span><?php esc_html_e( 'Email', 'proenem-wordpress-theme' ); ?></span>
-							<input type="email" name="email" autocomplete="email" placeholder="<?php esc_attr_e( 'voce@exemplo.com', 'proenem-wordpress-theme' ); ?>">
-						</label>
-						<label>
-							<span><?php esc_html_e( 'WhatsApp', 'proenem-wordpress-theme' ); ?></span>
-							<input type="tel" name="whatsapp" autocomplete="tel" placeholder="<?php esc_attr_e( '(00) 00000-0000', 'proenem-wordpress-theme' ); ?>">
-						</label>
-						<button class="pen-button pen-button--primary pen-button--md pro-material-capture__button" type="submit">
-							<?php esc_html_e( 'Baixar material gratuito', 'proenem-wordpress-theme' ); ?>
-						</button>
-					</form>
-					<small><?php esc_html_e( 'Sem pagamento. Enviaremos o material para o contato informado.', 'proenem-wordpress-theme' ); ?></small>
-				</aside>
+
+				<div class="pro-material-single__preview">
+					<figure class="pro-material-single__cover">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 980px) 40vw, 240px', true ); ?>
+					</figure>
+
+					<div class="pro-material-single__inside">
+						<?php if ( $highlights ) : ?>
+							<p class="pro-material-single__inside-title"><?php esc_html_e( 'O que tem dentro', 'proenem-wordpress-theme' ); ?></p>
+							<ul class="pro-material-single__highlights">
+								<?php foreach ( $highlights as $highlight ) : ?>
+									<li><?php echo esc_html( $highlight ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+						<?php if ( $specs ) : ?>
+							<p class="pro-material-single__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+						<?php endif; ?>
+					</div>
+				</div>
+				<?php
+				get_template_part(
+					'template-parts/materials/capture',
+					null,
+					array(
+						'anchor'      => 'material-download-form',
+						'instance'    => 'hero',
+						'material_id' => $material_id,
+					)
+				);
+				?>
 			</section>
 
 			<div class="pro-material-single__layout">
@@ -73,36 +73,61 @@ get_header();
 						)
 					);
 					?>
+
+					<?php proenem_render_material_share( $material_id ); ?>
 				</div>
 
-				<aside class="pro-material-download" aria-labelledby="pro-material-download-title">
-					<span class="pro-material-download__eyebrow"><?php esc_html_e( 'Material gratuito', 'proenem-wordpress-theme' ); ?></span>
-					<h2 id="pro-material-download-title"><?php esc_html_e( 'Pronto para usar nos estudos', 'proenem-wordpress-theme' ); ?></h2>
-					<p><?php esc_html_e( 'Acesse o material, salve na sua rotina e volte para esta página sempre que precisar revisar.', 'proenem-wordpress-theme' ); ?></p>
-					<a class="pen-button pen-button--primary pen-button--md pro-material-download__button" href="#material-download-form">
-						<?php esc_html_e( 'Baixar material', 'proenem-wordpress-theme' ); ?>
-						<span class="pen-button__arrow" aria-hidden="true">↑</span>
-					</a>
-				</aside>
+				<?php proenem_render_material_reassurance( $material_id ); ?>
 			</div>
 
-			<section class="pro-material-footer-cta" aria-labelledby="pro-material-footer-cta-title">
-				<div class="pro-material-footer-cta__inner">
-					<figure class="pro-material-footer-cta__media">
-						<img src="<?php echo esc_url( $cover_image['src'] ); ?>" alt="<?php echo esc_attr( $cover_image['alt'] ); ?>">
-					</figure>
-					<div class="pro-material-footer-cta__copy">
+			<?php proenem_render_related_materials( $material_id ); ?>
+
+			<section class="pro-material-single__closing" aria-labelledby="pro-material-capture-footer-title">
+				<div class="pro-material-single__closing-inner">
+					<div class="pro-material-single__closing-copy">
 						<span><?php esc_html_e( 'Material gratuito', 'proenem-wordpress-theme' ); ?></span>
-						<h2 id="pro-material-footer-cta-title"><?php esc_html_e( 'Leve este material para sua rotina de estudos', 'proenem-wordpress-theme' ); ?></h2>
-						<p><?php esc_html_e( 'Baixe agora e consulte sempre que precisar organizar sua próxima etapa.', 'proenem-wordpress-theme' ); ?></p>
+						<h2><?php esc_html_e( 'Leve este material para sua rotina de estudos', 'proenem-wordpress-theme' ); ?></h2>
+						<?php if ( $highlights ) : ?>
+							<ul class="pro-material-single__highlights">
+								<?php foreach ( $highlights as $highlight ) : ?>
+									<li><?php echo esc_html( $highlight ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+						<?php if ( $specs ) : ?>
+							<p class="pro-material-single__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+						<?php endif; ?>
 					</div>
-					<a class="pen-button pen-button--primary pen-button--md pro-material-footer-cta__button" href="#material-download-form">
-						<?php esc_html_e( 'Baixar material', 'proenem-wordpress-theme' ); ?>
-						<span class="pen-button__arrow" aria-hidden="true">↑</span>
-					</a>
+
+					<figure class="pro-material-single__closing-cover">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 980px) 40vw, 200px' ); ?>
+					</figure>
+
+					<?php
+					get_template_part(
+						'template-parts/materials/capture',
+						null,
+						array(
+							'eyebrow'     => __( 'Ainda dá tempo', 'proenem-wordpress-theme' ),
+							'heading'     => __( 'Baixe agora, é gratuito', 'proenem-wordpress-theme' ),
+							'instance'    => 'footer',
+							'material_id' => $material_id,
+						)
+					);
+					?>
 				</div>
 			</section>
 		</article>
+
+		<div class="pro-material-sticky-cta" data-pro-material-sticky-cta hidden>
+			<div class="pro-material-sticky-cta__copy">
+				<strong><?php echo esc_html( wp_trim_words( get_the_title( $material_id ), 6 ) ); ?></strong>
+				<span><?php echo esc_html( $specs ? implode( ' · ', $specs ) : __( 'Material gratuito', 'proenem-wordpress-theme' ) ); ?></span>
+			</div>
+			<a class="pen-button pen-button--primary pen-button--md" href="#material-download-form" data-pro-material-sticky-cta-action>
+				<?php echo esc_html( proenem_get_material_cta_label( $material_id ) ); ?>
+			</a>
+		</div>
 	<?php endwhile; ?>
 </main>
 

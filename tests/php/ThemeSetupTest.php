@@ -204,6 +204,7 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( home_url( '/aprovados/' ), proenem_get_testimonials_url() );
 		$this->assertFalse( proenem_testimonials_home_proof_is_available() );
 		$this->assertNull( proenem_get_featured_testimonial() );
+		$this->assertNull( proenem_get_material_proof_testimonial( 1 ) );
 		$this->assertSame( array(), proenem_get_testimonials_hero_selection() );
 	}
 
@@ -947,5 +948,998 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertSame( array(), proenem_get_unmet_required_plugins() );
 
 		update_option( 'active_plugins', $previous_active_plugins );
+	}
+
+	/**
+	 * The free materials surfaces should be exposed as explicit templates.
+	 *
+	 * Without the taxonomy template the category URL registered by the
+	 * free-materials plugin falls through to archive.php, which renders the
+	 * blog index.
+	 *
+	 * @return void
+	 */
+	public function test_free_materials_templates_exist() {
+		$this->assertFileExists( PROENEM_THEME_DIR . '/page-templates/free-materials.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/single-material_gratuito.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-material_categoria.php' );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' );
+	}
+
+	/**
+	 * The theme must provide the template WordPress looks for on the material
+	 * category archive.
+	 *
+	 * The expected name is derived from the plugin contract, so renaming the
+	 * taxonomy fails here instead of silently falling through to archive.php,
+	 * which is the blog index. The end-to-end suite covers the rendered page.
+	 *
+	 * @return void
+	 */
+	public function test_theme_provides_the_material_category_template() {
+		$taxonomy = proenem_get_free_materials_taxonomy();
+
+		$this->assertSame( 'material_categoria', $taxonomy );
+		$this->assertFileExists( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' );
+
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/taxonomy-' . $taxonomy . '.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'template-parts/materials/catalog', $template );
+		$this->assertStringContainsString( 'proenem_build_free_materials_query_args', $template );
+		$this->assertStringNotContainsString( 'get_the_archive_title', $template );
+	}
+
+	/**
+	 * The catalog query should filter by the selected categories.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_query_args_apply_the_category_filter() {
+		$unfiltered = proenem_build_free_materials_query_args( array() );
+
+		$this->assertSame( proenem_get_free_materials_post_type(), $unfiltered['post_type'] );
+		$this->assertArrayNotHasKey( 'tax_query', $unfiltered );
+
+		$filtered = proenem_build_free_materials_query_args( array( 'redacao', 'simulados' ) );
+
+		$this->assertArrayHasKey( 'tax_query', $filtered );
+		$this->assertSame( proenem_get_free_materials_taxonomy(), $filtered['tax_query'][0]['taxonomy'] );
+		$this->assertSame( 'slug', $filtered['tax_query'][0]['field'] );
+		$this->assertSame( array( 'redacao', 'simulados' ), $filtered['tax_query'][0]['terms'] );
+	}
+
+	/**
+	 * The catalog must filter through links, not a form.
+	 *
+	 * The rendered markup and the active state are covered end to end in
+	 * tests/e2e/free-materials.spec.js, which runs against the real taxonomy.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_filters_through_links_instead_of_a_form() {
+		$part = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'pen-blog-filter-bar', $part );
+		$this->assertStringNotContainsString( 'pro-materials-layout__sidebar', $part );
+		$this->assertFalse( function_exists( 'proenem_render_material_category_filters' ) );
+
+		// The categories live in the hero of both surfaces, where they are the
+		// artwork as well as the filter.
+		foreach ( array( '/page-templates/free-materials.php', '/taxonomy-material_categoria.php' ) as $file ) {
+			$template = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$this->assertStringContainsString( 'proenem_render_material_category_tabs', $template, $file );
+		}
+
+		$this->assertStringNotContainsString( 'proenem_render_material_category_tabs', $part );
+	}
+
+	/**
+	 * Only categories that lead somewhere should get a tab.
+	 *
+	 * @return void
+	 */
+	public function test_category_tabs_skip_empty_categories() {
+		$terms = array(
+			(object) array(
+				'slug'  => 'redacao',
+				'name'  => 'Redação',
+				'count' => 3,
+			),
+			(object) array(
+				'slug'  => 'vazia',
+				'name'  => 'Vazia',
+				'count' => 0,
+			),
+		);
+
+		$this->assertSame(
+			array( 'redacao' ),
+			wp_list_pluck( proenem_get_material_category_tabs_terms( $terms, array() ), 'slug' )
+		);
+
+		// The category being viewed stays visible even when it is empty, so the
+		// active tab does not disappear.
+		$this->assertSame(
+			array( 'redacao', 'vazia' ),
+			wp_list_pluck( proenem_get_material_category_tabs_terms( $terms, array( 'vazia' ) ), 'slug' )
+		);
+
+		$this->assertSame( array(), proenem_get_material_category_tabs_terms( 'nao e lista', array() ) );
+	}
+
+	/**
+	 * The results count must be pluralised and announced to assistive technology.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_count_is_pluralised_and_announced() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/catalog.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'aria-live="polite"', $template );
+		$this->assertStringContainsString( "_n( '%s material disponível', '%s materiais disponíveis'", $template );
+	}
+
+	/**
+	 * Material card headings must sit below the results heading.
+	 *
+	 * @return void
+	 */
+	public function test_material_card_heading_level_is_nested() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Checklist de revisão',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_card( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( '<h3>', $markup );
+		$this->assertStringNotContainsString( '<h2>', $markup );
+	}
+
+	/**
+	 * The capture form must block an empty submission on the client.
+	 *
+	 * @return void
+	 */
+	public function test_capture_form_marks_required_fields() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'name="name"', $template );
+		$this->assertStringContainsString( 'name="email"', $template );
+		$this->assertSame( 2, substr_count( $template, 'required' ) );
+		$this->assertStringContainsString( 'inputmode="numeric"', $template );
+
+		// A pattern attribute compiled in the browser's strict regex mode threw
+		// and silently killed the whole submit handler. See the Node guard in
+		// tests/e2e/free-materials.spec.js.
+		$this->assertStringNotContainsString( 'pattern=', $template );
+	}
+
+	/**
+	 * Every id in the capture panel must carry its instance, because the page
+	 * renders the panel twice.
+	 *
+	 * @return void
+	 */
+	public function test_capture_panel_ids_are_scoped_to_the_instance() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '$capture_field', $template );
+		$this->assertStringNotContainsString( 'id="pro-material-capture-name"', $template );
+
+		// Analytics autocapture identifies a form by id, name and action. Both
+		// instances post to the same admin-post.php, so without these two they
+		// arrive as the same anonymous event.
+		$this->assertStringContainsString( 'id="<?php echo esc_attr( $capture_field( \'form\' ) ); ?>"', $template );
+		$this->assertStringContainsString( 'name="<?php echo esc_attr( $capture_field( \'form\' ) ); ?>"', $template );
+
+		// The nonce is written by hand because the WordPress helper derives the
+		// id from the field name, duplicating id="_wpnonce" across both forms.
+		$this->assertStringContainsString( 'wp_create_nonce', $template );
+		$this->assertStringContainsString( 'wp_referer_field', $template );
+
+		// Rendering the panel twice must not repeat a single id. The end to end
+		// suite checks the whole page; this checks the panel in isolation.
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$markup  = '';
+
+		foreach ( array( 'hero', 'footer' ) as $instance ) {
+			ob_start();
+			$args = array(
+				'instance'    => $instance,
+				'material_id' => $post_id,
+			);
+			require PROENEM_THEME_DIR . '/template-parts/materials/capture.php';
+			$markup .= (string) ob_get_clean();
+		}
+
+		preg_match_all( '/\sid="([^"]+)"/', $markup, $matches );
+
+		$this->assertNotEmpty( $matches[1] );
+		$this->assertSame( $matches[1], array_unique( $matches[1] ) );
+	}
+
+	/**
+	 * The page must end with a form, not with a link back up to one.
+	 *
+	 * @return void
+	 */
+	public function test_material_page_ends_with_a_second_form() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/single-material_gratuito.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertSame( 2, substr_count( $template, "'template-parts/materials/capture'" ) );
+		$this->assertStringContainsString( "'instance'    => 'hero'", $template );
+		$this->assertStringContainsString( "'instance'    => 'footer'", $template );
+
+		// Both of these pointed at the form above them, with the arrow drawn up.
+		$this->assertStringNotContainsString( 'pro-material-download', $template );
+		$this->assertStringNotContainsString( 'pro-material-footer-cta', $template );
+	}
+
+	/**
+	 * The form must say what happens to the data it collects.
+	 *
+	 * @return void
+	 */
+	public function test_capture_form_carries_a_privacy_notice() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/template-parts/materials/capture.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'pro-material-capture__privacy', $template );
+		$this->assertStringContainsString( 'get_privacy_policy_url', $template );
+
+		// The notice still has to make sense before a privacy page is set.
+		$this->assertSame( 2, substr_count( $template, 'Sem pagamento.' ) );
+	}
+
+	/**
+	 * The material metadata helpers must degrade cleanly when the plugin that
+	 * owns the metadata is not active.
+	 *
+	 * @return void
+	 */
+	public function test_material_metadata_helpers_tolerate_missing_metadata() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		// No metadata stored: every helper must return its empty value rather
+		// than a placeholder label.
+
+		$this->assertSame( '', proenem_get_material_format_label( $post_id ) );
+		$this->assertSame( 0, proenem_get_material_pages( $post_id ) );
+		$this->assertSame( '', proenem_get_material_file_size( $post_id ) );
+		$this->assertSame( '', proenem_get_material_level( $post_id ) );
+		$this->assertSame( array(), proenem_get_material_highlights( $post_id ) );
+		$this->assertFalse( proenem_material_is_featured( $post_id ) );
+		$this->assertSame( array(), proenem_get_material_specs( $post_id ) );
+	}
+
+	/**
+	 * Card specs should list only the fields an editor filled in.
+	 *
+	 * @return void
+	 */
+	public function test_material_specs_skip_empty_fields() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_pages_meta_key(), 1 );
+
+		$this->assertSame( array( '1 página' ), proenem_get_material_specs( $post_id ) );
+
+		update_post_meta( $post_id, free_materials_pages_meta_key(), 14 );
+		update_post_meta( $post_id, free_materials_file_size_meta_key(), '1,8 MB' );
+
+		$this->assertSame( array( '14 páginas', '1,8 MB' ), proenem_get_material_specs( $post_id ) );
+	}
+
+	/**
+	 * Highlights should come back as a clean list of strings.
+	 *
+	 * @return void
+	 */
+	public function test_material_highlights_are_returned_as_clean_strings() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), array( 'Um', '', 'Dois' ) );
+
+		$this->assertSame( array( 'Um', 'Dois' ), proenem_get_material_highlights( $post_id ) );
+
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), 'nao e lista' );
+
+		$this->assertSame( array(), proenem_get_material_highlights( $post_id ) );
+	}
+
+	/**
+	 * Material images must come from WordPress so they carry srcset, sizes,
+	 * intrinsic dimensions and lazy loading.
+	 *
+	 * @return void
+	 */
+	public function test_material_image_is_rendered_by_wordpress() {
+		$post_id       = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$attachment_id = self::factory()->attachment->create_upload_object(
+			DIR_TESTDATA . '/images/canola.jpg',
+			$post_id
+		);
+
+		set_post_thumbnail( $post_id, $attachment_id );
+
+		ob_start();
+		proenem_render_material_image( $post_id, 'medium_large', '420px' );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( '<img', $markup );
+		$this->assertStringContainsString( 'srcset=', $markup );
+		$this->assertStringContainsString( 'sizes=', $markup );
+		$this->assertStringContainsString( 'width=', $markup );
+		$this->assertStringContainsString( 'height=', $markup );
+		$this->assertStringNotContainsString( 'pro-material-placeholder', $markup );
+	}
+
+	/**
+	 * An above-the-fold material image should opt out of lazy loading.
+	 *
+	 * @return void
+	 */
+	public function test_material_cover_image_is_eager() {
+		$post_id       = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$attachment_id = self::factory()->attachment->create_upload_object(
+			DIR_TESTDATA . '/images/canola.jpg',
+			$post_id
+		);
+
+		set_post_thumbnail( $post_id, $attachment_id );
+
+		ob_start();
+		proenem_render_material_image( $post_id, 'large', '800px', true );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'loading="eager"', $markup );
+		$this->assertStringContainsString( 'fetchpriority="high"', $markup );
+		$this->assertStringNotContainsString( 'loading="lazy"', $markup );
+	}
+
+	/**
+	 * A material without a cover must not borrow a photo of a student.
+	 *
+	 * @return void
+	 */
+	public function test_material_without_cover_renders_a_typographic_placeholder() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		ob_start();
+		proenem_render_material_image( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-placeholder', $markup );
+		$this->assertStringNotContainsString( '<img', $markup );
+		$this->assertStringNotContainsString( 'student_school', $markup );
+		$this->assertStringNotContainsString( 'hero-student', $markup );
+	}
+
+	/**
+	 * The placeholder should name the format when the editor set one.
+	 *
+	 * @return void
+	 */
+	public function test_material_placeholder_prefers_the_format_label() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		update_post_meta( $post_id, free_materials_format_meta_key(), 'pdf' );
+
+		ob_start();
+		proenem_render_material_image( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'PDF', $markup );
+	}
+
+	/**
+	 * The card must say what the visitor gets, and stay quiet about fields the
+	 * editor left empty.
+	 *
+	 * @return void
+	 */
+	public function test_material_card_shows_only_the_metadata_that_exists() {
+		$bare_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Sem metadados',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_card( $bare_id );
+		$bare = (string) ob_get_clean();
+
+		$this->assertStringNotContainsString( 'pro-material-card__specs', $bare );
+		$this->assertStringNotContainsString( 'pro-material-card__level', $bare );
+
+		$filled_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Com metadados',
+			)
+		);
+
+		update_post_meta( $filled_id, free_materials_format_meta_key(), 'pdf' );
+		update_post_meta( $filled_id, free_materials_pages_meta_key(), 14 );
+		update_post_meta( $filled_id, free_materials_file_size_meta_key(), '1,8 MB' );
+		update_post_meta( $filled_id, free_materials_level_meta_key(), 'Quem já fez simulado' );
+
+		ob_start();
+		proenem_render_material_card( $filled_id );
+		$filled = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'PDF · 14 páginas · 1,8 MB', $filled );
+		$this->assertStringContainsString( 'pro-material-card__level', $filled );
+	}
+
+	/**
+	 * The default call to action must promise the download.
+	 *
+	 * @return void
+	 */
+	public function test_material_cta_defaults_to_promising_the_download() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		$this->assertSame( 'Baixar grátis', proenem_get_material_cta_label( $post_id ) );
+
+		// A per-material label still wins.
+		update_post_meta( $post_id, proenem_get_free_materials_cta_label_meta_key(), 'Baixar checklist' );
+
+		$this->assertSame( 'Baixar checklist', proenem_get_material_cta_label( $post_id ) );
+	}
+
+	/**
+	 * The catalog hero must stay short enough to leave the first material
+	 * inside the first screen.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_hero_uses_the_compact_modifier() {
+		foreach ( array( '/page-templates/free-materials.php', '/taxonomy-material_categoria.php' ) as $file ) {
+			$template = (string) file_get_contents( PROENEM_THEME_DIR . $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+			$this->assertStringContainsString( 'pro-materials-hero--catalog', $template, $file );
+		}
+
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// The modifier has to win over the shared .pro-materials-hero rules,
+		// which have the same specificity, so cascade order is the contract.
+		$this->assertLessThan(
+			strpos( $css, '.pro-materials-hero--catalog {' ),
+			strpos( $css, '.pro-materials-hero h1,' ),
+			'.pro-materials-hero--catalog must come after the shared hero rules.'
+		);
+
+		// The card title moved to h3 in #243; the styles must follow.
+		$this->assertStringContainsString( '.pro-material-card h3 {', $css );
+		$this->assertStringNotContainsString( '.pro-material-card h2 {', $css );
+	}
+
+	/**
+	 * The catalog highlight is editorial and optional.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_selection_is_deterministic() {
+		$helpers = (string) file_get_contents( PROENEM_THEME_DIR . '/inc/template-tags.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start   = strpos( $helpers, 'function proenem_get_featured_material()' );
+		$query   = substr( $helpers, $start, 900 );
+
+		// Two editors can each flag a material. Without a tie-break the catalog
+		// promotes a different one between requests.
+		$this->assertStringContainsString( "'orderby'", $query );
+		$this->assertStringContainsString( "'ID'   => 'DESC'", $query );
+	}
+
+	/**
+	 * The catalog highlight is editorial and optional.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_is_opt_in() {
+		$this->assertNull( proenem_get_featured_material() );
+
+		// Nothing renders when the editors have not picked one.
+		ob_start();
+		proenem_render_featured_material( null );
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
+	 * The highlight promotes a material without removing it from the list.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_stays_in_the_catalog_count() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/free-materials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// Excluding it would make "Todos os materiais" and the count lie.
+		$this->assertStringNotContainsString( 'post__not_in', $template );
+		$this->assertStringContainsString( 'proenem_render_featured_material', $template );
+		$this->assertStringContainsString( "'featured_id'", $template );
+	}
+
+	/**
+	 * The highlighted material should be marked in the grid.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_card_is_flagged() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		ob_start();
+		proenem_render_material_card( $post_id );
+		$plain = (string) ob_get_clean();
+
+		$this->assertStringNotContainsString( 'pro-material-card--featured', $plain );
+		$this->assertStringNotContainsString( 'pro-material-card__flag', $plain );
+
+		ob_start();
+		proenem_render_material_card( $post_id, true );
+		$flagged = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-card--featured', $flagged );
+		$this->assertStringContainsString( 'Em destaque', $flagged );
+	}
+
+	/**
+	 * The highlight must render the material's own promise.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_band_renders_the_material() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_content' => 'Transforme o resultado do simulado em plano de estudo.',
+				'post_status'  => 'publish',
+				'post_title'   => 'Mapa de análise',
+			)
+		);
+
+		update_post_meta( $post_id, free_materials_format_meta_key(), 'pdf' );
+		update_post_meta( $post_id, free_materials_highlights_meta_key(), array( 'Um', 'Dois' ) );
+
+		ob_start();
+		proenem_render_featured_material( get_post( $post_id ) );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Material em destaque', $markup );
+		$this->assertStringContainsString( 'Mapa de análise', $markup );
+		$this->assertStringContainsString( 'PDF', $markup );
+		$this->assertSame( 2, substr_count( $markup, '<li>' ) );
+
+		// The decorative cover link must not duplicate the title for screen
+		// readers or take a second tab stop.
+		$this->assertStringContainsString( 'aria-hidden="true"', $markup );
+		$this->assertStringContainsString( 'tabindex="-1"', $markup );
+	}
+
+	/**
+	 * Only the capture page gets the reduced header.
+	 *
+	 * @return void
+	 */
+	public function test_reduced_header_is_limited_to_the_capture_surface() {
+		$page_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => 'page',
+			)
+		);
+
+		update_post_meta( $page_id, '_wp_page_template', 'page-templates/free-materials.php' );
+		$this->go_to( get_permalink( $page_id ) );
+
+		// The catalog still needs the full navigation.
+		$this->assertFalse( proenem_is_material_capture_surface() );
+
+		$this->go_to( home_url( '/' ) );
+
+		$this->assertFalse( proenem_is_material_capture_surface() );
+
+		$header = (string) file_get_contents( PROENEM_THEME_DIR . '/header.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( 'proenem_is_material_capture_surface', $header );
+		$this->assertStringContainsString( "'logo_only'  => true", $header );
+	}
+
+	/**
+	 * The breadcrumb should only offer the steps back the reader cannot reach
+	 * otherwise: the logo already goes home and the h1 already names the
+	 * material, so neither belongs in the trail.
+	 *
+	 * @return void
+	 */
+	public function test_material_breadcrumb_renders_the_trail() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Mapa de análise',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_breadcrumb( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'Materiais gratuitos', $markup );
+		$this->assertStringNotContainsString( 'Início', $markup );
+		$this->assertStringNotContainsString( 'Mapa de análise', $markup );
+
+		// Every crumb leads somewhere, so none of them is the current page.
+		$this->assertStringNotContainsString( 'aria-current', $markup );
+		$this->assertSame( 1, substr_count( $markup, '<a href' ) );
+	}
+
+	/**
+	 * Related materials should prefer the same category and never repeat the
+	 * material being viewed.
+	 *
+	 * @return void
+	 */
+	public function test_related_materials_prefer_the_same_category() {
+		if ( ! proenem_free_materials_is_available() ) {
+			$this->assertSame( array(), proenem_get_related_material_ids( 1 ) );
+
+			return;
+		}
+
+		$current = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_type'   => proenem_get_free_materials_post_type(),
+			)
+		);
+		$related = proenem_get_related_material_ids( $current, 3 );
+
+		$this->assertNotContains( $current, $related );
+	}
+
+	/**
+	 * The share bar must consume the design system contract.
+	 *
+	 * @return void
+	 */
+	public function test_material_share_uses_the_design_system_contract() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_status' => 'publish',
+				'post_title'  => 'Mapa de análise',
+			)
+		);
+
+		ob_start();
+		proenem_render_material_share( $post_id );
+		$markup = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pen-article-share-bar', $markup );
+		$this->assertStringContainsString( 'pen-article-share--green', $markup );
+
+		// WhatsApp comes first: the audience is students sharing with students.
+		$this->assertLessThan(
+			strpos( $markup, 'facebook.com' ),
+			strpos( $markup, 'wa.me' )
+		);
+
+		// Every share link must be labelled and safe to open.
+		$this->assertSame( 3, substr_count( $markup, 'rel="noopener noreferrer"' ) );
+		$this->assertSame( 3, substr_count( $markup, 'aria-label=' ) );
+	}
+
+	/**
+	 * The related section is absent rather than empty.
+	 *
+	 * @return void
+	 */
+	public function test_related_materials_section_is_absent_when_there_is_nothing_to_show() {
+		ob_start();
+		proenem_render_related_materials( 0 );
+
+		$this->assertSame( '', (string) ob_get_clean() );
+	}
+
+	/**
+	 * The catalog must stop loading every material at once.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_query_is_paged_and_ordered() {
+		$args = proenem_build_free_materials_query_args( array() );
+
+		$this->assertNotSame( -1, $args['posts_per_page'] );
+		$this->assertSame( proenem_get_materials_per_page(), $args['posts_per_page'] );
+		$this->assertSame( 1, $args['paged'] );
+		$this->assertSame( 'date', $args['orderby'] );
+		$this->assertSame( 'DESC', $args['order'] );
+	}
+
+	/**
+	 * The page size should be tunable without patching the theme.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_page_size_is_filterable() {
+		$smaller = static function () {
+			return 4;
+		};
+
+		add_filter( 'proenem_materials_per_page', $smaller );
+
+		$this->assertSame( 4, proenem_get_materials_per_page() );
+
+		remove_filter( 'proenem_materials_per_page', $smaller );
+
+		// A nonsense value must not produce an empty query.
+		$zero = static function () {
+			return 0;
+		};
+
+		add_filter( 'proenem_materials_per_page', $zero );
+
+		$this->assertSame( 1, proenem_get_materials_per_page() );
+
+		remove_filter( 'proenem_materials_per_page', $zero );
+	}
+
+	/**
+	 * Only the orders the catalog offers may reach the query.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_order_is_constrained_to_the_offered_options() {
+		$this->assertSame(
+			array(
+				'order'   => 'ASC',
+				'orderby' => 'title',
+			),
+			proenem_get_materials_order_args( 'az' )
+		);
+
+		// Anything unknown falls back to the default rather than reaching the
+		// query as-is.
+		$this->assertSame(
+			array(
+				'order'   => 'DESC',
+				'orderby' => 'date',
+			),
+			proenem_get_materials_order_args( 'DROP TABLE' )
+		);
+
+		$this->assertArrayHasKey( 'recentes', proenem_get_materials_orders() );
+	}
+
+	/**
+	 * Catalog pagination has to keep the filter and the order.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_pagination_links_preserve_the_context() {
+		$_GET['ordenar'] = 'az';
+
+		$link = proenem_get_materials_page_link( proenem_get_free_materials_url() );
+
+		$this->assertStringNotContainsString( 'pagina=', call_user_func( $link, 1 ) );
+		$this->assertStringContainsString( 'pagina=3', call_user_func( $link, 3 ) );
+
+		// Paging must not silently reset the order the visitor chose.
+		$this->assertStringContainsString( 'ordenar=az', call_user_func( $link, 1 ) );
+		$this->assertStringContainsString( 'ordenar=az', call_user_func( $link, 3 ) );
+
+		unset( $_GET['ordenar'] );
+	}
+
+	/**
+	 * An unknown order must not reach the query.
+	 *
+	 * @return void
+	 */
+	public function test_unknown_order_falls_back_to_the_default() {
+		$_GET['ordenar'] = 'az';
+
+		$this->assertSame( 'az', proenem_get_selected_materials_order() );
+
+		$_GET['ordenar'] = 'nao-existe';
+
+		$this->assertSame( 'recentes', proenem_get_selected_materials_order() );
+
+		unset( $_GET['ordenar'] );
+	}
+
+	/**
+	 * The catalog page and the material post type share a slug, so pagination
+	 * cannot use a pretty /page/N/ URL.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_pagination_uses_a_query_argument() {
+		$_GET['pagina'] = '3';
+
+		$this->assertSame( 3, proenem_get_materials_paged() );
+
+		$_GET['pagina'] = '-2';
+
+		$this->assertSame( 1, proenem_get_materials_paged() );
+
+		unset( $_GET['pagina'] );
+
+		$this->assertSame( 1, proenem_get_materials_paged() );
+	}
+
+	/**
+	 * The highlight belongs to the first page only.
+	 *
+	 * @return void
+	 */
+	public function test_featured_material_is_limited_to_the_first_page() {
+		$template = (string) file_get_contents( PROENEM_THEME_DIR . '/page-templates/free-materials.php' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		$this->assertStringContainsString( '1 === proenem_get_materials_paged()', $template );
+	}
+
+	/**
+	 * Social proof must only appear when somebody put a number in.
+	 *
+	 * @return void
+	 */
+	public function test_social_proof_needs_real_data() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+
+		$this->assertSame( 0, proenem_get_material_downloads( $post_id ) );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$without = (string) ob_get_clean();
+
+		// The questions still render; the proof block does not.
+		$this->assertStringNotContainsString( 'pro-material-proof__count', $without );
+		$this->assertStringContainsString( 'pen-faq-item', $without );
+
+		update_post_meta( $post_id, free_materials_downloads_meta_key(), 1847 );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$with = (string) ob_get_clean();
+
+		$this->assertStringContainsString( 'pro-material-proof__count', $with );
+		$this->assertStringContainsString( number_format_i18n( 1847 ), $with );
+	}
+
+	/**
+	 * The default questions describe this flow, so they hold for any material,
+	 * and a site can still replace them.
+	 *
+	 * @return void
+	 */
+	public function test_material_faq_has_defaults_and_is_filterable() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$faq     = proenem_get_material_faq( $post_id );
+
+		$this->assertCount( 4, $faq );
+
+		foreach ( $faq as $item ) {
+			$this->assertNotEmpty( $item['question'] );
+			$this->assertNotEmpty( $item['answer'] );
+		}
+
+		$replace = static function () {
+			return array(
+				array(
+					'question' => 'Pergunta do site',
+					'answer'   => 'Resposta do site',
+				),
+			);
+		};
+
+		add_filter( 'proenem_material_faq', $replace );
+
+		$this->assertCount( 1, proenem_get_material_faq( $post_id ) );
+
+		remove_filter( 'proenem_material_faq', $replace );
+	}
+
+	/**
+	 * An entry missing a question or an answer must not render an empty item.
+	 *
+	 * @return void
+	 */
+	public function test_material_faq_skips_incomplete_entries() {
+		$post_id    = self::factory()->post->create( array( 'post_status' => 'publish' ) );
+		$incomplete = static function () {
+			return array(
+				array(
+					'question' => 'Completa',
+					'answer'   => 'Com resposta',
+				),
+				array(
+					'question' => 'Sem resposta',
+					'answer'   => '',
+				),
+			);
+		};
+
+		add_filter( 'proenem_material_faq', $incomplete );
+
+		ob_start();
+		proenem_render_material_reassurance( $post_id );
+		$markup = (string) ob_get_clean();
+
+		remove_filter( 'proenem_material_faq', $incomplete );
+
+		$this->assertSame( 1, substr_count( $markup, '<summary>' ) );
+		$this->assertStringNotContainsString( 'Sem resposta', $markup );
+	}
+
+
+
+	/**
+	 * The category chips are the artwork of this hero, so every tone has to be
+	 * readable with ink text.
+	 *
+	 * @return void
+	 */
+	public function test_category_tones_are_readable_with_ink_text() {
+		$tones = proenem_get_material_category_tones();
+
+		$this->assertNotEmpty( $tones );
+
+		// purple (3.89:1) and platform blue (3.37:1) fail against ink.
+		$this->assertNotContains( 'purple', $tones );
+		$this->assertNotContains( 'blue', $tones );
+
+		// A category keeps its colour from one page to the next.
+		$this->assertSame( proenem_get_material_category_tone( 0 ), proenem_get_material_category_tone( 0 ) );
+		$this->assertSame(
+			proenem_get_material_category_tone( 0 ),
+			proenem_get_material_category_tone( count( $tones ) )
+		);
+	}
+
+	/**
+	 * The catalog hero must not repeat the approved students one.
+	 *
+	 * @return void
+	 */
+	public function test_catalog_hero_does_not_reuse_the_testimonials_treatment() {
+		$css   = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$start = strpos( $css, '.pro-materials-hero--catalog {' );
+		$rule  = substr( $css, $start, strpos( $css, '}', $start ) - $start );
+
+		// Light ground with an ink headline, not a solid brand band.
+		$this->assertStringContainsString( 'canvas-white', $rule );
+		$this->assertStringNotContainsString( 'proenem-red', $rule );
+
+		// The photo stage belongs to the approved students page.
+		$this->assertStringNotContainsString( '.pro-materials-hero__stage', $css );
+		$this->assertStringContainsString( '.pro-testimonials-hero__stage', $css );
+	}
+
+	/**
+	 * The footer title must not be beaten by the section heading rule.
+	 *
+	 * @return void
+	 */
+	public function test_footer_title_wins_over_the_section_heading_rule() {
+		$css = (string) file_get_contents( PROENEM_THEME_DIR . '/src/styles/theme.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+
+		// The design system groups `.pen-site-footer h2` with the section
+		// headings, at (0,1,1). A bare `.pen-site-footer__title` is (0,1,0) and
+		// loses, which rendered the footer at 70.4px on every page but the home.
+		$this->assertStringContainsString( '.pen-site-footer .pen-site-footer__title', $css );
+	}
+
+	/**
+	 * The unused delivery URL helper should be gone.
+	 *
+	 * @return void
+	 */
+	public function test_unused_material_delivery_helper_is_removed() {
+		$this->assertFalse( function_exists( 'proenem_get_material_delivery_url' ) );
 	}
 }
