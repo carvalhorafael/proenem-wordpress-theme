@@ -46,7 +46,19 @@ $capture_privacy  = function_exists( 'get_privacy_policy_url' ) ? get_privacy_po
 	<h2 id="<?php echo esc_attr( $capture_title_id ); ?>"><?php echo esc_html( $capture_heading ); ?></h2>
 	<p><?php esc_html_e( 'Enviamos o link de download para o contato que você informar.', 'proenem-wordpress-theme' ); ?></p>
 
-	<form class="pro-material-capture__form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-pro-material-capture-form>
+	<?php
+	// The analytics autocapture identifies a form by its id, name and action.
+	// Both instances post to the same admin-post.php, so without these two the
+	// hero and the closing form arrive as the same anonymous event.
+	?>
+	<form
+		id="<?php echo esc_attr( $capture_field( 'form' ) ); ?>"
+		name="<?php echo esc_attr( $capture_field( 'form' ) ); ?>"
+		class="pro-material-capture__form"
+		method="post"
+		action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>"
+		data-pro-material-capture-form
+	>
 		<input type="hidden" name="action" value="crm_leads_capture_free_material">
 		<?php
 		// wp_nonce_field() derives the id from the field name, which would
