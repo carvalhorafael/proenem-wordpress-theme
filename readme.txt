@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.22.1
+Stable tag: 0.23.0
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,14 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.23.0 =
+* Refaz o catalogo de materiais gratuitos: hero proprio, filtro por categoria aplicado no servidor e instantaneo no cliente, ordenacao, paginacao, material em destaque e card que diz o que se recebe.
+* Refaz a pagina de cada material como pagina de captura: formulario acima da dobra, o que tem dentro, prova social, duvidas frequentes, materiais relacionados, compartilhar, segundo formulario no fim e barra fixa no mobile.
+* Cria o template de arquivo das categorias de material, que antes caia no indice do blog.
+* Serve imagens responsivas e placeholder para material sem capa.
+* Mede a conversao da captura e o uso do filtro, e leva ao CRM o identificador anonimo de dispositivo.
+* Corrige o tamanho do titulo do rodape fora da home.
 
 = 0.22.1 =
 * Corrige a home, que ignorava o modelo de pagina escolhido no editor.
