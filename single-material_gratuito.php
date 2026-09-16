@@ -13,8 +13,7 @@ get_header();
 	while ( have_posts() ) :
 		the_post();
 
-		$material_id   = get_the_ID();
-		$category_name = proenem_get_material_category_label( $material_id );
+		$material_id = get_the_ID();
 		// Only an excerpt the editor actually wrote. The generated one repeated
 		// the opening of the content, truncated with an ellipsis.
 		$promise    = has_excerpt( $material_id ) ? get_the_excerpt( $material_id ) : '';
@@ -25,7 +24,6 @@ get_header();
 			<section class="pro-material-single__hero" aria-labelledby="pro-material-title">
 				<div class="pro-material-single__hero-copy">
 					<?php proenem_render_material_breadcrumb( $material_id ); ?>
-					<span class="pen-section-pill"><?php echo esc_html( $category_name ); ?></span>
 					<?php the_title( '<h1 id="pro-material-title">', '</h1>' ); ?>
 					<?php if ( '' !== $promise ) : ?>
 						<p><?php echo esc_html( $promise ); ?></p>
@@ -78,9 +76,9 @@ get_header();
 
 					<?php proenem_render_material_share( $material_id ); ?>
 				</div>
-			</div>
 
-			<?php proenem_render_material_reassurance( $material_id ); ?>
+				<?php proenem_render_material_reassurance( $material_id ); ?>
+			</div>
 
 			<?php proenem_render_related_materials( $material_id ); ?>
 
@@ -96,7 +94,14 @@ get_header();
 								<?php endforeach; ?>
 							</ul>
 						<?php endif; ?>
+						<?php if ( $specs ) : ?>
+							<p class="pro-material-single__specs"><?php echo esc_html( implode( ' · ', $specs ) ); ?></p>
+						<?php endif; ?>
 					</div>
+
+					<figure class="pro-material-single__closing-cover">
+						<?php proenem_render_material_image( $material_id, 'medium_large', '(max-width: 980px) 40vw, 200px' ); ?>
+					</figure>
 
 					<?php
 					get_template_part(
