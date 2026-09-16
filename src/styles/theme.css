@@ -8847,19 +8847,44 @@ body.proenem-home-template {
     padding: var(--pen-space-6) var(--pen-space-4);
   }
 
+  /*
+   * Stacked, this band took 557px between the hero and the catalog, so the
+   * first card of the grid started at 1682px. It keeps the job of selling one
+   * material — cover, label, title, promise, button — and drops what belongs
+   * to the material's own page.
+   */
+  .pro-materials-featured {
+    padding-block: var(--pen-space-5);
+  }
+
   .pro-materials-featured__inner {
-    gap: var(--pen-space-5);
+    gap: var(--pen-space-4);
     grid-template-columns: 1fr;
   }
 
   /* Leading with a large cover pushed the promise itself past the fold. */
   .pro-materials-featured__media {
     justify-self: start;
-    max-width: 11rem;
+    max-width: 7.5rem;
   }
 
   .pro-materials-featured__copy {
     gap: var(--pen-space-3);
+  }
+
+  .pro-materials-featured h3 {
+    font-size: 1.4rem;
+  }
+
+  /* The list is what the material page opens with. Here it only pushed the
+   * button, which is the whole point of the band, further down. */
+  .pro-materials-featured__highlights {
+    display: none;
+  }
+
+  .pro-materials-featured__footer {
+    gap: var(--pen-space-3);
+    margin-top: 0;
   }
 
   /*
