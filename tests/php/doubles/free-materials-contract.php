@@ -77,6 +77,17 @@ if ( ! function_exists( 'free_materials_featured_meta_key' ) ) {
 	}
 }
 
+if ( ! function_exists( 'free_materials_downloads_meta_key' ) ) {
+	/**
+	 * Meta key for the download count shown as social proof.
+	 *
+	 * @return string
+	 */
+	function free_materials_downloads_meta_key() {
+		return '_free_materials_downloads';
+	}
+}
+
 if ( ! function_exists( 'free_materials_formats' ) ) {
 	/**
 	 * Known material formats as slug keyed labels.

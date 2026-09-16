@@ -82,6 +82,10 @@ $materials = array(
 			'name' => 'Simulados',
 		),
 		'meta'     => array(
+			// Placeholder social proof, so the section can be reviewed. The
+			// theme renders nothing when the field is empty, which is the
+			// state a real material starts in.
+			'downloads'  => 1847,
 			'featured'   => true,
 			'format'     => 'pdf',
 			'pages'      => 14,
@@ -153,6 +157,7 @@ foreach ( $materials as $material ) {
 
 	if ( ! empty( $material['meta'] ) && function_exists( 'free_materials_format_meta_key' ) ) {
 		$meta_keys = array(
+			'downloads'  => free_materials_downloads_meta_key(),
 			'featured'   => free_materials_featured_meta_key(),
 			'file_size'  => free_materials_file_size_meta_key(),
 			'format'     => free_materials_format_meta_key(),
@@ -171,5 +176,7 @@ foreach ( $materials as $material ) {
 	proenem_materials_seed_log( 'Material pronto: ' . get_permalink( $material_id ) );
 }
 
-flush_rewrite_rules( false );
+// Hard flush: the browser suite runs immediately after this script, and the
+// category URLs 404 while the rules are not persisted yet.
+flush_rewrite_rules( true );
 proenem_materials_seed_log( 'Regras de rewrite atualizadas.' );

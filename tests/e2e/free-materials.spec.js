@@ -12,11 +12,15 @@ const MATERIAL = "/materiais-gratuitos/mapa-de-analise-de-simulados/";
  */
 const gotoMaterials = async (page, url) => {
   const response = await page.goto(url);
-  const available = Boolean(response) && response.status() === 200;
+  const status = response ? response.status() : 0;
 
-  test.skip(!available, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  // Only a 404 means the plugin is not mounted. Skipping on any other status
+  // would turn a slow start or a 5xx into a silently missing test.
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
 
-  return available;
+  expect(status, `${url} respondeu ${status}`).toBe(200);
+
+  return true;
 };
 
 test("catalog lists every material and reports the count", async ({ page }) => {
@@ -77,13 +81,14 @@ test("legacy query argument still filters on the server, without JavaScript", as
   const page = await context.newPage();
 
   const response = await page.goto(`${CATALOG}?material_categoria%5B%5D=redacao`);
-  const available = Boolean(response) && response.status() === 200;
+  const status = response ? response.status() : 0;
 
-  if (!available) {
+  if (status === 404) {
     await context.close();
   }
 
-  test.skip(!available, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
 
   await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
   await expect(page.locator("[data-pro-materials-count]")).toHaveText("1 material disponível");
@@ -189,11 +194,14 @@ test("the order control works without JavaScript", async ({ browser }) => {
   const page = await context.newPage();
 
   const response = await page.goto(CATALOG);
+  const status = response ? response.status() : 0;
 
-  if (!response || response.status() !== 200) {
+  if (status === 404) {
     await context.close();
-    test.skip(true, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
   }
+
+  test.skip(status === 404, "O catalogo de materiais gratuitos nao esta disponivel neste ambiente.");
+  expect(status).toBe(200);
 
   // With JavaScript the button is removed and the select submits on change.
   await page.locator("[data-pro-materials-order] select").selectOption("az");
@@ -441,6 +449,34 @@ test("the material page offers other materials instead of only the exit", async 
 
   await related.getByRole("link", { name: /ver todos/i }).click();
   await expect(page).toHaveURL(new RegExp(`${CATALOG}$`));
+});
+
+test("the page answers the doubts that come before a download", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const faq = page.locator(".pro-material-faq .pen-faq-item");
+
+  await expect(faq).toHaveCount(4);
+  await expect(faq.first()).toHaveAttribute("open", "");
+  await expect(faq.first().locator("summary")).toContainText("gratuito");
+
+  // A closed question opens on click, with no JavaScript of ours involved.
+  await expect(faq.nth(1)).not.toHaveAttribute("open", "");
+  await faq.nth(1).locator("summary").click();
+  await expect(faq.nth(1)).toHaveAttribute("open", "");
+});
+
+test("social proof shows only where there is data", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // The fixture carries a placeholder count.
+  await expect(page.locator(".pro-material-proof__count")).toHaveCount(1);
+
+  // A material without the field must not render an empty proof block.
+  await gotoMaterials(page, "/materiais-gratuitos/checklist-de-revisao-para-o-enem/");
+
+  await expect(page.locator(".pro-material-proof__count")).toHaveCount(0);
+  await expect(page.locator(".pro-material-faq .pen-faq-item")).toHaveCount(4);
 });
 
 test("sharing a material leads with WhatsApp", async ({ page }) => {

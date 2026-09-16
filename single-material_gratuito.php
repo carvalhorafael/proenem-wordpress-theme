@@ -80,6 +80,8 @@ get_header();
 				</div>
 			</div>
 
+			<?php proenem_render_material_reassurance( $material_id ); ?>
+
 			<?php proenem_render_related_materials( $material_id ); ?>
 
 			<section class="pro-material-single__closing" aria-labelledby="pro-material-capture-footer-title">
