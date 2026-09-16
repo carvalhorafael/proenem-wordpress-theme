@@ -703,6 +703,27 @@ test("the closing form does not collapse the copy beside it", async ({ page }) =
   expect(heroArea).toContain("capture");
 });
 
+test("each capture form says which one it is", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const forms = page.locator("form.pro-material-capture__form");
+
+  await expect(forms).toHaveCount(2);
+
+  // Both post to the same admin-post.php, so the id and the name are the only
+  // things telling the hero form apart from the closing one in analytics.
+  const identity = await forms.evaluateAll((elements) =>
+    elements.map((el) => ({ id: el.id, name: el.getAttribute("name") }))
+  );
+
+  expect(identity[0].id).toBe("pro-material-capture-hero-form");
+  expect(identity[1].id).toBe("pro-material-capture-footer-form");
+  expect(identity.map((form) => form.name)).toEqual(identity.map((form) => form.id));
+
+  // An id repeated across the two panels would make the second one unreachable.
+  expect(new Set(identity.map((form) => form.id)).size).toBe(2);
+});
+
 test("the closing block shows the material next to the form", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await gotoMaterials(page, MATERIAL);

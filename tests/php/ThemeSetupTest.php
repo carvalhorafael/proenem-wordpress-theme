@@ -1132,6 +1132,12 @@ class ThemeSetupTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( '$capture_field', $template );
 		$this->assertStringNotContainsString( 'id="pro-material-capture-name"', $template );
 
+		// Analytics autocapture identifies a form by id, name and action. Both
+		// instances post to the same admin-post.php, so without these two they
+		// arrive as the same anonymous event.
+		$this->assertStringContainsString( 'id="<?php echo esc_attr( $capture_field( \'form\' ) ); ?>"', $template );
+		$this->assertStringContainsString( 'name="<?php echo esc_attr( $capture_field( \'form\' ) ); ?>"', $template );
+
 		// The nonce is written by hand because the WordPress helper derives the
 		// id from the field name, duplicating id="_wpnonce" across both forms.
 		$this->assertStringContainsString( 'wp_create_nonce', $template );
