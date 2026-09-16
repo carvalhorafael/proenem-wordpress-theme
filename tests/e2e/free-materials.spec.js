@@ -724,6 +724,93 @@ test("each capture form says which one it is", async ({ page }) => {
   expect(new Set(identity.map((form) => form.id)).size).toBe(2);
 });
 
+test("a capture tells success and failure apart", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  // The capture posts over fetch, so both outcomes share one URL and one
+  // click. Autocapture cannot separate them; these events are the only thing
+  // that can.
+  const sent = await page.evaluate(() => {
+    const tracked = [];
+
+    window.amplitude = { track: (event, properties) => tracked.push({ event, properties }) };
+
+    const fire = (selector, detail) =>
+      document
+        .querySelector(selector)
+        .dispatchEvent(new CustomEvent("crm-leads-capture:result", { bubbles: true, detail }));
+
+    fire("#pro-material-capture-hero-form", { success: true, materialId: "123" });
+    fire("#pro-material-capture-footer-form", {
+      success: false,
+      materialId: "123",
+      errorCode: "missing_delivery",
+    });
+
+    return tracked;
+  });
+
+  expect(sent.map((entry) => entry.event)).toEqual([
+    "material_capture_succeeded",
+    "material_capture_failed",
+  ]);
+
+  expect(sent[0].properties.instance).toBe("hero");
+  expect(sent[0].properties.material_slug).toBe("mapa-de-analise-de-simulados");
+  expect(sent[0].properties.error_code).toBeUndefined();
+
+  expect(sent[1].properties.instance).toBe("footer");
+  expect(sent[1].properties.error_code).toBe("missing_delivery");
+});
+
+test("filtering reports itself, since it no longer navigates", async ({ page }) => {
+  await gotoMaterials(page, CATALOG);
+
+  const apply = (selector) =>
+    page.evaluate((target) => {
+      window.__tracked = [];
+      window.amplitude = { track: (event, properties) => window.__tracked.push({ event, properties }) };
+
+      const box = document.querySelector(target);
+
+      box.checked = true;
+      box.dispatchEvent(new Event("change", { bubbles: true }));
+    }, selector);
+
+  await apply(".pro-materials-filter--panel input[type=checkbox]");
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
+
+  const tracked = await page.evaluate(() => window.__tracked);
+
+  expect(tracked).toHaveLength(1);
+  expect(tracked[0].event).toBe("material_filter_applied");
+  expect(tracked[0].properties.categories.length).toBeGreaterThan(0);
+  expect(tracked[0].properties.results).toBe(1);
+  expect(tracked[0].properties.order).toBe("recentes");
+});
+
+test("the page works with no analytics on it", async ({ page }) => {
+  const failures = [];
+
+  page.on("pageerror", (error) => failures.push(error.message));
+
+  await gotoMaterials(page, CATALOG);
+
+  // The SDK comes from a plugin we do not control: a blocked CDN, a missing
+  // key or a disabled plugin must cost the visitor nothing.
+  await page.evaluate(() => {
+    delete window.amplitude;
+
+    const box = document.querySelector(".pro-materials-filter--panel input[type=checkbox]");
+
+    box.checked = true;
+    box.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+
+  await expect(page.locator("[data-pro-material-card]")).toHaveCount(1);
+  expect(failures).toEqual([]);
+});
+
 test("the closing block shows the material next to the form", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await gotoMaterials(page, MATERIAL);

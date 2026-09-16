@@ -1153,7 +1153,7 @@ msgstr "Link dos planos"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1291
 #: inc/class-proenem-elementor-sales-widget-base.php:1873
-#: template-parts/materials/capture.php:77
+#: template-parts/materials/capture.php:86
 msgid "Nome"
 msgstr "Nome"
 
@@ -3802,49 +3802,49 @@ msgstr "Receba o material agora"
 msgid "Acesso imediato"
 msgstr "Acesso imediato"
 
-#: template-parts/materials/capture.php:47
+#: template-parts/materials/capture.php:56
 msgid "Enviamos o link de download para o contato que você informar."
 msgstr "Enviamos o link de download para o contato que você informar."
 
-#: template-parts/materials/capture.php:83
+#: template-parts/materials/capture.php:92
 msgid "Seu nome completo"
 msgstr "Seu nome completo"
 
-#: template-parts/materials/capture.php:90
+#: template-parts/materials/capture.php:99
 msgid "Email"
 msgstr "Email"
 
-#: template-parts/materials/capture.php:96
+#: template-parts/materials/capture.php:105
 msgid "voce@exemplo.com"
 msgstr "voce@exemplo.com"
 
-#: template-parts/materials/capture.php:104
+#: template-parts/materials/capture.php:113
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
-#: template-parts/materials/capture.php:105
+#: template-parts/materials/capture.php:114
 msgid "(opcional)"
 msgstr "(opcional)"
 
-#: template-parts/materials/capture.php:114
+#: template-parts/materials/capture.php:123
 msgid "(00) 00000-0000"
 msgstr "(00) 00000-0000"
 
-#: template-parts/materials/capture.php:121
+#: template-parts/materials/capture.php:130
 msgid "Baixar material gratuito"
 msgstr "Baixar material gratuito"
 
 #. translators: %s: Link to the privacy policy.
-#: template-parts/materials/capture.php:130
+#: template-parts/materials/capture.php:139
 #, php-format
 msgid "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser. Veja a %s."
 msgstr "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser. Veja a %s."
 
-#: template-parts/materials/capture.php:131
+#: template-parts/materials/capture.php:140
 msgid "política de privacidade"
 msgstr "política de privacidade"
 
-#: template-parts/materials/capture.php:134
+#: template-parts/materials/capture.php:143
 msgid "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser."
 msgstr "Sem pagamento. Usamos seus dados para enviar o material e conteúdos de estudo, e você pode sair quando quiser."
 
