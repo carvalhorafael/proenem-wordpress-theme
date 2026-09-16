@@ -763,6 +763,37 @@ test("a capture tells success and failure apart", async ({ page }) => {
   expect(sent[1].properties.error_code).toBe("missing_delivery");
 });
 
+test("the lead carries the analytics device id, not the other way round", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const result = await page.evaluate(() => {
+    const form = document.querySelector("#pro-material-capture-hero-form");
+    const field = form.querySelector("[data-pro-analytics-device-id]");
+
+    form.addEventListener("submit", (event) => event.preventDefault());
+
+    const submit = () => form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+
+    window.amplitude = { getDeviceId: () => "dev-abc-123" };
+    submit();
+
+    const withAnalytics = field.value;
+
+    delete window.amplitude;
+    submit();
+
+    return { name: field.name, withAnalytics, without: field.value };
+  });
+
+  // Sending the email to analytics would put personal data in a tool that has
+  // no business holding it. The anonymous id travels the other way.
+  expect(result.name).toBe("analytics_device_id");
+  expect(result.withAnalytics).toBe("dev-abc-123");
+
+  // A visitor with no analytics still becomes a lead.
+  expect(result.without).toBe("");
+});
+
 test("filtering reports itself, since it no longer navigates", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 

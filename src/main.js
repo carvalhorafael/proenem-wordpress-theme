@@ -1336,6 +1336,33 @@ const proTrack = (event, properties) => {
 };
 
 /*
+ * Carry the anonymous device id to the CRM, so the conversion recorded there
+ * can be tied back to the session that produced it. The opposite direction —
+ * sending the email to analytics — would put personal data in a tool that has
+ * no business holding it.
+ *
+ * Filled in the capture phase, which runs before the capture plugin's own
+ * listener on document, so the value is fresh at the moment it is read.
+ */
+document.addEventListener(
+  "submit",
+  (event) => {
+    const field = event.target?.querySelector?.("[data-pro-analytics-device-id]");
+
+    if (!field) {
+      return;
+    }
+
+    try {
+      field.value = window.amplitude?.getDeviceId?.() ?? "";
+    } catch {
+      field.value = "";
+    }
+  },
+  true,
+);
+
+/*
  * The capture posts over fetch, so success and failure share one URL and one
  * click. Autocapture cannot tell them apart; the plugin announces the outcome
  * and the theme adds the material context only it knows.

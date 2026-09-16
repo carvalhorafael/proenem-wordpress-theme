@@ -88,17 +88,48 @@ O SDK vem de um plugin de terceiro: chave não configurada, CDN bloqueada ou plu
 
 Não é preciso esperar a inicialização: o Browser SDK 2 enfileira eventos rastreados antes do `init` e os despacha depois.
 
+## Como o RD Station entra
+
+O Amplitude chaveia por dispositivo e sessão; o RD Station chaveia por lead. Sem um identificador comum não dá para perguntar *"dos que vieram de busca orgânica e viram o material X, quantos converteram"* — só comparar agregados entre ferramentas.
+
+A ligação é feita **no sentido do RD**, não do Amplitude: o identificador anônimo do dispositivo viaja com o lead, e o e-mail nunca sai daqui. O cruzamento acontece no sistema que já guarda o dado pessoal.
+
+### A cadeia
+
+| Etapa | Onde | O quê |
+| --- | --- | --- |
+| 1 | `template-parts/materials/capture.php` | campo oculto `analytics_device_id`, nasce vazio |
+| 2 | `src/main.js` | preenche no `submit`, em fase de captura, com `window.amplitude.getDeviceId()` |
+| 3 | `class-free-material-capture.php` | sanitiza e leva adiante no `provider_context()` |
+| 4 | `class-rd-station-provider.php` | envia como `cf_amplitude_device_id` |
+
+O preenchimento é na **fase de captura** de propósito: o listener do `crm-leads-capture` está no `document` em fase de bolha, então o nosso roda antes e o valor está fresco no momento em que é lido.
+
+### Por que o nome muda no caminho
+
+Da etapa 1 à 3 o campo chama-se `analytics_device_id`, sem marca. Só na etapa 4, na fronteira do provider, ele vira `cf_amplitude_device_id`.
+
+O plugin de captura não conhece o Amplitude nem o RD Station — ele carrega uma string opaca. Trocar de ferramenta de análise mexe no tema e no provider; o meio da cadeia não muda. É a mesma razão pela qual o resultado da captura vai por `CustomEvent`.
+
+### Garantias
+
+O valor vem do cliente e é repassado ao CRM sem outra transformação, então o plugin restringe o charset a `A-Za-z0-9._:-` e corta em 128 caracteres. Ele nunca interpreta o conteúdo.
+
+Valores vazios são removidos pelo `array_filter` do provider: um visitante sem análise no navegador manda **um campo a menos**, não um campo vazio, e vira lead do mesmo jeito.
+
+### Dependência fora do código
+
+O campo customizado `cf_amplitude_device_id` precisa existir no RD Station. Sem ele o valor é enviado e descartado do outro lado, sem erro visível de nenhum dos dois lados.
+
+### Privacidade
+
+Guardar o identificador do dispositivo ao lado do e-mail **torna o identificador comportamental atrelável a uma pessoa dentro do RD**. Continua sendo o desenho mais conservador dos dois possíveis — a alternativa seria mandar o e-mail para o Amplitude —, mas é uma escolha consciente, não um efeito colateral.
+
 ## O que não fazemos
 
 - Não enviar e-mail, telefone ou nome ao Amplitude.
 - Não instrumentar page view, sessão, início de preenchimento, submit ou clique em card: o plugin já entrega.
 - Não instrumentar busca no catálogo, que não existe.
-
-## Pendente
-
-Cruzar Amplitude e RD Station exige um identificador comum. O desenho registrado na #236 é mandar o identificador anônimo do Amplitude para o RD, e não o e-mail para o Amplitude — o cruzamento acontece no sistema que já guarda o dado pessoal.
-
-Depende de duas coisas que não são código: criar o campo customizado `cf_amplitude_device_id` no RD Station, e conferir se a política de privacidade cobre guardar um identificador comportamental ao lado do e-mail.
 
 ## Como verificar
 
