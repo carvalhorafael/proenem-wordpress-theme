@@ -794,6 +794,52 @@ test("the lead carries the analytics device id, not the other way round", async 
   expect(result.without).toBe("");
 });
 
+test("a conversion is sent before the page leaves for the download", async ({ page }) => {
+  await gotoMaterials(page, MATERIAL);
+
+  const log = await page.evaluate(() => {
+    const entries = [];
+
+    window.amplitude = {
+      track: (event) => entries.push(`track:${event}`),
+      flush: () => entries.push("flush"),
+    };
+
+    document
+      .querySelector("#pro-material-capture-hero-form")
+      .dispatchEvent(
+        new CustomEvent("crm-leads-capture:result", {
+          bubbles: true,
+          detail: { success: true, materialId: "1" },
+        }),
+      );
+
+    return entries;
+  });
+
+  // The SDK batches for 10 seconds and the capture navigates to the delivery
+  // URL within a few, so the conversion has to be asked for right away.
+  expect(log).toEqual(["track:material_capture_succeeded", "flush"]);
+
+  // An SDK without flush, or none at all, must not break the page.
+  const survived = await page.evaluate(() => {
+    window.amplitude = { track: () => {} };
+
+    document
+      .querySelector("#pro-material-capture-hero-form")
+      .dispatchEvent(
+        new CustomEvent("crm-leads-capture:result", {
+          bubbles: true,
+          detail: { success: false, materialId: "1", errorCode: "missing_delivery" },
+        }),
+      );
+
+    return true;
+  });
+
+  expect(survived).toBe(true);
+});
+
 test("filtering reports itself, since it no longer navigates", async ({ page }) => {
   await gotoMaterials(page, CATALOG);
 

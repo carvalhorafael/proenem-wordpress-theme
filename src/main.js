@@ -1325,10 +1325,19 @@ const proMaterialsList = document.querySelector("[data-pro-materials-list]");
  * nothing. The SDK queues events tracked before init resolves, so there is no
  * need to wait for it.
  */
-const proTrack = (event, properties) => {
+const proTrack = (event, properties, { immediate = false } = {}) => {
   try {
-    if (typeof window.amplitude?.track === "function") {
-      window.amplitude.track(event, properties);
+    if (typeof window.amplitude?.track !== "function") {
+      return;
+    }
+
+    window.amplitude.track(event, properties);
+
+    // The SDK batches for 10 seconds by default. A capture navigates to the
+    // delivery URL a few seconds later, so the conversion would be racing a
+    // page it is guaranteed to lose often enough to matter.
+    if (immediate && typeof window.amplitude.flush === "function") {
+      window.amplitude.flush();
     }
   } catch {
     // Analytics must never break the page.
@@ -1379,12 +1388,16 @@ document.addEventListener("crm-leads-capture:result", (event) => {
   };
 
   if (detail.success) {
-    proTrack("material_capture_succeeded", properties);
+    proTrack("material_capture_succeeded", properties, { immediate: true });
 
     return;
   }
 
-  proTrack("material_capture_failed", { ...properties, error_code: detail.errorCode || "unknown" });
+  proTrack(
+    "material_capture_failed",
+    { ...properties, error_code: detail.errorCode || "unknown" },
+    { immediate: true },
+  );
 });
 
 const proMaterialsSwap = async (url) => {
