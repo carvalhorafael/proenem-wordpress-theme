@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.22.1
+Stable tag: 0.22.2
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,10 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.22.2 =
+* Traz para o tema a home publicada pelo marketing direto no painel: plano ENEM PRO, plano MED Performance, perguntas frequentes e textos da secao de planos.
+* Alinha o preco do hero ao ENEM PRO (12x de R$ 32,89) e usa os links de checkout definidos pelo marketing, incluindo a oferta que faltava no MED Performance.
 
 = 0.22.1 =
 * Corrige a home, que ignorava o modelo de pagina escolhido no editor.
