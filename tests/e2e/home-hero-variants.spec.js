@@ -101,7 +101,7 @@ for (const variant of VARIANTS) {
     await expect(enemPro.locator(".pro-home-plan-card__price")).toContainText("ou R$ 394,68 à vista");
     await expect(enemPro.getByRole("link", { name: /quero o enem pro/i })).toHaveAttribute(
       "href",
-      "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10",
+      "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&bid=1793364000853&utm_source=site&utm_medium=home&utm_campaign=botao-home",
     );
 
     const medPerformance = cards.nth(1);
@@ -111,7 +111,7 @@ for (const variant of VARIANTS) {
     await expect(medPerformance.locator(".pro-home-plan-card__price")).toContainText("ou R$ 718,56 à vista");
     await expect(medPerformance.getByRole("link", { name: /quero a med performance/i })).toHaveAttribute(
       "href",
-      "https://pay.hotmart.com/E108194423D?utm_source=site&utm_medium=home&utm_campaign=botao-home",
+      "https://pay.hotmart.com/E108194423D?off=7rzl89vv&bid=1793197504456&utm_source=site&utm_medium=home&utm_campaign=botao-home",
     );
 
     await expect(page.locator(".pro-home-plan-card__guarantee")).toHaveCount(2);
@@ -159,3 +159,22 @@ for (const variant of VARIANTS) {
     ).toEqual([]);
   });
 }
+
+test("home variant prova states the same ENEM PRO price as the plan card", async ({ page }) => {
+  await page.goto("/?pagename=e2e-home-variant-prova");
+
+  await expect(page.locator(".pro-hero-proof__price")).toContainText("12x de R$ 32,89");
+  await expect(page.locator(".pro-hero-proof__price")).not.toContainText("29,90");
+  await expect(
+    page.locator(".pen-plan-card.is-featured .pro-home-plan-card__price-amount"),
+  ).toHaveText(/12x de R\$\s*32,89/);
+});
+
+test("home variant oferta sells ENEM PRO for 12 months in the hero", async ({ page }) => {
+  await page.goto("/?pagename=e2e-home-variant-oferta");
+
+  await expect(page.locator(".pro-hero-offer__price-value")).toHaveText("R$ 32,89");
+  await expect(page.locator(".pro-hero-offer__price-details")).toHaveText(
+    "ou R$ 394,68 à vista, com 12 meses de acesso",
+  );
+});

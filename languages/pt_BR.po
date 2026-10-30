@@ -287,7 +287,6 @@ msgstr "Selo"
 #: page-templates/home.php:193
 #: page-templates/home.php:334
 #: page-templates/home.php:747
-#: template-parts/home/sections.php:608
 msgid "Método PRO"
 msgstr "Método PRO"
 
@@ -1201,7 +1200,6 @@ msgstr "Planos"
 #: inc/class-proenem-elementor-home-widget-base.php:1409
 #: inc/class-proenem-elementor-home-widget-base.php:1444
 #: inc/class-proenem-elementor-home-widget-base.php:1465
-#: inc/home-shared.php:259
 msgid "Turma Intensiva 2026"
 msgstr "Turma Intensiva 2026"
 
@@ -2397,17 +2395,24 @@ msgstr "Proenem LP"
 msgid "Proenem Home (somente na home)"
 msgstr "Proenem Home (somente na home)"
 
+#: inc/home-shared.php:259
+#: template-parts/home/sections.php:60
+#: template-parts/home/sections.php:195
+#: template-parts/home/sections.php:608
+msgid "ENEM PRO"
+msgstr "ENEM PRO"
+
 #: inc/home-shared.php:260
 msgid "12x de"
 msgstr "12x de"
 
 #: inc/home-shared.php:261
-msgid "R$ 29,90"
-msgstr "R$ 29,90"
+msgid "R$ 32,89"
+msgstr "R$ 32,89"
 
 #: inc/home-shared.php:262
-msgid "ou R$ 306,90 à vista, com 6 meses de acesso"
-msgstr "ou R$ 306,90 à vista, com 6 meses de acesso"
+msgid "ou R$ 394,68 à vista, com 12 meses de acesso"
+msgstr "ou R$ 394,68 à vista, com 12 meses de acesso"
 
 #: inc/home-shared.php:284
 #: inc/template-tags.php:1288
@@ -3697,11 +3702,6 @@ msgstr "Compartilhar no Facebook"
 #: template-parts/content-single.php:38
 msgid "Compartilhar no LinkedIn"
 msgstr "Compartilhar no LinkedIn"
-
-#: template-parts/home/sections.php:60
-#: template-parts/home/sections.php:195
-msgid "ENEM PRO"
-msgstr "ENEM PRO"
 
 #: template-parts/home/sections.php:62
 msgid "32,89"

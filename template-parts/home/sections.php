@@ -66,7 +66,7 @@ $plans = array(
 		'featured'      => true,
 		'label'         => __( 'Estude no seu ritmo', 'proenem-wordpress-theme' ),
 		'button_label'  => __( 'Quero o Enem Pro', 'proenem-wordpress-theme' ),
-		'button_url'    => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
+		'button_url'    => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&bid=1793364000853&utm_source=site&utm_medium=home&utm_campaign=botao-home',
 		'features'      => array(
 			__( 'Diagnóstico inicial e nota prevista', 'proenem-wordpress-theme' ),
 			__( 'Cronograma de estudos personalizado até a prova', 'proenem-wordpress-theme' ),
@@ -87,7 +87,7 @@ $plans = array(
 		'summary'       => __( 'Conteúdo, estratégia e orientação para acompanhar sua evolução rumo à aprovação.', 'proenem-wordpress-theme' ),
 		'label'         => __( 'Foco no resultado', 'proenem-wordpress-theme' ),
 		'button_label'  => __( 'Quero a Med Performance', 'proenem-wordpress-theme' ),
-		'button_url'    => 'https://pay.hotmart.com/E108194423D?utm_source=site&utm_medium=home&utm_campaign=botao-home',
+		'button_url'    => 'https://pay.hotmart.com/E108194423D?off=7rzl89vv&bid=1793197504456&utm_source=site&utm_medium=home&utm_campaign=botao-home',
 		'features'      => array(
 			__( 'Acesso até dezembro de 2027', 'proenem-wordpress-theme' ),
 			__( 'Plano de estudos personalizado e curso de nivelamento', 'proenem-wordpress-theme' ),
@@ -605,7 +605,7 @@ $subjects = array(
 		<div class="pen-audience-section__intro pro-home-school-section__intro">
 			<div>
 				<h2 id="pro-school-title">
-					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></strong><br>
+					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'ENEM PRO', 'proenem-wordpress-theme' ); ?></strong><br>
 					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
 				</h2>
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>
