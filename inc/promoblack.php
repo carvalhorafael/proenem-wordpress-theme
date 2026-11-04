@@ -60,7 +60,7 @@ function proenem_get_promoblack_settings() {
 			'label'       => __( 'ENEM Pro: link do checkout', 'proenem-wordpress-theme' ),
 			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano.', 'proenem-wordpress-theme' ),
 			'type'        => 'url',
-			'default'     => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_enempro2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_enempro2027&sck=site_home',
+			'default'     => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_enempro2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_enempro2027&sck=site_homePlanosPro',
 		),
 		'med_price'             => array(
 			'label'       => __( 'Med Performance 2027: preço do lote atual', 'proenem-wordpress-theme' ),
@@ -78,7 +78,7 @@ function proenem_get_promoblack_settings() {
 			'label'       => __( 'Med Performance 2027: link do checkout', 'proenem-wordpress-theme' ),
 			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano.', 'proenem-wordpress-theme' ),
 			'type'        => 'url',
-			'default'     => 'https://pay.hotmart.com/E108194423D?off=7rzl89vv&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_medperformance2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_medperformance2027&sck=site_home',
+			'default'     => 'https://pay.hotmart.com/E108194423D?off=7rzl89vv&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_medperformance2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_medperformance2027&sck=site_homePlanosMed',
 		),
 		'sisu_text'             => array(
 			'label'       => __( 'Faixa da garantia SISU: texto', 'proenem-wordpress-theme' ),
