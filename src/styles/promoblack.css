@@ -1583,6 +1583,16 @@ body.page-template-home-promoblack {
   }
 }
 
+@media (min-width: 1441px) {
+  .pro-pb-art {
+    left: 50%;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    transform: translateX(-50%);
+    width: 1440px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pro-pb-button {
     transition: none;
