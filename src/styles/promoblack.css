@@ -22,7 +22,13 @@
   color: var(--pro-pb-text);
   font-family: var(--pen-font-display, "Bricolage Grotesque", system-ui, sans-serif);
   font-variation-settings: "opsz" 14, "wdth" 100;
+  max-width: none;
   overflow-x: clip;
+  padding: 0;
+}
+
+body.page-template-home-promoblack {
+  background: #090305;
 }
 
 :where(.pro-pb) *,
@@ -1315,7 +1321,7 @@
   .pro-pb-sisu {
     gap: 22px;
     min-height: 96px;
-    padding: 26px var(--pro-pb-gutter);
+    padding: 26px 40px;
   }
 
   .pro-pb-sisu__icon {
@@ -1324,8 +1330,9 @@
   }
 
   .pro-pb-sisu__text {
-    font-size: 34px;
+    font-size: clamp(26px, 2.3vw, 34px);
     max-width: none;
+    text-wrap: balance;
   }
 
   .pro-pb-compare {
