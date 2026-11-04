@@ -3,6 +3,7 @@
   --pro-pb-graphite: #0f0f0f;
   --pro-pb-surface: #0e0709;
   --pro-pb-red: #ed172a;
+  --pro-pb-red-label: #e0101f;
   --pro-pb-red-glow: rgba(237, 23, 41, 0.45);
   --pro-pb-gradient: linear-gradient(90deg, #ff3338 0%, #cc040f 100%);
   --pro-pb-featured: linear-gradient(180deg, rgba(92, 5, 15, 0.95) 0%, rgba(23, 5, 8, 0.95) 100%);
@@ -452,7 +453,7 @@ body.page-template-home-promoblack {
 .pro-pb-lots__status {
   align-items: center;
   align-self: flex-start;
-  background: var(--pro-pb-red);
+  background: var(--pro-pb-red-label);
   border-radius: 999px;
   display: inline-flex;
   font-size: 14px;
@@ -566,7 +567,7 @@ body.page-template-home-promoblack {
 
 .pro-pb-plan__badge {
   align-self: flex-start;
-  background: var(--pro-pb-red);
+  background: var(--pro-pb-red-label);
   border-radius: 999px;
   font-size: 14px;
   font-weight: 700;
@@ -845,8 +846,8 @@ body.page-template-home-promoblack {
 }
 
 .pro-pb-compare__chip--featured {
-  background: var(--pro-pb-red);
-  border-color: var(--pro-pb-red);
+  background: var(--pro-pb-red-label);
+  border-color: var(--pro-pb-red-label);
 }
 
 .pro-pb-compare__chip-full {

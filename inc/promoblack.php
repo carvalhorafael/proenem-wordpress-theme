@@ -32,15 +32,6 @@ function proenem_register_promoblack_home_template( $templates ) {
 add_filter( 'proenem_home_templates', 'proenem_register_promoblack_home_template' );
 
 /**
- * Check whether the current request renders the PROMOBLACK home.
- *
- * @return bool
- */
-function proenem_is_promoblack_surface() {
-	return is_page_template( proenem_get_promoblack_template() );
-}
-
-/**
  * Get the editable PROMOBLACK settings with their defaults.
  *
  * @return array<string,array{label:string,description:string,type:string,default:string}>
@@ -49,7 +40,7 @@ function proenem_get_promoblack_settings() {
 	return array(
 		'lot_deadline'          => array(
 			'label'       => __( 'Fim do lote atual', 'proenem-wordpress-theme' ),
-			'description' => __( 'Data e hora em que o lote atual fecha, no fuso do site. Formato AAAA-MM-DD HH:MM. Vazio esconde os contadores.', 'proenem-wordpress-theme' ),
+			'description' => __( 'Data e hora em que o lote atual fecha, no fuso do site. Formato AAAA-MM-DD HH:MM. Vazio ou já vencido esconde os contadores e a barra de lotes.', 'proenem-wordpress-theme' ),
 			'type'        => 'datetime',
 			'default'     => '',
 		),
@@ -67,7 +58,7 @@ function proenem_get_promoblack_settings() {
 		),
 		'enem_pro_checkout_url' => array(
 			'label'       => __( 'ENEM Pro: link do checkout', 'proenem-wordpress-theme' ),
-			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio leva o botão para a seção de planos.', 'proenem-wordpress-theme' ),
+			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano.', 'proenem-wordpress-theme' ),
 			'type'        => 'url',
 			'default'     => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_enempro2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_enempro2027&sck=site_home',
 		),
@@ -85,19 +76,19 @@ function proenem_get_promoblack_settings() {
 		),
 		'med_checkout_url'      => array(
 			'label'       => __( 'Med Performance 2027: link do checkout', 'proenem-wordpress-theme' ),
-			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio leva o botão para a seção de planos.', 'proenem-wordpress-theme' ),
+			'description' => __( 'Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano.', 'proenem-wordpress-theme' ),
 			'type'        => 'url',
 			'default'     => 'https://pay.hotmart.com/E108194423D?off=7rzl89vv&checkoutMode=10&utm_source=site-proenem&utm_medium=referral&utm_campaign=vendas_bf_promoblack&utm_content=home_planos_medperformance2027&src=site%7Cvendas_bf_promoblack%7Corganico%7Chome_planos_medperformance2027&sck=site_home',
 		),
 		'sisu_text'             => array(
 			'label'       => __( 'Faixa da garantia SISU: texto', 'proenem-wordpress-theme' ),
-			'description' => __( 'Vazio esconde a faixa.', 'proenem-wordpress-theme' ),
+			'description' => __( 'Vazio esconde a faixa. A faixa também só aparece com o texto do asterisco preenchido.', 'proenem-wordpress-theme' ),
 			'type'        => 'text',
 			'default'     => __( 'Se você passar no SISU 2027, devolveremos o seu investimento', 'proenem-wordpress-theme' ),
 		),
 		'sisu_note'             => array(
 			'label'       => __( 'Faixa da garantia SISU: texto do asterisco', 'proenem-wordpress-theme' ),
-			'description' => __( 'Aparece no rodapé, ligado ao * da faixa. Vazio tira o asterisco.', 'proenem-wordpress-theme' ),
+			'description' => __( 'Aparece no rodapé, ligado ao * da faixa. A faixa só aparece com este texto preenchido.', 'proenem-wordpress-theme' ),
 			'type'        => 'text',
 			'default'     => __( 'Leia o regulamento em', 'proenem-wordpress-theme' ),
 		),
@@ -137,9 +128,25 @@ function proenem_sanitize_promoblack_deadline( $value ) {
 		return '';
 	}
 
-	$date = DateTimeImmutable::createFromFormat( '!Y-m-d H:i', substr( $value, 0, 16 ), wp_timezone() );
+	$value = substr( $value, 0, 16 );
+	$date  = DateTimeImmutable::createFromFormat( '!Y-m-d H:i', $value, wp_timezone() );
 
-	return $date ? $date->format( 'Y-m-d H:i' ) : '';
+	return $date && $date->format( 'Y-m-d H:i' ) === $value ? $value : '';
+}
+
+/**
+ * Reject a PROMOBLACK deadline the sanitizer would discard.
+ *
+ * @param WP_Error $validity Validity object.
+ * @param mixed    $value    Raw value.
+ * @return WP_Error
+ */
+function proenem_validate_promoblack_deadline( $validity, $value ) {
+	if ( is_string( $value ) && '' !== trim( $value ) && '' === proenem_sanitize_promoblack_deadline( $value ) ) {
+		$validity->add( 'invalid_deadline', __( 'Data inválida. Use AAAA-MM-DD HH:MM, por exemplo 2026-11-12 23:59.', 'proenem-wordpress-theme' ) );
+	}
+
+	return $validity;
 }
 
 /**
@@ -173,6 +180,7 @@ function proenem_promoblack_customize_register( $wp_customize ) {
 				'default'           => $setting['default'],
 				'capability'        => 'edit_theme_options',
 				'sanitize_callback' => $sanitizers[ $setting['type'] ],
+				'validate_callback' => 'datetime' === $setting['type'] ? 'proenem_validate_promoblack_deadline' : null,
 				'transport'         => 'refresh',
 				'type'              => 'theme_mod',
 			)
@@ -224,7 +232,11 @@ function proenem_get_promoblack_deadline_iso() {
 
 	$date = DateTimeImmutable::createFromFormat( '!Y-m-d H:i', $deadline, wp_timezone() );
 
-	return $date ? $date->format( DATE_ATOM ) : '';
+	if ( ! $date || $date->getTimestamp() <= time() ) {
+		return '';
+	}
+
+	return $date->format( DATE_ATOM );
 }
 
 /**
@@ -261,8 +273,6 @@ function proenem_get_promoblack_picture( $name ) {
  * @return array<string,array<string,mixed>>
  */
 function proenem_get_promoblack_plans() {
-	$plans_anchor = '#planos';
-
 	$enem_pro_checkout = proenem_get_promoblack_setting( 'enem_pro_checkout_url' );
 	$med_checkout      = proenem_get_promoblack_setting( 'med_checkout_url' );
 
@@ -276,7 +286,7 @@ function proenem_get_promoblack_plans() {
 			'price'       => proenem_get_promoblack_setting( 'enem_pro_price' ),
 			'price_note'  => proenem_get_promoblack_setting( 'enem_pro_price_note' ),
 			'cta'         => __( 'Quero o ENEM Pro', 'proenem-wordpress-theme' ),
-			'url'         => '' !== $enem_pro_checkout ? $enem_pro_checkout : $plans_anchor,
+			'url'         => $enem_pro_checkout,
 			'featured'    => false,
 			'items'       => array(
 				__( 'Plano de estudos personalizado', 'proenem-wordpress-theme' ),
@@ -296,7 +306,7 @@ function proenem_get_promoblack_plans() {
 			'price'       => proenem_get_promoblack_setting( 'med_price' ),
 			'price_note'  => proenem_get_promoblack_setting( 'med_price_note' ),
 			'cta'         => __( 'Quero o Med Performance 2027', 'proenem-wordpress-theme' ),
-			'url'         => '' !== $med_checkout ? $med_checkout : $plans_anchor,
+			'url'         => $med_checkout,
 			'featured'    => true,
 			'items'       => array(
 				__( 'Tudo do ENEM Pro', 'proenem-wordpress-theme' ),
@@ -354,9 +364,6 @@ function proenem_get_promoblack_pillars() {
 
 /**
  * Get the PROMOBLACK plan comparison rows.
- *
- * A cell is `true` for included, `false` for not included, a short text, or
- * an array with `note` for included with a remark.
  *
  * @return array<int,array{title:string,rows:array<int,array{label:string,enem_pro:bool|string|array<string,string>,med:bool|string|array<string,string>}>}>
  */

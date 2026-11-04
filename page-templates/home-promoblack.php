@@ -16,9 +16,10 @@ $copy           = proenem_get_promoblack_copy();
 $deadline       = proenem_get_promoblack_deadline_iso();
 $deadline_label = proenem_get_promoblack_deadline_label();
 $sisu_text      = proenem_get_promoblack_setting( 'sisu_text' );
-$sisu_note      = '' !== $sisu_text ? proenem_get_promoblack_setting( 'sisu_note' ) : '';
+$sisu_note      = proenem_get_promoblack_setting( 'sisu_note' );
+$sisu_visible   = '' !== $sisu_text && '' !== $sisu_note;
 $sisu_rules     = proenem_get_promoblack_setting( 'sisu_rules_url' );
-$desktop_media  = '(min-width: 1100px)';
+$desktop_media  = '(min-width: 1200px)';
 
 $proenem_promoblack_wordmark = static function ( $tag = 'span', $classes = 'pro-pb-wordmark' ) {
 	printf(
@@ -243,31 +244,31 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 							</li>
 						<?php endforeach; ?>
 					</ul>
-					<a
-						class="pro-pb-button pro-pb-plan__cta <?php echo ! empty( $plan['featured'] ) ? 'pro-pb-button--primary' : 'pro-pb-button--outline'; ?>"
-						href="<?php echo esc_url( $plan['url'] ); ?>"
-						data-pro-promoblack-action="checkout-<?php echo esc_attr( $plan_id ); ?>"
-					>
-						<span><?php echo esc_html( $plan['cta'] ); ?></span>
-						<span aria-hidden="true">→</span>
-					</a>
+					<?php if ( '' !== $plan['url'] ) : ?>
+						<a
+							class="pro-pb-button pro-pb-plan__cta <?php echo ! empty( $plan['featured'] ) ? 'pro-pb-button--primary' : 'pro-pb-button--outline'; ?>"
+							href="<?php echo esc_url( $plan['url'] ); ?>"
+							data-pro-promoblack-action="checkout-<?php echo esc_attr( $plan_id ); ?>"
+						>
+							<span><?php echo esc_html( $plan['cta'] ); ?></span>
+							<span aria-hidden="true">→</span>
+						</a>
+					<?php endif; ?>
 				</article>
 			<?php endforeach; ?>
 		</div>
 	</section>
 
-	<?php if ( '' !== $sisu_text ) : ?>
+	<?php if ( $sisu_visible ) : ?>
 		<aside class="pro-pb-sisu" aria-label="<?php esc_attr_e( 'Garantia SISU 2027', 'proenem-wordpress-theme' ); ?>">
 			<img class="pro-pb-sisu__icon" src="<?php echo esc_url( proenem_promoblack_asset_uri( 'sisu-alert.svg' ) ); ?>" alt="" width="44" height="44">
 			<p class="pro-pb-sisu__text">
 				<?php
 				echo esc_html( $sisu_text );
-				if ( '' !== $sisu_note ) {
-					printf(
-						'<a class="pro-pb-sisu__mark" href="#pro-pb-sisu-note" aria-label="%s">*</a>',
-						esc_attr__( 'Ler as condições da garantia', 'proenem-wordpress-theme' )
-					);
-				}
+				printf(
+					'<a class="pro-pb-sisu__mark" href="#pro-pb-sisu-note" aria-label="%s">*</a>',
+					esc_attr__( 'Ler as condições da garantia', 'proenem-wordpress-theme' )
+				);
 				?>
 			</p>
 			<img class="pro-pb-sisu__icon" src="<?php echo esc_url( proenem_promoblack_asset_uri( 'sisu-alert.svg' ) ); ?>" alt="" width="44" height="44">
@@ -371,11 +372,11 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 			</p>
 			<?php proenem_render_promoblack_countdown( 'large' ); ?>
 			<div class="pro-pb-final__actions">
-				<a class="pro-pb-button pro-pb-button--outline" href="<?php echo esc_url( $plans['enem-pro']['url'] ); ?>" data-pro-promoblack-action="final-enem-pro">
+				<a class="pro-pb-button pro-pb-button--outline" href="<?php echo esc_url( '' !== $plans['enem-pro']['url'] ? $plans['enem-pro']['url'] : '#planos' ); ?>" data-pro-promoblack-action="final-enem-pro">
 					<span><?php echo esc_html( $plans['enem-pro']['cta'] ); ?></span>
 					<span aria-hidden="true">→</span>
 				</a>
-				<a class="pro-pb-button pro-pb-button--primary" href="<?php echo esc_url( $plans['med']['url'] ); ?>" data-pro-promoblack-action="final-med">
+				<a class="pro-pb-button pro-pb-button--primary" href="<?php echo esc_url( '' !== $plans['med']['url'] ? $plans['med']['url'] : '#planos' ); ?>" data-pro-promoblack-action="final-med">
 					<span><?php echo esc_html( $plans['med']['cta'] ); ?></span>
 					<span aria-hidden="true">→</span>
 				</a>
@@ -387,7 +388,7 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 				<img src="<?php echo esc_url( proenem_promoblack_asset_uri( 'logo-proenem-branca.webp' ) ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="130" height="36" loading="lazy" decoding="async">
 			</a>
 			<div class="pro-pb-footer__legal">
-				<?php if ( '' !== $sisu_note ) : ?>
+				<?php if ( $sisu_visible ) : ?>
 					<p id="pro-pb-sisu-note">
 						<?php echo esc_html( '* ' . $sisu_note ); ?>
 						<?php if ( '' !== $sisu_rules ) : ?>

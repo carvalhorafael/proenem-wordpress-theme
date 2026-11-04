@@ -68,6 +68,38 @@ class PromoblackTest extends WP_UnitTestCase {
 		$this->assertSame( '', proenem_sanitize_promoblack_deadline( '12/11/2026 23:59' ) );
 		$this->assertSame( '', proenem_sanitize_promoblack_deadline( '' ) );
 		$this->assertSame( '', proenem_sanitize_promoblack_deadline( array( '2026-11-12 23:59' ) ) );
+		$this->assertSame( '', proenem_sanitize_promoblack_deadline( '2026-11-31 23:59' ) );
+		$this->assertSame( '', proenem_sanitize_promoblack_deadline( '2026-11-30 24:00' ) );
+	}
+
+	/**
+	 * The Customizer rejects a deadline the sanitizer would discard instead of saving it empty.
+	 *
+	 * @return void
+	 */
+	public function test_deadline_validation_reports_invalid_dates() {
+		$this->assertFalse( proenem_validate_promoblack_deadline( new WP_Error(), '2026-11-12 23:59' )->has_errors() );
+		$this->assertFalse( proenem_validate_promoblack_deadline( new WP_Error(), '' )->has_errors() );
+		$this->assertTrue( proenem_validate_promoblack_deadline( new WP_Error(), '30/11/2026 23:59' )->has_errors() );
+		$this->assertTrue( proenem_validate_promoblack_deadline( new WP_Error(), '2026-11-31 23:59' )->has_errors() );
+	}
+
+	/**
+	 * A lot that already closed does not keep announcing itself as open.
+	 *
+	 * @return void
+	 */
+	public function test_expired_deadline_hides_lot_urgency() {
+		set_theme_mod( proenem_promoblack_setting_id( 'lot_deadline' ), '2020-01-01 00:00' );
+
+		$this->assertSame( '', proenem_get_promoblack_deadline_iso() );
+		$this->assertSame( '', proenem_get_promoblack_deadline_label() );
+
+		$html = $this->render_template();
+
+		$this->assertStringNotContainsString( 'pro-pb-lots', $html );
+		$this->assertStringNotContainsString( 'data-pro-countdown=', $html );
+		$this->assertStringNotContainsString( 'acaba em', $html );
 	}
 
 	/**
@@ -77,18 +109,18 @@ class PromoblackTest extends WP_UnitTestCase {
 	 */
 	public function test_deadline_uses_site_timezone() {
 		update_option( 'timezone_string', 'America/Sao_Paulo' );
-		set_theme_mod( proenem_promoblack_setting_id( 'lot_deadline' ), '2026-11-12 23:59' );
+		set_theme_mod( proenem_promoblack_setting_id( 'lot_deadline' ), '2030-11-12 23:59' );
 
-		$this->assertSame( '2026-11-12T23:59:00-03:00', proenem_get_promoblack_deadline_iso() );
+		$this->assertSame( '2030-11-12T23:59:00-03:00', proenem_get_promoblack_deadline_iso() );
 		$this->assertSame( '12/11 às 23h59', proenem_get_promoblack_deadline_label() );
 	}
 
 	/**
-	 * Checkout buttons ship with the campaign links and fall back to the plans anchor when cleared.
+	 * Checkout buttons ship with the campaign links, and a cleared link removes the dead button.
 	 *
 	 * @return void
 	 */
-	public function test_checkout_urls_default_to_campaign_and_fall_back_to_plans_anchor() {
+	public function test_checkout_urls_default_to_campaign_and_clear_without_dead_buttons() {
 		$plans = proenem_get_promoblack_plans();
 
 		$this->assertStringStartsWith( 'https://pay.hotmart.com/T102416176R?', $plans['enem-pro']['url'] );
@@ -101,8 +133,14 @@ class PromoblackTest extends WP_UnitTestCase {
 
 		$plans = proenem_get_promoblack_plans();
 
-		$this->assertSame( '#planos', $plans['med']['url'] );
+		$this->assertSame( '', $plans['med']['url'] );
 		$this->assertSame( 'https://pay.hotmart.com/outro', $plans['enem-pro']['url'] );
+
+		$html = $this->render_template();
+
+		$this->assertStringNotContainsString( 'data-pro-promoblack-action="checkout-med"', $html );
+		$this->assertStringContainsString( 'data-pro-promoblack-action="checkout-enem-pro"', $html );
+		$this->assertMatchesRegularExpression( '/href="#planos" data-pro-promoblack-action="final-med"/', $html );
 	}
 
 	/**
@@ -144,16 +182,16 @@ class PromoblackTest extends WP_UnitTestCase {
 	 */
 	public function test_template_renders_countdowns_with_deadline() {
 		update_option( 'timezone_string', 'America/Sao_Paulo' );
-		set_theme_mod( proenem_promoblack_setting_id( 'lot_deadline' ), '2026-11-12 23:59' );
+		set_theme_mod( proenem_promoblack_setting_id( 'lot_deadline' ), '2030-11-12 23:59' );
 
 		$html = $this->render_template();
 
-		$this->assertSame( 2, substr_count( $html, 'data-pro-countdown="2026-11-12T23:59:00-03:00"' ) );
+		$this->assertSame( 2, substr_count( $html, 'data-pro-countdown="2030-11-12T23:59:00-03:00"' ) );
 		$this->assertStringContainsString( '<strong>12/11 às 23h59</strong>', $html );
 	}
 
 	/**
-	 * The SISU guarantee band follows its settings and carries its note to the footer.
+	 * The SISU guarantee only shows with its conditions, linked from the asterisk to the footer.
 	 *
 	 * @return void
 	 */
@@ -171,9 +209,8 @@ class PromoblackTest extends WP_UnitTestCase {
 
 		$html = $this->render_template();
 
-		$this->assertStringContainsString( 'pro-pb-sisu', $html );
-		$this->assertStringNotContainsString( 'href="#pro-pb-sisu-note"', $html );
-		$this->assertStringNotContainsString( 'id="pro-pb-sisu-note"', $html );
+		$this->assertStringNotContainsString( 'pro-pb-sisu', $html );
+		$this->assertStringNotContainsString( 'devolveremos o seu investimento', $html );
 
 		remove_theme_mod( proenem_promoblack_setting_id( 'sisu_note' ) );
 		set_theme_mod( proenem_promoblack_setting_id( 'sisu_text' ), '' );

@@ -597,7 +597,7 @@ document.querySelectorAll("[data-pro-testimonial-play]").forEach((button) => {
 // only replaces it when JavaScript runs. Unit labels come from PHP so they stay
 // translatable.
 //
-// Two modes. A deadline counts down to a date and ticks every minute, or every second when it shows seconds. A duration
+// Two modes. A deadline counts down to a date. A duration
 // counts down minutes from the first visit and ticks every second; the start is
 // persisted so a reload continues instead of handing out a fresh window.
 const readCountdownStart = (element, storage, key) => {
