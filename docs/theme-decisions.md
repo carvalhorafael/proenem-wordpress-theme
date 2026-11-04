@@ -650,3 +650,16 @@ Este arquivo registra decisoes que afetam arquitetura, fronteiras de responsabil
 - Protecao: `test_front_page_honours_the_assigned_page_template` recusa um `front-page.php` que nao consulte `get_page_template_slug`. Verificado que falha ao voltar a versao incondicional.
 - Licao: template na raiz do tema tem precedencia sobre escolha do editor, e um arquivo de uma linha pode desligar um recurso inteiro do painel sem deixar rastro. Ao criar variante selecionavel, verificar a hierarquia da superficie onde ela sera usada.
 - Tracking: tema `carvalhorafael/proenem-wordpress-theme#191`.
+
+## 2026-11-04: Home PROMOBLACK como modelo de pagina temporario
+
+- Contexto: durante novembro de 2026 a home do proenem.com.br vira a pagina da campanha PROMOBLACK, com layout da agencia WeMOV em desktop (1440) e mobile (390). Em dezembro a home volta ao modelo "Variante B (Prova social)".
+- Decisao: criar `page-templates/home-promoblack.php` e registra-lo como superficie de home pelo filtro `proenem_home_templates`, sem tema novo nem kit Elementor. Como `front-page.php` ja honra o modelo da pagina (decisao de 2026-09-10), a entrada e a saida da campanha sao so trocar o modelo da pagina da home, sem deploy.
+- Dados de campanha no Personalizar, secao PROMOBLACK: fim do lote, precos, links de checkout, texto da faixa SISU e o regulamento do asterisco. Os links da Hotmart, com as UTMs da campanha, sao o valor padrao; campo vazio leva o botao para `#planos`. Sem fim de lote, contadores e barra de lotes nao aparecem, para nao inventar urgencia.
+- Faixa da garantia SISU: o texto segue o Figma. O asterisco so aparece quando o regulamento e preenchido, e o regulamento vai para o rodape. Uma promessa de devolucao sem as condicoes visiveis nao deve ir ao ar com asterisco solto.
+- Layout: mobile-first a partir do frame de 390, com desktop a partir de 1200px. Abaixo disso a foto dos professores ficaria atras do titulo, entao tablet e notebook pequeno usam a composicao mobile centralizada em 640px.
+- Imagens: os fundos do hero e do CTA final usam blend LUMINOSITY e HUE no Figma e nao se recompoem em CSS. Foram renderizados pelo proprio Figma sem as camadas de texto, em WebP 1x e 2x, e o texto continua HTML. Os oito arquivos dos cartoes de pilar tem recorte proprio para desktop e mobile.
+- Countdown: o modo de data do contador de `src/main.js` passou a atualizar os segundos quando o elemento existe. O contador da pagina de venda nao renderiza segundos, entao o comportamento dele nao muda.
+- Gap do design system: a superficie escura, o vermelho `#ed172a`, o gradiente e os componentes escuros sao locais, em propriedades `--pro-pb-*` escopadas em `.pro-pb`. A tipografia vem de `--pen-font-display`.
+- Verificado: PHPUnit e PHPCS no wp-env; renderizacao comparada com o Figma em 360, 390, 834, 1280 e 1440px, sem quebra horizontal.
+- Tracking: tema `carvalhorafael/proenem-wordpress-theme#276`. A issue do design system esta pendente porque o repositorio nao esta acessivel para quem abriu a do tema.
