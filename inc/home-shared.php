@@ -256,10 +256,10 @@ function proenem_home_image_source_set( $filename, $sizes ) {
  */
 function proenem_get_home_offer() {
 	$offer = array(
-		'name'          => __( 'Turma Intensiva 2026', 'proenem-wordpress-theme' ),
+		'name'          => __( 'ENEM PRO', 'proenem-wordpress-theme' ),
 		'price_prefix'  => __( '12x de', 'proenem-wordpress-theme' ),
-		'price'         => __( 'R$ 29,90', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'ou R$ 306,90 à vista, com 6 meses de acesso', 'proenem-wordpress-theme' ),
+		'price'         => __( 'R$ 32,89', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'ou R$ 394,68 à vista, com 12 meses de acesso', 'proenem-wordpress-theme' ),
 		'guarantee'     => __( '7 dias de garantia', 'proenem-wordpress-theme' ),
 		'checkout_url'  => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
 		'plans_url'     => proenem_get_home_cta_destination( 'plans' ),

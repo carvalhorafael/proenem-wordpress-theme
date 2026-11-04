@@ -80,7 +80,7 @@ for (const variant of VARIANTS) {
     );
   });
 
-  test(`home variant ${variant.name} shows the same pricing section as the control`, async ({
+  test(`home variant ${variant.name} offers ENEM PRO and MED Performance`, async ({
     page,
   }) => {
     await page.goto(variant.path);
@@ -89,34 +89,54 @@ for (const variant of VARIANTS) {
 
     await expect(cards).toHaveCount(2);
     await expect(page.locator(".pen-plan-card.pro-home-plan-card--stack")).toHaveCount(2);
-    await expect(page.locator(".pen-plan-card.pro-home-plan-card--accent")).toHaveCount(1);
+    await expect(page.locator(".pen-plan-card.pro-home-plan-card--accent")).toHaveCount(0);
     await expect(page.locator(".pen-plan-card.is-featured")).toHaveCount(1);
     await expect(page.locator(".pen-plan-card.pro-home-plan-card--split")).toHaveCount(0);
 
-    const intensive = page.locator(".pen-plan-card.pro-home-plan-card--accent");
-    await expect(intensive.getByRole("heading", { level: 3 })).toHaveText("Turma Intensiva ENEM 2026");
-    await expect(intensive.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*19,90/);
-    await expect(intensive.locator(".pro-home-plan-card__discount")).toHaveText("33% OFF");
-    await expect(intensive.locator(".pro-home-plan-card__price")).toContainText("ou R$ 204,30 à vista");
-    await expect(intensive.getByRole("link", { name: /quero a turma intensiva/i })).toHaveAttribute(
+    const enemPro = cards.nth(0);
+    await expect(enemPro).toHaveClass(/is-featured/);
+    await expect(enemPro.getByRole("heading", { level: 3 })).toHaveText("ENEM PRO");
+    await expect(enemPro.locator(".pro-home-plan-card__label")).toHaveText("Estude no seu ritmo");
+    await expect(enemPro.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*32,89/);
+    await expect(enemPro.locator(".pro-home-plan-card__price")).toContainText("ou R$ 394,68 à vista");
+    await expect(enemPro.getByRole("link", { name: /quero o enem pro/i })).toHaveAttribute(
       "href",
-      "https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10",
+      "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&bid=1793364000853&utm_source=site&utm_medium=home&utm_campaign=botao-home",
     );
 
-    const methodPro = page.locator(".pen-plan-card.is-featured");
-    await expect(methodPro.getByRole("heading", { level: 3 })).toHaveText("Método PRO");
-    await expect(methodPro.locator(".pro-home-plan-card__label")).toHaveText("Estude no seu ritmo");
-    await expect(methodPro.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*29,90/);
-    await expect(methodPro.locator(".pro-home-plan-card__price")).toContainText("ou R$ 306,85 à vista");
-    await expect(methodPro.getByRole("link", { name: /quero o método pro/i })).toHaveAttribute(
+    const medPerformance = cards.nth(1);
+    await expect(medPerformance.getByRole("heading", { level: 3 })).toHaveText("MED Performance");
+    await expect(medPerformance.locator(".pro-home-plan-card__label")).toHaveText("Foco no resultado");
+    await expect(medPerformance.locator(".pro-home-plan-card__price-amount")).toHaveText(/12x de R\$\s*59,88/);
+    await expect(medPerformance.locator(".pro-home-plan-card__price")).toContainText("ou R$ 718,56 à vista");
+    await expect(medPerformance.getByRole("link", { name: /quero a med performance/i })).toHaveAttribute(
       "href",
-      "https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10",
+      "https://pay.hotmart.com/E108194423D?off=7rzl89vv&bid=1793197504456&utm_source=site&utm_medium=home&utm_campaign=botao-home",
     );
 
     await expect(page.locator(".pro-home-plan-card__guarantee")).toHaveCount(2);
     await expect(page.locator(".pro-home-pricing__intro p")).toHaveText(
-      /escolha pelo seu prazo.*plataforma completa por 12 meses.*7 dias de garantia/i,
+      /plataforma completa por 12 meses.*7 dias de garantia/i,
     );
+  });
+
+  test(`home variant ${variant.name} answers the ENEM PRO questions in the FAQ`, async ({
+    page,
+  }) => {
+    await page.goto(variant.path);
+
+    const questions = page.locator(".pen-faq-section .pen-faq-item summary");
+
+    await expect(questions).toHaveText([
+      "O que é o ENEM PRO?",
+      "O que está incluído no ENEM PRO?",
+      "Por quanto tempo tenho acesso?",
+      "Posso entrar em qualquer época do ano?",
+      "Quanto custa e como posso pagar?",
+      "E se eu não gostar?",
+    ]);
+    await expect(page.locator(".pen-faq-section")).toContainText("12x de R$ 32,89 ou R$ 394,68 à vista");
+    await expect(page.locator(".pen-faq-section")).not.toContainText("Turma Intensiva");
   });
 
   test(`home variant ${variant.name} has no critical accessibility violations`, async ({
@@ -139,3 +159,22 @@ for (const variant of VARIANTS) {
     ).toEqual([]);
   });
 }
+
+test("home variant prova states the same ENEM PRO price as the plan card", async ({ page }) => {
+  await page.goto("/?pagename=e2e-home-variant-prova");
+
+  await expect(page.locator(".pro-hero-proof__price")).toContainText("12x de R$ 32,89");
+  await expect(page.locator(".pro-hero-proof__price")).not.toContainText("29,90");
+  await expect(
+    page.locator(".pen-plan-card.is-featured .pro-home-plan-card__price-amount"),
+  ).toHaveText(/12x de R\$\s*32,89/);
+});
+
+test("home variant oferta sells ENEM PRO for 12 months in the hero", async ({ page }) => {
+  await page.goto("/?pagename=e2e-home-variant-oferta");
+
+  await expect(page.locator(".pro-hero-offer__price-value")).toHaveText("R$ 32,89");
+  await expect(page.locator(".pro-hero-offer__price-details")).toHaveText(
+    "ou R$ 394,68 à vista, com 12 meses de acesso",
+  );
+});

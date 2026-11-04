@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.23.1
+Stable tag: 0.24.0
 License: Proprietary
 License URI: LICENSE.md
 
@@ -16,6 +16,12 @@ Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao W
 
 == Changelog ==
 
+= 0.24.0 =
+* Cria o modelo de pagina "Proenem Home - PROMOBLACK" para a campanha de novembro de 2026, com o layout da WeMOV em desktop e mobile. A campanha entra e sai trocando o modelo da pagina da home, sem deploy.
+* Adiciona a secao PROMOBLACK no Personalizar, com fim do lote, precos, links de checkout com sck por plano, faixa da garantia SISU e regulamento. Lote vencido esconde contadores e barra de lotes, e a faixa SISU so aparece com o regulamento.
+* Faz o contador em modo de data atualizar os segundos quando o elemento existe. O contador da pagina de venda nao muda.
+* Leva para a linha 0.24 o hotfix 0.22.2, com a home publicada pelo marketing.
+
 = 0.23.1 =
 * Envia a conversao do material para a analise antes de a pagina sair para o download, em vez de deixa-la num lote de 10 segundos que a navegacao interrompia.
 
@@ -26,6 +32,10 @@ Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao W
 * Serve imagens responsivas e placeholder para material sem capa.
 * Mede a conversao da captura e o uso do filtro, e leva ao CRM o identificador anonimo de dispositivo.
 * Corrige o tamanho do titulo do rodape fora da home.
+
+= 0.22.2 =
+* Traz para o tema a home publicada pelo marketing direto no painel: plano ENEM PRO, plano MED Performance, perguntas frequentes e textos da secao de planos.
+* Alinha o preco do hero ao ENEM PRO (12x de R$ 32,89) e usa os links de checkout definidos pelo marketing, incluindo a oferta que faltava no MED Performance.
 
 = 0.22.1 =
 * Corrige a home, que ignorava o modelo de pagina escolhido no editor.

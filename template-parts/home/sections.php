@@ -57,62 +57,75 @@ $subject_icon_svg = static function ( $icon ) {
 
 $plans = array(
 	array(
-		'name'           => __( 'Turma Intensiva ENEM 2026', 'proenem-wordpress-theme' ),
-		'price_prefix'   => __( '12x de R$', 'proenem-wordpress-theme' ),
-		'price'          => __( '19,90', 'proenem-wordpress-theme' ),
-		'price_discount' => __( '33% OFF', 'proenem-wordpress-theme' ),
-		'price_details'  => __( 'ou R$ 204,30 à vista', 'proenem-wordpress-theme' ),
-		'guarantee'      => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-		'summary'        => __( 'Acesso completo até o dia da prova.', 'proenem-wordpress-theme' ),
-		'accent'         => true,
-		'button_label'   => __( 'Quero a Turma Intensiva', 'proenem-wordpress-theme' ),
-		'button_url'     => 'https://pay.hotmart.com/W106752534O?off=qo2rjef2&checkoutMode=10',
-		'features'       => array(
-			__( 'Cronograma semanal', 'proenem-wordpress-theme' ),
-			__( 'Correção de redação', 'proenem-wordpress-theme' ),
-			__( 'Aulas e pdfs com os melhores professores', 'proenem-wordpress-theme' ),
-			__( 'Simulados corrigidos no padrão ENEM', 'proenem-wordpress-theme' ),
-			__( 'Revisões inteligentes por matéria', 'proenem-wordpress-theme' ),
-			__( 'Mais de 50 mil questões para praticar', 'proenem-wordpress-theme' ),
-			__( '6 meses de acesso', 'proenem-wordpress-theme' ),
+		'name'          => __( 'ENEM PRO', 'proenem-wordpress-theme' ),
+		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
+		'price'         => __( '32,89', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'ou R$ 394,68 à vista', 'proenem-wordpress-theme' ),
+		'guarantee'     => __( '7 dias de garantia', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Tudo o que você precisa para organizar sua preparação para o Enem.', 'proenem-wordpress-theme' ),
+		'featured'      => true,
+		'label'         => __( 'Estude no seu ritmo', 'proenem-wordpress-theme' ),
+		'button_label'  => __( 'Quero o Enem Pro', 'proenem-wordpress-theme' ),
+		'button_url'    => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10&bid=1793364000853&utm_source=site&utm_medium=home&utm_campaign=botao-home',
+		'features'      => array(
+			__( 'Diagnóstico inicial e nota prevista', 'proenem-wordpress-theme' ),
+			__( 'Cronograma de estudos personalizado até a prova', 'proenem-wordpress-theme' ),
+			__( 'Aulas gravadas com professores do Pro', 'proenem-wordpress-theme' ),
+			__( 'Apostilas completas em PDF', 'proenem-wordpress-theme' ),
+			__( 'Banco de questões para praticar', 'proenem-wordpress-theme' ),
+			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
+			__( '2 correções de redação por mês', 'proenem-wordpress-theme' ),
+			__( 'Acesso por 12 meses', 'proenem-wordpress-theme' ),
 		),
 	),
 	array(
-		'name'          => __( 'Método PRO', 'proenem-wordpress-theme' ),
+		'name'          => __( 'MED Performance', 'proenem-wordpress-theme' ),
 		'price_prefix'  => __( '12x de R$', 'proenem-wordpress-theme' ),
-		'price'         => __( '29,90', 'proenem-wordpress-theme' ),
-		'price_details' => __( 'ou R$ 306,85 à vista', 'proenem-wordpress-theme' ),
-		'guarantee'     => __( '7 dias de garantia.', 'proenem-wordpress-theme' ),
-		'summary'       => __( 'Plataforma com preparação ENEM completa.', 'proenem-wordpress-theme' ),
-		'featured'      => true,
-		'label'         => __( 'Estude no seu ritmo', 'proenem-wordpress-theme' ),
-		'button_label'  => __( 'Quero o Método PRO', 'proenem-wordpress-theme' ),
-		'button_url'    => 'https://pay.hotmart.com/T102416176R?off=5na5b8bl&checkoutMode=10',
+		'price'         => __( '59,88', 'proenem-wordpress-theme' ),
+		'price_details' => __( 'ou R$ 718,56 à vista', 'proenem-wordpress-theme' ),
+		'guarantee'     => __( '7 dias de garantia', 'proenem-wordpress-theme' ),
+		'summary'       => __( 'Conteúdo, estratégia e orientação para acompanhar sua evolução rumo à aprovação.', 'proenem-wordpress-theme' ),
+		'label'         => __( 'Foco no resultado', 'proenem-wordpress-theme' ),
+		'button_label'  => __( 'Quero a Med Performance', 'proenem-wordpress-theme' ),
+		'button_url'    => 'https://pay.hotmart.com/E108194423D?off=7rzl89vv&bid=1793197504456&utm_source=site&utm_medium=home&utm_campaign=botao-home',
 		'features'      => array(
-			__( 'Diagnóstico inicial + nota prevista', 'proenem-wordpress-theme' ),
-			__( 'Banco com mais de 55 mil questões', 'proenem-wordpress-theme' ),
-			__( 'Cronograma personalizado completo até o dia da prova', 'proenem-wordpress-theme' ),
-			__( '2 correções de redação mensais', 'proenem-wordpress-theme' ),
-			__( 'Aulas gravadas com os melhores professores', 'proenem-wordpress-theme' ),
-			__( 'PDFs completos', 'proenem-wordpress-theme' ),
-			__( 'Simulados com nota TRI', 'proenem-wordpress-theme' ),
-			__( 'Acesso 12 meses', 'proenem-wordpress-theme' ),
+			__( 'Acesso até dezembro de 2027', 'proenem-wordpress-theme' ),
+			__( 'Plano de estudos personalizado e curso de nivelamento', 'proenem-wordpress-theme' ),
+			__( '576 módulos de aulas gravadas e apostilas em PDF', 'proenem-wordpress-theme' ),
+			__( 'Banco com mais de 50 mil questões', 'proenem-wordpress-theme' ),
+			__( 'Aprofundamentos em Matemática e Natureza', 'proenem-wordpress-theme' ),
+			__( '10 simulados com nota TRI', 'proenem-wordpress-theme' ),
+			__( 'Check-ups semanais com boletim de desempenho', 'proenem-wordpress-theme' ),
+			__( 'Assistente virtual de estudos e tira-dúvidas', 'proenem-wordpress-theme' ),
+			__( '4 correções de redação por mês', 'proenem-wordpress-theme' ),
+			__( 'A partir de fevereiro de 2027:', 'proenem-wordpress-theme' ),
+			__( 'Aulas ao vivo de seg a sex', 'proenem-wordpress-theme' ),
+			__( 'Mentoria de Performance VIP e metodologia Arrase na TRI', 'proenem-wordpress-theme' ),
+			__( 'Comunidade de redação', 'proenem-wordpress-theme' ),
 		),
 	),
 );
 
 $faq_items = array(
 	array(
-		'question' => __( 'O que é a Turma Intensiva 2026?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Uma estrutura de preparação que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota.', 'proenem-wordpress-theme' ),
+		'question' => __( 'O que é o ENEM PRO?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Uma plataforma de preparação para o ENEM que combina meta, diagnóstico, execução e performance para organizar seus estudos e transformar esforço em nota.', 'proenem-wordpress-theme' ),
 	),
 	array(
-		'question' => __( 'O que está incluído na Turma Intensiva?', 'proenem-wordpress-theme' ),
-		'answer'   => __( 'Diagnóstico inicial, nota prevista, banco de mais de 60 mil questões, cronograma personalizado até a prova, duas correções de redação mensais, aulas gravadas, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
+		'question' => __( 'O que está incluído no ENEM PRO?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'Diagnóstico inicial com nota prevista, banco com mais de 55 mil questões, cronograma personalizado até o dia da prova, 2 correções de redação por mês, aulas gravadas com os melhores professores, PDFs completos e simulados com nota TRI.', 'proenem-wordpress-theme' ),
+	),
+	array(
+		'question' => __( 'Por quanto tempo tenho acesso?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O acesso dura 12 meses a partir da compra, para você estudar no seu ritmo.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'Posso entrar em qualquer época do ano?', 'proenem-wordpress-theme' ),
 		'answer'   => __( 'Pode. O diagnóstico inicial ajusta o plano ao seu momento e ao tempo até a prova.', 'proenem-wordpress-theme' ),
+	),
+	array(
+		'question' => __( 'Quanto custa e como posso pagar?', 'proenem-wordpress-theme' ),
+		'answer'   => __( 'O ENEM PRO custa 12x de R$ 32,89 ou R$ 394,68 à vista.', 'proenem-wordpress-theme' ),
 	),
 	array(
 		'question' => __( 'E se eu não gostar?', 'proenem-wordpress-theme' ),
@@ -172,16 +185,16 @@ $subjects = array(
 			<?php for ( $marquee_iteration = 0; $marquee_iteration < 2; $marquee_iteration++ ) : ?>
 				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o ENEM PRO', 'proenem-wordpress-theme' ); ?></span>
 			<?php endfor; ?>
 		</div>
 	</div>
 
 	<section id="metodo" class="pen-pillars-section" aria-labelledby="pro-pillars-title">
 		<div class="pen-pillars-section__copy">
-			<p class="pen-section-pill"><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></p>
+			<p class="pen-section-pill"><?php esc_html_e( 'ENEM PRO', 'proenem-wordpress-theme' ); ?></p>
 			<h2 id="pro-pillars-title"><?php esc_html_e( 'Os 4 pilares que organizam a sua aprovação', 'proenem-wordpress-theme' ); ?></h2>
-			<p><?php esc_html_e( 'O Método PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
+			<p><?php esc_html_e( 'O ENEM PRO não é um cronograma bonito. É um sistema que te acompanha do primeiro diagnóstico até a vaga — dizendo o que fazer agora e corrigindo a rota quando você trava.', 'proenem-wordpress-theme' ); ?></p>
 			<p><?php esc_html_e( 'O ENEM não é prova de quem estuda mais. É de quem estuda com estratégia.', 'proenem-wordpress-theme' ); ?></p>
 		<a class="pen-button pen-button--primary pen-button--md" href="<?php echo esc_url( proenem_get_home_cta_destination( 'plans' ) ); ?>"><?php esc_html_e( 'Ver planos e preços', 'proenem-wordpress-theme' ); ?> <span class="pen-button__arrow" aria-hidden="true">-></span></a>
 		</div>
@@ -537,7 +550,7 @@ $subjects = array(
 					<?php esc_html_e( 'Sua preparação completa.', 'proenem-wordpress-theme' ); ?><br>
 					<span class="pro-home-pricing__title-line"><?php esc_html_e( 'Do diagnóstico', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'até a prova.', 'proenem-wordpress-theme' ); ?></strong></span>
 				</h2>
-				<p><?php esc_html_e( 'Escolha pelo seu prazo: a turma até o dia da prova ou a plataforma completa por 12 meses. Os dois com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
+				<p><?php esc_html_e( 'Plataforma completa por 12 meses, com diagnóstico, plano personalizado, aulas, questões, simulados e redação. Com 7 dias de garantia.', 'proenem-wordpress-theme' ); ?></p>
 			</div>
 		</div>
 		<div class="pen-plan-grid pro-home-plan-grid--duo">
@@ -580,10 +593,10 @@ $subjects = array(
 			<div class="pro-home-school-section__marquee-track">
 				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o ENEM PRO', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Sua aprovação não é sorte. É método.', 'proenem-wordpress-theme' ); ?></span>
 				<span><?php esc_html_e( 'Estude com estratégia, não com mais horas.', 'proenem-wordpress-theme' ); ?></span>
-				<span><?php esc_html_e( 'Conheça o Método PRO', 'proenem-wordpress-theme' ); ?></span>
+				<span><?php esc_html_e( 'Conheça o ENEM PRO', 'proenem-wordpress-theme' ); ?></span>
 			</div>
 		</div>
 		<figure class="pro-home-school-section__photo pro-home-school-section__photo--primary">
@@ -592,7 +605,7 @@ $subjects = array(
 		<div class="pen-audience-section__intro pro-home-school-section__intro">
 			<div>
 				<h2 id="pro-school-title">
-					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'Método PRO', 'proenem-wordpress-theme' ); ?></strong><br>
+					<?php esc_html_e( 'Leve o', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'ENEM PRO', 'proenem-wordpress-theme' ); ?></strong><br>
 					<?php esc_html_e( 'para a', 'proenem-wordpress-theme' ); ?> <strong><?php esc_html_e( 'sua escola.', 'proenem-wordpress-theme' ); ?></strong>
 				</h2>
 				<p><?php esc_html_e( 'Planos especiais para instituições que querem oferecer a melhor preparação para o ENEM: plataforma, apostilas e acompanhamento por aluno.', 'proenem-wordpress-theme' ); ?></p>

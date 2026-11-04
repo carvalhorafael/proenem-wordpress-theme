@@ -62,13 +62,13 @@ $university_names = implode(
 			</h1>
 
 			<p class="pro-hero-proof__subtitle">
-				<?php esc_html_e( 'Do diagnóstico ao dia da prova, o Método PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida.', 'proenem-wordpress-theme' ); ?>
+				<?php esc_html_e( 'Do diagnóstico ao dia da prova, o ENEM PRO transforma esforço em nota: plano semanal, aulas, mais de 60 mil questões, simulados com TRI e redação corrigida.', 'proenem-wordpress-theme' ); ?>
 			</p>
 
 			<div class="pro-hero-proof__action">
 				<a class="pen-button pen-button--lg pro-hero-proof__cta" href="<?php echo esc_url( $offer['checkout_url'] ); ?>" data-pro-hero-variant="prova" data-pro-hero-action="checkout">
 					<span class="pro-hero-cta__label">
-						<?php esc_html_e( 'Quero Método PRO', 'proenem-wordpress-theme' ); ?>
+						<?php esc_html_e( 'Quero ENEM PRO', 'proenem-wordpress-theme' ); ?>
 						<span class="pen-button__arrow" aria-hidden="true">-&gt;</span>
 					</span>
 				</a>
