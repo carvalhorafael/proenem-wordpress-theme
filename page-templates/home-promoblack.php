@@ -16,7 +16,8 @@ $copy           = proenem_get_promoblack_copy();
 $deadline       = proenem_get_promoblack_deadline_iso();
 $deadline_label = proenem_get_promoblack_deadline_label();
 $sisu_text      = proenem_get_promoblack_setting( 'sisu_text' );
-$sisu_note      = proenem_get_promoblack_setting( 'sisu_note' );
+$sisu_note      = '' !== $sisu_text ? proenem_get_promoblack_setting( 'sisu_note' ) : '';
+$sisu_rules     = proenem_get_promoblack_setting( 'sisu_rules_url' );
 $desktop_media  = '(min-width: 1100px)';
 
 $proenem_promoblack_wordmark = static function ( $tag = 'span', $classes = 'pro-pb-wordmark' ) {
@@ -258,7 +259,17 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 	<?php if ( '' !== $sisu_text ) : ?>
 		<aside class="pro-pb-sisu" aria-label="<?php esc_attr_e( 'Garantia SISU 2027', 'proenem-wordpress-theme' ); ?>">
 			<img class="pro-pb-sisu__icon" src="<?php echo esc_url( proenem_promoblack_asset_uri( 'sisu-alert.svg' ) ); ?>" alt="" width="44" height="44">
-			<p class="pro-pb-sisu__text"><?php echo esc_html( $sisu_text ); ?><?php echo '' !== $sisu_note ? '<span aria-hidden="true">*</span>' : ''; ?></p>
+			<p class="pro-pb-sisu__text">
+				<?php
+				echo esc_html( $sisu_text );
+				if ( '' !== $sisu_note ) {
+					printf(
+						'<a class="pro-pb-sisu__mark" href="#pro-pb-sisu-note" aria-label="%s">*</a>',
+						esc_attr__( 'Ler as condições da garantia', 'proenem-wordpress-theme' )
+					);
+				}
+				?>
+			</p>
 			<img class="pro-pb-sisu__icon" src="<?php echo esc_url( proenem_promoblack_asset_uri( 'sisu-alert.svg' ) ); ?>" alt="" width="44" height="44">
 		</aside>
 	<?php endif; ?>
@@ -376,8 +387,13 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 				<img src="<?php echo esc_url( proenem_promoblack_asset_uri( 'logo-proenem-branca.webp' ) ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="130" height="36" loading="lazy" decoding="async">
 			</a>
 			<div class="pro-pb-footer__legal">
-				<?php if ( '' !== $sisu_text && '' !== $sisu_note ) : ?>
-					<p><?php echo esc_html( '* ' . $sisu_note ); ?></p>
+				<?php if ( '' !== $sisu_note ) : ?>
+					<p id="pro-pb-sisu-note">
+						<?php echo esc_html( '* ' . $sisu_note ); ?>
+						<?php if ( '' !== $sisu_rules ) : ?>
+							<a href="<?php echo esc_url( $sisu_rules ); ?>"><?php echo esc_html( untrailingslashit( preg_replace( '#^https?://(www\.)?#', '', $sisu_rules ) ) ); ?></a>
+						<?php endif; ?>
+					</p>
 				<?php endif; ?>
 				<p><?php echo esc_html( $copy['legal'] ); ?></p>
 			</div>

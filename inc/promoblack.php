@@ -96,10 +96,16 @@ function proenem_get_promoblack_settings() {
 			'default'     => __( 'Se você passar no SISU 2027, devolveremos o seu investimento', 'proenem-wordpress-theme' ),
 		),
 		'sisu_note'             => array(
-			'label'       => __( 'Faixa da garantia SISU: regulamento', 'proenem-wordpress-theme' ),
-			'description' => __( 'Texto do asterisco. Quando preenchido, a faixa ganha um * e o texto aparece no rodapé.', 'proenem-wordpress-theme' ),
+			'label'       => __( 'Faixa da garantia SISU: texto do asterisco', 'proenem-wordpress-theme' ),
+			'description' => __( 'Aparece no rodapé, ligado ao * da faixa. Vazio tira o asterisco.', 'proenem-wordpress-theme' ),
 			'type'        => 'text',
-			'default'     => '',
+			'default'     => __( 'Leia o regulamento em', 'proenem-wordpress-theme' ),
+		),
+		'sisu_rules_url'        => array(
+			'label'       => __( 'Faixa da garantia SISU: link do regulamento', 'proenem-wordpress-theme' ),
+			'description' => __( 'Vai logo depois do texto do asterisco. Vazio mostra só o texto.', 'proenem-wordpress-theme' ),
+			'type'        => 'url',
+			'default'     => 'https://proenem.com.br/termos-de-uso/',
 		),
 	);
 }

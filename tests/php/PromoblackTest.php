@@ -162,20 +162,25 @@ class PromoblackTest extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( 'pro-pb-sisu', $html );
 		$this->assertStringContainsString( 'devolveremos o seu investimento', $html );
-		$this->assertStringNotContainsString( '<span aria-hidden="true">*</span>', $html );
+		$this->assertStringContainsString( 'href="#pro-pb-sisu-note"', $html );
+		$this->assertStringContainsString( 'id="pro-pb-sisu-note"', $html );
+		$this->assertStringContainsString( '* Leia o regulamento em', $html );
+		$this->assertStringContainsString( '<a href="https://proenem.com.br/termos-de-uso/">proenem.com.br/termos-de-uso</a>', $html );
 
-		set_theme_mod( proenem_promoblack_setting_id( 'sisu_note' ), 'Válido conforme regulamento.' );
+		set_theme_mod( proenem_promoblack_setting_id( 'sisu_note' ), '' );
 
 		$html = $this->render_template();
 
-		$this->assertStringContainsString( '<span aria-hidden="true">*</span>', $html );
-		$this->assertStringContainsString( '* Válido conforme regulamento.', $html );
+		$this->assertStringContainsString( 'pro-pb-sisu', $html );
+		$this->assertStringNotContainsString( 'href="#pro-pb-sisu-note"', $html );
+		$this->assertStringNotContainsString( 'id="pro-pb-sisu-note"', $html );
 
+		remove_theme_mod( proenem_promoblack_setting_id( 'sisu_note' ) );
 		set_theme_mod( proenem_promoblack_setting_id( 'sisu_text' ), '' );
 
 		$html = $this->render_template();
 
 		$this->assertStringNotContainsString( 'pro-pb-sisu', $html );
-		$this->assertStringNotContainsString( '* Válido conforme regulamento.', $html );
+		$this->assertStringNotContainsString( 'id="pro-pb-sisu-note"', $html );
 	}
 }

@@ -659,6 +659,23 @@
   padding: 18px 10px;
 }
 
+.pro-pb-sisu__mark {
+  color: inherit;
+  margin-left: 2px;
+  text-decoration: none;
+}
+
+.pro-pb-sisu__mark:focus-visible,
+.pro-pb-footer__legal a:focus-visible {
+  outline: 2px solid var(--pro-pb-text);
+  outline-offset: 2px;
+}
+
+.pro-pb-footer__legal a {
+  color: var(--pro-pb-text-soft);
+  text-underline-offset: 2px;
+}
+
 .pro-pb-sisu__icon {
   flex: none;
   height: 28px;
