@@ -147,6 +147,10 @@ $home_variant_fixtures = array(
 		'title'    => 'E2E Home Variante B',
 		'template' => 'page-templates/home-variant-prova.php',
 	),
+	'e2e-home-promoblack'     => array(
+		'title'    => 'E2E Home PROMOBLACK',
+		'template' => 'page-templates/home-promoblack.php',
+	),
 );
 
 foreach ( $home_variant_fixtures as $variant_slug => $variant ) {
@@ -169,3 +173,5 @@ foreach ( $home_variant_fixtures as $variant_slug => $variant ) {
 
 	update_post_meta( $variant_post_id, '_wp_page_template', $variant['template'] );
 }
+
+set_theme_mod( 'proenem_promoblack_lot_deadline', ( new DateTimeImmutable( '+10 days', wp_timezone() ) )->format( 'Y-m-d H:i' ) );
