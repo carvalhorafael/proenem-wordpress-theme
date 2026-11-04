@@ -597,7 +597,7 @@ document.querySelectorAll("[data-pro-testimonial-play]").forEach((button) => {
 // only replaces it when JavaScript runs. Unit labels come from PHP so they stay
 // translatable.
 //
-// Two modes. A deadline counts down to a date and ticks every minute. A duration
+// Two modes. A deadline counts down to a date. A duration
 // counts down minutes from the first visit and ticks every second; the start is
 // persisted so a reload continues instead of handing out a fresh window.
 const readCountdownStart = (element, storage, key) => {
@@ -704,6 +704,10 @@ document.querySelectorAll("[data-pro-countdown], [data-pro-countdown-duration]")
     } else {
       const totalMinutes = Math.floor(remaining / 60000);
 
+      if (seconds) {
+        seconds.textContent = pad(Math.floor(remaining / 1000) % 60);
+      }
+
       if (days) {
         days.textContent = pad(Math.floor(totalMinutes / 1440));
       }
@@ -726,7 +730,7 @@ document.querySelectorAll("[data-pro-countdown], [data-pro-countdown-duration]")
       if (!tick()) {
         clearInterval(timer);
       }
-    }, isDuration ? 1000 : 60000);
+    }, isDuration || seconds ? 1000 : 60000);
   }
 });
 
