@@ -127,6 +127,8 @@ class PromoblackTest extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'utm_campaign=vendas_bf_promoblack', $plans['enem-pro']['url'] );
 		$this->assertStringStartsWith( 'https://pay.hotmart.com/E108194423D?', $plans['med']['url'] );
 		$this->assertStringContainsString( 'utm_campaign=vendas_bf_promoblack', $plans['med']['url'] );
+		$this->assertStringEndsWith( '&sck=site_homePlanosPro', $plans['enem-pro']['url'] );
+		$this->assertStringEndsWith( '&sck=site_homePlanosMed', $plans['med']['url'] );
 
 		set_theme_mod( proenem_promoblack_setting_id( 'med_checkout_url' ), '' );
 		set_theme_mod( proenem_promoblack_setting_id( 'enem_pro_checkout_url' ), 'https://pay.hotmart.com/outro' );
