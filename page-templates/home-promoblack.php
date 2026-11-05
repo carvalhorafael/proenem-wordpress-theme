@@ -19,6 +19,21 @@ $sisu_text      = proenem_get_promoblack_setting( 'sisu_text' );
 $sisu_note      = proenem_get_promoblack_setting( 'sisu_note' );
 $sisu_visible   = '' !== $sisu_text && '' !== $sisu_note;
 $sisu_rules     = proenem_get_promoblack_setting( 'sisu_rules_url' );
+$login_links    = array_filter(
+	array(
+		'proenem'     => array(
+			'label' => __( 'Acessar Proenem', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_promoblack_setting( 'login_url' ),
+		),
+		'promedicina' => array(
+			'label' => __( 'Acessar Promedicina', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_promoblack_setting( 'login_med_url' ),
+		),
+	),
+	static function ( $link ) {
+		return '' !== $link['url'];
+	}
+);
 $desktop_media  = '(min-width: 1200px)';
 
 $proenem_promoblack_wordmark = static function ( $tag = 'span', $classes = 'pro-pb-wordmark' ) {
@@ -112,7 +127,21 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 			<a class="pro-pb-hero__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 				<img src="<?php echo esc_url( proenem_promoblack_asset_uri( 'logo-proenem-branca.webp' ) ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="154" height="43">
 			</a>
-			<?php $proenem_promoblack_wordmark( 'p', 'pro-pb-wordmark pro-pb-hero__wordmark' ); ?>
+			<div class="pro-pb-hero__actions">
+				<?php $proenem_promoblack_wordmark( 'p', 'pro-pb-wordmark pro-pb-hero__wordmark' ); ?>
+				<?php if ( ! empty( $login_links ) ) : ?>
+					<details class="pro-pb-login" data-pro-pb-login>
+						<summary class="pro-pb-login__toggle"><?php esc_html_e( 'Login', 'proenem-wordpress-theme' ); ?></summary>
+						<ul class="pro-pb-login__menu">
+							<?php foreach ( $login_links as $login_id => $login_link ) : ?>
+								<li>
+									<a class="pro-pb-login__link" href="<?php echo esc_url( $login_link['url'] ); ?>" data-pro-promoblack-action="login-<?php echo esc_attr( $login_id ); ?>"><?php echo esc_html( $login_link['label'] ); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</details>
+				<?php endif; ?>
+			</div>
 		</div>
 
 		<div class="pro-pb-hero__content">

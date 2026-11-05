@@ -737,6 +737,23 @@ document.querySelectorAll("[data-pro-countdown], [data-pro-countdown-duration]")
 // Sticky offer band: stays in place until the reader passes a share of the page,
 // then pins to the top. The space it leaves is held by its own Elementor wrapper
 // so pinning does not shift the page.
+document.querySelectorAll("[data-pro-pb-login]").forEach((menu) => {
+  const toggle = menu.querySelector("summary");
+
+  document.addEventListener("click", (event) => {
+    if (menu.open && !menu.contains(event.target)) {
+      menu.open = false;
+    }
+  });
+
+  menu.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu.open) {
+      menu.open = false;
+      toggle?.focus();
+    }
+  });
+});
+
 document.querySelectorAll("[data-pro-sticky]").forEach((band) => {
   const after = Number.parseInt(band.dataset.proStickyAfter || "", 10);
   const threshold = Number.isFinite(after) ? Math.min(Math.max(after, 0), 90) : 20;
