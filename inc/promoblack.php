@@ -99,10 +99,16 @@ function proenem_get_promoblack_settings() {
 			'default'     => 'https://proenem.com.br/termos-de-uso/',
 		),
 		'login_url'             => array(
-			'label'       => __( 'Botão Login: link', 'proenem-wordpress-theme' ),
-			'description' => __( 'Destino do botão Login no topo da página. Vazio esconde o botão.', 'proenem-wordpress-theme' ),
+			'label'       => __( 'Login: link de Acessar Proenem', 'proenem-wordpress-theme' ),
+			'description' => __( 'Primeira opção do menu Login. Vazio tira a opção; sem nenhuma opção, o botão some.', 'proenem-wordpress-theme' ),
 			'type'        => 'url',
 			'default'     => 'https://app.proenem.com.br',
+		),
+		'login_med_url'         => array(
+			'label'       => __( 'Login: link de Acessar Promedicina', 'proenem-wordpress-theme' ),
+			'description' => __( 'Segunda opção do menu Login. Vazio tira a opção.', 'proenem-wordpress-theme' ),
+			'type'        => 'url',
+			'default'     => 'https://app.promedicina.com.br/',
 		),
 	);
 }

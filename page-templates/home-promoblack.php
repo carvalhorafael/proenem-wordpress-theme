@@ -19,7 +19,21 @@ $sisu_text      = proenem_get_promoblack_setting( 'sisu_text' );
 $sisu_note      = proenem_get_promoblack_setting( 'sisu_note' );
 $sisu_visible   = '' !== $sisu_text && '' !== $sisu_note;
 $sisu_rules     = proenem_get_promoblack_setting( 'sisu_rules_url' );
-$login_url      = proenem_get_promoblack_setting( 'login_url' );
+$login_links    = array_filter(
+	array(
+		'proenem'     => array(
+			'label' => __( 'Acessar Proenem', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_promoblack_setting( 'login_url' ),
+		),
+		'promedicina' => array(
+			'label' => __( 'Acessar Promedicina', 'proenem-wordpress-theme' ),
+			'url'   => proenem_get_promoblack_setting( 'login_med_url' ),
+		),
+	),
+	static function ( $link ) {
+		return '' !== $link['url'];
+	}
+);
 $desktop_media  = '(min-width: 1200px)';
 
 $proenem_promoblack_wordmark = static function ( $tag = 'span', $classes = 'pro-pb-wordmark' ) {
@@ -115,8 +129,17 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 			</a>
 			<div class="pro-pb-hero__actions">
 				<?php $proenem_promoblack_wordmark( 'p', 'pro-pb-wordmark pro-pb-hero__wordmark' ); ?>
-				<?php if ( '' !== $login_url ) : ?>
-					<a class="pro-pb-login" href="<?php echo esc_url( $login_url ); ?>" data-pro-promoblack-action="login"><?php esc_html_e( 'Login', 'proenem-wordpress-theme' ); ?></a>
+				<?php if ( ! empty( $login_links ) ) : ?>
+					<details class="pro-pb-login" data-pro-pb-login>
+						<summary class="pro-pb-login__toggle"><?php esc_html_e( 'Login', 'proenem-wordpress-theme' ); ?></summary>
+						<ul class="pro-pb-login__menu">
+							<?php foreach ( $login_links as $login_id => $login_link ) : ?>
+								<li>
+									<a class="pro-pb-login__link" href="<?php echo esc_url( $login_link['url'] ); ?>" data-pro-promoblack-action="login-<?php echo esc_attr( $login_id ); ?>"><?php echo esc_html( $login_link['label'] ); ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</details>
 				<?php endif; ?>
 			</div>
 		</div>

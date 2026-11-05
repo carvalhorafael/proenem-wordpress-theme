@@ -40,16 +40,34 @@ test("home PROMOBLACK countdown ticks every second", async ({ page }) => {
   await expect(countdown.locator("[data-pro-countdown-days]")).toHaveText(/^\d{2}$/);
 });
 
-test("home PROMOBLACK shows the Login button next to the wordmark", async ({ page }) => {
+test("home PROMOBLACK Login opens a menu with both platforms", async ({ page }) => {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport);
     await page.goto(PATH);
 
-    const login = page.locator('[data-pro-promoblack-action="login"]');
+    const toggle = page.locator("[data-pro-pb-login] summary");
+    const proenem = page.locator('[data-pro-promoblack-action="login-proenem"]');
+    const promedicina = page.locator('[data-pro-promoblack-action="login-promedicina"]');
 
-    await expect(login).toBeVisible();
-    await expect(login).toHaveText("Login");
-    expect(new URL(await login.getAttribute("href")).host).toBe("app.proenem.com.br");
+    await expect(toggle).toHaveText("Login");
+    await expect(proenem).toBeHidden();
+
+    await toggle.click();
+
+    await expect(proenem).toBeVisible();
+    await expect(promedicina).toBeVisible();
+    await expect(proenem).toBeInViewport();
+    await expect(promedicina).toBeInViewport();
+    expect(new URL(await proenem.getAttribute("href")).host).toBe("app.proenem.com.br");
+    expect(new URL(await promedicina.getAttribute("href")).host).toBe("app.promedicina.com.br");
+
+    await page.keyboard.press("Escape");
+    await expect(proenem).toBeHidden();
+    await expect(toggle).toBeFocused();
+
+    await toggle.click();
+    await page.locator(".pro-pb-hero__title").click();
+    await expect(proenem).toBeHidden();
   }
 });
 

@@ -193,20 +193,29 @@ class PromoblackTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The Login button points to the platform and disappears when its link is cleared.
+	 * The Login menu offers both platforms and disappears when both links are cleared.
 	 *
 	 * @return void
 	 */
-	public function test_login_button_follows_setting() {
+	public function test_login_menu_follows_settings() {
 		$html = $this->render_template();
 
-		$this->assertStringContainsString( 'href="https://app.proenem.com.br" data-pro-promoblack-action="login"', $html );
+		$this->assertStringContainsString( 'data-pro-pb-login', $html );
+		$this->assertStringContainsString( 'href="https://app.proenem.com.br" data-pro-promoblack-action="login-proenem"', $html );
+		$this->assertStringContainsString( 'href="https://app.promedicina.com.br/" data-pro-promoblack-action="login-promedicina"', $html );
+
+		set_theme_mod( proenem_promoblack_setting_id( 'login_med_url' ), '' );
+
+		$html = $this->render_template();
+
+		$this->assertStringContainsString( 'data-pro-promoblack-action="login-proenem"', $html );
+		$this->assertStringNotContainsString( 'data-pro-promoblack-action="login-promedicina"', $html );
 
 		set_theme_mod( proenem_promoblack_setting_id( 'login_url' ), '' );
 
 		$html = $this->render_template();
 
-		$this->assertStringNotContainsString( 'data-pro-promoblack-action="login"', $html );
+		$this->assertStringNotContainsString( 'data-pro-pb-login', $html );
 	}
 
 	/**

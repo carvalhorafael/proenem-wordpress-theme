@@ -167,7 +167,7 @@ body.page-template-home-promoblack {
   position: absolute;
   right: var(--pro-pb-inline);
   top: 26px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .pro-pb-hero__logo img {
@@ -187,28 +187,71 @@ body.page-template-home-promoblack {
 }
 
 .pro-pb-login {
+  position: relative;
+}
+
+.pro-pb-login__toggle {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.06);
   border: 1.5px solid rgba(255, 255, 255, 0.5);
   border-radius: 999px;
   color: var(--pro-pb-text);
+  cursor: pointer;
+  display: block;
   font-size: 13px;
   font-weight: 600;
   line-height: 1.2;
+  list-style: none;
   padding: 7px 14px;
-  text-decoration: none;
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
-.pro-pb-login:hover {
+.pro-pb-login__toggle::-webkit-details-marker {
+  display: none;
+}
+
+.pro-pb-login__toggle:hover,
+.pro-pb-login[open] .pro-pb-login__toggle {
   background: rgba(255, 255, 255, 0.14);
   border-color: var(--pro-pb-text);
 }
 
-.pro-pb-login:focus-visible {
+.pro-pb-login__toggle:focus-visible,
+.pro-pb-login__link:focus-visible {
   outline: 3px solid var(--pro-pb-text);
   outline-offset: 3px;
+}
+
+.pro-pb-login__menu {
+  background: var(--pro-pb-surface);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 210px;
+  padding: 6px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 3;
+}
+
+.pro-pb-login__link {
+  border-radius: 9px;
+  color: var(--pro-pb-text);
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 11px 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pro-pb-login__link:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .pro-pb-hero__content {
@@ -1161,7 +1204,7 @@ body.page-template-home-promoblack {
     font-size: 30px;
   }
 
-  .pro-pb-login {
+  .pro-pb-login__toggle {
     font-size: 16px;
     padding: 11px 24px;
   }
@@ -1636,7 +1679,7 @@ body.page-template-home-promoblack {
 
 @media (prefers-reduced-motion: reduce) {
   .pro-pb-button,
-  .pro-pb-login {
+  .pro-pb-login__toggle {
     transition: none;
   }
 
