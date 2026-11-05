@@ -193,6 +193,23 @@ class PromoblackTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The Login button points to the platform and disappears when its link is cleared.
+	 *
+	 * @return void
+	 */
+	public function test_login_button_follows_setting() {
+		$html = $this->render_template();
+
+		$this->assertStringContainsString( 'href="https://app.proenem.com.br" data-pro-promoblack-action="login"', $html );
+
+		set_theme_mod( proenem_promoblack_setting_id( 'login_url' ), '' );
+
+		$html = $this->render_template();
+
+		$this->assertStringNotContainsString( 'data-pro-promoblack-action="login"', $html );
+	}
+
+	/**
 	 * The SISU guarantee only shows with its conditions, linked from the asterisk to the footer.
 	 *
 	 * @return void

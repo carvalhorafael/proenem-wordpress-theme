@@ -98,6 +98,12 @@ function proenem_get_promoblack_settings() {
 			'type'        => 'url',
 			'default'     => 'https://proenem.com.br/termos-de-uso/',
 		),
+		'login_url'             => array(
+			'label'       => __( 'Botão Login: link', 'proenem-wordpress-theme' ),
+			'description' => __( 'Destino do botão Login no topo da página. Vazio esconde o botão.', 'proenem-wordpress-theme' ),
+			'type'        => 'url',
+			'default'     => 'https://app.proenem.com.br',
+		),
 	);
 }
 

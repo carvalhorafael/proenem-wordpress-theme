@@ -19,6 +19,7 @@ $sisu_text      = proenem_get_promoblack_setting( 'sisu_text' );
 $sisu_note      = proenem_get_promoblack_setting( 'sisu_note' );
 $sisu_visible   = '' !== $sisu_text && '' !== $sisu_note;
 $sisu_rules     = proenem_get_promoblack_setting( 'sisu_rules_url' );
+$login_url      = proenem_get_promoblack_setting( 'login_url' );
 $desktop_media  = '(min-width: 1200px)';
 
 $proenem_promoblack_wordmark = static function ( $tag = 'span', $classes = 'pro-pb-wordmark' ) {
@@ -112,7 +113,12 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 			<a class="pro-pb-hero__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 				<img src="<?php echo esc_url( proenem_promoblack_asset_uri( 'logo-proenem-branca.webp' ) ); ?>" alt="<?php esc_attr_e( 'Proenem', 'proenem-wordpress-theme' ); ?>" width="154" height="43">
 			</a>
-			<?php $proenem_promoblack_wordmark( 'p', 'pro-pb-wordmark pro-pb-hero__wordmark' ); ?>
+			<div class="pro-pb-hero__actions">
+				<?php $proenem_promoblack_wordmark( 'p', 'pro-pb-wordmark pro-pb-hero__wordmark' ); ?>
+				<?php if ( '' !== $login_url ) : ?>
+					<a class="pro-pb-login" href="<?php echo esc_url( $login_url ); ?>" data-pro-promoblack-action="login"><?php esc_html_e( 'Login', 'proenem-wordpress-theme' ); ?></a>
+				<?php endif; ?>
+			</div>
 		</div>
 
 		<div class="pro-pb-hero__content">

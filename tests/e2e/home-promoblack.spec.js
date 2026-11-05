@@ -40,6 +40,19 @@ test("home PROMOBLACK countdown ticks every second", async ({ page }) => {
   await expect(countdown.locator("[data-pro-countdown-days]")).toHaveText(/^\d{2}$/);
 });
 
+test("home PROMOBLACK shows the Login button next to the wordmark", async ({ page }) => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
+    await page.setViewportSize(viewport);
+    await page.goto(PATH);
+
+    const login = page.locator('[data-pro-promoblack-action="login"]');
+
+    await expect(login).toBeVisible();
+    await expect(login).toHaveText("Login");
+    expect(new URL(await login.getAttribute("href")).host).toBe("app.proenem.com.br");
+  }
+});
+
 test("home PROMOBLACK links the SISU asterisk to the rules", async ({ page }) => {
   await page.goto(PATH);
 
