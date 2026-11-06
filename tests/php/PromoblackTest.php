@@ -193,7 +193,7 @@ class PromoblackTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * The promotional price block shows the original, cash and installment prices with the discount or the coupon.
+	 * The price block highlights the installments and shows the discount only where it is set.
 	 *
 	 * @return void
 	 */
@@ -203,10 +203,8 @@ class PromoblackTest extends WP_UnitTestCase {
 			'enem_pro_list_price' => 'R$ 563,83',
 			'enem_pro_cash_price' => 'R$ 394,68',
 			'enem_pro_discount'   => '30% OFF',
-			'med_price'           => 'R$ 25,66',
-			'med_list_price'      => 'R$ 1.026,51',
-			'med_cash_price'      => 'R$ 307,95',
-			'med_coupon'          => '70OFF',
+			'med_price'           => 'R$ 85,59',
+			'med_cash_price'      => 'R$ 1.026,51',
 		);
 
 		foreach ( $settings as $key => $value ) {
@@ -216,24 +214,28 @@ class PromoblackTest extends WP_UnitTestCase {
 		$html = $this->render_template();
 
 		$this->assertSame( 2, substr_count( $html, 'class="pro-pb-price"' ) );
+		$this->assertSame( 2, substr_count( $html, 'class="pro-pb-plan__price"' ) );
+		$this->assertStringContainsString( '<span class="pro-pb-plan__price-value">R$ 32,89</span>', $html );
+		$this->assertStringContainsString( '<span class="pro-pb-plan__price-value">R$ 85,59</span>', $html );
 		$this->assertStringContainsString( 'De R$ 563,83', $html );
 		$this->assertStringContainsString( 'Por R$ 394,68 à vista', $html );
-		$this->assertStringContainsString( 'ou 12x de R$ 32,89', $html );
 		$this->assertStringContainsString( '<span class="pro-pb-price__discount">30% OFF</span>', $html );
-		$this->assertStringContainsString( 'De R$ 1.026,51', $html );
-		$this->assertStringContainsString( 'Por R$ 307,95 à vista', $html );
-		$this->assertStringContainsString( 'ou 12x de R$ 25,66', $html );
-		$this->assertStringContainsString( '<strong class="pro-pb-price__coupon-code">70OFF</strong>', $html );
+		$this->assertMatchesRegularExpression( '/<p class="pro-pb-price__cash">\s*R\$ 1\.026,51 à vista\s*<\/p>/', $html );
+		$this->assertStringNotContainsString( 'De R$ 1.026,51', $html );
+		$this->assertStringNotContainsString( 'Por R$ 1.026,51', $html );
+		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price__from"' ) );
 		$this->assertSame( 1, substr_count( $html, 'pro-pb-price__discount' ) );
-		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price__coupon"' ) );
-		$this->assertStringNotContainsString( 'pro-pb-plan__price-prefix', $html );
+		$this->assertStringNotContainsString( 'pro-pb-price__coupon', $html );
+		$this->assertLessThan( strpos( $html, 'Por R$ 394,68' ), strpos( $html, 'R$ 32,89' ) );
 
+		set_theme_mod( proenem_promoblack_setting_id( 'med_coupon' ), '70OFF' );
 		set_theme_mod( proenem_promoblack_setting_id( 'med_cash_price' ), '' );
 
 		$html = $this->render_template();
 
-		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price"' ) );
-		$this->assertStringContainsString( '<span class="pro-pb-plan__price-value">R$ 25,66</span>', $html );
+		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price__cash"' ) );
+		$this->assertStringContainsString( '<strong class="pro-pb-price__coupon-code">70OFF</strong>', $html );
+		$this->assertSame( 2, substr_count( $html, 'class="pro-pb-plan__price"' ) );
 	}
 
 	/**

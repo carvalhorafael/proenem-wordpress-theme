@@ -690,9 +690,13 @@ body.page-template-home-promoblack {
 }
 
 .pro-pb-price__from {
+  align-items: center;
   color: var(--pro-pb-text-muted);
+  display: flex;
+  flex-wrap: wrap;
   font-size: 15px;
   font-weight: 700;
+  gap: 6px 10px;
 }
 
 .pro-pb-price__from s {
@@ -700,22 +704,19 @@ body.page-template-home-promoblack {
   text-decoration-thickness: 2px;
 }
 
-.pro-pb-price__cash {
-  font-size: 28px;
-  font-weight: 800;
-  font-variation-settings: "opsz" 96, "wdth" 100;
-  letter-spacing: -0.02em;
+.pro-pb-price .pro-pb-plan__price-prefix {
+  font-size: 18px;
+}
+
+.pro-pb-price .pro-pb-plan__price-value {
+  font-size: 34px;
   line-height: 1.1;
 }
 
-.pro-pb-price__installments {
-  align-items: center;
+.pro-pb-price__cash {
   color: var(--pro-pb-text-soft);
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 15px;
-  font-weight: 500;
-  gap: 6px 10px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .pro-pb-price__discount {
@@ -1455,11 +1456,15 @@ body.page-template-home-promoblack {
     font-size: 17px;
   }
 
-  .pro-pb-price__cash {
-    font-size: 34px;
+  .pro-pb-price .pro-pb-plan__price-prefix {
+    font-size: 20px;
   }
 
-  .pro-pb-price__installments,
+  .pro-pb-price .pro-pb-plan__price-value {
+    font-size: 40px;
+  }
+
+  .pro-pb-price__cash,
   .pro-pb-price__discount {
     font-size: 17px;
   }
