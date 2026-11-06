@@ -193,6 +193,50 @@ class PromoblackTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * The promotional price block shows the original, cash and installment prices with the discount or the coupon.
+	 *
+	 * @return void
+	 */
+	public function test_price_block_follows_settings() {
+		$settings = array(
+			'enem_pro_price'      => 'R$ 32,89',
+			'enem_pro_list_price' => 'R$ 563,83',
+			'enem_pro_cash_price' => 'R$ 394,68',
+			'enem_pro_discount'   => '30% OFF',
+			'med_price'           => 'R$ 25,66',
+			'med_list_price'      => 'R$ 1.026,51',
+			'med_cash_price'      => 'R$ 307,95',
+			'med_coupon'          => '70OFF',
+		);
+
+		foreach ( $settings as $key => $value ) {
+			set_theme_mod( proenem_promoblack_setting_id( $key ), $value );
+		}
+
+		$html = $this->render_template();
+
+		$this->assertSame( 2, substr_count( $html, 'class="pro-pb-price"' ) );
+		$this->assertStringContainsString( 'De R$ 563,83', $html );
+		$this->assertStringContainsString( 'Por R$ 394,68 à vista', $html );
+		$this->assertStringContainsString( 'ou 12x de R$ 32,89', $html );
+		$this->assertStringContainsString( '<span class="pro-pb-price__discount">30% OFF</span>', $html );
+		$this->assertStringContainsString( 'De R$ 1.026,51', $html );
+		$this->assertStringContainsString( 'Por R$ 307,95 à vista', $html );
+		$this->assertStringContainsString( 'ou 12x de R$ 25,66', $html );
+		$this->assertStringContainsString( '<strong class="pro-pb-price__coupon-code">70OFF</strong>', $html );
+		$this->assertSame( 1, substr_count( $html, 'pro-pb-price__discount' ) );
+		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price__coupon"' ) );
+		$this->assertStringNotContainsString( 'pro-pb-plan__price-prefix', $html );
+
+		set_theme_mod( proenem_promoblack_setting_id( 'med_cash_price' ), '' );
+
+		$html = $this->render_template();
+
+		$this->assertSame( 1, substr_count( $html, 'class="pro-pb-price"' ) );
+		$this->assertStringContainsString( '<span class="pro-pb-plan__price-value">R$ 25,66</span>', $html );
+	}
+
+	/**
 	 * The Login menu offers both platforms and disappears when both links are cleared.
 	 *
 	 * @return void
