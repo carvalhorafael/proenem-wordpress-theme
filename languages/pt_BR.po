@@ -17,7 +17,7 @@ msgstr ""
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.24.2\n"
+"Project-Id-Version: Proenem 0.24.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -35,7 +35,7 @@ msgstr ""
 #: inc/template-tags.php:3005
 #: inc/template-tags.php:3393
 #: page-templates/home-promoblack.php:128
-#: page-templates/home-promoblack.php:454
+#: page-templates/home-promoblack.php:452
 msgid "Proenem"
 msgstr "Proenem"
 
@@ -1496,14 +1496,14 @@ msgstr "FAQ"
 #: inc/class-proenem-elementor-home-widget-base.php:1780
 #: inc/class-proenem-elementor-home-widget-base.php:1800
 #: inc/class-proenem-elementor-sales-widget-base.php:2706
-#: page-templates/home-promoblack.php:398
+#: page-templates/home-promoblack.php:396
 #: page-templates/home.php:797
 #: template-parts/home/sections.php:658
 msgid "Perguntas"
 msgstr "Perguntas"
 
 #: inc/class-proenem-elementor-home-widget-base.php:1781
-#: page-templates/home-promoblack.php:399
+#: page-templates/home-promoblack.php:397
 #: page-templates/home.php:798
 #: template-parts/home/sections.php:659
 msgid "frequentes"
@@ -2420,7 +2420,7 @@ msgid "ENEM PRO"
 msgstr "ENEM PRO"
 
 #: inc/home-shared.php:260
-#: page-templates/home-promoblack.php:300
+#: page-templates/home-promoblack.php:277
 msgid "12x de"
 msgstr "12x de"
 
@@ -3562,12 +3562,12 @@ msgid "Acessar Promedicina"
 msgstr "Acessar Promedicina"
 
 #: page-templates/home-promoblack.php:44
-#: page-templates/home-promoblack.php:420
+#: page-templates/home-promoblack.php:418
 msgid "PROMO"
 msgstr "PROMO"
 
 #: page-templates/home-promoblack.php:45
-#: page-templates/home-promoblack.php:420
+#: page-templates/home-promoblack.php:418
 msgid "BLACK"
 msgstr "BLACK"
 
@@ -3646,69 +3646,69 @@ msgid "Próximo lote"
 msgstr "Próximo lote"
 
 #. translators: %s: Original plan price.
-#: page-templates/home-promoblack.php:265
+#: page-templates/home-promoblack.php:266
 #, php-format
 msgid "De %s"
 msgstr "De %s"
 
 #. translators: %s: Promotional cash price.
-#: page-templates/home-promoblack.php:273
+#: page-templates/home-promoblack.php:286
 #, php-format
 msgid "Por %s à vista"
 msgstr "Por %s à vista"
 
-#. translators: %s: Installment value.
-#: page-templates/home-promoblack.php:285
+#. translators: %s: Cash price.
+#: page-templates/home-promoblack.php:289
 #, php-format
-msgid "ou 12x de %s"
-msgstr "ou 12x de %s"
+msgid "%s à vista"
+msgstr "%s à vista"
 
-#: page-templates/home-promoblack.php:293
+#: page-templates/home-promoblack.php:296
 msgid "Use o cupom"
 msgstr "Use o cupom"
 
-#: page-templates/home-promoblack.php:304
+#: page-templates/home-promoblack.php:302
 msgid "Inclui"
 msgstr "Inclui"
 
-#: page-templates/home-promoblack.php:329
+#: page-templates/home-promoblack.php:327
 msgid "Garantia SISU 2027"
 msgstr "Garantia SISU 2027"
 
-#: page-templates/home-promoblack.php:336
+#: page-templates/home-promoblack.php:334
 msgid "Ler as condições da garantia"
 msgstr "Ler as condições da garantia"
 
-#: page-templates/home-promoblack.php:346
+#: page-templates/home-promoblack.php:344
 msgid "Qual plano"
 msgstr "Qual plano"
 
-#: page-templates/home-promoblack.php:347
+#: page-templates/home-promoblack.php:345
 msgid "é o seu?"
 msgstr "é o seu?"
 
-#: page-templates/home-promoblack.php:390
+#: page-templates/home-promoblack.php:388
 msgid "Pagamento em até 12x"
 msgstr "Pagamento em até 12x"
 
-#: page-templates/home-promoblack.php:391
+#: page-templates/home-promoblack.php:389
 msgid "Compra pela Hotmart, com ambiente seguro"
 msgstr "Compra pela Hotmart, com ambiente seguro"
 
-#: page-templates/home-promoblack.php:392
+#: page-templates/home-promoblack.php:390
 msgid "7 dias para desistir da compra"
 msgstr "7 dias para desistir da compra"
 
-#: page-templates/home-promoblack.php:424
+#: page-templates/home-promoblack.php:422
 msgid "Comece o seu"
 msgstr "Comece o seu"
 
-#: page-templates/home-promoblack.php:425
+#: page-templates/home-promoblack.php:423
 msgid "novo jeito de estudar"
 msgstr "novo jeito de estudar"
 
 #. translators: %s: Lot closing date and time.
-#: page-templates/home-promoblack.php:432
+#: page-templates/home-promoblack.php:430
 #, php-format
 msgid "O lote atual da PROMOBLACK acaba em %s."
 msgstr "O lote atual da PROMOBLACK acaba em %s."
