@@ -255,37 +255,40 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 						<h3 id="pro-pb-plan-<?php echo esc_attr( $plan_id ); ?>" class="pro-pb-plan__name"><?php $proenem_promoblack_plan_name( $plan ); ?></h3>
 					</header>
 					<p class="pro-pb-plan__description"><?php echo esc_html( $plan['description'] ); ?></p>
-					<?php if ( '' !== $plan['cash_price'] ) : ?>
+					<?php if ( '' !== $plan['price'] || '' !== $plan['cash_price'] ) : ?>
 						<div class="pro-pb-price">
-							<?php if ( '' !== $plan['list_price'] ) : ?>
+							<?php if ( '' !== $plan['list_price'] || '' !== $plan['discount'] ) : ?>
 								<p class="pro-pb-price__from">
-									<s>
-										<?php
-										/* translators: %s: Original plan price. */
-										echo esc_html( sprintf( __( 'De %s', 'proenem-wordpress-theme' ), $plan['list_price'] ) );
-										?>
-									</s>
-								</p>
-							<?php endif; ?>
-							<p class="pro-pb-price__cash">
-								<?php
-								/* translators: %s: Promotional cash price. */
-								echo esc_html( sprintf( __( 'Por %s à vista', 'proenem-wordpress-theme' ), $plan['cash_price'] ) );
-								?>
-							</p>
-							<?php if ( '' !== $plan['discount'] || '' !== $plan['price'] ) : ?>
-								<p class="pro-pb-price__installments">
+									<?php if ( '' !== $plan['list_price'] ) : ?>
+										<s>
+											<?php
+											/* translators: %s: Original plan price. */
+											echo esc_html( sprintf( __( 'De %s', 'proenem-wordpress-theme' ), $plan['list_price'] ) );
+											?>
+										</s>
+									<?php endif; ?>
 									<?php if ( '' !== $plan['discount'] ) : ?>
 										<span class="pro-pb-price__discount"><?php echo esc_html( $plan['discount'] ); ?></span>
 									<?php endif; ?>
-									<?php if ( '' !== $plan['price'] ) : ?>
-										<span>
-											<?php
-											/* translators: %s: Installment value. */
-											echo esc_html( sprintf( __( 'ou 12x de %s', 'proenem-wordpress-theme' ), $plan['price'] ) );
-											?>
-										</span>
-									<?php endif; ?>
+								</p>
+							<?php endif; ?>
+							<?php if ( '' !== $plan['price'] ) : ?>
+								<p class="pro-pb-plan__price">
+									<span class="pro-pb-plan__price-prefix"><?php esc_html_e( '12x de', 'proenem-wordpress-theme' ); ?></span>
+									<span class="pro-pb-plan__price-value"><?php echo esc_html( $plan['price'] ); ?></span>
+								</p>
+							<?php endif; ?>
+							<?php if ( '' !== $plan['cash_price'] ) : ?>
+								<p class="pro-pb-price__cash">
+									<?php
+									if ( '' !== $plan['list_price'] ) {
+										/* translators: %s: Promotional cash price. */
+										echo esc_html( sprintf( __( 'Por %s à vista', 'proenem-wordpress-theme' ), $plan['cash_price'] ) );
+									} else {
+										/* translators: %s: Cash price. */
+										echo esc_html( sprintf( __( '%s à vista', 'proenem-wordpress-theme' ), $plan['cash_price'] ) );
+									}
+									?>
 								</p>
 							<?php endif; ?>
 							<?php if ( '' !== $plan['coupon'] ) : ?>
@@ -295,11 +298,6 @@ $proenem_promoblack_background = static function ( $name, $width, $height, $mobi
 								</p>
 							<?php endif; ?>
 						</div>
-					<?php elseif ( '' !== $plan['price'] ) : ?>
-						<p class="pro-pb-plan__price">
-							<span class="pro-pb-plan__price-prefix"><?php esc_html_e( '12x de', 'proenem-wordpress-theme' ); ?></span>
-							<span class="pro-pb-plan__price-value"><?php echo esc_html( $plan['price'] ); ?></span>
-						</p>
 					<?php endif; ?>
 					<p class="pro-pb-plan__includes"><?php esc_html_e( 'Inclui', 'proenem-wordpress-theme' ); ?></p>
 					<ul class="pro-pb-plan__items">
