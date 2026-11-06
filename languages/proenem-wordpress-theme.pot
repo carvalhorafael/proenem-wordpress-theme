@@ -2,7 +2,7 @@
 # This file is distributed under the Proprietary.
 msgid ""
 msgstr ""
-"Project-Id-Version: Proenem 0.24.1\n"
+"Project-Id-Version: Proenem 0.24.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/proenem-wordpress-theme\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Proenem\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: inc/template-tags.php:3005
 #: inc/template-tags.php:3393
 #: page-templates/home-promoblack.php:128
-#: page-templates/home-promoblack.php:417
+#: page-templates/home-promoblack.php:454
 msgid "Proenem"
 msgstr ""
 
@@ -115,7 +115,7 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1778
 #: inc/class-proenem-elementor-sales-widget-base.php:1257
 #: inc/class-proenem-elementor-sales-widget-base.php:1571
-#: inc/promoblack.php:348
+#: inc/promoblack.php:390
 msgid "Conteúdo"
 msgstr ""
 
@@ -418,7 +418,7 @@ msgid "O plano diz o que estudar, quando revisar e como corrigir a rota — sem 
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:526
-#: inc/promoblack.php:355
+#: inc/promoblack.php:397
 #: page-templates/home.php:377
 #: template-parts/home/sections.php:238
 msgid "Performance"
@@ -1481,14 +1481,14 @@ msgstr ""
 #: inc/class-proenem-elementor-home-widget-base.php:1780
 #: inc/class-proenem-elementor-home-widget-base.php:1800
 #: inc/class-proenem-elementor-sales-widget-base.php:2706
-#: page-templates/home-promoblack.php:361
+#: page-templates/home-promoblack.php:398
 #: page-templates/home.php:797
 #: template-parts/home/sections.php:658
 msgid "Perguntas"
 msgstr ""
 
 #: inc/class-proenem-elementor-home-widget-base.php:1781
-#: page-templates/home-promoblack.php:362
+#: page-templates/home-promoblack.php:399
 #: page-templates/home.php:798
 #: template-parts/home/sections.php:659
 msgid "frequentes"
@@ -2168,12 +2168,12 @@ msgid "Aparecer após rolar (%)"
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1767
-#: inc/promoblack.php:529
+#: inc/promoblack.php:571
 msgid "dias"
 msgstr ""
 
 #: inc/class-proenem-elementor-sales-widget-base.php:1771
-#: inc/promoblack.php:530
+#: inc/promoblack.php:572
 msgid "horas"
 msgstr ""
 
@@ -2405,7 +2405,7 @@ msgid "ENEM PRO"
 msgstr ""
 
 #: inc/home-shared.php:260
-#: page-templates/home-promoblack.php:260
+#: page-templates/home-promoblack.php:300
 msgid "12x de"
 msgstr ""
 
@@ -2502,420 +2502,462 @@ msgid "ENEM Pro: preço do lote atual"
 msgstr ""
 
 #: inc/promoblack.php:49
-msgid "Valor da parcela em 12x. Ex.: R$ 32,89. Vazio esconde a linha de preço."
+msgid "Valor da parcela em 12x. Ex.: R$ 32,89. Sem parcela e sem preço à vista, o cartão fica sem preço."
 msgstr ""
 
 #: inc/promoblack.php:54
-msgid "ENEM Pro: complemento do preço"
+msgid "ENEM Pro: preço original (De)"
 msgstr ""
 
 #: inc/promoblack.php:55
-msgid "Ex.: ou R$ 394,68 à vista."
+msgid "Aparece riscado. Ex.: R$ 563,83. Vazio tira a linha."
 msgstr ""
 
 #: inc/promoblack.php:60
-msgid "ENEM Pro: link do checkout"
+msgid "ENEM Pro: preço à vista (Por)"
 msgstr ""
 
 #: inc/promoblack.php:61
-#: inc/promoblack.php:79
-msgid "Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano."
+msgid "Preço em destaque. Ex.: R$ 394,68. Vazio volta a destacar só a parcela."
 msgstr ""
 
 #: inc/promoblack.php:66
-msgid "Med Performance 2027: preço do lote atual"
+msgid "ENEM Pro: selo de desconto"
 msgstr ""
 
 #: inc/promoblack.php:67
-msgid "Valor da parcela em 12x. Ex.: R$ 59,89. Vazio esconde a linha de preço."
+#: inc/promoblack.php:103
+msgid "Selo vermelho ao lado da parcela. Ex.: 30% OFF. Vazio esconde o selo."
 msgstr ""
 
 #: inc/promoblack.php:72
-msgid "Med Performance 2027: complemento do preço"
+msgid "ENEM Pro: cupom"
 msgstr ""
 
 #: inc/promoblack.php:73
-msgid "Ex.: ou R$ 718,68 à vista."
+#: inc/promoblack.php:109
+msgid "Código mostrado na caixa \"Use o cupom\". Ex.: 70OFF. Vazio esconde a caixa."
 msgstr ""
 
 #: inc/promoblack.php:78
-msgid "Med Performance 2027: link do checkout"
+msgid "ENEM Pro: link do checkout"
+msgstr ""
+
+#: inc/promoblack.php:79
+#: inc/promoblack.php:115
+msgid "Checkout da Hotmart com as UTMs da campanha. Vazio tira o botão do cartão do plano."
 msgstr ""
 
 #: inc/promoblack.php:84
-msgid "Faixa da garantia SISU: texto"
+msgid "Med Performance 2027: preço do lote atual"
 msgstr ""
 
 #: inc/promoblack.php:85
-msgid "Vazio esconde a faixa. A faixa também só aparece com o texto do asterisco preenchido."
-msgstr ""
-
-#: inc/promoblack.php:87
-msgid "Se você passar no SISU 2027, devolveremos o seu investimento"
+msgid "Valor da parcela em 12x. Ex.: R$ 25,66. Sem parcela e sem preço à vista, o cartão fica sem preço."
 msgstr ""
 
 #: inc/promoblack.php:90
-msgid "Faixa da garantia SISU: texto do asterisco"
+msgid "Med Performance 2027: preço original (De)"
 msgstr ""
 
 #: inc/promoblack.php:91
-msgid "Aparece no rodapé, ligado ao * da faixa. A faixa só aparece com este texto preenchido."
-msgstr ""
-
-#: inc/promoblack.php:93
-msgid "Leia o regulamento em"
+msgid "Aparece riscado. Ex.: R$ 1.026,51. Vazio tira a linha."
 msgstr ""
 
 #: inc/promoblack.php:96
-msgid "Faixa da garantia SISU: link do regulamento"
+msgid "Med Performance 2027: preço à vista (Por)"
 msgstr ""
 
 #: inc/promoblack.php:97
-msgid "Vai logo depois do texto do asterisco. Vazio mostra só o texto."
+msgid "Preço em destaque. Ex.: R$ 307,95. Vazio volta a destacar só a parcela."
 msgstr ""
 
 #: inc/promoblack.php:102
-msgid "Login: link de Acessar Proenem"
-msgstr ""
-
-#: inc/promoblack.php:103
-msgid "Primeira opção do menu Login. Vazio tira a opção; sem nenhuma opção, o botão some."
+msgid "Med Performance 2027: selo de desconto"
 msgstr ""
 
 #: inc/promoblack.php:108
+msgid "Med Performance 2027: cupom"
+msgstr ""
+
+#: inc/promoblack.php:114
+msgid "Med Performance 2027: link do checkout"
+msgstr ""
+
+#: inc/promoblack.php:120
+msgid "Faixa da garantia SISU: texto"
+msgstr ""
+
+#: inc/promoblack.php:121
+msgid "Vazio esconde a faixa. A faixa também só aparece com o texto do asterisco preenchido."
+msgstr ""
+
+#: inc/promoblack.php:123
+msgid "Se você passar no SISU 2027, devolveremos o seu investimento"
+msgstr ""
+
+#: inc/promoblack.php:126
+msgid "Faixa da garantia SISU: texto do asterisco"
+msgstr ""
+
+#: inc/promoblack.php:127
+msgid "Aparece no rodapé, ligado ao * da faixa. A faixa só aparece com este texto preenchido."
+msgstr ""
+
+#: inc/promoblack.php:129
+msgid "Leia o regulamento em"
+msgstr ""
+
+#: inc/promoblack.php:132
+msgid "Faixa da garantia SISU: link do regulamento"
+msgstr ""
+
+#: inc/promoblack.php:133
+msgid "Vai logo depois do texto do asterisco. Vazio mostra só o texto."
+msgstr ""
+
+#: inc/promoblack.php:138
+msgid "Login: link de Acessar Proenem"
+msgstr ""
+
+#: inc/promoblack.php:139
+msgid "Primeira opção do menu Login. Vazio tira a opção; sem nenhuma opção, o botão some."
+msgstr ""
+
+#: inc/promoblack.php:144
 msgid "Login: link de Acessar Promedicina"
 msgstr ""
 
-#: inc/promoblack.php:109
+#: inc/promoblack.php:145
 msgid "Segunda opção do menu Login. Vazio tira a opção."
 msgstr ""
 
-#: inc/promoblack.php:158
+#: inc/promoblack.php:194
 msgid "Data inválida. Use AAAA-MM-DD HH:MM, por exemplo 2026-11-12 23:59."
 msgstr ""
 
-#: inc/promoblack.php:174
+#: inc/promoblack.php:210
 msgid "PROMOBLACK"
 msgstr ""
 
-#: inc/promoblack.php:175
+#: inc/promoblack.php:211
 msgid "Lote, preços e checkout da home PROMOBLACK. Valem para a página que usa o modelo Proenem Home - PROMOBLACK."
 msgstr ""
 
-#: inc/promoblack.php:266
+#: inc/promoblack.php:302
 msgctxt "PROMOBLACK lot deadline date format"
 msgid "d/m \\à\\s H\\hi"
 msgstr ""
 
-#: inc/promoblack.php:293
-#: inc/promoblack.php:294
+#: inc/promoblack.php:329
+#: inc/promoblack.php:330
 msgid "ENEM Pro"
 msgstr ""
 
-#: inc/promoblack.php:297
+#: inc/promoblack.php:333
 msgid "Para estudar com direção, praticar no formato da prova e receber correção."
 msgstr ""
 
-#: inc/promoblack.php:300
+#: inc/promoblack.php:339
 msgid "Quero o ENEM Pro"
 msgstr ""
 
-#: inc/promoblack.php:304
-#: inc/promoblack.php:398
+#: inc/promoblack.php:343
+#: inc/promoblack.php:440
 msgid "Plano de estudos personalizado"
 msgstr ""
 
-#: inc/promoblack.php:305
-#: inc/promoblack.php:388
+#: inc/promoblack.php:344
+#: inc/promoblack.php:430
 msgid "Aulas gravadas"
 msgstr ""
 
-#: inc/promoblack.php:306
+#: inc/promoblack.php:345
 msgid "Mais de 50 mil questões"
 msgstr ""
 
-#: inc/promoblack.php:307
+#: inc/promoblack.php:346
 msgid "10 simulados modelo Enem com correção TRI"
 msgstr ""
 
-#: inc/promoblack.php:308
+#: inc/promoblack.php:347
 msgid "Redação corrigida por especialistas da banca (2 créditos por mês)"
 msgstr ""
 
-#: inc/promoblack.php:309
-#: inc/promoblack.php:331
-#: inc/promoblack.php:423
+#: inc/promoblack.php:348
+#: inc/promoblack.php:373
+#: inc/promoblack.php:465
 msgid "Acesso à plataforma nova"
 msgstr ""
 
-#: inc/promoblack.php:313
+#: inc/promoblack.php:352
 msgid "Med Performance 2027"
 msgstr ""
 
-#: inc/promoblack.php:314
+#: inc/promoblack.php:353
 msgid "Med Perf. 2027"
 msgstr ""
 
-#: inc/promoblack.php:316
+#: inc/promoblack.php:355
 msgid "Mais completo"
 msgstr ""
 
-#: inc/promoblack.php:317
+#: inc/promoblack.php:356
 msgid "Tudo do ENEM Pro, com aulas ao vivo, mentoria e acompanhamento semanal da sua performance."
 msgstr ""
 
-#: inc/promoblack.php:320
+#: inc/promoblack.php:362
 msgid "Quero o Med Performance 2027"
 msgstr ""
 
-#: inc/promoblack.php:324
+#: inc/promoblack.php:366
 msgid "Tudo do ENEM Pro"
 msgstr ""
 
-#: inc/promoblack.php:325
+#: inc/promoblack.php:367
 msgid "Aulas ao vivo a partir de fev/2027"
 msgstr ""
 
-#: inc/promoblack.php:326
+#: inc/promoblack.php:368
 msgid "10 + 4 simulados exclusivos TRI na Prática"
 msgstr ""
 
-#: inc/promoblack.php:327
+#: inc/promoblack.php:369
 msgid "Aulas mensais de TRI"
 msgstr ""
 
-#: inc/promoblack.php:328
+#: inc/promoblack.php:370
 msgid "Aula Vip TRI na Prática"
 msgstr ""
 
-#: inc/promoblack.php:329
+#: inc/promoblack.php:371
 #: template-parts/home/sections.php:98
 msgid "Check-ups semanais com boletim de desempenho"
 msgstr ""
 
-#: inc/promoblack.php:330
+#: inc/promoblack.php:372
 msgid "Redação corrigida por especialistas da banca (4 créditos por mês)"
 msgstr ""
 
-#: inc/promoblack.php:349
+#: inc/promoblack.php:391
 msgid "Aprenda com os melhores professores"
 msgstr ""
 
-#: inc/promoblack.php:350
+#: inc/promoblack.php:392
 msgid "Aulas gravadas para estudar no seu ritmo e, a partir de fevereiro de 2027, aulas ao vivo de segunda a sexta. Conte também com plano personalizado e aprofundamentos em Matemática e Natureza."
 msgstr ""
 
-#: inc/promoblack.php:356
+#: inc/promoblack.php:398
 msgid "Transforme conhecimento em estratégia"
 msgstr ""
 
-#: inc/promoblack.php:357
+#: inc/promoblack.php:399
 msgid "Mais de 50 mil questões e 10 simulados modelo Enem com TRI. A partir de fevereiro de 2027, metodologia Arrase na TRI e Mentoria de Performance VIP para orientar sua preparação."
 msgstr ""
 
-#: inc/promoblack.php:362
+#: inc/promoblack.php:404
 msgid "Redação"
 msgstr ""
 
-#: inc/promoblack.php:363
+#: inc/promoblack.php:405
 msgid "Entenda como melhorar seu próximo texto"
 msgstr ""
 
-#: inc/promoblack.php:364
+#: inc/promoblack.php:406
 msgid "4 correções de redação por mês para orientar seus próximos treinos. A partir de fevereiro de 2027, amplie seu repertório com a Comunidade de Redação."
 msgstr ""
 
-#: inc/promoblack.php:369
+#: inc/promoblack.php:411
 msgid "Resultado"
 msgstr ""
 
-#: inc/promoblack.php:370
+#: inc/promoblack.php:412
 msgid "Acompanhe sua evolução"
 msgstr ""
 
-#: inc/promoblack.php:371
+#: inc/promoblack.php:413
 msgid "Check-ups semanais com boletim de desempenho para identificar seus avanços e os pontos que precisam de mais atenção na preparação."
 msgstr ""
 
-#: inc/promoblack.php:385
+#: inc/promoblack.php:427
 msgid "Tudo do ENEM Pro — também no Med"
 msgstr ""
 
-#: inc/promoblack.php:389
-#: inc/promoblack.php:390
+#: inc/promoblack.php:431
+#: inc/promoblack.php:432
 msgid "576 módulos"
 msgstr ""
 
-#: inc/promoblack.php:393
+#: inc/promoblack.php:435
 msgid "Curso de Nivelamento"
 msgstr ""
 
-#: inc/promoblack.php:403
+#: inc/promoblack.php:445
 #: template-parts/home/sections.php:74
 msgid "Apostilas completas em PDF"
 msgstr ""
 
-#: inc/promoblack.php:404
-#: inc/promoblack.php:405
+#: inc/promoblack.php:446
+#: inc/promoblack.php:447
 msgid "todos os módulos"
 msgstr ""
 
-#: inc/promoblack.php:408
+#: inc/promoblack.php:450
 msgid "Banco com +50 mil questões"
 msgstr ""
 
-#: inc/promoblack.php:413
+#: inc/promoblack.php:455
 msgid "Simulados modelo ENEM com TRI"
 msgstr ""
 
-#: inc/promoblack.php:418
+#: inc/promoblack.php:460
 msgid "Redação corrigida por banca"
 msgstr ""
 
-#: inc/promoblack.php:419
+#: inc/promoblack.php:461
 msgid "2 créditos/mês"
 msgstr ""
 
-#: inc/promoblack.php:420
+#: inc/promoblack.php:462
 msgid "4 créditos/mês"
 msgstr ""
 
-#: inc/promoblack.php:430
+#: inc/promoblack.php:472
 msgid "+ Exclusivo do Med Performance"
 msgstr ""
 
-#: inc/promoblack.php:433
+#: inc/promoblack.php:475
 msgid "Aulas ao vivo"
 msgstr ""
 
-#: inc/promoblack.php:435
+#: inc/promoblack.php:477
 msgid "a partir de fev/2027"
 msgstr ""
 
-#: inc/promoblack.php:438
+#: inc/promoblack.php:480
 msgid "Aula exclusiva TRI na Prática"
 msgstr ""
 
-#: inc/promoblack.php:440
+#: inc/promoblack.php:482
 msgid "mensal"
 msgstr ""
 
-#: inc/promoblack.php:443
+#: inc/promoblack.php:485
 msgid "Simulados TRI na Prática"
 msgstr ""
 
-#: inc/promoblack.php:448
+#: inc/promoblack.php:490
 msgid "Check-ups semanais com boletim"
 msgstr ""
 
-#: inc/promoblack.php:453
+#: inc/promoblack.php:495
 msgid "EscreveAI: tutor de redação"
 msgstr ""
 
-#: inc/promoblack.php:470
+#: inc/promoblack.php:512
 msgid "Qual a diferença entre o ENEM Pro e o Med Performance 2027?"
 msgstr ""
 
-#: inc/promoblack.php:471
+#: inc/promoblack.php:513
 msgid "O ENEM Pro reúne plano de estudos, aulas gravadas, questões, simulados com TRI e redação corrigida. O Med Performance 2027 tem tudo isso e soma aulas ao vivo, simulados exclusivos, mentoria VIP em TRI e check-ups semanais com boletim."
 msgstr ""
 
-#: inc/promoblack.php:474
+#: inc/promoblack.php:516
 msgid "O que são os simulados com TRI?"
 msgstr ""
 
-#: inc/promoblack.php:475
+#: inc/promoblack.php:517
 msgid "TRI é a Teoria de Resposta ao Item, o método de correção do Enem. A nota considera quais questões você acertou e o nível de cada uma, não só a quantidade de acertos. Nos simulados do ProEnem você treina com essa correção."
 msgstr ""
 
-#: inc/promoblack.php:478
+#: inc/promoblack.php:520
 msgid "Como funciona a correção de redação?"
 msgstr ""
 
-#: inc/promoblack.php:479
+#: inc/promoblack.php:521
 msgid "Sua redação é corrigida por especialistas da banca do Enem, com base nas cinco competências do Enem. Você tem créditos mensais de correção conforme a turma escolhida."
 msgstr ""
 
-#: inc/promoblack.php:482
+#: inc/promoblack.php:524
 msgid "Quando começam as aulas ao vivo do Med Performance 2027?"
 msgstr ""
 
-#: inc/promoblack.php:483
+#: inc/promoblack.php:525
 msgid "A partir de fevereiro de 2027."
 msgstr ""
 
-#: inc/promoblack.php:486
+#: inc/promoblack.php:528
 msgid "Posso parcelar?"
 msgstr ""
 
-#: inc/promoblack.php:487
+#: inc/promoblack.php:529
 msgid "Sim, em até 12x."
 msgstr ""
 
-#: inc/promoblack.php:490
+#: inc/promoblack.php:532
 #: template-parts/home/sections.php:119
 msgid "Por quanto tempo tenho acesso?"
 msgstr ""
 
-#: inc/promoblack.php:491
+#: inc/promoblack.php:533
 msgid "Enem Pro - 12 meses / Med Performance até dez 2027"
 msgstr ""
 
-#: inc/promoblack.php:494
+#: inc/promoblack.php:536
 msgid "Como recebo o acesso depois de comprar?"
 msgstr ""
 
-#: inc/promoblack.php:495
+#: inc/promoblack.php:537
 msgid "A compra é feita pela Hotmart e as instruções de acesso chegam no e-mail usado na compra."
 msgstr ""
 
-#: inc/promoblack.php:498
+#: inc/promoblack.php:540
 msgid "Até quando vale o valor atual?"
 msgstr ""
 
-#: inc/promoblack.php:499
+#: inc/promoblack.php:541
 msgid "O valor vale até o fim do lote vigente, indicado no contador da página. Quando o lote vira, o valor muda."
 msgstr ""
 
-#: inc/promoblack.php:531
+#: inc/promoblack.php:573
 msgid "minutos"
 msgstr ""
 
-#: inc/promoblack.php:532
+#: inc/promoblack.php:574
 msgid "segundos"
 msgstr ""
 
-#: inc/promoblack.php:539
+#: inc/promoblack.php:581
 msgid "Lote encerrado"
 msgstr ""
 
 #. translators: %s: Lot closing date and time.
-#: inc/promoblack.php:545
+#: inc/promoblack.php:587
 #, php-format
 msgid "Até %s"
 msgstr ""
 
-#: inc/promoblack.php:578
+#: inc/promoblack.php:620
 msgid "Dois caminhos para o mesmo objetivo: estudar com método e acompanhar a sua performance até o Enem 2027."
 msgstr ""
 
-#: inc/promoblack.php:579
+#: inc/promoblack.php:621
 msgid "Os lotes viram por data. Quando o lote vira, o valor muda."
 msgstr ""
 
-#: inc/promoblack.php:580
+#: inc/promoblack.php:622
 msgid "O ENEM Pro tem tudo para estudar com método. O Med Performance 2027 soma aulas ao vivo, mentoria e acompanhamento semanal para quem quer ir além."
 msgstr ""
 
-#: inc/promoblack.php:581
+#: inc/promoblack.php:623
 msgid "O que cada plano inclui:"
 msgstr ""
 
-#: inc/promoblack.php:582
+#: inc/promoblack.php:624
 msgid "Escolha o seu plano e comece a estudar para o Enem 2027 com método."
 msgstr ""
 
-#: inc/promoblack.php:583
+#: inc/promoblack.php:625
 msgid "Valores do lote vigente, sujeitos a alteração. Pagamento processado pela Hotmart. Os resultados dependem da dedicação de cada aluno."
 msgstr ""
 
@@ -3505,12 +3547,12 @@ msgid "Acessar Promedicina"
 msgstr ""
 
 #: page-templates/home-promoblack.php:44
-#: page-templates/home-promoblack.php:383
+#: page-templates/home-promoblack.php:420
 msgid "PROMO"
 msgstr ""
 
 #: page-templates/home-promoblack.php:45
-#: page-templates/home-promoblack.php:383
+#: page-templates/home-promoblack.php:420
 msgid "BLACK"
 msgstr ""
 
@@ -3588,48 +3630,70 @@ msgstr ""
 msgid "Próximo lote"
 msgstr ""
 
-#: page-templates/home-promoblack.php:267
+#. translators: %s: Original plan price.
+#: page-templates/home-promoblack.php:265
+#, php-format
+msgid "De %s"
+msgstr ""
+
+#. translators: %s: Promotional cash price.
+#: page-templates/home-promoblack.php:273
+#, php-format
+msgid "Por %s à vista"
+msgstr ""
+
+#. translators: %s: Installment value.
+#: page-templates/home-promoblack.php:285
+#, php-format
+msgid "ou 12x de %s"
+msgstr ""
+
+#: page-templates/home-promoblack.php:293
+msgid "Use o cupom"
+msgstr ""
+
+#: page-templates/home-promoblack.php:304
 msgid "Inclui"
 msgstr ""
 
-#: page-templates/home-promoblack.php:292
+#: page-templates/home-promoblack.php:329
 msgid "Garantia SISU 2027"
 msgstr ""
 
-#: page-templates/home-promoblack.php:299
+#: page-templates/home-promoblack.php:336
 msgid "Ler as condições da garantia"
 msgstr ""
 
-#: page-templates/home-promoblack.php:309
+#: page-templates/home-promoblack.php:346
 msgid "Qual plano"
 msgstr ""
 
-#: page-templates/home-promoblack.php:310
+#: page-templates/home-promoblack.php:347
 msgid "é o seu?"
 msgstr ""
 
-#: page-templates/home-promoblack.php:353
+#: page-templates/home-promoblack.php:390
 msgid "Pagamento em até 12x"
 msgstr ""
 
-#: page-templates/home-promoblack.php:354
+#: page-templates/home-promoblack.php:391
 msgid "Compra pela Hotmart, com ambiente seguro"
 msgstr ""
 
-#: page-templates/home-promoblack.php:355
+#: page-templates/home-promoblack.php:392
 msgid "7 dias para desistir da compra"
 msgstr ""
 
-#: page-templates/home-promoblack.php:387
+#: page-templates/home-promoblack.php:424
 msgid "Comece o seu"
 msgstr ""
 
-#: page-templates/home-promoblack.php:388
+#: page-templates/home-promoblack.php:425
 msgid "novo jeito de estudar"
 msgstr ""
 
 #. translators: %s: Lot closing date and time.
-#: page-templates/home-promoblack.php:395
+#: page-templates/home-promoblack.php:432
 #, php-format
 msgid "O lote atual da PROMOBLACK acaba em %s."
 msgstr ""

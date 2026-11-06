@@ -683,10 +683,75 @@ body.page-template-home-promoblack {
   letter-spacing: -0.02em;
 }
 
-.pro-pb-plan__price-note {
+.pro-pb-price {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pro-pb-price__from {
   color: var(--pro-pb-text-muted);
-  flex-basis: 100%;
   font-size: 15px;
+  font-weight: 700;
+}
+
+.pro-pb-price__from s {
+  text-decoration-color: var(--pro-pb-red);
+  text-decoration-thickness: 2px;
+}
+
+.pro-pb-price__cash {
+  font-size: 28px;
+  font-weight: 800;
+  font-variation-settings: "opsz" 96, "wdth" 100;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.pro-pb-price__installments {
+  align-items: center;
+  color: var(--pro-pb-text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 15px;
+  font-weight: 500;
+  gap: 6px 10px;
+}
+
+.pro-pb-price__discount {
+  background: var(--pro-pb-red-label);
+  border-radius: 4px;
+  color: var(--pro-pb-text);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  text-transform: uppercase;
+}
+
+.pro-pb-price__coupon {
+  align-self: flex-start;
+  background: var(--pro-pb-red-label);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  padding: 10px 18px 12px;
+}
+
+.pro-pb-price__coupon-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pro-pb-price__coupon-code {
+  font-size: 30px;
+  font-weight: 800;
+  font-variation-settings: "opsz" 96, "wdth" 100;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
 }
 
 .pro-pb-plan__includes {
@@ -1384,6 +1449,27 @@ body.page-template-home-promoblack {
 
   .pro-pb-plan__price-value {
     font-size: 28px;
+  }
+
+  .pro-pb-price__from {
+    font-size: 17px;
+  }
+
+  .pro-pb-price__cash {
+    font-size: 34px;
+  }
+
+  .pro-pb-price__installments,
+  .pro-pb-price__discount {
+    font-size: 17px;
+  }
+
+  .pro-pb-price__coupon-label {
+    font-size: 13px;
+  }
+
+  .pro-pb-price__coupon-code {
+    font-size: 36px;
   }
 
   .pro-pb-plan__includes {

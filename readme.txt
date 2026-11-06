@@ -4,7 +4,7 @@ Tags: blog, education, editor-style, custom-logo, custom-menu, featured-images
 Requires at least: 6.5
 Tested up to: 6.6
 Requires PHP: 8.2
-Stable tag: 0.24.1
+Stable tag: 0.24.2
 License: Proprietary
 License URI: LICENSE.md
 
@@ -15,6 +15,9 @@ Tema WordPress do Proenem.
 Tema WordPress do Proenem, estruturado como camada de apresentacao e adaptacao WordPress.
 
 == Changelog ==
+
+= 0.24.2 =
+* Destaca o desconto nos planos da home PROMOBLACK: preco original riscado, preco a vista em destaque e a parcela, com o selo de desconto ou a caixa do cupom. Os valores ficam no Personalizar, um conjunto por plano.
 
 = 0.24.1 =
 * Adiciona o botao Login no topo da home PROMOBLACK, que faltava no Figma publicado. Ele abre um menu com Acessar Proenem e Acessar Promedicina, os mesmos destinos do Entrar do resto do site, editaveis no Personalizar.
